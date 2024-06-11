@@ -32,7 +32,6 @@ package net.algart.arrays;
  * ({@link #elementType()} must not return a primitive type).</p>
  *
  * @param <E> the generic type of array elements.
- *
  * @author Daniel Alievsky
  */
 public interface ObjectArray<E> extends Array {
@@ -49,7 +48,7 @@ public interface ObjectArray<E> extends Array {
      * Equivalent to {@link #getElement(long) getElement(index)}.
      *
      * @param index index of element to get.
-     * @return      the element at the specified position in this array.
+     * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
      */
     E get(long index);
@@ -73,9 +72,9 @@ public interface ObjectArray<E> extends Array {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the first occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, E value);
 
@@ -99,9 +98,9 @@ public interface ObjectArray<E> extends Array {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     * @return the index of the last occurrence of this value in this array
+     * in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
+     * or <tt>-1</tt> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, E value);
 
@@ -117,7 +116,7 @@ public interface ObjectArray<E> extends Array {
      * {@link #elementType() element type} and do not allow saving illegal elements.
      *
      * @param elementType the required generic type.
-     * @return            this array cast to the specified generic element type.
+     * @return this array cast to the specified generic element type.
      * @throws NullPointerException if the argument is <tt>null</tt>.
      * @throws ClassCastException   if the elements cannot be cast to the required type.
      */
@@ -151,5 +150,6 @@ public interface ObjectArray<E> extends Array {
     default Matrix<? extends ObjectArray<E>> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
     /*Repeat.IncludeEnd*/
 }

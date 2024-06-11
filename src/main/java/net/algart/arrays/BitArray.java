@@ -30,8 +30,11 @@ package net.algart.arrays;
   FloatBuffer ==> BitBuffer ;;
   getFloat ==> getBit ;;
   Float(?!ing) ==> Boolean ;;
-  float ==> boolean
+  float ==> boolean ;;
+  \@Override\s+default\s+boolean\[\]\s+jaBoolean(.*?)(?:\r(?!\n)|\n|\r\n)\s*}\s* ==>
      !! Auto-generated: NOT EDIT !! */
+
+import java.util.Objects;
 
 /**
  * <p>AlgART array of <code>boolean</code> values, read-only access.</p>
@@ -118,6 +121,37 @@ public interface BitArray extends PFixedArray {
 
     default Matrix<? extends BitArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
+    }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableBitArray(long)
+     * memoryModel.newUnresizableBitArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>boolean</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableBitArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableBitArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableBitArray(long)
+     * newUnresizableBitArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableBitArray newArray(long length) {
+        return Arrays.SMM.newUnresizableBitArray(length);
     }
     /*Repeat.IncludeEnd*/
 

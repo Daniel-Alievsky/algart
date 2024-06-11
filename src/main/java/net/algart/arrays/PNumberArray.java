@@ -62,7 +62,8 @@ public interface PNumberArray extends PArray {
      * @throws IllegalArgumentException        if <code>elementType</code> is not  <code>byte.class</code>,
      *                                         <code>short.class</code>, <code>int.class</code>,
      *                                         <code>long.class</code>,
-     *                                         <code>float.class</code> or <code>double.class</code>
+     *                                         <code>float.class</code> or <code>double.class</code>.
+     *                                         or if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the specified length is too large for this memory model.
      */
@@ -86,10 +87,26 @@ public interface PNumberArray extends PArray {
      * @throws IllegalArgumentException if <code>elementType</code> is not  <code>byte.class</code>,
      *                                  <code>short.class</code>, <code>int.class</code>,
      *                                  <code>long.class</code>,
-     *                                  <code>float.class</code> or <code>double.class</code>
+     *                                  <code>float.class</code> or <code>double.class</code>,
+     *                                  or if the specified length is negative.
      * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
      */
     static UpdatablePNumberArray newArray(Class<?> elementType, long length) {
         return newArray(Arrays.SMM, elementType, length);
+    }
+
+    /**
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatablePNumberArray(Object)
+     * SimpleMemoryModel.asUpdatablePNumberArray}(array)</code>.
+     *
+     * @param array the source Java array.
+     * @return an unresizable AlgART array backed by the specified Java array.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>array</code> argument is not an array,
+     *                                  or <code>boolean[]</code> array,
+     *                                  or <code>char[]</code> array, or <code>Objects[]</code> array.
+     */
+    static UpdatablePNumberArray as(Object array) {
+        return SimpleMemoryModel.asUpdatablePNumberArray(array);
     }
 }

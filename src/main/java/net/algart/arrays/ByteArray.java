@@ -32,6 +32,8 @@ package net.algart.arrays;
   float ==> byte
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>byte</code> values, read-only access.</p>
  *
@@ -118,6 +120,42 @@ public interface ByteArray extends PIntegerArray {
     default Matrix<? extends ByteArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
+    @Override
+    default byte[] jaByte() {
+        return ja();
+    }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableByteArray(long)
+     * memoryModel.newUnresizableByteArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>byte</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableByteArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableByteArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableByteArray(long)
+     * newUnresizableByteArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableByteArray newArray(long length) {
+        return Arrays.SMM.newUnresizableByteArray(length);
+    }
     /*Repeat.IncludeEnd*/
 
     /**
@@ -131,11 +169,6 @@ public interface ByteArray extends PIntegerArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
     int getInt(long index);
-
-    @Override
-    default byte[] jaByte() {
-        return ja();
-    }
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableByteArray(byte[])

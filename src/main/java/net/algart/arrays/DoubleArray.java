@@ -29,6 +29,8 @@ package net.algart.arrays;
   float ==> double
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>double</code> values, read-only access.</p>
  *
@@ -115,12 +117,43 @@ public interface DoubleArray extends PFloatingArray {
     default Matrix<? extends DoubleArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
-    /*Repeat.IncludeEnd*/
 
     @Override
     default double[] jaDouble() {
         return ja();
     }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableDoubleArray(long)
+     * memoryModel.newUnresizableDoubleArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>double</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableDoubleArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableDoubleArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableDoubleArray(long)
+     * newUnresizableDoubleArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableDoubleArray newArray(long length) {
+        return Arrays.SMM.newUnresizableDoubleArray(length);
+    }
+    /*Repeat.IncludeEnd*/
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableDoubleArray(double[])

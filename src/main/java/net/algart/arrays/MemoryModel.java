@@ -252,7 +252,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>boolean</code> element type
      *                                         is not supported by this memory model.
@@ -268,7 +267,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>boolean</code> element type
      *                                         is not supported by this memory model.
@@ -319,7 +317,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>char</code> element type
      *                                         is not supported by this memory model.
@@ -335,7 +332,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>char</code> element type
      *                                         is not supported by this memory model.
@@ -386,7 +382,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>byte</code> element type
      *                                         is not supported by this memory model.
@@ -402,7 +397,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>byte</code> element type
      *                                         is not supported by this memory model.
@@ -453,7 +447,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>short</code> element type
      *                                         is not supported by this memory model.
@@ -469,7 +462,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>short</code> element type
      *                                         is not supported by this memory model.
@@ -520,7 +512,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>int</code> element type
      *                                         is not supported by this memory model.
@@ -536,7 +527,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>int</code> element type
      *                                         is not supported by this memory model.
@@ -587,7 +577,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>long</code> element type
      *                                         is not supported by this memory model.
@@ -603,7 +592,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>long</code> element type
      *                                         is not supported by this memory model.
@@ -654,7 +642,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>float</code> element type
      *                                         is not supported by this memory model.
@@ -670,7 +657,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>float</code> element type
      *                                         is not supported by this memory model.
@@ -721,7 +707,6 @@ public interface MemoryModel {
      *
      * @param initialLength the initial length and capacity of the array.
      * @return created AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <code>double</code> element type
      *                                         is not supported by this memory model.
@@ -737,7 +722,6 @@ public interface MemoryModel {
      *
      * @param length the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>double</code> element type
      *                                         is not supported by this memory model.
@@ -944,6 +928,7 @@ public interface MemoryModel {
      * @see #newMatrix(Class, Matrix)
      * @see Matrices#matrix(Array, long...)
      * @see Matrices#checkNewMatrixType(Class, Class)
+     * @see Matrix#newMatrix(MemoryModel, Class, long...)
      */
     <T extends UpdatableArray> Matrix<T> newMatrix(Class<T> arraySupertype, Class<?> elementType, long... dim);
 

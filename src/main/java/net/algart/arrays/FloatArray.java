@@ -26,6 +26,8 @@ package net.algart.arrays;
 
 /*Repeat.SectionStart all*/
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>float</code> values, read-only access.</p>
  *
@@ -113,13 +115,45 @@ public interface FloatArray extends PFloatingArray {
     default Matrix<? extends FloatArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
     /*Repeat.SectionEnd resultTypes*/
-    /*Repeat.SectionEnd all*/
 
     @Override
     default float[] jaFloat() {
         return ja();
     }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableFloatArray(long)
+     * memoryModel.newUnresizableFloatArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>float</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableFloatArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableFloatArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableFloatArray(long)
+     * newUnresizableFloatArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableFloatArray newArray(long length) {
+        return Arrays.SMM.newUnresizableFloatArray(length);
+    }
+    /*Repeat.SectionEnd all*/
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableFloatArray(float[])

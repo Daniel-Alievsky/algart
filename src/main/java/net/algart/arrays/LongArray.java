@@ -30,6 +30,8 @@ package net.algart.arrays;
   float ==> long
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>long</code> values, read-only access.</p>
  *
@@ -116,6 +118,42 @@ public interface LongArray extends PIntegerArray {
     default Matrix<? extends LongArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
+    @Override
+    default long[] jaLong() {
+        return ja();
+    }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableLongArray(long)
+     * memoryModel.newUnresizableLongArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>long</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableLongArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableLongArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableLongArray(long)
+     * newUnresizableLongArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableLongArray newArray(long length) {
+        return Arrays.SMM.newUnresizableLongArray(length);
+    }
     /*Repeat.IncludeEnd*/
 
     /**
@@ -131,11 +169,6 @@ public interface LongArray extends PIntegerArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
     int getInt(long index);
-
-    @Override
-    default long[] jaLong() {
-        return ja();
-    }
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableLongArray(long[])

@@ -437,23 +437,24 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * Analog of {@link #asUpdatableArray(Object)} with the only difference, that this method
      * does not work with Java array of objects.
      *
-     * <p>This method has a brief alias: {@link PArray#as(Object)}.</p>
+     * <p>This method has a brief alias: {@link PNumberArray#as(Object)}.</p>
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>array</code> argument is not an array,
-     *                                  or <code>boolean[]</code> array, or <code>Objects[]</code> array.
+     *                                  or <code>boolean[]</code> array,
+     *                                  or <code>char[]</code> array, or <code>Objects[]</code> array.
      */
-    public static UpdatablePArray asUpdatablePNumberArray(Object array) {
+    public static UpdatablePNumberArray asUpdatablePNumberArray(Object array) {
         if (array instanceof Object[]) {
-            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for Object[] array");
+            throw new IllegalArgumentException("Object[] Java array cannot be viewed as UpdatablePArray");
         }
         if (array instanceof boolean[]) {
-            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for boolean[] array");
+            throw new IllegalArgumentException("boolean[] Java array cannot be viewed as UpdatablePArray");
         }
         if (array instanceof char[]) {
-            throw new IllegalArgumentException("asUpdatablePNumberArray cannot be called for char[] array");
+            throw new IllegalArgumentException("char[] Java array cannot be viewed as UpdatablePArray");
         }
         return (UpdatablePNumberArray) asUpdatableArray(array);
     }
@@ -634,7 +635,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      */
     public static Matrix<UpdatablePArray> asMatrix(Object array, long... dim) {
         if (array instanceof Object[]) {
-            throw new IllegalArgumentException("asMatrix cannot be called for Object[] array");
+            throw new IllegalArgumentException("Object[] Java array cannot be viewed as Matrix<UpdatablePArray>");
         }
         return Matrices.matrix((UpdatablePArray) asUpdatableArray(array), dim);
     }

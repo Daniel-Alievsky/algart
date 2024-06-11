@@ -30,6 +30,8 @@ package net.algart.arrays;
   float ==> int
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>int</code> values, read-only access.</p>
  *
@@ -116,12 +118,43 @@ public interface IntArray extends PIntegerArray {
     default Matrix<? extends IntArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
-    /*Repeat.IncludeEnd*/
 
     @Override
     default int[] jaInt() {
         return ja();
     }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableIntArray(long)
+     * memoryModel.newUnresizableIntArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>int</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableIntArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableIntArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableIntArray(long)
+     * newUnresizableIntArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableIntArray newArray(long length) {
+        return Arrays.SMM.newUnresizableIntArray(length);
+    }
+    /*Repeat.IncludeEnd*/
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableIntArray(int[])

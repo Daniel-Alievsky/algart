@@ -32,6 +32,8 @@ package net.algart.arrays;
   (eturns?\s+the\s+)element ==> $1unsigned short (char)
      !! Auto-generated: NOT EDIT !! */
 
+import java.util.Objects;
+
 /**
  * <p>AlgART array of <code>short</code> values, read-only access.</p>
  *
@@ -118,6 +120,42 @@ public interface ShortArray extends PIntegerArray {
     default Matrix<? extends ShortArray> matrix(long... dim) {
         return Matrices.matrix(this, dim);
     }
+
+    @Override
+    default short[] jaShort() {
+        return ja();
+    }
+
+    /**
+     * Equivalent to <code>{@link MemoryModel#newUnresizableShortArray(long)
+     * memoryModel.newUnresizableShortArray(length)}</code>.
+     *
+     * @param memoryModel the memory model, used for allocation new array.
+     * @param length      the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws IllegalArgumentException        if the specified length is negative.
+     * @throws UnsupportedElementTypeException if <code>short</code> element type
+     *                                         is not supported by this memory model.
+     * @throws TooLargeArrayException          if the specified length is too large for this memory model.
+     */
+    static UpdatableShortArray newArray(MemoryModel memoryModel, long length) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        return memoryModel.newUnresizableShortArray(length);
+    }
+
+    /**
+     * Equivalent to <code>{@link Arrays#SMM Arrays.SMM}.{@link MemoryModel#newUnresizableShortArray(long)
+     * newUnresizableShortArray(length)}</code>.
+     *
+     * @param length the length and capacity of the array.
+     * @return created unresizable AlgART array.
+     * @throws IllegalArgumentException if the specified length is negative.
+     * @throws TooLargeArrayException   if the specified length is too large for {@link SimpleMemoryModel}.
+     */
+    static UpdatableShortArray newArray(long length) {
+        return Arrays.SMM.newUnresizableShortArray(length);
+    }
     /*Repeat.IncludeEnd*/
 
     /**
@@ -131,11 +169,6 @@ public interface ShortArray extends PIntegerArray {
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
      */
     int getInt(long index);
-
-    @Override
-    default short[] jaShort() {
-        return ja();
-    }
 
     /**
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableShortArray(short[])
