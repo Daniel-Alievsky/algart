@@ -460,14 +460,14 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
     }
 
     /**
-     * Returns an unresizable AlgART bit array backed by the specified <code>long[]</code>>array
+     * Returns an unresizable AlgART bit array backed by the specified <code>long[]</code> array
      * according the packing rules, describing in {@link PackedBitArrays} class.
      * Changes in the returned array "write through" to <code>array</code> argument.
      * The length and capacity of the returned array are equal to the specified <code>length</code> argument.
      *
      * <p>This method has a brief alias: {@link BitArray#as(long[], long)}.</p>
      *
-     * @param packedBitArray the source <code>long[]</code>> array.
+     * @param packedBitArray the source <code>long[]</code> array.
      * @param length         the length of the returned bit array.
      * @return an unresizable AlgART bit array backed by the specified Java array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.

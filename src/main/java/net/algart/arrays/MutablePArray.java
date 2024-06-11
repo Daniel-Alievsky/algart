@@ -87,7 +87,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      * </pre>
      *
      * @param value to be added to the top of this array.
-     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     * @throws TooLargeArrayException if the resulting array length is too large for this type of array.
      */
     void addDouble(double value);
 
@@ -106,7 +106,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      * </pre>
      *
      * @param value to be added to the top of this array.
-     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     * @throws TooLargeArrayException if the resulting array length is too large for this type of array.
      */
     void addLong(long value);
 
@@ -121,7 +121,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      * and {@link #addDouble(double) addDouble((double) value)}, but can work little faster.
      *
      * @param value to be added to the top of this array.
-     * @throws TooLargeArrayException if the resulting stack length is too large for this type of array.
+     * @throws TooLargeArrayException if the resulting array length is too large for this type of array.
      */
     void addInt(int value);
 

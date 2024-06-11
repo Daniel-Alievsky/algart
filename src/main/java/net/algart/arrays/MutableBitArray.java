@@ -64,7 +64,7 @@ public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFi
      *
      * @param memoryModel the memory model, used for allocation new array.
      * @return created empty AlgART array.
-     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws NullPointerException            if <code>memoryModel</code> argument is {@code null}.
      * @throws UnsupportedElementTypeException if <code>boolean</code> element type
      *                                         is not supported by this memory model.
      */
@@ -83,4 +83,14 @@ public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFi
         return Arrays.SMM.newEmptyBitArray();
     }
     /*Repeat.IncludeEnd*/
+
+    /**
+     * Equivalent to {@link #pushBit(boolean)} (exact synonym).
+     *
+     * @param value to be added to the top of this stack.
+     * @throws TooLargeArrayException if the resulting array length is too large for this type of array.
+     */
+    default void addBit(boolean value) {
+        pushBit(value);
+    }
 }

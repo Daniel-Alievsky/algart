@@ -130,7 +130,7 @@ public interface BitArray extends PFixedArray {
      * @param memoryModel the memory model, used for allocation new array.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws NullPointerException            if <code>memoryModel</code> argument is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>boolean</code> element type
      *                                         is not supported by this memory model.
@@ -376,7 +376,7 @@ public interface BitArray extends PFixedArray {
      * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)
      * SimpleMemoryModel.asUpdatableBitArray}(packedBitArray, length)</tt>.
      *
-     * @param packedBitArray the source <code>long[]</code>> array.
+     * @param packedBitArray the source <code>long[]</code> array.
      * @param length         the length of the returned bit array.
      * @return an unresizable AlgART bit array backed by the specified Java array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.

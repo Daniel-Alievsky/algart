@@ -142,9 +142,9 @@ public class PushPopGetTest {
 
         // Check semantics of pushXxx, addInt/addLong/addDouble, getInt/getLong/getDouble
         for (int k = 0; k < arrayLength; k++) {
-            if (array instanceof BitStack a) {
+            if (array instanceof MutableBitArray a) {
                 boolean v = longs[k] != 0;
-                a.pushBit(v);
+                a.addBit(v);
                 addedInt.addInt(v ? 1 : 0);
                 addedLong.addLong(v ? 1L : 0L);
                 addedDouble.addDouble(v ? 1.0 : 0.0);

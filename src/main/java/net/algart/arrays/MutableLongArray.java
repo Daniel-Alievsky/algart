@@ -63,7 +63,7 @@ public interface MutableLongArray extends LongStack, UpdatableLongArray, Mutable
      *
      * @param memoryModel the memory model, used for allocation new array.
      * @return created empty AlgART array.
-     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws NullPointerException            if <code>memoryModel</code> argument is {@code null}.
      * @throws UnsupportedElementTypeException if <code>long</code> element type
      *                                         is not supported by this memory model.
      */

@@ -131,7 +131,7 @@ public interface CharArray extends PFixedArray {
      * @param memoryModel the memory model, used for allocation new array.
      * @param length      the length and capacity of the array.
      * @return created unresizable AlgART array.
-     * @throws NullPointerException            if <code>memoryModel</code>> argument is {@code null}.
+     * @throws NullPointerException            if <code>memoryModel</code> argument is {@code null}.
      * @throws IllegalArgumentException        if the specified length is negative.
      * @throws UnsupportedElementTypeException if <code>char</code> element type
      *                                         is not supported by this memory model.

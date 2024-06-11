@@ -207,7 +207,7 @@ public class PackedBitArraysPer8 {
      * PackedBitArraysPer8.packedLength}(packedBitArrayLength)</code>. The bytes of the returned array
      * are just the bytes of the source <code>long</code> values, packed in little-endian order.
      *
-     * @param packedBitArray       <code>long</code>> array, supposedly storing packed bits according the rules
+     * @param packedBitArray       <code>long</code> array, supposedly storing packed bits according the rules
      *                             of {@link PackedBitArrays} class.
      * @param packedBitArrayLength the number of packed bits.
      * @return <code>byte[]</code> array, storing the same packed bits according the rules of this class.
