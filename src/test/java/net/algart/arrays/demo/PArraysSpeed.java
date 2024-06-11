@@ -425,7 +425,7 @@ public class PArraysSpeed {
                         } else {
                             long[] jia = (long[]) ja1Converted;
                             for (int k = 0; k < n; k++) {
-                                sum16 += getLongTest(jia, k);
+                                sum16 += (int) getLongTest(jia, k);
                             }
                         }
                     }

@@ -30,13 +30,14 @@ public class ArrayNewDemo {
     public static void main(String[] args) {
         UpdatableArray a1 = Array.newArray(String.class, 1000);
         System.out.println(a1);
-        UpdatablePArray a2 = PArray.newArray(byte.class, 1000);
+        UpdatablePArray a2 = PArray.newArray(byte.class, 900);
         System.out.println(a2);
-        UpdatablePArray a3 = PArray.newArray(Arrays.BMM, byte.class, 1000);
+        UpdatablePArray a3 = PArray.newArray(Arrays.BMM, byte.class, 900);
         System.out.println(a3);
         if (!a2.equals(a3)) {
             throw new AssertionError();
         }
+        System.out.println(Arrays.clone(a3));
         UpdatablePArray a4 = PArray.newArray(boolean.class, 1000);
         System.out.println(a4);
         // PNumberArray.newArray(Arrays.BMM, boolean.class, 1000);

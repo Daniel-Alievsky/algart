@@ -84,8 +84,8 @@ public class SortingArraysTest {
     public static void main(String[] args) {
         int startArgIndex = 0;
         SortingArraysTest test = new SortingArraysTest();
-        if (test.sortLazyCopy = startArgIndex < args.length
-                && args[startArgIndex].equalsIgnoreCase("-sortLazyCopy")) {
+        if (test.sortLazyCopy = (startArgIndex < args.length
+                && args[startArgIndex].equalsIgnoreCase("-sortLazyCopy"))) {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 2) {

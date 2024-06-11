@@ -596,8 +596,8 @@ public class Arrays {
          *
          * <p>This value is determined while initializing {@link Arrays} class
          * from the system property "net.algart.arrays.maxTempJavaMemoryForTiling" by the call
-         * <tt>Long.getLong("net.algart.arrays.maxTempJavaMemoryForTiling",
-         * Math.max(134217728, {@link #maxTempJavaMemory()}))</tt> (134217728=128&nbsp;MB).
+         * <code>Long.getLong("net.algart.arrays.maxTempJavaMemoryForTiling",
+         * Math.max(134217728, {@link #maxTempJavaMemory()}))</code> (134217728=128&nbsp;MB).
          * If this property contains a negative integer, it is supposed to be zero,
          * that means that this limit will be ignored and this optimization ability should not be used.
          * If this property contains an integer greater than the limit 2<sup>56</sup>~7.2*10<sup>16</sup>,
@@ -1539,14 +1539,14 @@ public class Arrays {
      * <p>More precisely:
      * <ol>
      * <li>For {@link BitArray},
-     * returns <tt>8*{@link PackedBitArrays#packedLength(long)
-     * PackedBitArrays.packedLength}(array.{@link Array#length() length()})</tt>
+     * returns <code>8*{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(array.{@link Array#length() length()})</code>
      * (8 is the number of bytes in one <code>long</code> value).</li>
      *
      * <li>For other variants of {@link PArray},
      * returns <code>array.{@link Array#length() length()}*<i>sizeOfElement</i></code>,
-     * where <tt><i>sizeOfElement</i>=((PArray)array).{@link PArray#bitsPerElement()
-     * bitsPerElement()}/8</tt>.</li>
+     * where <code><i>sizeOfElement</i>=((PArray)array).{@link PArray#bitsPerElement()
+     * bitsPerElement()}/8</code>.</li>
      *
      * <li>For {@link CombinedMemoryModel#isCombinedArray combined arrays},
      * returns the sum of the results of this method, recursively called
@@ -1605,8 +1605,8 @@ public class Arrays {
      * <p>More precisely:
      * <ul>
      * <li>for <code>boolean.class</code>,
-     * returns <tt>8*{@link PackedBitArrays#packedLength(long)
-     * PackedBitArrays.packedLength}(arrayLength)</tt>
+     * returns <code>8*{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(arrayLength)</code>
      * (8 is the number of bytes in one <code>long</code> value);</li>
      * <li>for <code>char.class</code>, returns <code>2*arrayLength</code>;</li>
      * <li>for <code>byte.class</code>, returns <code>arrayLength</code>;</li>
@@ -2510,8 +2510,8 @@ public class Arrays {
     /**
      * Returns an immutable view of the passed <code>x</code> AlgART arrays (with primitive element type),
      * where each element <code>#k</code> is a result of calling
-     * <tt>f.{@link Func#get(double...) get}(x[0].{@link PArray#getDouble
-     * getDouble}(k), x[1].{@link PArray#getDouble getDouble}(k), ...)</tt>,
+     * <code>f.{@link Func#get(double...) get}(x[0].{@link PArray#getDouble
+     * getDouble}(k), x[1].{@link PArray#getDouble getDouble}(k), ...)</code>,
      * i&#46;e&#46; the result of the passed function for arguments, equal
      * to the corresponding elements <code>#k</code>
      * in all passed arrays.
@@ -2694,16 +2694,16 @@ public class Arrays {
      * <ol>
      * <li>
      * getting the elements <code>#k</code> of the original arrays <code>x</code>
-     * by <tt>x[0].{@link PArray#getDouble getDouble}(k),
+     * by <code>x[0].{@link PArray#getDouble getDouble}(k),
      * x[1].{@link PArray#getDouble getDouble}(k), ...
-     * x[n-1].{@link PArray#getDouble getDouble}(k)</tt> calls
+     * x[n-1].{@link PArray#getDouble getDouble}(k)</code> calls
      * into a temporary array <code>double args[n]</code>;</li>
      * <li>calling <code>f.{@link net.algart.math.functions.Func.Updatable#set set}(args, w)</code> &mdash;
      * this call should correct <code>args</code> elements (usually the first element);</li>
      * <li>back saving the elements <code>#k</code> into the original arrays <code>x</code>
-     * by <tt>x[0].{@link UpdatablePArray#setDouble setDouble}(k),
+     * by <code>x[0].{@link UpdatablePArray#setDouble setDouble}(k),
      * x[1].{@link UpdatablePArray#setDouble setDouble}(k), ...
-     * x[n-1].{@link UpdatablePArray#setDouble setDouble}(k)</tt> calls.</li>
+     * x[n-1].{@link UpdatablePArray#setDouble setDouble}(k)</code> calls.</li>
      * </ol>
      * <p>The stage #1 <i>may be skipped</i> if the number of <code>x</code> arrays is 1.
      * In this case, this method supposes that the
@@ -2862,18 +2862,18 @@ public class Arrays {
     }
 
     /**
-     * Creates a "lazy" array by <tt>lazy = {@link #asFuncArray(boolean, Func, Class, PArray...)
-     * asFuncArray(truncateOverflows, f, result.type(), x)}</tt> call
+     * Creates a "lazy" array by <code>lazy = {@link #asFuncArray(boolean, Func, Class, PArray...)
+     * asFuncArray(truncateOverflows, f, result.type(), x)}</code> call
      * and copies it into the <code>result</code> argument by
-     * <tt>{@link #copy(ArrayContext, UpdatableArray, Array, int, boolean)
-     * copy(context, result, lazy, numberOfTasks, strictMode)}</tt> call.
+     * <code>{@link #copy(ArrayContext, UpdatableArray, Array, int, boolean)
+     * copy(context, result, lazy, numberOfTasks, strictMode)}</code> call.
      *
      * <p>In addition, this method checks, whether all passed arrays have the
      * same length as <code>result</code> one, and throws an exception in other case.
      *
      * <p>If no source arrays are passed (<code>x.length==0</code>), the "lazy" array is created by
-     * another way: <tt>lazy = {@link #asIndexFuncArray(boolean, Func, Class, long)
-     * asIndexFuncArray(truncateOverflows, f, result.type(), result.length())}</tt>.
+     * another way: <code>lazy = {@link #asIndexFuncArray(boolean, Func, Class, long)
+     * asIndexFuncArray(truncateOverflows, f, result.type(), result.length())}</code>.
      *
      * @param context           the context of copying; can be {@code null}, then it will be ignored.
      * @param truncateOverflows the behavior of typecasting: see
@@ -3247,6 +3247,20 @@ public class Arrays {
     }
 
     /**
+     * Equivalent to <code>{@link #copy(ArrayContext, UpdatableArray, Array)
+     * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src)</code>.
+     *
+     * @param dest    the destination array.
+     * @param src     the source array.
+     * @return the information about copying.
+     * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
+     * @throws IllegalArgumentException if the source and destination element types do not match.
+     */
+    public static CopyStatus copy(UpdatableArray dest, Array src) {
+        return copy(ArrayContext.DEFAULT_SINGLE_THREAD, dest, src);
+    }
+
+    /**
      * Copies <code>min(dest.{@link Array#length() length()}, src.{@link Array#length() length()})</code> elements
      * of <code>src</code> array, starting from index 0, to dest array, starting from index 0.
      *
@@ -3301,8 +3315,8 @@ public class Arrays {
      * </ol>
      *
      * <p>Usually this method performs copying by a sequence of calls
-     * <tt>dest.{@link Array#subArr subArr}(p, len).{@link UpdatableArray#copy(Array)
-     * copy}(array.{@link Array#subArr subArr}(p, len))</tt>,
+     * <code>dest.{@link Array#subArr subArr}(p, len).{@link UpdatableArray#copy(Array)
+     * copy}(array.{@link Array#subArr subArr}(p, len))</code>,
      * where <code>p</code> is the position inside arrays and <code>len</code> is the length
      * of the copied portion, usually several tens of thousands elements.
      * But in some special cases this method uses more complex algorithms of copying.
@@ -3456,7 +3470,68 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, minMaxInfo)}</tt>.
+     * Equivalent to {@link #clone(MemoryModel, PArray) clone(Arrays.SMM, array)}.
+     *
+     * <p>Note: this operation can optimize access to this array in many times, if it is lazy-calculated
+     * and not too large (can be placed in available Java memory).
+     * It performs cloning with maximal speed via multithreading optimization. We recommend to call
+     * it after lazy calculations.</p>
+     *
+     * @param array      the array to be cloned.
+     * @return exact updatable clone of the passed matrix.
+     * @throws NullPointerException if the argument is {@code null}.
+     */
+    public static UpdatablePArray clone(PArray array) {
+        return clone(Arrays.SMM, array);
+    }
+
+    /**
+     * Returns an exact updatable clone of the given array, created in the given memory model.
+     * Equivalent to the following operators:
+     * <pre>
+     *     final UpdatablePArray result = (UpdatablePArray) memoryModel.{@link MemoryModel#newUnresizableArray(Array)
+     *     newUnresizableArray}(array);
+     *     {@link Arrays#copy(ArrayContext, UpdatableArray, Array)
+     *     Arrays.copy}(null, result, matrix); // - maximally fast multithreading copying
+     *     (return result)
+     * </pre>
+     *
+     * @param memoryModel the memory model, used for allocation a new copy of this array.
+     * @param array      the array to be cloned.
+     * @return exact updatable clone of the passed matrix.
+     * @throws NullPointerException if one of the arguments is {@code null}.
+     */
+    public static UpdatablePArray clone(MemoryModel memoryModel, PArray array) {
+        return (UpdatablePArray) clone(memoryModel, (Array) array);
+    }
+
+    /**
+     * Returns an exact updatable clone of the given array, created in the given memory model.
+     * Equivalent to the following operators:
+     * <pre>
+     *     final UpdatableArray result = memoryModel.{@link MemoryModel#newUnresizableArray(Array)
+     *     newUnresizableArray}(array);
+     *     {@link Arrays#copy(ArrayContext, UpdatableArray, Array)
+     *     Arrays.copy}(null, result, matrix); // - maximally fast multithreading copying
+     *     (return result)
+     * </pre>
+     *
+     * @param memoryModel the memory model, used for allocation a new copy of this array.
+     * @param array      the array to be cloned.
+     * @return exact updatable clone of the passed array.
+     * @throws NullPointerException if one of the arguments is {@code null}.
+     */
+    public static UpdatableArray clone(MemoryModel memoryModel, Array array) {
+        Objects.requireNonNull(memoryModel, "Null memory model");
+        Objects.requireNonNull(array, "Null array");
+        final UpdatableArray result = memoryModel.newUnresizableArray(array);
+        Arrays.copy(null, result, array);
+        // - maximally fast multithreading copying
+        return result;
+    }
+
+    /**
+     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, minMaxInfo)}</code>.
      *
      * @param array      some primitive array.
      * @param minMaxInfo the object where to store the indexes and values of found minimum and maximum;
@@ -3475,8 +3550,8 @@ public class Arrays {
      * Returns a {@link Range#valueOf(double, double) Range.valueOf(min, max)},
      * where <code>min</code> is equal to the minimal array element
      * and <code>min</code> is equal to the maximal array element.
-     * The elements are extracted by <tt>array.{@link PArray#getDouble(long)
-     * getDouble(k)}</tt> method (or by an equivalent technique).
+     * The elements are extracted by <code>array.{@link PArray#getDouble(long)
+     * getDouble(k)}</code> method (or by an equivalent technique).
      *
      * <p>Please remember that {@link ByteArray} and {@link ShortArray} are interpreted as unsigned.
      *
@@ -3540,7 +3615,7 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, null)}</tt>.
+     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, null)}.
      *
      * @param array some primitive array.
      * @return the values of the found minimal and maximal elements.
@@ -3554,7 +3629,7 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(context, array, null)}</tt>.
+     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(context, array, null)}.
      *
      * @param context the context of calculations; can be {@code null}, then it will be ignored.
      * @param array   some primitive array.
@@ -3569,7 +3644,7 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #sumOf(ArrayContext, PArray) sumOf(null, array)}</tt>.
+     * Equivalent to {@link #sumOf(ArrayContext, PArray) sumOf(null, array)}.
      *
      * @param array some primitive array.
      * @return the sum of all array elements.
@@ -3583,8 +3658,8 @@ public class Arrays {
     }
 
     /**
-     * Returns the sum of all array elements: the results of <tt>array.{@link PArray#getDouble(long)
-     * getDouble(k)}</tt> for all <code>k==0,1,...,array.length()-1</code>.
+     * Returns the sum of all array elements: the results of <code>array.{@link PArray#getDouble(long)
+     * getDouble(k)}</code> for all <code>k==0,1,...,array.length()-1</code>.
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
@@ -3615,7 +3690,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
-     * preciseSumOf(null, array, checkOverflow)}</tt>.
+     * preciseSumOf(null, array, checkOverflow)}.
      *
      * @param array         some primitive array, excluding floating point arrays.
      * @param checkOverflow whether overflow should lead to <code>ArithmeticException</code>
@@ -3633,8 +3708,8 @@ public class Arrays {
     }
 
     /**
-     * Returns the integer sum of all array elements: the results of <tt>array.{@link PFixedArray#getLong(long)
-     * getLong(k)}</tt> for all <code>k==0,1,...,array.length()-1</code>.
+     * Returns the integer sum of all array elements: the results of <code>array.{@link PFixedArray#getLong(long)
+     * getLong(k)}</code> for all <code>k==0,1,...,array.length()-1</code>.
      *
      * <p>The result is the same as the sum calculated by the following loop:<pre>
      * long sum = 0;
@@ -3681,8 +3756,8 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
-     * preciseSumOf(null, array, false)}</tt>.
+     * Equivalent to <code>{@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
+     * preciseSumOf(null, array, false)}</code>.
      *
      * @param array some primitive array, excluding floating point arrays.
      * @return the sum of all array elements.
@@ -3696,8 +3771,8 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
-     * preciseSumOf(context, array, false)}</tt>.
+     * Equivalent to <code>{@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
+     * preciseSumOf(context, array, false)}</code>.
      *
      * @param context the context of calculations; can be {@code null}, then it will be ignored.
      * @param array   some primitive array, excluding floating point arrays.
@@ -3713,8 +3788,8 @@ public class Arrays {
 
     /**
      * Returns the number of bits set to <code>true</code> in this array.
-     * Equivalent to <tt>{@link #preciseSumOf(ArrayContext, PFixedArray)
-     * preciseSumOf(context, bitArray)}</tt>.
+     * Equivalent to <code>{@link #preciseSumOf(ArrayContext, PFixedArray)
+     * preciseSumOf(context, bitArray)}</code>.
      *
      * @param context  the context of calculations; can be {@code null}, then it will be ignored.
      * @param bitArray the bit array.
@@ -3730,8 +3805,8 @@ public class Arrays {
 
     /**
      * Returns the number of bits set to <code>true</code> in this array.
-     * Equivalent to <tt>{@link #preciseSumOf(PFixedArray)
-     * preciseSumOf(bitArray)}</tt>.
+     * Equivalent to <code>{@link #preciseSumOf(PFixedArray)
+     * preciseSumOf(bitArray)}</code>.
      *
      * @param bitArray the bit array.
      * @return the number of bits set to <code>true</code> in this array.
@@ -3746,7 +3821,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #histogramOf(ArrayContext, PArray, long[], double, double)
-     * histogramOf(null, array, histogram, from, to)}</tt>.
+     * histogramOf(null, array, histogram, from, to)}.
      *
      * @param array     some primitive array.
      * @param histogram the histogram to be incremented: <code>histogram.length</code> columns
@@ -3834,7 +3909,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsGreater(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsGreater}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
+     * packBitsGreater}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold).
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3888,7 +3963,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsLess(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsLess}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
+     * packBitsLess}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold).
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3943,7 +4018,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsGreaterOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsGreaterOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
+     * packBitsGreaterOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold).
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -3997,7 +4072,7 @@ public class Arrays {
 
     /**
      * Equivalent to {@link #packBitsLessOrEqual(ArrayContext, UpdatableBitArray, PArray, double)
-     * packBitsLessOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold)</tt>.
+     * packBitsLessOrEqual}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, bits, array, threshold).
      *
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
@@ -4051,8 +4126,8 @@ public class Arrays {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to {@link #unpackBits(ArrayContext, UpdatablePArray, BitArray, double, double)
-     * unpackBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0, filler1)</tt>.
+     * Equivalent to <code>{@link #unpackBits(ArrayContext, UpdatablePArray, BitArray, double, double)
+     * unpackBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0, filler1)</code>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array that should be "unpacked" to <code>array</code>.
@@ -4139,8 +4214,8 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
-     * unpackUnitBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler1)</tt>.
+     * Equivalent to <code>{@link #unpackUnitBits(ArrayContext, UpdatablePArray, BitArray, double)
+     * unpackUnitBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler1)</code>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array, the unit elements of which should be "unpacked" to <code>array</code>.
@@ -4198,8 +4273,8 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
-     * unpackZeroBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0)</tt>.
+     * Equivalent to <code>{@link #unpackZeroBits(ArrayContext, UpdatablePArray, BitArray, double)
+     * unpackZeroBits}({@link ArrayContext#DEFAULT_SINGLE_THREAD}, array, bits, filler0)</code>.
      *
      * @param array   some primitive array.
      * @param bits    the bit array, the zero elements of which should be "unpacked" to <code>array</code>.
@@ -4301,8 +4376,8 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to creating a "lazy" array by <nobr><tt>lazy = {@link #asPrecision(PArray, Class)
-     * asPrecision(array, result.elementType()}</tt></nobr> call
+     * Equivalent to creating a "lazy" array by <code>lazy = {@link #asPrecision(PArray, Class)
+     * asPrecision(array, result.elementType()}</code> call
      * and copying it into the <code>result</code> argument by
      * <code>{@link #copy(ArrayContext, UpdatableArray, Array) copy(context, result, lazy)}</code> call.
      *
@@ -4380,14 +4455,14 @@ public class Arrays {
      *
      * <p>The length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array (but may be greater than necessary). More precisely, <code>bytes.length</code> must be
-     * <nobr><tt>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
-     * sizeOfBytesForCopying}(array)</tt></nobr>.
+     * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      *
      * <p>The <code>bytes</code> argument can be {@code null}; in this case, this method automatically allocates
-     * <code>byte[]</code> array with minimal necessary length <nobr><tt>Arrays.{@link #sizeOfBytesForCopying(PArray)
-     * sizeOfBytesForCopying}(array)</tt></nobr>, copies all elements of the AlgART array
+     * <code>byte[]</code> array with minimal necessary length <code>Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</code>, copies all elements of the AlgART array
      * into it and returns it.
      *
      * <p>The array element #<i>k</i> (<code>array.{@link Array#getElement(long) getElement}(<i>k</i>))</code>
@@ -4471,8 +4546,8 @@ public class Arrays {
      * <p>As in {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method,
      * the length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <code>bytes.length</code> must be
-     * <nobr><tt>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
-     * sizeOfBytesForCopying}(array)</tt></nobr>.
+     * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * sizeOfBytesForCopying}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      * This method always copies all <code>array.{@link Array#length() length()}</code>
@@ -4556,10 +4631,10 @@ public class Arrays {
      * excepting the case of {@link BitArray}, when <code>ByteOrder.LITTLE_ENDIAN</code> order is used always.
      * The <code>packedArray</code> is sequentially read from the specified AlgART array,
      * from its element #0 to its last element #<code>array.length()-1</code>,
-     * by sequential calls of <tt>{@link BitArray#getBits(long, long[], long, long)
-     * getBits}(position,packedArray,0,count)</tt> in a case of {@link BitArray}
-     * or <tt>{@link Array#getData(long, Object, int, int)
-     * getData}(position,packedArray,0,count)</tt> in other cases.
+     * by sequential calls of <code>{@link BitArray#getBits(long, long[], long, long)
+     * getBits}(position,packedArray,0,count)</code> in a case of {@link BitArray}
+     * or <code>{@link Array#getData(long, Object, int, int)
+     * getData}(position,packedArray,0,count)</code> in other cases.
      *
      * <p>Note that this method always writes in the stream the integer number of blocks per
      * 8, 2, 1, 2, 4, 8, 4, 8 bytes for cases of (correspondingly) {@link BitArray}, {@link CharArray},
@@ -4610,10 +4685,10 @@ public class Arrays {
      * excepting the case of {@link BitArray}, when <code>ByteOrder.LITTLE_ENDIAN</code> order is used always.
      * After this, the converted elements are sequentially written to the specified AlgART array,
      * from its element #0 to its last element #<code>array.length()-1</code>,
-     * by sequential calls of <tt>{@link UpdatableBitArray#setBits(long, long[], long, long)
-     * setBits}(position,packedArray,0,count)</tt> in a case of {@link BitArray}
-     * or <tt>{@link UpdatableArray#setData(long, Object, int, int)
-     * setData}(position,packedArray,0,count)</tt> in other cases.
+     * by sequential calls of <code>{@link UpdatableBitArray#setBits(long, long[], long, long)
+     * setBits}(position,packedArray,0,count)</code> in a case of {@link BitArray}
+     * or <code>{@link UpdatableArray#setData(long, Object, int, int)
+     * setData}(position,packedArray,0,count)</code> in other cases.
      *
      * <p>Note that this method always reads from the stream the integer number of blocks per
      * 8, 2, 1, 2, 4, 8, 4, 8 bytes for cases of (correspondingly) {@link BitArray}, {@link CharArray},
@@ -5887,8 +5962,8 @@ public class Arrays {
      * More precisely, this method returns<br>
      * <code>&nbsp;&nbsp;&nbsp;&nbsp;(int)(position - quickPosition) % maxAvailableGap</code>,<br>
      * where<br>
-     * <tt>&nbsp;&nbsp;&nbsp;&nbsp;quickPosition = bitArray.{@link BitArray#nextQuickPosition
-     * nextQuickPosition}(position - Math.max(maxAvailableGap, 64))</tt>.<br>
+     * <code>&nbsp;&nbsp;&nbsp;&nbsp;quickPosition = bitArray.{@link BitArray#nextQuickPosition
+     * nextQuickPosition}(position - Math.max(maxAvailableGap, 64))</code>.<br>
      * (Subtracting <code>max(maxAvailableGap, 64)</code> does not change the result in a usual case,
      * but allows to return better result if position is near bitArray.length().)
      *
@@ -6195,8 +6270,8 @@ public class Arrays {
      * (adds <code>count</code> to their indexes).
      * Elements <code>#position..#position+count-1</code> <i>are not changed</i>.
      * You may assign new values to these elements after calling this method
-     * with help of <tt>{@link UpdatableArray#setData(long, Object)
-     * setData}(position, someArray)</tt> or another methods.
+     * with help of <code>{@link UpdatableArray#setData(long, Object)
+     * setData}(position, someArray)</code> or another methods.
      *
      * <p>This method is equivalent to the following operators:<pre>
      * long len = array.length();
@@ -6490,8 +6565,8 @@ public class Arrays {
      * <li>the underlying array of the <code>matrix</code> (<code>matrix.</code>{@link Matrix#array() array()}),
      * if the <code>array</code> argument the {@link Matrix#array() underlying array} of its submatrix,
      * created by one of its <code>subMatrix</code> or <code>subMatr</code> methods, for example:
-     * <nobr><tt>array=matrix.{@link Matrix#subMatrix(long[], long[]) subMatrix(from,to)}.{@link Matrix#array()
-     * array()}</tt></nobr>;</li>
+     * <code>array=matrix.{@link Matrix#subMatrix(long[], long[]) subMatrix(from,to)}.{@link Matrix#array()
+     * array()}</code>;</li>
      *
      * <li>the <code>underlyingArrays</code> argument of the
      * {@link AbstractArray#AbstractArray(long, long, Array...) constructor of this class}
@@ -8105,7 +8180,7 @@ public class Arrays {
          * @param numberOfTasks  the desired number of tasks.
          * @return the number of ranges that will be really used by this class.
          * @throws IllegalArgumentException if <code>numberOfTasks &lt;= 0</code> or
-         *                                  if <tt>numberOfRanges &lt;= 0</tt>.
+         *                                  if <code>numberOfRanges &lt;= 0</code>.
          */
         public static long correctNumberOfRanges(long numberOfRanges, int numberOfTasks) {
             if (numberOfTasks <= 0) {
@@ -8510,8 +8585,8 @@ public class Arrays {
          * and subtracts {@link #endGap(long) endGap(rangeIndex)} from <code>endIndex</code> argument,
          * with calling {@link #increaseReadyCount(int, long)} for skipped elements.
          * If those methods return negative values, <code>AssertionError</code> is thrown.
-         * If the sum <tt>{@link #startGap(long) startGap(rangeIndex)}+{@link #endGap(long)
-         * endGap(rangeIndex)}&gt;=toIndex-fromIndex</tt>,
+         * If the sum <code>{@link #startGap(long) startGap(rangeIndex)}+{@link #endGap(long)
+         * endGap(rangeIndex)}&gt;=toIndex-fromIndex</code>,
          * this method does not process any elements.
          *
          * <p>You may override this method, if this simple scheme is not appropriate for your algorithm.
@@ -8911,8 +8986,8 @@ public class Arrays {
          *                       it is replaced with {@link #numberOfTasks}.
          *                       If this argument is 0 and <code>{@link #numberOfTasks}&gt;1</code>, then
          *                       the number of ranges is chosen automatically as
-         *                       <tt>max({@link #numberOfTasks},&nbsp;{@link #recommendedNumberOfRanges
-         *                       recommendedNumberOfRanges(src,&nbsp;true)})</tt>
+         *                       <code>max({@link #numberOfTasks},&nbsp;{@link #recommendedNumberOfRanges
+         *                       recommendedNumberOfRanges(src,&nbsp;true)})</code>
          * @throws NullPointerException     if the <code>src</code> or <code>dest</code> argument is {@code null}.
          * @throws IllegalArgumentException if <code>blockSize &lt;= 0</code>,
          *                                  or if <code>numberOfTasks &lt; 0</code>,

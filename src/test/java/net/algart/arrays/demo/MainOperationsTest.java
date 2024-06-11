@@ -1888,8 +1888,7 @@ public class MainOperationsTest implements Cloneable {
                         throw new AssertionError("The bug C in append found in test #" + testCount
                                 + ": subarray length = " + sac.length() + " instead of " + count);
                 }
-                UpdatableArray sacClone = cmm.newUnresizableArray(sac);
-                Arrays.copy(null, sacClone, sac);
+                UpdatableArray sacClone = Arrays.clone(cmm, sac);
                 for (int k = 0; k < count; k++) {
                     if (!objectEquals(e1 = sac.getElement(k), e2 = swork.getElement(k)))
                         throw new AssertionError("The bug D in asConcatenation found in test #" +
