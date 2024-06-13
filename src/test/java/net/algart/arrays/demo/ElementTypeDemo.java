@@ -34,24 +34,36 @@ import java.util.Locale;
  *
  * @author Daniel Alievsky
  */
-public class MinimalAndMaximalPossibleElementsDemo {
+public class ElementTypeDemo {
     public static void main(String[] args) {
         Class<?>[] types = {boolean.class, char.class, byte.class, short.class,
-            int.class, long.class, float.class, double.class,
-            String.class
+                int.class, long.class, float.class, double.class,
+                String.class
         };
         for (Class<?> t : types) {
             Class<? extends Array> type = Arrays.type(Array.class, t);
             PArray[] arrays = new PArray[5];
             double min = Arrays.minPossibleValue(type, t.isPrimitive() ? Double.NEGATIVE_INFINITY : Double.NaN);
             double max = Arrays.maxPossibleValue(type, t.isPrimitive() ? Double.POSITIVE_INFINITY : Double.NaN);
+            if (t.isPrimitive() != Arrays.isPrimitiveElementType(t)) {
+                throw new AssertionError();
+            }
             System.out.printf(Locale.US,
-                "%-16s - minimal possible element is %.1f, maximal possible element is %.1f%n",
-                t.getCanonicalName(), min, max);
+                    "%-16s - minimal possible element is %.1f, maximal possible element is %.1f%n" +
+                            "    primitive: %s, numbers: %s, floating: %s, unsigned: %s, bits: %d, sizeOf: %s%n",
+                    t.getCanonicalName(),
+                    min,
+                    max,
+                    Arrays.isPrimitiveElementType(t),
+                    Arrays.isNumberElementType(t),
+                    Arrays.isFloatingPointElementType(t),
+                    Arrays.isUnsignedElementType(t),
+                    Arrays.bitsPerElement(t),
+                    Arrays.sizeOf(t));
             if (t.isPrimitive()) {
-                arrays[0] = (PArray)SimpleMemoryModel.getInstance().newEmptyArray(t);
-                arrays[1] = (PArray)BufferMemoryModel.getInstance().newEmptyArray(t);
-                arrays[2] = (PArray)LargeMemoryModel.getInstance().newEmptyArray(t);
+                arrays[0] = (PArray) SimpleMemoryModel.getInstance().newEmptyArray(t);
+                arrays[1] = (PArray) BufferMemoryModel.getInstance().newEmptyArray(t);
+                arrays[2] = (PArray) LargeMemoryModel.getInstance().newEmptyArray(t);
                 arrays[3] = Arrays.nPCopies(1, t, 1);
                 assert arrays[3] != null;
                 arrays[4] = Arrays.asIndexFuncArray(ConstantFunc.getInstance(0), Arrays.type(PArray.class, t), 1);
@@ -61,9 +73,9 @@ public class MinimalAndMaximalPossibleElementsDemo {
                     if (a.maxPossibleValue(Double.POSITIVE_INFINITY) != max)
                         throw new AssertionError("Illegal maxValue(double) in " + a);
                     if (a instanceof PFixedArray) {
-                        if (((PFixedArray)a).minPossibleValue() != min)
+                        if (((PFixedArray) a).minPossibleValue() != min)
                             throw new AssertionError("Illegal minValue() in " + a);
-                        if (((PFixedArray)a).maxPossibleValue() != max)
+                        if (((PFixedArray) a).maxPossibleValue() != max)
                             throw new AssertionError("Illegal maxValue() in " + a);
                     }
                     final Matrix<PArray> m = Matrices.matrix(a.asImmutable(), a.length());
