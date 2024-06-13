@@ -68,7 +68,7 @@ public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFi
      * @throws UnsupportedElementTypeException if <code>boolean</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableBitArray newEmpty(MemoryModel memoryModel) {
+    static MutableBitArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyBitArray();
     }
@@ -79,7 +79,7 @@ public interface MutableBitArray extends BitStack, UpdatableBitArray, MutablePFi
      *
      * @return created empty AlgART array.
      */
-    static MutableBitArray newEmpty() {
+    static MutableBitArray newArray() {
         return Arrays.SMM.newEmptyBitArray();
     }
     /*Repeat.IncludeEnd*/

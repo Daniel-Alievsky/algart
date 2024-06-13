@@ -66,7 +66,7 @@ public interface MutableDoubleArray extends DoubleStack, UpdatableDoubleArray, M
      * @throws UnsupportedElementTypeException if <code>double</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableDoubleArray newEmpty(MemoryModel memoryModel) {
+    static MutableDoubleArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyDoubleArray();
     }
@@ -77,7 +77,7 @@ public interface MutableDoubleArray extends DoubleStack, UpdatableDoubleArray, M
      *
      * @return created empty AlgART array.
      */
-    static MutableDoubleArray newEmpty() {
+    static MutableDoubleArray newArray() {
         return Arrays.SMM.newEmptyDoubleArray();
     }
     /*Repeat.IncludeEnd*/

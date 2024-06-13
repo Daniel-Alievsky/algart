@@ -67,7 +67,7 @@ public interface MutableByteArray extends ByteStack, UpdatableByteArray, Mutable
      * @throws UnsupportedElementTypeException if <code>byte</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableByteArray newEmpty(MemoryModel memoryModel) {
+    static MutableByteArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyByteArray();
     }
@@ -78,7 +78,7 @@ public interface MutableByteArray extends ByteStack, UpdatableByteArray, Mutable
      *
      * @return created empty AlgART array.
      */
-    static MutableByteArray newEmpty() {
+    static MutableByteArray newArray() {
         return Arrays.SMM.newEmptyByteArray();
     }
     /*Repeat.IncludeEnd*/

@@ -67,7 +67,7 @@ public interface MutableLongArray extends LongStack, UpdatableLongArray, Mutable
      * @throws UnsupportedElementTypeException if <code>long</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableLongArray newEmpty(MemoryModel memoryModel) {
+    static MutableLongArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyLongArray();
     }
@@ -78,7 +78,7 @@ public interface MutableLongArray extends LongStack, UpdatableLongArray, Mutable
      *
      * @return created empty AlgART array.
      */
-    static MutableLongArray newEmpty() {
+    static MutableLongArray newArray() {
         return Arrays.SMM.newEmptyLongArray();
     }
     /*Repeat.IncludeEnd*/

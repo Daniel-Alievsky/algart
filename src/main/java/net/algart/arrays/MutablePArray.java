@@ -158,7 +158,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      * @throws IllegalArgumentException        if <code>elementType</code> is not a primitive class.
      * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      */
-    static MutablePArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+    static MutablePArray newArray(MemoryModel memoryModel, Class<?> elementType) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(elementType, "Null element type");
         if (!elementType.isPrimitive()) {
@@ -168,15 +168,15 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
     }
 
     /**
-     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
-     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     * Equivalent to <code>{@link #newArray(MemoryModel, Class)
+     * newArray}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
      *
      * @param elementType the type of array elements.
      * @return created empty AlgART array.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>elementType</code> is not a primitive class.
      */
-    static MutablePArray newEmpty(Class<?> elementType) {
-        return newEmpty(Arrays.SMM, elementType);
+    static MutablePArray newArray(Class<?> elementType) {
+        return newArray(Arrays.SMM, elementType);
     }
 }

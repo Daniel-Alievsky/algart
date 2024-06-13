@@ -67,7 +67,7 @@ public interface MutableIntArray extends IntStack, UpdatableIntArray, MutablePIn
      * @throws UnsupportedElementTypeException if <code>int</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableIntArray newEmpty(MemoryModel memoryModel) {
+    static MutableIntArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyIntArray();
     }
@@ -78,7 +78,7 @@ public interface MutableIntArray extends IntStack, UpdatableIntArray, MutablePIn
      *
      * @return created empty AlgART array.
      */
-    static MutableIntArray newEmpty() {
+    static MutableIntArray newArray() {
         return Arrays.SMM.newEmptyIntArray();
     }
     /*Repeat.IncludeEnd*/

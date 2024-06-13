@@ -54,7 +54,7 @@ public interface MutablePNumberArray extends UpdatablePNumberArray, MutablePArra
      *                                         <code>float.class</code> or <code>double.class</code>.
      * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      */
-    static MutablePNumberArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+    static MutablePNumberArray newArray(MemoryModel memoryModel, Class<?> elementType) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         Objects.requireNonNull(elementType, "Null element type");
         if (!Arrays.isNumberElementType(elementType)) {
@@ -64,8 +64,8 @@ public interface MutablePNumberArray extends UpdatablePNumberArray, MutablePArra
     }
 
     /**
-     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
-     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     * Equivalent to <code>{@link #newArray(MemoryModel, Class)
+     * newArray}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
      *
      * @param elementType the type of array elements.
      * @return created empty AlgART array.
@@ -75,7 +75,7 @@ public interface MutablePNumberArray extends UpdatablePNumberArray, MutablePArra
      *                                         <code>long.class</code>,
      *                                         <code>float.class</code> or <code>double.class</code>.
      */
-    static MutablePNumberArray newEmpty(Class<?> elementType) {
-        return newEmpty(Arrays.SMM, elementType);
+    static MutablePNumberArray newArray(Class<?> elementType) {
+        return newArray(Arrays.SMM, elementType);
     }
 }

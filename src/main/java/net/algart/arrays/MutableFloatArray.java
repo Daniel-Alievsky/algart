@@ -66,7 +66,7 @@ public interface MutableFloatArray extends FloatStack, UpdatableFloatArray, Muta
      * @throws UnsupportedElementTypeException if <code>float</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableFloatArray newEmpty(MemoryModel memoryModel) {
+    static MutableFloatArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyFloatArray();
     }
@@ -77,7 +77,7 @@ public interface MutableFloatArray extends FloatStack, UpdatableFloatArray, Muta
      *
      * @return created empty AlgART array.
      */
-    static MutableFloatArray newEmpty() {
+    static MutableFloatArray newArray() {
         return Arrays.SMM.newEmptyFloatArray();
     }
     /*Repeat.SectionEnd all*/

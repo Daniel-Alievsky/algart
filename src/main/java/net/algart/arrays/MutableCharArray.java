@@ -67,7 +67,7 @@ public interface MutableCharArray extends CharStack, UpdatableCharArray, Mutable
      * @throws UnsupportedElementTypeException if <code>char</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableCharArray newEmpty(MemoryModel memoryModel) {
+    static MutableCharArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyCharArray();
     }
@@ -78,7 +78,7 @@ public interface MutableCharArray extends CharStack, UpdatableCharArray, Mutable
      *
      * @return created empty AlgART array.
      */
-    static MutableCharArray newEmpty() {
+    static MutableCharArray newArray() {
         return Arrays.SMM.newEmptyCharArray();
     }
     /*Repeat.IncludeEnd*/

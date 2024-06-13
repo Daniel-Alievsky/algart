@@ -157,7 +157,7 @@ class DemoUtils {
             if (unresizable) {
                 a = Array.newArray(cmm, CombinedArraysDemo.Circle.class, len);
             } else {
-                a = ma = MutableArray.newEmpty(cmm, CombinedArraysDemo.Circle.class);
+                a = ma = MutableArray.newArray(cmm, CombinedArraysDemo.Circle.class);
             }
             CombinedArraysDemo.Circle circle = new CombinedArraysDemo.Circle();
             if (unresizable) {

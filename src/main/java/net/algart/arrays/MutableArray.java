@@ -141,21 +141,21 @@ public interface MutableArray extends Stack, UpdatableArray {
      * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>.
      * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      */
-    static MutableArray newEmpty(MemoryModel memoryModel, Class<?> elementType) {
+    static MutableArray newArray(MemoryModel memoryModel, Class<?> elementType) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyArray(elementType);
     }
 
     /**
-     * Equivalent to <code>{@link #newEmpty(MemoryModel, Class)
-     * newEmpty}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
+     * Equivalent to <code>{@link #newArray(MemoryModel, Class)
+     * newArray}({@link Arrays#SMM Arrays.SMM}, elementType)</code>.
      *
      * @param elementType the type of array elements.
      * @return created empty AlgART array.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>elementType</code> is <code>void.class</code>.
      */
-    static UpdatableArray newEmpty(Class<?> elementType) {
+    static UpdatableArray newArray(Class<?> elementType) {
         return Arrays.SMM.newEmptyArray(elementType);
     }
 }

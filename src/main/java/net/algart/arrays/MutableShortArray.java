@@ -67,7 +67,7 @@ public interface MutableShortArray extends ShortStack, UpdatableShortArray, Muta
      * @throws UnsupportedElementTypeException if <code>short</code> element type
      *                                         is not supported by this memory model.
      */
-    static MutableShortArray newEmpty(MemoryModel memoryModel) {
+    static MutableShortArray newArray(MemoryModel memoryModel) {
         Objects.requireNonNull(memoryModel, "Null memory model");
         return memoryModel.newEmptyShortArray();
     }
@@ -78,7 +78,7 @@ public interface MutableShortArray extends ShortStack, UpdatableShortArray, Muta
      *
      * @return created empty AlgART array.
      */
-    static MutableShortArray newEmpty() {
+    static MutableShortArray newArray() {
         return Arrays.SMM.newEmptyShortArray();
     }
     /*Repeat.IncludeEnd*/
