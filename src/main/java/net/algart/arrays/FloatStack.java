@@ -26,14 +26,14 @@ package net.algart.arrays;
 
 /*Repeat.SectionStart all*/
 /**
- * <p>Stack of <tt>float</tt> values.</p>
+ * <p>Stack of <code>float</code> values.</p>
  *
  * @author Daniel Alievsky
  */
 public interface FloatStack extends Stack {
     /**
      * Removes the element at the top of this stack and returns its value,
-     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * or throws <code>EmptyStackException</code> if the stack is empty.
      *
      * <p>It this object is an AlgART float array, implementing {@link MutableFloatArray} interface,
      * and it is not empty, the same action may be performed by the following code:</p>
@@ -48,7 +48,7 @@ public interface FloatStack extends Stack {
     float popFloat();
 
     /**
-     * Appends <tt>value</tt> element to the end of this stack.
+     * Appends <code>value</code> element to the end of this stack.
      *
      * <p>It this object is an AlgART float array, implementing {@link MutableFloatArray} interface,
      * the same action may be performed by the following code:</p>

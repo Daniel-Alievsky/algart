@@ -29,14 +29,14 @@ package net.algart.arrays;
   float ==> int
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Stack of <tt>int</tt> values.</p>
+ * <p>Stack of <code>int</code> values.</p>
  *
  * @author Daniel Alievsky
  */
 public interface IntStack extends Stack {
     /**
      * Removes the element at the top of this stack and returns its value,
-     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * or throws <code>EmptyStackException</code> if the stack is empty.
      *
      * <p>It this object is an AlgART int array, implementing {@link MutableIntArray} interface,
      * and it is not empty, the same action may be performed by the following code:</p>
@@ -51,7 +51,7 @@ public interface IntStack extends Stack {
     int popInt();
 
     /**
-     * Appends <tt>value</tt> element to the end of this stack.
+     * Appends <code>value</code> element to the end of this stack.
      *
      * <p>It this object is an AlgART int array, implementing {@link MutableIntArray} interface,
      * the same action may be performed by the following code:</p>

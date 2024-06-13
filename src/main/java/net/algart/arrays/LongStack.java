@@ -29,14 +29,14 @@ package net.algart.arrays;
   float ==> long
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Stack of <tt>long</tt> values.</p>
+ * <p>Stack of <code>long</code> values.</p>
  *
  * @author Daniel Alievsky
  */
 public interface LongStack extends Stack {
     /**
      * Removes the element at the top of this stack and returns its value,
-     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * or throws <code>EmptyStackException</code> if the stack is empty.
      *
      * <p>It this object is an AlgART long array, implementing {@link MutableLongArray} interface,
      * and it is not empty, the same action may be performed by the following code:</p>
@@ -51,7 +51,7 @@ public interface LongStack extends Stack {
     long popLong();
 
     /**
-     * Appends <tt>value</tt> element to the end of this stack.
+     * Appends <code>value</code> element to the end of this stack.
      *
      * <p>It this object is an AlgART long array, implementing {@link MutableLongArray} interface,
      * the same action may be performed by the following code:</p>
