@@ -420,7 +420,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
         Objects.requireNonNull(array, "Null array argument");
         Class<?> elementType = array.getClass().getComponentType();
         if (elementType == null) {
-            throw new IllegalArgumentException("The passed argument is not a Java array");
+            throw new IllegalArgumentException("The argument is not a Java array: " + array.getClass());
         }
         return newUnresizableArray(elementType, count).setData(0, array, offset, count);
     }
@@ -429,7 +429,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
         Objects.requireNonNull(array, "Null array argument");
         Class<?> elementType = array.getClass().getComponentType();
         if (elementType == null) {
-            throw new IllegalArgumentException("The passed argument is not a Java array");
+            throw new IllegalArgumentException("The argument is not a Java array: " + array.getClass());
         }
         return newUnresizableArray(elementType, java.lang.reflect.Array.getLength(array)).setData(0, array);
     }

@@ -348,7 +348,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
         Objects.requireNonNull(byteBuffer, "Null byteBuffer argument");
         Objects.requireNonNull(elementType, "Null elementType argument");
         if (elementType == boolean.class) {
-            throw new IllegalArgumentException("asUpdatableArray cannot be called for boolean.class");
+            throw new IllegalArgumentException("ByteBuffer cannot be viewed as UpdatableBitArray");
         }
         ByteBuffer bb = byteBuffer.duplicate();
         bb.order(byteBuffer.order());
