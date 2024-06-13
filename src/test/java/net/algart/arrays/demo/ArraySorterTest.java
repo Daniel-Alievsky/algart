@@ -35,7 +35,7 @@ import java.util.Locale;
  */
 public class ArraySorterTest {
     private String beginOfArray(double[] a, int[] indexes) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         int len = a != null ? a.length : indexes.length;
         for (int k = Math.max(leftGap, 0), count = 0; k < len - rightGap; k++, count++) {
             // Math.max here allows to test throwing exceptions in Sorter

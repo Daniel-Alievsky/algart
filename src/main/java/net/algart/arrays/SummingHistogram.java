@@ -262,7 +262,7 @@ import java.util.Objects;
  * by static methods and by creating an instance of this class and using its methods) are absolutely identical:
  * little mismatches in the last digits after the decimal point are possible.</p>
  *
- * <p>This class does not implement own <tt>equals</tt> and <tt>hashCode</tt> methods.
+ * <p>This class does not implement own <code>equals</code> and <code>hashCode</code> methods.
  * So, this class does not provide a mechanism for comparing different histograms.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
@@ -278,7 +278,7 @@ public abstract class SummingHistogram extends Histogram {
     /**
      * <p>The helper class for static methods of {@link SummingHistogram} class,
      * calculating the integrals of <nobr><i>v</i>(<i>r</i>)</nobr> function between
-     * two given values: <nobr><tt>minValue</tt>&le;<i>v</i>&le;<tt>maxValue</tt></nobr>.</p>
+     * two given values: <nobr><code>minValue</code>&le;<i>v</i>&le;<code>maxValue</code></nobr>.</p>
      *
      * <p>More precisely, this class is used by the static methods</p>
      *
@@ -290,12 +290,12 @@ public abstract class SummingHistogram extends Histogram {
      * </ul>
      *
      * <p>and allows to return some additional information. All these methods have two arguments
-     * <tt>minValue</tt>, <tt>maxValue</tt> and calculate the integral of <nobr><i>v</i>(<i>r</i>)</nobr>,
+     * <code>minValue</code>, <code>maxValue</code> and calculate the integral of <nobr><i>v</i>(<i>r</i>)</nobr>,
      * defined in {@link Histogram  comments to Histogram class},
      * in terms of the simple histogram model for first 2 methods or the precise
      * histogram model for the last 2 methods. The integral is calculated between
-     * <nobr><i>r</i><sub>1</sub>=<i>r</i>(<tt>maxValue</tt>)</nobr>
-     * and <nobr><i>r</i><sub>2</sub>=<i>r</i>(<tt>maxValue</tt>)</nobr>,
+     * <nobr><i>r</i><sub>1</sub>=<i>r</i>(<code>maxValue</code>)</nobr>
+     * and <nobr><i>r</i><sub>2</sub>=<i>r</i>(<code>maxValue</code>)</nobr>,
      * where <nobr><i>r</i>(<i>v</i>)</nobr> is the inverse function to <i>v</i>(<i>r</i>)
      * (see {@link Histogram} class). This integral is returned in the result of the methods.</p>
      *
@@ -306,22 +306,22 @@ public abstract class SummingHistogram extends Histogram {
      * <ul>
      * <li>{@link #count()}: the difference
      * <nobr><i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub> =
-     * <i>r</i>(<tt>maxValue</tt>)&minus;<i>r</i>(<tt>minValue</tt>)</nobr>;</li>
+     * <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>;</li>
      *
-     * <li>{@link #isLeftBound()} flag: it is <tt>true</tt> if
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=0</nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left
+     * <li>{@link #isLeftBound()} flag: it is <code>true</code> if
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];</li>
      *
-     * <li>{@link #isRightBound()} flag: it is <tt>true</tt> if
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the right
+     * <li>{@link #isRightBound()} flag: it is <code>true</code> if
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>].</li>
      * </ul>
      *
-     * <p>If <tt>minValue&ge;maxValue</tt>, these methods always return 0.0 and fill the last argument
-     * (if it is not {@code null}) by the following values: <nobr><tt>{@link #count()}=0</tt></nobr>,
-     * <nobr><tt>{@link #isLeftBound()}=false</tt></nobr>, <nobr><tt>{@link #isRightBound()}=false</tt></nobr>.
+     * <p>If <code>minValue&ge;maxValue</code>, these methods always return 0.0 and fill the last argument
+     * (if it is not {@code null}) by the following values: <nobr><code>{@link #count()}=0</code></nobr>,
+     * <nobr><code>{@link #isLeftBound()}=false</code></nobr>, <nobr><code>{@link #isRightBound()}=false</code></nobr>.
      *
      * <p>Note: in the special case <i>N</i>=0 (all bars <b>b</b>[<i>k</i>] are zero)
      * the values of {@link #isLeftBound()} and {@link #isRightBound()} flags are not specified.</p>
@@ -329,12 +329,12 @@ public abstract class SummingHistogram extends Histogram {
      * <p>The only way to create an instance of this class is the constructor without arguments,
      * that creates an <i>uninitialized</i> instance.
      * "Uninitialized" means that any attempt to read information by {@link #count()},
-     * {@link #isLeftBound()} or {@link #isRightBound()} leads to <tt>IllegalStateException</tt>.
+     * {@link #isLeftBound()} or {@link #isRightBound()} leads to <code>IllegalStateException</code>.
      * The only way to change the information stored in this instance is calling one of 4 static methods
      * of {@link SummingHistogram} class, listed above.
      * These methods change its state to initialized.</p>
      *
-     * <p>This class does not implement own <tt>equals</tt> and <tt>hashCode</tt> methods.
+     * <p>This class does not implement own <code>equals</code> and <code>hashCode</code> methods.
      * So, this class does not provide a mechanism for comparing different instances of this class.</p>
      *
      * <p>This class is not thread-safe, but <b>is thread-compatible</b>
@@ -352,13 +352,13 @@ public abstract class SummingHistogram extends Histogram {
          * {@link SummingHistogram#integralBetweenValues(int[], double, double, CountOfValues)},
          * {@link SummingHistogram#preciseIntegralBetweenValues(long[], double, double, CountOfValues)},
          * {@link SummingHistogram#preciseIntegralBetweenValues(int[], double, double, CountOfValues)}
-         *  methods for this instance before you will be able to use it.
+         * methods for this instance before you will be able to use it.
          */
         public CountOfValues() {
         }
 
         /**
-         * Returns <tt>true</tt> if and only this object is <i>initialized</i>.
+         * Returns <code>true</code> if and only this object is <i>initialized</i>.
          * It means that it was passed to one of
          * {@link SummingHistogram#integralBetweenValues(long[], double, double, CountOfValues)},
          * {@link SummingHistogram#integralBetweenValues(int[], double, double, CountOfValues)},
@@ -367,8 +367,8 @@ public abstract class SummingHistogram extends Histogram {
          * methods at least once
          * and that method was successfully finished.
          * If the object is not initialized, then all its methods, excepting
-         * this one and methods of the basic <tt>Object</tt> class (<tt>toString</tt>, <tt>equals</tt>, etc.)
-         * throw <tt>IllegalStateException</tt>.
+         * this one and methods of the basic <code>Object</code> class (<code>toString</code>, <code>equals</code>, etc.)
+         * throw <code>IllegalStateException</code>.
          *
          * @return whether this object is <i>initialized</i>.
          */
@@ -377,16 +377,16 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         /**
-         * Returns <tt>true</tt> if
-         * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=0</nobr> &mdash;
-         * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left
+         * Returns <code>true</code> if
+         * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
+         * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
          * from the minimal element of the source array <b>A</b>[<i>k</i>].
          * See the {@link CountOfValues comments to this class} for more details.
          *
-         * <p>If <tt>minValue&gt;=maxValue</tt>, this method returns <tt>false</tt>.
+         * <p>If <code>minValue&gt;=maxValue</code>, this method returns <code>false</code>.
          *
-         * @return whether <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left
-         *         from the minimal element of the source array <b>A</b>[<i>k</i>].
+         * @return whether <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+         * from the minimal element of the source array <b>A</b>[<i>k</i>].
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
         public boolean isLeftBound() {
@@ -395,16 +395,16 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         /**
-         * Returns <tt>true</tt> if
-         * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=<i>N</i></nobr> &mdash;
-         * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the right
+         * Returns <code>true</code> if
+         * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
+         * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
          * from the maximal element of the source array <b>A</b>[<i>k</i>].
          * See the {@link CountOfValues comments to this class} for more details.
          *
-         * <p>If <tt>minValue&gt;=maxValue</tt>, this method returns <tt>false</tt>.
+         * <p>If <code>minValue&gt;=maxValue</code>, this method returns <code>false</code>.
          *
-         * @return whether <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the right
-         *         from the maximal element of the source array <b>A</b>[<i>k</i>].
+         * @return whether <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+         * from the maximal element of the source array <b>A</b>[<i>k</i>].
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
         public boolean isRightBound() {
@@ -413,24 +413,24 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         /**
-         * Returns the difference <nobr><i>r</i>(<tt>maxValue</tt>)&minus;<i>r</i>(<tt>minValue</tt>)</nobr>.
+         * Returns the difference <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>.
          * In other words, it is the number of elements of the source <b>A</b> array,
-         * lying in range <nobr><tt>minValue..maxValue</tt></nobr>, generalized to the real case.
+         * lying in range <nobr><code>minValue..maxValue</code></nobr>, generalized to the real case.
          * See the {@link CountOfValues comments to this class} for more details.
          *
          * <p>In the precise histogram model, this value can be zero only if
-         * <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left from
+         * <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left from
          * the minimal element or to the right from the maximal element of the source array,
          * in other words, if <nobr>{@link #isLeftBound()} || {@link #isRightBound()}</nobr>.
          * In all other cases, this method returns a positive value, because <i>r</i>(<i>v</i>)
          * function is increasing. Unlike this, in the simple histogram model
          * this value will be zero also in a case, when all histogram bars <nobr><b>b</b>[<i>k</i>]</nobr>,
-         * <i>k</i> is an integer in range <nobr><tt>(int)minValue</tt>&le;<i>k</i>&lt;<tt>maxValue</tt>,
+         * <i>k</i> is an integer in range <nobr><code>(int)minValue</code>&le;<i>k</i>&lt;<code>maxValue</code>,
          * are zero.
          *
-         * <p>If <tt>minValue&gt;=maxValue</tt>, this method returns 0.0.
+         * <p>If <code>minValue&gt;=maxValue</code>, this method returns 0.0.
          *
-         * @return the difference <nobr><i>r</i>(<tt>maxValue</tt>)&minus;<i>r</i>(<tt>minValue</tt>)</nobr>.
+         * @return the difference <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>.
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
         public double count() {
@@ -451,15 +451,15 @@ public abstract class SummingHistogram extends Histogram {
                 return "not initialized CountOfValues";
             }
             return count + " ("
-                + (leftBound ? "" : "not ") + " left bound, "
-                + (rightBound ? "" : "not ") + " right bound)";
+                    + (leftBound ? "" : "not ") + " left bound, "
+                    + (rightBound ? "" : "not ") + " right bound)";
 
         }
 
         private void checkInitialized() {
             if (Double.isNaN(count))
                 throw new IllegalStateException("This instance is not initialized by integralBetweenValues "
-                    + "or preciseIntegralBetweenValues method yet");
+                        + "or preciseIntegralBetweenValues method yet");
         }
     }
 
@@ -473,38 +473,41 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code>
+     *                                  is not in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingLongHistogram(int histogramLength, int... bitLevelsOfPyramid) {
+    public static SummingHistogram newSummingLongHistogram(
+            int histogramLength,
+            int... bitLevelsOfPyramid) {
         return newSummingLongHistogram(histogramLength, false, bitLevelsOfPyramid);
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+     * Creates new histogram, consisting of <i>M</i>=<code>histogramLength</code> empty bars.
      * It is an analog of {@link #newLongHistogram(int, int...)} method; the only difference
      * is that this method creates an instance of {@link SummingHistogram} class.
      *
-     * <p>The <tt>optimizeSimpleIntegral</tt> argument allows to provide maximal performance
+     * <p>The <code>optimizeSimpleIntegral</code> argument allows to provide maximal performance
      * if you are going to use the created instance for calculating only the simple current
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
-     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <tt>false</tt>,
+     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
      * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
-     * If it is <tt>true</tt>, then {@link #include(int) include}, {@link #exclude(int) exclude}
-     * and all <tt>moveTo...</tt> methods will work rather more quickly, because they will not recalculate
+     * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
+     * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
      * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
-     * even in a case of using the histogram pyramid (see comments to <tt>bitLevelsOfPyramid</tt> argument
+     * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newLongHistogram(int, int...)} method).
      *
      * @param histogramLength        the number <i>M</i> of bars of the new histogram.
@@ -513,29 +516,31 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid     the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
-     * @return                       the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingLongHistogram(int histogramLength, boolean optimizeSimpleIntegral,
-        int... bitLevelsOfPyramid)
-    {
+    public static SummingHistogram newSummingLongHistogram(
+            int histogramLength,
+            boolean optimizeSimpleIntegral,
+            int... bitLevelsOfPyramid) {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
-                new SimplifiedSummingLong1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
-                new SimplifiedSummingLongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
+                    new SimplifiedSummingLong1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
+                    new SimplifiedSummingLongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
         } else {
             return bitLevelsOfPyramid.length == 0 ?
-                new SummingLong1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
-                new SummingLongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
+                    new SummingLong1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
+                    new SummingLongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
         }
     }
 
@@ -547,41 +552,45 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Long.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Long.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingLongHistogram(long[] histogram, int... bitLevelsOfPyramid) {
+    public static SummingHistogram newSummingLongHistogram(
+            long[] histogram,
+            int... bitLevelsOfPyramid) {
         return newSummingLongHistogram(histogram, false, bitLevelsOfPyramid);
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+     * Creates new histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
      * It is an analog of {@link #newLongHistogram(long[], int...)} method; the only difference
      * is that this method creates an instance of {@link SummingHistogram} class.
      *
-     * <p>The <tt>optimizeSimpleIntegral</tt> argument allows to provide maximal performance
+     * <p>The <code>optimizeSimpleIntegral</code> argument allows to provide maximal performance
      * if you are going to use the created instance for calculating only the simple current
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
-     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <tt>false</tt>,
+     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
      * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
-     * If it is <tt>true</tt>, then {@link #include(int) include}, {@link #exclude(int) exclude}
-     * and all <tt>moveTo...</tt> methods will work rather more quickly, because they will not recalculate
+     * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
+     * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
      * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
-     * even in a case of using the histogram pyramid (see comments to <tt>bitLevelsOfPyramid</tt> argument
+     * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newLongHistogram(long[], int...)} method).
      *
      * @param histogram              initial values of the bars <b>b</b>[<i>k</i>] of the histogram.
@@ -590,30 +599,33 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid     the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
-     * @return                       the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Long.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Long.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingLongHistogram(long[] histogram, boolean optimizeSimpleIntegral,
-        int... bitLevelsOfPyramid)
-    {
+    public static SummingHistogram newSummingLongHistogram(
+            long[] histogram,
+            boolean optimizeSimpleIntegral,
+            int... bitLevelsOfPyramid) {
         Objects.requireNonNull(histogram, "Null histogram argument");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
-                new SimplifiedSummingLong1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-                new SimplifiedSummingLongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                    new SimplifiedSummingLong1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                    new SimplifiedSummingLongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
         } else {
             return bitLevelsOfPyramid.length == 0 ?
-                new SummingLong1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-                new SummingLongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                    new SummingLong1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                    new SummingLongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
         }
     }
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
@@ -626,38 +638,41 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code>
+     *                                  is not in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingIntHistogram(int histogramLength, int... bitLevelsOfPyramid) {
+    public static SummingHistogram newSummingIntHistogram(
+            int histogramLength,
+            int... bitLevelsOfPyramid) {
         return newSummingIntHistogram(histogramLength, false, bitLevelsOfPyramid);
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+     * Creates new histogram, consisting of <i>M</i>=<code>histogramLength</code> empty bars.
      * It is an analog of {@link #newIntHistogram(int, int...)} method; the only difference
      * is that this method creates an instance of {@link SummingHistogram} class.
      *
-     * <p>The <tt>optimizeSimpleIntegral</tt> argument allows to provide maximal performance
+     * <p>The <code>optimizeSimpleIntegral</code> argument allows to provide maximal performance
      * if you are going to use the created instance for calculating only the simple current
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
-     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <tt>false</tt>,
+     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
      * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
-     * If it is <tt>true</tt>, then {@link #include(int) include}, {@link #exclude(int) exclude}
-     * and all <tt>moveTo...</tt> methods will work rather more quickly, because they will not recalculate
+     * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
+     * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
      * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
-     * even in a case of using the histogram pyramid (see comments to <tt>bitLevelsOfPyramid</tt> argument
+     * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newIntHistogram(int, int...)} method).
      *
      * @param histogramLength        the number <i>M</i> of bars of the new histogram.
@@ -666,29 +681,31 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid     the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
-     * @return                       the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingIntHistogram(int histogramLength, boolean optimizeSimpleIntegral,
-        int... bitLevelsOfPyramid)
-    {
+    public static SummingHistogram newSummingIntHistogram(
+            int histogramLength,
+            boolean optimizeSimpleIntegral,
+            int... bitLevelsOfPyramid) {
         if (histogramLength < 0)
             throw new IllegalArgumentException("Negative histogramLength");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
-                new SimplifiedSummingInt1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
-                new SimplifiedSummingIntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
+                    new SimplifiedSummingInt1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
+                    new SimplifiedSummingIntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
         } else {
             return bitLevelsOfPyramid.length == 0 ?
-                new SummingInt1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
-                new SummingIntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
+                    new SummingInt1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
+                    new SummingIntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
         }
     }
 
@@ -700,41 +717,45 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Integer.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Integer.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingIntHistogram(int[] histogram, int... bitLevelsOfPyramid) {
+    public static SummingHistogram newSummingIntHistogram(
+            int[] histogram,
+            int... bitLevelsOfPyramid) {
         return newSummingIntHistogram(histogram, false, bitLevelsOfPyramid);
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+     * Creates new histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
      * It is an analog of {@link #newIntHistogram(int[], int...)} method; the only difference
      * is that this method creates an instance of {@link SummingHistogram} class.
      *
-     * <p>The <tt>optimizeSimpleIntegral</tt> argument allows to provide maximal performance
+     * <p>The <code>optimizeSimpleIntegral</code> argument allows to provide maximal performance
      * if you are going to use the created instance for calculating only the simple current
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
-     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <tt>false</tt>,
+     * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
      * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
-     * If it is <tt>true</tt>, then {@link #include(int) include}, {@link #exclude(int) exclude}
-     * and all <tt>moveTo...</tt> methods will work rather more quickly, because they will not recalculate
+     * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
+     * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
      * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
-     * even in a case of using the histogram pyramid (see comments to <tt>bitLevelsOfPyramid</tt> argument
+     * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newIntHistogram(int[], int...)} method).
      *
      * @param histogram              initial values of the bars <b>b</b>[<i>k</i>] of the histogram.
@@ -743,30 +764,33 @@ public abstract class SummingHistogram extends Histogram {
      * @param bitLevelsOfPyramid     the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
-     * @return                       the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Integer.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Integer.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
-    public static SummingHistogram newSummingIntHistogram(int[] histogram, boolean optimizeSimpleIntegral,
-        int... bitLevelsOfPyramid)
-    {
+    public static SummingHistogram newSummingIntHistogram(
+            int[] histogram,
+            boolean optimizeSimpleIntegral,
+            int... bitLevelsOfPyramid) {
         Objects.requireNonNull(histogram, "Null histogram argument");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         if (optimizeSimpleIntegral) {
             return bitLevelsOfPyramid.length == 0 ?
-                new SimplifiedSummingInt1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-                new SimplifiedSummingIntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                    new SimplifiedSummingInt1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                    new SimplifiedSummingIntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
         } else {
             return bitLevelsOfPyramid.length == 0 ?
-                new SummingInt1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-                new SummingIntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                    new SummingInt1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                    new SummingIntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
         }
     }
     //[[Repeat.AutoGeneratedEnd]]
@@ -789,16 +813,16 @@ public abstract class SummingHistogram extends Histogram {
      * {@link #newSummingLongHistogram(long[], boolean, int...)},
      * {@link #newSummingIntHistogram(int, boolean, int...)},
      * {@link #newSummingIntHistogram(int[], boolean, int...)} methods
-     * with the argument <tt>optimizeSimpleIntegral=true</tt>.
+     * with the argument <code>optimizeSimpleIntegral=true</code>.
      * In this case, the internal value, returned by this method, is also used for calculating
      * the current precise integral <i>S<sup>P</sup></i>.
-     * If this class was created with the flag <tt>optimizeSimpleIntegral=true</tt>,
+     * If this class was created with the flag <code>optimizeSimpleIntegral=true</code>,
      * this method just performs a simple loop on all <nobr><b>b</b>[<i>k</i>]</nobr>,
      * <nobr><i>k</i>=0,1,...,{@link #currentIValue() currentIValue()}&minus;1</nobr>,
      * and therefore works slowly.
      *
      * @return the number of non-zero bars <b>b</b>[<i>k</i>] with indexes
-     *         <nobr><i>k</i>&lt;{@link #currentIValue() currentIValue()}</nobr>.
+     * <nobr><i>k</i>&lt;{@link #currentIValue() currentIValue()}</nobr>.
      * @see #currentPreciseIntegral()
      */
     public abstract int currentNumberOfDifferentValues();
@@ -843,9 +867,9 @@ public abstract class SummingHistogram extends Histogram {
     public final double currentIntegral() {
         final long total = total();
         assert currentValue >= currentIValue - 0.5001 : "currentValue = " + currentValue
-            + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
+                + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
         assert currentValue < currentIValue + 1.0001 :
-            "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
+                "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
         if (total == 0) {
             return 0.0;
         }
@@ -862,15 +886,15 @@ public abstract class SummingHistogram extends Histogram {
                 throw new AssertionError("Negative rank " + r + " at bar #" + v + " (" + currentIValue + ") = " + b);
             if (r + b > total)
                 throw new AssertionError("Rank " + r + " + bar #"
-                    + v + " (" + currentIValue + ") = " + b + " > total number of elements " + total);
+                        + v + " (" + currentIValue + ") = " + b + " > total number of elements " + total);
             if (r + b == total && shifted)
                 throw new AssertionError("currentValue = " + currentValue + " < currentIValue = "
-                    + currentIValue + ": it cannot at the histogram end, but rank is " + r + "+" + b + " / " + total);
+                        + currentIValue + ": it cannot at the histogram end, but rank is " + r + "+" + b + " / " + total);
         }
         if (r + b == 0) {
             return 0.0;
         }
-        final double s = shifted ? currentSum() - (double)b * (double)v : currentSum();
+        final double s = shifted ? currentSum() - (double) b * (double) v : currentSum();
         if (b == 0) {
             return s + 0.5 * r;
         }
@@ -878,7 +902,7 @@ public abstract class SummingHistogram extends Histogram {
         if (delta == 0.0) {
             return s + 0.5 * r;
         }
-        double indexInBar = b == 1 ? delta : delta * (double)b;
+        double indexInBar = b == 1 ? delta : delta * (double) b;
         return s + 0.5 * r + indexInBar * (v + 0.5 * delta);
     }
 
@@ -897,9 +921,9 @@ public abstract class SummingHistogram extends Histogram {
         // and ndv(v) is currentNumberOfDifferentValues()
         final long total = total();
         assert currentValue >= currentIValue - 0.5001 : "currentValue = " + currentValue
-            + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
+                + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
         assert currentValue < currentIValue + 1.0001 :
-            "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
+                "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
         if (total == 0) {
             return 0.0;
         }
@@ -916,10 +940,10 @@ public abstract class SummingHistogram extends Histogram {
                 throw new AssertionError("Negative rank " + r + " at bar #" + v + " (" + currentIValue + ") = " + b);
             if (r + b > total)
                 throw new AssertionError("Rank " + r + " + bar #"
-                    + v + " (" + currentIValue + ") = " + b + " > total number of elements " + total);
+                        + v + " (" + currentIValue + ") = " + b + " > total number of elements " + total);
             if (r + b == total && shifted)
                 throw new AssertionError("currentValue = " + currentValue + " < currentIValue = "
-                    + currentIValue + ": it cannot at the histogram end, but rank is " + r + "+" + b + " / " + total);
+                        + currentIValue + ": it cannot at the histogram end, but rank is " + r + "+" + b + " / " + total);
         }
         final int savedIValue = currentIValue;
         final double savedValue = currentValue;
@@ -955,7 +979,7 @@ public abstract class SummingHistogram extends Histogram {
         // and the only non-zero bar between v(r) and v(r'=r+bar(v(r))) is v(r):
         // it's impossible that v(r)<v<v(r'), and also impossible v>=v(r'), because r(v)=r, not r'.
         if (b > 0 && delta == 0.0) {
-            final double s = shifted ? currentSum() - (double)b * (double)v : currentSum();
+            final double s = shifted ? currentSum() - (double) b * (double) v : currentSum();
             return s + 0.5 * r + 0.5 * (v - ndv); // the correct formula for integer ranks
             // here and below we write just "v-ndv": overflow is impossible while subtracting non-negative integers
         }
@@ -963,10 +987,10 @@ public abstract class SummingHistogram extends Histogram {
         final boolean needRank = Double.isNaN(savedPreciseRank);
         final double v1, sum1;
         if (b > 1) {
-            final double s = shifted ? currentSum() - (double)b * (double)v : currentSum();
-            double indexInBar = delta * (double)b;
+            final double s = shifted ? currentSum() - (double) b * (double) v : currentSum();
+            double indexInBar = delta * (double) b;
             if (indexInBar <= b - 1 // delta in range 0..(b-1)/b: simple case
-                || r + b == total) // the rightmost range (b-1)/b..1.0: special case
+                    || r + b == total) // the rightmost range (b-1)/b..1.0: special case
             {
                 if (needRank) {
                     currentPreciseRank = r + indexInBar;
@@ -974,7 +998,7 @@ public abstract class SummingHistogram extends Histogram {
                 return s + 0.5 * r + 0.5 * (v - ndv) + indexInBar * (v + 0.5 * delta);
                 // indexInBar * (v + 0.5 * delta) is the area of the additional trapezoid
             }
-            v1 = v + (double)(b - 1) / (double)b;
+            v1 = v + (double) (b - 1) / (double) b;
             sum1 = s + 0.5 * r + 0.5 * (v - ndv) + (b - 1) * 0.5 * (v + v1);
             // sum1 is the integral (area left from) v(x) until x=r+b-1, v(x)=v1
             // (b - 1) * 0.5 * (v + v1) is the area of the additional trapezoid
@@ -992,7 +1016,7 @@ public abstract class SummingHistogram extends Histogram {
             saveRanks();
             if (b == 1) {
                 v1 = v;
-                final double s = shifted ? currentSum() - (double)b * (double)v : currentSum();
+                final double s = shifted ? currentSum() - (double) b * (double) v : currentSum();
                 sum1 = s + 0.5 * r + 0.5 * (v - ndv);
                 // sum1 is the integral (area left from) v(x) until x=r, v(x)=v1
             } else {
@@ -1011,14 +1035,14 @@ public abstract class SummingHistogram extends Histogram {
         }
         moveToIRank(r + b);
         assert currentValue == currentIValue :
-            "bug: we are not at the left boundary of the bar #" + currentIValue + ", we at " + currentValue;
+                "bug: we are not at the left boundary of the bar #" + currentIValue + ", we at " + currentValue;
         final double v2 = currentValue;
         restoreRanks();
         currentIValue = savedIValue;
         currentValue = savedValue;
         assert v1 < v2 : "bug: illegal " + v1 + ".." + v2 + " range";
         assert v1 <= currentValue && currentValue <= v2 :
-            "bug: currentValue = " + currentValue + " is not in " + v1 + ".." + v2 + " range";
+                "bug: currentValue = " + currentValue + " is not in " + v1 + ".." + v2 + " range";
         final double deltaRank = (currentValue - v1) / (v2 - v1);
         final double newPreciseRank = r + b - 1 + deltaRank;
         if (needRank) {
@@ -1026,7 +1050,7 @@ public abstract class SummingHistogram extends Histogram {
         } else {
             currentPreciseRank = savedPreciseRank;
             assert Math.abs(currentPreciseRank - newPreciseRank) <= 1.0e-3 :
-                "bug: currentPreciseRank should be " + newPreciseRank + ", but saved value is " + savedPreciseRank;
+                    "bug: currentPreciseRank should be " + newPreciseRank + ", but saved value is " + savedPreciseRank;
         }
         if (DEBUG_MODE) {
             checkIntegrity();
@@ -1035,26 +1059,26 @@ public abstract class SummingHistogram extends Histogram {
     }
 
     /**
-     * Equivalent to <tt>{@link #nextSharing()}.{@link #currentIntegral()}
-     * - thisInstance.{@link #currentIntegral()}</tt>, but probably works little faster.
+     * Equivalent to <code>{@link #nextSharing()}.{@link #currentIntegral()}
+     * - thisInstance.{@link #currentIntegral()}</code>, but probably works little faster.
      *
      * @return the difference between the current simple integrals <i>S<sup>S</sup></i>, calculated
-     *         in two instances, sharing the same histogram <b>b</b>[<i>k</i>].
+     * in two instances, sharing the same histogram <b>b</b>[<i>k</i>].
      */
     public final double currentIntegralBetweenSharing() {
         final SummingHistogram next = nextSharing();
         final long total = total();
         assert currentValue >= currentIValue - 0.5001 :
-            "currentValue = " + currentValue
-                + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
+                "currentValue = " + currentValue
+                        + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
         assert currentValue < currentIValue + 1.0001 :
-            "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
+                "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
         assert next.currentValue >= next.currentIValue - 0.5001 :
-            "next.currentValue = " + next.currentValue
-                + " < next.currentIValue - 0.5001, next.currentIValue = " + next.currentIValue;
+                "next.currentValue = " + next.currentValue
+                        + " < next.currentIValue - 0.5001, next.currentIValue = " + next.currentIValue;
         assert next.currentValue < next.currentIValue + 1.0001 :
-            "next.currentValue = " + next.currentValue
-                + " >= next.currentIValue + 1.0 = " + (next.currentIValue + 1.0);
+                "next.currentValue = " + next.currentValue
+                        + " >= next.currentIValue + 1.0 = " + (next.currentIValue + 1.0);
         assert total == next.total();
         if (total == 0) {
             return 0.0;
@@ -1076,10 +1100,10 @@ public abstract class SummingHistogram extends Histogram {
                 throw new AssertionError("Negative rank " + r1 + " at bar #" + v1 + " (" + currentIValue + ") = " + b1);
             if (r1 + b1 > total)
                 throw new AssertionError("Rank " + r1 + " + bar #"
-                    + v1 + " (" + currentIValue + ") = " + b1 + " > total number of elements " + total);
+                        + v1 + " (" + currentIValue + ") = " + b1 + " > total number of elements " + total);
             if (r1 + b1 == total && shifted1)
                 throw new AssertionError("currentValue = " + currentValue + " < currentIValue = "
-                    + currentIValue + ": it cannot at the histogram end, but rank is " + r1 + "+" + b1 + " / " + total);
+                        + currentIValue + ": it cannot at the histogram end, but rank is " + r1 + "+" + b1 + " / " + total);
             if (v2 < 0)
                 throw new AssertionError("Negative value" + v2);
             if (b2 < 0)
@@ -1088,36 +1112,36 @@ public abstract class SummingHistogram extends Histogram {
                 throw new AssertionError("Negative rank " + r2 + " at bar #" + v2 + " (" + currentIValue + ") = " + b2);
             if (r2 + b2 > total)
                 throw new AssertionError("Rank " + r2 + " + bar #"
-                    + v2 + " (" + currentIValue + ") = " + b2 + " > total number of elements " + total);
+                        + v2 + " (" + currentIValue + ") = " + b2 + " > total number of elements " + total);
             if (r2 + b2 == total && shifted2)
                 throw new AssertionError("currentValue = " + currentValue + " < currentIValue = "
-                    + currentIValue + ": it cannot at the histogram end, but rank is " + r2 + "+" + b2 + " / " + total);
+                        + currentIValue + ": it cannot at the histogram end, but rank is " + r2 + "+" + b2 + " / " + total);
         }
-        final double s1 = shifted1 ? currentSum() - (double)b1 * (double)v1 : currentSum();
-        final double s2 = shifted2 ? next.currentSum() - (double)b2 * (double)v2 : next.currentSum();
+        final double s1 = shifted1 ? currentSum() - (double) b1 * (double) v1 : currentSum();
+        final double s2 = shifted2 ? next.currentSum() - (double) b2 * (double) v2 : next.currentSum();
         final double correction1, correction2;
         double delta;
         if (b1 == 0 || (delta = currentValue - v1) == 0.0) {
             correction1 = 0.0;
         } else {
-            double indexInBar = b1 == 1 ? delta : delta * (double)b1;
+            double indexInBar = b1 == 1 ? delta : delta * (double) b1;
             correction1 = indexInBar * (v1 + 0.5 * delta);
         }
         if (b2 == 0 || (delta = next.currentValue - v2) == 0.0) {
             correction2 = 0.0;
         } else {
-            double indexInBar = b2 == 1 ? delta : delta * (double)b2;
+            double indexInBar = b2 == 1 ? delta : delta * (double) b2;
             correction2 = indexInBar * (v2 + 0.5 * delta);
         }
         return s2 - s1 + 0.5 * (r2 - r1) + (correction2 - correction1);
     }
 
     /**
-     * Equivalent to <tt>{@link #nextSharing()}.{@link #currentPreciseIntegral()}
-     * - thisInstance.{@link #currentPreciseIntegral()}</tt>, but probably works little faster.
+     * Equivalent to <code>{@link #nextSharing()}.{@link #currentPreciseIntegral()}
+     * - thisInstance.{@link #currentPreciseIntegral()}</code>, but probably works little faster.
      *
      * @return the difference between the current precise integrals <i>S<sup>P</sup></i>, calculated
-     *         in two instances, sharing the same histogram <b>b</b>[<i>k</i>].
+     * in two instances, sharing the same histogram <b>b</b>[<i>k</i>].
      */
     public final double currentPreciseIntegralBetweenSharing() {
         return nextSharing().currentPreciseIntegral() - currentPreciseIntegral();
@@ -1131,27 +1155,27 @@ public abstract class SummingHistogram extends Histogram {
 
     @Override
     public SummingHistogram moveToPreciseRank(double rank) {
-        return (SummingHistogram)super.moveToPreciseRank(rank);
+        return (SummingHistogram) super.moveToPreciseRank(rank);
     }
 
     @Override
     public SummingHistogram moveToValue(double value) {
-        return (SummingHistogram)super.moveToValue(value);
+        return (SummingHistogram) super.moveToValue(value);
     }
 
     /**
-     * <p>Returns the difference <i>S</i>(<tt>toRank</tt>)&minus;<i>S</i>(<tt>fromRank</tt>),
+     * <p>Returns the difference <i>S</i>(<code>toRank</code>)&minus;<i>S</i>(<code>fromRank</code>),
      * where <nobr><i>S</i>(<i>r</i>)</nobr> is the summing function, defined in terms of
      * the simple histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
-     * <tt>histogram</tt> argument.
+     * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the simple histogram model,
-     * between <i>r</i>=<tt>fromRank</tt> and <i>r</i>=<tt>toRank</tt>.
-     * The <tt>fromRank</tt> argument should be not greater than <tt>toRank</tt>;
+     * between <i>r</i>=<code>fromRank</code> and <i>r</i>=<code>toRank</code>.
+     * The <code>fromRank</code> argument should be not greater than <code>toRank</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <tt>fromRank&lt;=toRank</tt>, the result of this method is equal to the result of the following operators:
+     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
      *
      * <pre>
      * &#32;   {@link SummingHistogram} hist = {@link SummingHistogram}.{@link #newSummingLongHistogram(long[], int...)
@@ -1165,17 +1189,18 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * @param histogram <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>]
+     *                  is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
-     * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                  the simple histogram model, between <i>r</i>=<tt>fromRank</tt> and
-     *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the simple histogram model, between <i>r</i>=<code>fromRank</code> and
+     * <i>r</i>=<code>toRank</code>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(fromRank)</code> or <code>Double.isNaN(toRank)</code>.
      */
     public static double integralBetweenRanks(long[] histogram, double fromRank, double toRank) {
         //[[Repeat.SectionStart integralBetweenRanksImpl]]
@@ -1193,8 +1218,8 @@ public abstract class SummingHistogram extends Histogram {
         if (fromRank >= toRank) {
             return 0.0;
         }
-        final long fromR = (long)fromRank;
-        final long toR = (long)toRank;
+        final long fromR = (long) fromRank;
+        final long toR = (long) toRank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "fromRank" to "fromR", "fromValue" to "fromV", etc.
         int fromV = 0;
@@ -1217,9 +1242,9 @@ public abstract class SummingHistogram extends Histogram {
         int toV = fromV + 1;
         if (toRank <= acc) { // special case: we are inside a single bar
             double middleRank = 0.5 * (fromRank + toRank);
-            return (toRank - fromRank) * (toV - (acc - middleRank) / (double)b);
+            return (toRank - fromRank) * (toV - (acc - middleRank) / (double) b);
         }
-        double sum = (acc - fromRank) * (toV - 0.5 * (acc - fromRank) / (double)b);
+        double sum = (acc - fromRank) * (toV - 0.5 * (acc - fromRank) / (double) b);
         for (; toV < histogram.length; toV++) {
             b = histogram[toV];
             if (b < 0)
@@ -1227,10 +1252,10 @@ public abstract class SummingHistogram extends Histogram {
             if (b > 0) {
                 acc += b;
                 if (toR < acc) {
-                    sum += (toRank - (acc - b)) * (toV + 0.5 * (toRank - (acc - b)) / (double)b);
+                    sum += (toRank - (acc - b)) * (toV + 0.5 * (toRank - (acc - b)) / (double) b);
                     break;
                 } else {
-                    sum += (double)b * (toV + 0.5);
+                    sum += (double) b * (toV + 0.5);
                 }
             }
         }
@@ -1240,19 +1265,19 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * Precise equivalent of {@link #integralBetweenRanks(long[], double, double)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
-     * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                  the simple histogram model, between <i>r</i>=<tt>fromRank</tt> and
-     *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the simple histogram model, between <i>r</i>=<code>fromRank</code> and
+     * <i>r</i>=<code>toRank</code>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(fromRank)</code> or <code>Double.isNaN(toRank)</code>.
      */
     public static double integralBetweenRanks(int[] histogram, double fromRank, double toRank) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, integralBetweenRanksImpl)
@@ -1271,8 +1296,8 @@ public abstract class SummingHistogram extends Histogram {
         if (fromRank >= toRank) {
             return 0.0;
         }
-        final int fromR = (int)fromRank;
-        final int toR = (int)toRank;
+        final int fromR = (int) fromRank;
+        final int toR = (int) toRank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "fromRank" to "fromR", "fromValue" to "fromV", etc.
         int fromV = 0;
@@ -1295,9 +1320,9 @@ public abstract class SummingHistogram extends Histogram {
         int toV = fromV + 1;
         if (toRank <= acc) { // special case: we are inside a single bar
             double middleRank = 0.5 * (fromRank + toRank);
-            return (toRank - fromRank) * (toV - (acc - middleRank) / (double)b);
+            return (toRank - fromRank) * (toV - (acc - middleRank) / (double) b);
         }
-        double sum = (acc - fromRank) * (toV - 0.5 * (acc - fromRank) / (double)b);
+        double sum = (acc - fromRank) * (toV - 0.5 * (acc - fromRank) / (double) b);
         for (; toV < histogram.length; toV++) {
             b = histogram[toV];
             if (b < 0)
@@ -1305,10 +1330,10 @@ public abstract class SummingHistogram extends Histogram {
             if (b > 0) {
                 acc += b;
                 if (toR < acc) {
-                    sum += (toRank - (acc - b)) * (toV + 0.5 * (toRank - (acc - b)) / (double)b);
+                    sum += (toRank - (acc - b)) * (toV + 0.5 * (toRank - (acc - b)) / (double) b);
                     break;
                 } else {
-                    sum += (double)b * (toV + 0.5);
+                    sum += (double) b * (toV + 0.5);
                 }
             }
         }
@@ -1317,18 +1342,18 @@ public abstract class SummingHistogram extends Histogram {
     }
 
     /**
-     * <p>Returns the difference <i>S</i>(<tt>toRank</tt>)&minus;<i>S</i>(<tt>fromRank</tt>),
+     * <p>Returns the difference <i>S</i>(<code>toRank</code>)&minus;<i>S</i>(<code>fromRank</code>),
      * where <nobr><i>S</i>(<i>r</i>)</nobr> is the summing function, defined in terms of
      * the precise histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
-     * <tt>histogram</tt> argument.
+     * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the precise histogram model,
-     * between <i>r</i>=<tt>fromRank</tt> and <i>r</i>=<tt>toRank</tt>.
-     * The <tt>fromRank</tt> argument should be not greater than <tt>toRank</tt>;
+     * between <i>r</i>=<code>fromRank</code> and <i>r</i>=<code>toRank</code>.
+     * The <code>fromRank</code> argument should be not greater than <code>toRank</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <tt>fromRank&lt;=toRank</tt>, the result of this method is equal to the result of the following operators:
+     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
      *
      * <pre>
      * &#32;   {@link SummingHistogram} hist = {@link SummingHistogram}.{@link #newSummingLongHistogram(long[], int...)
@@ -1342,17 +1367,18 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * @param histogram <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>]
+     *                  is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
-     * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                  the precise histogram model, between <i>r</i>=<tt>fromRank</tt> and
-     *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the precise histogram model, between <i>r</i>=<code>fromRank</code> and
+     * <i>r</i>=<code>toRank</code>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(fromRank)</code> or <code>Double.isNaN(toRank)</code>.
      */
     public static double preciseIntegralBetweenRanks(long[] histogram, double fromRank, double toRank) {
         double result = preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank);
@@ -1361,29 +1387,29 @@ public abstract class SummingHistogram extends Histogram {
             double toIntegral = preciseIntegralBetweenRanksImpl(histogram, 0.0, toRank);
             if (Math.abs((toIntegral - fromIntegral) - result) > 0.01)
                 throw new AssertionError("Bug in preciseIntegralBetweenRanks(histogram, "
-                    + fromRank + ", " + toRank + "): fromIntegral = " + fromIntegral
-                    + ", toIntegral = " + toIntegral + ", but result = "
-                    + preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank)
-                    + ": " + histogram.length + " bars " + JArrays.toString(histogram, ",", 2048));
+                        + fromRank + ", " + toRank + "): fromIntegral = " + fromIntegral
+                        + ", toIntegral = " + toIntegral + ", but result = "
+                        + preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank)
+                        + ": " + histogram.length + " bars " + JArrays.toString(histogram, ",", 2048));
         }
         return result;
     }
 
     /**
      * Precise equivalent of {@link #preciseIntegralBetweenRanks(long[], double, double)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
-     * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                  the precise histogram model, between <i>r</i>=<tt>fromRank</tt> and
-     *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the precise histogram model, between <i>r</i>=<code>fromRank</code> and
+     * <i>r</i>=<code>toRank</code>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(fromRank)</code> or <code>Double.isNaN(toRank)</code>.
      */
     public static double preciseIntegralBetweenRanks(int[] histogram, double fromRank, double toRank) {
         double result = preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank);
@@ -1392,10 +1418,10 @@ public abstract class SummingHistogram extends Histogram {
             double toIntegral = preciseIntegralBetweenRanksImpl(histogram, 0.0, toRank);
             if (Math.abs((toIntegral - fromIntegral) - result) > 0.01)
                 throw new AssertionError("Bug in preciseIntegralBetweenRanks(histogram, "
-                    + fromRank + ", " + toRank + "): fromIntegral = " + fromIntegral
-                    + ", toIntegral = " + toIntegral + ", but result = "
-                    + preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank)
-                    + ": " + histogram.length + " bars " + JArrays.toString(histogram, ",", 2048));
+                        + fromRank + ", " + toRank + "): fromIntegral = " + fromIntegral
+                        + ", toIntegral = " + toIntegral + ", but result = "
+                        + preciseIntegralBetweenRanksImpl(histogram, fromRank, toRank)
+                        + ": " + histogram.length + " bars " + JArrays.toString(histogram, ",", 2048));
         }
         return result;
     }
@@ -1416,8 +1442,8 @@ public abstract class SummingHistogram extends Histogram {
         if (fromRank >= toRank) {
             return 0.0;
         }
-        final long fromR = (long)fromRank;
-        final long toR = (long)toRank;
+        final long fromR = (long) fromRank;
+        final long toR = (long) toRank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "fromRank" to "fromR", "fromValue" to "fromV", etc.
         int leftV = 0;
@@ -1448,10 +1474,9 @@ public abstract class SummingHistogram extends Histogram {
         // Calculating fromIntegral
         final double fromIntegral;
         if (fromRank == fromR // in particular, if fromRank = leftR and b == 1
-            || indexInBar < b - 1)
-        {
+                || indexInBar < b - 1) {
             fromIntegral = b == 1 ? 0.0 :
-                (fromRank - (double)leftR) * (leftV + 0.5 * (fromRank - (double)leftR) / (double)b);
+                    (fromRank - (double) leftR) * (leftV + 0.5 * (fromRank - (double) leftR) / (double) b);
         } else {
             assert indexInBar == b - 1;
             assert fromR + 1 == acc;
@@ -1464,12 +1489,12 @@ public abstract class SummingHistogram extends Histogram {
                 // fromValue = leftV + (fromRank - leftR) / (double)b,
                 // toValue = leftV + (toRank - leftR) / (double)b
                 double middleRank = 0.5 * (fromRank + toRank);
-                return (toRank - fromRank) * (leftV + (middleRank - (double)leftR) / (double)b);
+                return (toRank - fromRank) * (leftV + (middleRank - (double) leftR) / (double) b);
             }
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            double wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (leftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            double wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (leftV + 0.5 * wideTrapDeltaV);
             double leftValue = leftV + wideTrapDeltaV;
-            double fromDelta = fromRank - (double)fromR;
+            double fromDelta = fromRank - (double) fromR;
             double partialNarrowTrap = fromDelta * (leftValue + 0.5 * fromDelta * (rightV - leftValue));
             fromIntegral = wideTrap + partialNarrowTrap;
         }
@@ -1507,7 +1532,7 @@ public abstract class SummingHistogram extends Histogram {
                     if (toR < acc) {
                         break;
                     }
-                    toIntegral += (double)b * (leftV + 0.5);
+                    toIntegral += (double) b * (leftV + 0.5);
                 }
             }
             if (leftV >= histogram.length) { // special case toRank >= N: the last BCD triangle is also degenerated
@@ -1524,10 +1549,9 @@ public abstract class SummingHistogram extends Histogram {
 
         // Calculating toIntegral, last "appendix"
         if (toRank == toR // in particular, if toRank = leftR and b == 1
-            || indexInBar < b - 1)
-        {
+                || indexInBar < b - 1) {
             if (b > 1) {
-                toIntegral += (toRank - (double)leftR) * (leftV + 0.5 * (toRank - (double)leftR) / (double)b);
+                toIntegral += (toRank - (double) leftR) * (leftV + 0.5 * (toRank - (double) leftR) / (double) b);
             }
         } else {
             assert indexInBar == b - 1;
@@ -1539,13 +1563,13 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 // it is a special case: appendix is simple trapezoid leftR..toRank, leftV..toValue, where
                 // toValue = leftV + (toRank - leftR) / (double)b
-                toIntegral += (toRank - (double)leftR) * (leftV + 0.5 * (toRank - (double)leftR) / (double)b);
+                toIntegral += (toRank - (double) leftR) * (leftV + 0.5 * (toRank - (double) leftR) / (double) b);
                 return toIntegral - fromIntegral;
             }
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            double wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (leftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            double wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (leftV + 0.5 * wideTrapDeltaV);
             double leftValue = leftV + wideTrapDeltaV;
-            double toDelta = toRank - (double)toR;
+            double toDelta = toRank - (double) toR;
             double partialNarrowTrap = toDelta * (leftValue + 0.5 * toDelta * (rightV - leftValue));
             toIntegral += wideTrap + partialNarrowTrap;
         }
@@ -1570,8 +1594,8 @@ public abstract class SummingHistogram extends Histogram {
         if (fromRank >= toRank) {
             return 0.0;
         }
-        final int fromR = (int)fromRank;
-        final int toR = (int)toRank;
+        final int fromR = (int) fromRank;
+        final int toR = (int) toRank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "fromRank" to "fromR", "fromValue" to "fromV", etc.
         int leftV = 0;
@@ -1602,10 +1626,9 @@ public abstract class SummingHistogram extends Histogram {
         // Calculating fromIntegral
         final double fromIntegral;
         if (fromRank == fromR // in particular, if fromRank = leftR and b == 1
-            || indexInBar < b - 1)
-        {
+                || indexInBar < b - 1) {
             fromIntegral = b == 1 ? 0.0 :
-                (fromRank - (double)leftR) * (leftV + 0.5 * (fromRank - (double)leftR) / (double)b);
+                    (fromRank - (double) leftR) * (leftV + 0.5 * (fromRank - (double) leftR) / (double) b);
         } else {
             assert indexInBar == b - 1;
             assert fromR + 1 == acc;
@@ -1618,12 +1641,12 @@ public abstract class SummingHistogram extends Histogram {
                 // fromValue = leftV + (fromRank - leftR) / (double)b,
                 // toValue = leftV + (toRank - leftR) / (double)b
                 double middleRank = 0.5 * (fromRank + toRank);
-                return (toRank - fromRank) * (leftV + (middleRank - (double)leftR) / (double)b);
+                return (toRank - fromRank) * (leftV + (middleRank - (double) leftR) / (double) b);
             }
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            double wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (leftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            double wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (leftV + 0.5 * wideTrapDeltaV);
             double leftValue = leftV + wideTrapDeltaV;
-            double fromDelta = fromRank - (double)fromR;
+            double fromDelta = fromRank - (double) fromR;
             double partialNarrowTrap = fromDelta * (leftValue + 0.5 * fromDelta * (rightV - leftValue));
             fromIntegral = wideTrap + partialNarrowTrap;
         }
@@ -1661,7 +1684,7 @@ public abstract class SummingHistogram extends Histogram {
                     if (toR < acc) {
                         break;
                     }
-                    toIntegral += (double)b * (leftV + 0.5);
+                    toIntegral += (double) b * (leftV + 0.5);
                 }
             }
             if (leftV >= histogram.length) { // special case toRank >= N: the last BCD triangle is also degenerated
@@ -1678,10 +1701,9 @@ public abstract class SummingHistogram extends Histogram {
 
         // Calculating toIntegral, last "appendix"
         if (toRank == toR // in particular, if toRank = leftR and b == 1
-            || indexInBar < b - 1)
-        {
+                || indexInBar < b - 1) {
             if (b > 1) {
-                toIntegral += (toRank - (double)leftR) * (leftV + 0.5 * (toRank - (double)leftR) / (double)b);
+                toIntegral += (toRank - (double) leftR) * (leftV + 0.5 * (toRank - (double) leftR) / (double) b);
             }
         } else {
             assert indexInBar == b - 1;
@@ -1693,13 +1715,13 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 // it is a special case: appendix is simple trapezoid leftR..toRank, leftV..toValue, where
                 // toValue = leftV + (toRank - leftR) / (double)b
-                toIntegral += (toRank - (double)leftR) * (leftV + 0.5 * (toRank - (double)leftR) / (double)b);
+                toIntegral += (toRank - (double) leftR) * (leftV + 0.5 * (toRank - (double) leftR) / (double) b);
                 return toIntegral - fromIntegral;
             }
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            double wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (leftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            double wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (leftV + 0.5 * wideTrapDeltaV);
             double leftValue = leftV + wideTrapDeltaV;
-            double toDelta = toRank - (double)toR;
+            double toDelta = toRank - (double) toR;
             double partialNarrowTrap = toDelta * (leftValue + 0.5 * toDelta * (rightV - leftValue));
             toIntegral += wideTrap + partialNarrowTrap;
         }
@@ -1708,19 +1730,19 @@ public abstract class SummingHistogram extends Histogram {
     //[[Repeat.IncludeEnd]]
 
     /**
-     * <p>Returns the difference <i>s</i>(<tt>maxValue</tt>)&minus;<i>s</i>(<tt>minValue</tt>),
+     * <p>Returns the difference <i>s</i>(<code>maxValue</code>)&minus;<i>s</i>(<code>minValue</code>),
      * where <nobr><i>s</i>(<i>v</i>)</nobr> is the summing function, defined in terms of
      * the simple histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
-     * <tt>histogram</tt> argument.
+     * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the simple histogram model,
-     * between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * The <tt>minValue</tt> argument should be not greater than <tt>maxValue</tt>;
+     * between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <tt>minValue&lt;=maxValue</tt>, the result of this method is equal
+     * <p>If <code>minValue&lt;=maxValue</code>, the result of this method is equal
      * to the result of the following operators:
      *
      * <pre>
@@ -1737,68 +1759,70 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * <p>The <tt>countOfValue</tt> argument, if it is not {@code null}, is filled by this method
+     * <p>The <code>countOfValue</code> argument, if it is not {@code null}, is filled by this method
      * by some additional information. Namely:
      *
      * <ul>
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
-     * count()}</tt> will be equal to the difference
-     * <nobr><i>r</i>(<tt>maxValue</tt>)&minus;<i>r</i>(<tt>minValue</tt>)</nobr>,
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
+     * count()}</code> will be equal to the difference
+     * <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>,
      * where <nobr><i>r</i>(<i>v</i>)</nobr> is the rank function, defined in terms of
-     * of the simple histogram model, or 0.0 if <tt>minValue&gt;maxValue</tt>
+     * of the simple histogram model, or 0.0 if <code>minValue&gt;maxValue</code>
      * (see the {@link Histogram comments to Histogram class});
      * in the code example, listed above, it will be equal to
-     * <nobr><tt>toRank-fromRank</tt></nobr>;</li>
+     * <nobr><code>toRank-fromRank</code></nobr>;</li>
      *
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
-     * isLeftBound()}</tt> will be <tt>true</tt> if <tt>minValue&lt;maxValue</tt> and
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=0</nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
+     * isLeftBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
-     * <tt>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</tt> method after
-     * <tt>hist.{@link #moveToValue(double) moveToValue}(maxValue)</tt> call;</li>
+     * <code>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</code> method after
+     * <code>hist.{@link #moveToValue(double) moveToValue}(maxValue)</code> call;</li>
      *
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
-     * isRightBound()}</tt> will be <tt>true</tt> if <tt>minValue&lt;maxValue</tt> and
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the right
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
+     * isRightBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
-     * <tt>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</tt> method after
-     * <tt>hist.{@link #moveToValue(double) moveToValue}(minValue)</tt> call.</li>
+     * <code>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</code> method after
+     * <code>hist.{@link #moveToValue(double) moveToValue}(minValue)</code> call.</li>
      * </ul>
      *
      * <p>Note: in the special case <i>N</i>=0 (all bars <b>b</b>[<i>k</i>] are zero),
-     * the <tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
-     * isLeftBound()}</tt> and
-     * <tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
-     * isRightBound()}</tt> values can be any: they are not specified.
+     * the <code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
+     * isLeftBound()}</code> and
+     * <code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
+     * isRightBound()}</code> values can be any: they are not specified.
      * It is the only exception from the rules specified above.
      *
      * <p>This information, for example, allows to calculate the <i>mean</i> of all elements
-     * of the source array <b>A</b>[<i>k</i>], lying in range <tt>minValue..maxValue</tt>,
+     * of the source array <b>A</b>[<i>k</i>], lying in range <code>minValue..maxValue</code>,
      * with generalization to the floating-point case: it is
      * <nobr>result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
      * count()}</nobr>.
      *
-     * @param histogram     <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
+     * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                      <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
-     * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
-    public static double integralBetweenValues(long[] histogram, double minValue, double maxValue,
-        CountOfValues countOfValues)
-    {
+    public static double integralBetweenValues(
+            long[] histogram,
+            double minValue,
+            double maxValue,
+            CountOfValues countOfValues) {
         //[[Repeat.SectionStart integralBetweenValuesImpl]]
         Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
@@ -1818,8 +1842,8 @@ public abstract class SummingHistogram extends Histogram {
             }
             return 0.0;
         }
-        final int minV = (int)minValue;
-        final int maxV = (int)maxValue;
+        final int minV = (int) minValue;
+        final int maxV = (int) maxValue;
         assert minV <= maxV;
         assert minValue < histogram.length;
         assert minV < histogram.length;
@@ -1828,7 +1852,7 @@ public abstract class SummingHistogram extends Histogram {
         if (b < 0)
             throw new IllegalArgumentException("Negative histogram[" + minV + "]=" + b);
         if (minV == maxV) { // special case: we are inside a single bar
-            double count = b == 0 ? 0.0 : (maxValue - minValue) * (double)b;
+            double count = b == 0 ? 0.0 : (maxValue - minValue) * (double) b;
             if (countOfValues != null) {
                 countOfValues.count = count;
                 countOfValues.leftBound = b == 0 && previousNonZero(histogram, minV - 1) == -1;
@@ -1836,7 +1860,7 @@ public abstract class SummingHistogram extends Histogram {
             }
             return b == 0 ? 0.0 : 0.5 * (maxValue + minValue) * count;
         }
-        double count = b == 0 ? 0.0 : (minV + 1 - minValue) * (double)b;
+        double count = b == 0 ? 0.0 : (minV + 1 - minValue) * (double) b;
         double sum = b == 0 ? 0.0 : 0.5 * (minV + 1 + minValue) * count;
         for (int v = minV + 1; v < maxV; v++) {
             b = histogram[v];
@@ -1844,7 +1868,7 @@ public abstract class SummingHistogram extends Histogram {
                 throw new IllegalArgumentException("Negative histogram[" + v + "]=" + b);
             if (b > 0) {
                 count += b;
-                sum += (v + 0.5) * (double)b;
+                sum += (v + 0.5) * (double) b;
             }
         }
         if (maxValue > maxV) {
@@ -1852,8 +1876,8 @@ public abstract class SummingHistogram extends Histogram {
             if (b < 0)
                 throw new IllegalArgumentException("Negative histogram[" + maxV + "]=" + b);
             if (b > 0) {
-                count += (maxValue - maxV) * (double)b;
-                sum += 0.5 * (maxValue + maxV) * (maxValue - maxV) * (double)b;
+                count += (maxValue - maxV) * (double) b;
+                sum += 0.5 * (maxValue + maxV) * (maxValue - maxV) * (double) b;
             }
         }
         if (countOfValues != null) {
@@ -1871,25 +1895,27 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * Precise equivalent of {@link #integralBetweenValues(long[], double, double, CountOfValues)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram     <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
+     * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                      <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
-     * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
-    public static double integralBetweenValues(int[] histogram, double minValue, double maxValue,
-        CountOfValues countOfValues)
-    {
+    public static double integralBetweenValues(
+            int[] histogram,
+            double minValue,
+            double maxValue,
+            CountOfValues countOfValues) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, integralBetweenValuesImpl)
         //        \blong\b ==> int    !! Auto-generated: NOT EDIT !! ]]
         Objects.requireNonNull(histogram, "Null histogram argument");
@@ -1910,8 +1936,8 @@ public abstract class SummingHistogram extends Histogram {
             }
             return 0.0;
         }
-        final int minV = (int)minValue;
-        final int maxV = (int)maxValue;
+        final int minV = (int) minValue;
+        final int maxV = (int) maxValue;
         assert minV <= maxV;
         assert minValue < histogram.length;
         assert minV < histogram.length;
@@ -1920,7 +1946,7 @@ public abstract class SummingHistogram extends Histogram {
         if (b < 0)
             throw new IllegalArgumentException("Negative histogram[" + minV + "]=" + b);
         if (minV == maxV) { // special case: we are inside a single bar
-            double count = b == 0 ? 0.0 : (maxValue - minValue) * (double)b;
+            double count = b == 0 ? 0.0 : (maxValue - minValue) * (double) b;
             if (countOfValues != null) {
                 countOfValues.count = count;
                 countOfValues.leftBound = b == 0 && previousNonZero(histogram, minV - 1) == -1;
@@ -1928,7 +1954,7 @@ public abstract class SummingHistogram extends Histogram {
             }
             return b == 0 ? 0.0 : 0.5 * (maxValue + minValue) * count;
         }
-        double count = b == 0 ? 0.0 : (minV + 1 - minValue) * (double)b;
+        double count = b == 0 ? 0.0 : (minV + 1 - minValue) * (double) b;
         double sum = b == 0 ? 0.0 : 0.5 * (minV + 1 + minValue) * count;
         for (int v = minV + 1; v < maxV; v++) {
             b = histogram[v];
@@ -1936,7 +1962,7 @@ public abstract class SummingHistogram extends Histogram {
                 throw new IllegalArgumentException("Negative histogram[" + v + "]=" + b);
             if (b > 0) {
                 count += b;
-                sum += (v + 0.5) * (double)b;
+                sum += (v + 0.5) * (double) b;
             }
         }
         if (maxValue > maxV) {
@@ -1944,8 +1970,8 @@ public abstract class SummingHistogram extends Histogram {
             if (b < 0)
                 throw new IllegalArgumentException("Negative histogram[" + maxV + "]=" + b);
             if (b > 0) {
-                count += (maxValue - maxV) * (double)b;
-                sum += 0.5 * (maxValue + maxV) * (maxValue - maxV) * (double)b;
+                count += (maxValue - maxV) * (double) b;
+                sum += 0.5 * (maxValue + maxV) * (maxValue - maxV) * (double) b;
             }
         }
         if (countOfValues != null) {
@@ -1962,19 +1988,19 @@ public abstract class SummingHistogram extends Histogram {
     }
 
     /**
-     * <p>Returns the difference <i>s</i>(<tt>maxValue</tt>)&minus;<i>s</i>(<tt>minValue</tt>),
+     * <p>Returns the difference <i>s</i>(<code>maxValue</code>)&minus;<i>s</i>(<code>minValue</code>),
      * where <nobr><i>s</i>(<i>v</i>)</nobr> is the summing function, defined in terms of
      * the precise histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
-     * <tt>histogram</tt> argument.
+     * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the precise histogram model,
-     * between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * The <tt>minValue</tt> argument should be not greater than <tt>maxValue</tt>;
+     * between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <tt>minValue&lt;=maxValue</tt>, the result of this method is equal
+     * <p>If <code>minValue&lt;=maxValue</code>, the result of this method is equal
      * to the result of the following operators:
      *
      * <pre>
@@ -1991,68 +2017,70 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * <p>The <tt>countOfValue</tt> argument, if it is not {@code null}, is filled by this method
+     * <p>The <code>countOfValue</code> argument, if it is not {@code null}, is filled by this method
      * by some additional information. Namely:
      *
      * <ul>
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
-     * count()}</tt> will be equal to the difference
-     * <nobr><i>r</i>(<tt>maxValue</tt>)&minus;<i>r</i>(<tt>minValue</tt>)</nobr>,
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
+     * count()}</code> will be equal to the difference
+     * <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>,
      * where <nobr><i>r</i>(<i>v</i>)</nobr> is the rank function, defined in terms of
-     * of the precise histogram model, or 0.0 if <tt>minValue&gt;maxValue</tt>
+     * of the precise histogram model, or 0.0 if <code>minValue&gt;maxValue</code>
      * (see the {@link Histogram comments to Histogram class});
      * in the code example, listed above, it will be equal to
-     * <nobr><tt>toRank-fromRank</tt></nobr>;</li>
+     * <nobr><code>toRank-fromRank</code></nobr>;</li>
      *
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
-     * isLeftBound()}</tt> will be <tt>true</tt> if <tt>minValue&lt;maxValue</tt> and
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=0</nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the left
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
+     * isLeftBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
-     * <tt>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</tt> method after
-     * <tt>hist.{@link #moveToValue(double) moveToValue}(maxValue)</tt> call;</li>
+     * <code>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</code> method after
+     * <code>hist.{@link #moveToValue(double) moveToValue}(maxValue)</code> call;</li>
      *
-     * <li><tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
-     * isRightBound()}</tt> will be <tt>true</tt> if <tt>minValue&lt;maxValue</tt> and
-     * <nobr><i>r</i>(<tt>maxValue</tt>)=<i>r</i>(<tt>minValue</tt>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><tt>minValue..maxValue</tt></nobr> range fully lies to the right
+     * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
+     * isRightBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
+     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
+     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
-     * <tt>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</tt> method after
-     * <tt>hist.{@link #moveToValue(double) moveToValue}(minValue)</tt> call.</li>
+     * <code>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</code> method after
+     * <code>hist.{@link #moveToValue(double) moveToValue}(minValue)</code> call.</li>
      * </ul>
      *
      * <p>Note: in the special case <i>N</i>=0 (all bars <b>b</b>[<i>k</i>] are zero),
-     * the <tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
-     * isLeftBound()}</tt> and
-     * <tt>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
-     * isRightBound()}</tt> values can be any: they are not specified.
+     * the <code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
+     * isLeftBound()}</code> and
+     * <code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
+     * isRightBound()}</code> values can be any: they are not specified.
      * It is the only exception from the rules specified above.
      *
      * <p>This information, for example, allows to calculate the <i>mean</i> of all elements
-     * of the source array <b>A</b>[<i>k</i>], lying in range <tt>minValue..maxValue</tt>,
+     * of the source array <b>A</b>[<i>k</i>], lying in range <code>minValue..maxValue</code>,
      * with generalization to the floating-point case: it is
      * <nobr>result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
      * count()}</nobr>.
      *
-     * @param histogram     <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
+     * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                      <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
-     * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                      the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
-    public static double preciseIntegralBetweenValues(long[] histogram, double minValue, double maxValue,
-        CountOfValues countOfValues)
-    {
+    public static double preciseIntegralBetweenValues(
+            long[] histogram,
+            double minValue,
+            double maxValue,
+            CountOfValues countOfValues) {
         //[[Repeat.SectionStart preciseIntegralBetweenValuesImpl]]
         Objects.requireNonNull(histogram, "Null histogram argument");
         if (Double.isNaN(minValue))
@@ -2072,8 +2100,8 @@ public abstract class SummingHistogram extends Histogram {
             }
             return 0.0;
         }
-        final int minV = (int)minValue;
-        final int maxV = (int)maxValue;
+        final int minV = (int) minValue;
+        final int maxV = (int) maxValue;
         assert minV <= maxV;
         assert minValue < histogram.length; // because minValue < maxValue
         assert minV < histogram.length;
@@ -2098,8 +2126,8 @@ public abstract class SummingHistogram extends Histogram {
         if (minLeftV == -1) {
             minCount = 0.0;
             minIntegral = 0.0;
-        } else if (minV == minLeftV && b > 1 && (minValue - minV) * (double)b <= b - 1) {
-            minCount = (minValue - minV) * (double)b;
+        } else if (minV == minLeftV && b > 1 && (minValue - minV) * (double) b <= b - 1) {
+            minCount = (minValue - minV) * (double) b;
             minIntegral = 0.5 * (minValue + minV) * minCount;
         } else {
             assert b > 0; // because minLeftV != -1
@@ -2116,7 +2144,7 @@ public abstract class SummingHistogram extends Histogram {
                 assert b == histogram[minV];
                 assert b > 0;
                 if (minV == maxV) { // special case: we are inside the rightmost single bar
-                    double count = (maxValue - minValue) * (double)b;
+                    double count = (maxValue - minValue) * (double) b;
                     if (countOfValues != null) {
                         countOfValues.count = count;
                         countOfValues.leftBound = false;
@@ -2124,7 +2152,7 @@ public abstract class SummingHistogram extends Histogram {
                     }
                     return 0.5 * (maxValue + minValue) * count;
                 } else {
-                    double count = (minV + 1 - minValue) * (double)b;
+                    double count = (minV + 1 - minValue) * (double) b;
                     if (countOfValues != null) {
                         countOfValues.count = count;
                         countOfValues.leftBound = false;
@@ -2134,8 +2162,8 @@ public abstract class SummingHistogram extends Histogram {
                 }
             }
             trapProcessed = true;
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (minLeftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (minLeftV + 0.5 * wideTrapDeltaV);
             leftValue = minLeftV + wideTrapDeltaV;
             assert minValue >= leftValue - 0.001;
             double deltaRank = (minValue - leftValue) / (rightV - leftValue);
@@ -2169,8 +2197,8 @@ public abstract class SummingHistogram extends Histogram {
                 countOfValues.rightBound = false;
             }
             return 0.0;
-        } else if (maxV == maxLeftV && b > 1 && (maxValue - maxV) * (double)b <= b - 1) {
-            maxCount = (maxValue - maxV) * (double)b;
+        } else if (maxV == maxLeftV && b > 1 && (maxValue - maxV) * (double) b <= b - 1) {
+            maxCount = (maxValue - maxV) * (double) b;
             maxIntegral = 0.5 * (maxValue + maxV) * maxCount;
         } else {
             assert b > 0; // because maxLeftV != -1
@@ -2180,17 +2208,17 @@ public abstract class SummingHistogram extends Histogram {
             if (rightV == -1) { // all further elements are zero
                 if (maxV > maxLeftV) { // special case: no narrow trapezoid, full right bar
                     maxCount = b;
-                    maxIntegral = (maxLeftV + 0.5) * (double)b;
+                    maxIntegral = (maxLeftV + 0.5) * (double) b;
                 } else {
                     assert b == histogram[maxV];
                     assert b > 0;
-                    maxCount = (maxValue - maxV) * (double)b;
+                    maxCount = (maxValue - maxV) * (double) b;
                     maxIntegral = 0.5 * (maxValue + maxV) * maxCount;
                 }
             } else {
                 if (maxLeftV != minLeftV || !trapProcessed) { // maybe, all this was already calculated
-                    double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-                    wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (maxLeftV + 0.5 * wideTrapDeltaV);
+                    double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+                    wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (maxLeftV + 0.5 * wideTrapDeltaV);
                     leftValue = maxLeftV + wideTrapDeltaV;
                 }
                 assert maxValue >= leftValue - 0.001;
@@ -2247,7 +2275,7 @@ public abstract class SummingHistogram extends Histogram {
                 } // else BCD triangle is degenerated: C=D
                 lastNonZero = v;
                 middleCount += b;
-                middleIntegral += (v + 0.5) * (double)b;
+                middleIntegral += (v + 0.5) * (double) b;
             }
         }
         if (maxLeftV < histogram.length && maxLeftV - lastNonZero > 1) { // last MADN trapezoid
@@ -2265,25 +2293,27 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * Precise equivalent of {@link #preciseIntegralBetweenValues(long[], double, double, CountOfValues)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram     <tt>histogram</tt>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
+     * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                      <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
-     * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     *                      the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
-     *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
+     * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
+     * the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
+     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
-    public static double preciseIntegralBetweenValues(int[] histogram, double minValue, double maxValue,
-        CountOfValues countOfValues)
-    {
+    public static double preciseIntegralBetweenValues(
+            int[] histogram,
+            double minValue,
+            double maxValue,
+            CountOfValues countOfValues) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, preciseIntegralBetweenValuesImpl)
         //        \blong\b ==> int  !! Auto-generated: NOT EDIT !! ]]
         Objects.requireNonNull(histogram, "Null histogram argument");
@@ -2304,8 +2334,8 @@ public abstract class SummingHistogram extends Histogram {
             }
             return 0.0;
         }
-        final int minV = (int)minValue;
-        final int maxV = (int)maxValue;
+        final int minV = (int) minValue;
+        final int maxV = (int) maxValue;
         assert minV <= maxV;
         assert minValue < histogram.length; // because minValue < maxValue
         assert minV < histogram.length;
@@ -2330,8 +2360,8 @@ public abstract class SummingHistogram extends Histogram {
         if (minLeftV == -1) {
             minCount = 0.0;
             minIntegral = 0.0;
-        } else if (minV == minLeftV && b > 1 && (minValue - minV) * (double)b <= b - 1) {
-            minCount = (minValue - minV) * (double)b;
+        } else if (minV == minLeftV && b > 1 && (minValue - minV) * (double) b <= b - 1) {
+            minCount = (minValue - minV) * (double) b;
             minIntegral = 0.5 * (minValue + minV) * minCount;
         } else {
             assert b > 0; // because minLeftV != -1
@@ -2348,7 +2378,7 @@ public abstract class SummingHistogram extends Histogram {
                 assert b == histogram[minV];
                 assert b > 0;
                 if (minV == maxV) { // special case: we are inside the rightmost single bar
-                    double count = (maxValue - minValue) * (double)b;
+                    double count = (maxValue - minValue) * (double) b;
                     if (countOfValues != null) {
                         countOfValues.count = count;
                         countOfValues.leftBound = false;
@@ -2356,7 +2386,7 @@ public abstract class SummingHistogram extends Histogram {
                     }
                     return 0.5 * (maxValue + minValue) * count;
                 } else {
-                    double count = (minV + 1 - minValue) * (double)b;
+                    double count = (minV + 1 - minValue) * (double) b;
                     if (countOfValues != null) {
                         countOfValues.count = count;
                         countOfValues.leftBound = false;
@@ -2366,8 +2396,8 @@ public abstract class SummingHistogram extends Histogram {
                 }
             }
             trapProcessed = true;
-            double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-            wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (minLeftV + 0.5 * wideTrapDeltaV);
+            double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+            wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (minLeftV + 0.5 * wideTrapDeltaV);
             leftValue = minLeftV + wideTrapDeltaV;
             assert minValue >= leftValue - 0.001;
             double deltaRank = (minValue - leftValue) / (rightV - leftValue);
@@ -2401,8 +2431,8 @@ public abstract class SummingHistogram extends Histogram {
                 countOfValues.rightBound = false;
             }
             return 0.0;
-        } else if (maxV == maxLeftV && b > 1 && (maxValue - maxV) * (double)b <= b - 1) {
-            maxCount = (maxValue - maxV) * (double)b;
+        } else if (maxV == maxLeftV && b > 1 && (maxValue - maxV) * (double) b <= b - 1) {
+            maxCount = (maxValue - maxV) * (double) b;
             maxIntegral = 0.5 * (maxValue + maxV) * maxCount;
         } else {
             assert b > 0; // because maxLeftV != -1
@@ -2412,17 +2442,17 @@ public abstract class SummingHistogram extends Histogram {
             if (rightV == -1) { // all further elements are zero
                 if (maxV > maxLeftV) { // special case: no narrow trapezoid, full right bar
                     maxCount = b;
-                    maxIntegral = (maxLeftV + 0.5) * (double)b;
+                    maxIntegral = (maxLeftV + 0.5) * (double) b;
                 } else {
                     assert b == histogram[maxV];
                     assert b > 0;
-                    maxCount = (maxValue - maxV) * (double)b;
+                    maxCount = (maxValue - maxV) * (double) b;
                     maxIntegral = 0.5 * (maxValue + maxV) * maxCount;
                 }
             } else {
                 if (maxLeftV != minLeftV || !trapProcessed) { // maybe, all this was already calculated
-                    double wideTrapDeltaV = b == 1 ? 0.0 : (double)(b - 1) / (double)b;
-                    wideTrap = b == 1 ? 0.0 : (double)(b - 1) * (maxLeftV + 0.5 * wideTrapDeltaV);
+                    double wideTrapDeltaV = b == 1 ? 0.0 : (double) (b - 1) / (double) b;
+                    wideTrap = b == 1 ? 0.0 : (double) (b - 1) * (maxLeftV + 0.5 * wideTrapDeltaV);
                     leftValue = maxLeftV + wideTrapDeltaV;
                 }
                 assert maxValue >= leftValue - 0.001;
@@ -2479,7 +2509,7 @@ public abstract class SummingHistogram extends Histogram {
                 } // else BCD triangle is degenerated: C=D
                 lastNonZero = v;
                 middleCount += b;
-                middleIntegral += (v + 0.5) * (double)b;
+                middleIntegral += (v + 0.5) * (double) b;
             }
         }
         if (maxLeftV < histogram.length && maxLeftV - lastNonZero > 1) { // last MADN trapezoid
@@ -2526,10 +2556,9 @@ public abstract class SummingHistogram extends Histogram {
         private long shareCount = 1; // the length of the sharing list
 
         private SummingLongHistogram(long[][] histogram,
-            double[][] sums, // separate line for removing by preprocessor
-            int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-            long total, int[] bitLevels)
-        {
+                                     double[][] sums, // separate line for removing by preprocessor
+                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -2546,13 +2575,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -2568,9 +2597,9 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingLongHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -2587,7 +2616,7 @@ public abstract class SummingHistogram extends Histogram {
                         int numberOfDifferentValues = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (double)value * histogram[value];
+                            sum += (double) value * histogram[value];
                             if (histogram[value] != 0) { // numberOfDifferentValues: removed by preprocessor
                                 numberOfDifferentValues++;
                             }  // numberOfDifferentValues: removed by preprocessor
@@ -2619,7 +2648,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             final boolean wasEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             ++histogram0[value];
             // multilevel start (for preprocessing)
@@ -2681,7 +2710,7 @@ public abstract class SummingHistogram extends Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             // multilevel start (for preprocessing)
@@ -2741,7 +2770,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -2868,7 +2897,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     // multilevel start (for preprocessing)
@@ -2924,7 +2953,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     // multilevel start (for preprocessing)
@@ -3055,12 +3084,12 @@ public abstract class SummingHistogram extends Histogram {
                                 currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             final double previousSum = currentSums[k] + sum;
                             final int previousNumberOfDifferentValues =
-                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                    currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                             do {
                                 k--;
                                 level = bitLevels[k];
@@ -3069,9 +3098,9 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                                 currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                        - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                             } while (k > 0 && rank >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -3085,7 +3114,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -3102,7 +3131,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -3118,7 +3147,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             final double lastSum = currentSums[k];
@@ -3138,7 +3167,7 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -3146,13 +3175,13 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -3199,7 +3228,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -3229,12 +3258,12 @@ public abstract class SummingHistogram extends Histogram {
                                 currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             final double previousSum = currentSums[k] + sum;
                             final int previousNumberOfDifferentValues =
-                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                    currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                             do {
                                 k--;
                                 level = bitLevels[k];
@@ -3243,9 +3272,9 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                                 currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                        - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                             } while (k > 0 && r >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -3259,7 +3288,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -3276,7 +3305,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -3292,7 +3321,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             final double lastSum = currentSums[k];
@@ -3312,7 +3341,7 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -3320,14 +3349,14 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -3380,14 +3409,14 @@ public abstract class SummingHistogram extends Histogram {
                             currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
                         final long previousRank = currentIRanks[k] + b;
                         final double previousSum = currentSums[k] + sum;
                         final int previousNumberOfDifferentValues =
-                            currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                         do {
                             k--;
                             level = bitLevels[k];
@@ -3396,9 +3425,9 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                             currentIRanks[k] = previousRank - b;
                             currentSums[k] = previousSum
-                                - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                    - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                             currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                         } while (k > 0 && value >> level == currentIValue);
                         currentIValue <<= level;
                     }
@@ -3412,7 +3441,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     long b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (double)b * (double)j;
+                    currentSums[0] -= (double) b * (double) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         --currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -3437,7 +3466,7 @@ public abstract class SummingHistogram extends Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -3459,13 +3488,13 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     long b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)j;
+                    currentSums[0] += (double) b * (double) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -3492,9 +3521,9 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SummingLongHistogram result = new SummingLongHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    numbersOfDifferentValues, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        numbersOfDifferentValues, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SummingLongHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -3515,11 +3544,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -3555,13 +3584,13 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             if (currentNumberOfDifferentValues[0] < 0 || currentNumberOfDifferentValues[0] > Math.min(length, total))
                 throw new AssertionError("Bug in " + this + ": currentNumberOfDifferentValues = "
-                    + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
+                        + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
             for (int k = 0; k < m; k++) {
                 int nDifferentValues = 0;
                 if (k == 0) {
@@ -3573,32 +3602,32 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 if (currentNumberOfDifferentValues[k] != nDifferentValues)
                     throw new AssertionError("Bug in " + this + ": illegal currentNumberOfDifferentValues[" + k
-                        + "] = " + currentNumberOfDifferentValues[k] + " != "
-                        + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
+                            + "] = " + currentNumberOfDifferentValues[k] + " != "
+                            + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 double sum = 0.0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (double)histogram0[j] * (double)j;
+                    sum += (double) histogram0[j] * (double) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -3615,8 +3644,7 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -3631,7 +3659,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final long lastRank = currentIRanks[k];
                         final double lastSum = currentSums[k];
@@ -3652,7 +3680,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     long b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)currentIValue;
+                    currentSums[0] += (double) b * (double) currentIValue;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -3761,7 +3789,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -3801,10 +3829,9 @@ public abstract class SummingHistogram extends Histogram {
         private long shareCount = 1; // the length of the sharing list
 
         private SummingLong1LevelHistogram(long[][] histogram,
-            double[][] sums, // separate line for removing by preprocessor
-            int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-            long total, int[] bitLevels)
-        {
+                                     double[][] sums, // separate line for removing by preprocessor
+                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3821,13 +3848,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -3843,9 +3870,9 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingLong1LevelHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -3862,7 +3889,7 @@ public abstract class SummingHistogram extends Histogram {
                         int numberOfDifferentValues = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (double)value * histogram[value];
+                            sum += (double) value * histogram[value];
                             if (histogram[value] != 0) { // numberOfDifferentValues: removed by preprocessor
                                 numberOfDifferentValues++;
                             }  // numberOfDifferentValues: removed by preprocessor
@@ -3894,7 +3921,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             final boolean wasEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             ++histogram0[value];
             if (value < currentIValue) {
@@ -3928,7 +3955,7 @@ public abstract class SummingHistogram extends Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             if (value < currentIValue) {
@@ -3960,7 +3987,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -4035,7 +4062,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     if (value < currentIValue) {
@@ -4067,7 +4094,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     if (value < currentIValue) {
@@ -4151,7 +4178,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -4164,7 +4191,7 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -4172,13 +4199,13 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -4225,7 +4252,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -4236,7 +4263,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -4249,7 +4276,7 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -4257,14 +4284,14 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -4296,7 +4323,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     long b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (double)b * (double)j;
+                    currentSums[0] -= (double) b * (double) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         --currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -4306,13 +4333,13 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     long b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)j;
+                    currentSums[0] += (double) b * (double) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -4339,9 +4366,9 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SummingLong1LevelHistogram result = new SummingLong1LevelHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    numbersOfDifferentValues, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        numbersOfDifferentValues, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SummingLong1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -4362,11 +4389,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -4402,13 +4429,13 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             if (currentNumberOfDifferentValues[0] < 0 || currentNumberOfDifferentValues[0] > Math.min(length, total))
                 throw new AssertionError("Bug in " + this + ": currentNumberOfDifferentValues = "
-                    + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
+                        + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
             for (int k = 0; k < m; k++) {
                 int nDifferentValues = 0;
                 if (k == 0) {
@@ -4420,32 +4447,32 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 if (currentNumberOfDifferentValues[k] != nDifferentValues)
                     throw new AssertionError("Bug in " + this + ": illegal currentNumberOfDifferentValues[" + k
-                        + "] = " + currentNumberOfDifferentValues[k] + " != "
-                        + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
+                            + "] = " + currentNumberOfDifferentValues[k] + " != "
+                            + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 double sum = 0.0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (double)histogram0[j] * (double)j;
+                    sum += (double) histogram0[j] * (double) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -4461,7 +4488,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     long b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)currentIValue;
+                    currentSums[0] += (double) b * (double) currentIValue;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -4515,7 +4542,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -4557,10 +4584,9 @@ public abstract class SummingHistogram extends Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private SummingIntHistogram(int[][] histogram,
-            long[][] sums, // separate line for removing by preprocessor
-            int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-            int total, int[] bitLevels)
-        {
+                                     long[][] sums, // separate line for removing by preprocessor
+                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4577,13 +4603,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -4599,9 +4625,9 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingIntHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -4618,7 +4644,7 @@ public abstract class SummingHistogram extends Histogram {
                         int numberOfDifferentValues = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (long)value * histogram[value];
+                            sum += (long) value * histogram[value];
                             if (histogram[value] != 0) { // numberOfDifferentValues: removed by preprocessor
                                 numberOfDifferentValues++;
                             }  // numberOfDifferentValues: removed by preprocessor
@@ -4650,7 +4676,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             final boolean wasEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             ++histogram0[value];
             // multilevel start (for preprocessing)
@@ -4712,7 +4738,7 @@ public abstract class SummingHistogram extends Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             // multilevel start (for preprocessing)
@@ -4772,7 +4798,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -4899,7 +4925,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     // multilevel start (for preprocessing)
@@ -4955,7 +4981,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     // multilevel start (for preprocessing)
@@ -5086,12 +5112,12 @@ public abstract class SummingHistogram extends Histogram {
                                 currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             final long previousSum = currentSums[k] + sum;
                             final int previousNumberOfDifferentValues =
-                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                    currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                             do {
                                 k--;
                                 level = bitLevels[k];
@@ -5100,9 +5126,9 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                                 currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                        - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                             } while (k > 0 && rank >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -5116,7 +5142,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -5133,7 +5159,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -5149,7 +5175,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             final long lastSum = currentSums[k];
@@ -5169,7 +5195,7 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -5177,13 +5203,13 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (long)histogram0[currentIValue];
+                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
@@ -5230,7 +5256,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -5260,12 +5286,12 @@ public abstract class SummingHistogram extends Histogram {
                                 currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             final long previousSum = currentSums[k] + sum;
                             final int previousNumberOfDifferentValues =
-                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                    currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                             do {
                                 k--;
                                 level = bitLevels[k];
@@ -5274,9 +5300,9 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                                 currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                        - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                             } while (k > 0 && r >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -5290,7 +5316,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -5307,7 +5333,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -5323,7 +5349,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             final long lastSum = currentSums[k];
@@ -5343,7 +5369,7 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -5351,14 +5377,14 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (long)b;
+                double frac = (rank - currentIRanks[0]) / (long) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0001;
                 }
@@ -5411,14 +5437,14 @@ public abstract class SummingHistogram extends Histogram {
                             currentNumberOfDifferentValues[k] -= numberOfDifferentValues;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
                         final int previousRank = currentIRanks[k] + b;
                         final long previousSum = currentSums[k] + sum;
                         final int previousNumberOfDifferentValues =
-                            currentNumberOfDifferentValues[k] + numberOfDifferentValues;
+                                currentNumberOfDifferentValues[k] + numberOfDifferentValues;
                         do {
                             k--;
                             level = bitLevels[k];
@@ -5427,9 +5453,9 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                             currentIRanks[k] = previousRank - b;
                             currentSums[k] = previousSum
-                                - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                    - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                             currentNumberOfDifferentValues[k] = previousNumberOfDifferentValues
-                                - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
+                                    - (k > 0 ? numbersOfDifferentValues[k][currentIValue] : b > 0 ? 1 : 0);
                         } while (k > 0 && value >> level == currentIValue);
                         currentIValue <<= level;
                     }
@@ -5443,7 +5469,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     int b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (long)b * (long)j;
+                    currentSums[0] -= (long) b * (long) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         --currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -5468,7 +5494,7 @@ public abstract class SummingHistogram extends Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -5490,13 +5516,13 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     int b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)j;
+                    currentSums[0] += (long) b * (long) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -5523,9 +5549,9 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SummingIntHistogram result = new SummingIntHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    numbersOfDifferentValues, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        numbersOfDifferentValues, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SummingIntHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -5546,11 +5572,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -5586,13 +5612,13 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             if (currentNumberOfDifferentValues[0] < 0 || currentNumberOfDifferentValues[0] > Math.min(length, total))
                 throw new AssertionError("Bug in " + this + ": currentNumberOfDifferentValues = "
-                    + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
+                        + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
             for (int k = 0; k < m; k++) {
                 int nDifferentValues = 0;
                 if (k == 0) {
@@ -5604,32 +5630,32 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 if (currentNumberOfDifferentValues[k] != nDifferentValues)
                     throw new AssertionError("Bug in " + this + ": illegal currentNumberOfDifferentValues[" + k
-                        + "] = " + currentNumberOfDifferentValues[k] + " != "
-                        + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
+                            + "] = " + currentNumberOfDifferentValues[k] + " != "
+                            + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 long sum = 0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (long)histogram0[j] * (long)j;
+                    sum += (long) histogram0[j] * (long) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -5646,8 +5672,7 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -5662,7 +5687,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final int lastRank = currentIRanks[k];
                         final long lastSum = currentSums[k];
@@ -5683,7 +5708,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     int b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)currentIValue;
+                    currentSums[0] += (long) b * (long) currentIValue;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -5792,7 +5817,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }
@@ -5837,10 +5862,9 @@ public abstract class SummingHistogram extends Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private SummingInt1LevelHistogram(int[][] histogram,
-            long[][] sums, // separate line for removing by preprocessor
-            int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-            int total, int[] bitLevels)
-        {
+                                     long[][] sums, // separate line for removing by preprocessor
+                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -5857,13 +5881,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -5879,9 +5903,9 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingInt1LevelHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -5898,7 +5922,7 @@ public abstract class SummingHistogram extends Histogram {
                         int numberOfDifferentValues = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (long)value * histogram[value];
+                            sum += (long) value * histogram[value];
                             if (histogram[value] != 0) { // numberOfDifferentValues: removed by preprocessor
                                 numberOfDifferentValues++;
                             }  // numberOfDifferentValues: removed by preprocessor
@@ -5930,7 +5954,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             final boolean wasEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             ++histogram0[value];
             if (value < currentIValue) {
@@ -5964,7 +5988,7 @@ public abstract class SummingHistogram extends Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed by preprocessor
             if (value < currentIValue) {
@@ -5996,7 +6020,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -6071,7 +6095,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     if (value < currentIValue) {
@@ -6103,7 +6127,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     final boolean becomeEmpty = histogram0[value] == 0; // numberOfDifferentValues: removed...
                     if (value < currentIValue) {
@@ -6187,7 +6211,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -6200,7 +6224,7 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -6208,13 +6232,13 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (long)histogram0[currentIValue];
+                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
@@ -6261,7 +6285,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -6272,7 +6296,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             --currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -6285,7 +6309,7 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                             ++currentNumberOfDifferentValues[0];
                         } // numberOfDifferentValues: removed by preprocessor
@@ -6293,14 +6317,14 @@ public abstract class SummingHistogram extends Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (long)b;
+                double frac = (rank - currentIRanks[0]) / (long) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0001;
                 }
@@ -6332,7 +6356,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     int b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (long)b * (long)j;
+                    currentSums[0] -= (long) b * (long) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         --currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -6342,13 +6366,13 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     int b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)j;
+                    currentSums[0] += (long) b * (long) j;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -6375,9 +6399,9 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SummingInt1LevelHistogram result = new SummingInt1LevelHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    numbersOfDifferentValues, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        numbersOfDifferentValues, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SummingInt1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -6398,11 +6422,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -6438,13 +6462,13 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             if (currentNumberOfDifferentValues[0] < 0 || currentNumberOfDifferentValues[0] > Math.min(length, total))
                 throw new AssertionError("Bug in " + this + ": currentNumberOfDifferentValues = "
-                    + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
+                        + currentNumberOfDifferentValues[0] + " is out of range 0..min(" + length + "," + total + ")");
             for (int k = 0; k < m; k++) {
                 int nDifferentValues = 0;
                 if (k == 0) {
@@ -6456,32 +6480,32 @@ public abstract class SummingHistogram extends Histogram {
                 }
                 if (currentNumberOfDifferentValues[k] != nDifferentValues)
                     throw new AssertionError("Bug in " + this + ": illegal currentNumberOfDifferentValues[" + k
-                        + "] = " + currentNumberOfDifferentValues[k] + " != "
-                        + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
+                            + "] = " + currentNumberOfDifferentValues[k] + " != "
+                            + nDifferentValues + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // numberOfDifferentValues: removed...
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 long sum = 0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (long)histogram0[j] * (long)j;
+                    sum += (long) histogram0[j] * (long) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -6497,7 +6521,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     int b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)currentIValue;
+                    currentSums[0] += (long) b * (long) currentIValue;
                     if (b != 0) { // numberOfDifferentValues: removed by preprocessor
                         ++currentNumberOfDifferentValues[0];
                     } // numberOfDifferentValues: removed by preprocessor
@@ -6551,7 +6575,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }
@@ -6587,9 +6611,8 @@ public abstract class SummingHistogram extends Histogram {
         private long shareCount = 1; // the length of the sharing list
 
         private SimplifiedSummingLongHistogram(long[][] histogram,
-            double[][] sums, // separate line for removing by preprocessor
-            long total, int[] bitLevels)
-        {
+                                     double[][] sums, // separate line for removing by preprocessor
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -6605,13 +6628,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -6625,8 +6648,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingLongHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -6641,7 +6664,7 @@ public abstract class SummingHistogram extends Histogram {
                         double sum = 0.0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (double)value * histogram[value];
+                            sum += (double) value * histogram[value];
                         }
                         this.histogram[k][i] = count;
                         this.sums[k][i] = sum;
@@ -6669,7 +6692,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             ++histogram0[value];
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -6715,7 +6738,7 @@ public abstract class SummingHistogram extends Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -6759,7 +6782,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -6853,7 +6876,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -6893,7 +6916,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -7004,7 +7027,7 @@ public abstract class SummingHistogram extends Histogram {
                                 currentSums[k] -= sum;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             final double previousSum = currentSums[k] + sum;
@@ -7016,7 +7039,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                             } while (k > 0 && rank >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -7030,7 +7053,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                     } while (rank < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -7044,7 +7067,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -7059,7 +7082,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             final double lastSum = currentSums[k];
@@ -7077,18 +7100,18 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -7135,7 +7158,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -7162,7 +7185,7 @@ public abstract class SummingHistogram extends Histogram {
                                 currentSums[k] -= sum;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             final double previousSum = currentSums[k] + sum;
@@ -7174,7 +7197,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                             } while (k > 0 && r >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -7188,7 +7211,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                     } while (r < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -7202,7 +7225,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -7217,7 +7240,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             final double lastSum = currentSums[k];
@@ -7235,19 +7258,19 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -7297,7 +7320,7 @@ public abstract class SummingHistogram extends Histogram {
                             currentSums[k] -= sum;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
@@ -7311,7 +7334,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                             currentIRanks[k] = previousRank - b;
                             currentSums[k] = previousSum
-                                - (k > 0 ? sums[k][currentIValue] : (double)b * (double)currentIValue);
+                                    - (k > 0 ? sums[k][currentIValue] : (double) b * (double) currentIValue);
                         } while (k > 0 && value >> level == currentIValue);
                         currentIValue <<= level;
                     }
@@ -7325,7 +7348,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     long b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (double)b * (double)j;
+                    currentSums[0] -= (double) b * (double) j;
                 }
                 assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for value=" + value;
             } else {
@@ -7346,7 +7369,7 @@ public abstract class SummingHistogram extends Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -7366,10 +7389,10 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     long b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)j;
+                    currentSums[0] += (double) b * (double) j;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -7396,8 +7419,8 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SimplifiedSummingLongHistogram result = new SimplifiedSummingLongHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SimplifiedSummingLongHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -7418,11 +7441,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -7451,10 +7474,10 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
                 if (k == 0) {
                 } else {
@@ -7462,26 +7485,26 @@ public abstract class SummingHistogram extends Histogram {
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 double sum = 0.0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (double)histogram0[j] * (double)j;
+                    sum += (double) histogram0[j] * (double) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -7498,8 +7521,7 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -7513,7 +7535,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final long lastRank = currentIRanks[k];
                         final double lastSum = currentSums[k];
@@ -7532,7 +7554,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     long b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)currentIValue;
+                    currentSums[0] += (double) b * (double) currentIValue;
                     ++currentIValue;
                 } while (currentIRanks[0] < total);
                 assert currentIRanks[0] == total : "currentIRank=" + currentIRanks[0] + " > total=" + total;
@@ -7635,7 +7657,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -7673,9 +7695,8 @@ public abstract class SummingHistogram extends Histogram {
         private long shareCount = 1; // the length of the sharing list
 
         private SimplifiedSummingLong1LevelHistogram(long[][] histogram,
-            double[][] sums, // separate line for removing by preprocessor
-            long total, int[] bitLevels)
-        {
+                                     double[][] sums, // separate line for removing by preprocessor
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -7691,13 +7712,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -7711,8 +7732,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingLong1LevelHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -7727,7 +7748,7 @@ public abstract class SummingHistogram extends Histogram {
                         double sum = 0.0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (double)value * histogram[value];
+                            sum += (double) value * histogram[value];
                         }
                         this.histogram[k][i] = count;
                         this.sums[k][i] = sum;
@@ -7755,7 +7776,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             ++histogram0[value];
             if (value < currentIValue) {
                 ++currentIRanks[0];
@@ -7782,7 +7803,7 @@ public abstract class SummingHistogram extends Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             if (value < currentIValue) {
                 --currentIRanks[0];
@@ -7807,7 +7828,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -7867,7 +7888,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRank1;
@@ -7892,7 +7913,7 @@ public abstract class SummingHistogram extends Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRanks[0];
@@ -7968,7 +7989,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                     } while (rank < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -7978,18 +7999,18 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -8036,7 +8057,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -8047,7 +8068,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         long b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (double)b * (double)currentIValue;
+                        currentSums[0] -= (double) b * (double) currentIValue;
                     } while (r < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -8057,19 +8078,19 @@ public abstract class SummingHistogram extends Histogram {
                     long b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (double)b * (double)currentIValue;
+                        currentSums[0] += (double) b * (double) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -8101,17 +8122,17 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     long b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (double)b * (double)j;
+                    currentSums[0] -= (double) b * (double) j;
                 }
                 assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for value=" + value;
             } else {
                 for (int j = currentIValue; j < value; j++) {
                     long b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)j;
+                    currentSums[0] += (double) b * (double) j;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -8138,8 +8159,8 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SimplifiedSummingLong1LevelHistogram result = new SimplifiedSummingLong1LevelHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SimplifiedSummingLong1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -8160,11 +8181,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -8193,10 +8214,10 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
                 if (k == 0) {
                 } else {
@@ -8204,26 +8225,26 @@ public abstract class SummingHistogram extends Histogram {
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 double sum = 0.0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (double)histogram0[j] * (double)j;
+                    sum += (double) histogram0[j] * (double) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -8239,7 +8260,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     long b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (double)b * (double)currentIValue;
+                    currentSums[0] += (double) b * (double) currentIValue;
                     ++currentIValue;
                 } while (currentIRanks[0] < total);
                 assert currentIRanks[0] == total : "currentIRank=" + currentIRanks[0] + " > total=" + total;
@@ -8289,7 +8310,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -8329,9 +8350,8 @@ public abstract class SummingHistogram extends Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private SimplifiedSummingIntHistogram(int[][] histogram,
-            long[][] sums, // separate line for removing by preprocessor
-            int total, int[] bitLevels)
-        {
+                                     long[][] sums, // separate line for removing by preprocessor
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -8347,13 +8367,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -8367,8 +8387,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingIntHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -8383,7 +8403,7 @@ public abstract class SummingHistogram extends Histogram {
                         long sum = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (long)value * histogram[value];
+                            sum += (long) value * histogram[value];
                         }
                         this.histogram[k][i] = count;
                         this.sums[k][i] = sum;
@@ -8411,7 +8431,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             ++histogram0[value];
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -8457,7 +8477,7 @@ public abstract class SummingHistogram extends Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -8501,7 +8521,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -8595,7 +8615,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -8635,7 +8655,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -8746,7 +8766,7 @@ public abstract class SummingHistogram extends Histogram {
                                 currentSums[k] -= sum;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             final long previousSum = currentSums[k] + sum;
@@ -8758,7 +8778,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                             } while (k > 0 && rank >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -8772,7 +8792,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                     } while (rank < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -8786,7 +8806,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -8801,7 +8821,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             final long lastSum = currentSums[k];
@@ -8819,18 +8839,18 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (long)histogram0[currentIValue];
+                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
@@ -8877,7 +8897,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -8904,7 +8924,7 @@ public abstract class SummingHistogram extends Histogram {
                                 currentSums[k] -= sum;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             final long previousSum = currentSums[k] + sum;
@@ -8916,7 +8936,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                                 currentIRanks[k] = previousRank - b;
                                 currentSums[k] = previousSum
-                                    - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                        - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                             } while (k > 0 && r >= currentIRanks[k]);
                             currentIValue <<= level;
                         }
@@ -8930,7 +8950,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                     } while (r < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -8944,7 +8964,7 @@ public abstract class SummingHistogram extends Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -8959,7 +8979,7 @@ public abstract class SummingHistogram extends Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             final long lastSum = currentSums[k];
@@ -8977,19 +8997,19 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (long)b;
+                double frac = (rank - currentIRanks[0]) / (long) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0001;
                 }
@@ -9039,7 +9059,7 @@ public abstract class SummingHistogram extends Histogram {
                             currentSums[k] -= sum;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
@@ -9053,7 +9073,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                             currentIRanks[k] = previousRank - b;
                             currentSums[k] = previousSum
-                                - (k > 0 ? sums[k][currentIValue] : (long)b * (long)currentIValue);
+                                    - (k > 0 ? sums[k][currentIValue] : (long) b * (long) currentIValue);
                         } while (k > 0 && value >> level == currentIValue);
                         currentIValue <<= level;
                     }
@@ -9067,7 +9087,7 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     int b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (long)b * (long)j;
+                    currentSums[0] -= (long) b * (long) j;
                 }
                 assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for value=" + value;
             } else {
@@ -9088,7 +9108,7 @@ public abstract class SummingHistogram extends Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -9108,10 +9128,10 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue; j < value; j++) {
                     int b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)j;
+                    currentSums[0] += (long) b * (long) j;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -9138,8 +9158,8 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SimplifiedSummingIntHistogram result = new SimplifiedSummingIntHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SimplifiedSummingIntHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -9160,11 +9180,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -9193,10 +9213,10 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
                 if (k == 0) {
                 } else {
@@ -9204,26 +9224,26 @@ public abstract class SummingHistogram extends Histogram {
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 long sum = 0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (long)histogram0[j] * (long)j;
+                    sum += (long) histogram0[j] * (long) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -9240,8 +9260,7 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -9255,7 +9274,7 @@ public abstract class SummingHistogram extends Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final int lastRank = currentIRanks[k];
                         final long lastSum = currentSums[k];
@@ -9274,7 +9293,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     int b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)currentIValue;
+                    currentSums[0] += (long) b * (long) currentIValue;
                     ++currentIValue;
                 } while (currentIRanks[0] < total);
                 assert currentIRanks[0] == total : "currentIRank=" + currentIRanks[0] + " > total=" + total;
@@ -9377,7 +9396,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }
@@ -9420,9 +9439,8 @@ public abstract class SummingHistogram extends Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private SimplifiedSummingInt1LevelHistogram(int[][] histogram,
-            long[][] sums, // separate line for removing by preprocessor
-            int total, int[] bitLevels)
-        {
+                                     long[][] sums, // separate line for removing by preprocessor
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -9438,13 +9456,13 @@ public abstract class SummingHistogram extends Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -9458,8 +9476,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingInt1LevelHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -9474,7 +9492,7 @@ public abstract class SummingHistogram extends Histogram {
                         long sum = 0;
                         for (int max = value + Math.min(levelLen, this.length - value); value < max; value++) {
                             count += histogram[value];
-                            sum += (long)value * histogram[value];
+                            sum += (long) value * histogram[value];
                         }
                         this.histogram[k][i] = count;
                         this.sums[k][i] = sum;
@@ -9502,7 +9520,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             ++histogram0[value];
             if (value < currentIValue) {
                 ++currentIRanks[0];
@@ -9529,7 +9547,7 @@ public abstract class SummingHistogram extends Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             if (value < currentIValue) {
                 --currentIRanks[0];
@@ -9554,7 +9572,7 @@ public abstract class SummingHistogram extends Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -9614,7 +9632,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRank1;
@@ -9639,7 +9657,7 @@ public abstract class SummingHistogram extends Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRanks[0];
@@ -9715,7 +9733,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                     } while (rank < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -9725,18 +9743,18 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (rank >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (long)histogram0[currentIValue];
+                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
@@ -9783,7 +9801,7 @@ public abstract class SummingHistogram extends Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -9794,7 +9812,7 @@ public abstract class SummingHistogram extends Histogram {
                         --currentIValue;
                         int b = histogram0[currentIValue];
                         currentIRanks[0] -= b;
-                        currentSums[0] -= (long)b * (long)currentIValue;
+                        currentSums[0] -= (long) b * (long) currentIValue;
                     } while (r < currentIRanks[0]);
                     assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for rank=" + rank;
                 }
@@ -9804,19 +9822,19 @@ public abstract class SummingHistogram extends Histogram {
                     int b = histogram0[currentIValue];
                     while (r >= currentIRanks[0] + b) {
                         currentIRanks[0] += b;
-                        currentSums[0] += (long)b * (long)currentIValue;
+                        currentSums[0] += (long) b * (long) currentIValue;
                         ++currentIValue;
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (long)b;
+                double frac = (rank - currentIRanks[0]) / (long) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0001;
                 }
@@ -9848,17 +9866,17 @@ public abstract class SummingHistogram extends Histogram {
                 for (int j = currentIValue - 1; j >= value; j--) {
                     int b = histogram0[j];
                     currentIRanks[0] -= b;
-                    currentSums[0] -= (long)b * (long)j;
+                    currentSums[0] -= (long) b * (long) j;
                 }
                 assert currentIRanks[0] >= 0 : "currentIRank=" + currentIRanks[0] + " < 0 for value=" + value;
             } else {
                 for (int j = currentIValue; j < value; j++) {
                     int b = histogram0[j];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)j;
+                    currentSums[0] += (long) b * (long) j;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -9885,8 +9903,8 @@ public abstract class SummingHistogram extends Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 SimplifiedSummingInt1LevelHistogram result = new SimplifiedSummingInt1LevelHistogram(histogram,
-                    sums, // separate line for removing by preprocessor
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        sums, // separate line for removing by preprocessor
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 SimplifiedSummingInt1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -9907,11 +9925,11 @@ public abstract class SummingHistogram extends Histogram {
         @Override
         public String toString() {
             return "summing int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -9940,10 +9958,10 @@ public abstract class SummingHistogram extends Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
                 if (k == 0) {
                 } else {
@@ -9951,26 +9969,26 @@ public abstract class SummingHistogram extends Histogram {
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
                 long sum = 0;
                 for (int j = 0; j < (currentIValue & highBitMasks[k]); j++) { // sum: removed by preprocessor
-                    sum += (long)histogram0[j] * (long)j;
+                    sum += (long) histogram0[j] * (long) j;
                 } // sum: removed by preprocessor
                 if (currentSums[k] != sum)
                     throw new AssertionError("Bug in " + this + ": illegal currentSums[" + k
-                        + "] = " + currentSums[k] + " != "
-                        + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
-                        + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
+                            + "] = " + currentSums[k] + " != "
+                            + sum + " for " + currentIValue + ": " + histogram[k].length + " bars "
+                            + JArrays.toString(histogram[k], ",", 3000)); // sum: removed by preprocessor
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -9986,7 +10004,7 @@ public abstract class SummingHistogram extends Histogram {
                 do {
                     int b = histogram0[currentIValue];
                     currentIRanks[0] += b;
-                    currentSums[0] += (long)b * (long)currentIValue;
+                    currentSums[0] += (long) b * (long) currentIValue;
                     ++currentIValue;
                 } while (currentIRanks[0] < total);
                 assert currentIRanks[0] == total : "currentIRank=" + currentIRanks[0] + " > total=" + total;
@@ -10036,7 +10054,7 @@ public abstract class SummingHistogram extends Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }

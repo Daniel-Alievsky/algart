@@ -31,9 +31,9 @@ import java.util.Objects;
  * where every element <b>b</b>[<i>v</i>] represents the number of occurrence of the value <i>v</i>
  * in some source array <b>A</b>, consisting of integer elements in 0..<i>M</i>&minus;1 range.
  * The integer values <i>v</i> in the source array are 31-bit:
- * 0&le;<i>M</i>&lt;2<sup>31</sup> (<tt>int</tt> Java type). The elements (bars) of the histogram
+ * 0&le;<i>M</i>&lt;2<sup>31</sup> (<code>int</code> Java type). The elements (bars) of the histogram
  * <b>b</b>[<i>v</i>] and also the total number of elements in the source array <i>N</i> are 63-bit:
- * 0&le;<i>N</i>&lt;2<sup>63</sup> (<tt>long</tt> Java type).
+ * 0&le;<i>N</i>&lt;2<sup>63</sup> (<code>long</code> Java type).
  * The source array <b>A</b> is always supposed to be <i>sorted in increasing order</i>:
  * <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>, where <i>N</i>
  * is the number of elements in <b>A</b> (obviously, <i>N</i> is equal to the sum of all bars
@@ -96,7 +96,7 @@ import java.util.Objects;
  * (<i>r</i>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>], where <i>v</i><sub>0</sub> is
  * the minimal integer value so that
  * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;
- * (here and below &lfloor;<i>x</i>&rfloor; means the integer part of <i>x</i> or <tt>(long)</tt><i>x</i>
+ * (here and below &lfloor;<i>x</i>&rfloor; means the integer part of <i>x</i> or <code>(long)</code><i>x</i>
  * for our non-negative numbers),
  * and <i>r</i><sub>0</sub> = this&nbsp;sum&minus;<b>b</b>[<i>v</i><sub>0</sub>] =
  * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
@@ -292,8 +292,8 @@ import java.util.Objects;
  * {@link #currentIValue()} and {@link #currentIRank()}.
  * The {@link #currentIValue()} method returns the current value, rounded to an integer.
  * The rules of rounding are complicated enough and described in the comments to this method;
- * depending on the situation, it can work as rounding to the nearest integer (<tt>Math.round</tt>)
- * or as truncating (<tt>Math.floor</tt>). In any case, there is a guarantee that
+ * depending on the situation, it can work as rounding to the nearest integer (<code>Math.round</code>)
+ * or as truncating (<code>Math.floor</code>). In any case, there is a guarantee that
  * <nobr>{@link #currentIValue()}&minus;0.5&le;<i>v</i>&lt;{@link #currentIValue()}+1</nobr>.
  * The {@link #currentIRank()} method return the rank, corresponding to <i>w</i>={@link #currentIValue()}:
  * it is equal to <nobr><i>r</i>(&lfloor;<i>w</i>&rfloor;)</nobr> (this rank is integer and does not
@@ -316,7 +316,7 @@ import java.util.Objects;
  *
  * <p>Sometimes you need calculating (and supporting) not one, but several pairs "current value + current rank"
  * in the same histogram. If is possible to use a single object of this class and move from one pair to another,
- * but if the necessary values are not close to each other, the <tt>moveTo...</tt> methods work relatively
+ * but if the necessary values are not close to each other, the <code>moveTo...</code> methods work relatively
  * slowly. In this case, you can <i>share</i> the histogram <b>b</b>[<i>k</i>] between several instance of this
  * class by {@link #share()} method. The sharing instances work with the same <b>b</b>[<i>k</i>] array:
  * any modification by {@link #include include} / {@link #exclude exclude} methods are immediately reflected
@@ -333,8 +333,8 @@ import java.util.Objects;
  * <p>There is no guarantee that the same results, got by different ways (for example,
  * by static methods and by creating an instance of this class and using its methods) are absolutely identical:
  * little mismatches in the last digits after the decimal point are possible.</p>
-
- * <p>This class does not implement own <tt>equals</tt> and <tt>hashCode</tt> methods.
+ *
+ * <p>This class does not implement own <code>equals</code> and <code>hashCode</code> methods.
  * So, this class does not provide a mechanism for comparing different histograms.</p>
  *
  * <p>This class is not thread-safe, but <b>is thread-compatible</b>
@@ -355,31 +355,32 @@ public abstract class Histogram {
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+     * Creates new histogram, consisting of <i>M</i>=<code>histogramLength</code> empty bars.
      * In other words, all bars <b>b</b>[<i>k</i>]=0 at first; but they can be increased by
      * {@link #include(int)} method.
-     *
-     <!--Repeat.SectionStart bitLevels_description-->
-     * <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+     * <p>
+     * <!--Repeat.SectionStart bitLevels_description-->
+     * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
-     * <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+     * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
      * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
      * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
      * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
-     * <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
-     * <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
-     * = <tt>histogramLength</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+     * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
+     * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+     * = <code>histogramLength</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
-     * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
-     * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+     * The elements of <code>bitLevelsOfPyramid</code> array must be
+     * in 1..31 range and must be listed in increasing order:
+     * 0&lt;<code>bitLevelsOfPyramid</code>[0]&lt;...&lt;<code>bitLevelsOfPyramid</code>[<i>m</i>&minus;1]&le;31.
      *
      * <p>Supporting this pyramid little slows down {@link #include(int)} and {@link #exclude(int)} methods:
      * they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
@@ -387,25 +388,25 @@ public abstract class Histogram {
      * in the worst case they require
      *
      * <blockquote>
-     * <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
-     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+     * <i>O</i> (<b>b</b><sup><i>m</i></sup><code>.length</code> + <big>&Sigma;</big>
+     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>)
      * </blockquote>
      *
      * <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
      *
-     * <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+     * <p>Without the pyramid of histograms (<i>m</i>=<code>bitLevelsOfPyramid.length=0</code>), the required time
      * of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
      * and sequential settings of the current value and rank also work much faster if the current
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
-     * will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
-     <!--Repeat.SectionEnd bitLevels_description-->
+     * will work faster without <code>bitLevelsOfPyramid</code> arguments.
+     * <!--Repeat.SectionEnd bitLevels_description-->
      *
-     * <p>The passed <tt>bitLevelsOfPyramid</tt> argument is cloned by this method:
+     * <p>The passed <code>bitLevelsOfPyramid</code> argument is cloned by this method:
      * no references to it are maintained by the created object.
      *
      * <p>If you are sure that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
-     * source array <b>A</b>) will never exceed <tt>Integer.MAX_VALUE</tt>, you can use
+     * source array <b>A</b>) will never exceed <code>Integer.MAX_VALUE</code>, you can use
      * {@link #newIntHistogram(int, int...)} method instead of this one:
      * the created object will probably work little faster and will occupy less memory.
      *
@@ -413,13 +414,14 @@ public abstract class Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
     public static Histogram newLongHistogram(int histogramLength, int... bitLevelsOfPyramid) {
@@ -427,38 +429,39 @@ public abstract class Histogram {
             throw new IllegalArgumentException("Negative histogramLength");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
-            new Long1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
-            new LongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
+                new Long1LevelHistogram(new long[histogramLength], bitLevelsOfPyramid, true) :
+                new LongHistogram(new long[histogramLength], bitLevelsOfPyramid, true);
     }
 
     /**
-     * Creates new histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+     * Creates new histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
-     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]</nobr> at first.
-     *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
-     histogramLength ==> histogram.length
-       !! Auto-generated: NOT EDIT !! -->
-     * <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]</nobr> at first.
+     * <p>
+     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
+     * histogramLength ==> histogram.length
+     * !! Auto-generated: NOT EDIT !! -->
+     * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
-     * <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+     * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
      * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
      * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
      * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
-     * <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
-     * <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
-     * = <tt>histogram.length</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+     * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
+     * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+     * = <code>histogram.length</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
-     * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
-     * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+     * The elements of <code>bitLevelsOfPyramid</code> array must be
+     * in 1..31 range and must be listed in increasing order:
+     * 0&lt;<code>bitLevelsOfPyramid</code>[0]&lt;...&lt;<code>bitLevelsOfPyramid</code>[<i>m</i>&minus;1]&le;31.
      *
      * <p>Supporting this pyramid little slows down {@link #include(int)} and {@link #exclude(int)} methods:
      * they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
@@ -466,24 +469,24 @@ public abstract class Histogram {
      * in the worst case they require
      *
      * <blockquote>
-     * <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
-     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+     * <i>O</i> (<b>b</b><sup><i>m</i></sup><code>.length</code> + <big>&Sigma;</big>
+     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>)
      * </blockquote>
      *
      * <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
      *
-     * <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+     * <p>Without the pyramid of histograms (<i>m</i>=<code>bitLevelsOfPyramid.length=0</code>), the required time
      * of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
      * and sequential settings of the current value and rank also work much faster if the current
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
-     * will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
-     <!--Repeat.IncludeEnd-->
-     * <p>The passed <tt>histogram</tt> and <tt>bitLevelsOfPyramid</tt> arguments are cloned by this method:
+     * will work faster without <code>bitLevelsOfPyramid</code> arguments.
+     * <!--Repeat.IncludeEnd-->
+     * <p>The passed <code>histogram</code> and <code>bitLevelsOfPyramid</code> arguments are cloned by this method:
      * no references to them are maintained by the created object.
      *
      * <p>If you are sure that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
-     * source array <b>A</b>) will never exceed <tt>Integer.MAX_VALUE</tt>, you can use
+     * source array <b>A</b>) will never exceed <code>Integer.MAX_VALUE</code>, you can use
      * {@link #newIntHistogram(int[], int...)} method instead of this one:
      * the created object will probably work little faster and will occupy less memory.
      *
@@ -491,55 +494,58 @@ public abstract class Histogram {
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Long.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Long.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
     public static Histogram newLongHistogram(long[] histogram, int... bitLevelsOfPyramid) {
         Objects.requireNonNull(histogram, "Null histogram argument");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
-            new Long1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-            new LongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                new Long1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                new LongHistogram(histogram.clone(), bitLevelsOfPyramid, false);
     }
 
     /**
-     * Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogramLength</tt> empty bars.
+     * Creates new 32-bit histogram, consisting of <i>M</i>=<code>histogramLength</code> empty bars.
      * In other words, all bars <b>b</b>[<i>k</i>]=0 at first; but they can be increased by
      * {@link #include(int)} method.
      * "32-bit" means that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
-     * source array <b>A</b>) will not be able to exceed <tt>Integer.MAX_VALUE</tt>.
+     * source array <b>A</b>) will not be able to exceed <code>Integer.MAX_VALUE</code>.
      * If you need to process greater numbers, please use {@link #newLongHistogram(int, int...)} method
      * instead of this one.
-     *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)   !! Auto-generated: NOT EDIT !! -->
-     * <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+     * <p>
+     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)   !! Auto-generated: NOT EDIT !! -->
+     * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
-     * <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+     * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
      * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
      * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
      * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
-     * <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
-     * <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
-     * = <tt>histogramLength</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+     * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
+     * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+     * = <code>histogramLength</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
-     * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
-     * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+     * The elements of <code>bitLevelsOfPyramid</code> array must be
+     * in 1..31 range and must be listed in increasing order:
+     * 0&lt;<code>bitLevelsOfPyramid</code>[0]&lt;...&lt;<code>bitLevelsOfPyramid</code>[<i>m</i>&minus;1]&le;31.
      *
      * <p>Supporting this pyramid little slows down {@link #include(int)} and {@link #exclude(int)} methods:
      * they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
@@ -547,34 +553,35 @@ public abstract class Histogram {
      * in the worst case they require
      *
      * <blockquote>
-     * <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
-     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+     * <i>O</i> (<b>b</b><sup><i>m</i></sup><code>.length</code> + <big>&Sigma;</big>
+     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>)
      * </blockquote>
      *
      * <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
      *
-     * <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+     * <p>Without the pyramid of histograms (<i>m</i>=<code>bitLevelsOfPyramid.length=0</code>), the required time
      * of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
      * and sequential settings of the current value and rank also work much faster if the current
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
-     * will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
-     <!--Repeat.IncludeEnd-->
-
-     * <p>The passed <tt>bitLevelsOfPyramid</tt> argument is cloned by this method:
+     * will work faster without <code>bitLevelsOfPyramid</code> arguments.
+     * <!--Repeat.IncludeEnd-->
+     *
+     * <p>The passed <code>bitLevelsOfPyramid</code> argument is cloned by this method:
      * no references to it are maintained by the created object.
      *
      * @param histogramLength    the number <i>M</i> of bars of the new histogram.
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
+     * @throws NullPointerException     if <code>bitLevelsOfPyramid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>histogramLength&lt;0</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
     public static Histogram newIntHistogram(int histogramLength, int... bitLevelsOfPyramid) {
@@ -582,42 +589,43 @@ public abstract class Histogram {
             throw new IllegalArgumentException("Negative histogramLength");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
-            new Int1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
-            new IntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
+                new Int1LevelHistogram(new int[histogramLength], bitLevelsOfPyramid, true) :
+                new IntHistogram(new int[histogramLength], bitLevelsOfPyramid, true);
     }
 
     /**
-     * Creates new 32-bit histogram, consisting of <i>M</i>=<tt>histogram.length</tt> bars, equal to elements
+     * Creates new 32-bit histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
-     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]</nobr> at first.
+     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]</nobr> at first.
      * "32-bit" means that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
-     * source array <b>A</b>) cannot exceed and will not be able to exceed <tt>Integer.MAX_VALUE</tt>.
+     * source array <b>A</b>) cannot exceed and will not be able to exceed <code>Integer.MAX_VALUE</code>.
      * If you need to process greater numbers, please use {@link #newLongHistogram(long[], int...)} method
      * instead of this one.
-     *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
-     histogramLength ==> histogram.length
-       !! Auto-generated: NOT EDIT !! -->
-     * <p>The <tt>bitLevelsOfPyramid</tt> argument is used for optimization of large histograms, consisting
+     * <p>
+     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
+     * histogramLength ==> histogram.length
+     * !! Auto-generated: NOT EDIT !! -->
+     * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
-     * <i>pyramid of histograms</i>: <i>m</i>=<tt>bitLevelsOfPyramid.length</tt> additional arrays
+     * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
      * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
      * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
      * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
-     * <b>b</b>[<i>j</i>], <i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1];<br>
-     * <b>b</b><sup><i>q</i></sup><tt>.length</tt> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
-     * = <tt>histogram.length</tt> &gt;&gt; <tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1].
+     * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
+     * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
+     * = <code>histogram.length</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup></nobr>:
+     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
      * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
-     * The elements of <tt>bitLevelsOfPyramid</tt> array must be in 1..31 range and must be listed in increasing order:
-     * <nobr>0&lt;<tt>bitLevelsOfPyramid</tt>[0]&lt;...&lt;<tt>bitLevelsOfPyramid</tt>[<i>m</i>&minus;1]&le;31</nobr>.
+     * The elements of <code>bitLevelsOfPyramid</code> array must be
+     * in 1..31 range and must be listed in increasing order:
+     * 0&lt;<code>bitLevelsOfPyramid</code>[0]&lt;...&lt;<code>bitLevelsOfPyramid</code>[<i>m</i>&minus;1]&le;31.
      *
      * <p>Supporting this pyramid little slows down {@link #include(int)} and {@link #exclude(int)} methods:
      * they require <i>O</i>(<i>m</i>) operations to correct <i>m</i> arrays <b>b</b><sup><i>q</i></sup>.
@@ -625,43 +633,45 @@ public abstract class Histogram {
      * in the worst case they require
      *
      * <blockquote>
-     * <i>O</i> (<b>b</b><sup><i>m</i></sup><tt>.length</tt> + <big>&Sigma;</big>
-     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><tt>bitLevelsOfPyramid</tt>[<i>q</i>&minus;1]</sup>)
+     * <i>O</i> (<b>b</b><sup><i>m</i></sup><code>.length</code> + <big>&Sigma;</big>
+     * <sub><i>q</i>=1,2,...,<i>m</i>&minus;1</sub>2<sup><code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>)
      * </blockquote>
      *
      * <p>and sequential settings of the current value and rank work much faster if the current value changes slightly.
      *
-     * <p>Without the pyramid of histograms (<i>m</i>=<tt>bitLevelsOfPyramid.length=0</tt>), the required time
+     * <p>Without the pyramid of histograms (<i>m</i>=<code>bitLevelsOfPyramid.length=0</code>), the required time
      * of setting the current value or rank is <i>O</i>(<i>M</i>) in the worst case,
      * and sequential settings of the current value and rank also work much faster if the current
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
-     * will work faster without <tt>bitLevelsOfPyramid</tt> arguments.
-     <!--Repeat.IncludeEnd-->
-     * <p>The passed <tt>histogram</tt> and <tt>bitLevelsOfPyramid</tt> arguments are cloned by this method:
+     * will work faster without <code>bitLevelsOfPyramid</code> arguments.
+     * <!--Repeat.IncludeEnd-->
+     * <p>The passed <code>histogram</code> and <code>bitLevelsOfPyramid</code> arguments are cloned by this method:
      * no references to them are maintained by the created object.
      *
      * @param histogram          initial values of the bars <b>b</b>[<i>k</i>] of the histogram.
      * @param bitLevelsOfPyramid the bit levels: binary logarithms of widths of bars in the sub-histograms
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
-     * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
-     *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
-     *                                  than <tt>Integer.MAX_VALUE</tt>,
-     *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
-     *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
-     *                                  or if <nobr><tt>bitLevelsOfPyramid</tt>[<i>k</i>] &gt;=
-     *                                  <tt>bitLevelsOfPyramid</tt>[<i>k</i>+1]</nobr>
+     * @return the new histogram with bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * @throws NullPointerException     if <code>histogram</code> or <code>bitLevelsOfPyramid</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if some of <code>histogram</code> elements are negative (&lt;0),
+     *                                  or if sum of all bars (elements of <code>histogram</code> array) is greater
+     *                                  than <code>Integer.MAX_VALUE</code>,
+     *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
+     *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
+     *                                  in 1..31 range,
+     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
      *                                  for some <i>k</i>.
      */
     public static Histogram newIntHistogram(int[] histogram, int... bitLevelsOfPyramid) {
         Objects.requireNonNull(histogram, "Null histogram argument");
         Objects.requireNonNull(bitLevelsOfPyramid, "Null bitLevelsOfPyramid argument");
         return bitLevelsOfPyramid.length == 0 ?
-            new Int1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
-            new IntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
+                new Int1LevelHistogram(histogram.clone(), bitLevelsOfPyramid, false) :
+                new IntHistogram(histogram.clone(), bitLevelsOfPyramid, false);
     }
 
     /**
@@ -687,15 +697,15 @@ public abstract class Histogram {
     public abstract long total();
 
     /**
-     * Returns the bar <tt>#value</tt> of the histogram: <b>b</b>[<tt>value</tt>].
-     * If the index <tt>value</tt> is negative or &ge;<i>M</i>={@link #length()},
-     * this method returns <tt>0</tt> and does not throw an exception
+     * Returns the bar <code>#value</code> of the histogram: <b>b</b>[<code>value</code>].
+     * If the index <code>value</code> is negative or &ge;<i>M</i>={@link #length()},
+     * this method returns <code>0</code> and does not throw an exception
      * (unlike {@link #include(int) include} and {@link #exclude(int) exclude} methods).
      *
      * <p>The result of this method is always non-negative (&ge;0).
      *
-     * @param value the index of the bar; can be out of <tt>0..</tt><i>M</i></tt> range.
-     * @return      the bar <tt>#value</tt> of the histogram.
+     * @param value the index of the bar; can be out of <code>0..</code><i>M</i> range.
+     * @return the bar <code>#value</code> of the histogram.
      */
     public abstract long bar(int value);
 
@@ -706,28 +716,30 @@ public abstract class Histogram {
      * <p>The returned array is never a reference to an internal array stored in this object:
      * if necessary, the internal Java array is cloned.
      *
-     * @return all bars of the histogram as <tt>long[]</tt> Java array.
+     * @return all bars of the histogram as <code>long[]</code> Java array.
      */
     public abstract long[] bars();
 
     /**
-     * Increments the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>++</tt>.
-     * It can be interpreted as adding one element <tt>value</tt> to the source array <b>A</b>,
+     * Increments the bar <code>#value</code> of the histogram by 1: <b>b</b>[<code>value</code>]<code>++</code>.
+     * It can be interpreted as adding one element <code>value</code> to the source array <b>A</b>,
      * on the base of which this histogram is built.
      *
      * <p>If this histogram is 32-bit, that is created by {@link #newIntHistogram(int, int...)} or
-     * {@link #newIntHistogram(int[], int...)} method, this method throws <tt>IllegalStateException</tt>
-     * if the current sum of all bars {@link #total()} is <tt>Integer.MAX_VALUE</tt> (2<sup>31</sup>&minus;1).
-     * In other cases, this method throws <tt>IllegalStateException</tt>
-     * if the current sum of all bars is <tt>Long.MAX_VALUE</tt> (2<sup>63</sup>&minus;1).
+     * {@link #newIntHistogram(int[], int...)} method, this method throws <code>IllegalStateException</code>
+     * if the current sum of all bars {@link #total()} is <code>Integer.MAX_VALUE</code> (2<sup>31</sup>&minus;1).
+     * In other cases, this method throws <code>IllegalStateException</code>
+     * if the current sum of all bars is <code>Long.MAX_VALUE</code> (2<sup>63</sup>&minus;1).
      * In a case of throwing an exception, this method does not change the histogram.
      *
      * <p>This method does not change the current value, but can change the current simple and precise ranks.
      * If there are some {@link #nextSharing() sharing instances}, this method change ranks in all sharing instances.
      *
      * @param value the index of the increased histogram bar.
-     * @throws IndexOutOfBoundsException if <tt>value&lt;0</tt> or <tt>value&gt;=</tt><i>M</i>={@link #length()}.
-     * @throws IllegalStateException     if <tt>{@link #total()}==Long.MAX_VALUE</tt> (or <tt>Integer.MAX_VALUE</tt>
+     * @throws IndexOutOfBoundsException if <code>value&lt;0</code> or
+     *                                   <code>value&gt;=</code><i>M</i>={@link #length()}.
+     * @throws IllegalStateException     if <code>{@link #total()}==Long.MAX_VALUE</code>
+     *                                   (or <code>Integer.MAX_VALUE</code>
      *                                   for 32-bit histogram).
      * @see #exclude(int)
      * @see #include(int...)
@@ -736,20 +748,21 @@ public abstract class Histogram {
     public abstract void include(int value);
 
     /**
-     * Decrements the bar <tt>#value</tt> of the histogram by 1: <b>b</b>[<tt>value</tt>]<tt>--</tt>.
-     * It can be interpreted as removing one element, equal to <tt>value</tt>, from the source array <b>A</b>,
+     * Decrements the bar <code>#value</code> of the histogram by 1: <b>b</b>[<code>value</code>]<code>--</code>.
+     * It can be interpreted as removing one element, equal to <code>value</code>, from the source array <b>A</b>,
      * on the base of which this histogram is built.
      *
-     * <p>If the bar <tt>#value</tt> of the histogram is zero (<b>b</b>[<tt>value</tt>]=0), this method
-     * throws <tt>IllegalStateException</tt> and does not change the histogram.
+     * <p>If the bar <code>#value</code> of the histogram is zero (<b>b</b>[<code>value</code>]=0), this method
+     * throws <code>IllegalStateException</code> and does not change the histogram.
      * So, the bars of the histogram cannot become negative.
      *
      * <p>This method does not change the current value, but can change the current simple and precise ranks.
      * If there are some {@link #nextSharing() sharing instances}, this method change ranks in all sharing instances.
      *
      * @param value the index of the increased histogram bar.
-     * @throws IndexOutOfBoundsException if <tt>value&lt;0</tt> or <tt>value&gt;=</tt><i>M</i>={@link #length()}.
-     * @throws IllegalStateException     if <b>b</b>[<tt>value</tt>]=0.
+     * @throws IndexOutOfBoundsException if <code>value&lt;0</code> or
+     *                                   <code>value&gt;=</code><i>M</i>={@link #length()}.
+     * @throws IllegalStateException     if <b>b</b>[<code>value</code>]=0.
      * @see #include(int)
      * @see #include(int...)
      * @see #exclude(int...)
@@ -767,11 +780,11 @@ public abstract class Histogram {
      *
      * @param values the indexes of the increased histogram bars. If some index is repeated several times
      *               in this array, the corresponding histogram bar will be increased several times.
-     * @throws NullPointerException      if <tt>values</tt> array is {@code null}.
-     * @throws IndexOutOfBoundsException if some <tt>values[k]&lt;0</tt> or
-     *                                   <tt>values[k]&gt;=</tt><i>M</i>={@link #length()}.
-     * @throws IllegalStateException     if <tt>{@link #total()}&gt;Long.MAX_VALUE-values.length</tt>
-     *                                   (or <tt>Integer.MAX_VALUE-values.length</tt> for 32-bit histogram).
+     * @throws NullPointerException      if <code>values</code> array is {@code null}.
+     * @throws IndexOutOfBoundsException if some <code>values[k]&lt;0</code> or
+     *                                   <code>values[k]&gt;=</code><i>M</i>={@link #length()}.
+     * @throws IllegalStateException     if <code>{@link #total()}&gt;Long.MAX_VALUE-values.length</code>
+     *                                   (or <code>Integer.MAX_VALUE-values.length</code> for 32-bit histogram).
      * @see #include(int)
      * @see #exclude(int)
      * @see #exclude(int...)
@@ -789,10 +802,10 @@ public abstract class Histogram {
      *
      * @param values the indexes of the decreased histogram bars. If some index is repeated several times
      *               in this array, the corresponding histogram bar will be decreased several times.
-     * @throws NullPointerException      if <tt>values</tt> array is {@code null}.
-     * @throws IndexOutOfBoundsException if some <tt>values[k]&lt;0</tt> or
-     *                                   <tt>values[k]&gt;=</tt><i>M</i>={@link #length()}.
-     * @throws IllegalStateException     if <b>b</b>[<tt>values[k]</tt>]=0 for some <tt>k</tt>.
+     * @throws NullPointerException      if <code>values</code> array is {@code null}.
+     * @throws IndexOutOfBoundsException if some <code>values[k]&lt;0</code> or
+     *                                   <code>values[k]&gt;=</code><i>M</i>={@link #length()}.
+     * @throws IllegalStateException     if <b>b</b>[<code>values[k]</code>]=0 for some <code>k</code>.
      * @see #include(int)
      * @see #exclude(int)
      * @see #include(int...)
@@ -826,9 +839,9 @@ public abstract class Histogram {
         final long total = total();
         if (DEBUG_MODE) {
             assert currentValue >= currentIValue - 0.5001 : "currentValue = " + currentValue
-                + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
+                    + " < currentIValue - 0.5001, currentIValue = " + currentIValue;
             assert currentValue < currentIValue + 1.0001 :
-                "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
+                    "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
         }
         if (total == 0) {
             return 0.0;
@@ -868,7 +881,7 @@ public abstract class Histogram {
                 throw new AssertionError("Negative histogram bar #" + currentIValue);
             if (r + b > total)
                 throw new AssertionError("Current rank " + r + " + bar #"
-                    + currentIValue + " = " + b + " > total number of elements " + total);
+                        + currentIValue + " = " + b + " > total number of elements " + total);
         }
         if (r + b == 0) {
             return currentPreciseRank = 0.0;
@@ -878,9 +891,9 @@ public abstract class Histogram {
         // of moveToValue or moveToRank, after which currentIValue<=currentValue<=currentIValue+1
         if (DEBUG_MODE) {
             assert delta >= 0.0 : "currentValue = " + currentValue
-                + " < currentIValue = " + currentIValue + ", though currentPreciseRank is unknown";
+                    + " < currentIValue = " + currentIValue + ", though currentPreciseRank is unknown";
             assert delta < 1.0001 :
-                "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
+                    "currentValue = " + currentValue + " >= currentIValue + 1.0 = " + (currentIValue + 1.0);
             checkIntegrity();
         }
         if (b > 0 && delta == 0.0) {
@@ -897,7 +910,7 @@ public abstract class Histogram {
             if (r + b == total) { // the rightmost range (b-1)/b..1.0: special case
                 return currentPreciseRank = r + indexInBar;
             }
-            v1 = currentIValue + (double)(b - 1) / (double)b;
+            v1 = currentIValue + (double) (b - 1) / (double) b;
             saveRanks();
         } else {
             if (r + b == total) {
@@ -916,14 +929,14 @@ public abstract class Histogram {
         }
         moveToIRank(r + b);
         assert currentValue == currentIValue :
-            "bug: we are not at the left boundary of the bar #" + currentIValue + ", we at " + currentValue;
+                "bug: we are not at the left boundary of the bar #" + currentIValue + ", we at " + currentValue;
         final double v2 = currentValue;
         restoreRanks();
         currentIValue = savedIValue;
         currentValue = savedValue;
         assert v1 < v2 : "bug: illegal " + v1 + ".." + v2 + " range";
         assert v1 <= currentValue && currentValue <= v2 :
-            "bug: currentValue = " + currentValue + " is not in " + v1 + ".." + v2 + " range";
+                "bug: currentValue = " + currentValue + " is not in " + v1 + ".." + v2 + " range";
         currentPreciseRank = r + b - 1 + (currentValue - v1) / (v2 - v1);
         if (DEBUG_MODE) {
             checkIntegrity();
@@ -947,8 +960,8 @@ public abstract class Histogram {
      * {@link #moveToIRank(long) moveToIRank},
      * then the result of this method is just the integer part of the current value: &lfloor;<i>v</i>&rfloor;.
      * But after {@link #moveToPreciseRank(double) moveToPreciseRank} method the returned value will be equal to
-     * {@link #iPreciseValue(long[], double) iPreciseValue(histogram, rank)}, where <tt>histogram</tt>
-     * is this histogram (the result of {@link #bars()} method) and <tt>rank</tt> is the argument of
+     * {@link #iPreciseValue(long[], double) iPreciseValue(histogram, rank)}, where <code>histogram</code>
+     * is this histogram (the result of {@link #bars()} method) and <code>rank</code> is the argument of
      * {@link #moveToPreciseRank(double)}.
      *
      * <p>The special case
@@ -964,8 +977,8 @@ public abstract class Histogram {
      *
      * <p>Immediately after creating a new histogram this method always returns 0 (like {@link #currentValue()}).
      *
-     * <p>This result of this method always lies between <tt>(int)</tt><i>v</i>=&lfloor;<i>v</i>&rfloor;
-     * and <nobr><tt>Math.round</tt>(<i>v</i>)</nobr>.
+     * <p>This result of this method always lies between <code>(int)</code><i>v</i>=&lfloor;<i>v</i>&rfloor;
+     * and <nobr><code>Math.round</code>(<i>v</i>)</nobr>.
      *
      * @return the current value (percentile), rounded to an integer number.
      * @see #currentValue()
@@ -995,13 +1008,13 @@ public abstract class Histogram {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+     * Returns <code>true</code> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
      * (<i>v</i> is the {@link #currentValue() current value})
      * and either all bars from the left, or all bars from the right are also zero.
-     * Equivalent to <nobr><tt>{@link #leftFromNonZeroPart()} || {@link #rightFromNonZeroPart()}</tt></nobr>.
+     * Equivalent to <nobr><code>{@link #leftFromNonZeroPart()} || {@link #rightFromNonZeroPart()}</code></nobr>.
      *
-     * @return <tt>true</tt> if the current bar (containing the current value)
-     *         and all bars rightward or leftward from it are zero.
+     * @return <code>true</code> if the current bar (containing the current value)
+     * and all bars rightward or leftward from it are zero.
      */
     public final boolean outsideNonZeroPart() {
         long r = currentIRank();
@@ -1009,46 +1022,46 @@ public abstract class Histogram {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+     * Returns <code>true</code> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
      * (<i>v</i> is the {@link #currentValue() current value})
      * and all bars from the left are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;.
      *
-     * @return <tt>true</tt> if the current bar (containing the current value)
-     *         and all bars leftward from it are zero.
+     * @return <code>true</code> if the current bar (containing the current value)
+     * and all bars leftward from it are zero.
      */
     public final boolean leftFromNonZeroPart() {
         return currentIRank() == 0 && bar(currentIValue) == 0;
     }
 
     /**
-     * Returns <tt>true</tt> if and only all bars from the left of the current bar are zero:
+     * Returns <code>true</code> if and only all bars from the left of the current bar are zero:
      * <b>b</b>[<i>k</i>]=0 for all <i>k</i>&lt;&lfloor;<i>v</i>&rfloor;
      * (<i>v</i> is the {@link #currentValue() current value}).
      *
-     * @return <tt>true</tt> if all bars leftward from the current value are zero.
+     * @return <code>true</code> if all bars leftward from the current value are zero.
      */
     public final boolean leftFromOrAtBoundOfNonZeroPart() {
         return currentIRank() == 0;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
+     * Returns <code>true</code> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
      * (<i>v</i> is the {@link #currentValue() current value})
      * and all bars from the right are also zero: <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;.
      *
-     * @return <tt>true</tt> if the current bar (containing the current value)
-     *         and all bars rightward from it are zero.
+     * @return <code>true</code> if the current bar (containing the current value)
+     * and all bars rightward from it are zero.
      */
     public final boolean rightFromNonZeroPart() {
         return currentIRank() == total();
     }
 
     /**
-     * Returns <tt>true</tt> if and only all bars from the right of the current bar are zero:
+     * Returns <code>true</code> if and only all bars from the right of the current bar are zero:
      * <b>b</b>[<i>k</i>]=0 for all <i>k</i>&gt;&lfloor;<i>v</i>&rfloor;
      * (<i>v</i> is the {@link #currentValue() current value}).
      *
-     * @return <tt>true</tt> if all bars rightward from the current value are zero.
+     * @return <code>true</code> if all bars rightward from the current value are zero.
      */
     public final boolean rightFromOrAtBoundOfNonZeroPart() {
         return currentIRank() + bar(currentIValue) == total();
@@ -1057,11 +1070,11 @@ public abstract class Histogram {
     /**
      * Sets the current simple rank <i>r<sup>S</sup></i> and
      * precise rank <i>r<sup>P</sup></i>
-     * to be equal of the <tt>rank</tt> argument.
+     * to be equal of the <code>rank</code> argument.
      * (Because the argument is integer, both <i>r<sup>S</sup></i>
      * and <i>r<sup>P</sup></i> ranks are the same.)
-     * If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><tt>rank</tt>&gt;<i>N</i>={@link #total()}</nobr>,
+     * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
+     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentValue() current value} <i>v</i> automatically changes
      * in accordance to the new rank.
@@ -1079,9 +1092,9 @@ public abstract class Histogram {
      * <p>This method works little faster than equivalent calls
      * {@link #moveToRank(double) moveToRank(rank)} and
      * {@link #moveToPreciseRank(double) moveToPreciseRank(rank)}.
-
+     *
      * @param rank new rank <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>.
-     * @return     the reference to this object.
+     * @return the reference to this object.
      * @see #moveToRank(double)
      * @see #moveToPreciseRank(double)
      */
@@ -1089,9 +1102,9 @@ public abstract class Histogram {
 
     /**
      * Sets the current simple rank <i>r<sup>S</sup></i>
-     * to be equal of the <tt>rank</tt> argument.
-     * If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><tt>rank</tt>&gt;<i>N</i>={@link #total()}</nobr>,
+     * to be equal of the <code>rank</code> argument.
+     * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
+     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
      * and the {@link #currentValue() current value} <i>v</i>
@@ -1108,8 +1121,8 @@ public abstract class Histogram {
      * there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
      *
      * @param rank new simple rank <i>r<sup>S</sup></i>.
-     * @return     the reference to this object.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return the reference to this object.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #moveToPreciseRank(double)
      * @see #moveToIRank(long)
      */
@@ -1117,9 +1130,9 @@ public abstract class Histogram {
 
     /**
      * Sets the current precise rank <i>r<sup>P</sup></i>
-     * to be equal of the <tt>rank</tt> argument.
-     * If the <tt>rank</tt> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><tt>rank</tt>&gt;<i>N</i>={@link #total()}</nobr>,
+     * to be equal of the <code>rank</code> argument.
+     * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
+     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentValue() current value} <i>v</i> automatically change
@@ -1136,14 +1149,14 @@ public abstract class Histogram {
      * there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
      *
      * @param rank new precise rank <i>r<sup>P</sup></i>.
-     * @return     the reference to this object.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return the reference to this object.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #moveToRank(double)
      * @see #moveToIRank(long)
      */
     public Histogram moveToPreciseRank(double rank) {
         final long total = total();
-        final long r = (long)rank;
+        final long r = (long) rank;
         if (r == rank || total == 0 || r < 0 || r >= total) {
             moveToIRank(r);
         } else {
@@ -1156,9 +1169,9 @@ public abstract class Histogram {
             final long leftBar = bar(currentIValue);
             assert indexInBar >= 0 && indexInBar <= leftBar;
             if (indexInBar < leftBar - 1 // we are inside a single bar
-                || r == total - 1) // the rightmost range (b-1)/b..1.0: special case
+                    || r == total - 1) // the rightmost range (b-1)/b..1.0: special case
             {
-                currentValue = currentIValue + (rank - (double)leftIRank) / (double)leftBar;
+                currentValue = currentIValue + (rank - (double) leftIRank) / (double) leftBar;
                 // not use "+=" here to provide precise identity with formula in preciseValue static method
             } else {
                 final double leftValue = currentValue;
@@ -1184,15 +1197,15 @@ public abstract class Histogram {
                 //     b-a = 1/leftBar + (rank-r) * (1/rightBar - 1/leftBar)
                 final double leftStripe = leftBar == 1 ? 1.0 : 1.0 / leftBar;
                 final double weightedMeanStripe = leftBar == rightBar ?
-                    leftStripe :
-                    leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
+                        leftStripe :
+                        leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
                 assert weightedMeanStripe >= -0.001;
                 final double rangeCenter = newValue + 0.5 * Math.max(weightedMeanStripe, 1e-10); // (a+b)/2
                 // to be on the safe side, we guarantee that newValue + 1 > newValue
                 // (any real stripe width is not less than 1/Integer.MAX_VALUE>1e-10)
-                final int newIValue = (int)rangeCenter;
+                final int newIValue = (int) rangeCenter;
                 assert newIValue >= leftIValue && newIValue <= rightIValue :
-                    "bug: " + newIValue + " is not in [" + leftIValue + ".." + rightIValue + "] range";
+                        "bug: " + newIValue + " is not in [" + leftIValue + ".." + rightIValue + "] range";
                 if (newIValue == leftIValue) {
                     restoreRanks();
                     currentIValue = leftIValue;
@@ -1216,9 +1229,9 @@ public abstract class Histogram {
 
     /**
      * Sets the current value <i>v</i>
-     * to be equal of the <tt>value</tt> argument.
-     * If the <tt>value</tt> argument is negative, it is replaced with 0 (minimal possible value);
-     * if <nobr><tt>value</tt>&gt;<i>M</i>={@link #length()}</nobr>,
+     * to be equal of the <code>value</code> argument.
+     * If the <code>value</code> argument is negative, it is replaced with 0 (minimal possible value);
+     * if <nobr><code>value</code>&gt;<i>M</i>={@link #length()}</nobr>,
      * it is replaced with <i>M</i> (maximal possible value).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
@@ -1229,16 +1242,16 @@ public abstract class Histogram {
      * {@link #moveToValue(double) moveToValue(value)}.
      *
      * @param value new current value (percentile).
-     * @return      the reference to this object.
+     * @return the reference to this object.
      * @see #moveToValue(double)
      */
     public abstract Histogram moveToIValue(int value);
 
     /**
      * Sets the current value <i>v</i>
-     * to be equal of the <tt>value</tt> argument.
-     * If the <tt>value</tt> argument is negative, it is replaced with 0 (minimal possible value);
-     * if <nobr><tt>value</tt>&gt;<i>M</i>={@link #length()}</nobr>,
+     * to be equal of the <code>value</code> argument.
+     * If the <code>value</code> argument is negative, it is replaced with 0 (minimal possible value);
+     * if <nobr><code>value</code>&gt;<i>M</i>={@link #length()}</nobr>,
      * it is replaced with <i>M</i> (maximal possible value).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
@@ -1246,14 +1259,14 @@ public abstract class Histogram {
      * See {@link Histogram comments to Histogram class} for more details.
      *
      * @param value new current value (percentile).
-     * @return      the reference to this object.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(value)</tt>.
+     * @return the reference to this object.
+     * @throws IllegalArgumentException if <code>Double.isNaN(value)</code>.
      * @see #moveToIValue(int)
      */
     public Histogram moveToValue(double value) {
         if (Double.isNaN(value))
             throw new IllegalArgumentException("Illegal value argument (NaN)");
-        int v = (int)value;
+        int v = (int) value;
         if (v < 0) {
             value = v = 0;
         } else if (v > length) {
@@ -1280,14 +1293,15 @@ public abstract class Histogram {
      * Returns the next instance of this class, sharing the histogram array <b>b</b>[<i>k</i>] with this instance.
      *
      * <p>All instances, created by {@link #share()} method, are connected into a circular list, and this method
-     * returns the next element in this list. For example, if the instance <tt>h1</tt> was created by
-     * {@link #newLongHistogram(int, int...)} method and, after this, the instance <tt>h2</tt> was created as
-     * <nobr><tt>h2=h1.{@link #share()}</tt></nobr>, then this method in <tt>h1</tt> object returns <tt>h2</tt>
-     * and in <tt>h2</tt> object returns <tt>h1</tt>. If there are no sharing instances, this method returns
+     * returns the next element in this list. For example, if the instance <code>h1</code> was created by
+     * {@link #newLongHistogram(int, int...)} method and, after this, the instance <code>h2</code> was created as
+     * <nobr><code>h2=h1.{@link #share()}</code></nobr>, then this method in <code>h1</code>
+     * object returns <code>h2</code>
+     * and in <code>h2</code> object returns <code>h1</code>. If there are no sharing instances, this method returns
      * the reference to this instance.
      *
      * <p>You can get all instances, sharing the same array  <b>b</b>[<i>k</i>] with the given histogram
-     * <tt>hist</tt>, by the following loop:
+     * <code>hist</code>, by the following loop:
      *
      * <pre>
      * Histogram h = hist.nextSharing();
@@ -1300,7 +1314,7 @@ public abstract class Histogram {
      * <p>See {@link Histogram comments to Histogram class} for more details.
      *
      * @return the next instance sharing the histogram array <b>b</b>[<i>k</i>] with this instance,
-     *         or the reference to this instance if you did not use {@link #share()} method.
+     * or the reference to this instance if you did not use {@link #share()} method.
      * @see #shareCount()
      */
     public abstract Histogram nextSharing();
@@ -1333,27 +1347,27 @@ public abstract class Histogram {
     abstract void checkIntegrity();
 
     /**
-     * Returns the element with the given index <tt>rank</tt> in the sorted array
-     * of integer numbers <tt>0..histogram.length-1</tt>, corresponding to this histogram.
+     * Returns the element with the given index <code>rank</code> in the sorted array
+     * of integer numbers <code>0..histogram.length-1</code>, corresponding to this histogram.
      *
      * <p>More precisely, returns minimal integer value <i>v</i> so that
-     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i>]&gt;<tt>rank</tt></nobr>,
-     * <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * If <tt>rank&le;0</tt>, this method returns
+     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i>]&gt;<code>rank</code></nobr>,
+     * <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
+     * If <code>rank&le;0</code>, this method returns
      * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
      * (the minimal element in the source array).
-     * If <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+     * If <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
      * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
      * (the maximal element plus 1).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in some source array
-     *                  that are equal to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in some source array
+     *                  that are equal to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
-     * @return          value of the found element (percentile).
-     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
+     * @return value of the found element (percentile).
+     * @throws NullPointerException if <code>histogram</code> argument is {@code null}.
      * @see #value(long[], double)
      * @see #preciseValue(long[], double)
      */
@@ -1382,15 +1396,15 @@ public abstract class Histogram {
 
     /**
      * Precise equivalent of {@link #iValue(long[], long)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source array
-     *                  that are equal to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source array
+     *                  that are equal to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
-     * @return          value of the found element (percentile).
-     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
+     * @return value of the found element (percentile).
+     * @throws NullPointerException if <code>histogram</code> argument is {@code null}.
      * @see #value(int[], double)
      * @see #preciseValue(int[], double)
      */
@@ -1422,50 +1436,50 @@ public abstract class Histogram {
      * Floating-point version of {@link #iValue(long[], long)}.
      * Alike {@link #preciseValue(long[], double)}, this function supposes that the histogram
      * is built on an array of <i>floating-point</i> values after truncating them to an integer value
-     * <tt>(long)value</tt>,  but it doesn't try to interpolate value between different bars of the histogram.
+     * <code>(long)value</code>,  but it doesn't try to interpolate value between different bars of the histogram.
      *
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
-     * (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+     * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
      * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
-     * with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>.
+     * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>.
      * Obviously, <nobr><i>v</i><sub>1</sub> =
      * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
      * where <i>v</i><sub>0</sub> is the minimal integer value so that
      * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
      * <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
      * Then this method returns
-     * <nobr><i>v</i><sub>1</sub>+(<tt>rank</tt>&minus;<i>r</i><sub>1</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
+     * <nobr><i>v</i><sub>1</sub>+(<code>rank</code>&minus;<i>r</i><sub>1</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
      * (this value is equal to
-     * <nobr><i>v</i><sub>0</sub>+(<tt>rank</tt>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>).
+     * <nobr><i>v</i><sub>0</sub>+(<code>rank</code>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>).
      * Please compare: unlike {@link #preciseValue(long[], double)}, we do not find the next element
      * <i>v</i><sub>2</sub>
      * in the following bars of the histogram, but just interpolate between <i>v</i><sub>1</sub>
      * and <i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>].
      *
-     * <p>As {@link #iValue(long[], long)}, if <tt>rank&lt;0</tt>, this method returns
+     * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
      * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
      * (the minimal element in the source array), and
-     * if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
      * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
      * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
      *
      * <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
-     * <i>r</i>=<tt>rank</tt> in terms of the <i>simple histogram model</i>:
+     * <i>r</i>=<code>rank</code> in terms of the <i>simple histogram model</i>:
      * see {@link Histogram comments to Histogram class} for more details.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source floating-point array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method returns a real value,
-     *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
+     *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank,
      *                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).
-     * @return          the found value (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return the found value (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #preciseValue(long[], double)
      */
     public static double value(long[] histogram, double rank) {
@@ -1475,7 +1489,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final long r = (long)rank;
+        final long r = (long) rank;
         long acc = 0;
         int lastNonZero = -1;
         for (int k = 0; k < histogram.length; k++) {
@@ -1485,7 +1499,7 @@ public abstract class Histogram {
             if (b > 0) {
                 lastNonZero = k;
                 if (r < acc + b) {
-                    return k + (b == 1 ? rank - acc : (rank - acc) / (double)b);
+                    return k + (b == 1 ? rank - acc : (rank - acc) / (double) b);
                 }
                 acc += b;
             }
@@ -1496,18 +1510,18 @@ public abstract class Histogram {
 
     /**
      * Precise equivalent of {@link #value(long[], double)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source floating-point array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method returns a real value,
-     *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
+     *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank,
      *                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).
-     * @return          the found value (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return the found value (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #preciseValue(int[], double)
      */
     public static double value(int[] histogram, double rank) {
@@ -1518,7 +1532,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final int r = (int)rank;
+        final int r = (int) rank;
         int acc = 0;
         int lastNonZero = -1;
         for (int k = 0; k < histogram.length; k++) {
@@ -1528,7 +1542,7 @@ public abstract class Histogram {
             if (b > 0) {
                 lastNonZero = k;
                 if (r < acc + b) {
-                    return k + (b == 1 ? rank - acc : (rank - acc) / (double)b);
+                    return k + (b == 1 ? rank - acc : (rank - acc) / (double) b);
                 }
                 acc += b;
             }
@@ -1541,15 +1555,15 @@ public abstract class Histogram {
      * "Interpolated" version of {@link #iValue(long[], long)}, rounded to the "best" integer result.
      * Alike {@link #preciseValue(long[], double)}, this function supposes that the histogram
      * is built on an array of <i>floating-point</i> values after truncating them to an integer value
-     * <tt>(long)value</tt>. In addition to {@link #preciseValue(long[], double) preciseValue},
+     * <code>(long)value</code>. In addition to {@link #preciseValue(long[], double) preciseValue},
      * this function tries to approximate the real result by some nearest integer value.
      *
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
-     * (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+     * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
      * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
-     * with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>
+     * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>
      * and the element of the source array <i>v</i><sub>2</sub>
      * with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
      * Here <nobr><i>v</i><sub>1</sub> =
@@ -1558,11 +1572,11 @@ public abstract class Histogram {
      * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
      * <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
      * and there is the analogous formula for <i>v</i><sub>2</sub>.
-     * If <tt>rank</tt> argument is integer (<nobr><tt>rank==(long)rank</tt></nobr>),
+     * If <code>rank</code> argument is integer (<nobr><code>rank==(long)rank</code></nobr>),
      * this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
      * Until this moment, this method works like {@link #preciseValue(long[], double) preciseValue}.
      *
-     * <p>After this, the behaviour of this method is more complicated. If <tt>rank</tt> is not integer,
+     * <p>After this, the behaviour of this method is more complicated. If <code>rank</code> is not integer,
      * we calculate <nobr><i>v</i><sub>1</sub>'=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>1</sub>]</nobr>
      * and <nobr><i>v</i><sub>2</sub>'=<i>v</i><sub>2</sub>+1/<b>b</b>[<i>v</i><sub>2</sub>]</nobr>.
      * Let's consider that the true real values in the source array
@@ -1575,44 +1589,44 @@ public abstract class Histogram {
      * lie in <nobr>&lfloor;<i>v</i><sub>1</sub>&rfloor;..&lfloor;<i>v</i><sub>1</sub>&rfloor;+1</nobr> range and some
      * <nobr><b>b</b>[&lfloor;<i>v</i><sub>2</sub>&rfloor;]</nobr> values
      * lie in <nobr>&lfloor;<i>v</i><sub>2</sub>&rfloor;..&lfloor;<i>v</i><sub>2</sub>&rfloor;+1</nobr> range.)
-     * Then the value with real "index" <tt>rank</tt>,
+     * Then the value with real "index" <code>rank</code>,
      * interpolated between <i>w</i><sub>1</sub> and <i>w</i><sub>2</sub>, lies in range
      * <nobr><i>a</i>&le;<i>w</i>&lt;<i>b</i></nobr>, where
      * <nobr><i>a</i>=<i>v</i><sub>1</sub> +
-     * (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>
-     * (the result of {@link #preciseValue(long[],double) preciseValue} call with the same arguments)
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>
+     * (the result of {@link #preciseValue(long[], double) preciseValue} call with the same arguments)
      * and <nobr><i>b</i>=<i>v</i><sub>1</sub>' +
-     * (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>'&minus;<i>v</i><sub>1</sub>')</nobr>.
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>'&minus;<i>v</i><sub>1</sub>')</nobr>.
      *
      * <p>This method finds the integer range <nobr><i>v</i>..<i>v</i>+1</nobr>, which "covers"
      * the range <i>a</i>..<i>b</i> in the best way. Namely, it calculates
-     * <nobr><i>v</i>=&lfloor;(<i>a</i>+<i>b</i>)/2&rfloor;</nobr> and returns <tt>v</tt>
+     * <nobr><i>v</i>=&lfloor;(<i>a</i>+<i>b</i>)/2&rfloor;</nobr> and returns <code>v</code>
      * as the result.
      *
-     * <p>The result of this method always lies between <tt>(int)p</tt> and <tt>Math.round(p)</tt>,
-     * where <tt>p={@link #preciseValue(long[], double) preciseValue}(histogram,rank)</tt>.
+     * <p>The result of this method always lies between <code>(int)p</code> and <code>Math.round(p)</code>,
+     * where <code>p={@link #preciseValue(long[], double) preciseValue}(histogram,rank)</code>.
      *
-     * <p>As {@link #iValue(long[], long)}, if <tt>rank&lt;0</tt>, this method returns
+     * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
      * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
      * (the minimal element in the source array), and
-     * if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
      * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
      * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If <nobr><tt>rank&gt;</tt>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
-     * <nobr><tt>rank&lt;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
+     * If <nobr><code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
+     * <nobr><code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
      * <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
      * in this case, this method returns
      * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>.
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source floating-point array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
-     * @return          interpolated value of the found element (percentile), rounded to the "best" integer value.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return interpolated value of the found element (percentile), rounded to the "best" integer value.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #iValue(long[], long)
      * @see #preciseValue(long[], double)
      */
@@ -1623,7 +1637,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final long r = (long)rank;
+        final long r = (long) rank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "rank" to "r", "leftValue" to "leftV", etc.
         assert r >= 0;
@@ -1660,7 +1674,7 @@ public abstract class Histogram {
             return leftV;
         }
         assert r + 1 == acc; // r < acc, but r + 1 >= acc, because indexInBar + 1 >= acc - leftR = leftBar
-        final double leftValue = leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+        final double leftValue = leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         int rightV = leftV + 1;
         long rightBar = 0;
         for (; rightV < histogram.length; rightV++) {
@@ -1677,13 +1691,13 @@ public abstract class Histogram {
         final double newValue = leftValue + (rank - r) * (rightV - leftValue);
         final double leftStripe = leftBar == 1 ? 1.0 : 1.0 / leftBar;
         final double weightedMeanStripe = leftBar == rightBar ?
-            leftStripe :
-            leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
+                leftStripe :
+                leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
         assert weightedMeanStripe >= -0.001;
         final double rangeCenter = newValue + 0.5 * Math.max(weightedMeanStripe, 1e-10); // (a+b)/2
         // to be on the safe side, we guarantee that newIValue + 1 > newValue
         // (any real stripe width is not less than 1/Integer.MAX_VALUE>1e-10)
-        final int result = (int)rangeCenter;
+        final int result = (int) rangeCenter;
         assert result >= leftV && result <= rightV : "bug: " + result + " is not in [" + leftV + ".." + rightV + "] range";
         return result;
         //[[Repeat.SectionEnd iPreciseValue]]
@@ -1691,16 +1705,16 @@ public abstract class Histogram {
 
     /**
      * Precise equivalent of {@link #iPreciseValue(long[], double)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source floating-point array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
-     * @return          interpolated value of the found element (percentile), rounded to the "best" integer value.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return interpolated value of the found element (percentile), rounded to the "best" integer value.
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #iValue(long[], long)
      */
     public static int iPreciseValue(int[] histogram, double rank) {
@@ -1711,7 +1725,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final int r = (int)rank;
+        final int r = (int) rank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "rank" to "r", "leftValue" to "leftV", etc.
         assert r >= 0;
@@ -1748,7 +1762,7 @@ public abstract class Histogram {
             return leftV;
         }
         assert r + 1 == acc; // r < acc, but r + 1 >= acc, because indexInBar + 1 >= acc - leftR = leftBar
-        final double leftValue = leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+        final double leftValue = leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         int rightV = leftV + 1;
         int rightBar = 0;
         for (; rightV < histogram.length; rightV++) {
@@ -1765,13 +1779,13 @@ public abstract class Histogram {
         final double newValue = leftValue + (rank - r) * (rightV - leftValue);
         final double leftStripe = leftBar == 1 ? 1.0 : 1.0 / leftBar;
         final double weightedMeanStripe = leftBar == rightBar ?
-            leftStripe :
-            leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
+                leftStripe :
+                leftStripe + (rank - r) * (1.0 / rightBar - leftStripe);
         assert weightedMeanStripe >= -0.001;
         final double rangeCenter = newValue + 0.5 * Math.max(weightedMeanStripe, 1e-10); // (a+b)/2
         // to be on the safe side, we guarantee that newIValue + 1 > newValue
         // (any real stripe width is not less than 1/Integer.MAX_VALUE>1e-10)
-        final int result = (int)rangeCenter;
+        final int result = (int) rangeCenter;
         assert result >= leftV && result <= rightV : "bug: " + result + " is not in [" + leftV + ".." + rightV + "] range";
         return result;
         //[[Repeat.IncludeEnd]]
@@ -1780,14 +1794,14 @@ public abstract class Histogram {
     /**
      * "Interpolated" version of {@link #iValue(long[], long)}.
      * This function supposes that the histogram is built on an array of
-     * <i>floating-point</i> values after truncating them to an integer value <tt>(long)value</tt>.
+     * <i>floating-point</i> values after truncating them to an integer value <code>(long)value</code>.
      *
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
-     * (here and below <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>]),
+     * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
      * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
-     * with the index #<i>r</i><sub>1</sub>=&lfloor;<tt>rank</tt>&rfloor;=<tt>(long)rank</tt>
+     * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>
      * and the element of the source array <i>v</i><sub>2</sub>
      * with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
      * Obviously, <nobr><i>v</i><sub>1</sub> =
@@ -1805,39 +1819,39 @@ public abstract class Histogram {
      *
      * <p>After finding <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub>, this method returns the value
      * interpolated between them:  <nobr><i>v</i><sub>1</sub> +
-     * (<tt>rank</tt>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>.
-     * Note: if <tt>rank</tt> argument is integer (<nobr><tt>rank==(long)rank</tt></nobr>),
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>.
+     * Note: if <code>rank</code> argument is integer (<nobr><code>rank==(long)rank</code></nobr>),
      * this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
      *
-     * <p>As {@link #iValue(long[], long)}, if <tt>rank&lt;0</tt>, this method returns
+     * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
      * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
      * (the minimal element in the source array), and
-     * if <nobr><tt>rank&ge;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
+     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
      * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
      * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If <nobr><tt>rank&gt;</tt>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
-     * <nobr><tt>rank&lt;</tt>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
+     * If <nobr><code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
+     * <nobr><code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
      * <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
      * in this case, it is supposed <nobr><i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1</nobr>
      * (the maximal element of the floating-point array plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>,
      * <nobr><i>k</i>=<i>v</i><sub>1</sub></nobr>).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <tt>0</tt>.
+     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
      *
      * <p>Please compare the described behaviour with little more simple behaviour of
      * {@link #value(long[], double)} method.
      *
      * <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
-     * <i>r</i>=<tt>rank</tt> in terms of the <i>precise histogram model</i>:
+     * <i>r</i>=<code>rank</code> in terms of the <i>precise histogram model</i>:
      * see {@link Histogram comments to Histogram class} for more details.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
-     * @return          interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return interpolated value of the found element (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #value(long[], double)
      * @see #iPreciseValue(long[], double)
      */
@@ -1848,7 +1862,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final long r = (long)rank;
+        final long r = (long) rank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "rank" to "r", "leftValue" to "leftV", etc.
         assert r >= 0;
@@ -1879,37 +1893,37 @@ public abstract class Histogram {
         final long indexInBar = r - leftR;
         assert indexInBar < leftBar; // because leftBar = acc - leftR and r < acc
         if (rank == r) {
-            return leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+            return leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         }
         if (indexInBar < leftBar - 1) {
-            return leftV + (rank - (double)leftR) / (double)leftBar;
+            return leftV + (rank - (double) leftR) / (double) leftBar;
         }
         assert r + 1 == acc; // r < acc, but r + 1 >= acc, because indexInBar + 1 >= acc - leftR = leftBar
         int rightV = nextNonZero(histogram, leftV + 1);
         if (rightV == -1) {
             // all further elements are zero: we use the formula, identical to the one from moveToPreciseRank
-            return leftV + (rank - (double)leftR) / (double)leftBar;
+            return leftV + (rank - (double) leftR) / (double) leftBar;
         }
-        final double leftValue = leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+        final double leftValue = leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         return leftValue + (rank - r) * (rightV - leftValue);
         //[[Repeat.SectionEnd preciseValueImpl]]
     }
 
     /**
      * Precise equivalent of {@link #preciseValue(long[], double)} for a case
-     * of <tt>int[]</tt> type of the histogram.
+     * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <tt>histogram[k]</tt> is the number of elements in the source array
-     *                  that are "almost equal" to <tt>k</tt>.
-     *                  All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram <code>histogram[k]</code> is the number of elements in the source array
+     *                  that are "almost equal" to <code>k</code>.
+     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
-     * @return          interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
+     * @return interpolated value of the found element (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(rank)</code>.
      * @see #iPreciseValue(int[], double)
      */
-    public static double preciseValue(int[] histogram,  double rank) {
+    public static double preciseValue(int[] histogram, double rank) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, preciseValueImpl)
         //        \blong\b ==> int  !! Auto-generated: NOT EDIT !! ]]
         if (Double.isNaN(rank))
@@ -1917,7 +1931,7 @@ public abstract class Histogram {
         if (rank < 0.0) {
             rank = 0.0;
         }
-        final int r = (int)rank;
+        final int r = (int) rank;
         // here and below we get identifiers of integer variables by "truncating" identifiers of corresponding
         // real variables to the first letter, for example, "rank" to "r", "leftValue" to "leftV", etc.
         assert r >= 0;
@@ -1948,48 +1962,50 @@ public abstract class Histogram {
         final int indexInBar = r - leftR;
         assert indexInBar < leftBar; // because leftBar = acc - leftR and r < acc
         if (rank == r) {
-            return leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+            return leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         }
         if (indexInBar < leftBar - 1) {
-            return leftV + (rank - (double)leftR) / (double)leftBar;
+            return leftV + (rank - (double) leftR) / (double) leftBar;
         }
         assert r + 1 == acc; // r < acc, but r + 1 >= acc, because indexInBar + 1 >= acc - leftR = leftBar
         int rightV = nextNonZero(histogram, leftV + 1);
         if (rightV == -1) {
             // all further elements are zero: we use the formula, identical to the one from moveToPreciseRank
-            return leftV + (rank - (double)leftR) / (double)leftBar;
+            return leftV + (rank - (double) leftR) / (double) leftBar;
         }
-        final double leftValue = leftBar == 1 ? leftV : leftV + (double)indexInBar / (double)leftBar;
+        final double leftValue = leftBar == 1 ? leftV : leftV + (double) indexInBar / (double) leftBar;
         return leftValue + (rank - r) * (rightV - leftValue);
         //[[Repeat.IncludeEnd]]
     }
 
     //[[Repeat() long(?!\s+sumOfColumns) ==> int]]
+
     /**
-     * Equivalent to <tt>{@link #preciseValue(long[], double)
-     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</tt>,
-     * if <tt>sumOfColumns&gt;0</tt>.
-     * If <tt>sumOfColumns==0</tt>, this method immediately returns <tt>0.0</tt>;
-     * if <tt>sumOfColumns&lt;0</tt>, this method throws an exception.
+     * Equivalent to <code>{@link #preciseValue(long[], double)
+     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</code>,
+     * if <code>sumOfColumns&gt;0</code>.
+     * If <code>sumOfColumns==0</code>, this method immediately returns <code>0.0</code>;
+     * if <code>sumOfColumns&lt;0</code>, this method throws an exception.
      *
-     * <p>If is supposed that <tt>sumOfColumns</tt> is the sum of all histogram elements.
+     * <p>If is supposed that <code>sumOfColumns</code> is the sum of all histogram elements.
      * If it is true, the returned value is usually called the <i>percentile</i> of the source array
-     * with the <i>level</i> specified by <tt>percentileLevel</tt> argument.
-     * If <tt>percentileLevel==0.5</tt>, this value is also called the <i>median</i> of the source array.
-     * But, of course, you can pass any positive value as <tt>sumOfColumns</tt>: in any case,
-     * if <tt>sumOfColumns&gt;0</tt>, this method returns the result of <tt>{@link #preciseValue(long[], double)
-     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</tt>.
+     * with the <i>level</i> specified by <code>percentileLevel</code> argument.
+     * If <code>percentileLevel==0.5</code>, this value is also called the <i>median</i> of the source array.
+     * But, of course, you can pass any positive value as <code>sumOfColumns</code>: in any case,
+     * if <code>sumOfColumns&gt;0</code>, this method returns the result of <code>{@link #preciseValue(long[], double)
+     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</code>.
      *
-     * @param histogram       <tt>histogram[k]</tt> is the number of elements in the source array
-     *                        that are "almost equal" to <tt>k</tt>.
-     *                        All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                        <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram       <code>histogram[k]</code> is the number of elements in the source array
+     *                        that are "almost equal" to <code>k</code>.
+     *                        All <code>histogram[k]</code> must be non-negative; in other case,
+     *                        <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param sumOfColumns    should be equal to sum of all histogram elements
      *                        (in other words, the length of the source array).
      * @param percentileLevel the percentile level (usually from 0.0 to 1.0).
-     * @return                interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.
+     * @return interpolated value of the found element (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(percentileLevel)</code> or
+     *                                  if <code>sumOfColumns&lt;0</code>.
      * @see #sumOf(long[])
      */
     public static double percentile(long[] histogram, long sumOfColumns, double percentileLevel) {
@@ -2003,31 +2019,33 @@ public abstract class Histogram {
         return preciseValue(histogram, percentileLevel * (sumOfColumns - 1));
     }
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
+
     /**
-     * Equivalent to <tt>{@link #preciseValue(int[], double)
-     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</tt>,
-     * if <tt>sumOfColumns&gt;0</tt>.
-     * If <tt>sumOfColumns==0</tt>, this method immediately returns <tt>0.0</tt>;
-     * if <tt>sumOfColumns&lt;0</tt>, this method throws an exception.
+     * Equivalent to <code>{@link #preciseValue(int[], double)
+     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</code>,
+     * if <code>sumOfColumns&gt;0</code>.
+     * If <code>sumOfColumns==0</code>, this method immediately returns <code>0.0</code>;
+     * if <code>sumOfColumns&lt;0</code>, this method throws an exception.
      *
-     * <p>If is supposed that <tt>sumOfColumns</tt> is the sum of all histogram elements.
+     * <p>If is supposed that <code>sumOfColumns</code> is the sum of all histogram elements.
      * If it is true, the returned value is usually called the <i>percentile</i> of the source array
-     * with the <i>level</i> specified by <tt>percentileLevel</tt> argument.
-     * If <tt>percentileLevel==0.5</tt>, this value is also called the <i>median</i> of the source array.
-     * But, of course, you can pass any positive value as <tt>sumOfColumns</tt>: in any case,
-     * if <tt>sumOfColumns&gt;0</tt>, this method returns the result of <tt>{@link #preciseValue(int[], double)
-     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</tt>.
+     * with the <i>level</i> specified by <code>percentileLevel</code> argument.
+     * If <code>percentileLevel==0.5</code>, this value is also called the <i>median</i> of the source array.
+     * But, of course, you can pass any positive value as <code>sumOfColumns</code>: in any case,
+     * if <code>sumOfColumns&gt;0</code>, this method returns the result of <code>{@link #preciseValue(int[], double)
+     * preciseValue}(histogram,percentileLevel*(sumOfColumns-1))</code>.
      *
-     * @param histogram       <tt>histogram[k]</tt> is the number of elements in the source array
-     *                        that are "almost equal" to <tt>k</tt>.
-     *                        All <tt>histogram[k]</tt> must be non-negative; in other case,
-     *                        <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
+     * @param histogram       <code>histogram[k]</code> is the number of elements in the source array
+     *                        that are "almost equal" to <code>k</code>.
+     *                        All <code>histogram[k]</code> must be non-negative; in other case,
+     *                        <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param sumOfColumns    should be equal to sum of all histogram elements
      *                        (in other words, the length of the source array).
      * @param percentileLevel the percentile level (usually from 0.0 to 1.0).
-     * @return                interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.
+     * @return interpolated value of the found element (percentile).
+     * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>Double.isNaN(percentileLevel)</code> or
+     *                                  if <code>sumOfColumns&lt;0</code>.
      * @see #sumOf(int[])
      */
     public static double percentile(int[] histogram, long sumOfColumns, double percentileLevel) {
@@ -2043,11 +2061,11 @@ public abstract class Histogram {
     //[[Repeat.AutoGeneratedEnd]]
 
     /**
-     * Returns the sum of all elements of the passed <tt>histogram</tt> array.
+     * Returns the sum of all elements of the passed <code>histogram</code> array.
      *
      * @param histogram any array (for example, a histogram).
-     * @return          the sum of all elements of the passed array.
-     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
+     * @return the sum of all elements of the passed array.
+     * @throws NullPointerException if <code>histogram</code> argument is {@code null}.
      */
     public static long sumOf(long[] histogram) {
         long result = 0;
@@ -2058,11 +2076,11 @@ public abstract class Histogram {
     }
 
     /**
-     * Returns the sum of all elements of the passed <tt>histogram</tt> array.
+     * Returns the sum of all elements of the passed <code>histogram</code> array.
      *
      * @param histogram any array (for example, a histogram).
-     * @return          the sum of all elements of the passed array.
-     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
+     * @return the sum of all elements of the passed array.
+     * @throws NullPointerException if <code>histogram</code> argument is {@code null}.
      */
     public static int sumOf(int[] histogram) {
         int result = 0;
@@ -2073,10 +2091,10 @@ public abstract class Histogram {
     }
 
     /**
-     * Fills all non-zero elements of <tt>histogram</tt> by 0.
+     * Fills all non-zero elements of <code>histogram</code> by 0.
      *
-     * <p>Works faster then trivial loop for all elements <tt>histogram[0..histogram.length-1]</tt>,
-     * if most of last elements of <tt>histogram</tt> array already contain zero.
+     * <p>Works faster than trivial loop for all elements <code>histogram[0..histogram.length-1]</code>,
+     * if most of the last elements of <code>histogram</code> array already contain zero.
      *
      * @param histogram    cleared histogram.
      * @param sumOfColumns should be equal to sum of all histogram elements.
@@ -2089,7 +2107,7 @@ public abstract class Histogram {
         }
         if (acc != sumOfColumns)
             throw new IllegalArgumentException("Illegal sumOfColumns in clearHistogram method: "
-                + sumOfColumns + " instead of " + acc);
+                    + sumOfColumns + " instead of " + acc);
     }
 
     //[[Repeat() long ==> int]]
@@ -2146,9 +2164,9 @@ public abstract class Histogram {
 
     static long[] cloneBars(Object histogram0) {
         if (histogram0 instanceof long[]) {
-            return ((long[])histogram0).clone();
+            return ((long[]) histogram0).clone();
         } else {
-            int[] bars = (int[])histogram0;
+            int[] bars = (int[]) histogram0;
             long[] result = new long[bars.length];
             for (int k = 0; k < result.length; k++) {
                 result[k] = bars[k];
@@ -2180,9 +2198,9 @@ public abstract class Histogram {
         private LongHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private LongHistogram(long[][] histogram,
-            long total, int[] bitLevels)
-        {
+        private LongHistogram(
+                long[][] histogram,
+                long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -2196,13 +2214,13 @@ public abstract class Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -2214,7 +2232,7 @@ public abstract class Histogram {
 
         LongHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -2253,7 +2271,7 @@ public abstract class Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             ++histogram0[value];
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -2294,7 +2312,7 @@ public abstract class Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -2333,7 +2351,7 @@ public abstract class Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -2411,7 +2429,7 @@ public abstract class Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -2444,7 +2462,7 @@ public abstract class Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -2481,12 +2499,10 @@ public abstract class Histogram {
         }
 
 
-
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
-
 
 
         @Override
@@ -2541,7 +2557,7 @@ public abstract class Histogram {
                                 currentIRanks[k] -= b;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             do {
@@ -2577,7 +2593,7 @@ public abstract class Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -2591,7 +2607,7 @@ public abstract class Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             do {
@@ -2611,13 +2627,13 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -2664,7 +2680,7 @@ public abstract class Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -2688,7 +2704,7 @@ public abstract class Histogram {
                                 currentIRanks[k] -= b;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final long previousRank = currentIRanks[k] + b;
                             do {
@@ -2724,7 +2740,7 @@ public abstract class Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -2738,7 +2754,7 @@ public abstract class Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final long lastRank = currentIRanks[k];
                             do {
@@ -2758,14 +2774,14 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -2812,7 +2828,7 @@ public abstract class Histogram {
                             currentIRanks[k] -= b;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
@@ -2856,7 +2872,7 @@ public abstract class Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -2876,7 +2892,7 @@ public abstract class Histogram {
                     currentIRanks[0] += b;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -2903,7 +2919,7 @@ public abstract class Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 LongHistogram result = new LongHistogram(histogram,
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 LongHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -2924,11 +2940,11 @@ public abstract class Histogram {
         @Override
         public String toString() {
             return "long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -2950,28 +2966,25 @@ public abstract class Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
-                if (k == 0) {
-                } else {
-                }
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -2988,8 +3001,7 @@ public abstract class Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -3002,7 +3014,7 @@ public abstract class Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final long lastRank = currentIRanks[k];
                         do {
@@ -3110,7 +3122,7 @@ public abstract class Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -3143,9 +3155,9 @@ public abstract class Histogram {
         private Long1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private Long1LevelHistogram(long[][] histogram,
-            long total, int[] bitLevels)
-        {
+        private Long1LevelHistogram(
+                long[][] histogram,
+                long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3159,13 +3171,13 @@ public abstract class Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -3177,7 +3189,7 @@ public abstract class Histogram {
 
         Long1LevelHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -3216,7 +3228,7 @@ public abstract class Histogram {
         public void include(int value) {
             if (total == Long.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Long.MAX_VALUE");
+                        + value + ", because the current total number of values is Long.MAX_VALUE");
             ++histogram0[value];
             if (value < currentIValue) {
                 ++currentIRanks[0];
@@ -3241,7 +3253,7 @@ public abstract class Histogram {
                 long b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             if (value < currentIValue) {
                 --currentIRanks[0];
@@ -3264,7 +3276,7 @@ public abstract class Histogram {
         public void include(int... values) {
             if (total > Long.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Long.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 long currentIRank1 = currentIRanks[0];
                 long currentIRank2 = nextSharing.currentIRanks[0];
@@ -3314,7 +3326,7 @@ public abstract class Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRank1;
@@ -3335,7 +3347,7 @@ public abstract class Histogram {
                         long b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRanks[0];
@@ -3356,12 +3368,10 @@ public abstract class Histogram {
         }
 
 
-
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
-
 
 
         @Override
@@ -3416,13 +3426,13 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -3469,7 +3479,7 @@ public abstract class Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -3493,14 +3503,14 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 long b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -3540,7 +3550,7 @@ public abstract class Histogram {
                     currentIRanks[0] += b;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -3567,7 +3577,7 @@ public abstract class Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 Long1LevelHistogram result = new Long1LevelHistogram(histogram,
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 Long1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -3588,11 +3598,11 @@ public abstract class Histogram {
         @Override
         public String toString() {
             return "long histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -3614,28 +3624,25 @@ public abstract class Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
-                if (k == 0) {
-                } else {
-                }
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -3691,7 +3698,7 @@ public abstract class Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Long.MAX_VALUE");
+                            + "is >Long.MAX_VALUE");
             }
             return result;
         }
@@ -3725,8 +3732,7 @@ public abstract class Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private IntHistogram(int[][] histogram,
-            int total, int[] bitLevels)
-        {
+                             int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3740,13 +3746,13 @@ public abstract class Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -3758,7 +3764,7 @@ public abstract class Histogram {
 
         IntHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -3797,7 +3803,7 @@ public abstract class Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             ++histogram0[value];
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -3838,7 +3844,7 @@ public abstract class Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             // multilevel start (for preprocessing)
             for (int k = m - 1; k > 0; k--) {
@@ -3877,7 +3883,7 @@ public abstract class Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -3955,7 +3961,7 @@ public abstract class Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -3988,7 +3994,7 @@ public abstract class Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     // multilevel start (for preprocessing)
                     for (int k = m - 1; k > 0; k--) {
@@ -4025,12 +4031,10 @@ public abstract class Histogram {
         }
 
 
-
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
-
 
 
         @Override
@@ -4085,7 +4089,7 @@ public abstract class Histogram {
                                 currentIRanks[k] -= b;
                             } while (rank < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             do {
@@ -4121,7 +4125,7 @@ public abstract class Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && rank >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -4135,7 +4139,7 @@ public abstract class Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             do {
@@ -4155,13 +4159,13 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -4208,7 +4212,7 @@ public abstract class Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -4232,7 +4236,7 @@ public abstract class Histogram {
                                 currentIRanks[k] -= b;
                             } while (r < currentIRanks[k]);
                             assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                                + " < 0 for rank=" + rank;
+                                    + " < 0 for rank=" + rank;
                             final int previousValue = (currentIValue + 1) << level;
                             final int previousRank = currentIRanks[k] + b;
                             do {
@@ -4268,7 +4272,7 @@ public abstract class Histogram {
                         }
                         int k = 0;
                         while (k + 1 < m && r >= currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
+                                + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {
                             // here we can suppose that histogram[m][0]==total
                             k++;
                         }
@@ -4282,7 +4286,7 @@ public abstract class Histogram {
                                 b = histogram[k][currentIValue];
                             }
                             assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                                + ">= total=" + total + " for rank=" + rank;
+                                    + ">= total=" + total + " for rank=" + rank;
                             currentIValue <<= level;
                             final int lastRank = currentIRanks[k];
                             do {
@@ -4302,14 +4306,14 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -4356,7 +4360,7 @@ public abstract class Histogram {
                             currentIRanks[k] -= b;
                         } while (v < currentIValue);
                         assert currentIRanks[k] >= 0 : "currentIRanks[" + k + "]=" + currentIRanks[k]
-                            + " < 0 for value=" + value;
+                                + " < 0 for value=" + value;
                         assert currentIValue == v;
                         final int previousValue = (currentIValue + 1) << level;
                         assert value < previousValue;
@@ -4400,7 +4404,7 @@ public abstract class Histogram {
                             ++currentIValue;
                         } while (v > currentIValue);
                         assert currentIRanks[k] <= total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + "> total=" + total + " for value=" + value;
+                                + "> total=" + total + " for value=" + value;
                         assert currentIValue == v;
                         currentIValue <<= level;
                         assert currentIValue <= value;
@@ -4420,7 +4424,7 @@ public abstract class Histogram {
                     currentIRanks[0] += b;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -4447,7 +4451,7 @@ public abstract class Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 IntHistogram result = new IntHistogram(histogram,
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 IntHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -4468,11 +4472,11 @@ public abstract class Histogram {
         @Override
         public String toString() {
             return "int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -4494,10 +4498,10 @@ public abstract class Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
                 if (k == 0) {
                 } else {
@@ -4505,17 +4509,17 @@ public abstract class Histogram {
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -4532,8 +4536,7 @@ public abstract class Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                        + histogram[k + 1][currentIValue >> bitLevels[k + 1]])
-                    {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -4546,7 +4549,7 @@ public abstract class Histogram {
                             b = histogram[k][currentIValue];
                         }
                         assert currentIRanks[k] < total : "currentIRank[" + k + "]=" + currentIRanks[k]
-                            + ">= total=" + total;
+                                + ">= total=" + total;
                         currentIValue <<= level;
                         final int lastRank = currentIRanks[k];
                         do {
@@ -4654,7 +4657,7 @@ public abstract class Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }
@@ -4690,9 +4693,9 @@ public abstract class Histogram {
         private Int1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private Int1LevelHistogram(int[][] histogram,
-            int total, int[] bitLevels)
-        {
+        private Int1LevelHistogram(
+                int[][] histogram,
+                int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4706,13 +4709,13 @@ public abstract class Histogram {
             for (int k = 1; k < this.m; k++) {
                 if (this.bitLevels[k] <= 0)
                     throw new IllegalArgumentException("Negative or zero bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k]);
+                            + "]=" + this.bitLevels[k]);
                 if (this.bitLevels[k] > 31)
                     throw new IllegalArgumentException("Too high bitLevels[" + (k - 1)
-                        + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
+                            + "]=" + this.bitLevels[k] + " (only 1..31 values are allowed)");
                 if (this.bitLevels[k] <= this.bitLevels[k - 1])
                     throw new IllegalArgumentException("bitLevels[" + (k - 1)
-                        + "] must be greater than bitLevels[" + (k - 2) + "]");
+                            + "] must be greater than bitLevels[" + (k - 2) + "]");
             }
             this.highBitMasks = new int[this.m];
             for (int k = 0; k < this.m; k++) {
@@ -4724,7 +4727,7 @@ public abstract class Histogram {
 
         Int1LevelHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
+                    histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
                 int levelCount = histogram.length >> this.bitLevels[k];
@@ -4763,7 +4766,7 @@ public abstract class Histogram {
         public void include(int value) {
             if (total == Integer.MAX_VALUE)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new value "
-                    + value + ", because the current total number of values is Integer.MAX_VALUE");
+                        + value + ", because the current total number of values is Integer.MAX_VALUE");
             ++histogram0[value];
             if (value < currentIValue) {
                 ++currentIRanks[0];
@@ -4788,7 +4791,7 @@ public abstract class Histogram {
                 int b = histogram0[value];
                 histogram0[value] = 0;
                 throw new IllegalStateException("Disbalance in the histogram: negative number "
-                    + b + " of occurrences of " + value + " value");
+                        + b + " of occurrences of " + value + " value");
             }
             if (value < currentIValue) {
                 --currentIRanks[0];
@@ -4811,7 +4814,7 @@ public abstract class Histogram {
         public void include(int... values) {
             if (total > Integer.MAX_VALUE - values.length)
                 throw new IllegalStateException("Overflow of the histogram: cannot include new "
-                    + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
+                        + values.length + "values, because the total number of values will exceed Integer.MAX_VALUE");
             if (shareCount == 2) { // optimization
                 int currentIRank1 = currentIRanks[0];
                 int currentIRank2 = nextSharing.currentIRanks[0];
@@ -4861,7 +4864,7 @@ public abstract class Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRank1;
@@ -4882,7 +4885,7 @@ public abstract class Histogram {
                         int b = histogram0[value];
                         histogram0[value] = 0;
                         throw new IllegalStateException("Disbalance in the histogram: negative number "
-                            + b + " of occurrences of " + value + " value");
+                                + b + " of occurrences of " + value + " value");
                     }
                     if (value < currentIValue) {
                         --currentIRanks[0];
@@ -4903,12 +4906,10 @@ public abstract class Histogram {
         }
 
 
-
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
-
 
 
         @Override
@@ -4963,13 +4964,13 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (double)(rank - currentIRanks[0]) / (double)histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (double) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0;
                 }
@@ -5016,7 +5017,7 @@ public abstract class Histogram {
             } else if (rank > total) {
                 rank = r = total;
             } else {
-                r = (int)rank;
+                r = (int) rank;
             }
             if (r == total) {
                 moveToRightmostRank();
@@ -5040,14 +5041,14 @@ public abstract class Histogram {
                         b = histogram0[currentIValue];
                     }
                     assert currentIRanks[0] < total : "currentIRank=" + currentIRanks[0]
-                        + " >= total=" + total + " for rank=" + rank;
+                            + " >= total=" + total + " for rank=" + rank;
                 }
             }
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
                 int b = histogram0[currentIValue];
-                double frac = (rank - currentIRanks[0]) / (double)b;
+                double frac = (rank - currentIRanks[0]) / (double) b;
                 if (DEBUG_MODE) {
                     assert frac >= 0.0 && frac < 1.0001;
                 }
@@ -5087,7 +5088,7 @@ public abstract class Histogram {
                     currentIRanks[0] += b;
                 }
                 assert currentIRanks[0] <= total : "currentIRank=" + currentIRanks[0]
-                    + " > total=" + total + " for value=" + value;
+                        + " > total=" + total + " for value=" + value;
                 // here is possible currentIRanks[0]==total, if the bar #value and higher are zero
             }
             currentIValue = value;
@@ -5114,7 +5115,7 @@ public abstract class Histogram {
             // synchronization is to be on the safe side: destroying sharing list is most undesirable danger
             synchronized (histogram0) { // histogram[0] is shared between several instances
                 Int1LevelHistogram result = new Int1LevelHistogram(histogram,
-                    total, JArrays.copyOfRange(bitLevels, 1, m));
+                        total, JArrays.copyOfRange(bitLevels, 1, m));
                 Int1LevelHistogram last = this;
                 int count = 1;
                 while (last.nextSharing != this) {
@@ -5135,11 +5136,11 @@ public abstract class Histogram {
         @Override
         public String toString() {
             return "int histogram with " + length + " bars and " + m + " bit level"
-                + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
-                + ", current value " + currentIValue + " (precise " + currentValue + ")"
-                + ", current rank " + currentIRanks[0] + " (precise "
-                + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
-                + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
+                    + (m == 1 ? "" : "s {" + JArrays.toString(bitLevels, ",", 100) + "}")
+                    + ", current value " + currentIValue + " (precise " + currentValue + ")"
+                    + ", current rank " + currentIRanks[0] + " (precise "
+                    + (Double.isNaN(currentPreciseRank) ? "unknown" : currentPreciseRank) + ")"
+                    + (shareCount == 1 ? "" : ", shared between " + shareCount + " instances");
         }
 
         @Override
@@ -5161,28 +5162,25 @@ public abstract class Histogram {
         void checkIntegrity() {
             if (currentIValue < 0 || currentIValue > length)
                 throw new AssertionError("Bug in " + this + ": currentIValue = " + currentIValue
-                    + " is out of range 0.." + length );
+                        + " is out of range 0.." + length);
             if (currentIRanks[0] < 0 || currentIRanks[0] > total)
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
-                    + " is out of range 0.." + total);
+                        + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
-                if (k == 0) {
-                } else {
-                }
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
-                        + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
-                        + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
+                            + currentIRanks[k] + " != " + s + " for " + currentIValue + ": "
+                            + histogram[k].length + " bars " + JArrays.toString(histogram[k], ",", 3000));
             }
             if (!Double.isNaN(currentPreciseRank) && !outsideNonZeroPart()) {
                 if (Math.abs(preciseValue(histogram0, currentPreciseRank) - currentValue) > 1.0e-3) {
                     throw new AssertionError("Bug in " + this + ": for rank=" + currentPreciseRank
-                        + ", precise value is " + currentValue + " instead of "
-                        + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
-                        + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
-                        + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
-                        + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
+                            + ", precise value is " + currentValue + " instead of "
+                            + preciseValue(histogram0, currentPreciseRank) + ", currentIValue = " + currentIValue
+                            + ", results of iValue()/iPreciseValue() methods are " + iValue(histogram0, currentIRank())
+                            + " and " + iPreciseValue(histogram0, currentPreciseRank) + ", "
+                            + histogram0.length + " bars " + JArrays.toString(histogram0, ",", 3000));
                 }
             }
         }
@@ -5238,7 +5236,7 @@ public abstract class Histogram {
                 result += histogram[k];
                 if (result < 0)
                     throw new IllegalArgumentException("Total number of values (sum of all bars in the histogram) "
-                        + "is >Integer.MAX_VALUE");
+                            + "is >Integer.MAX_VALUE");
             }
             return result;
         }
