@@ -72,13 +72,13 @@ import java.util.Objects;
  * There is {@link Arrays#sort Arrays.sort} method performing such sorting
  * by {@link #getQuickSorter() QuickSort instance} of this class.
  *
- * <p>Also this class allows to sort <tt>int[]</tt> array of indexes of elements
+ * <p>Also this class allows to sort <code>int[]</code> array of indexes of elements
  * and not move data at all. It is often useful for large sorted elements.</p>
  *
  * <p>Please note that the sorting algorithms, provided by this class, excepting
  * the slow Insertion algorithm, are not <i>stable</i>: equal elements may be
  * reordered as a result of the sort. If you need stable sorting some objects,
- * please use <tt>java.util</tt> package.
+ * please use <code>java.util</code> package.
  *
  * <p>Unlike standard Java sorting algorithms, this class has no restriction 2<sup>31</sup>-1
  * for the length of sorted arrays.
@@ -124,17 +124,17 @@ public abstract class ArraySorter {
     }
 
     /**
-     * Returns <tt>true</tt> if the <tt>from..to-1</tt> range of <i>indexes</i> in some array is sorted.
-     * It means that for any <tt>k</tt>, <tt>from &lt;= k &lt; to</tt>,
-     * the following check returns <tt>false</tt>:<pre>
+     * Returns <code>true</code> if the <code>from..to-1</code> range of <i>indexes</i> in some array is sorted.
+     * It means that for any <code>k</code>, <code>from &lt;= k &lt; to</code>,
+     * the following check returns <code>false</code>:<pre>
      *     comparator.less(indexes[k + 1], indexes[k])
      * </pre>
      *
      * @param indexes    indexes of elements in some data array.
-     * @param from       index of the first checked element of <tt>indexes</tt> array, inclusive.
-     * @param to         index of the last checked element of <tt>indexes</tt> array, exclusive.
+     * @param from       index of the first checked element of <code>indexes</code> array, inclusive.
+     * @param to         index of the last checked element of <code>indexes</code> array, exclusive.
      * @param comparator comparator for checking order.
-     * @return <tt>true</tt> if the specified range of indexes is sorted.
+     * @return <code>true</code> if the specified range of indexes is sorted.
      */
     public static boolean areIndexesSorted(int[] indexes, int from, int to, ArrayComparator comparator) {
         Objects.requireNonNull(comparator, "Null comparator argument");
@@ -146,17 +146,17 @@ public abstract class ArraySorter {
     }
 
     /**
-     * Returns <tt>true</tt> if the <tt>from..to-1</tt> range of some array is sorted.
-     * It means that for any <tt>k</tt>, <tt>from &lt;= k &lt; to</tt>,
-     * the following check returns <tt>false</tt>:<pre>
+     * Returns <code>true</code> if the <code>from..to-1</code> range of some array is sorted.
+     * It means that for any <code>k</code>, <code>from &lt;= k &lt; to</code>,
+     * the following check returns <code>false</code>:<pre>
      *     comparator.less(k + 1, k)
      * </pre>
      *
      * @param from       index of the first checked element of some data array, inclusive.
      * @param to         index of the last checked element of some data array, exclusive.
      * @param comparator comparator for checking order.
-     * @return <tt>true</tt> if the specified range of the data array is sorted.
-     * @throws NullPointerException if <tt>comparator</tt> argument is {@code null}.
+     * @return <code>true</code> if the specified range of the data array is sorted.
+     * @throws NullPointerException if <code>comparator</code> argument is {@code null}.
      */
     public static boolean areSorted(long from, long to, ArrayComparator comparator) {
         Objects.requireNonNull(comparator, "Null comparator argument");
@@ -168,30 +168,30 @@ public abstract class ArraySorter {
     }
 
     /**
-     * Sorts <tt>indexes[from..to-1]</tt> in increasing order.
-     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>from &lt;= i &lt; j &lt; to</tt>,
-     * the following check will return <tt>false</tt>:<pre>
+     * Sorts <code>indexes[from..to-1]</code> in increasing order.
+     * After sorting, for any <code>i</code>, <code>j</code>, <code>from &lt;= i &lt; j &lt; to</code>,
+     * the following check will return <code>false</code>:<pre>
      *     comparator.less(indexes[j], indexes[i])
      * </pre>
      *
-     * <p>Sorting is based on exchanging elements of the passed <tt>indexes</tt> array.
+     * <p>Sorting is based on exchanging elements of the passed <code>indexes</code> array.
      *
-     * <p>Note: if some exception occurs while calling <tt>comparator.less</tt> method,
+     * <p>Note: if some exception occurs while calling <code>comparator.less</code> method,
      * the array stays shuffled ("partially" sorted).
-     * (The typical example is <tt>ClassCastException</tt> when the comparator tries to cast some objects
-     * to <tt>java.lang.Comparable</tt> type.)
+     * (The typical example is <code>ClassCastException</code> when the comparator tries to cast some objects
+     * to <code>java.lang.Comparable</code> type.)
      * In other words, this method <b>is non-atomic regarding this failure</b>.
-     * Unlike this, sorting methods from <tt>java.util</tt>
+     * Unlike this, sorting methods from <code>java.util</code>
      * package never modify the passed array or collection in a case of some exceptions.
      *
      * @param indexes    indexes of elements in some data array: this array will be sorted.
-     * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
-     * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
+     * @param from       index of the first sorted element of <code>indexes</code> array, inclusive.
+     * @param to         index of the last sorted element of <code>indexes</code> array, exclusive.
      * @param comparator comparator for checking order.
-     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
-     *                                  or <tt>to &gt; indexes.length</tt>
-     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
+     * @throws NullPointerException     if <code>indexes</code> or <code>comparator</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code>, <code>from &lt; 0</code>
+     *                                  or <code>to &gt; indexes.length</code>
+     * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code>
      *                                  during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
@@ -203,13 +203,13 @@ public abstract class ArraySorter {
      * method with the same arguments.
      *
      * @param indexes    indexes of elements in some data array: this array will be sorted.
-     * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
-     * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
+     * @param from       index of the first sorted element of <code>indexes</code> array, inclusive.
+     * @param to         index of the last sorted element of <code>indexes</code> array, exclusive.
      * @param comparator comparator for checking order.
-     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
-     *                                  or <tt>to &gt; indexes.length</tt>
-     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
+     * @throws NullPointerException     if <code>indexes</code> or <code>comparator</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code>, <code>from &lt; 0</code>
+     *                                  or <code>to &gt; indexes.length</code>
+     * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code>
      *                                  during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
@@ -238,47 +238,49 @@ public abstract class ArraySorter {
     //}
 
     /**
-     * Sorts <tt>from..to-1</tt> fragment of some array in increasing order.
-     * After sorting, for any <tt>i</tt>, <tt>j</tt>, <tt>from &lt;= i &lt; j &lt; to</tt>,
-     * the following check will return <tt>false</tt>:<pre>
+     * Sorts <code>from..to-1</code> fragment of some array in increasing order.
+     * After sorting, for any <code>i</code>, <code>j</code>, <code>from &lt;= i &lt; j &lt; to</code>,
+     * the following check will return <code>false</code>:<pre>
      *     comparator.less(j, i)
      * </pre>
      *
-     * <p>Sorting is based on movement of elements of the sorted array with help of <tt>exchanger</tt>
+     * <p>Sorting is based on movement of elements of the sorted array with help of <code>exchanger</code>
      * object, which must provide necessary access to the sorted data.
      *
-     * <p>Note: some sorting algorithms, implemented by this class, may require, that <tt>exchanger</tt>
+     * <p>Note: some sorting algorithms, implemented by this class, may require, that <code>exchanger</code>
      * must implement some additional interfaces, maybe a more powerful inheritor of
      * {@link ArrayExchanger} interface, for example, allowing not only exchanging, but also copying elements.
-     * In such situation, this method throws <tt>UnsupportedOperationException</tt>, if <tt>exchanger</tt> argument
+     * In such situation, this method throws <code>UnsupportedOperationException</code>,
+     * if <code>exchanger</code> argument
      * does not implement necessary interface. The implementations, returned by
      * {@link #getInsertionSorter()}, {@link #getShellSorter()}, {@link #getQuickSorter()}
      * (i.e. all implementation, available in the current version of this package),
      * do not require this: it is enough to implement simple {@link ArrayExchanger} interface to use them.
      * But, maybe, such algorithms will appear in future versions.
-     * You can verify, does this sorter require implementing additional interfaces by <tt>exchanger</tt> object,
-     * by {@link #isExchangingSorter()} method: it will return <tt>false</tt> in this case.
+     * You can verify, does this sorter require implementing additional interfaces by <code>exchanger</code> object,
+     * by {@link #isExchangingSorter()} method: it will return <code>false</code> in this case.
      *
-     * <p>Note: if some exception occurs while calling <tt>comparator</tt> or <tt>exchanger</tt> methods,
+     * <p>Note: if some exception occurs while calling <code>comparator</code> or <code>exchanger</code> methods,
      * the array stays shuffled ("partially" sorted).
-     * (The typical example is <tt>ClassCastException</tt> when the comparator tries to cast some objects
-     * to <tt>java.lang.Comparable</tt> type.)
+     * (The typical example is <code>ClassCastException</code> when the comparator tries to cast some objects
+     * to <code>java.lang.Comparable</code> type.)
      * In other words, this method <b>is non-atomic regarding this failure</b>.
-     * Unlike this, sorting methods from <tt>java.util</tt>
+     * Unlike this, sorting methods from <code>java.util</code>
      * package never modify the passed array or collection in a case of some exceptions.
      *
      * @param from       index of the first sorted element of some data array, inclusive.
      * @param to         index of the last sorted element of some data array, exclusive.
      * @param comparator comparator for checking order of elements.
      * @param exchanger  exchanger for exchanging sorted elements.
-     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
-     * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
-     * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
-     *                                       the <tt>exchanger</tt> does not implement interfaces, necessary
+     * @throws NullPointerException          if <code>comparator</code> or <code>exchanger</code>
+     *                                       argument is {@code null}.
+     * @throws IllegalArgumentException      if <code>from &gt; to</code> or <code>from &lt; 0</code>
+     * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <code>false</code> and
+     *                                       the <code>exchanger</code> does not implement interfaces, necessary
      *                                       to perform sorting by this algorithm. Never occurs in the current
      *                                       version of this package.
-     * @throws ClassCastException            may be thrown while calling methods of <tt>comparator</tt> or
-     *                                       <tt>exchanger</tt> during the sorting, if the types of the array elements
+     * @throws ClassCastException            may be thrown while calling methods of <code>comparator</code> or
+     *                                       <code>exchanger</code> during the sorting, if the types of the array elements
      *                                       are not appropriate (it is only a typical example of exception:
      *                                       those methods may throw another run-time exceptions).
      */
@@ -291,14 +293,15 @@ public abstract class ArraySorter {
      * @param to         index of the last sorted element of some data array, exclusive.
      * @param comparator comparator for checking order of elements.
      * @param exchanger  exchanger for exchanging sorted elements.
-     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
-     * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
-     * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
-     *                                       the <tt>exchanger</tt> does not implement interfaces, necessary
+     * @throws NullPointerException          if <code>comparator</code> or <code>exchanger</code> argument
+     *                                       is {@code null}.
+     * @throws IllegalArgumentException      if <code>from &gt; to</code> or <code>from &lt; 0</code>
+     * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <code>false</code> and
+     *                                       the <code>exchanger</code> does not implement interfaces, necessary
      *                                       to perform sorting by this algorithm. Never occurs in the current
      *                                       version of this package.
-     * @throws ClassCastException            may be thrown while calling methods of <tt>comparator</tt> or
-     *                                       <tt>exchanger</tt> during the sorting, if the types of the array elements
+     * @throws ClassCastException            may be thrown while calling methods of <code>comparator</code> or
+     *                                       <code>exchanger</code> during the sorting, if the types of the array elements
      *                                       are not appropriate (it is only a typical example of exception:
      *                                       those methods may throw another run-time exceptions).
      */
@@ -307,17 +310,17 @@ public abstract class ArraySorter {
     }
 
     /**
-     * Returns <tt>true</tt>, if it is enough to implement the pure {@link ArrayExchanger} interface by
-     * the <tt>exchanger</tt> argument of {@link #sort(long, long, ArrayComparator, ArrayExchanger)} method,
-     * or <tt>false</tt>, if that method requires <tt>exchanger</tt> to implement something else.
-     * If this method returns <tt>false</tt>, then it is possible that {@link #sort sort} method
-     * will throw <tt>UnsupportedOperationException</tt> when its <tt>exchanger</tt> object does not
+     * Returns <code>true</code>, if it is enough to implement the pure {@link ArrayExchanger} interface by
+     * the <code>exchanger</code> argument of {@link #sort(long, long, ArrayComparator, ArrayExchanger)} method,
+     * or <code>false</code>, if that method requires <code>exchanger</code> to implement something else.
+     * If this method returns <code>false</code>, then it is possible that {@link #sort sort} method
+     * will throw <code>UnsupportedOperationException</code> when its <code>exchanger</code> object does not
      * implement some additional interface, necessary for this sorting algorithm.
      *
-     * <p>In the current version of the package, this method always returns <tt>true</tt>.
+     * <p>In the current version of the package, this method always returns <code>true</code>.
      * But this behaviour may change in future versions.
      *
-     * @return whether {@link #sort sort} method works properly if its <tt>exchanger</tt> implements only
+     * @return whether {@link #sort sort} method works properly if its <code>exchanger</code> implements only
      * the simple {@link ArrayExchanger} interface.
      */
     public boolean isExchangingSorter() {

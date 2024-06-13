@@ -54,7 +54,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>, with the given direction.
+     * Creates new straight line, passing through the given start point <code>(x0,y0,z0)</code>, with the given direction.
      *
      * <p>If the given <b>d</b> vector is not unit, it is automatically
      * replaced with a unit vector of the same direction: all components are divided by its length.
@@ -77,7 +77,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * Creates new straight line, passing through the given start point <code>(x0,y0,z0)</code>
      * and directed along the unit vector <b>i</b> of the specified basis.
      *
      * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
@@ -85,14 +85,14 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public static StraightLine3D newLineAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongI(basis);
     }
 
     /**
-     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * Creates new straight line, passing through the given start point <code>(x0,y0,z0)</code>
      * and directed along the unit vector <b>j</b> of the specified basis.
      *
      * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
@@ -100,14 +100,14 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public static StraightLine3D newLineAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongJ(basis);
     }
 
     /**
-     * Creates new straight line, passing through the given start point <tt>(x0,y0,z0)</tt>
+     * Creates new straight line, passing through the given start point <code>(x0,y0,z0)</code>
      * and directed along the unit vector <b>k</b> of the specified basis.
      *
      * @param x0    <i>x</i>-coordinate of the start point <b>o</b>.
@@ -115,7 +115,7 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public static StraightLine3D newLineAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongK(basis);
@@ -270,7 +270,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public StraightLine3D setDirectionAlongI(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -282,7 +282,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public StraightLine3D setDirectionAlongJ(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -294,7 +294,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
+     * @throws NullPointerException if <code>basis</code> is {@code null}.
      */
     public StraightLine3D setDirectionAlongK(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -330,7 +330,7 @@ public final class StraightLine3D implements Cloneable {
 
     /**
      * Sets new <i>direction</i> randomly with uniform distribution in the space.
-     * This is chosen with help of <tt>random.nextDouble()</tt> method.
+     * This is chosen with help of <code>random.nextDouble()</code> method.
      *
      * @param random random generator used to create the basis.
      * @return a reference to this object.
@@ -367,7 +367,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns <tt>{@link #x0() x0} + t * {@link #dx() dx}.</tt>
+     * Returns <code>{@link #x0() x0} + t * {@link #dx() dx}.</code>
      *
      * @param t the shift value from the start point.
      * @return <i>x</i>-coordinate of a point.
@@ -377,7 +377,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns <tt>{@link #y0() y0} + t * {@link #dy() dy}.</tt>
+     * Returns <code>{@link #y0() y0} + t * {@link #dy() dy}.</code>
      *
      * @param t the shift value from the start point.
      * @return <i>y</i>-coordinate of a point.
@@ -387,7 +387,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns <tt>{@link #z0() z0} + t * {@link #dz() dz}.</tt>
+     * Returns <code>{@link #z0() z0} + t * {@link #dz() dz}.</code>
      *
      * @param t the shift value from the start point.
      * @return <i>z</i>-coordinate of a point.
@@ -397,10 +397,10 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns projection of the given vector <b>a</b> to this straight: <tt>ax * dx + ay * dy + az * dz</tt>.
+     * Returns projection of the given vector <b>a</b> to this straight: <code>ax * dx + ay * dy + az * dz</code>.
      *
      * <p>Equivalent to
-     * <tt>{@link Orthonormal3DBasis#scalarProduct Orthonormal3DBasis.scalarProduct}(ax, ay, ax, dx, dy, dz).</p>
+     * <code>{@link Orthonormal3DBasis#scalarProduct Orthonormal3DBasis.scalarProduct}(ax, ay, ax, dx, dy, dz).</p>
      *
      * @param ax x-component of the vector.
      * @param ay y-component of the vector.
@@ -412,7 +412,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns <tt>(x&minus;x0)*dx + (y&minus;y0)*dy + (z&minus;z0)*dz</tt>.
+     * Returns <code>(x&minus;x0)*dx + (y&minus;y0)*dy + (z&minus;z0)*dz</code>.
      *
      * @param x x-coordinate of the point.
      * @param y y-coordinate of the point.
@@ -436,9 +436,9 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns the distance from the given point <tt>(x,y,z)</tt> to the start point <tt>(x0,y0,z0)</tt>.
+     * Returns the distance from the given point <code>(x,y,z)</code> to the start point <code>(x0,y0,z0)</code>.
      * <p>Equivalent to
-     * <tt>Math.sqrt({@link #distanceToStartPointSquare distanceToStartPointSquare}(x, y, z))</tt>.</p>
+     * <code>Math.sqrt({@link #distanceToStartPointSquare distanceToStartPointSquare}(x, y, z))</code>.</p>
      *
      * @param x x-coordinate of the point.
      * @param y y-coordinate of the point.
@@ -450,7 +450,7 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to this straight.
+     * Returns the square of the distance from the given point <code>(x,y,z)</code> to this straight.
      *
      * <p>Equivalent to
      * {@link StraightLine3D#distanceToStraightSquare(double, double, double, double, double, double)
@@ -467,10 +467,10 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns the distance from the given point <tt>(x,y,z)</tt> to this straight.
+     * Returns the distance from the given point <code>(x,y,z)</code> to this straight.
      * <p>Equivalent to
-     * <tt>Math.sqrt({@link #distanceToStraightSquare(double, double, double)
-     * distanceToStraightSquare}(x, y, z))</tt>.</p>
+     * <code>Math.sqrt({@link #distanceToStraightSquare(double, double, double)
+     * distanceToStraightSquare}(x, y, z))</code>.</p>
      *
      * @param x x-coordinate of the point.
      * @param y y-coordinate of the point.
@@ -495,12 +495,12 @@ public final class StraightLine3D implements Cloneable {
     /**
      * Indicates whether some other object is an instance of this class, containing the same straight line
      * (the same <b>o</b> and <b>d</b>).
-     * The corresponding coordinates are compared as in <tt>Double.equals</tt> method,
-     * i.e. they are converted to <tt>long</tt> values by <tt>Double.doubleToLongBits</tt> method
+     * The corresponding coordinates are compared as in <code>Double.equals</code> method,
+     * i.e. they are converted to <code>long</code> values by <code>Double.doubleToLongBits</code> method
      * and the results are compared.
      *
      * @param o the object to be compared for equality with this instance.
-     * @return <tt>true</tt> if and only if the specified object is an instance of {@link StraightLine3D},
+     * @return <code>true</code> if and only if the specified object is an instance of {@link StraightLine3D},
      * representing the same straight line as this object.
      */
     @Override
@@ -548,14 +548,14 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns the square of the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
-     * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
+     * Returns the square of the distance from the given point <code>(x,y,z)</code> to the straight
+     * <code>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</code>,
+     * where <code><b>d</b>=(dx,dy,dz)</code> is some unit vector.
      *
      * <p>This method works faster than creating a new instance of this class and calling its
      * {@link #distanceToStraightSquare(double, double, double)} method.
-     * But this method requires that the vector <tt>(dx, dy, dz)</tt> to be unit:
-     * <tt>dx&nbsp;*&nbsp;dx&nbsp;+&nbsp;dy&nbsp;*&nbsp;dy+&nbsp;dz&nbsp;*&nbsp;dz&nbsp;=&nbsp;1.0</tt>,
+     * But this method requires that the vector <code>(dx, dy, dz)</code> to be unit:
+     * <code>dx&nbsp;*&nbsp;dx&nbsp;+&nbsp;dy&nbsp;*&nbsp;dy+&nbsp;dz&nbsp;*&nbsp;dz&nbsp;=&nbsp;1.0</code>,
      * otherwise its result will be incorrect.
      *
      * @param dx x-component of the unit direction vector <b>d</b>.
@@ -572,13 +572,13 @@ public final class StraightLine3D implements Cloneable {
     }
 
     /**
-     * Returns the distance from the given point <tt>(x,y,z)</tt> to the straight
-     * <tt>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</tt>,
-     * where <tt><b>d</b>=(dx,dy,dz)</tt> is some unit vector.
+     * Returns the distance from the given point <code>(x,y,z)</code> to the straight
+     * <code>{@link #newLineThroughOrigin(double, double, double) getInstanceFromOrigin}(dx, dy, dz)</code>,
+     * where <code><b>d</b>=(dx,dy,dz)</code> is some unit vector.
      *
      * <p>Equivalent to
-     * <tt>Math.sqrt({@link #distanceToStraightSquare(double, double, double, double, double, double)
-     * distanceToStraightSquare}(dx, dy, dz, x, y, z))</tt>.</p>
+     * <code>Math.sqrt({@link #distanceToStraightSquare(double, double, double, double, double, double)
+     * distanceToStraightSquare}(dx, dy, dz, x, y, z))</code>.</p>
      *
      * @param dx x-component of the unit direction vector <b>d</b>.
      * @param dy y-component of the unit direction vector <b>d</b>.

@@ -43,12 +43,12 @@ public class IntegerCirclePointsGenerator {
     private static final int DEBUG_LEVEL = 0;
 
     /**
-     * Returns all integer points of the circle with given radius <tt>r</tt>
+     * Returns all integer points of the circle with given radius <code>r</code>
      * and center at (0,0). Points are calculated by Bresenham algorithm.
      * Result array consists of (x,y) pairs: [0] element is x0, [1] element is y0,
      * [2] element is x1, [3] element is y1, ... The number of returned points
-     * if <tt>(result_array).length/2</tt>.
-     * In a special case <tt>r==0</tt>, returns {0,0}.
+     * if <code>(result_array).length/2</code>.
+     * In a special case <code>r==0</code>, returns {0,0}.
      * <p>Warning: the result array <i>must not be modified</i>!
      */
     public int[] getCirclePoints(int r) {
@@ -70,9 +70,9 @@ public class IntegerCirclePointsGenerator {
 
     /**
      * Analog of {@link #getCirclePoints(int)} method, but returned points
-     * are shifted by <tt>delta</tt> pixels from (0,0). The number of returned points
-     * is the same as in <tt>getCirclePoints</tt> method with the same <tt>r</tt>.
-     * In a special case <tt>r==0</tt>, returns {0,0}.
+     * are shifted by <code>delta</code> pixels from (0,0). The number of returned points
+     * is the same as in <code>getCirclePoints</code> method with the same <code>r</code>.
+     * In a special case <code>r==0</code>, returns {0,0}.
      * <p>Warning: the result array <i>must not be modified</i>!
      */
     public int[] getExternalCirclePoints(int r, int delta) {
@@ -106,7 +106,7 @@ public class IntegerCirclePointsGenerator {
 
     /**
      * Frees all cache memory. Recommended when ceasing using this class for a long time.
-     * <tt>System.gc()</tt> may be called after this to real freeing memory.
+     * <code>System.gc()</code> may be called after this to real freeing memory.
      */
     public void dispose() {
         circlePointsReference.dispose();

@@ -52,8 +52,8 @@ public final class Orthonormal3DBasis {
     // - must be not too big: every rotation can replace |r| to |r|^2, so 50-100 iteration can lead to overflow
 
     /**
-     * Minimal allowed length of the vectors (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) and
-     * (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>), passed to creation methods
+     * Minimal allowed length of the vectors (<code>ix</code>,<code>iy</code>,<code>iz</code>) and
+     * (<code>jx</code>,<code>jy</code>,<code>jz</code>), passed to creation methods
      * {@link #newBasis(double, double, double, double, double, double, boolean)},
      * {@link #newSomeBasis(double, double, double)}.
      */
@@ -121,16 +121,17 @@ public final class Orthonormal3DBasis {
     }
 
     /**
-     * Creates new basis, where <b>i</b> vector has components (<tt>ix</tt>/d, <tt>iy</tt>/d, <tt>iz</tt>/d),
-     * d=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>). Other vectors <b>j</b> and <b>k</b>
+     * Creates new basis, where <b>i</b> vector has components
+     * (<code>ix</code>/d, <code>iy</code>/d, <code>iz</code>/d),
+     * d=<code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>). Other vectors <b>j</b> and <b>k</b>
      * will have some values, depending on the implementation.
      *
      * @param ix <i>x</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @param iy <i>y</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @param iz <i>z</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @return new right orthonormal basis with given direction of <b>i</b> vector.
-     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
-     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
+     * @throws IllegalArgumentException if the length <code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<code>ix</code>,<code>iy</code>,<code>iz</code>) is zero or
      *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      */
     public static Orthonormal3DBasis newSomeBasis(double ix, double iy, double iz) {
@@ -158,24 +159,26 @@ public final class Orthonormal3DBasis {
 
     /**
      * Creates new basis, where <b>i</b> vector has components
-     * (<tt>ix</tt>/d<sub>1</sub>, <tt>iy</tt>/d<sub>1</sub>, <tt>iz</tt>/d<sub>1</sub>),
-     * d<sub>1</sub>=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>),
-     * <b>j</b> vector has components (<tt>jx</tt>/d<sub>2</sub>, <tt>jy</tt>/d<sub>2</sub>, <tt>jz</tt>/d<sub>2</sub>),
-     * d<sub>2</sub>=<tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>),
+     * (<code>ix</code>/d<sub>1</sub>, <code>iy</code>/d<sub>1</sub>, <code>iz</code>/d<sub>1</sub>),
+     * d<sub>1</sub>=<code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>),
+     * <b>j</b> vector has components
+     * (<code>jx</code>/d<sub>2</sub>, <code>jy</code>/d<sub>2</sub>, <code>jz</code>/d<sub>2</sub>),
+     * d<sub>2</sub>=<code>sqrt</code>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>),
      * <b>k</b> vector is chosen automatically to provide right orthonormal basis.
      *
-     * <p>If the passed vectors (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) and (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
-     * are not orthogonal, the vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) is automatically corrected,
+     * <p>If the passed vectors (<code>ix</code>,<code>iy</code>,<code>iz</code>) and
+     * (<code>jx</code>,<code>jy</code>,<code>jz</code>)
+     * are not orthogonal, the vector (<code>jx</code>,<code>jy</code>,<code>jz</code>) is automatically corrected,
      * before all other calculations, to become orthogonal to <b>i</b>, and the plane <b>ij</b> is preserved
      * while this correction.
      *
      * <p>If the passed vectors are collinear or almost collinear (with very little angle difference,
      * about 10<sup>&minus;8</sup>..10<sup>&minus;6</sup> radians or something like this),
      * or if the length of one of the passed vectors is less than {@link #MIN_ALLOWED_LENGTH},
-     * then behaviour depends on <tt>exceptionOnCollinearity</tt> argument. If it is <tt>true</tt>,
+     * then behaviour depends on <code>exceptionOnCollinearity</code> argument. If it is <code>true</code>,
      * the method throws {@link CollinearityException}. In other case, the method ignores the passed
-     * vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>) and returns some basis according the passed vector
-     * (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>), as {@link #newSomeBasis(double, double, double)} method.
+     * vector (<code>jx</code>,<code>jy</code>,<code>jz</code>) and returns some basis according the passed vector
+     * (<code>ix</code>,<code>iy</code>,<code>iz</code>), as {@link #newSomeBasis(double, double, double)} method.
      *
      * @param ix                      <i>x</i>-component of new <b>i</b> vector
      *                                (maybe, multiplied by some <i>d</i><sub>1</sub> constant).
@@ -192,13 +195,13 @@ public final class Orthonormal3DBasis {
      * @param exceptionOnCollinearity whether exception is thrown for collinear vector pair.
      * @return new right orthonormal basis with given direction of <b>i</b> vector
      * and the direction of <b>j</b> vector, chosen according the arguments (see above).
-     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
-     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) or
-     *                                  the length <tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
-     *                                  of the passed vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
+     * @throws IllegalArgumentException if the length <code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<code>ix</code>,<code>iy</code>,<code>iz</code>) or
+     *                                  the length <code>sqrt</code>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
+     *                                  of the passed vector (<code>jx</code>,<code>jy</code>,<code>jz</code>)
      *                                  is zero or too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      * @throws CollinearityException    if the passed two vectors are almost collinear and
-     *                                  <tt>exceptionOnCollinearity==true</tt>.
+     *                                  <code>exceptionOnCollinearity==true</code>.
      */
     public static Orthonormal3DBasis newBasis(
             final double ix, final double iy, final double iz,
@@ -248,19 +251,19 @@ public final class Orthonormal3DBasis {
     /**
      * Analogue of {@link #newBasis(double, double, double, double, double, double, boolean)
      * getBasis(ix, iy, iz, jx, jy, jz, true}}, but instead of throwing exceptions this method
-     * just returns <tt>Optional.empty()</tt>.
+     * just returns <code>Optional.empty()</code>.
      *
-     * <p>In other words, this method returns <tt>Optional.empty()</tt> when
-     * the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
-     * of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) or
-     * the length <tt>sqrt</tt>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
-     * of the passed vector (<tt>jx</tt>,<tt>jy</tt>,<tt>jz</tt>)
+     * <p>In other words, this method returns <code>Optional.empty()</code> when
+     * the length <code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     * of the passed vector (<code>ix</code>,<code>iy</code>,<code>iz</code>) or
+     * the length <code>sqrt</code>(jx<sup>2</sup>+jy<sup>2</sup>+jz<sup>2</sup>)
+     * of the passed vector (<code>jx</code>,<code>jy</code>,<code>jz</code>)
      * is zero or too small (&lt; {@link #MIN_ALLOWED_LENGTH}),
-     * and also this method returns <tt>Optional.empty()</tt> when
+     * and also this method returns <code>Optional.empty()</code> when
      * the passed two vectors are almost collinear.
      * In all other cases, this method is equivalent
-     * to <tt>Optional.of({@link #newBasis(double, double, double, double, double, double, boolean)
-     * getBasis(ix, iy, iz, jx, jy, jz, true/false)})</tt> (the last argument is not important).
+     * to <code>Optional.of({@link #newBasis(double, double, double, double, double, double, boolean)
+     * getBasis(ix, iy, iz, jx, jy, jz, true/false)})</code> (the last argument is not important).
      * This method <i>never</i> throws any exceptions.
      *
      * @param ix <i>x</i>-component of new <b>i</b> vector
@@ -319,7 +322,7 @@ public final class Orthonormal3DBasis {
 
     /**
      * Creates a pseudorandom basis, which orientation is uniformly distributed in the space.
-     * The orientation is chosen with help of <tt>random.nextDouble()</tt> method.
+     * The orientation is chosen with help of <code>random.nextDouble()</code> method.
      *
      * @param random random generator used to create the basis.
      * @return new right orthonormal basis with random orientation.
@@ -338,18 +341,19 @@ public final class Orthonormal3DBasis {
     }
 
     /**
-     * Creates a pseudorandom basis, where <b>i</b> vector has components (<tt>ix</tt>/d, <tt>iy</tt>/d, <tt>iz</tt>/d),
-     * d=<tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>).
+     * Creates a pseudorandom basis, where <b>i</b> vector has components
+     * (<code>ix</code>/d, <code>iy</code>/d, <code>iz</code>/d),
+     * d=<code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>).
      * Directions of vector pair <b>j</b>, <b>k</b> are uniformly distributed in the plane, perpendicular to
-     * <b>i</b> vector. These directions are chosen with help of <tt>random.nextDouble()</tt> method.
+     * <b>i</b> vector. These directions are chosen with help of <code>random.nextDouble()</code> method.
      *
      * @param ix     <i>x</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @param iy     <i>y</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @param iz     <i>z</i>-component of new <b>i</b> vector (maybe, multiplied by some <i>d</i> constant).
      * @param random random generator used to create the basis.
      * @return new randomly oriented right orthonormal basis with given direction of <b>i</b> vector.
-     * @throws IllegalArgumentException if the length <tt>sqrt</tt>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
-     *                                  of the passed vector (<tt>ix</tt>,<tt>iy</tt>,<tt>iz</tt>) is zero or
+     * @throws IllegalArgumentException if the length <code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>)
+     *                                  of the passed vector (<code>ix</code>,<code>iy</code>,<code>iz</code>) is zero or
      *                                  too small (&lt; {@link #MIN_ALLOWED_LENGTH}).
      */
     public static Orthonormal3DBasis newRandomBasis(RandomGenerator random, double ix, double iy, double iz) {
@@ -683,12 +687,12 @@ public final class Orthonormal3DBasis {
 
     /**
      * Indicates whether some other object is an instance of this class, representing the same basis.
-     * The corresponding coordinates of vectors are compared as in <tt>Double.equals</tt> method,
-     * i.e. they are converted to <tt>long</tt> values by <tt>Double.doubleToLongBits</tt> method
+     * The corresponding coordinates of vectors are compared as in <code>Double.equals</code> method,
+     * i.e. they are converted to <code>long</code> values by <code>Double.doubleToLongBits</code> method
      * and the results are compared.
      *
      * @param o the object to be compared for equality with this instance.
-     * @return <tt>true</tt> if and only if the specified object is an instance of {@link Orthonormal3DBasis},
+     * @return <code>true</code> if and only if the specified object is an instance of {@link Orthonormal3DBasis},
      * representing the same right orthonormal basis as this object.
      */
     public boolean equals(Object o) {
@@ -722,7 +726,7 @@ public final class Orthonormal3DBasis {
 
     /**
      * Returns the square of the length of 3D segment with the given projections to the axes.
-     * Equivalent to <tt>x * x + y * y + z * z</tt>.
+     * Equivalent to <code>x * x + y * y + z * z</code>.
      *
      * @param x <i>x</i>-projection of the segment.
      * @param y <i>y</i>-projection of the segment.
@@ -735,7 +739,7 @@ public final class Orthonormal3DBasis {
 
     /**
      * Returns the length of 3D segment with the given projections to the axes.
-     * Equivalent to <tt>Math.sqrt({@link #lengthSquare(double, double, double) lengthSquare}(x, y, z)).</tt>.
+     * Equivalent to <code>Math.sqrt({@link #lengthSquare(double, double, double) lengthSquare}(x, y, z)).</code>.
      *
      * @param x <i>x</i>-projection of the segment.
      * @param y <i>y</i>-projection of the segment.
@@ -748,7 +752,7 @@ public final class Orthonormal3DBasis {
 
     /**
      * Analog ot {@link #lengthSquare(double, double, double)} for integer components.
-     * Equivalent to <tt>x * x + y * y + z * z</tt>.
+     * Equivalent to <code>x * x + y * y + z * z</code>.
      *
      * <p>Note: this method does not check possible overflow! To avoid overflow, we recommend never
      * pass here the components of the segment, which precise length &ge;2<sup>31</sup>*&radic;2.
@@ -766,7 +770,7 @@ public final class Orthonormal3DBasis {
 
     /**
      * Returns the scalar product of <b>a</b> and <b>b</b> vectors:
-     * <tt>ax * bx + ay * by + az * bz</tt>.
+     * <code>ax * bx + ay * by + az * bz</code>.
      *
      * @param ax x-component of the vector <b>a</b>.
      * @param ay y-component of the vector <b>a</b>.

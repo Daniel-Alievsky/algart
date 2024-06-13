@@ -58,30 +58,30 @@ public class ArraySelector {
     }
 
     /**
-     * Partially reorders elements of some array <tt>0..numberOfElements-1</tt> so, that
-     * every element, having index <tt>m=percentileIndexes[k]</tt> in increasing order,
-     * will be placed at the position <tt>array[m]</tt> (<tt>m=0..numberOfElements-1</tt>),
+     * Partially reorders elements of some array <code>0..numberOfElements-1</code> so, that
+     * every element, having index <code>m=percentileIndexes[k]</code> in increasing order,
+     * will be placed at the position <code>array[m]</code> (<code>m=0..numberOfElements-1</code>),
      * all previous elements (in increasing order) will be placed before it, and all further elements
      * will be placed after it.</p>
      *
-     * <p>Аfter this reordering we have a guarantee, that for any <tt>m=percentileIndexes[...]</tt> and
-     * for any <tt>i, j</tt>, that <tt>0 &le; i &lt; m</tt>, <tt>m &lt; j &lt; numberOfElements</tt>,
-     * the following checks will return <tt>false</tt>:<pre>
+     * <p>Аfter this reordering we have a guarantee, that for any <code>m=percentileIndexes[...]</code> and
+     * for any <code>i, j</code>, that <code>0 &le; i &lt; m</code>, <code>m &lt; j &lt; numberOfElements</code>,
+     * the following checks will return <code>false</code>:<pre>
      *     comparator.less(j, m)
      *     comparator.less(m, i)
      * </pre>
      *
-     * <p>Reordering is based on movement of elements of the array with help of <tt>exchanger</tt>
+     * <p>Reordering is based on movement of elements of the array with help of <code>exchanger</code>
      * object, which must provide necessary access to the data.
      *
-     * <p>Note: list of indexes <tt>percentileIndexes</tt> <b>must be sorted</b> in increasing order.
+     * <p>Note: list of indexes <code>percentileIndexes</code> <b>must be sorted</b> in increasing order.
      * You can provide this, for example, by simple call of standard Java sorting method
-     * <tt>Arrays.sort(percentileIndexes)</tt> before calling this method.
+     * <code>Arrays.sort(percentileIndexes)</code> before calling this method.
      *
-     * <p>Note: if some exception occurs while calling <tt>comparator</tt> or <tt>exchanger</tt> methods,
+     * <p>Note: if some exception occurs while calling <code>comparator</code> or <code>exchanger</code> methods,
      * the array stays shuffled ("partially" sorted).
-     * (The typical example is <tt>ClassCastException</tt> when the comparator tries to cast some objects
-     * to <tt>java.lang.Comparable</tt> type.)
+     * (The typical example is <code>ClassCastException</code> when the comparator tries to cast some objects
+     * to <code>java.lang.Comparable</code> type.)
      * In other words, this method <b>is non-atomic regarding this failure</b>.
      *
      * @param numberOfElements  number of elements in the array.
@@ -89,14 +89,15 @@ public class ArraySelector {
      *                          in increasing order.
      * @param comparator        comparator for checking order of elements.
      * @param exchanger         exchanger for exchanging reordered elements.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt>, <tt>comparator</tt> or <tt>exchanger</tt>
+     * @throws NullPointerException     if <code>percentileIndexes</code>, <code>comparator</code> or
+     *                                  <code>exchanger</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>,
-     *                                  or if <tt>percentileIndexes</tt> array is empty,
-     *                                  or if it contains indexes outside <tt>0..numberOfElements-1</tt> range,
+     * @throws IllegalArgumentException if <code>numberOfElements&le;0</code>,
+     *                                  or if <code>percentileIndexes</code> array is empty,
+     *                                  or if it contains indexes outside <code>0..numberOfElements-1</code> range,
      *                                  or if it is not sorted in increasing order.
-     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt> or
-     *                                  <tt>exchanger</tt> during the sorting, if the types of the array elements
+     * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code> or
+     *                                  <code>exchanger</code> during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
      */
@@ -119,30 +120,31 @@ public class ArraySelector {
      * </pre>
      * call, where <tt>percentileIndexes[k]={@link #percentileIndex(double, long)
      * percentileIndex}(percentileLevels[k], numberOfElements)</tt>
-     * for every <tt>k=0,...,percentileLevels.length-1</tt>.</p>
+     * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *
-     * <p>For example, <tt>percentileLevels={0.0, 0.5, 1.0}</tt> requests to find the minimum, median and maximum
-     * and place them to positions <tt>0</tt>,
-     * <tt>{@link #percentileIndex(double, long) percentileIndex}(0.5, numberOfElements)</tt> and
-     * <tt>numberOfElements-1</tt>.
+     * <p>For example, <code>percentileLevels={0.0, 0.5, 1.0}</code> requests to find the minimum, median and maximum
+     * and place them to positions <code>0</code>,
+     * <code>{@link #percentileIndex(double, long) percentileIndex}(0.5, numberOfElements)</code> and
+     * <code>numberOfElements-1</code>.
      *
-     * <p>Note: list of levels <tt>percentileLevels</tt> <b>must be sorted</b> in increasing order.
+     * <p>Note: list of levels <code>percentileLevels</code> <b>must be sorted</b> in increasing order.
      * You can provide this, for example, but simple call of standard Java sorting method
-     * <tt>Arrays.sort(percentileLevels)</tt> before calling this method.
+     * <code>Arrays.sort(percentileLevels)</code> before calling this method.
      *
      * @param numberOfElements number of elements in the array.
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param comparator       comparator for checking order of elements.
      * @param exchanger        exchanger for exchanging sorted elements.
-     * @throws NullPointerException     if <tt>percentileLevels</tt>, <tt>comparator</tt> or <tt>exchanger</tt>
+     * @throws NullPointerException     if <code>percentileLevels</code>, <code>comparator</code> or
+     *                                  <code>exchanger</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>, or
-     *                                  if <tt>percentileLevels</tt> array is empty,
+     * @throws IllegalArgumentException if <code>numberOfElements&le;0</code>, or
+     *                                  if <code>percentileLevels</code> array is empty,
      *                                  or if it contains elements outside
-     *                                  0..1 range or <tt>NaN</tt>,
+     *                                  0..1 range or <code>NaN</code>,
      *                                  or if it is not sorted in increasing order.
-     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt> or
-     *                                  <tt>exchanger</tt> during the sorting, if the types of the array elements
+     * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code> or
+     *                                  <code>exchanger</code> during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
      */
@@ -163,26 +165,26 @@ public class ArraySelector {
     /**
      * The version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
      * the single element with the required index.
-     * Unlike the previous method, allows to select element in a part of the array <tt>from &le; index &lt; to</tt>.
+     * Unlike the previous method, allows to select element in a part of the array <code>from &le; index &lt; to</code>.
      *
-     * <p>After this reordering we have a guarantee, that for any <tt>i, j</tt>, that
-     * <tt>from &le; i &lt; requiredIndex</tt>, <tt>requiredIndex &lt; j &lt; to</tt>,
-     * the following checks will return <tt>false</tt>:<pre>
+     * <p>After this reordering we have a guarantee, that for any <code>i, j</code>, that
+     * <code>from &le; i &lt; requiredIndex</code>, <code>requiredIndex &lt; j &lt; to</code>,
+     * the following checks will return <code>false</code>:<pre>
      *     comparator.less(j, m)
      *     comparator.less(m, i)
      * </pre>
-     * <p>Elements with indexes <tt>&lt;from</tt> and <tt>&ge;to</tt> are not analysed.
+     * <p>Elements with indexes <code>&lt;from</code> and <code>&ge;to</code> are not analysed.
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param comparator    comparator for checking order of elements.
      * @param exchanger     exchanger for exchanging reordered elements.
-     * @throws NullPointerException     if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
-     * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt> or
-     *                                  <tt>exchanger</tt> during the sorting, if the types of the array elements
+     * @throws NullPointerException     if <code>comparator</code> or <code>exchanger</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  or if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
+     * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code> or
+     *                                  <code>exchanger</code> during the sorting, if the types of the array elements
      *                                  are not appropriate (it is only a typical example of exception:
      *                                  those methods may throw another run-time exceptions).
      */
@@ -302,15 +304,19 @@ public class ArraySelector {
                (\([\w\[\]]+\))\s<\s(\([\w\[\]]+\)) ==>
                    $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0;;
                (<p>Note that.*?\<\/p\>\s*\*\s*\*\s) ==> ,,$1,, ,, ,,
-               <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+               <p>Note that elements of <code>float[]</code> array are compared by
+     * <code>Float.compare(float, float)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      *
      ,,
-                <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+                <p>Note that elements of <code>double[]</code> array are compared by
+     * <code>Double.compare(double, double)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      *;;
                \*(\@param (?:from|percentile)) ==> * $1,,...
@@ -318,10 +324,10 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>byte[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>byte[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
@@ -332,9 +338,10 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, byte[] array, int length) {
         if (length <= 0) {
@@ -350,10 +357,10 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>byte[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>byte[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
@@ -363,9 +370,10 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, byte[] array, int length) {
         if (length <= 0) {
@@ -381,7 +389,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>byte[]</tt> array.</p>
+     * the element from <code>byte[]</code> array.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
      * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
@@ -391,9 +399,9 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public byte select(
             final int from,
@@ -605,19 +613,20 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>char[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>char[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, char[] array, int length) {
         if (length <= 0) {
@@ -633,18 +642,19 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>char[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>char[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, char[] array, int length) {
         if (length <= 0) {
@@ -660,15 +670,15 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>char[]</tt> array.</p>
+     * the element from <code>char[]</code> array.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public char select(
             final int from,
@@ -880,10 +890,10 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>short[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>short[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
@@ -894,9 +904,10 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, short[] array, int length) {
         if (length <= 0) {
@@ -912,10 +923,10 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>short[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>short[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
@@ -925,9 +936,10 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, short[] array, int length) {
         if (length <= 0) {
@@ -943,7 +955,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>short[]</tt> array.</p>
+     * the element from <code>short[]</code> array.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
      * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
@@ -953,9 +965,9 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public short select(
             final int from,
@@ -1167,19 +1179,20 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>int[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>int[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, int[] array, int length) {
         if (length <= 0) {
@@ -1195,18 +1208,19 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>int[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>int[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, int[] array, int length) {
         if (length <= 0) {
@@ -1222,15 +1236,15 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>int[]</tt> array.</p>
+     * the element from <code>int[]</code> array.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public int select(
             final int from,
@@ -1442,19 +1456,20 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>long[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>long[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, long[] array, int length) {
         if (length <= 0) {
@@ -1470,18 +1485,19 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>long[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>long[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, long[] array, int length) {
         if (length <= 0) {
@@ -1497,15 +1513,15 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>long[]</tt> array.</p>
+     * the element from <code>long[]</code> array.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public long select(
             final int from,
@@ -1717,23 +1733,26 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>float[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>float[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>float[]</code> array are compared by
+     * <code>Float.compare(float, float)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, float[] array, int length) {
         if (length <= 0) {
@@ -1749,22 +1768,25 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>float[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>float[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>float[]</code> array are compared by
+     * <code>Float.compare(float, float)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, float[] array, int length) {
         if (length <= 0) {
@@ -1780,19 +1802,21 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>float[]</tt> array.</p>
+     * the element from <code>float[]</code> array.</p>
      *
-     * <p>Note that elements of <tt>float[]</tt> array are compared by <tt>Float.compare(float, float)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other float values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>float[]</code> array are compared by
+     * <code>Float.compare(float, float)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public float select(
             final int from,
@@ -2004,23 +2028,26 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>double[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>double[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileIndexes</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileIndexes(int[], int)} method.</p>
      *
-     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>double[]</code> array are compared by
+     * <code>Double.compare(double, double)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileIndexes</code> or
+     *                                  <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(int[] percentileIndexes, double[] array, int length) {
         if (length <= 0) {
@@ -2036,22 +2063,25 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <tt>length</tt> elements of <tt>double[]</tt> array.</p>
+     * the element from first <code>length</code> elements of <code>double[]</code> array.</p>
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
-     * does not check elements of <tt>percentileLevels</tt>, that they are correct and correctly sorted.
+     * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
      * If they are incorrect, the results will be undefined. You can check them yourself by
      * {@link #checkPercentileLevels(double[])} method.</p>
      *
-     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>double[]</code> array are compared by
+     * <code>Double.compare(double, double)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
+     *                                  is {@code null}.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(double[] percentileLevels, double[] array, int length) {
         if (length <= 0) {
@@ -2067,19 +2097,21 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <tt>double[]</tt> array.</p>
+     * the element from <code>double[]</code> array.</p>
      *
-     * <p>Note that elements of <tt>double[]</tt> array are compared by <tt>Double.compare(double, double)</tt>
-     * method. So, <tt>NaN</tt> is considered to be equal to itself and greater than all other double values
-     * (including <tt>POSITIVE_INFINITY</tt>), and <tt>0.0 </tt>is considered  be greater than <tt>-0.0</tt>.</p>
+     * <p>Note that elements of <code>double[]</code> array are compared by
+     * <code>Double.compare(double, double)</code>
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * be greater than <code>-0.0</code>.</p>
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
-     *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     *                                  if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      */
     public double select(
             final int from,
@@ -2327,9 +2359,9 @@ public class ArraySelector {
      * @param numberOfElements  number of elements in the array.
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
-     * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>,
-     *                                  or if <tt>percentileIndexes</tt> array is empty,
-     *                                  or if it contains indexes outside <tt>0..numberOfElements-1</tt> range,
+     * @throws IllegalArgumentException if <code>numberOfElements&le;0</code>,
+     *                                  or if <code>percentileIndexes</code> array is empty,
+     *                                  or if it contains indexes outside <code>0..numberOfElements-1</code> range,
      *                                  or if it is not sorted in increasing order.
      */
     public static void checkPercentileIndexes(long[] percentileIndexes, long numberOfElements) {
@@ -2358,9 +2390,9 @@ public class ArraySelector {
      * @param numberOfElements  number of elements in the array.
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
-     * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>,
-     *                                  or if <tt>percentileIndexes</tt> array is empty,
-     *                                  or if it contains indexes outside <tt>0..numberOfElements-1</tt> range,
+     * @throws IllegalArgumentException if <code>numberOfElements&le;0</code>,
+     *                                  or if <code>percentileIndexes</code> array is empty,
+     *                                  or if it contains indexes outside <code>0..numberOfElements-1</code> range,
      *                                  or if it is not sorted in increasing order.
      */
     public static void checkPercentileIndexes(int[] percentileIndexes, int numberOfElements) {
@@ -2384,9 +2416,9 @@ public class ArraySelector {
      * Throws an exception if they are incorrect.
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
-     * @throws IllegalArgumentException if <tt>percentileLevels</tt> array is empty,
+     * @throws IllegalArgumentException if <code>percentileLevels</code> array is empty,
      *                                  or if it contains elements outside
-     *                                  0..1 range or <tt>NaN</tt>,
+     *                                  0..1 range or <code>NaN</code>,
      *                                  or if it is not sorted in increasing order.
      */
     public static void checkPercentileLevels(double[] percentileLevels) {

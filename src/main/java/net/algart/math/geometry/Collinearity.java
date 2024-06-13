@@ -9,10 +9,10 @@ import net.algart.math.MutableInt128;
  */
 public class Collinearity {
     /**
-     * Returns <tt>true</tt> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
+     * Returns <code>true</code> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
      *
      * <p>This method is the equivalent of {@link #collinear(long, long, long, long, long, long)} method,
-     * optimized for the case of 32-bit <tt>int</tt> arguments.</p>
+     * optimized for the case of 32-bit <code>int</code> arguments.</p>
      *
      * @param x1 x-component of the first vector.
      * @param y1 y-component of the first vector.
@@ -30,7 +30,7 @@ public class Collinearity {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
+     * Returns <code>true</code> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
      *
      * <p>Note that this method allocates two temporary {@link MutableInt128} objects.
      * If you need to call it more than once, you can optimize this by allocating these two objects
@@ -50,7 +50,7 @@ public class Collinearity {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
+     * Returns <code>true</code> if and only if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are collinear.
      *
      * <p>Unlike {@link #collinear(long, long, long, long, long, long)},
      * this method requires to pass two non-null objects {@link MutableInt128}:
@@ -66,7 +66,7 @@ public class Collinearity {
      * @param temp1 some non-null temporary instance of {@link MutableInt128}.
      * @param temp2 some other non-null temporary instance of {@link MutableInt128}.
      * @return whether two vectors are collinear.
-     * @throws NullPointerException if <tt>temp1</tt> or <tt>temp2</tt> is {@code null}.
+     * @throws NullPointerException if <code>temp1</code> or <code>temp2</code> is {@code null}.
      */
     public static boolean collinear(
             long x1, long y1, long z1, long x2, long y2, long z2,
@@ -87,7 +87,7 @@ public class Collinearity {
     }
 
     /**
-     * Returns <tt>true</tt> if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are also co-directional.
+     * Returns <code>true</code> if two collinear 3D vectors (x1,y1,z1) and (x2,y2,z2) are also co-directional.
      * Note that the result has no sense for non-collinear vectors: you should check this fact separately,
      * for example, using  {@link #collinear(long, long, long, long, long, long)} method.
      *
