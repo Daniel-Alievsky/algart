@@ -514,7 +514,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @param shift the shift of the grid indexes.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
      * @throws TooLargePatternCoordinatesException
      *                                  if the set of shifted points does not fulfil the restrictions,

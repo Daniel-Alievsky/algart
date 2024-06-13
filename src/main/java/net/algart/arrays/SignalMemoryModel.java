@@ -90,7 +90,7 @@ public class SignalMemoryModel extends AbstractMemoryModel {
      *
      * @param elementType the type of array elements.
      * @return            <tt>false</tt> always.
-     * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -120,7 +120,7 @@ public class SignalMemoryModel extends AbstractMemoryModel {
      *
      * @param elementType the type of array elements.
      * @return            <tt>-1</tt> always.
-     * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
      */
     public long maxSupportedLength(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");

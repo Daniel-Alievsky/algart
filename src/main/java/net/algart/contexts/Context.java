@@ -60,7 +60,7 @@ package net.algart.contexts;
  * Unlike algorithm parameters, the context <i>should not determine the final results</i> of execution.
  * But it may clarify the behavior of methods: for example, may allow them to show execution progress
  * or specify the directory for temporary files.
- * Some modules may work correctly without any context (when <tt>null</tt> is passed
+ * Some modules may work correctly without any context (when {@code null} is passed
  * as the {@link Context} argument).
  * Other modules may require some context providing the necessary information.
  * The requirements to the context, passed to some method,
@@ -113,12 +113,12 @@ public interface Context {
      * this method usually returns a reference to this instance.
      * In particular, it's true for all context implementations provided by this package.
      *
-     * <p>If <tt>contextClass</tt> is <tt>null</tt> or is not an inheritor of {@link Context} interface,
+     * <p>If <tt>contextClass</tt> is {@code null} or is not an inheritor of {@link Context} interface,
      * this method throws an exception.
      *
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             the required context.
-     * @throws NullPointerException        if <tt>contextClass</tt> is <tt>null</tt>.
+     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
      * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if this context cannot serve the request.

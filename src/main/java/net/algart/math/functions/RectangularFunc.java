@@ -68,7 +68,7 @@ public final class RectangularFunc implements Func {
      * @param in    the value returned inside the range.
      * @param out   the value returned outside the range.
      * @return      an instance of this class with the passed parameters.
-     * @throws NullPointerException if <tt>range</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>range</tt> is {@code null}.
      */
     public static RectangularFunc getInstance(Range range, double in, double out) {
         return new RectangularFunc(range, in, out);

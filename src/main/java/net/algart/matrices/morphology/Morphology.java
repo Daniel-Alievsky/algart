@@ -183,7 +183,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the "lazy" matrix containing the dilation of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -216,7 +216,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the "lazy" matrix containing the erosion of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -257,7 +257,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the result of dilation of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -302,7 +302,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the result of erosion of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -329,7 +329,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference of the dilation and the source matrix should be returned.
      * @return                the result of dilation of the source matrix by the given pattern
      *                        or the difference of the dilation and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -355,7 +355,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference of the erosion and the source matrix should be returned.
      * @return                the result of erosion of the source matrix by the given pattern
      *                        or the difference of the erosion and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -399,7 +399,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param disableMemoryAllocation if <tt>false</tt>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
      *                                if <tt>true</tt>, no any work memory will be allocated.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -444,7 +444,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param disableMemoryAllocation if <tt>false</tt>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
      *                                if <tt>true</tt>, no any work memory will be allocated.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -461,7 +461,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param dest                    the target matrix.
      * @param src                     the source matrix.
      * @param pattern                 the pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -475,7 +475,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param dest                    the target matrix.
      * @param src                     the source matrix.
      * @param pattern                 the pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -502,7 +502,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference with the source matrix should be returned.
      * @return                the result of sequential dilation and erosion of the source matrix by the given patterns
      *                        or the difference of such result and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -530,7 +530,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference with the source matrix should be returned.
      * @return                the result of sequential erosion and dilation of the source matrix by the given patterns
      *                        or the difference of such result and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -566,7 +566,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference of the closing and the source matrix should be returned.
      * @return                the result of closing of the source matrix by the given pattern
      *                        or the difference of the closing and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -602,7 +602,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param subtractionMode whether the difference of the opening and the source matrix should be returned.
      * @return                the result of opening of the source matrix by the given pattern
      *                        or the difference of the opening and the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -630,7 +630,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the result of weak dilation of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -656,7 +656,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the result of weak dilation of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -729,7 +729,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param erosionPattern  the pattern for erosion.
      * @return                the elementwise minimum between the source matrix and
      *                        its sequential dilation and erosion by the given patterns.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -750,7 +750,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param dilationPattern the pattern for dilation.
      * @return                the elementwise maximum between the source matrix and
      *                        its sequential erosion and dilation by the given patterns.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
      *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -777,7 +777,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the Beucher gradient of the source matrix by the given pattern.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.

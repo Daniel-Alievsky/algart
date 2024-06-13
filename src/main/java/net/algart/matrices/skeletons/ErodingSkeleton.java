@@ -113,12 +113,12 @@ public class ErodingSkeleton extends AbstractIterativeArrayProcessor<Matrix<? ex
      * Creates new instance of this class.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       can be <tt>null</tt>, then it will be ignored.
+     *                       can be {@code null}, then it will be ignored.
      * @param matrix         the bit matrix that should be processed and returned by {@link #result()} method.
      * @param erosionPattern the pattern that will be used for erosion operation at every iteration.
      * @param openingPattern the pattern that will be used for opening operation at every iteration.
      * @return               new instance of this class.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static ErodingSkeleton getInstance(ArrayContext context,
         Matrix<? extends UpdatableBitArray> matrix, Pattern erosionPattern, Pattern openingPattern)

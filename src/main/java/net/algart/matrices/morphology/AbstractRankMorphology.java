@@ -99,7 +99,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param percentileIndex <i>r</i> argument of the percentile.
      * @param pattern         the pattern: the shape of the aperture.
      * @return                the "lazy" matrix containing the percentile of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -125,7 +125,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                          for every element of the result.
      * @param pattern           the pattern: the shape of the aperture.
      * @return                  the percentile of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -153,7 +153,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param percentileIndex <i>r</i> argument of the percentile.
      * @param pattern         the pattern: the shape of the aperture.
      * @return                the percentile of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -177,7 +177,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
      * @param pattern         the pattern: the shape of the aperture.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -209,7 +209,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                     the rank of which should be calculated.
      * @param pattern      the pattern: the shape of the aperture.
      * @return             the rank of the given values.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -266,7 +266,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
      * @return                    the "lazy" matrix containing the mean between 2 given percentiles
      *                            of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -302,7 +302,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param filler                the reserved value, returned when
      *                              <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
      * @return                      the mean between 2 given percentiles of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -339,7 +339,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param filler              the reserved value, returned when
      *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
      * @return                    the mean between 2 given percentiles of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -377,7 +377,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
      *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -420,7 +420,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                  or one of the special keys {@link #FILL_MIN_VALUE}, {@link #FILL_MAX_VALUE},
      *                  {@link #FILL_NEAREST_VALUE}, which mean using of special calculation modes B, C, D.
      * @return          the mean between 2 given values of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -454,7 +454,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param src                 the source matrix.
      * @param pattern             the pattern: the shape of the aperture.
      * @return                    the "lazy" matrix containing the mean of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -483,7 +483,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param src                 the source matrix.
      * @param pattern             the pattern: the shape of the aperture.
      * @return                    the mean of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -507,7 +507,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param dest                  the target matrix.
      * @param src                   the source matrix.
      * @param pattern               the pattern: the shape of the aperture.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -542,7 +542,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param pattern               the pattern: the shape of the aperture.
      * @param processingFunc        the function, which should be applied to every calculated aperture sum.
      * @return                      the result of the given function for the aperture sum of the source matrix.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -584,7 +584,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                 the "lazy" matrix containing the result of the given function.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -623,7 +623,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                           where <i>v</i> is the element of the source matrix,
      *                           <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                   the result of the given function.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -662,7 +662,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                 the result of the given function.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -701,7 +701,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                         <nobr>(<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal

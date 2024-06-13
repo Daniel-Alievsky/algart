@@ -51,7 +51,7 @@ public abstract class AbstractWeightedPattern implements WeightedPattern {
      * Creates a new weighted pattern on the base of the given parent one.
      *
      * @param parent the parent pattern, serving most of all methods of this instance.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     protected AbstractWeightedPattern(Pattern parent) {
         Objects.requireNonNull(parent, "Null parent pattern");

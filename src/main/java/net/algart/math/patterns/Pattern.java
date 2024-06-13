@@ -894,7 +894,7 @@ public interface Pattern {
      *
      * @param shift the shift.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
      * @throws TooLargePatternCoordinatesException
      *                                  if the set of shifted points does not fulfil the restrictions,
@@ -1005,7 +1005,7 @@ public interface Pattern {
      *
      * @param multipliers the scales along coordinates.
      * @return the scaled pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>multipliers.length!={@link #dimCount() dimCount()}</tt>.
      * @throws TooLargePatternCoordinatesException
      *                                  if the set of scaled points does not fulfil the restrictions,
@@ -1322,7 +1322,7 @@ public interface Pattern {
      *
      * @param added another pattern.
      * @return the Minkowski sum of this and another patterns.
-     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
      *                                     <tt>added</tt> or result pattern is greater than
@@ -1338,7 +1338,7 @@ public interface Pattern {
 
     /**
      * Calculates and returns the erosion of this pattern by specified pattern
-     * or <tt>null</tt> if this erosion is the empty set.
+     * or {@code null} if this erosion is the empty set.
      * Briefly, the returned pattern consists of all such points <i>p</i>,
      * that for any points <i>b</i> of the "<tt>subtracted</tt>" pattern the vector sum of two points
      * <i>p</i>+<i>b</i>
@@ -1371,8 +1371,8 @@ public interface Pattern {
      *
      * @param subtracted another pattern.
      * @return the erosion of this pattern by the specified pattern
-     *         or <tt>null</tt> if this erosion is the empty set.
-     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     *         or {@code null} if this erosion is the empty set.
+     * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
      *                                     <tt>subtracted</tt> or result pattern is greater than

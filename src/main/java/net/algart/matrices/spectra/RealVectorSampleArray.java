@@ -111,7 +111,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= samples.length()</tt></nobr>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
-     *                     {@link #newCompatibleSamplesArray(long)} method; can be <tt>null</tt>,
+     *                     {@link #newCompatibleSamplesArray(long)} method; can be {@code null},
      *                     then {@link SimpleMemoryModel} will be used.
      * @param samples      the samples.
      * @param vectorLength the length of each real vector.
@@ -119,7 +119,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * @param length       the length of the returned sample array.
      * @return             the array of vector real samples, represented by corresponding ranges (subarrays)
      *                     of this AlgART array.
-     * @throws NullPointerException     if <tt>samples</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>samples</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>vectorLength&lt;0</tt>, <tt>vectorStep&lt;vectorLength</tt>,
      *                                  <tt>length&lt;0</tt> or
      *                                  <nobr><tt>(length-1)*vectorStep+vectorLength &lt;=

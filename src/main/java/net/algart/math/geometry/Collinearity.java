@@ -66,7 +66,7 @@ public class Collinearity {
      * @param temp1 some non-null temporary instance of {@link MutableInt128}.
      * @param temp2 some other non-null temporary instance of {@link MutableInt128}.
      * @return whether two vectors are collinear.
-     * @throws NullPointerException if <tt>temp1</tt> or <tt>temp2</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>temp1</tt> or <tt>temp2</tt> is {@code null}.
      */
     public static boolean collinear(
             long x1, long y1, long z1, long x2, long y2, long z2,

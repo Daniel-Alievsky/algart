@@ -162,7 +162,7 @@ public class DefaultContext extends AbstractContext
      *
      * @param settings additional desires about the required memory model.
      * @return         the desired memory model.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public MemoryModel getMemoryModel(String settings) {
         Objects.requireNonNull(settings, "Null settings argument");

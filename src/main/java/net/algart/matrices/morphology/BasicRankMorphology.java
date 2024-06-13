@@ -146,13 +146,13 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * {@link RankMorphology}.
      *
      * @param context       the {@link #context() context} that will be used by this object;
-     *                      can be <tt>null</tt>, then it will be ignored.
+     *                      can be {@code null}, then it will be ignored.
      * @param dilationLevel the level: 1.0 means strict dilation and erosion as described in {@link Morphology}
      *                      interface, 0.5 means median, 0.0 means that dilation works like erosion and erosion
      *                      works like dilation (but with a {@link Pattern#symmetric() symmetric} pattern).
      * @param precision     precision characteristics of all rank operations, performed by the created object.
      * @return              new instance of this class.
-     * @throws NullPointerException     if <tt>precision</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>precision</tt> argument is {@code null}
      * @throws IllegalArgumentException if the <tt>dilationLevel</tt> argument is out of <tt>0.0..1.0</tt> range
      *                                  of if <tt>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
      *                                  bitLevels()}</tt> are incorrect:

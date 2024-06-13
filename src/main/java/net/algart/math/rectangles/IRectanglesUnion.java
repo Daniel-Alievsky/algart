@@ -623,7 +623,7 @@ public class IRectanglesUnion {
      *
      * @param whatToSubtract the subtracted rectangle.
      * @return the union of the rest of rectangles after subtraction.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>whatToSubtract.coordCount() != 2</tt>.
      */
     public IRectanglesUnion subtractRectangle(IRectangularArea whatToSubtract) {

@@ -106,13 +106,13 @@ public class TiledMorphology implements Morphology {
      * of the created object is <nobr><tt>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
      * context}(newInstance.{@link #context() context()})</tt></nobr>.
      * It means that the {@link TiledApertureProcessorFactory#context() context} of the passed tiler is not important
-     * and can be <tt>null</tt>.</p>
+     * and can be {@code null}.</p>
      *
      * @param parent <i>parent</i> object: the instance of {@link Morphology} interface
      *               that will perform all operations.
      * @param tiler  the tiler, which will be used for processing matrices by this class.
      * @return       new instance of this class.
-     * @throws NullPointerException if <tt>parent</tt> or <tt>tiler</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>parent</tt> or <tt>tiler</tt> argument is {@code null}.
      */
     public static TiledMorphology getInstance(Morphology parent, TiledApertureProcessorFactory tiler) {
         return new TiledMorphology(parent, tiler);
@@ -154,7 +154,7 @@ public class TiledMorphology implements Morphology {
      * getInstance}({@link #parent()}.{@link Morphology#context(ArrayContext)
      * context}(newContext), {@link #tiler() tiler()}).</tt>
      *
-     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return           new instance with another context.
      */
     public Morphology context(ArrayContext newContext) {

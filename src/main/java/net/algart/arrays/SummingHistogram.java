@@ -300,7 +300,7 @@ public abstract class SummingHistogram extends Histogram {
      * (see {@link Histogram} class). This integral is returned in the result of the methods.</p>
      *
      * <p>But, while calculating the integral, these methods incidentally calculate the additional information,
-     * which is stored in the instance of this class, passed as the last argument, if it is not <tt>null</tt>.
+     * which is stored in the instance of this class, passed as the last argument, if it is not {@code null}.
      * Namely, they calculate:</p>
      *
      * <ul>
@@ -320,7 +320,7 @@ public abstract class SummingHistogram extends Histogram {
      * </ul>
      *
      * <p>If <tt>minValue&ge;maxValue</tt>, these methods always return 0.0 and fill the last argument
-     * (if it is not <tt>null</tt>) by the following values: <nobr><tt>{@link #count()}=0</tt></nobr>,
+     * (if it is not {@code null}) by the following values: <nobr><tt>{@link #count()}=0</tt></nobr>,
      * <nobr><tt>{@link #isLeftBound()}=false</tt></nobr>, <nobr><tt>{@link #isRightBound()}=false</tt></nobr>.
      *
      * <p>Note: in the special case <i>N</i>=0 (all bars <b>b</b>[<i>k</i>] are zero)
@@ -474,7 +474,7 @@ public abstract class SummingHistogram extends Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -514,7 +514,7 @@ public abstract class SummingHistogram extends Histogram {
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
      * @return                       the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -548,7 +548,7 @@ public abstract class SummingHistogram extends Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
@@ -591,7 +591,7 @@ public abstract class SummingHistogram extends Histogram {
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
      * @return                       the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
@@ -627,7 +627,7 @@ public abstract class SummingHistogram extends Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -667,7 +667,7 @@ public abstract class SummingHistogram extends Histogram {
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
      * @return                       the new summing histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -701,7 +701,7 @@ public abstract class SummingHistogram extends Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
@@ -744,7 +744,7 @@ public abstract class SummingHistogram extends Histogram {
      *                               in the "histogram pyramid"; can be empty, then will be ignored
      *                               (the histogram pyramid will not be used).
      * @return                       the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
@@ -1174,7 +1174,7 @@ public abstract class SummingHistogram extends Histogram {
      * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                  the simple histogram model, between <i>r</i>=<tt>fromRank</tt> and
      *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
      */
     public static double integralBetweenRanks(long[] histogram, double fromRank, double toRank) {
@@ -1251,7 +1251,7 @@ public abstract class SummingHistogram extends Histogram {
      * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                  the simple histogram model, between <i>r</i>=<tt>fromRank</tt> and
      *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
      */
     public static double integralBetweenRanks(int[] histogram, double fromRank, double toRank) {
@@ -1351,7 +1351,7 @@ public abstract class SummingHistogram extends Histogram {
      * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                  the precise histogram model, between <i>r</i>=<tt>fromRank</tt> and
      *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
      */
     public static double preciseIntegralBetweenRanks(long[] histogram, double fromRank, double toRank) {
@@ -1382,7 +1382,7 @@ public abstract class SummingHistogram extends Histogram {
      * @return          the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                  the precise histogram model, between <i>r</i>=<tt>fromRank</tt> and
      *                  <i>r</i>=<tt>toRank</tt>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(fromRank)</tt> or <tt>Double.isNaN(toRank)</tt>.
      */
     public static double preciseIntegralBetweenRanks(int[] histogram, double fromRank, double toRank) {
@@ -1737,7 +1737,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * <p>The <tt>countOfValue</tt> argument, if it is not <tt>null</tt>, is filled by this method
+     * <p>The <tt>countOfValue</tt> argument, if it is not {@code null}, is filled by this method
      * by some additional information. Namely:
      *
      * <ul>
@@ -1789,11 +1789,11 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be <tt>null</tt>, then will be ignored.
+     *                      can be {@code null}, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
      */
     public static double integralBetweenValues(long[] histogram, double minValue, double maxValue,
@@ -1880,11 +1880,11 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be <tt>null</tt>, then will be ignored.
+     *                      can be {@code null}, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
      */
     public static double integralBetweenValues(int[] histogram, double minValue, double maxValue,
@@ -1991,7 +1991,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <p>but this method works little faster.
      *
-     * <p>The <tt>countOfValue</tt> argument, if it is not <tt>null</tt>, is filled by this method
+     * <p>The <tt>countOfValue</tt> argument, if it is not {@code null}, is filled by this method
      * by some additional information. Namely:
      *
      * <ul>
@@ -2043,11 +2043,11 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be <tt>null</tt>, then will be ignored.
+     *                      can be {@code null}, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
      */
     public static double preciseIntegralBetweenValues(long[] histogram, double minValue, double maxValue,
@@ -2274,11 +2274,11 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be <tt>null</tt>, then will be ignored.
+     *                      can be {@code null}, then will be ignored.
      * @return              the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      *                      the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<tt>minValue</tt>)</nobr> and
      *                      <nobr><i>r</i>=<i>r</i>(<tt>maxValue</tt>)</nobr>.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(minValue)</tt> or <tt>Double.isNaN(maxValue)</tt>.
      */
     public static double preciseIntegralBetweenValues(int[] histogram, double minValue, double maxValue,

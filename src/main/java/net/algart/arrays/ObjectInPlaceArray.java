@@ -39,7 +39,7 @@ public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
 
     /**
      * Copies the content of element #<tt>index</tt> to the passed <tt>resultValue</tt>
-     * and returns <tt>resultValue</tt>. Never returns <tt>null</tt>.
+     * and returns <tt>resultValue</tt>. Never returns {@code null}.
      *
      * <p>This method may work much faster than {@link #getElement(long)} in long loops,
      * because allows to avoid allocating Java objects in the heap.
@@ -48,7 +48,7 @@ public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
      * @param index       index of element to load.
      * @param resultValue the object where the retrieved content will be stored.
      * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
-     * @throws NullPointerException if <tt>resultValue</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>resultValue</tt> is {@code null}.
      */
     E getInPlace(long index, Object resultValue);
 

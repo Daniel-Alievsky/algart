@@ -707,7 +707,7 @@ public abstract class SkeletonPixelClassifier {
      *                             the neighbour #<tt>neighbourIndex</tt> of some (central) element
      *                             and the coordinates of this central element.
      * @param neighbourIndex       an index if the neighbour of some central element of the matrix.
-     * @throws NullPointerException     if <tt>coordinateIncrements</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>coordinateIncrements</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>coordinateIncrements.length!={@link #dimCount()}</tt>.
      * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
      *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
@@ -822,7 +822,7 @@ public abstract class SkeletonPixelClassifier {
      * @param attachmentInformation what should this method return for attachable pixels.
      * @return                      the matrix of integer codes with the same sizes, describing the types
      *                              of all skeleton pixels.
-     * @throws NullPointerException     if <tt>skeleton</tt> or <tt>attachmentInformation</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>skeleton</tt> or <tt>attachmentInformation</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.dimCount()!={@link #dimCount()}</tt>.
      */
     public abstract Matrix<? extends PIntegerArray> asPixelTypes(
@@ -879,7 +879,7 @@ public abstract class SkeletonPixelClassifier {
      *                                  supposed to be a {@link #TYPE_USUAL_NODE node}; this method will replace
      *                                  some {@link #TYPE_USUAL_NODE} values in this array with
      *                                  <tt>Integer.MIN_VALUE</tt>.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the length of the passed array is less than {@link #numberOfNeighbours()}.
      */
     public abstract void markNeighbouringNodesNotConnectedViaDegeneratedBranches(int[] pixelTypesOfAllNeighbours);

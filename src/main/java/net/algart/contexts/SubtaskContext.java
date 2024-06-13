@@ -115,7 +115,7 @@ public class SubtaskContext implements Context {
      *                      must be in <tt>0.0..1.0</tt> range.
      * @param toPart        the estimated ready part of the total algorithm at the finish of the subtask;
      *                      must be in <tt>fromPart..1.0</tt> range.
-     * @throws NullPointerException     if the <tt>parentContext</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if the <tt>parentContext</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>fromPart</tt> or <tt>toPart</tt> is not in
      *                                  <tt>0.0..1.0</tt> range or if <tt>fromPart&gt;toPart</tt>.
      * @see #SubtaskContext(Context, long, long, long)
@@ -194,7 +194,7 @@ public class SubtaskContext implements Context {
      *
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             the required context.
-     * @throws NullPointerException        if <tt>contextClass</tt> is <tt>null</tt>.
+     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
      * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if the parent context cannot serve the request.

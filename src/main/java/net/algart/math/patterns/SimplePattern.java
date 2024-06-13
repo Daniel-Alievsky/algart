@@ -64,8 +64,8 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      * No references to the passed argument are maintained by the created instance.
      *
      * @param points collection of all points of the pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt> or if some element in the specified
-     *                                  collection is <tt>null</tt>
+     * @throws NullPointerException     if the argument is {@code null} or if some element in the specified
+     *                                  collection is {@code null}
      * @throws IllegalArgumentException if <tt>points</tt> argument is an empty collection,
      *                                  or if some points have different number of coordinates.
      * @see Patterns#newPattern(java.util.Collection)
@@ -106,7 +106,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      *
      * @param shift the shift.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
      * @throws TooLargePatternCoordinatesException
      *                                  if the set of shifted points does not fulfil the restrictions,
@@ -143,7 +143,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      *
      * @param multipliers the multipliers for all coordinates.
      * @return the scaled pattern.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>multipliers.length!={@link #dimCount() dimCount()}</tt>.
      * @throws TooLargePatternCoordinatesException
      *                                  if the set of scaled points does not fulfil the restrictions,

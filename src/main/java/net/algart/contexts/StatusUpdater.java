@@ -41,10 +41,10 @@ public interface StatusUpdater extends Context {
     /**
      * Equivalent to {@link #updateStatus(String, boolean) updateStatus(message, true)}.
      *
-     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is <tt>null</tt>,
+     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is {@code null},
      * but it is not guaranteed.
      *
-     * @param message some information message; must not be <tt>null</tt>.
+     * @param message some information message; must not be {@code null}.
      */
     void updateStatus(String message);
 
@@ -61,10 +61,10 @@ public interface StatusUpdater extends Context {
      * Please avoid too frequent calls of this method with <tt>force=true</tt>:
      * millions of such calls may require long time.
      *
-     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is <tt>null</tt>,
+     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is {@code null},
      * but it is not guaranteed.
      *
-     * @param message some information message; must not be <tt>null</tt>.
+     * @param message some information message; must not be {@code null}.
      * @param force   whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
      */
     void updateStatus(String message, boolean force);

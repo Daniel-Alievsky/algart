@@ -97,7 +97,7 @@ public final class IRange {
      *
      * @param range the real range.
      * @return      the integer range with same (cast) bounds.
-     * @throws NullPointerException     if the passed range is <tt>null</tt>.
+     * @throws NullPointerException     if the passed range is {@code null}.
      * @throws IllegalArgumentException if the desired range does not match requirements of
      *                                  {@link #valueOf(long, long)} method.
      */
@@ -115,7 +115,7 @@ public final class IRange {
      *
      * @param range the real range.
      * @return      the integer range with same (rounded) bounds.
-     * @throws NullPointerException     if the passed range is <tt>null</tt>.
+     * @throws NullPointerException     if the passed range is {@code null}.
      * @throws IllegalArgumentException if the desired range does not match requirements of
      *                                  {@link #valueOf(long, long)} method.
      */

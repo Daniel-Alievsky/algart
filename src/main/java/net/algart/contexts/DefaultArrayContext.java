@@ -54,7 +54,7 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
      * {@link ProgressUpdater}.
      *
      * @param context the context that will be used by methods of this class.
-     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     * @throws NullPointerException        if the argument is {@code null}.
      * @throws UnsupportedContextException if this context cannot serve at least one from
      *                                     the requested 4 specified contexts.
      */
@@ -83,7 +83,7 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
      * @param context           the context that will be used by methods of this class.
      * @param threadPoolFactory the thread pool factory that will be used by this object.
      * @throws NullPointerException        if the <tt>context</tt> or <tt>threadPoolFactory</tt> argument
-     *                                     is <tt>null</tt>.
+     *                                     is {@code null}.
      * @throws UnsupportedContextException if this context cannot serve at least one from
      *                                     the requested 3 specified contexts.
      */

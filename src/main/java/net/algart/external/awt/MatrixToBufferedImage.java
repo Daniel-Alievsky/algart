@@ -73,7 +73,7 @@ public abstract class MatrixToBufferedImage {
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
      * @param interleavedMatrix the interleaved matrix.
-     * @param dataBuffer        the data for <tt>BufferedImage</tt>; can be <tt>null</tt>, then it is automatically
+     * @param dataBuffer        the data for <tt>BufferedImage</tt>; can be {@code null}, then it is automatically
      *                          created as {@link #toDataBuffer(net.algart.arrays.Matrix)
      *                          toDataBuffer(interleavedMatrix)}.
      * @return the <tt>BufferedImage</tt> with the same data.
@@ -248,9 +248,9 @@ public abstract class MatrixToBufferedImage {
     /**
      * Returns the palette (<tt></tt>byte[4][256]</tt>) if the indexed image is supposed.
      *
-     * <p>The default implementation returns <tt>null</tt>, that means non-indexed image.
+     * <p>The default implementation returns {@code null}, that means non-indexed image.
      *
-     * @return the palette or <tt>null</tt> if the image should be not indexed.
+     * @return the palette or {@code null} if the image should be not indexed.
      */
     public byte[][] palette() {
         return null;
@@ -272,11 +272,11 @@ public abstract class MatrixToBufferedImage {
     /**
      * Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
      * if you want to convert data into a packed <tt>BufferedImage</tt>.
-     * The resulting array can be <tt>null</tt>, that means an unpacked form of the raster
+     * The resulting array can be {@code null}, that means an unpacked form of the raster
      * (<tt>Raster.createBandedRaster</tt>), or an array containing <tt>bandCount</tt> elements:
      * red, green, blue and (if necessary) alpha masks.
      *
-     * @param bandCount the number of masks (3 or 4, in other cases <tt>null</tt> is returned).
+     * @param bandCount the number of masks (3 or 4, in other cases {@code null} is returned).
      * @return the bit masks for storing bands in the packed <tt>int</tt> values.
      */
 

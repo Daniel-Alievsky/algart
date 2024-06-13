@@ -94,7 +94,7 @@ public class SubContext extends AbstractContext implements Context {
      * @param superContext   super-context.
      * @param allowedClasses the set of served specific contexts
      *                       (in addition to interfaces implemented by this instance).
-     * @throws NullPointerException     if <tt>superContext</tt> or one of <tt>allowedClasses</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>superContext</tt> or one of <tt>allowedClasses</tt> is {@code null}.
      * @throws IllegalArgumentException if one of <tt>allowedClasses</tt> is not a {@link Context}.
      */
     public SubContext(Context superContext, Class<?> ...allowedClasses) {
@@ -121,7 +121,7 @@ public class SubContext extends AbstractContext implements Context {
      *
      * @param superContext super-context.
      * @param memoryModel  desired memory model.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public SubContext(Context superContext, MemoryModel memoryModel) {
         super(false); // the constructor argument does not matter: we override both as and is methods
@@ -159,7 +159,7 @@ public class SubContext extends AbstractContext implements Context {
      *
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             this instance.
-     * @throws NullPointerException        if <tt>contextClass</tt> is <tt>null</tt>.
+     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
      * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if this instance does not implement or extend the required type.
@@ -184,7 +184,7 @@ public class SubContext extends AbstractContext implements Context {
     }
 
     /**
-     * This implementation returns <tt>true</tt> if <tt>contextClass</tt> is not <tt>null</tt> and
+     * This implementation returns <tt>true</tt> if <tt>contextClass</tt> is not {@code null} and
      * and <tt>contextClass.isAssignableFrom(thisInstance.getClass())</tt>.
      * In other case, if this instance was created by the constructor with the specified set of allowed classes
      * ({@link #SubContext(Context, Class[])}) and if the passed context class is not

@@ -171,7 +171,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param tempPath the path where new temporary files will be created
      *                 by {@link #createTemporaryFile(boolean)} method
-     *                 or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                 or {@code null} if the default temporary-file directory is to be used.
      */
     public StandardIODataFileModel(File tempPath) {
         this(tempPath, STANDARD_IO_PREFIX_SIZE, DEFAULT_CACHE_READING, defaultDirectBuffers());
@@ -183,7 +183,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param tempPath     the path where new temporary files will be created
      *                     by {@link #createTemporaryFile(boolean)} method
-     *                     or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                     or {@code null} if the default temporary-file directory is to be used.
      * @param cacheReading whether reading data should be cached in free Java memory.
      */
     public StandardIODataFileModel(File tempPath, boolean cacheReading) {
@@ -196,7 +196,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param tempPath      the path where new temporary files will be created
      *                      by {@link #createTemporaryFile(boolean)} method
-     *                      or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                      or {@code null} if the default temporary-file directory is to be used.
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
      *                      byte buffers for mapping by <tt>ByteBuffer.allocateDirect(size)</tt>
@@ -259,7 +259,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param tempPath      the path where new temporary files will be created
      *                      by {@link #createTemporaryFile(boolean)} method
-     *                      or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                      or {@code null} if the default temporary-file directory is to be used.
      * @param prefixSize    the value returned by {@link #recommendedPrefixSize()} implementation in this class.
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
@@ -300,7 +300,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * @param path      the path to disk file (as the argument of <tt>new java.io.File(path)</tt>).
      * @param byteOrder the byte order that will be always used for mapping this file.
      * @return new instance of {@link DataFile} object.
-     * @throws NullPointerException if one of the passed arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the passed arguments is {@code null}.
      */
     public DataFile getDataFile(File path, ByteOrder byteOrder) {
         Objects.requireNonNull(path, "Null path argument");
@@ -316,7 +316,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param dataFile the data file.
      * @return the absolute path to the disk file.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the data file was created by data file model, other than
      *                              {@link DefaultDataFileModel} or {@link StandardIODataFileModel}.
      */

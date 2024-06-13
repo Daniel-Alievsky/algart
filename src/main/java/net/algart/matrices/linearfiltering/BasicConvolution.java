@@ -44,7 +44,7 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
      * Returns new instance of this class.
      *
      * @param context                   the {@link #context() context} that will be used by this object;
-     *                                  can be <tt>null</tt>, then it will be ignored.
+     *                                  can be {@code null}, then it will be ignored.
      * @param incrementByHalfForInteger if <tt>true</tt>, when the type of the convolution result is integer,
      *                                  the precise result is automatically increments by 0.5 before casting.
      * @return                          new instance of this class.
@@ -60,7 +60,7 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
      * (<tt>byte</tt>) or 32768 (<tt>short</tt> and <tt>char</tt>).
      *
      * @param context                   the {@link #context() context} that will be used by this object;
-     *                                  can be <tt>null</tt>, then it will be ignored.
+     *                                  can be {@code null}, then it will be ignored.
      * @return                          new instance of this class.
      */
     public static BasicConvolution getCorrectingUnsignedInstance(ArrayContext context) {

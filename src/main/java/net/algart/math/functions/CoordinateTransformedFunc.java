@@ -75,7 +75,7 @@ public class CoordinateTransformedFunc implements Func {
      * @param parent   the parent function.
      * @param operator the operator, transforming the arguments of this function before passing them to the parent one.
      * @return         new function.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static Func getInstance(Func parent, CoordinateTransformationOperator operator) {
         if (operator instanceof LinearOperator) {

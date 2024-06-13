@@ -45,7 +45,7 @@ public abstract class InterruptibleAction<T> {
      * Creates an instance of this class with the given interruption context.
      *
      * @param context an interruption context that will be used for interruption of the action.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     protected InterruptibleAction(InterruptionContext context) {
         Objects.requireNonNull(context, "Null context argument");

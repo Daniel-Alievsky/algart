@@ -176,7 +176,7 @@ public interface ShortArray extends PIntegerArray {
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> argument is {@code null}.
      */
     static UpdatableShortArray as(short[] array) {
         return SimpleMemoryModel.asUpdatableShortArray(array);

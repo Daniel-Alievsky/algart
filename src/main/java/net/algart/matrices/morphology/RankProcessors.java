@@ -84,13 +84,13 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be <tt>null</tt>, then it will be ignored.
+     *                     can be {@code null}, then it will be ignored.
      * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
      *                     the precise histogram model, <tt>false</tt> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return             the new streaming aperture processor, finding the percentile.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
@@ -143,13 +143,13 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be <tt>null</tt>, then it will be ignored.
+     *                     can be {@code null}, then it will be ignored.
      * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
      *                     the precise histogram model, <tt>false</tt> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return             the new streaming aperture processor, finding the rank.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
@@ -221,7 +221,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be <tt>null</tt>, then it will be ignored.
+     *                     can be {@code null}, then it will be ignored.
      * @param filler       the reserved value, returned when
      *                     <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
      * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
@@ -229,7 +229,7 @@ public class RankProcessors {
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return             the new streaming aperture processor, finding the mean between 2 percentiles.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
@@ -301,7 +301,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be <tt>null</tt>, then it will be ignored.
+     *                     can be {@code null}, then it will be ignored.
      * @param filler       the reserved value, returned when
      *                     <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
      *                     or one of the special keys {@link RankMorphology#FILL_MIN_VALUE},
@@ -312,7 +312,7 @@ public class RankProcessors {
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return             the new streaming aperture processor, finding the mean between 2 values.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
@@ -381,10 +381,10 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                       can be <tt>null</tt>, then it will be ignored.
+     *                       can be {@code null}, then it will be ignored.
      * @param processingFunc the function, which should be applied to every calculated aperture sum.
      * @return               the new streaming aperture processor, finding the given function of the aperture sum.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
@@ -471,7 +471,7 @@ public class RankProcessors {
      * processor twice: as the main source matrix <b>M</b> and as the first additional matrix <b>M</b><sub>0</sub>.
      *
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                       can be <tt>null</tt>, then it will be ignored.
+     *                       can be {@code null}, then it will be ignored.
      * @param processingFunc the function, which should be applied to every three
      *                       <nobr>(<i>v</i><sub>0</sub>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
      *                       where <i>v</i><sub>0</sub> is the element of <b>M</b><sub>0</sub> matrix,
@@ -483,7 +483,7 @@ public class RankProcessors {
      * @param bitLevels      the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return               the new streaming aperture processor, finding the given function of the additional
      *                       matrix <b>M</b><sub>0</sub> and the pair of percentiles.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
      *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>

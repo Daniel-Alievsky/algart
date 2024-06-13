@@ -115,7 +115,7 @@ public interface InterruptionContext extends Context {
      * by {@link #removeInterruptionListener(Listener)} method (usually in the <tt>finally</tt>
      * section of your method).
      *
-     * <p>If <tt>listener</tt> is <tt>null</tt>, no exception is thrown and no action is performed.
+     * <p>If <tt>listener</tt> is {@code null}, no exception is thrown and no action is performed.
      *
      * @param listener the listener that will be invoked when the application attempts to interrupt module execution.
      */
@@ -124,7 +124,7 @@ public interface InterruptionContext extends Context {
     /**
      * Removes the listener added by {@link #addInterruptionListener(Listener)} method.
      *
-     * <p>If <tt>listener</tt> is <tt>null</tt>, no exception is thrown and no action is performed.
+     * <p>If <tt>listener</tt> is {@code null}, no exception is thrown and no action is performed.
      *
      * @param listener the listener that should be removed.
      */

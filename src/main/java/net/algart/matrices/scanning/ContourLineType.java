@@ -138,7 +138,7 @@ public enum ContourLineType {
      * @param scanner some boundary scanner.
      * @return        <i>x</i>-coordinate of the point at the contour line, corresponding to the current position
      *                at the boundary in the given scanner.
-     * @throws NullPointerException  if the argument is <tt>null</tt>.
+     * @throws NullPointerException  if the argument is {@code null}.
      * @throws IllegalStateException if the scanner was not {@link Boundary2DScanner#isInitialized() positioned yet},
      *                               or, maybe, if {@link Boundary2DScanner#next()}
      *                               (or {@link Boundary2DScanner#scanBoundary}) method was never called for it.
@@ -172,7 +172,7 @@ public enum ContourLineType {
      * @param scanner some boundary scanner.
      * @return        <i>y</i>-coordinate of the point at the contour line, corresponding to the current position
      *                at the boundary in the given scanner.
-     * @throws NullPointerException  if the argument is <tt>null</tt>.
+     * @throws NullPointerException  if the argument is {@code null}.
      * @throws IllegalStateException if the scanner was not {@link Boundary2DScanner#isInitialized() positioned yet},
      *                               or, maybe, if {@link Boundary2DScanner#next()}
      *                               (or {@link Boundary2DScanner#scanBoundary}) method was never called for it.

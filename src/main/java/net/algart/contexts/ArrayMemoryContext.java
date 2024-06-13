@@ -75,7 +75,7 @@ public interface ArrayMemoryContext extends Context {
      *
      * @param elementType the required element type.
      * @return            the desired memory model.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     MemoryModel getMemoryModel(Class<?> elementType);
 
@@ -94,7 +94,7 @@ public interface ArrayMemoryContext extends Context {
      *
      * @param settings additional desires about the required memory model.
      * @return         the desired memory model.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     MemoryModel getMemoryModel(String settings);
 }

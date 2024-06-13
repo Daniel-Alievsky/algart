@@ -88,7 +88,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * getInstance}(context, {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()}).
      *
      * @param context the {@link #context() context} that will be used by this object;
-     *                can be <tt>null</tt>, then it will be ignored.
+     *                can be {@code null}, then it will be ignored.
      * @return new instance of this class.
      */
     public static BasicMorphology getInstance(ArrayContext context) {
@@ -108,7 +108,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * specified by the context: {@link ArrayContext#getMemoryModel()}.
      *
      * @param context           the {@link #context() context} that will be used by this object;
-     *                          can be <tt>null</tt>, then it will be ignored.
+     *                          can be {@code null}, then it will be ignored.
      * @param maxTempJavaMemory maximal amount of Java memory, in bytes, allowed for allocating
      *                          by methods of this class.
      * @return new instance of this class.
@@ -1095,13 +1095,13 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
         /**
          * Difference between this and next segment in a form of Minkowski decomposition,
-         * <tt>null</tt> if there is no such difference.
+         * {@code null} if there is no such difference.
          */
         final List<Pattern> incrementToNext;
 
         /**
          * Difference between this and previous segment in a form of Minkowski decomposition,
-         * <tt>null</tt> if there is no such difference. Filled later.
+         * {@code null} if there is no such difference. Filled later.
          */
         List<Pattern> incrementFromPrevious = null;
 
@@ -1137,14 +1137,14 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
     /**
      * Returns Minkowski decomposition of such pattern p that larger=smaller(+)p,
-     * or <tt>null</tt> if there is no such pattern.
+     * or {@code null} if there is no such pattern.
      * Works with 1-dimensional segments; for all other types of the passed patterns,
-     * returns <tt>null</tt>.
+     * returns {@code null}.
      * Returns best results if at least minimal or maximal segment ends are equal.
      *
      * @param larger  larger pattern.
      * @param smaller smaller pattern.
-     * @return Minkowski decomposition of such pattern p that larger=smaller(+)p or <tt>null</tt>.
+     * @return Minkowski decomposition of such pattern p that larger=smaller(+)p or {@code null}.
      */
     private static List<Pattern> minkowskiSubtractSegment(Pattern larger, Pattern smaller) {
         final int dimCount = larger.dimCount();

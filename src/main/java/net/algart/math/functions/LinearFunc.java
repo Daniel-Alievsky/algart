@@ -372,7 +372,7 @@ public abstract class LinearFunc implements Func {
      * @param destRange the destination range.
      * @param srcRange  the source range.
      * @return          the linear function mapping the source range to the destination range.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static LinearFunc getInstance(Range destRange, Range srcRange) {
         double mult = destRange.size() / srcRange.size();

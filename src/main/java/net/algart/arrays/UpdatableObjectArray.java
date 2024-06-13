@@ -67,7 +67,7 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
      * (and throws possible <tt>IndexOutOfBoundsException</tt>) in the very beginning.
      *
      * <p>If <tt>value == null</tt>, this method does not throw <tt>NullPointerException</tt>,
-     * but may fill the elements by some default value, if <tt>null</tt> elements are not supported
+     * but may fill the elements by some default value, if {@code null} elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
      * @param position start index (inclusive) to be filled.

@@ -295,7 +295,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param src          the source matrix <b>M</b>.
      * @param pattern      the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
      *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
@@ -319,7 +319,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrix the additional matrix <b>M</b><sub>0</sub>.
      * @param pattern          the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -347,7 +347,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrix2 the additional matrix <b>M</b><sub>1</sub>.
      * @param pattern           the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -377,7 +377,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrix3 the additional matrix <b>M</b><sub>2</sub>.
      * @param pattern           the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -434,8 +434,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      *                           ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
      * @param pattern            the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt> or
-     *                                  if one of <tt>additionalMatrices</tt> elements is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null} or
+     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -457,7 +457,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param dest    the resulting matrix <b>R</b>.
      * @param src     the source matrix <b>M</b>.
      * @param pattern the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -479,7 +479,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param src              the source matrix <b>M</b>.
      * @param additionalMatrix the additional matrix <b>M</b><sub>0</sub>.
      * @param pattern          the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -504,7 +504,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrix1 the additional matrix <b>M</b><sub>0</sub>.
      * @param additionalMatrix2 the additional matrix <b>M</b><sub>1</sub>.
      * @param pattern           the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -531,7 +531,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrix2 the additional matrix <b>M</b><sub>1</sub>.
      * @param additionalMatrix3 the additional matrix <b>M</b><sub>2</sub>.
      * @param pattern           the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -594,8 +594,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrices the additional matrices <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>,
      *                           ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
      * @param pattern            the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt> or
-     *                                  if one of <tt>additionalMatrices</tt> elements is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null} or
+     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
@@ -786,8 +786,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * {@link #process(Matrix, Matrix, List, Pattern)} method and throws the corresponding exception
      * if it is not so. Does nothing if the arguments are correct.
      *
-     * <p>More precisely, this method checks that all arguments are not <tt>null</tt>,
-     * all elements of <tt>additionalMatrices</tt> (if this list is not empty) are not <tt>null</tt>,
+     * <p>More precisely, this method checks that all arguments are not {@code null},
+     * all elements of <tt>additionalMatrices</tt> (if this list is not empty) are not {@code null},
      * <tt>dest</tt> and <tt>src</tt> matrices and elements of <tt>additionalMatrices</tt> (if this list is not empty)
      * have the {@link Matrix#dimEquals(Matrix) same dimensions} and
      * <tt>pattern.{@link Pattern#dimCount() dimCount()}==src.{@link Matrix#dimCount() dimCount()}</tt>.
@@ -801,8 +801,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param additionalMatrices the additional matrices <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>,
      *                           ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
      * @param pattern            the aperture shape <b>P</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt> or
-     *                                  if one of <tt>additionalMatrices</tt> elements is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null} or
+     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal

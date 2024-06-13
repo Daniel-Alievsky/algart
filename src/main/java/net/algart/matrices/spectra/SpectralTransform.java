@@ -105,7 +105,7 @@ import net.algart.arrays.*;
  * passed to them in the first argument. This context is used as in
  * {@link net.algart.arrays.Arrays.ParallelExecutor} class for interruption, showing the progress,
  * allocating work memory (if necessary) and multiprocessing on several CPUs.
- * If this argument is <tt>null</tt>, then all temporary AlgART arrays are allocated by
+ * If this argument is {@code null}, then all temporary AlgART arrays are allocated by
  * {@link SimpleMemoryModel}, multiprocessing (when possible) is implemented by
  * {@link DefaultThreadPoolFactory} class, interrupting by the user is impossible
  * and showing the progress is not supported.</p>
@@ -151,7 +151,7 @@ public interface SpectralTransform {
      * checks, whether {@link SampleArray#isComplex()} method returns <tt>true</tt> for the <tt>samples</tt> argument,
      * and the methods {@link #directTransformMatrix directTransformMatrix} /
      * {@link #inverseTransformMatrix inverseTransformMatrix} checks, whether the <tt>matrixIm</tt> argument is
-     * not <tt>null</tt>. If this condition is not fulfilled, these methods throw
+     * not {@code null}. If this condition is not fulfilled, these methods throw
      * <tt>UnsupportedOperationException</tt>.
      * In other case, these methods work normally.
      *
@@ -168,10 +168,10 @@ public interface SpectralTransform {
      * Direct transform of the passed sample array to its spectrum.
      * The resulting data are returned in the same sample array.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
@@ -185,10 +185,10 @@ public interface SpectralTransform {
      * Inverse transform of the spectrum back to the original sample array.
      * The resulting data are returned in the same sample array.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
@@ -205,24 +205,24 @@ public interface SpectralTransform {
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix.
      * The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
-     * in this case, <tt>matrixIm</tt> argument must be <tt>null</tt>.
+     * in this case, <tt>matrixIm</tt> argument must be {@code null}.
      * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
      * The resulting data are returned in the same AlgART matrices.
      *
-     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param matrixIm <tt>null</tt> if we have a real matrix;
+     * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
-     * @throws SizeMismatchException         if both passed matrices are not <tt>null</tt> (the case of the complex
+     * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
+     *                                       and <tt>matrixIm</tt> argument is {@code null}.
      */
     void directTransformMatrix(
             ArrayContext context,
@@ -235,24 +235,24 @@ public interface SpectralTransform {
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix.
      * The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
-     * in this case, <tt>matrixIm</tt> argument must be <tt>null</tt>.
+     * in this case, <tt>matrixIm</tt> argument must be {@code null}.
      * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
      * The resulting data are returned in the same AlgART matrices.
      *
-     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param matrixIm <tt>null</tt> if we have a real matrix;
+     * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
-     * @throws SizeMismatchException         if both passed matrices are not <tt>null</tt> (the case of the complex
+     * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
+     *                                       and <tt>matrixIm</tt> argument is {@code null}.
      */
     void inverseTransformMatrix(
             ArrayContext context,

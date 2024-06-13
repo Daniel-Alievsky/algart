@@ -63,7 +63,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return the "lazy" matrix containing the convolution of the source matrix with the given pattern.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     Matrix<? extends PArray> asConvolution(Matrix<? extends PArray> src, WeightedPattern pattern);
 
@@ -105,7 +105,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * @param src          the source matrix.
      * @param pattern      the pattern.
      * @return the "lazy" matrix containing the convolution of the source matrix with the given pattern.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     <T extends PArray> Matrix<T> asConvolution(
             Class<? extends T> requiredType,
@@ -147,7 +147,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return the result of convolution of the source matrix with the given pattern.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      * @see #asConvolution(Class, Matrix, WeightedPattern)
      */
     Matrix<? extends UpdatablePArray> convolution(Matrix<? extends PArray> src, WeightedPattern pattern);

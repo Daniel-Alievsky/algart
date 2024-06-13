@@ -125,7 +125,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= min(samplesRe.length(),samplesIm.length())</tt></nobr>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
-     *                     {@link #newCompatibleSamplesArray(long)} method; can be <tt>null</tt>,
+     *                     {@link #newCompatibleSamplesArray(long)} method; can be {@code null},
      *                     then {@link SimpleMemoryModel} will be used.
      * @param samplesRe    the real parts of all samples.
      * @param samplesIm    the imaginary parts of all samples.
@@ -134,7 +134,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * @param length       the length of the returned sample array.
      * @return             the array of vector complex samples, represented by corresponding ranges (subarrays)
      *                     of these two arrays.
-     * @throws NullPointerException     if <tt>samplesRe</tt> or <tt>samplesIm</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>samplesRe</tt> or <tt>samplesIm</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>vectorLength&lt;0</tt>, <tt>vectorStep&lt;vectorLength</tt>,
      *                                  <tt>length&lt;0</tt> or
      *                                  <nobr><tt>(length-1)*vectorStep+vectorLength &lt;=

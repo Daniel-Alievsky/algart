@@ -233,7 +233,7 @@ public abstract class MatrixInfo {
      * @param dataOffset the value that may be interpreted as an offset of some "main" data and
      *                   that will be stored in byte array returned by {@link #toBytes()} method.
      * @return full structural information about the matrix.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
+     * @throws NullPointerException   if the argument is {@code null}.
      * @throws TooLargeArrayException if the number of matrix dimensions is greater than
      *                                {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
      * @throws ClassCastException     if the built-in array in the matrix is not {@link PArray}.
@@ -258,7 +258,7 @@ public abstract class MatrixInfo {
      *                   that will be stored in byte array returned by {@link #toBytes()} method.
      * @param version    the version of the serialization format supported by the created instance.
      * @return full structural information about the matrix.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws TooLargeArrayException   if the number of matrix dimensions is greater than
      *                                  {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
      * @throws ClassCastException       if the built-in array in the matrix is not {@link PArray}.
@@ -311,7 +311,7 @@ public abstract class MatrixInfo {
      *
      * @param bytes the byte array produced by some previous call of {@link #toBytes()} method.
      * @return new instance of this class, built on the base of the passed byte array.
-     * @throws NullPointerException       if the argument is <tt>null</tt>.
+     * @throws NullPointerException       if the argument is {@code null}.
      * @throws IllegalInfoSyntaxException if the format of <tt>bytes</tt> argument is illegal.
      * @see #toBytes()
      * @see #valueOf(String)
@@ -341,7 +341,7 @@ public abstract class MatrixInfo {
      *
      * @param chars the string produced by some previous call of {@link #toChars()} method.
      * @return new instance of this class, built on the base of the passed string.
-     * @throws NullPointerException       if the argument is <tt>null</tt>.
+     * @throws NullPointerException       if the argument is {@code null}.
      * @throws IllegalInfoSyntaxException if the format of <tt>chars</tt> argument is illegal.
      * @see #toChars()
      * @see #valueOf(byte[])
@@ -373,7 +373,7 @@ public abstract class MatrixInfo {
      *
      * @param name the checked property name.
      * @return whether the passed string is an allowed name for an additional property.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static boolean isCorrectAdditionalPropertyName(String name) {
         Objects.requireNonNull(name, "Null name argument");
@@ -439,7 +439,7 @@ public abstract class MatrixInfo {
     /**
      * Returns the byte order used by the matrix for storing data.
      *
-     * <p>This method never returns <tt>null</tt>.
+     * <p>This method never returns {@code null}.
      *
      * @return the byte order used by the matrix for storing data.
      * @see Array#byteOrder()
@@ -520,7 +520,7 @@ public abstract class MatrixInfo {
      * <p>The returned map is a clone of the internal map stored in this object.
      * The returned map is always mutable and allows to add/remove elements, alike <tt>HashMap</tt>
      * or <tt>TreeMap</tt> classes.
-     * The returned object is never <tt>null</tt>.
+     * The returned object is never {@code null}.
      *
      * <p>Note that the first version 1.1 of serialization format does not support this feature.
      * If the current {@link #version() version} of serialization format of this instance is 1.1,
@@ -537,7 +537,7 @@ public abstract class MatrixInfo {
      *
      * @param byteOrder new value of byte order.
      * @return modified instance of this class.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public abstract MatrixInfo cloneWithOtherByteOrder(ByteOrder byteOrder);
 
@@ -554,7 +554,7 @@ public abstract class MatrixInfo {
      *
      * @param version required version.
      * @return modified instance of this class.
-     * @throws NullPointerException          if the argument is <tt>null</tt>.
+     * @throws NullPointerException          if the argument is {@code null}.
      * @throws IllegalArgumentException      if the specified version is not supported by this class.
      * @throws UnsupportedOperationException if the specified version cannot store all information, stored
      *                                       in this object.
@@ -625,8 +625,8 @@ public abstract class MatrixInfo {
      * @param additionalProperties another additional properties.
      * @return modified instance of this class.
      * @throws UnsupportedOperationException if the {@link #version() version} of this instance is 1.1.
-     * @throws NullPointerException          if the argument is <tt>null</tt>
-     *                                       or if some keys or values are <tt>null</tt>.
+     * @throws NullPointerException          if the argument is {@code null}
+     *                                       or if some keys or values are {@code null}.
      * @throws ClassCastException            if some of keys or values are not <tt>String</tt> instances
      *                                       (this situation is possible while passing raw <tt>Map</tt> type
      *                                       without generics).
@@ -695,7 +695,7 @@ public abstract class MatrixInfo {
      *
      * @param matrix the matrix to be compared with this matrix information.
      * @return <tt>true</tt> if this information correctly describes the given matrix.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public boolean matches(Matrix<?> matrix) {
         return matrix.elementType().equals(elementType)

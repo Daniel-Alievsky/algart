@@ -117,7 +117,7 @@ public interface ObjectArray<E> extends Array {
      *
      * @param elementType the required generic type.
      * @return this array cast to the specified generic element type.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the elements cannot be cast to the required type.
      */
     <D> ObjectArray<D> cast(Class<D> elementType);

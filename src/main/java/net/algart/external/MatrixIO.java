@@ -186,7 +186,7 @@ public class MatrixIO {
      *                                            saves a little text "reference" file with information about
      *                                            the path to this file F.
      * @throws IOException          in a case of I/O error.
-     * @throws NullPointerException if one of the arguments or elements of <tt>image</tt> list is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments or elements of <tt>image</tt> list is {@code null}.
      */
     public static void writeAlgARTImage(
             Path folder,
@@ -262,7 +262,7 @@ public class MatrixIO {
      * @param folder folder with multichannel image, stored in a set of files.
      * @return all channels of this image.
      * @throws IOException          in a case of I/O error.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static List<Matrix<? extends PArray>> readAlgARTImage(Path folder) throws IOException {
         Objects.requireNonNull(folder, "Null folder");

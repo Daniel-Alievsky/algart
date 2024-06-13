@@ -70,7 +70,7 @@ import java.util.Map;
  * <i>after</i> the call of {@link #process(Map, Map) process} method.</p>
  *
  * <p>Some of the resulting matrices <b>M'</b><sub><i>j</i></sub> (but not the source arguments),
- * passed to {@link #process(Map, Map) process} method, can be <tt>null</tt> &mdash;
+ * passed to {@link #process(Map, Map) process} method, can be {@code null} &mdash;
  * it means that {@link #process(Map, Map) process} method <i>must</i> create them itself.
  * (And it also <i>may</i> create some additional matrices <b>M'</b><sub><i>j</i></sub>, not contained
  * in <tt>dest</tt> while calling this method.)
@@ -85,7 +85,7 @@ import java.util.Map;
  * Degenerated cases <i>Q</i>=&empty; (no arguments) and <i>R</i>=&empty; (no results) are allowed.
  * If <i>Q</i>=&empty; (no matrices are passed in <tt>src</tt> map) and
  * the <tt>dest</tt> map, passed to {@link #process(Map, Map) process} method,
- * either is empty or contains only <tt>null</tt> matrices,
+ * either is empty or contains only {@code null} matrices,
  * then {@link #process(Map, Map) process} method usually does nothing.
  * See {@link #process(Map, Map) comments to that method} for additional details.</p>
  *
@@ -133,8 +133,8 @@ import java.util.Map;
  *
  * <p>The {@link #process(Map, Map) process} method fills all resulting matrices.
  * But if some of the resulting matrices <b>M'</b><sub><i>j</i></sub>, passed via <tt>dest</tt> map
- * while calling this method, is <tt>null</tt>, then it <i>must</i> be automatically created.
- * Moreover, if some of the resulting matrices <b>M'</b><sub><i>j</i></sub> was not <tt>null</tt>
+ * while calling this method, is {@code null}, then it <i>must</i> be automatically created.
+ * Moreover, if some of the resulting matrices <b>M'</b><sub><i>j</i></sub> was not {@code null}
  * while calling this method, the method still <i>may</i> create new matrix for this key (index) <i>j</i>
  * and store it in <tt>dest</tt> map instead of the original matrix.
  * In addition, this method may <i>create</i> (and store in <tt>dest</tt> map) some new resulting matrices
@@ -186,7 +186,7 @@ public interface ApertureProcessor<K> {
      * (but may add new resulting matrices).
      *
      * <p>Note 4: if some resulting matrix <b>M'</b><sub><i>j</i></sub>, passed in <tt>dest</tt> map
-     * as <tt>dest.get(<i>j</i>)</tt>, is <tt>null</tt> while calling this method,
+     * as <tt>dest.get(<i>j</i>)</tt>, is {@code null} while calling this method,
      * it <i>must</i> be automatically created and stored back in <tt>dest</tt> map for the same key (index) <i>j</i>.
      * (Besides this, this method may create and store in <tt>dest</tt> another additional resulting matrices
      * with another indexes.)
@@ -196,9 +196,9 @@ public interface ApertureProcessor<K> {
      *
      * <p>Note 6: if this method stores some resulting matrices it <tt>dest</tt> map, they must have the same
      * dimensions as all matrices, passed in <tt>src</tt> and <tt>dest</tt> maps while calling the method.
-     * This method must not store <tt>null</tt> values in <tt>dest</tt> map.
+     * This method must not store {@code null} values in <tt>dest</tt> map.
      *
-     * <p>Note 7: resulting matrices, created by this method instead of <tt>null</tt> values in <tt>dest</tt> map
+     * <p>Note 7: resulting matrices, created by this method instead of {@code null} values in <tt>dest</tt> map
      * or in addition to the existing matrices in <tt>dest</tt> map,
      * <i>may</i> be not updatable, i.e. it is possible that their {@link Matrix#array() built-in arrays} will not
      * implement {@link net.algart.arrays.UpdatableArray} interface.
@@ -227,7 +227,7 @@ public interface ApertureProcessor<K> {
      * <i>R</i>=&empty; (<tt>dest.isEmpty()</tt>: no results) are allowed.
      * If <i>Q</i>=<i>R</i>=&empty;, as well as if <i>Q</i>=&empty; and
      * the <tt>dest</tt> map, passed to this method,
-     * either is empty or contains only <tt>null</tt> matrices,
+     * either is empty or contains only {@code null} matrices,
      * then this method usually does nothing &mdash;
      * it is really true for the tiled processors, returned by
      * {@link TiledApertureProcessorFactory#tile(ApertureProcessor)} method,
@@ -237,9 +237,9 @@ public interface ApertureProcessor<K> {
      *             will be the value <tt>dest.get(<i>j</i>)</tt> of this map after calling this method.
      * @param src  the source arguments: the argument <b>M</b><sub><i>i</i></sub> is the value
      *             <tt>src.get(<i>i</i>)</tt> of this map.
-     * @throws NullPointerException                    if <tt>dest</tt> or <tt>src</tt> argument is <tt>null</tt>,
-     *                                                 or if one of values in <tt>src</tt> map is <tt>null</tt>.
-     * @throws IllegalArgumentException                if some values in <tt>dest</tt> map are not <tt>null</tt>
+     * @throws NullPointerException                    if <tt>dest</tt> or <tt>src</tt> argument is {@code null},
+     *                                                 or if one of values in <tt>src</tt> map is {@code null}.
+     * @throws IllegalArgumentException                if some values in <tt>dest</tt> map are not {@code null}
      *                                                 and, at the same time, their {@link Matrix#array()
      *                                                 built-in arrays} are not
      *                                                 {@link net.algart.arrays.UpdatableArray updatable};

@@ -73,13 +73,13 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>The "real" case is chosen above if the second <tt>matrixIm</tt> argument of
  * {@link #directTransformMatrix directTransformMatrix} / {@link #inverseTransformMatrix inverseTransformMatrix}
- * methods is <tt>null</tt>; in this case, the
+ * methods is {@code null}; in this case, the
  * {@link RealScalarSampleArray#asSampleArray RealScalarSampleArray.asSampleArray} or
  * {@link RealVectorSampleArray#asSampleArray RealVectorSampleArray.asSampleArray} method is applied
  * to the corresponding {@link Array#subArr(long, long) subarrays} of the {@link Matrix#array() underlying array}
  * of the <tt>matrixRe</tt> argument.
  *
- * <p>The "complex" case is chosen if the second <tt>matrixIm</tt> argument is not <tt>null</tt>; in this case, the
+ * <p>The "complex" case is chosen if the second <tt>matrixIm</tt> argument is not {@code null}; in this case, the
  * {@link ComplexScalarSampleArray#asSampleArray ComplexScalarSampleArray.asSampleArray} or
  * {@link ComplexVectorSampleArray#asSampleArray ComplexVectorSampleArray.asSampleArray} method is applied
  * to the pairs of corresponding {@link Array#subArr(long, long) subarrays} of the
@@ -95,8 +95,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * methods by this class. Really, this implementation performs much more: for example, downloads parts of large
  * matrices into Java memory ({@link SimpleMemoryModel}) for better performance; splits the execution into
  * several parallel tasks on multicore or multiprocessor computers, according the passed {@link ArrayContext}
- * or via {@link DefaultThreadPoolFactory} when this context is <tt>null</tt>; provides used interruption and
- * showing progress via the passed {@link ArrayContext} (if it's not <tt>null</tt>); etc.</p>
+ * or via {@link DefaultThreadPoolFactory} when this context is {@code null}; provides used interruption and
+ * showing progress via the passed {@link ArrayContext} (if it's not {@code null}); etc.</p>
  *
  * <p>Please note: for very large matrices, much greater than the available Java RAM, the algorithms, implemented
  * in this class, are designed to {@link Matrix#tile() tiled} matrices. For non-tiled matrices, these
@@ -178,10 +178,10 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
      * throws <tt>IllegalArgumentException</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
@@ -207,10 +207,10 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
      * throws <tt>IllegalArgumentException</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
@@ -229,30 +229,30 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * transformMatrix(context,matrixRe,matrixIm,false)}</nobr>.
      *
      * <p>Checking matrices means the following.
-     * First, if <tt>matrixRe</tt> argument is <tt>null</tt>, this method throws <tt>NullPointerException</tt>.
+     * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.
      * Second, if {@link #areComplexSamplesRequired()} returns <tt>true</tt> and <tt>matrixIm</tt> argument
-     * is <tt>null</tt>, this method throws <tt>UnsupportedOperationException</tt>.
-     * Third, if <tt>matrixIm</tt> argument is not <tt>null</tt>,
+     * is {@code null}, this method throws <tt>UnsupportedOperationException</tt>.
+     * Third, if <tt>matrixIm</tt> argument is not {@code null},
      * this method checks that its dimensions are {@link Matrix#dimEquals(Matrix) equal} to the dimensions
      * of <tt>matrixRe</tt>. If it is not so, {@link SizeMismatchException} is thrown.
      * Last, this method checks, whether all dimensions of the passed matrices are allowed, i.e. that
      * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
-     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param matrixIm <tt>null</tt> if we have a real matrix;
+     * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
-     * @throws SizeMismatchException         if both passed matrices are not <tt>null</tt> (the case of the complex
+     * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
+     *                                       and <tt>matrixIm</tt> argument is {@code null}.
      */
     public final void directTransformMatrix(ArrayContext context,
         Matrix<? extends UpdatablePNumberArray> matrixRe,
@@ -268,30 +268,30 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * transformMatrix(context,matrixRe,matrixIm,true)}</nobr>.
      *
      * <p>Checking matrices means the following.
-     * First, if <tt>matrixRe</tt> argument is <tt>null</tt>, this method throws <tt>NullPointerException</tt>.
+     * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.
      * Second, if {@link #areComplexSamplesRequired()} returns <tt>true</tt> and <tt>matrixIm</tt> argument
-     * is <tt>null</tt>, this method throws <tt>UnsupportedOperationException</tt>.
-     * Third, if <tt>matrixIm</tt> argument is not <tt>null</tt>,
+     * is {@code null}, this method throws <tt>UnsupportedOperationException</tt>.
+     * Third, if <tt>matrixIm</tt> argument is not {@code null},
      * this method checks that its dimensions are {@link Matrix#dimEquals(Matrix) equal} to the dimensions
      * of <tt>matrixRe</tt>. If it is not so, {@link SizeMismatchException} is thrown.
      * Last, this method checks, whether all dimensions of the passed matrices are allowed, i.e. that
      * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
-     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param matrixIm <tt>null</tt> if we have a real matrix;
+     * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
      *                                       returns <tt>false</tt> for this value.
-     * @throws SizeMismatchException         if both passed matrices are not <tt>null</tt> (the case of the complex
+     * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
      * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is <tt>null</tt>.
+     *                                       and <tt>matrixIm</tt> argument is {@code null}.
      */
     public final void inverseTransformMatrix(ArrayContext context,
         Matrix<? extends UpdatablePNumberArray> matrixRe,
@@ -324,7 +324,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * returns <tt>true</tt>;
      * 3) {@link #isLengthAllowed(long)} returns <tt>true</tt> for <tt>samples.length()</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
      * @param inverse <tt>true</tt> if this method implements the inverse transform,
@@ -343,14 +343,14 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * / {@link #inverseTransformMatrix inverseTransformMatrix} methods.
      * In this case, there is a guarantee that: 1) <tt>matrixRe!=null</tt>;
      * 2) in a case {@link #areComplexSamplesRequired()}, also <tt>matrixIm!=null</tt>;
-     * 3) <tt>matrixIm</tt> (if not <tt>null</tt>) has the same dimensions as <tt>matrixRe</tt> and
+     * 3) <tt>matrixIm</tt> (if not {@code null}) has the same dimensions as <tt>matrixRe</tt> and
      * 4) {@link #isLengthAllowed(long)} returns <tt>true</tt> for all these dimensions.
      *
-     * @param context  the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
      * @param matrixRe the transformed matrix if we have a real matrix;
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param matrixIm <tt>null</tt> if we have a real matrix;
+     * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
      * @param inverse  <tt>true</tt> if this method implements the inverse transform,
      *                 <tt>false</tt> if this method implements the direct transform.

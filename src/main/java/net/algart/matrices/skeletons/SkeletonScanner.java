@@ -455,7 +455,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
 public final class SkeletonScanner implements ArrayProcessor {
 
     /**
-     * Current execution context. It is returned by {@link #context()} method. May be <tt>null</tt>.
+     * Current execution context. It is returned by {@link #context()} method. May be {@code null}.
      */
     final ArrayContext context;
 
@@ -554,12 +554,12 @@ public final class SkeletonScanner implements ArrayProcessor {
      * used for skeletonization.
      *
      * @param context         the {@link #context() context} that will be used by this object;
-     *                        can be <tt>null</tt>, then it will be ignored.
+     *                        can be {@code null}, then it will be ignored.
      * @param skeleton        the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
      * @return                new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount()
      *                                  dimCount()}!=pixelClassifier.{@link SkeletonPixelClassifier#dimCount()
      *                                  dimCount()}</tt>.
@@ -579,10 +579,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getOctupleThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getRememberingOctupleThinningInstance2D(ArrayContext context,
@@ -600,10 +600,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getQuadruple3x5ThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getRememberingQuadruple3x5ThinningInstance2D(ArrayContext context,
@@ -621,10 +621,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getStrongQuadruple3x5ThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getRememberingStrongQuadruple3x5ThinningInstance2D(ArrayContext context,
@@ -647,12 +647,12 @@ public final class SkeletonScanner implements ArrayProcessor {
      * used for skeletonization.
      *
      * @param context         the {@link #context() context} that will be used by this object;
-     *                        can be <tt>null</tt>, then it will be ignored.
+     *                        can be {@code null}, then it will be ignored.
      * @param skeleton        the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
      * @return                new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount()
      *                                  dimCount()}!=pixelClassifier.{@link SkeletonPixelClassifier#dimCount()
      *                                  dimCount()}</tt>.
@@ -672,10 +672,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getOctupleThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getLightweightOctupleThinningInstance2D(ArrayContext context,
@@ -693,10 +693,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getQuadruple3x5ThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getLightweightQuadruple3x5ThinningInstance2D(ArrayContext context,
@@ -714,10 +714,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getStrongQuadruple3x5ThinningInstance()})</tt>.
      *
      * @param context   the {@link #context() context} that will be used by this object;
-     *                  can be <tt>null</tt>, then it will be ignored.
+     *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
      */
     public static SkeletonScanner getLightweightStrongQuadruple3x5ThinningInstance2D(ArrayContext context,
@@ -734,7 +734,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * It is used, for example, in {@link #scanBranch(int, boolean, boolean)} and
      * {@link #scanBranchFromBranch(boolean, boolean)} methods.
      *
-     * @return the current context used by this instance; can be <tt>null</tt>.
+     * @return the current context used by this instance; can be {@code null}.
      */
     public ArrayContext context() {
         return context;
@@ -837,7 +837,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param attachmentInformation what should this method return for attachable pixels.
      * @return                      the matrix of integer codes with the same sizes as the {@link #skeleton()
      *                              scanned skeleton matrix}, describing the types of all skeleton pixels.
-     * @throws NullPointerException if <tt>attachmentInformation</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>attachmentInformation</tt> is {@code null}.
      */
     public Matrix<? extends PIntegerArray> asPixelTypes(
         SkeletonPixelClassifier.AttachmentInformation attachmentInformation)
@@ -1326,7 +1326,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * @param newCurrentCoordinates new current coordinates: the {@link #currentCoordinates()} method will return
      *                              an identical array after this call.
-     * @throws NullPointerException      if <tt>newCurrentCoordinates</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>newCurrentCoordinates</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if the length of <tt>newCurrentCoordinates</tt> array is not equal to
      *                                   {@link #dimCount() dimCount()}.
      * @throws IndexOutOfBoundsException if one of new coordinates <tt>newCurrentCoordinates[<i>k</i>]</tt>
@@ -1482,7 +1482,7 @@ public final class SkeletonScanner implements ArrayProcessor {
 
     /**
      * Enhanced version of {@link #nextNodeOrBranch()}, which returns the type of the successfully found element
-     * in the result or return <tt>null</tt> if the required element is not found.
+     * in the result or return {@code null} if the required element is not found.
      * More precisely, it is equivalent to
      * <pre>
      * {@link #nextNodeOrBranch()} ? Integer.valueOf({@link #currentPixelTypeOrAttachedNode()}) : null
@@ -1490,7 +1490,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * @return the type of the found pixel (or, for attachable branch end,
      *         the index of its neighbouring node, which is one of the ends of the branch),
-     *         or <tt>null</tt> if this method does not found the required element.
+     *         or {@code null} if this method does not found the required element.
      */
     public Integer nextNodeOrBranchPixelType() {
         long index = currentIndexInArray;
@@ -1561,7 +1561,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @return       the number of found neighbours (which are the starting pixels of branches,
      *               incident with this node): after calling this method,
      *               you should use this number of first elements of the <tt>result</tt> array.
-     * @throws NullPointerException  if <tt>result</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException  if <tt>result</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>result.length&lt;{@link #numberOfNeighbours()}</tt>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
      *                               if <tt>!{@link #isNode() isNode()}</tt>.

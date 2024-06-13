@@ -71,7 +71,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
      * @param samplesRe the real parts of all samples.
      * @param samplesIm the imaginary parts of all samples.
      * @return          the array of scalar complex samples, represented by these two arrays.
-     * @throws NullPointerException  if <tt>samplesRe</tt> or <tt>samplesIm</tt> is <tt>null</tt>.
+     * @throws NullPointerException  if <tt>samplesRe</tt> or <tt>samplesIm</tt> is {@code null}.
      * @throws SizeMismatchException if <tt>samplesRe.length() != samplesIm.length()</tt>.
      */
     public static ComplexScalarSampleArray asSampleArray(

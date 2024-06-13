@@ -365,7 +365,7 @@ public interface SampleArray {
      * @param maxStringLength the maximal allowed length of returned string (longer results are trunctated
      *                        with adding "..." at the end).
      * @return                the string representations of all samples joined into one string.
-     * @throws NullPointerException     if <tt>format</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>format</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     String toString(String format, String separator, int maxStringLength);

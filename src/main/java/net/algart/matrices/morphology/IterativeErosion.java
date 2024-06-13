@@ -156,7 +156,7 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
-     * @throws NullPointerException     if one of arguments or one of passed patterns is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
      * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
      */
     public static IterativeErosion getInstance(

@@ -68,7 +68,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @param a the elements of <b>A</b> matrix.
      * @param b the coordinates of <b>b</b> vector.
      * @return  the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>b.length==0</tt> or <tt>a.length!=b.length<sup>2</sup></tt>.
      */
     public static LinearOperator getInstance(double[] a, double[] b) {
@@ -95,7 +95,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @param diagonal the diagonal elements of <b>A</b> matrix (all other elements are supposed to be zero).
      * @param b        the coordinates of <b>b</b> vector.
      * @return         the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>diagonal.length==0</tt> or <tt>diagonal.length!=b.length</tt>.
      */
     public static LinearOperator getDiagonalInstance(double[] diagonal, double[] b) {
@@ -112,7 +112,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param diagonal the diagonal elements of <b>A</b> matrix (all other elements are supposed to be zero).
      * @return         the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>).
-     * @throws NullPointerException     if the argument of the method is <tt>null</tt>.
+     * @throws NullPointerException     if the argument of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>diagonal.length==0</tt>.
      */
     public static LinearOperator getDiagonalInstance(double ...diagonal) {
@@ -128,7 +128,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param b the coordinates of <b>b</b> vector.
      * @return  the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>x</b>&nbsp;+&nbsp;<b>b</b>).
-     * @throws NullPointerException     if the argument of the method is <tt>null</tt>.
+     * @throws NullPointerException     if the argument of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>b.length==0</tt>.
      */
     public static LinearOperator getShiftInstance(double ...b) {
@@ -214,7 +214,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @return the <i>n</i>-dimensional linear operator, which maps <b>p</b><sub><i>i</i></sub> to
      *         <b>q</b><sub><i>i</i></sub> for all <i>i</i>=0,1,2,...,<i>n</i>.
      * @throws NullPointerException     if one of arguments of this method or one of elements of
-     *                                  <tt>p</tt> and <tt>q</tt> arrays <tt>null</tt>.
+     *                                  <tt>p</tt> and <tt>q</tt> arrays {@code null}.
      * @throws IllegalArgumentException if the lengths of the passed <tt>p</tt> and <tt>q</tt> arrays are not equal,
      *                                  or if for some <tt>k</tt>
      *                                  <tt>p[k].{@link Point#coordCount() coordCount()}!=p.length-1</tt> or
@@ -296,7 +296,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param operator the second operator, that should be applied after this one.
      * @return         superposition of this and the passed operator.
-     * @throws NullPointerException     if the argument of the method is <tt>null</tt>.
+     * @throws NullPointerException     if the argument of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>operator.{@link #n() n()}!=this.{@link #n() n()}</tt>.
      */
     public LinearOperator superposition(LinearOperator operator) {
@@ -344,7 +344,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param b the new coordinates of <b>b</b> vector.
      * @return  the linear operator with changed <b>b</b> vector.
-     * @throws NullPointerException     if the argument of the method is <tt>null</tt>.
+     * @throws NullPointerException     if the argument of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>b.length!=this.{@link #n() n()}</tt>.
      */
     public LinearOperator changeB(double ...b) {
@@ -362,7 +362,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param destPoint the coordinates of the destination point <b>y</b>, filled by this method.
      * @param srcPoint  the coordinates of the source point <b>x</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
@@ -398,7 +398,7 @@ public final class LinearOperator extends ProjectiveOperator {
      *
      * @param srcPoint  the coordinates of the source point <b>x</b>, filled by this method.
      * @param destPoint the coordinates of the destinated point <b>y</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
@@ -464,7 +464,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @param x the coordinates of <b>x</b> vector, filled by this method.
      * @param a the elements of <b>A</b> matrix (row by row).
      * @param y the coordinates of <b>y</b> vector.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if the length of one of the passed arrays is 0,
      *                                  or if <tt>x.length!=y.length</tt>,
      *                                  or if <tt>a.length!=x.length<sup>2</sup></tt>.

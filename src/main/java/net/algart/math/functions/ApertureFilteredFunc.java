@@ -57,7 +57,7 @@ public class ApertureFilteredFunc implements Func {
      * @param parent   the parent function.
      * @param operator the operator, transforming this function.
      * @return         new function.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static ApertureFilteredFunc getInstance(Func parent, ApertureFilterOperator operator) {
         Objects.requireNonNull(parent, "Null parent function");

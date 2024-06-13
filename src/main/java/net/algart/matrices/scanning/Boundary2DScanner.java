@@ -1341,7 +1341,7 @@ public abstract class Boundary2DScanner {
      * @param matrix           the matrix that will be scanned by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      */
     public static Boundary2DScanner getSingleBoundaryScanner(
@@ -1452,7 +1452,7 @@ public abstract class Boundary2DScanner {
      *                         will work incorrectly.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -1558,7 +1558,7 @@ public abstract class Boundary2DScanner {
      * @param buffer           the buffer matrix for writing "brackets" and filling holes.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -1596,7 +1596,7 @@ public abstract class Boundary2DScanner {
      * @param memoryModel      the memory model, used for creating the result matrix.
      * @param source           the source bit matrix.
      * @param connectivityType the connectivity kind used while building completion.
-     * @throws NullPointerException     if one of argument is <tt>null</tt>.
+     * @throws NullPointerException     if one of argument is {@code null}.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      */
     public static Matrix<UpdatableBitArray> fillHoles(
@@ -1633,7 +1633,7 @@ public abstract class Boundary2DScanner {
      * @param result           the completion: the bit matrix with filled holes.
      * @param source           the source bit matrix.
      * @param connectivityType the connectivity kind used while building completion.
-     * @throws NullPointerException     if one of argument is <tt>null</tt>.
+     * @throws NullPointerException     if one of argument is {@code null}.
      * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
@@ -1879,7 +1879,7 @@ public abstract class Boundary2DScanner {
      * @param x    new current <i>x</i>-coordinate.
      * @param y    new current <i>y</i>-coordinate.
      * @param side new current pixel side.
-     * @throws NullPointerException      if <tt>side</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>side</tt> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <tt>x&lt;0</tt>, <tt>y&lt;0</tt>,
      *                                   <tt>x&gt;={@link #matrix()}.{@link Matrix#dimX() dimX()}</tt>
      *                                   or <tt>y&gt;={@link #matrix()}.{@link Matrix#dimY() dimY()}</tt>.
@@ -1892,7 +1892,7 @@ public abstract class Boundary2DScanner {
      * <tt>{@link #goTo goTo}(scanner.{@link #x() x()}, scanner.{@link #y() y()}, scanner.{@link #side() side()})</tt>.
      *
      * @param scanner some other scanner.
-     * @throws NullPointerException      if <tt>scanner</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>scanner</tt> argument is {@code null}.
      * @throws IllegalStateException     if the specified <tt>scanner</tt> was not {@link #isInitialized() positioned yet}.
      * @throws IndexOutOfBoundsException in the same situations as {@link #goTo goTo} method
      *                                   (impossible if the currently scanned matrices of this and passed scanners
@@ -2233,7 +2233,7 @@ public abstract class Boundary2DScanner {
      * more than 10<sup>10</sup> seconds (&gt; 300 years) on a very quick computer that can perform one
      * iteration per 1&nbsp;ns.</p>
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      * @return the length of scanned boundary (the number of visited pixel sides,
      * not the number of visited pixels!)
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
@@ -2259,7 +2259,7 @@ public abstract class Boundary2DScanner {
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      */
     public final void updateProgress(ArrayContext context) {
         if (context != null)
@@ -2273,7 +2273,7 @@ public abstract class Boundary2DScanner {
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      */
     public final void checkInterruption(ArrayContext context) {
         if (context != null) {

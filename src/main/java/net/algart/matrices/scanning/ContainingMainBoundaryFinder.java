@@ -224,9 +224,9 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
     /**
      * Finds minimal rectangle, containing the main boundary, found by the last call of {@link #find(long x, long y)}
      * method.
-     * Returns <tt>null</tt> if the point (x,y), passed to that method, lies outside any main boundaries.
+     * Returns {@code null} if the point (x,y), passed to that method, lies outside any main boundaries.
      *
-     * @return Minimal rectangle, containing the main boundary, or <tt>null</tt> if there is no containing boundary.
+     * @return Minimal rectangle, containing the main boundary, or {@code null} if there is no containing boundary.
      * @throws IllegalStateException if {@link #find(long, long)} was not called yet.
      */
     public IRectangularArea findContainingRectangle() {

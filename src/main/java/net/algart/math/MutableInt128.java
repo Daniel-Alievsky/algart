@@ -353,7 +353,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * @param other other number.
      * @return a reference to this object.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public MutableInt128 setTo(MutableInt128 other) {
         Objects.requireNonNull(other, "Null other");
@@ -814,7 +814,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * @return a reference to this object.
      * @throws ArithmeticException  in a case of arithmetic overflow.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public MutableInt128 add(MutableInt128 other) throws ArithmeticException {
         add(other.high64Bits, other.low64Bits, other.negative);
@@ -826,7 +826,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * @return a reference to this object.
      * @throws ArithmeticException  in a case of arithmetic overflow.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public MutableInt128 subtract(MutableInt128 other) throws ArithmeticException {
         add(other.high64Bits, other.low64Bits, !other.negative);
@@ -1159,7 +1159,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * @param o other number to which this number is to be compared.
      * @return -1, 0 or 1 as this number is numerically less than, equal
      * to, or greater than {@code o}.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     @Override
     public int compareTo(MutableInt128 o) {

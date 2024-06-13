@@ -56,7 +56,7 @@ public class ContinuedDerivator implements Derivator {
      * @param parent           the instance of {@link Derivator} interface that will perform all operations.
      * @param continuationMode the mode of continuation outside the source matrix.
      * @return                 new instance of this class.
-     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>.
      * @see #parent()
@@ -97,7 +97,7 @@ public class ContinuedDerivator implements Derivator {
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
-     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return           new instance with another newContext.
      */
     public Derivator context(ArrayContext newContext) {

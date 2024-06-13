@@ -381,7 +381,7 @@ public abstract class AbstractPattern implements Pattern {
      *
      * @param added another pattern.
      * @return the Minkowski sum of this and another patterns.
-     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
      *                                     <tt>added</tt> or result pattern is greater than
@@ -423,8 +423,8 @@ public abstract class AbstractPattern implements Pattern {
      *
      * @param subtracted another pattern.
      * @return the erosion of this pattern by the specified pattern
-     *         or <tt>null</tt> if this erosion is the empty set.
-     * @throws NullPointerException        if the argument is <tt>null</tt>.
+     *         or {@code null} if this erosion is the empty set.
+     * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
      *                                     <tt>subtracted</tt> or result pattern is greater than
@@ -545,7 +545,7 @@ public abstract class AbstractPattern implements Pattern {
      *
      * @param point some point.
      * @return whether this point is an allowed point for patterns.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static boolean isAllowedPoint(Point point) {
         Objects.requireNonNull(point, "Null point");
@@ -571,7 +571,7 @@ public abstract class AbstractPattern implements Pattern {
      *
      * @param range some range.
      * @return whether this range is an allowed coordinate range for patterns.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public static boolean isAllowedCoordRange(Range range) {
         Objects.requireNonNull(range, "Null range");

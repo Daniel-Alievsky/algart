@@ -66,7 +66,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
      *
      * @param samples the samples.
      * @return        the array of scalar real samples, represented by this array.
-     * @throws NullPointerException  if <tt>samples</tt> is <tt>null</tt>.
+     * @throws NullPointerException  if <tt>samples</tt> is {@code null}.
      */
     public static RealScalarSampleArray asSampleArray(UpdatablePNumberArray samples) {
         Objects.requireNonNull(samples, "Null samples");

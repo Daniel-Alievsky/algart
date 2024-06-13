@@ -56,7 +56,7 @@ public interface CoordinateTransformationOperator extends Operator {
      *
      * @param destPoint the coordinates of the destinated point <b>y</b>, filled by this method.
      * @param srcPoint  the coordinates of the source point <b>x</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>destPoint.length!=srcPoint.length</tt>
      *                                  (may be not thrown by some implementations,
      *                                  or may be thrown in other situations).

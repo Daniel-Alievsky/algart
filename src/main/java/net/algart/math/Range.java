@@ -83,7 +83,7 @@ public final class Range {
      *
      * @param iRange the integer range.
      * @return       the equivalent real range.
-     * @throws NullPointerException if the passed integer range is <tt>null</tt>.
+     * @throws NullPointerException if the passed integer range is {@code null}.
      */
     public static Range valueOf(IRange iRange) {
         Objects.requireNonNull(iRange, "Null iRange argument");

@@ -88,7 +88,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * @param originOfGrid              the {@link #originOfGrid() origin of the grid}.
      * @param stepsOfGrid               the {@link #stepsOfGrid() steps of the grid}.
      * @param trivialUnionDecomposition whether this pattern has the degenerated union decomposition.
-     * @throws NullPointerException     if <tt>originOfGrid</tt> or <tt>stepsOfGrid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>originOfGrid</tt> or <tt>stepsOfGrid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>originOfGrid.{@link Point#coordCount()
      *                                  coordCount()}!=stepsOfGrid.length</tt>, or if one of the passed steps
      *                                  is zero (<tt>==0.0</tt>).
@@ -672,7 +672,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      *
      * @param added another pattern.
      * @return the Minkowski sum of this and another patterns.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the numbers of space dimensions of both patterns are different.
      */
     public Pattern minkowskiAdd(Pattern added) {
@@ -755,8 +755,8 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      *
      * @param subtracted another pattern.
      * @return the erosion of this pattern by the specified pattern
-     *         or <tt>null</tt> if this erosion is the empty set.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     *         or {@code null} if this erosion is the empty set.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the numbers of space dimensions of both patterns are different.
      */
     public Pattern minkowskiSubtract(Pattern subtracted) {

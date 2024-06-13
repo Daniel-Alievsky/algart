@@ -100,7 +100,7 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      *                         {@link #dimCount() dimCount()} method.
      * @param neighbourOffsets offsets of all neighbours of any matrix element,
      *                         in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method.
-     * @throws NullPointerException     if <tt>neighbourOffsets</tt> or one of its elements is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>neighbourOffsets</tt> or one of its elements is {@code null}.
      * @throws IllegalArgumentException if <tt>dimCount</tt> is not in <tt>1..3</tt> range,
      *                                  or if <tt>neighbourOffsets.length!=3<sup>dimCount</sup>-1</tt>,
      *                                  or if <tt>neighbourOffsets[k].length!=dimCount</tt> for some <tt>k</tt>,
@@ -311,7 +311,7 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * @param skeleton    the skeleton matrix that should be processed.
      * @return            the matrix of integer values with the same sizes, containing the bit maps
      *                    of the neighbourhoods of all skeleton pixels.
-     * @throws NullPointerException     if <tt>skeleton</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>skeleton</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.dimCount()!={@link #dimCount()}</tt>.
      */
     public final Matrix<? extends PIntegerArray> asNeighbourhoodBitMaps(

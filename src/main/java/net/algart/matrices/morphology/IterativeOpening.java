@@ -90,7 +90,7 @@ import java.util.Objects;
  *
  * <li>{@link #result()} method always returns the reference to the accumulator matrix <tt>result</tt>,
  * if the object was created by {@link #getInstance getInstance} method,
- * or <tt>null</tt>,
+ * or {@code null},
  * if the object was created by {@link #getGranulometryInstance getGranulometryInstance} method.</li>
  * </ul>
  *
@@ -203,7 +203,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
-     * @throws NullPointerException     if one of arguments or one of passed patterns is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
      * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
      */
     public static IterativeOpening getInstance(
@@ -227,7 +227,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
-     * @throws NullPointerException     if one of arguments or one of passed patterns is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
      * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
      */
     public static IterativeOpening getGranulometryInstance(

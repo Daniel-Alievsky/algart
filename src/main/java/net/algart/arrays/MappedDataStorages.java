@@ -328,7 +328,7 @@ class MappedDataStorages {
 
         /**
          * Specific buffers (ByteBuffer[], CharBuffer[], etc.) corresponding to bh[] elements.
-         * <tt>null</tt> for empty banks.
+         * {@code null} for empty banks.
          */
         final Buffer[] specBufs;
         // Should be final to avoid partial object initialization in shutdown hook!
@@ -377,7 +377,7 @@ class MappedDataStorages {
 
         /**
          * If {@link #syncNecessary} is <tt>false</tt>, this field is filled by a copy of the
-         * only {@link #specBufs specific buffer}, used for file mapping, or by <tt>null</tt>
+         * only {@link #specBufs specific buffer}, used for file mapping, or by {@code null}
          * in a case of releasing resources, every time when the file is mapped or released
          * (in a synchronized block). Non-synchronized access method must check this field
          * to be sure that they "see" the actual, fully initialized buffer object.
@@ -409,16 +409,16 @@ class MappedDataStorages {
 
         /**
          * The data file (an instance of {@link DataFile} class) used by this storage.
-         * This field is filled in the constructor and set to <tt>null</tt>
+         * This field is filled in the constructor and set to {@code null}
          * before file deletion; no any other modifications of this field are not allowed.
          */
         private volatile DataFile dataFile = null;
-        // volatile is necessary because this field is set to <tt>null</tt> while deletion a parralel finalization
+        // volatile is necessary because this field is set to {@code null} while deletion a parralel finalization
 
         /**
          * This field is the same as {@link #dataFile} with the only exception:
          * if this data storage was finalized, but an error was occurred attemt to delete this file
-         * while finalization, then {@link #dataFile} will be assigned to <tt>null</tt>,
+         * while finalization, then {@link #dataFile} will be assigned to {@code null},
          * but this field will not.
          */
         private volatile DataFile dataFileForDeletion = null;
@@ -443,7 +443,7 @@ class MappedDataStorages {
         private int countOfFailedDeletionsWhileFinalization = 0;
 
         /**
-         * This flag informs whether {@link #dataFile} is <tt>null</tt> as a result of standard shutdown
+         * This flag informs whether {@link #dataFile} is {@code null} as a result of standard shutdown
          * cleanup procedure, but not as a result of direct calling {@link #dispose()} method.
          * For logging goals only. (Not used in current implementation.)
          */

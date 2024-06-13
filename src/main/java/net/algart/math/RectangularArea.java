@@ -82,7 +82,7 @@ public class RectangularArea {
      * @param min the minimal vertex, inclusive.
      * @param max the maximal vertex, inclusive.
      * @return    the new rectangular area "between" these vertices.
-     * @throws NullPointerException     if one of arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of arguments is {@code null}.
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in <tt>min</tt>
      *                                  and <tt>max</tt> points are different,
      *                                  or if, for some <i>i</i>,
@@ -126,8 +126,8 @@ public class RectangularArea {
      *
      * @param coordRanges the coordinate ranges.
      * @return            the Cartesian product of the specified coordinate ranges.
-     * @throws NullPointerException     if the argument is <tt>null</tt>
-     *                                  or if one of specified <tt>coordRanges</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}
+     *                                  or if one of specified <tt>coordRanges</tt> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
     public static RectangularArea valueOf(Range... coordRanges) {
@@ -234,7 +234,7 @@ public class RectangularArea {
      *
      * @param iArea the integer rectangular area.
      * @return      the real rectangular area with same coordinates.
-     * @throws NullPointerException     if the passed area is <tt>null</tt>.
+     * @throws NullPointerException     if the passed area is {@code null}.
      */
     public static RectangularArea valueOf(IRectangularArea iArea) {
         Objects.requireNonNull(iArea, "Null iArea argument");
@@ -490,7 +490,7 @@ public class RectangularArea {
      *
      * @param point the checked point.
      * @return      <tt>true</tt> if this rectangular area contains the given point.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -516,7 +516,7 @@ public class RectangularArea {
      * @param areas list of checked rectangular areas.
      * @param point the checked point.
      * @return      <tt>true</tt> if one of the passed areas contains the given point.
-     * @throws NullPointerException     if one of the arguments or one of the areas is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments or one of the areas is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas.
      */
@@ -539,7 +539,7 @@ public class RectangularArea {
      *
      * @param area the checked rectangular area.
      * @return     <tt>true</tt> if the checked rectangular area is a subset of this area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -565,7 +565,7 @@ public class RectangularArea {
      * @param areas list of checked rectangular areas.
      * @param area  the checked area.
      * @return      <tt>true</tt> if one of the passed areas (1st argument) contains the given area (2nd argument).
-     * @throws NullPointerException     if one of the arguments or one of the areas is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments or one of the areas is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas
      *                                  in the 1st argument.
@@ -590,7 +590,7 @@ public class RectangularArea {
      * @param area the checked rectangular area.
      * @return     <tt>true</tt> if the checked rectangular area overlaps with this area,
      *             maybe in boundary points only.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -617,7 +617,7 @@ public class RectangularArea {
      *
      * @param area the checked rectangular area.
      * @return     <tt>true</tt> if the checked rectangular area overlaps with this area in some internal points.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -647,7 +647,7 @@ public class RectangularArea {
       (\[k\])\s*[+-]\s*1 ==> $1 !! Auto-generated: NOT EDIT !! */
     /**
      * Returns the set-theoretical intersection <b>A</b>&nbsp;&cap;&nbsp;<b>B</b> of this (<b>A</b>) and
-     * the passed rectangular area (<b>B</b>) or <tt>null</tt> if they
+     * the passed rectangular area (<b>B</b>) or {@code null} if they
      * do not {@link #intersects(RectangularArea) intersect}
      * (<b>A</b>&nbsp;&cap;&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;).
      * Equivalent to
@@ -658,8 +658,8 @@ public class RectangularArea {
      * null</pre>.
      *
      * @param area the second rectangular area.
-     * @return     intersection of this and the second rectangular area or <tt>null</tt> if they do not intersect.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @return     intersection of this and the second rectangular area or {@code null} if they do not intersect.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -699,8 +699,8 @@ public class RectangularArea {
      * </pre>.
      *
      * @param areas collection of areas (we find intersection with each from them).
-     * @return     intersection of this and the second rectangular area or <tt>null</tt> if they do not intersect.
-     * @throws NullPointerException     if the argument is <tt>null</tt> or one of its elements is <tt>null</tt>.
+     * @return     intersection of this and the second rectangular area or {@code null} if they do not intersect.
+     * @throws NullPointerException     if the argument is {@code null} or one of its elements is {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
      */
@@ -747,7 +747,7 @@ public class RectangularArea {
      * @param results the collection to store results (new areas will be added to this collection).
      * @param area    the area <b>B</b>, subtracted from this area <b>A</b>.
      * @return        a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException     if <tt>result</tt> or <tt>area</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>result</tt> or <tt>area</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      * @see #subtractCollection(java.util.Queue, java.util.Collection)
@@ -801,7 +801,7 @@ public class RectangularArea {
      * </pre>
      *
      * <p>Note: if some exception occurs while execution of the listed loop (for example,
-     * some elements of the collections are <tt>null</tt> or have different number of dimensions),
+     * some elements of the collections are {@code null} or have different number of dimensions),
      * the <tt>fromWhatToSubtract</tt> stays partially modified.
      * In other words, this method <b>is non-atomic regarding failures</b>.
      *
@@ -810,7 +810,7 @@ public class RectangularArea {
      * @return                   a reference to <tt>fromWhatToSubtract</tt> argument, which will contain
      *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
-     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if some of the elements of the passed collections
      *                                  have different {@link #coordCount()}.
      * @see #subtractCollection(java.util.Queue, RectangularArea...)
@@ -842,7 +842,7 @@ public class RectangularArea {
      * @return                   a reference to <tt>fromWhatToSubtract</tt> argument, which will contain
      *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
-     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if some of the elements of the passed collection and array
      *                                  have different {@link #coordCount()}.
      */
@@ -862,7 +862,7 @@ public class RectangularArea {
      * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
      *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
      * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
-     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
      */
@@ -882,7 +882,7 @@ public class RectangularArea {
      * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
      *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
      * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
-     *                                  is <tt>null</tt> or if one of their elements it <tt>null</tt>.
+     *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed array
      *                                  have different {@link #coordCount()}.
      */
@@ -899,7 +899,7 @@ public class RectangularArea {
      *
      * @param point some point that should be included to the new rectangular area.
      * @return      the expanded rectangular area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the points
@@ -931,7 +931,7 @@ public class RectangularArea {
      *
      * @param area the second rectangular area.
      * @return     the minimal rectangular area, containing this and the passed area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -954,11 +954,11 @@ public class RectangularArea {
      * Equivalent to the loop of {@link #expand(RectangularArea)} methods, called for each element
      * of the passed collection, but works faster.
      *
-     * <p>If the passed collection is empty, returns <tt>null</tt>.
+     * <p>If the passed collection is empty, returns {@code null}.
      *
      * @param areas some collection of rectangular areas.
-     * @return      the minimal rectangular area, containing all them, or <tt>null</tt> for empty collection.
-     * @throws NullPointerException     if the argument or one of the passed areas is <tt>null</tt>.
+     * @return      the minimal rectangular area, containing all them, or {@code null} for empty collection.
+     * @throws NullPointerException     if the argument or one of the passed areas is {@code null}.
      * @throws IllegalArgumentException if <tt>{@link #coordCount() coordCount()}</tt> is not equal for all areas.
      */
     public static RectangularArea minimalContainingArea(Collection<RectangularArea> areas) {
@@ -1017,7 +1017,7 @@ public class RectangularArea {
      *
      * @param point some point.
      * @return      the parallel distance from this point to this rectangular area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -1033,7 +1033,7 @@ public class RectangularArea {
      *
      * @param coordinates coordinates of some point.
      * @return      the parallel distance from this point to this rectangular area.
-     * @throws NullPointerException     if <tt>coordinates</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>coordinates</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>coordinates.length</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -1133,7 +1133,7 @@ public class RectangularArea {
      *
      * @param vector the vector which is added to all vertices of this area.
      * @return       the shifted area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>vector.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -1159,7 +1159,7 @@ public class RectangularArea {
      *
      * @param vector the vector which is subtracted from all vertices of this area.
      * @return       the shifted area.
-     * @throws NullPointerException     if the argument is <tt>null</tt>.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>vector.{@link Point#coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
@@ -1185,7 +1185,7 @@ public class RectangularArea {
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result area will be incorrect (see comments to
@@ -1209,7 +1209,7 @@ public class RectangularArea {
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws IllegalArgumentException if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
      */
@@ -1246,7 +1246,7 @@ public class RectangularArea {
      * @param results the list to store results (new areas will be added to the end of this list).
      * @param expansion how to dilate this area.
      * @return a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if one of coordinates of <tt>expansion</tt> is negative,
@@ -1294,7 +1294,7 @@ public class RectangularArea {
      * @param results the list to store results (new areas will be added to the end of this list).
      * @param expansion how to dilate this area.
      * @return a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
      *                                  or if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
@@ -1326,7 +1326,7 @@ public class RectangularArea {
      * @param expansion how to dilate these areas.
      * @param straightOnly dilation mode.
      * @return list of dilated areas.
-     * @throws NullPointerException  if one of the  arguments is <tt>null</tt> or one of areas is <tt>null</tt>.
+     * @throws NullPointerException  if one of the  arguments is {@code null} or one of areas is {@code null}.
      * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas,
      *                                  or if <tt>straightOnly</tt> amd one of coordinates of <tt>expansion</tt>

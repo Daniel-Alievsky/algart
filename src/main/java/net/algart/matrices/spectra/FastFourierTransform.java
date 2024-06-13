@@ -259,7 +259,7 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param cRe     the real parts of the elements of the resulting matrix.
      * @param cIm     the imaginary parts of the elements of the resulting matrix.
@@ -268,7 +268,7 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * @param qRe     the real parts of the elements of the 2nd source matrix.
      * @param qIm     the imaginary parts of the elements of the 2nd source matrix.
      * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
-     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is <tt>null</tt>.
+     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      */
     public void spectrumOfConvolution(ArrayContext context,

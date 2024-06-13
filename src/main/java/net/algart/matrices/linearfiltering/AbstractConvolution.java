@@ -94,7 +94,7 @@ public abstract class AbstractConvolution extends AbstractArrayProcessorWithCont
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the result of convolution of the source matrix with the given pattern.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      * @see #asConvolution(Class, Matrix, WeightedPattern)
      */
     public Matrix<? extends UpdatablePArray> convolution(Matrix<? extends PArray> src, WeightedPattern pattern) {

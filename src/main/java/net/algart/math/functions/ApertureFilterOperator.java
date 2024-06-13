@@ -171,7 +171,7 @@ public final class ApertureFilterOperator implements Operator {
      * @param apertureFrom  the start coordinates of the points in the aperture.
      * @param apertureSteps the steps of changing coordinates of the points in the aperture.
      * @return              the aperture filtering operator with the specified aperture and aperture function.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if the lengths of <tt>apertureDim</tt>, <tt>apertureFrom</tt> and
      *                                  <tt>apertureSteps</tt> arrays are not equal,
      *                                  or if they are zero ("0-dimensional" space),
@@ -211,7 +211,7 @@ public final class ApertureFilterOperator implements Operator {
      * @param apertureFunc the aperture function.
      * @param apertureDim  the dimensions of the aperture.
      * @return             the aperture filtering operator with the specified aperture and aperture function.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if the lengths of <tt>apertureDim</tt> is zero ("0-dimensional" space),
      *                                  or if some elements of <tt>apertureDim</tt> array are zero or negative,
      *                                  or if {@link #tooLargeAperture(long[]) tooLargeAperture(apertureDim)}
@@ -236,7 +236,7 @@ public final class ApertureFilterOperator implements Operator {
      * @param apertureFrom  the start coordinates of the points in the aperture.
      * @param apertureSteps the steps of changing coordinates of the points in the aperture.
      * @return              the aperture averaging (smoothing) operator with the specified aperture.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #getInstance(Func, long[], double[], double[])}.
      */
@@ -257,7 +257,7 @@ public final class ApertureFilterOperator implements Operator {
      *
      * @param apertureDim the dimensions of the aperture.
      * @return            the aperture averaging (smoothing) operator with the specified aperture.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #getInstance(Func, long[])}.
      */

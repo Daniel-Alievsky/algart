@@ -387,12 +387,12 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param fRe     the real parts of the elements of the resulting matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
      * @param h       the source real matrix (separable Hartley spectrum).
-     * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>h</tt> arguments is <tt>null</tt>.
+     * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>h</tt> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
@@ -440,14 +440,14 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param fRe     the real parts of the elements of the resulting matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
      * @param hRe     the real parts of the elements of the source matrix (separable Hartley spectrum).
      * @param hIm     the imaginary parts of the elements of the source matrix (separable Hartley spectrum).
      * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>hRe</tt>, <tt>hIm</tt>
-     *                               arguments is <tt>null</tt>.
+     *                               arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix)
      */
@@ -502,12 +502,12 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param h       the resulting real matrix (separable Hartley spectrum).
      * @param fRe     the real parts of the elements of the source matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
-     * @throws NullPointerException  if one of <tt>h</tt>, <tt>fRe</tt>, <tt>fIm</tt> arguments is <tt>null</tt>.
+     * @throws NullPointerException  if one of <tt>h</tt>, <tt>fRe</tt>, <tt>fIm</tt> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
@@ -555,14 +555,14 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param hRe     the real parts of the elements of the resulting matrix (separable Hartley spectrum).
      * @param hIm     the imaginary parts of the elements of the resulting matrix (separable Hartley spectrum).
      * @param fRe     the real parts of the elements of the source matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
      * @throws NullPointerException  if one of <tt>hRe</tt>, <tt>hIm</tt>, <tt>fRe</tt>, <tt>fIm</tt>
-     *                               arguments is <tt>null</tt>.
+     *                               arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix)
      */
@@ -611,12 +611,12 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param c       the resulting matrix (spectrum of the convolution).
      * @param p       the spectrum of the 1st matrix.
      * @param q       the spectrum of the 2nd matrix.
-     * @throws NullPointerException  if one of <tt>c</tt>, <tt>p</tt>, <tt>q</tt> arguments is <tt>null</tt>.
+     * @throws NullPointerException  if one of <tt>c</tt>, <tt>p</tt>, <tt>q</tt> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)
      */
@@ -665,7 +665,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
-     * @param context the context that will be used by this algorithm; can be <tt>null</tt>
+     * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param cRe     the real parts of the elements of the resulting matrix (spectrum of the convolution).
      * @param cIm     the imaginary parts of the elements of the resulting matrix (spectrum of the convolution).
@@ -674,7 +674,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param qRe     the real parts of the elements of the spectrum of the 2nd matrix.
      * @param qIm     the imaginary parts of the elements of the spectrum of the 2nd matrix.
      * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
-     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is <tt>null</tt>.
+     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)
      */

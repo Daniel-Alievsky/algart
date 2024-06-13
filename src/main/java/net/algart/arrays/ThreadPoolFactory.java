@@ -92,7 +92,7 @@ public interface ThreadPoolFactory {
      *
      * @param sourceArray some AlgART array that should be processed.
      * @return            the recommended number of parallel tasks to perform the processing (&gt;0).
-     * @throws NullPointerException if the argument is <tt>null</tt> (not necessary).
+     * @throws NullPointerException if the argument is {@code null} (not necessary).
      */
     int recommendedNumberOfTasks(Array sourceArray);
 
@@ -116,9 +116,9 @@ public interface ThreadPoolFactory {
      * after finishing your algorithm.
      *
      * <p>The <tt>threadFactory</tt> can be used for creation new thread pool.
-     * This argument <i>can be <tt>null</tt></i>: in this case, some default thread factory should be used.
+     * This argument <i>can be {@code null}</i>: in this case, some default thread factory should be used.
      *
-     * @param threadFactory if not <tt>null</tt>, specifies the desired thread factory for using by the thread pool.
+     * @param threadFactory if not {@code null}, specifies the desired thread factory for using by the thread pool.
      * @return              the thread pool for parallel processing large data.
      */
     ExecutorService getThreadPool(ThreadFactory threadFactory);
@@ -132,12 +132,12 @@ public interface ThreadPoolFactory {
      * after finishing your algorithm.
      *
      * <p>The <tt>threadFactory</tt> may be used for creation new thread pool.
-     * This argument <i>can be <tt>null</tt></i>: in this case, some default thread factory should be used.
+     * This argument <i>can be {@code null}</i>: in this case, some default thread factory should be used.
      *
      * @param sourceArray   some AlgART array that should be processed.
-     * @param threadFactory if not <tt>null</tt>, specifies the desired thread factory for using by the thread pool.
+     * @param threadFactory if not {@code null}, specifies the desired thread factory for using by the thread pool.
      * @return              the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt> (not necessary).
+     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null} (not necessary).
      */
     ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory);
 
@@ -150,7 +150,7 @@ public interface ThreadPoolFactory {
      * method to remove extra system threads.
      *
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
-     * @throws NullPointerException if the argument is <tt>null</tt> (not necessary).
+     * @throws NullPointerException if the argument is {@code null} (not necessary).
      */
     void releaseThreadPool(ExecutorService pool);
 
@@ -159,7 +159,7 @@ public interface ThreadPoolFactory {
      * performTasks}(null, tasks)</tt> call.
      *
      * @param tasks the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
+     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
      */
     void performTasks(Runnable[] tasks);
 
@@ -214,9 +214,9 @@ public interface ThreadPoolFactory {
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be <tt>null</tt>, then some default thread factory will be used.
+     *                      can be {@code null}, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
+     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
      * @see #performTasks(Array, java.util.concurrent.ThreadFactory, Runnable[])
      */
     void performTasks(ThreadFactory threadFactory, Runnable[] tasks);
@@ -233,9 +233,9 @@ public interface ThreadPoolFactory {
      * @param threadFactory the factory, passed to
      *                      {@link #getThreadPool(Array, java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be <tt>null</tt>, then some default thread factory will be used.
+     *                      can be {@code null}, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is <tt>null</tt>.
+     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
      */
     void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks);
 
@@ -247,7 +247,7 @@ public interface ThreadPoolFactory {
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.
      * @throws NullPointerException      if <tt>tasks</tt> argument
-     *                                   or one of tasks in the specified range is <tt>null</tt>.
+     *                                   or one of tasks in the specified range is {@code null}.
      * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
      * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
      */
@@ -259,12 +259,12 @@ public interface ThreadPoolFactory {
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be <tt>null</tt>, then some default thread factory will be used.
+     *                      can be {@code null}, then some default thread factory will be used.
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.
      * @throws NullPointerException      if <tt>tasks</tt> argument or
-     *                                   or one of tasks in the specified range is <tt>null</tt>.
+     *                                   or one of tasks in the specified range is {@code null}.
      * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
      * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
      */

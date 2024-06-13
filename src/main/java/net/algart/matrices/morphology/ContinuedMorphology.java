@@ -113,7 +113,7 @@ public class ContinuedMorphology implements Morphology {
      * @param parent           the instance of {@link Morphology} interface that will perform all operations.
      * @param continuationMode the mode of continuation outside the source matrix.
      * @return                 new instance of this class.
-     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>.
      * @see #parent()

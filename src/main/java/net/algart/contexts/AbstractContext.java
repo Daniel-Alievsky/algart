@@ -105,7 +105,7 @@ public abstract class AbstractContext implements Context {
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             this instance, if it is suitable, or some service provider of {@link Context}
      *                     interface that implements (extends) required <tt>contextClass</tt>.
-     * @throws NullPointerException        if <tt>contextClass</tt> is <tt>null</tt>.
+     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
      * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if this context cannot serve the request.

@@ -201,7 +201,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      *                           which are not inside this set, are not modified by {@link #next()} method
      *                           and stay to be equal to their initial value.
      * @return                   new instance of this class.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      * @see #contourLineType()
      * @see #measuredParameters()
      */

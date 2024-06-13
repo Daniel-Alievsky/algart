@@ -125,10 +125,10 @@ public class Quadruple3x5ThinningSkeleton2D extends AbstractThinningSkeleton2D i
      * Creates new instance of this class.
      *
      * @param context the {@link #context() context} that will be used by this object;
-     *                can be <tt>null</tt>, then it will be ignored.
+     *                can be {@code null}, then it will be ignored.
      * @param matrix  the bit matrix that should be processed and returned by {@link #result()} method.
      * @return        new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
      */
     public static Quadruple3x5ThinningSkeleton2D getInstance(ArrayContext context,
         Matrix<? extends UpdatableBitArray> matrix)

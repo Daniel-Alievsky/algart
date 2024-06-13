@@ -260,7 +260,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      * @throws IllegalArgumentException  if <tt>count &lt; 0</tt>.
      * @see #getData(long, Object, int, int)

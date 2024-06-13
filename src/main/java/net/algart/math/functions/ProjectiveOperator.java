@@ -213,7 +213,7 @@ public class ProjectiveOperator
      * @param c the coordinates of <b>c</b> vector.
      * @param d the <i>d</i> parameter.
      * @return  the projective operator described by these parameters.
-     * @throws NullPointerException     if one of the arguments of the method is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if <tt>b.length==0</tt>, <tt>c.length==0</tt>, <tt>b.length!=c.length</tt>
      *                                  or <tt>a.length!=b.length<sup>2</sup></tt>.
      */
@@ -301,7 +301,7 @@ public class ProjectiveOperator
      * @return the <i>n</i>-dimensional projective operator, which maps <b>p</b><sub><i>i</i></sub> to
      *         <b>q</b><sub><i>i</i></sub> for all <i>i</i>=0,1,2,...,<i>n</i>+1.
      * @throws NullPointerException     if one of arguments of this method or one of elements of
-     *                                  <tt>p</tt> and <tt>q</tt> arrays <tt>null</tt>.
+     *                                  <tt>p</tt> and <tt>q</tt> arrays {@code null}.
      * @throws IllegalArgumentException if the lengths of the passed <tt>p</tt> and <tt>q</tt> arrays are not equal,
      *                                  or if for some <tt>k</tt>
      *                                  <tt>p[k].{@link Point#coordCount() coordCount()}!=p.length-2</tt> or
@@ -538,7 +538,7 @@ public class ProjectiveOperator
      *
      * @param destPoint the coordinates of the destinated point <b>y</b>, filled by this method.
      * @param srcPoint  the coordinates of the source point <b>x</b>.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */

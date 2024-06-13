@@ -85,7 +85,7 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public static StraightLine3D newLineAlongI(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongI(basis);
@@ -100,7 +100,7 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public static StraightLine3D newLineAlongJ(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongJ(basis);
@@ -115,7 +115,7 @@ public final class StraightLine3D implements Cloneable {
      * @param z0    <i>z</i>-coordinate of the start point <b>o</b>.
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return new straight line.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public static StraightLine3D newLineAlongK(double x0, double y0, double z0, Orthonormal3DBasis basis) {
         return new StraightLine3D().setStart(x0, y0, z0).setDirectionAlongK(basis);
@@ -270,7 +270,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public StraightLine3D setDirectionAlongI(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -282,7 +282,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public StraightLine3D setDirectionAlongJ(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -294,7 +294,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param basis some orthonormal basis (<b>i</b>, <b>j</b>, <b>k</b>).
      * @return a reference to this object.
-     * @throws NullPointerException if <tt>basis</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>basis</tt> is {@code null}.
      */
     public StraightLine3D setDirectionAlongK(Orthonormal3DBasis basis) {
         Objects.requireNonNull(basis, "Null basis");
@@ -353,7 +353,7 @@ public final class StraightLine3D implements Cloneable {
      *
      * @param other other straight.
      * @return a reference to this object.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public StraightLine3D setTo(StraightLine3D other) {
         Objects.requireNonNull(other, "Null other");

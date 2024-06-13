@@ -268,7 +268,7 @@ public enum DependenceApertureBuilder {
      * @param inverted        if <tt>true</tt>, then <tt>patterns</tt> is supposed to be inverted.
      * @return                rectangular dependence aperture, describing dependence of the elements of the full
      *                        processing algorithm.
-     * @throws NullPointerException      if <tt>pattern</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>pattern</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
      *                                   or the passed pattern has
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
@@ -294,7 +294,7 @@ public enum DependenceApertureBuilder {
      * @param inverted2       if <tt>true</tt>, then <tt>pattern2</tt> is supposed to be inverted.
      * @return                rectangular dependence aperture, describing dependence of the elements of the full
      *                        processing algorithm, consisting of 2 parts (stages).
-     * @throws NullPointerException      if <tt>patterns1</tt> or <tt>pattern2</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>patterns1</tt> or <tt>pattern2</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
      *                                   or if some of the passed patterns have
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
@@ -320,8 +320,8 @@ public enum DependenceApertureBuilder {
      *                        <tt>patterns[k]</tt> is supposed to be inverted.
      * @return                rectangular dependence aperture, describing dependence of the elements of the full
      *                        processing algorithm, consisting of <tt>patterns.length</tt> parts (stages).
-     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is <tt>null</tt>,
-     *                                   or if some elements of <tt>patterns</tt> array is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is {@code null},
+     *                                   or if some elements of <tt>patterns</tt> array is {@code null}.
      * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
      *                                   or if <tt>patterns</tt> and <tt>inverted</tt> arrays have different lengths,
      *                                   or if their length is zero (<tt>patterns.length==0</tt>),
@@ -352,8 +352,8 @@ public enum DependenceApertureBuilder {
      * @param additionalSpace additional gap, added to all coordinate ranges of the resulting aperture.
      * @return                rectangular dependence aperture, describing dependence of the elements of the full
      *                        processing algorithm, consisting of <tt>patterns.length</tt> parts (stages).
-     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is <tt>null</tt>,
-     *                                   or if some elements of <tt>patterns</tt> array is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is {@code null},
+     *                                   or if some elements of <tt>patterns</tt> array is {@code null}.
      * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
      *                                   or if <tt>patterns</tt> and <tt>inverted</tt> arrays have different lengths,
      *                                   or if their length is zero (<tt>patterns.length==0</tt>),
@@ -440,7 +440,7 @@ public enum DependenceApertureBuilder {
      * @param matrixDimensions {@link Matrix#dimensions() dimensions} of some <i>n</i>-dimensional matrix.
      * @param aperture         the dependence aperture.
      * @return                 new dimensions, extended by the given aperture.
-     * @throws NullPointerException      if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException      if one of the arguments is {@code null}.
      * @throws IllegalArgumentException  if <tt>matrixDimensions.length!=aperture.{@link IRectangularArea#coordCount()
      *                                   coordCount()}</tt>,
      *                                   or if <tt>matrixDimensions[k]&lt;0</tt> for some <tt>k</tt>.
@@ -508,7 +508,7 @@ public enum DependenceApertureBuilder {
      * @param aperture         the dependence aperture.
      * @param continuationMode the continuation mode for extending the matrix.
      * @return                 new matrix, extended by the given aperture.
-     * @throws NullPointerException      if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException      if one of the arguments is {@code null}.
      * @throws IllegalArgumentException  if <tt>matrix.{@link Matrix#dimCount()
      *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount() coordCount()}</tt>.
      * @throws IndexOutOfBoundsException in a case of integer overflow while calculating <tt>to[k]</tt>,
@@ -562,7 +562,7 @@ public enum DependenceApertureBuilder {
      *                 {@link #extend(Matrix, IRectangularArea, Matrix.ContinuationMode)} method.
      * @param aperture the dependence aperture.
      * @return         new matrix, reduced to the original sizes.
-     * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the arguments is {@code null}.
      * @throws IllegalArgumentException  if <tt>matrix.{@link Matrix#dimCount()
      *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount() coordCount()}</tt>.
      * @throws IndexOutOfBoundsException in the same situations as the corresponding
