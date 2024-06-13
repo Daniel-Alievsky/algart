@@ -2555,10 +2555,12 @@ public abstract class SummingHistogram extends Histogram {
         private SummingLongHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private SummingLongHistogram(long[][] histogram,
-                                     double[][] sums, // separate line for removing by preprocessor
-                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-                                     long total, int[] bitLevels) {
+        private SummingLongHistogram(
+                long[][] histogram,
+                double[][] sums, // separate line for removing by preprocessor
+                int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3828,10 +3830,12 @@ public abstract class SummingHistogram extends Histogram {
         private SummingLong1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private SummingLong1LevelHistogram(long[][] histogram,
-                                     double[][] sums, // separate line for removing by preprocessor
-                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-                                     long total, int[] bitLevels) {
+        private SummingLong1LevelHistogram(
+                long[][] histogram,
+                double[][] sums, // separate line for removing by preprocessor
+                int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4583,10 +4587,12 @@ public abstract class SummingHistogram extends Histogram {
         private SummingIntHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private SummingIntHistogram(int[][] histogram,
-                                     long[][] sums, // separate line for removing by preprocessor
-                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-                                     int total, int[] bitLevels) {
+        private SummingIntHistogram(
+                int[][] histogram,
+                long[][] sums, // separate line for removing by preprocessor
+                int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -5861,10 +5867,12 @@ public abstract class SummingHistogram extends Histogram {
         private SummingInt1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private SummingInt1LevelHistogram(int[][] histogram,
-                                     long[][] sums, // separate line for removing by preprocessor
-                                     int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
-                                     int total, int[] bitLevels) {
+        private SummingInt1LevelHistogram(
+                int[][] histogram,
+                long[][] sums, // separate line for removing by preprocessor
+                int[][] numbersOfDifferentValues, // separate line for removing by preprocessor
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -6610,9 +6618,11 @@ public abstract class SummingHistogram extends Histogram {
         private SimplifiedSummingLongHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private SimplifiedSummingLongHistogram(long[][] histogram,
-                                     double[][] sums, // separate line for removing by preprocessor
-                                     long total, int[] bitLevels) {
+        private SimplifiedSummingLongHistogram(
+                long[][] histogram,
+                double[][] sums, // separate line for removing by preprocessor
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -7694,9 +7704,11 @@ public abstract class SummingHistogram extends Histogram {
         private SimplifiedSummingLong1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private SimplifiedSummingLong1LevelHistogram(long[][] histogram,
-                                     double[][] sums, // separate line for removing by preprocessor
-                                     long total, int[] bitLevels) {
+        private SimplifiedSummingLong1LevelHistogram(
+                long[][] histogram,
+                double[][] sums, // separate line for removing by preprocessor
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -8349,9 +8361,11 @@ public abstract class SummingHistogram extends Histogram {
         private SimplifiedSummingIntHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private SimplifiedSummingIntHistogram(int[][] histogram,
-                                     long[][] sums, // separate line for removing by preprocessor
-                                     int total, int[] bitLevels) {
+        private SimplifiedSummingIntHistogram(
+                int[][] histogram,
+                long[][] sums, // separate line for removing by preprocessor
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -9438,9 +9452,11 @@ public abstract class SummingHistogram extends Histogram {
         private SimplifiedSummingInt1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private SimplifiedSummingInt1LevelHistogram(int[][] histogram,
-                                     long[][] sums, // separate line for removing by preprocessor
-                                     int total, int[] bitLevels) {
+        private SimplifiedSummingInt1LevelHistogram(
+                int[][] histogram,
+                long[][] sums, // separate line for removing by preprocessor
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;

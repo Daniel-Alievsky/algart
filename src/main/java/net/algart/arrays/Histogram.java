@@ -2188,8 +2188,10 @@ public abstract class Histogram {
         private LongHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private LongHistogram(long[][] histogram,
-                                     long total, int[] bitLevels) {
+        private LongHistogram(
+                long[][] histogram,
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3149,8 +3151,10 @@ public abstract class Histogram {
         private Long1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private Long1LevelHistogram(long[][] histogram,
-                                     long total, int[] bitLevels) {
+        private Long1LevelHistogram(
+                long[][] histogram,
+                long total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3729,8 +3733,10 @@ public abstract class Histogram {
         private IntHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private IntHistogram(int[][] histogram,
-                                     int total, int[] bitLevels) {
+        private IntHistogram(
+                int[][] histogram,
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4693,8 +4699,10 @@ public abstract class Histogram {
         private Int1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private Int1LevelHistogram(int[][] histogram,
-                                     int total, int[] bitLevels) {
+        private Int1LevelHistogram(
+                int[][] histogram,
+                int total,
+                int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
