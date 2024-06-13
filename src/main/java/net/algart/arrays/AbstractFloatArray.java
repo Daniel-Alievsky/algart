@@ -41,19 +41,19 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     /**
      * Creates an array with the given initial capacity and length.
      *
-     * <p>The <tt>underlyingArraysAreParallel</tt> informs whether the passed underlying arrays (if they exist)
+     * <p>The <code>underlyingArraysAreParallel</code> informs whether the passed underlying arrays (if they exist)
      * are "parallel" to this one and to each other.
-     * Intuitively, it means that every element #<tt>k</tt> of this array is connected (for example, depends on)
-     * the elements #<tt>k</tt> (of, maybe, #<tt>k&plusmn;i</tt>, where <tt>i</tt> is little) of the
+     * Intuitively, it means that every element #<code>k</code> of this array is connected (for example, depends on)
+     * the elements #<code>k</code> (of, maybe, #<code>k&plusmn;i</code>, where <code>i</code> is little) of the
      * underlying arrays.
      * Precisely, this argument affects the following in this implementation:
      *
      * <ol>
-     * <li>If it is <tt>true</tt>, then all passed underlying arrays (if <tt>underlyingArrays.length&gt;1</tt>)
+     * <li>If it is <code>true</code>, then all passed underlying arrays (if <code>underlyingArrays.length&gt;1</code>)
      * must have identical length &mdash; in other case, this constructor throws {@link SizeMismatchException}.
      * </li>
      *
-     * <li>If it is <tt>true</tt>, then<ul>
+     * <li>If it is <code>true</code>, then<ul>
      * <li>{@link #loadResources(ArrayContext context, long fromIndex, long toIndex)},</li>
      * <li>{@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and</li>
@@ -64,16 +64,16 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * {@link #flushResources(ArrayContext context, boolean forcePhysicalWriting)} and
      * {@link #freeResources(ArrayContext context, boolean forcePhysicalWriting)}
      * methods for the corresponding {@link #subArray subarrays} of all underlying
-     * arrays. If this argument is <tt>false</tt>, then<ul>
+     * arrays. If this argument is <code>false</code>, then<ul>
      * <li>{@link #loadResources(ArrayContext context, long fromIndex, long toIndex)} does nothing,</li>
      * <li>{@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and {@link #freeResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
-     * methods ignore their <tt>fromIndex</tt> / <tt>toIndex</tt> arguments and call
+     * methods ignore their <code>fromIndex</code> / <code>toIndex</code> arguments and call
      * {@link #loadResources(ArrayContext context)},
      * {@link #flushResources(ArrayContext context, boolean forcePhysicalWriting)} and
      * {@link #freeResources(ArrayContext context, boolean forcePhysicalWriting)}
      * methods for <i>original</i> underlying arrays (not their subarrays).</li>
-     * </ul>Of course, if you specify <tt>underlyingArraysAreParallel=false</tt>, you can override
+     * </ul>Of course, if you specify <code>underlyingArraysAreParallel=false</code>, you can override
      * {@link #loadResources(ArrayContext context, long fromIndex, long toIndex)},
      * {@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and {@link #freeResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
@@ -90,25 +90,25 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * the constructor of your subclass.
      *
      * <p>The created array never has <i>new-read-only-view</i> status:
-     * {@link Array#isNewReadOnlyView()} method always returns <tt>false</tt> in this class and its inheritors.
+     * {@link Array#isNewReadOnlyView()} method always returns <code>false</code> in this class and its inheritors.
      *
      * @param initialCapacity             initial capacity of the array.
      * @param initialLength               initial length of the array.
      * @param underlyingArraysAreParallel whether the underlying arrays are "parallel" to this.
      * @param underlyingArrays            see the same argument of
      *                                    {@link AbstractArray#AbstractArray(long, long, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument
+     *                                  or some of <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
+     * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractFloatArray(
-        long initialCapacity, long initialLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            long initialCapacity, long initialLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         super(initialCapacity, initialLength, underlyingArrays);
         if (initialLength < 0) {
             throw new IllegalArgumentException("Negative initialLength argument");
@@ -129,7 +129,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
                     len = underlyingArrays[k].length();
                 } else if (underlyingArrays[k].length() != len) {
                     throw new SizeMismatchException("underlyingArrays[" + k
-                        + "].length() and underlyingArrays[0].length() mismatch");
+                            + "].length() and underlyingArrays[0].length() mismatch");
                 }
             }
         }
@@ -137,23 +137,23 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
 
     /**
      * Equivalent to the constructor {@link #AbstractFloatArray(long, long, boolean, Array...)},
-     * where both <tt>initialCapacity</tt> and <tt>initialLength</tt> arguments are equal to
-     * <tt>initialCapacityAndLength</tt>.
+     * where both <code>initialCapacity</code> and <code>initialLength</code> arguments are equal to
+     * <code>initialCapacityAndLength</code>.
      *
      * @param initialCapacityAndLength    initial capacity and length of the array.
      * @param underlyingArraysAreParallel see {@link #AbstractFloatArray(long, long, boolean, Array...)}.
      * @param underlyingArrays            see {@link #AbstractFloatArray(long, long, boolean, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument
+     *                                  or some of <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if <tt>initialCapacityAndLength</tt> argument is negative.
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws IllegalArgumentException if <code>initialCapacityAndLength</code> argument is negative.
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractFloatArray(
-        long initialCapacityAndLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            long initialCapacityAndLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         this(initialCapacityAndLength, initialCapacityAndLength, underlyingArraysAreParallel, underlyingArrays);
     }
 
@@ -186,14 +186,14 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     @Override
@@ -220,14 +220,14 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
-     * @throws IndexOutOfBoundsException if <tt>arrayPos</tt> is out of range <tt>0..length()-1</tt>.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array.
+     * @throws IndexOutOfBoundsException if <code>arrayPos</code> is out of range <code>0..length()-1</code>.
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     @Override
@@ -244,11 +244,11 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     }
 
     /**
-     * This implementation returns <tt>getFloat(index)</tt>.
+     * This implementation returns <code>getFloat(index)</code>.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     @Override
     public Object getElement(long index) {
@@ -258,7 +258,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
 
     /**
      * This implementation returns new instance of {@link AbstractFloatArray} with the same memory model,
-     * underlying arrays and <tt>underlyingArraysAreParallel</tt> flag, that were passed
+     * underlying arrays and <code>underlyingArraysAreParallel</code> flag, that were passed
      * to the constructor of this instance,
      * and with overridden methods {@link #getFloat(long)} and
      * {@link #getData(long, Object, int, int)},
@@ -267,7 +267,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
-     * that also call the same methods of this instance with corresponding correction of their <tt>fromIndex</tt>
+     * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
      * <p>The returned instance also have overridden method {@link #isLazy()},
@@ -353,17 +353,15 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
         };
@@ -407,8 +405,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long indexOf(long lowIndex, long highIndex, double value) {
         return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
@@ -424,8 +422,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long lastIndexOf(long lowIndex, long highIndex, double value) {
         return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
@@ -449,8 +447,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     private long indexOf(long lowIndex, long highIndex, long value) {
         return value == (float) value ? indexOf(lowIndex, highIndex, (float) value) : -1;
@@ -466,8 +464,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     private long lastIndexOf(long lowIndex, long highIndex, long value) {
         return value == (float) value ? lastIndexOf(lowIndex, highIndex, (float) value) : -1;
@@ -477,7 +475,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
 
     /**
      * This implementation is based on a loop of calls of {@link #getFloat(long)} method
-     * from index <tt>max(lowIndex,0)</tt> until index <tt>min({@link #length()},highIndex)-1</tt>.
+     * from index <code>max(lowIndex,0)</code> until index <code>min({@link #length()},highIndex)-1</code>.
      * Please override this method if it's possible to perform the same task more efficiently
      * than such a loop.
      *
@@ -485,8 +483,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long indexOf(long lowIndex, long highIndex, float value) {
         for (long k = Math.max(lowIndex, 0), n = Math.min(length(), highIndex); k < n; k++) {
@@ -499,7 +497,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
 
     /**
      * This implementation is based on a loop of calls of {@link #getFloat(long)} method
-     * from index <tt>min({@link #length()},highIndex)-1</tt> back until index <tt>max(lowIndex,0)</tt>.
+     * from index <code>min({@link #length()},highIndex)-1</code> back until index <code>max(lowIndex,0)</code>.
      * Please override this method if it's possible to perform the same task more efficiently
      * than such a loop.
      *
@@ -507,8 +505,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long lastIndexOf(long lowIndex, long highIndex, float value) {
         for (long k = Math.min(length(), highIndex), low = Math.max(lowIndex, 0); k > low; ) {
@@ -523,10 +521,10 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     /*Repeat.SectionStart service*/
 
     /**
-     * This implementation returns <tt>true</tt>.
+     * This implementation returns <code>true</code>.
      * Should be overridden if the inheritor is mutable.
      *
-     * @return <tt>true</tt> if this instance is immutable.
+     * @return <code>true</code> if this instance is immutable.
      */
     @Override
     public boolean isImmutable() {
@@ -534,10 +532,10 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     }
 
     /**
-     * This implementation returns <tt>true</tt>.
+     * This implementation returns <code>true</code>.
      * Should be overridden if the inheritor is resizable
      *
-     * @return <tt>true</tt> if this instance is unresizable.
+     * @return <code>true</code> if this instance is unresizable.
      */
     @Override
     public boolean isUnresizable() {
@@ -557,7 +555,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * This implementation calls {@link #asImmutable()} and returns its result.
      *
      * @return a trusted immutable view of this array (or a reference to this array if it is already
-     *         trusted immutable).
+     * trusted immutable).
      */
     @Override
     public FloatArray asTrustedImmutable() {
@@ -569,7 +567,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * Should be overridden if the inheritor is mutable.
      *
      * @return a copy-on-next-write view of this array (or a reference to this array if it is
-     *         immutable or already copy-on-next-write).
+     * immutable or already copy-on-next-write).
      */
     @Override
     public Array asCopyOnNextWrite() {
@@ -577,10 +575,10 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     }
 
     /**
-     * This implementation returns <tt>false</tt>.
+     * This implementation returns <code>false</code>.
      * Should be overridden if the inheritor is mutable.
      *
-     * @return <tt>true</tt> if this array is in copy-on-next-write mode
+     * @return <code>true</code> if this array is in copy-on-next-write mode
      */
     @Override
     public boolean isCopyOnNextWrite() {
@@ -656,10 +654,10 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
      * loadResources}(context)</nobr></tt> call.
      * This default implementation calls {@link #loadResources(ArrayContext) loadResources(c)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray
      * of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or does nothing in other case.
      *
      * @param context   the context of execution; can be {@code null}, then it will be ignored.
@@ -673,7 +671,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).loadResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length));
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length));
             }
         }
     }
@@ -684,9 +682,9 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * flushResources(context, forcePhysicalWriting)}</nobr></tt> call.
      * This default implementation calls {@link #flushResources(ArrayContext, boolean)
      * flushResources(c, forcePhysicalWriting)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
@@ -703,8 +701,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).flushResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                        forcePhysicalWriting);
             }
         } else {
             super.flushResources(context, forcePhysicalWriting);
@@ -717,9 +715,9 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
      * freeResources(context, forcePhysicalWriting)}</nobr></tt> call.
      * This default implementation calls {@link #freeResources(ArrayContext, boolean)
      * freeResources(c, forcePhysicalWriting)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
@@ -736,8 +734,8 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).freeResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                        forcePhysicalWriting);
             }
         } else {
             super.freeResources(context, forcePhysicalWriting);
@@ -747,7 +745,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
     @Override
     public String toString() {
         return "immutable AlgART array float[" + length + "]" + (underlyingArrays.length == 0 ? "" :
-            " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
+                " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
     }
 
     Object javaArrayInternal() {
@@ -758,7 +756,7 @@ public abstract class AbstractFloatArray extends AbstractArray implements FloatA
         return 0;
     }
     /*Repeat.SectionEnd service*/
-/*Repeat.SectionEnd all*/
+    /*Repeat.SectionEnd all*/
 
     public double minPossibleValue(double valueForFloatingPoint) {
         return valueForFloatingPoint;

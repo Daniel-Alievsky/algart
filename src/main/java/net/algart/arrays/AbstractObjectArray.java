@@ -478,10 +478,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
       array\s+float\[\" ==> array " + elementType.getName() + "["   !! Auto-generated: NOT EDIT !! */
 
     /**
-     * This implementation returns <tt>true</tt>.
+     * This implementation returns <code>true</code>.
      * Should be overridden if the inheritor is mutable.
      *
-     * @return <tt>true</tt> if this instance is immutable.
+     * @return <code>true</code> if this instance is immutable.
      */
     @Override
     public boolean isImmutable() {
@@ -489,10 +489,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     }
 
     /**
-     * This implementation returns <tt>true</tt>.
+     * This implementation returns <code>true</code>.
      * Should be overridden if the inheritor is resizable
      *
-     * @return <tt>true</tt> if this instance is unresizable.
+     * @return <code>true</code> if this instance is unresizable.
      */
     @Override
     public boolean isUnresizable() {
@@ -512,7 +512,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * This implementation calls {@link #asImmutable()} and returns its result.
      *
      * @return a trusted immutable view of this array (or a reference to this array if it is already
-     *         trusted immutable).
+     * trusted immutable).
      */
     @Override
     public ObjectArray<E> asTrustedImmutable() {
@@ -524,7 +524,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * Should be overridden if the inheritor is mutable.
      *
      * @return a copy-on-next-write view of this array (or a reference to this array if it is
-     *         immutable or already copy-on-next-write).
+     * immutable or already copy-on-next-write).
      */
     @Override
     public Array asCopyOnNextWrite() {
@@ -532,10 +532,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     }
 
     /**
-     * This implementation returns <tt>false</tt>.
+     * This implementation returns <code>false</code>.
      * Should be overridden if the inheritor is mutable.
      *
-     * @return <tt>true</tt> if this array is in copy-on-next-write mode
+     * @return <code>true</code> if this array is in copy-on-next-write mode
      */
     @Override
     public boolean isCopyOnNextWrite() {
@@ -611,10 +611,10 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
      * loadResources}(context)</nobr></tt> call.
      * This default implementation calls {@link #loadResources(ArrayContext) loadResources(c)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray
      * of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or does nothing in other case.
      *
      * @param context   the context of execution; can be {@code null}, then it will be ignored.
@@ -628,7 +628,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).loadResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length));
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length));
             }
         }
     }
@@ -639,9 +639,9 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * flushResources(context, forcePhysicalWriting)}</nobr></tt> call.
      * This default implementation calls {@link #flushResources(ArrayContext, boolean)
      * flushResources(c, forcePhysicalWriting)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
@@ -658,8 +658,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).flushResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                        forcePhysicalWriting);
             }
         } else {
             super.flushResources(context, forcePhysicalWriting);
@@ -672,9 +672,9 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * freeResources(context, forcePhysicalWriting)}</nobr></tt> call.
      * This default implementation calls {@link #freeResources(ArrayContext, boolean)
      * freeResources(c, forcePhysicalWriting)}
-     * (where <tt>c</tt> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
+     * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
-     * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
+     * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
@@ -691,8 +691,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         if (underlyingArraysAreParallel) {
             for (int k = 0; k < underlyingArrays.length; k++) {
                 underlyingArrays[k].subArray(fromIndex, toIndex).freeResources(
-                    context == null ? null : context.part(k, k + 1, underlyingArrays.length),
-                    forcePhysicalWriting);
+                        context == null ? null : context.part(k, k + 1, underlyingArrays.length),
+                        forcePhysicalWriting);
             }
         } else {
             super.freeResources(context, forcePhysicalWriting);
@@ -702,7 +702,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     @Override
     public String toString() {
         return "immutable AlgART array " + elementType.getName() + "[" + length + "]" + (underlyingArrays.length == 0 ? "" :
-            " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
+                " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
     }
 
     Object javaArrayInternal() {
