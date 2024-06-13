@@ -93,7 +93,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param initialCapacity  initial capacity of the array.
      * @param initialLength    initial length of the array.
      * @param underlyingArrays the created arrays is a view of the arrays passed by this argument.
-     * @throws NullPointerException if <tt>underlyingArrays</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>underlyingArrays</tt> is {@code null}.
      */
     protected AbstractArray(long initialCapacity, long initialLength, Array... underlyingArrays) {
         Objects.requireNonNull(underlyingArrays, "Null underlyingArrays argument");
@@ -247,7 +247,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param mode     the access mode for new buffer.
      * @param capacity the capacity of the buffer
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
      *                                  or if the specified <tt>capacity</tt> is negative or too high
@@ -266,7 +266,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param mode the access mode for new buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface.
      */
@@ -390,7 +390,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
@@ -408,7 +408,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
@@ -448,7 +448,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * preloading correct part all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      */
     public void loadResources(ArrayContext context) {
     }
@@ -460,7 +460,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Please override it if you want to provide (in a case of subarray)
      * flushing correct part of the underlying arrays.
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -478,7 +478,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Please override it if you want to provide (in a case of subarray)
      * freeing correct part of the underlying arrays.
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -706,7 +706,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param src       the source array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     public static void checkCopyArguments(UpdatableArray thisArray, Array src) {
@@ -727,7 +727,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param another   another array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public static void checkSwapArguments(UpdatableArray thisArray, UpdatableArray another) {
@@ -876,7 +876,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param mode      the access mode for new buffer.
      * @param capacity  the capacity of the buffer
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
      *                                  or if the specified <tt>capacity</tt> is negative or too high
@@ -893,7 +893,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param src       the source array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     protected static void defaultCopy(UpdatableArray thisArray, Array src) {
@@ -917,8 +917,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray  this array.
      * @param src        the source array.
-     * @param allowNulls whether this method should always allow filling object array by <tt>null</tt>.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is <tt>null</tt>.
+     * @param allowNulls whether this method should always allow filling object array by {@code null}.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     protected static void defaultCopy(UpdatableArray thisArray, Array src, boolean allowNulls) {
@@ -943,7 +943,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param another   another array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>another</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>another</tt> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     protected static void defaultSwap(UpdatableArray thisArray, UpdatableArray another) {
@@ -973,7 +973,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param thisArray     this array.
      * @param appendedArray appended array.
      * @return this array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>appendedArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>appendedArray</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
      */
@@ -1123,7 +1123,7 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * Provides package-private access to the backed array even for immutable arrays.
-     * Returns <tt>null</tt> if the is no backed array (not throws an exception).
+     * Returns {@code null} if the is no backed array (not throws an exception).
      *
      * @return the same result as {@link DirectAccessible#javaArray()} method, but also for immutable arrays.
      */

@@ -48,8 +48,8 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
 
     /**
      * The path where new temporary files will be created by {@link #createTemporaryFile(boolean)} method
-     * or <tt>null</tt> if the default temporary-file directory is to be used.
-     * If it is not <tt>null</tt>, it can refer to: 1) an existing directory, 2) existing file or
+     * or {@code null} if the default temporary-file directory is to be used.
+     * If it is not {@code null}, it can refer to: 1) an existing directory, 2) existing file or
      * 3) non-existing file/directory. In 1st case, it is considered as the temporary-file directory,
      * in which new temporary files will be created. In 2nd and 3rd case, it is considered
      * as a <i>file</i> name: the name of new temporary file will always equal to this
@@ -88,7 +88,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * In this case, new temporary files, created by {@link #createTemporaryFile(boolean)} method,
      * will be placed in this directory with unique names.</li>
      *
-     * <li><tt>tempPath</tt> is <tt>null</tt>. In this case, new temporary files, created by
+     * <li><tt>tempPath</tt> is {@code null}. In this case, new temporary files, created by
      * {@link #createTemporaryFile(boolean)} method, will be placed in the default system-dependent
      * temporary-file directory.</li>
      *
@@ -128,7 +128,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *
      * @param tempPath   the path where new temporary files will be created
      *                   by {@link #createTemporaryFile(boolean)} method
-     *                   or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                   or {@code null} if the default temporary-file directory is to be used.
      * @param prefixSize the value returned by {@link #recommendedPrefixSize()} implementation in this class.
      */
     protected AbstractDataFileModel(File tempPath, long prefixSize) {
@@ -196,7 +196,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * @return         <tt>true</tt> if and only if the data file existed and was successfully deleted,
      *                 <tt>false</tt> if the data file does not exist (maybe was deleted already).
      * @throws java.io.IOError      in a case of any problems while file deletion.
-     * @throws NullPointerException if the passed data file is <tt>null</tt>.
+     * @throws NullPointerException if the passed data file is {@code null}.
      */
     public boolean delete(DataFile dataFile) {
         Objects.requireNonNull(dataFile, "Null dataFile argument");
@@ -294,7 +294,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #tempPath} field is not <tt>null</tt> and
+     * Returns <tt>true</tt> if the {@link #tempPath} field is not {@code null} and
      * corresponds to existing file or non-existing file/directory:
      * <tt>tempPath != null &amp;&amp; (!tempPath.exists() || tempPath.isFile())</tt>
      * In such situations, this data file model always works with the only one constant file,
@@ -319,7 +319,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * In other case, its result will be automatically appended with "_" to fulfil
      * the requirements of the standard <tt>File.createTempFile</tt> method.
      *
-     * <p>This method must not return <tt>null</tt>.
+     * <p>This method must not return {@code null}.
      *
      * <p>This implementation returns <tt>"lmm"</tt>.
      * The implementation from {@link DefaultDataFileModel} class returns <tt>"mapmm"</tt>.
@@ -338,11 +338,11 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * in particular, in both {@link DefaultDataFileModel} and {@link StandardIODataFileModel} classes.
      *
      * <p>If {@link #isConcreteFile()} method returns <tt>false</tt>
-     * (i.e. if {@link #tempPath} is <tt>null</tt> or an existing directory:
+     * (i.e. if {@link #tempPath} is {@code null} or an existing directory:
      * <nobr><tt>tempPath.exists() &amp;&amp; !tempPath.isFile()</tt></nobr>),
      * this implementation returns the following result:
      * <tt>File.createTempFile(prefix,suffix,{@link #tempPath}).getAbsolutePath()</tt>, where
-     * <tt>tempPath</tt> is the constructor argument (<tt>null</tt> for constructor without
+     * <tt>tempPath</tt> is the constructor argument ({@code null} for constructor without
      * <tt>File</tt> argument), <tt>prefix</tt> is the result of {@link #temporaryFilePrefix()}
      * method, padded to length 3 with "_" character if its length &lt;3,
      * <tt>suffix</tt> is calculated as<pre>
@@ -351,7 +351,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * </pre>
      *
      * <p>If {@link #isConcreteFile()} method returns <tt>true</tt>
-     * (i.e. if {@link #tempPath} is not <tt>null</tt>, and it is a file or does not exist:
+     * (i.e. if {@link #tempPath} is not {@code null}, and it is a file or does not exist:
      * <nobr><tt>!tempPath.exists() || tempPath.isFile()</tt></nobr>),
      * this implementation calls <tt>tempPath.createNewFile()</tt> and returns <tt>tempPath</tt>.
      *
@@ -398,7 +398,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
 
     /**
      * Returns byte order that is used for new temporary files by {@link #createTemporary(boolean)} method
-     * in this class. Never returns <tt>null</tt>.
+     * in this class. Never returns {@code null}.
      *
      * <p>This implementation returns <tt>ByteOrder.nativeOrder()</tt>: in most situations,
      * the best choice for temporary data, that will be automatically deleted
