@@ -25,14 +25,15 @@
 package net.algart.arrays;
 
 /**
- * <p>Version of {@link ArrayComparator} for a case of 32-bit indexes (<tt>int</tt> instead of <tt>long</tt>).
+ * <p>Version of {@link ArrayComparator} for a case of 32-bit indexes (<code>int</code> instead of <code>long</code>).
  *
  * @author Daniel Alievsky
  */
 @FunctionalInterface
 public interface ArrayComparator32 extends ArrayComparator {
     /**
-     * This method, implemented in this interface, just calls another <tt>less</tt> method with <tt>int</tt> indexes:
+     * This method, implemented in this interface, just calls another <code>less</code> method
+     * with <code>int</code> indexes:
      * <pre>
      *     {@link #less(int, int) less}((int) first, (int) second);
      * </pre>
@@ -41,24 +42,24 @@ public interface ArrayComparator32 extends ArrayComparator {
      *
      * @param first  index of the first compared element.
      * @param second index of the second compared element.
-     * @return <tt>true</tt> if, and only if, the element <tt>#first</tt> is "less"
-     * than the element <tt>#second</tt>.
+     * @return <code>true</code> if, and only if, the element <code>#first</code> is "less"
+     * than the element <code>#second</code>.
      */
     default boolean less(long first, long second) {
         return less((int) first, (int) second);
     }
 
     /**
-     * Should return <tt>true</tt> if, and only if, the element at position <tt>first</tt>
-     * in the sorted array is "less" than the element at position <tt>second</tt>.
+     * Should return <code>true</code> if, and only if, the element at position <code>first</code>
+     * in the sorted array is "less" than the element at position <code>second</code>.
      * ("Less" element will have less index in the sorted array.)
      * The result of this comparison <i>must be fully defined by the values of the elements</i>
      * of the sorted array.
      *
      * @param first  index of the first compared element.
      * @param second index of the second compared element.
-     * @return <tt>true</tt> if, and only if, the element <tt>#first</tt> is "less"
-     * than the element <tt>#second</tt>.
+     * @return <code>true</code> if, and only if, the element <code>#first</code> is "less"
+     * than the element <code>#second</code>.
      */
     boolean less(int first, int second);
 }

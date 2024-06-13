@@ -56,25 +56,25 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param underlyingArrays            see the same argument of
      *                                    {@link
      *                                    AbstractArray#AbstractArray(long, long, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument or some of
+     *                                  <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
+     * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractUpdatableFloatArray(
-        long initialCapacity, long initialLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            long initialCapacity, long initialLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         super(initialCapacity, initialLength, underlyingArraysAreParallel, underlyingArrays);
     }
 
     /**
      * Equivalent to the constructor {@link #AbstractUpdatableFloatArray(long, long, boolean, Array...)},
-     * where both <tt>initialCapacity</tt> and <tt>initialLength</tt> arguments are equal to
-     * <tt>initialCapacityAndLength</tt>.
+     * where both <code>initialCapacity</code> and <code>initialLength</code> arguments are equal to
+     * <code>initialCapacityAndLength</code>.
      *
      * @param initialCapacityAndLength    initial capacity and length of the array.
      * @param underlyingArraysAreParallel see {@link
@@ -84,9 +84,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @throws IllegalArgumentException if the passed argument are illegal (negative).
      */
     protected AbstractUpdatableFloatArray(
-        long initialCapacityAndLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            long initialCapacityAndLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         this(initialCapacityAndLength, initialCapacityAndLength, underlyingArraysAreParallel, underlyingArrays);
     }
 
@@ -101,7 +100,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
-     * that also call the same methods of this instance with corresponding correction of their <tt>fromIndex</tt>
+     * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
      * <p>The returned instance also have overridden method {@link #isLazy()},
@@ -118,7 +117,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
         final AbstractUpdatableFloatArray parent = this;
         final long offset = fromIndex;
         return new AbstractUpdatableFloatArray(toIndex - fromIndex,
-            underlyingArraysAreParallel, underlyingArrays) {
+                underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public float getFloat(long index) {
                 if (index < 0 || index >= length) {
@@ -217,17 +216,15 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
         };
@@ -253,7 +250,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
     /**
      * <!--fill_double (necessary for preprocessing)-->
-     * This implementation just calls <tt>{@link #fill(long, long, double) fill}(0, thisArray.length(), value)</tt>.
+     * This implementation just calls
+     * <code>{@link #fill(long, long, double) fill}(0, thisArray.length(), value)</code>.
      *
      * @param value the value to be stored in all elements of the array.
      * @return a reference to this array.
@@ -264,14 +262,16 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
     /**
      * <!--fill_double (necessary for preprocessing)-->
-     * This implementation just calls <tt>{@link #fill(long, long, float) fill}(position, count, (float)value)</tt>.
+     * This implementation just calls
+     * <code>{@link #fill(long, long, float) fill}(position, count, (float)value)</code>.
      *
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
      * @return a reference to this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<tt>position &lt; 0 || count &lt; 0
+     *                                   || position + count &gt; length()</tt>).
      */
     public UpdatableFloatArray fill(long position, long count, double value) {
         return fill(position, count, (float) value);
@@ -279,7 +279,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
     /**
      * <!--fill_long (necessary for preprocessing)-->
-     * This implementation just calls <tt>{@link #fill(long, long, long) fill}(0, thisArray.length(), value)</tt>.
+     * This implementation just calls <code>{@link #fill(long, long, long) fill}(0, thisArray.length(), value)</code>.
      *
      * @param value the value to be stored in all elements of the array.
      * @return a reference to this array.
@@ -290,21 +290,23 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
     /**
      * <!--fill_long (necessary for preprocessing)-->
-     * This implementation just calls <tt>{@link #fill(long, long, float) fill}(position, count, (float)value)</tt>.
+     * This implementation just calls
+     * <code>{@link #fill(long, long, float) fill}(position, count, (float)value)</code>.
      *
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
      * @return a reference to this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<code>position &lt; 0 || count &lt; 0 ||
+     *                                   position + count &gt; length()</code>).
      */
     public UpdatableFloatArray fill(long position, long count, long value) {
         return fill(position, count, (float) value);
     }
 
     /**
-     * This implementation just calls <tt>{@link #fill(long, long, float) fill}(0, thisArray.length(), value)</tt>.
+     * This implementation just calls <code>{@link #fill(long, long, float) fill}(0, thisArray.length(), value)</code>.
      *
      * @param value the value to be stored in all elements of the array.
      * @return a reference to this array.
@@ -322,8 +324,9 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param position start index (inclusive) to be filled.
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<code>position &lt; 0 || count &lt; 0 ||
+     *                                   position + count &gt; length()</code>).
      */
     public UpdatableFloatArray fill(long position, long count, float value) {
         UpdatableFloatArray a = position == 0 && count == length() ? this : subArr(position, count);
@@ -332,9 +335,9 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     }
 
     /**
-     * This implementation returns <tt>false</tt>.
+     * This implementation returns <code>false</code>.
      *
-     * @return <tt>true</tt> if this instance is immutable.
+     * @return <code>true</code> if this instance is immutable.
      */
     @Override
     public boolean isImmutable() {
@@ -396,17 +399,15 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, fromIndex, toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, fromIndex, toIndex, forcePhysicalWriting);
             }
         };
@@ -424,16 +425,16 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     }
 
     /**
-     * This implementation calls <tt>setFloat(index, (Float)value).floatValue())</tt>.
+     * This implementation calls <code>setFloat(index, (Float)value).floatValue())</code>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
-     * @throws NullPointerException      if <tt>value == null</tt> and it is an array of primitive elements
-     * @throws ClassCastException        if it is an array of primitive elements and <tt>value</tt>
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
+     * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements
+     * @throws ClassCastException        if it is an array of primitive elements and <code>value</code>
      *                                   is not a corresponding wrapped class
-     *                                   (<tt>Boolean</tt>, <tt>Integer</tt>, etc.)
-     * @throws ArrayStoreException       if it is an array of non-primitive elements and <tt>value</tt>
+     *                                   (<code>Boolean</code>, <code>Integer</code>, etc.)
+     * @throws ArrayStoreException       if it is an array of non-primitive elements and <code>value</code>
      *                                   is not an instance of {@link #elementType()} class
      */
     public void setElement(long index, Object value) {
@@ -443,21 +444,21 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     /**
      * This implementation is based on a loop of calls of {@link #setFloat(long, float)} method.
      * Please override this method if it's possible to perform the same task more efficiently
-     * than such a loop.
+     * than such a loop.     *
      *
      * @param arrayPos       starting position in this AlgART array.
      * @param srcArray       the source Java array.
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -485,14 +486,14 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param arrayPos starting position in this AlgART array.
      * @param srcArray the source Java array.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray) {
@@ -509,11 +510,11 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     }
 
     /**
-     * This implementation calls <tt>setFloat(destIndex, getFloat(srcIndex))</tt>.
+     * This implementation calls <code>setFloat(destIndex, getFloat(srcIndex))</code>.
      *
      * @param destIndex index of element to replace.
      * @param srcIndex  index of element to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void copy(long destIndex, long srcIndex) {
         setFloat(destIndex, getFloat(srcIndex));
@@ -525,12 +526,12 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param destIndex starting index of element to replace.
      * @param srcIndex  starting index of element to be copied.
      * @param count     the number of elements to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void copy(long destIndex, long srcIndex, long count) {
         if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                + ") in " + getClass());
+                    + ") in " + getClass());
         }
         if (srcIndex <= destIndex && srcIndex + count > destIndex) {
             srcIndex += count;
@@ -551,7 +552,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      *
      * @param firstIndex  first index of element to exchange.
      * @param secondIndex second index of element to exchange.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void swap(long firstIndex, long secondIndex) {
         float temp = getFloat(firstIndex);
@@ -565,12 +566,12 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param firstIndex  starting first index of element to exchange.
      * @param secondIndex starting second index of element to exchange.
      * @param count       the number of elements to be exchanged.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void swap(long firstIndex, long secondIndex, long count) {
         if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                + ") in " + getClass());
+                    + ") in " + getClass());
         }
         for (long k = 0; k < count; k++) {
             swap(firstIndex++, secondIndex++);
@@ -582,7 +583,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      *
      * @param src the source array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      */
     public UpdatableArray copy(Array src) {
@@ -595,7 +596,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      *
      * @param another another array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>another</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>another</code> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public UpdatableArray swap(UpdatableArray another) {
@@ -634,7 +635,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     @Override
     public String toString() {
         return "unresizable AlgART array float[" + length + "]" + (underlyingArrays.length == 0 ? "" :
-            " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
+                " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
     }
-/*Repeat.SectionEnd all*/
+    /*Repeat.SectionEnd all*/
 }
