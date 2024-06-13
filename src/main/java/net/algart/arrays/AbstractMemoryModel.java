@@ -221,7 +221,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      *
      * @param array the source array.
      * @return      the usual identical copy of the source array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
@@ -249,7 +249,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      *
      * @param array the source array.
      * @return      the usual identical unresizable copy of the source array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      * @throws TooLargeArrayException          if the length of the passed array is too large for this memory model.
@@ -272,7 +272,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @param elementType    the type of matrix elements.
      * @param dim            the dimensions of the matrix.
      * @return               created matrix.
-     * @throws NullPointerException            if <tt>elementType</tt> or <tt>dim</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <tt>elementType</tt> or <tt>dim</tt> is {@code null}.
      * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>,
      *                                         or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
      *                                         or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
@@ -315,7 +315,7 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @param elementType                  the type of matrix elements.
      * @param dim                          the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException     if <tt>elementType</tt> or <tt>dim</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>elementType</tt> or <tt>dim</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>elementType</tt> is <tt>void.class</tt>,
      *                                  or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
      *                                  or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,

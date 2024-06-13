@@ -120,7 +120,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *                                    {@link
      *                                    AbstractArray#AbstractArray(long, long, Array...)}.
      * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
-     *                                  elements is <tt>null</tt>.
+     *                                  elements is {@code null}.
      * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
      *                                  are illegal (negative, or capacity &lt; length).
      * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
@@ -565,7 +565,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
@@ -600,7 +600,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @param arrayPos starting position in this AlgART array.
      * @param srcArray the source Java array.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
@@ -697,7 +697,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *
      * @param src the source array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>src</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>src</tt> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      */
     public UpdatableArray copy(Array src) {
@@ -710,7 +710,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *
      * @param another another array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>another</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>another</tt> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public UpdatableArray swap(UpdatableArray another) {

@@ -100,7 +100,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param underlyingArrays            see the same argument of
      *                                    {@link AbstractArray#AbstractArray(long, long, Array...)}.
      * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
-     *                                  elements is <tt>null</tt>.
+     *                                  elements is {@code null}.
      * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
      *                                  are illegal (negative, or capacity &lt; length).
      * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
@@ -151,7 +151,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param underlyingArrays            see {@link
      *                                    #AbstractObjectArray(Class, long, long, boolean, Array...)}.
      * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
-     *                                  elements is <tt>null</tt>.
+     *                                  elements is {@code null}.
      * @throws IllegalArgumentException if <tt>initialCapacityAndLength</tt> argument is negative.
      * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
      *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
@@ -194,7 +194,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target array.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
@@ -228,7 +228,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
      * @throws IndexOutOfBoundsException if <tt>arrayPos</tt> is out of range <tt>0..length()-1</tt>.
      * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
@@ -571,7 +571,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.
      *
-     * @param context the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, then it will be ignored.
      */
     @Override
     public void loadResources(ArrayContext context) {
@@ -583,7 +583,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * {@link #flushResources(ArrayContext, long, long, boolean)
      * flushResources(context, 0, length(), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -597,7 +597,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * {@link #freeResources(ArrayContext, long, long, boolean)
      * freeResources(context, 0, length()), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */
@@ -617,7 +617,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * if the <tt>underlyingArraysAreParallel</tt> constructor argument was <tt>true</tt>,
      * or does nothing in other case.
      *
-     * @param context   the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context   the context of execution; can be {@code null}, then it will be ignored.
      * @param fromIndex low endpoint (inclusive) of the subarray that should be loaded.
      * @param toIndex   high endpoint (exclusive) of the subarray that should be loaded.
      * @throws IndexOutOfBoundsException for illegal fromIndex and toIndex
@@ -645,7 +645,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be flushed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be flushed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
@@ -678,7 +678,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * or for original underlying arrays in other case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; can be <tt>null</tt>, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be freed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be freed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
