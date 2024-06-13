@@ -26,6 +26,7 @@ package net.algart.arrays;
 
 import java.io.EOFException;
 import java.io.File;
+import java.io.IOError;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -604,7 +605,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                                 }
                             });
                     } catch (IOException ex) {
-                        throw IOErrorJ5.getInstance(ex);
+                        throw new IOError(ex);
                     } catch (Exception ex) {
                         throw new AssertionError("Unexpected exception type: " + ex);
                     }
@@ -679,7 +680,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                                 }
                             });
                     } catch (IOException ex) {
-                        throw IOErrorJ5.getInstance(ex);
+                        throw new IOError(ex);
                     } catch (Exception ex) {
                         throw new AssertionError("Unexpected exception type: " + ex);
                     }

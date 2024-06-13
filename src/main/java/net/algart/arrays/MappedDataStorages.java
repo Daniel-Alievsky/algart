@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.io.IOError;
 import java.nio.*;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -527,8 +528,8 @@ class MappedDataStorages {
                 // atomic creating and deleting temporary files
                 try {
                     if (shutdownInProgress) {
-                        throw IOErrorJ5.getInstance(new IllegalStateException(
-                            "Cannot allocate new AlgART array: shutdown is in progress"));
+                        throw new IOError(new IllegalStateException(
+                                "Cannot allocate new AlgART array: shutdown is in progress"));
                     }
                     if (!ms.temporary) {
                         this.dataFileForDeletion = this.dataFile = ms.existingDataFile;
@@ -2529,13 +2530,13 @@ class MappedDataStorages {
 
         private void checkIsDataFileDisposedOrShutdownInProgress() {
             if (shutdownInProgress) {
-                throw IOErrorJ5.getInstance(new IllegalStateException(
-                    "AlgART array @<" + this + "> is inaccessible: system shutdown in progress"));
+                throw new IOError(new IllegalStateException(
+                        "AlgART array @<" + this + "> is inaccessible: system shutdown in progress"));
             }
             if (dataFile == null) // for a case when the file was disposed via dispose() method
             {
-                throw IOErrorJ5.getInstance(new IllegalStateException(
-                    "AlgART array @<" + this + "> is inaccessible: the storage was already disposed and deleted"));
+                throw new IOError(new IllegalStateException(
+                        "AlgART array @<" + this + "> is inaccessible: the storage was already disposed and deleted"));
             }
         }
 
@@ -2615,7 +2616,7 @@ class MappedDataStorages {
                         } catch (Throwable ex) {
                             String msg = "Finalization: cannot delete temporary array storage file " + df
                                 + (timeout > 0 ? " in " + timeout + " ms" : "");
-                            if (ex.getClass().getName().equals("java.io.IOError") || ex instanceof IOErrorJ5) {
+                            if (ex instanceof IOError) {
                                 if (++countOfFailedDeletionsWhileFinalization
                                     >= LargeMemoryModel.MAX_NUMBER_OF_DELETIONS_WHILE_FINALIZATION) {
                                     warningEvenInHook(msg

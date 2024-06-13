@@ -31,6 +31,7 @@ import net.algart.math.functions.Func;
 import net.algart.math.functions.LinearFunc;
 import net.algart.math.functions.SelectConstantFunc;
 
+import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8364,7 +8365,7 @@ public class Arrays {
                                             synchronizer.wait();
                                         } catch (InterruptedException ex) {
                                             interruptionRequested = true;
-                                            throw IOErrorJ5.getInstance(ex);
+                                            throw new IOError(ex);
                                         }
                                     }
                                 }
@@ -8387,7 +8388,7 @@ public class Arrays {
                                             synchronizer.wait();
                                         } catch (InterruptedException ex) {
                                             interruptionRequested = true;
-                                            throw IOErrorJ5.getInstance(ex);
+                                            throw new IOError(ex);
                                         }
                                     }
                                     long ready = readyRanges.incrementAndGet();
@@ -8432,7 +8433,7 @@ public class Arrays {
                                 throwUncheckedException(ex);
                             } catch (InterruptedException ex) {
                                 interruptionRequested = true;
-                                throw IOErrorJ5.getInstance(ex);
+                                throw new IOError(ex);
                             }
                         } finally {
                             threadPoolFactory.releaseThreadPool(pool);

@@ -24,10 +24,7 @@
 
 package net.algart.arrays;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -667,10 +664,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 if (ex instanceof Error) {
                     resultError = (Error)ex;
                 } else if (ex instanceof Exception) {
-                    resultError = IOErrorJ5.getInstance(ex);
+                    resultError = new IOError(ex);
                 } else {
-                    throw IOErrorJ5.getInstance(
-                        new AssertionError("Invalid class of caught exception: " + ex.getClass()));
+                    throw new IOError(
+                            new AssertionError("Invalid class of caught exception: " + ex.getClass()));
                 }
             }
             if (resultError == null || timeoutInMillis <= 0) {
@@ -833,7 +830,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     }
                     raf = openWithSeveralAttempts(file, readOnly);
                 } catch (IOException ex) {
-                    throw IOErrorJ5.getInstance(ex);
+                    throw new IOError(ex);
                 }
                 fc = raf.getChannel();
             }
@@ -847,7 +844,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     fc.close(); // to be on the safe side: can help under Java 1.7.0-ea-b10
                     raf.close(); // the channel is closed inside this call
                 } catch (IOException ex) {
-                    throw IOErrorJ5.getInstance(ex);
+                    throw new IOError(ex);
                 } finally {
                     raf = null;
                     fc = null;
@@ -903,7 +900,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     LargeMemoryModel.LOGGER.fine(String.format(Locale.US,
                         "MMMM flush: forcing FileChannel (%.3f ms) for %s", (t2 - t1) * 1e-6, this));
                 } catch (IOException ex) {
-                    throw IOErrorJ5.getInstance(ex);
+                    throw new IOError(ex);
                 }
             }
         }
@@ -956,7 +953,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 }
                 return new MappedByteBufferHolder(mbb, br, file.getPath(), range, lazyWriting, foundInCache);
             } catch (IOException ex) {
-                throw IOErrorJ5.getInstance(ex);
+                throw new IOError(ex);
             }
         }
 
@@ -964,7 +961,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             try {
                 return this.raf.length();
             } catch (IOException ex) {
-                throw IOErrorJ5.getInstance(ex);
+                throw new IOError(ex);
             }
         }
 
@@ -972,7 +969,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             try {
                 raf.setLength(newLength);
             } catch (IOException ex) {
-                throw IOErrorJ5.getInstance(ex);
+                throw new IOError(ex);
             }
         }
 

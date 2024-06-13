@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.io.IOError;
 import java.io.IOException;
 import java.io.File;
 import java.nio.ByteOrder;
@@ -170,7 +171,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
         try {
             fileName = createTemporaryFile(unresizable);
         } catch (IOException ex) {
-            throw IOErrorJ5.getInstance(ex);
+            throw new IOError(ex);
         }
         DataFile result = getDataFile(fileName, byteOrderInTemporaryFiles());
         if (isAutoDeletionRequested()) {
@@ -213,7 +214,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
 //              dataFile.close();
 //          }
             if (!f.delete()) {
-                throw IOErrorJ5.getInstance(new IOException("Cannot delete file " + f));
+                throw new IOError(new IOException("Cannot delete file " + f));
             }
             allTemporaryFiles.remove(dataFile);
             return true;

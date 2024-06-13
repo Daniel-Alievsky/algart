@@ -24,6 +24,7 @@
 
 package net.algart.arrays;
 
+import java.io.IOError;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -96,7 +97,7 @@ public abstract class AbstractThreadPoolFactory implements ThreadPoolFactory {
             } catch (ExecutionException e) {
                 Arrays.throwUncheckedException(e.getCause());
             } catch (InterruptedException e) {
-                throw IOErrorJ5.getInstance(e);
+                throw new IOError(e);
             }
         } finally {
             releaseThreadPool(pool);
