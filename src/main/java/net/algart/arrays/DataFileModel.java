@@ -91,7 +91,7 @@ public interface DataFileModel<P> {
      * @param path      the path describing unique position of the existing data file.
      * @param byteOrder the byte order that will be always used for mapping this file.
      * @return          new instance of {@link DataFile} object.
-     * @throws NullPointerException if one of passed arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of passed arguments is {@code null}.
      */
     DataFile getDataFile(P path, ByteOrder byteOrder);
 
@@ -102,7 +102,7 @@ public interface DataFileModel<P> {
      *
      * @param dataFile the data file.
      * @return         the path describing unique position of the data file.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the data file was created by incompatible data file model.
      */
     P getPath(DataFile dataFile);
@@ -166,7 +166,7 @@ public interface DataFileModel<P> {
      * @param dataFile the data file that should be deleted.
      * @return         <tt>true</tt> if and only if the data file existed and was successfully deleted,
      *                 <tt>false</tt> if the data file does not exist (maybe was deleted already).
-     * @throws NullPointerException if the passed data file is <tt>null</tt>.
+     * @throws NullPointerException if the passed data file is {@code null}.
      * @throws ClassCastException   if the data file was created by incompatible data file model.
      * @throws java.io.IOError in a case of any problems while file deletion.
      */
@@ -210,7 +210,7 @@ public interface DataFileModel<P> {
      * Returns the set of all data files, that are
      * temporary and should be automatically deleted while system shutdown.
      * The returned set is an immutable view or a newly allocated copy of an internal set stored in this instance.
-     * The returned instance must not be <tt>null</tt> (but may be the empty set).
+     * The returned instance must not be {@code null} (but may be the empty set).
      *
      * <p>Usually this method returns the set of temporary files
      * that were created by {@link #createTemporary(boolean)} method by this instance of this factory,
@@ -243,7 +243,7 @@ public interface DataFileModel<P> {
      * @param dataFile the data file.
      * @param value    specifies whether the data file should be included into or excluded from
      *                 the internal collection of temporary files.
-     * @throws NullPointerException if the passed data file is <tt>null</tt>.
+     * @throws NullPointerException if the passed data file is {@code null}.
      */
     void setTemporary(DataFile dataFile, boolean value);
 

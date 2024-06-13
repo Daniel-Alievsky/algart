@@ -116,7 +116,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public ByteArrayComparator(byte[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -148,7 +148,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public ByteArrayExchanger(byte[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -185,7 +185,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public ByteAndIndexArrayExchanger(byte[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -227,7 +227,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public CharArrayComparator(char[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -259,7 +259,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public CharArrayExchanger(char[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -296,7 +296,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public CharAndIndexArrayExchanger(char[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -341,7 +341,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public ShortArrayComparator(short[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -373,7 +373,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public ShortArrayExchanger(short[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -410,7 +410,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public ShortAndIndexArrayExchanger(short[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -452,7 +452,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public IntArrayComparator(int[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -484,7 +484,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public IntArrayExchanger(int[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -521,7 +521,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public IntAndIndexArrayExchanger(int[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -563,7 +563,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public LongArrayComparator(long[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -595,7 +595,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public LongArrayExchanger(long[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -632,7 +632,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public LongAndIndexArrayExchanger(long[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -677,7 +677,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public FloatArrayComparator(float[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -709,7 +709,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public FloatArrayExchanger(float[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -746,7 +746,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public FloatAndIndexArrayExchanger(float[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -791,7 +791,7 @@ public class JArrays {
          * Creates new comparator, comparing elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public DoubleArrayComparator(double[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -823,7 +823,7 @@ public class JArrays {
          * Creates new exchanger, exchanging elements of the passed array.
          *
          * @param array some Java array.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         public DoubleArrayExchanger(double[] array) {
             Objects.requireNonNull(array, "Null array");
@@ -860,7 +860,7 @@ public class JArrays {
          *
          * @param array some Java array.
          * @param indexes another Java array.
-         * @throws NullPointerException if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException if one of the arguments is {@code null}.
          */
         public DoubleAndIndexArrayExchanger(double[] array, int[] indexes) {
             Objects.requireNonNull(array, "Null array");
@@ -902,7 +902,7 @@ public class JArrays {
      * but may be greater than <tt>array.length</tt> (the length of the source array),
      * in which case all "extra" elements of the result (with indexes
      * <tt>#array.length..#toIndex</tt>) are zero-filled: 0 for array of numbers and characters,
-     * <tt>false</tt> for <tt>boolean</tt> array, <tt>null</tt> for array of objects.
+     * <tt>false</tt> for <tt>boolean</tt> array, {@code null} for array of objects.
      *
      * <p>The method always creates a new array, even if <tt>fromIndex</tt> is 0
      * and <tt>toIndex</tt> is equal to <tt>array.length</tt>.
@@ -923,7 +923,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if the <tt>array</tt> argument is not a Java array
      *                                    or if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt>
@@ -956,7 +956,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -983,7 +983,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1010,7 +1010,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1037,7 +1037,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1064,7 +1064,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1091,7 +1091,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1118,7 +1118,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1145,7 +1145,7 @@ public class JArrays {
      * @param toIndex   the end index in <tt>array</tt>, exclusive. (May lie outside the array.)
      * @return          the specified subarray, padded by zeros to required length
      *                  if <tt>toIndex &gt; array.length</tt>. (Its length is always <tt>toIndex-fromIndex</tt>.)
-     * @throws  NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws  NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws  IllegalArgumentException  if <tt>fromIndex</tt> is greater than <tt>toIndex</tt>.
      * @throws  IndexOutOfBoundsException if <tt>fromIndex&lt; 0</tt> or <tt>fromIndex &gt; array.length</tt>.
      */
@@ -1172,7 +1172,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillBooleanArray(boolean[] dest, boolean value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1190,7 +1190,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1206,7 +1206,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillByteArray(byte[] dest, byte value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1224,7 +1224,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1240,7 +1240,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillCharArray(char[] dest, char value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1258,7 +1258,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1274,7 +1274,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillShortArray(short[] dest, short value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1292,7 +1292,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1308,7 +1308,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillIntArray(int[] dest, int value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1326,7 +1326,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1342,7 +1342,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillLongArray(long[] dest, long value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1360,7 +1360,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1376,7 +1376,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillFloatArray(float[] dest, float value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1394,7 +1394,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1410,7 +1410,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillDoubleArray(double[] dest, double value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1428,7 +1428,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1444,7 +1444,7 @@ public class JArrays {
      *
      * @param dest    the filled Java array.
      * @param value   the filler.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void fillObjectArray(Object[] dest, Object value) {
         for (int i = 0, len = dest.length; i < len; i++) {
@@ -1462,7 +1462,7 @@ public class JArrays {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1491,7 +1491,7 @@ public class JArrays {
      * @param count     the number of elements to be filled (should be &gt;=0).
      * @param start     starting value of the progression.
      * @param increment step of the progression.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
@@ -1528,7 +1528,7 @@ public class JArrays {
 
     /**
      * Fills <tt>count</tt> elements in the <tt>dest</tt> array, starting from the element <tt>#destPos</tt>,
-     * by zeroes (<tt>null</tt> for <tt>Object[]</tt> arrays, <tt>false</tt> for <tt>boolean[]</tt>,
+     * by zeroes ({@code null} for <tt>Object[]</tt> arrays, <tt>false</tt> for <tt>boolean[]</tt>,
      * <tt>+0.0</tt> for floating-point types).
      * <i>Be careful:</i> the second <tt>int</tt> argument in this method
      * is the number of filled element, but not the end filled index
@@ -1537,7 +1537,7 @@ public class JArrays {
      * @param dest    the filled Java array.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if the <tt>dest</tt> argument is not a Java array,
      *                                   or if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
@@ -1571,7 +1571,7 @@ public class JArrays {
     /**
      * Returns <tt>true</tt> if the specified fragment of the passed Java array is filled by zero
      * (<tt>false</tt> for <tt>boolean[]</tt> array, <tt>(char)0</tt> for <tt>char[]</tt>,
-     * <tt>null</tt> for non-primitive element type).
+     * {@code null} for non-primitive element type).
      * Returns <tt>false</tt> if at least one of elements <tt>array[pos]..array[pos+count-1]</tt> is non-zero.
      *
      * <p>For arrays of floating-point types, unlike {@link #arrayEquals(Object, int, Object, int, int)},
@@ -1584,7 +1584,7 @@ public class JArrays {
      * @param count the number of checked elements.
      * @return      <tt>true</tt> if and only if all elements <tt>array[pos]..array[pos+count-1]</tt> are zero
      *              or if <tt>count==0</tt>.
-     * @throws NullPointerException      if the <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if the <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if the <tt>dest</tt> argument is not a Java array,
      *                                   or if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if <tt>pos</tt> is negative,
@@ -1683,7 +1683,7 @@ public class JArrays {
 
     /**
      * Returns a hash code based on the contents of the specified fragment of the given array.
-     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, returns 0.
+     * If the passed array is {@code null} or <tt>fromIndex==toIndex</tt>, returns 0.
      *
      * <p>If the array is <tt>Object[]</tt>,
      * the result is based on standard <tt>hashCode</tt> method for all elements of the array.
@@ -1723,7 +1723,7 @@ public class JArrays {
     /**
      * Updates hash code (<tt>hash</tt> argument) on the base of the contents
      * of the specified fragment of the given array.
-     * If the passed array is <tt>null</tt> or <tt>fromIndex==toIndex</tt>, does nothing.
+     * If the passed array is {@code null} or <tt>fromIndex==toIndex</tt>, does nothing.
      *
      * <p>This method is used by {@link #arrayHashCode(Object, int, int)
      * arrayHashCode(Object array, int fromIndex, int toIndex)}.
@@ -1750,7 +1750,7 @@ public class JArrays {
      * @param fromIndex the initial index of the checked fragment, inclusive.
      * @param toIndex   the end index of the checked fragment, exclusive.
      * @param hash      updated hash code.
-     * @throws NullPointerException      if the <tt>hash</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if the <tt>hash</tt> argument is {@code null}.
      * @throws IllegalArgumentException  if the <tt>array</tt> argument is not a Java array.
      * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
      *                                   or if <tt>toIndex</tt> is greater than <tt>array.length</tt>
@@ -1905,8 +1905,8 @@ public class JArrays {
     /**
      * Returns <tt>true</tt> if the arguments are Java arrays
      * and their specified fragments are equals,
-     * or if both arguments are <tt>null</tt>.
-     * Returns <tt>false</tt> if one of the arguments is <tt>null</tt>, but the other is not <tt>null</tt>.
+     * or if both arguments are {@code null}.
+     * Returns <tt>false</tt> if one of the arguments is {@code null}, but the other is not {@code null}.
      *
      * <p>The two fragments of the passed arrays are considered equal
      * if all corresponding pairs of elements are equal.
@@ -2096,7 +2096,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfBoolean(boolean[], int, int, boolean)
      */
     public static int indexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
@@ -2132,7 +2132,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfBoolean(boolean[], int, int, boolean)
      */
     public static int lastIndexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
@@ -2164,7 +2164,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfByte(byte[], int, int, byte)
      */
     public static int indexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
@@ -2200,7 +2200,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfByte(byte[], int, int, byte)
      */
     public static int lastIndexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
@@ -2232,7 +2232,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfChar(char[], int, int, char)
      */
     public static int indexOfChar(char[] array, int lowIndex, int highIndex, char value) {
@@ -2268,7 +2268,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfChar(char[], int, int, char)
      */
     public static int lastIndexOfChar(char[] array, int lowIndex, int highIndex, char value) {
@@ -2300,7 +2300,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfShort(short[], int, int, short)
      */
     public static int indexOfShort(short[] array, int lowIndex, int highIndex, short value) {
@@ -2336,7 +2336,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfShort(short[], int, int, short)
      */
     public static int lastIndexOfShort(short[] array, int lowIndex, int highIndex, short value) {
@@ -2368,7 +2368,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfInt(int[], int, int, int)
      */
     public static int indexOfInt(int[] array, int lowIndex, int highIndex, int value) {
@@ -2404,7 +2404,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfInt(int[], int, int, int)
      */
     public static int lastIndexOfInt(int[] array, int lowIndex, int highIndex, int value) {
@@ -2436,7 +2436,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfLong(long[], int, int, long)
      */
     public static int indexOfLong(long[] array, int lowIndex, int highIndex, long value) {
@@ -2472,7 +2472,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfLong(long[], int, int, long)
      */
     public static int lastIndexOfLong(long[] array, int lowIndex, int highIndex, long value) {
@@ -2504,7 +2504,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfFloat(float[], int, int, float)
      */
     public static int indexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
@@ -2540,7 +2540,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfFloat(float[], int, int, float)
      */
     public static int lastIndexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
@@ -2572,7 +2572,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfDouble(double[], int, int, double)
      */
     public static int indexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
@@ -2608,7 +2608,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfDouble(double[], int, int, double)
      */
     public static int lastIndexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
@@ -2642,7 +2642,7 @@ public class JArrays {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #lastIndexOfObject(Object[], int, int, Object)
      */
     public static int indexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
@@ -2688,7 +2688,7 @@ public class JArrays {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,array.length)</tt>.
-     * @throws NullPointerException if <tt>array</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> is {@code null}.
      * @see #indexOfObject(Object[], int, int, Object)
      */
     public static int lastIndexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
@@ -2725,7 +2725,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2757,7 +2757,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2796,7 +2796,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2821,7 +2821,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2846,7 +2846,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2871,7 +2871,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2896,7 +2896,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2921,7 +2921,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2946,7 +2946,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2971,7 +2971,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -2996,7 +2996,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3021,7 +3021,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3046,7 +3046,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3071,7 +3071,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3103,7 +3103,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3129,7 +3129,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3166,7 +3166,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3192,7 +3192,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3229,7 +3229,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3255,7 +3255,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3292,7 +3292,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3318,7 +3318,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3355,7 +3355,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3381,7 +3381,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3418,7 +3418,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3444,7 +3444,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3481,7 +3481,7 @@ public class JArrays {
      * @param src     the source array.
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3507,7 +3507,7 @@ public class JArrays {
      * @param srcPos  position of the first read element in the source array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3557,7 +3557,7 @@ public class JArrays {
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3593,7 +3593,7 @@ public class JArrays {
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3629,7 +3629,7 @@ public class JArrays {
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3666,7 +3666,7 @@ public class JArrays {
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3702,7 +3702,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3725,7 +3725,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3748,7 +3748,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3780,7 +3780,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3807,7 +3807,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3834,7 +3834,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3861,7 +3861,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3888,7 +3888,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3915,7 +3915,7 @@ public class JArrays {
      * @param src               the source array.
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3945,7 +3945,7 @@ public class JArrays {
      * @param srcPos            position of the first read element in the source array.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -3980,7 +3980,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeByteArray(byte[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -3997,7 +3997,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4014,7 +4014,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeShortArray(short[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -4031,7 +4031,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4048,7 +4048,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeIntArray(int[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -4065,7 +4065,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4082,7 +4082,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeLongArray(long[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -4099,7 +4099,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4116,7 +4116,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeFloatArray(float[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -4133,7 +4133,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4150,7 +4150,7 @@ public class JArrays {
      * <tt>dest[i]=-dest[i]</tt>.
      *
      * @param dest the destination array.
-     * @throws NullPointerException if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>dest</tt> is {@code null}.
      */
     public static void oppositeDoubleArray(double[] dest) {
         for (int destPos = 0; destPos < dest.length; destPos++) {
@@ -4167,7 +4167,7 @@ public class JArrays {
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
@@ -4195,7 +4195,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(boolean[] array, String separator, int maxStringLength) {
@@ -4231,7 +4231,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(char[] array, String separator, int maxStringLength) {
@@ -4267,7 +4267,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(byte[] array, String separator, int maxStringLength) {
@@ -4303,7 +4303,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(short[] array, String separator, int maxStringLength) {
@@ -4339,7 +4339,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(int[] array, String separator, int maxStringLength) {
@@ -4375,7 +4375,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(long[] array, String separator, int maxStringLength) {
@@ -4411,7 +4411,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(float[] array, String separator, int maxStringLength) {
@@ -4447,7 +4447,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(double[] array, String separator, int maxStringLength) {
@@ -4483,7 +4483,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(Object[] array, String separator, int maxStringLength) {
@@ -4527,7 +4527,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(byte[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4567,7 +4567,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(short[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4607,7 +4607,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(int[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4647,7 +4647,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(long[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4687,7 +4687,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(float[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4727,7 +4727,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toString(double[] array, Locale locale, String format, String separator, int maxStringLength) {
@@ -4774,7 +4774,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toBinaryString(boolean[] array, String separator, int maxStringLength) {
@@ -4810,7 +4810,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(char[] array, String separator, int maxStringLength) {
@@ -4846,7 +4846,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(byte[] array, String separator, int maxStringLength) {
@@ -4882,7 +4882,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(short[] array, String separator, int maxStringLength) {
@@ -4918,7 +4918,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(int[] array, String separator, int maxStringLength) {
@@ -4954,7 +4954,7 @@ public class JArrays {
      * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
      *                        with adding "..." at the end).
      * @return                the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> or <tt>separator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
      */
     public static String toHexString(long[] array, String separator, int maxStringLength) {

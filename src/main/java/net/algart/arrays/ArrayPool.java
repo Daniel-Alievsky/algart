@@ -65,7 +65,7 @@ public class ArrayPool {
      * @param elementType the type of elements in the arrays.
      * @param arrayLength the length of the arrays.
      * @return            new pool of AlgART arrays.
-     * @throws NullPointerException     if <tt>memoryModel</tt> or <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>memoryModel</tt> or <tt>elementType</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>arrayLength</tt> is negative.
      */
     public static ArrayPool getInstance(MemoryModel memoryModel, Class<?> elementType, long arrayLength) {
@@ -135,10 +135,10 @@ public class ArrayPool {
      *
      * <p>This method must not be called twice for the same object.
      *
-     * <p>This method does nothing if the passed argument is <tt>null</tt>.
+     * <p>This method does nothing if the passed argument is {@code null}.
      *
      * @param array some AlgART array, returned by previous {@link #requestArray()} call;
-     *        can be <tt>null</tt>, then the method does nothing.
+     *        can be {@code null}, then the method does nothing.
      * @throws IllegalArgumentException if the length or element type of the passed array
      *                                  do not match the arguments of {@link #getInstance getInstance} method.
      */

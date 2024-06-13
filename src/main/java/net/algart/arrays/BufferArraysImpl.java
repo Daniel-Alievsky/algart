@@ -85,14 +85,14 @@ class BufferArraysImpl {
         /**
          * Underlying (parent) array, if this instance is a view of it, created by
          * {@link #subArray}, {@link #asImmutable}, {@link #asCopyOnNextWrite} or {@link UpdatableArray#asUnresizable}
-         * methods, or <tt>null</tt> in other cases.
+         * methods, or {@code null} in other cases.
          *
-         * <p>If it is <tt>null</tt>, this instance must be attached to the {@link #storage}
+         * <p>If it is {@code null}, this instance must be attached to the {@link #storage}
          * and controlled by {@link LargeMemoryModel#globalArrayFinalizer}.
          * But creating a lot of such objects leads to much workload for the garbage collector and even
          * can lead to unexpected <tt>OutOfMemory</tt>.
          *
-         * <p>If it is not <tt>null</tt>, this field is a strong reference guaranteeing that the parent array
+         * <p>If it is not {@code null}, this field is a strong reference guaranteeing that the parent array
          * will be collected as garbage only after its views &mdash; and, so, that the data storage
          * will not be informed about finalization all array too early.
          */

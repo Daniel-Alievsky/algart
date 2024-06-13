@@ -68,7 +68,7 @@ public class JBuffers {
      * @param src     the source <tt>ByteBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -110,7 +110,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -153,7 +153,7 @@ public class JBuffers {
      * @param second    the second <tt>ByteBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>ByteBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -190,7 +190,7 @@ public class JBuffers {
      * @param src     the source <tt>CharBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -232,7 +232,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -275,7 +275,7 @@ public class JBuffers {
      * @param second    the second <tt>CharBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>CharBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -312,7 +312,7 @@ public class JBuffers {
      * @param src     the source <tt>ShortBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -354,7 +354,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -397,7 +397,7 @@ public class JBuffers {
      * @param second    the second <tt>ShortBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>ShortBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -434,7 +434,7 @@ public class JBuffers {
      * @param src     the source <tt>IntBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -476,7 +476,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -519,7 +519,7 @@ public class JBuffers {
      * @param second    the second <tt>IntBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>IntBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -556,7 +556,7 @@ public class JBuffers {
      * @param src     the source <tt>LongBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -598,7 +598,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -641,7 +641,7 @@ public class JBuffers {
      * @param second    the second <tt>LongBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>LongBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -678,7 +678,7 @@ public class JBuffers {
      * @param src     the source <tt>FloatBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -720,7 +720,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -763,7 +763,7 @@ public class JBuffers {
      * @param second    the second <tt>FloatBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>FloatBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -800,7 +800,7 @@ public class JBuffers {
      * @param src     the source <tt>DoubleBuffer</tt>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -842,7 +842,7 @@ public class JBuffers {
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -885,7 +885,7 @@ public class JBuffers {
      * @param second    the second <tt>DoubleBuffer</tt>.
      * @param secondPos starting index of element to exchange in the second <tt>DoubleBuffer</tt>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
@@ -916,7 +916,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -954,7 +954,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -992,7 +992,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -1030,7 +1030,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -1068,7 +1068,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -1106,7 +1106,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -1144,7 +1144,7 @@ public class JBuffers {
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
@@ -1190,7 +1190,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfByte(ByteBuffer, int, int, byte)
      */
     public static int indexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
@@ -1227,7 +1227,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfByte(ByteBuffer, int, int, byte)
      */
     public static int lastIndexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
@@ -1260,7 +1260,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfChar(CharBuffer, int, int, char)
      */
     public static int indexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
@@ -1297,7 +1297,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfChar(CharBuffer, int, int, char)
      */
     public static int lastIndexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
@@ -1330,7 +1330,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfShort(ShortBuffer, int, int, short)
      */
     public static int indexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
@@ -1367,7 +1367,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfShort(ShortBuffer, int, int, short)
      */
     public static int lastIndexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
@@ -1400,7 +1400,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfInt(IntBuffer, int, int, int)
      */
     public static int indexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
@@ -1437,7 +1437,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfInt(IntBuffer, int, int, int)
      */
     public static int lastIndexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
@@ -1470,7 +1470,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfLong(LongBuffer, int, int, long)
      */
     public static int indexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
@@ -1507,7 +1507,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfLong(LongBuffer, int, int, long)
      */
     public static int lastIndexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
@@ -1540,7 +1540,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfFloat(FloatBuffer, int, int, float)
      */
     public static int indexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
@@ -1577,7 +1577,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfFloat(FloatBuffer, int, int, float)
      */
     public static int lastIndexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
@@ -1610,7 +1610,7 @@ public class JBuffers {
      * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #lastIndexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int indexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
@@ -1647,7 +1647,7 @@ public class JBuffers {
      * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
      *                  or <tt>-1</tt> if this value does not occur
      *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
      * @see #indexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int lastIndexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
@@ -1676,7 +1676,7 @@ public class JBuffers {
      * @param src     the source <tt>ByteBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1709,7 +1709,7 @@ public class JBuffers {
      * @param src     the source <tt>ByteBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1747,7 +1747,7 @@ public class JBuffers {
      * @param src     the source <tt>ShortBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1773,7 +1773,7 @@ public class JBuffers {
      * @param src     the source <tt>ShortBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1799,7 +1799,7 @@ public class JBuffers {
      * @param src     the source <tt>CharBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1825,7 +1825,7 @@ public class JBuffers {
      * @param src     the source <tt>CharBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1851,7 +1851,7 @@ public class JBuffers {
      * @param src     the source <tt>IntBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1877,7 +1877,7 @@ public class JBuffers {
      * @param src     the source <tt>IntBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1903,7 +1903,7 @@ public class JBuffers {
      * @param src     the source <tt>LongBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1929,7 +1929,7 @@ public class JBuffers {
      * @param src     the source <tt>LongBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1955,7 +1955,7 @@ public class JBuffers {
      * @param src     the source <tt>FloatBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -1981,7 +1981,7 @@ public class JBuffers {
      * @param src     the source <tt>FloatBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2007,7 +2007,7 @@ public class JBuffers {
      * @param src     the source <tt>DoubleBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2033,7 +2033,7 @@ public class JBuffers {
      * @param src     the source <tt>DoubleBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2066,7 +2066,7 @@ public class JBuffers {
      * @param src     the source <tt>ByteBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2093,7 +2093,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2132,7 +2132,7 @@ public class JBuffers {
      * @param src     the source <tt>CharBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2159,7 +2159,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2198,7 +2198,7 @@ public class JBuffers {
      * @param src     the source <tt>ShortBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2225,7 +2225,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2264,7 +2264,7 @@ public class JBuffers {
      * @param src     the source <tt>IntBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2291,7 +2291,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2330,7 +2330,7 @@ public class JBuffers {
      * @param src     the source <tt>LongBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2357,7 +2357,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2396,7 +2396,7 @@ public class JBuffers {
      * @param src     the source <tt>FloatBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2423,7 +2423,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2462,7 +2462,7 @@ public class JBuffers {
      * @param src     the source <tt>DoubleBuffer</tt>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2489,7 +2489,7 @@ public class JBuffers {
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
      * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
@@ -2541,7 +2541,7 @@ public class JBuffers {
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2578,7 +2578,7 @@ public class JBuffers {
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2615,7 +2615,7 @@ public class JBuffers {
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2653,7 +2653,7 @@ public class JBuffers {
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2690,7 +2690,7 @@ public class JBuffers {
      * @param src               the source <tt>LongBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2714,7 +2714,7 @@ public class JBuffers {
      * @param src               the source <tt>FloatBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2738,7 +2738,7 @@ public class JBuffers {
      * @param src               the source <tt>DoubleBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2771,7 +2771,7 @@ public class JBuffers {
      * @param src               the source <tt>ByteBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2802,7 +2802,7 @@ public class JBuffers {
      * @param src               the source <tt>CharBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2833,7 +2833,7 @@ public class JBuffers {
      * @param src               the source <tt>ShortBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2864,7 +2864,7 @@ public class JBuffers {
      * @param src               the source <tt>LongBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2895,7 +2895,7 @@ public class JBuffers {
      * @param src               the source <tt>FloatBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2926,7 +2926,7 @@ public class JBuffers {
      * @param src               the source <tt>DoubleBuffer</tt>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
@@ -2960,7 +2960,7 @@ public class JBuffers {
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
      * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is <tt>null</tt>.
+     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
      * @throws IllegalArgumentException  if <tt>count</tt> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.

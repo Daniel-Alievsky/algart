@@ -414,7 +414,7 @@ public abstract class Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -492,7 +492,7 @@ public abstract class Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Long.MAX_VALUE</tt>,
@@ -569,7 +569,7 @@ public abstract class Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with zero (empty) bars <b>b</b>[<i>k</i>]=0.
-     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>histogramLength&lt;0</tt>,
      *                                  or if <tt>bitLevelsOfPyramid.length&gt;30</tt>,
      *                                  or if some of the elements <tt>bitLevelsOfPyramid</tt> is not in 1..31 range,
@@ -646,7 +646,7 @@ public abstract class Histogram {
      *                           in the "histogram pyramid"; can be empty, then will be ignored
      *                           (the histogram pyramid will not be used).
      * @return                   the new histogram with bars <b>b</b>[<i>k</i>]=<tt>histogram</tt>[<i>k</i>].
-     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> or <tt>bitLevelsOfPyramid</tt> argument is {@code null}.
      * @throws IllegalArgumentException if some of <tt>histogram</tt> elements are negative (&lt;0),
      *                                  or if sum of all bars (elements of <tt>histogram</tt> array) is greater
      *                                  than <tt>Integer.MAX_VALUE</tt>,
@@ -767,7 +767,7 @@ public abstract class Histogram {
      *
      * @param values the indexes of the increased histogram bars. If some index is repeated several times
      *               in this array, the corresponding histogram bar will be increased several times.
-     * @throws NullPointerException      if <tt>values</tt> array is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>values</tt> array is {@code null}.
      * @throws IndexOutOfBoundsException if some <tt>values[k]&lt;0</tt> or
      *                                   <tt>values[k]&gt;=</tt><i>M</i>={@link #length()}.
      * @throws IllegalStateException     if <tt>{@link #total()}&gt;Long.MAX_VALUE-values.length</tt>
@@ -789,7 +789,7 @@ public abstract class Histogram {
      *
      * @param values the indexes of the decreased histogram bars. If some index is repeated several times
      *               in this array, the corresponding histogram bar will be decreased several times.
-     * @throws NullPointerException      if <tt>values</tt> array is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>values</tt> array is {@code null}.
      * @throws IndexOutOfBoundsException if some <tt>values[k]&lt;0</tt> or
      *                                   <tt>values[k]&gt;=</tt><i>M</i>={@link #length()}.
      * @throws IllegalStateException     if <b>b</b>[<tt>values[k]</tt>]=0 for some <tt>k</tt>.
@@ -1353,7 +1353,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
      * @return          value of the found element (percentile).
-     * @throws NullPointerException if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
      * @see #value(long[], double)
      * @see #preciseValue(long[], double)
      */
@@ -1390,7 +1390,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
      * @return          value of the found element (percentile).
-     * @throws NullPointerException if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
      * @see #value(int[], double)
      * @see #preciseValue(int[], double)
      */
@@ -1464,7 +1464,7 @@ public abstract class Histogram {
      *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
      *                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).
      * @return          the found value (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #preciseValue(long[], double)
      */
@@ -1506,7 +1506,7 @@ public abstract class Histogram {
      *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank</tt>,
      *                  but is less than the next element #<i>r</i><sub>1</sub>+1 and has the same integer part).
      * @return          the found value (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #preciseValue(int[], double)
      */
@@ -1611,7 +1611,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return          interpolated value of the found element (percentile), rounded to the "best" integer value.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #iValue(long[], long)
      * @see #preciseValue(long[], double)
@@ -1699,7 +1699,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return          interpolated value of the found element (percentile), rounded to the "best" integer value.
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #iValue(long[], long)
      */
@@ -1836,7 +1836,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return          interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #value(long[], double)
      * @see #iPreciseValue(long[], double)
@@ -1905,7 +1905,7 @@ public abstract class Histogram {
      *                  <tt>IllegalArgumentException</tt> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return          interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(rank)</tt>.
      * @see #iPreciseValue(int[], double)
      */
@@ -1988,7 +1988,7 @@ public abstract class Histogram {
      *                        (in other words, the length of the source array).
      * @param percentileLevel the percentile level (usually from 0.0 to 1.0).
      * @return                interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.
      * @see #sumOf(long[])
      */
@@ -2026,7 +2026,7 @@ public abstract class Histogram {
      *                        (in other words, the length of the source array).
      * @param percentileLevel the percentile level (usually from 0.0 to 1.0).
      * @return                interpolated value of the found element (percentile).
-     * @throws NullPointerException     if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>histogram</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>Double.isNaN(percentileLevel)</tt> or if <tt>sumOfColumns&lt;0</tt>.
      * @see #sumOf(int[])
      */
@@ -2047,7 +2047,7 @@ public abstract class Histogram {
      *
      * @param histogram any array (for example, a histogram).
      * @return          the sum of all elements of the passed array.
-     * @throws NullPointerException if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
      */
     public static long sumOf(long[] histogram) {
         long result = 0;
@@ -2062,7 +2062,7 @@ public abstract class Histogram {
      *
      * @param histogram any array (for example, a histogram).
      * @return          the sum of all elements of the passed array.
-     * @throws NullPointerException if <tt>histogram</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>histogram</tt> argument is {@code null}.
      */
     public static int sumOf(int[] histogram) {
         int result = 0;

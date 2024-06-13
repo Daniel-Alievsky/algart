@@ -284,7 +284,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
-     *                    or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                    or {@code null} if the default temporary-file directory is to be used.
      */
     public DefaultDataFileModel(File tempPath) {
         this(tempPath, DEFAULT_PREFIX_SIZE, defaultLazyWriting());
@@ -296,7 +296,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
-     *                    or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                    or {@code null} if the default temporary-file directory is to be used.
      * @param lazyWriting it <tt>true</tt>, lazy-writing mode will be used.
      */
     public DefaultDataFileModel(File tempPath, boolean lazyWriting) {
@@ -347,7 +347,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
-     *                    or <tt>null</tt> if the default temporary-file directory is to be used.
+     *                    or {@code null} if the default temporary-file directory is to be used.
      * @param prefixSize  the value returned by {@link #recommendedPrefixSize()} implementation in this class.
      * @param lazyWriting it <tt>true</tt>, lazy-writing mode will be used.
      * @see #maxMappedMemory()
@@ -377,7 +377,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * @param path      the path to disk file (as the argument of <tt>new java.io.File(path)</tt>).
      * @param byteOrder the byte order that will be always used for mapping this file.
      * @return          new instance of {@link DataFile} object.
-     * @throws NullPointerException if one of the passed arguments is <tt>null</tt>.
+     * @throws NullPointerException if one of the passed arguments is {@code null}.
      */
     public DataFile getDataFile(File path, ByteOrder byteOrder) {
         Objects.requireNonNull(path, "Null path argument");
@@ -393,7 +393,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *
      * @param dataFile the data file.
      * @return         the absolute path to the disk file.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the data file was created by data file model, other than
      *                              {@link DefaultDataFileModel} or {@link StandardIODataFileModel}.
      */

@@ -818,7 +818,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      */
     public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {

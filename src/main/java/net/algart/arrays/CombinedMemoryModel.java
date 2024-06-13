@@ -198,11 +198,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * This method is called by {@link UpdatableObjectArray#setElement(long, Object)}.
          *
          * <p>Important: this method must not throw <tt>NullPointerException</tt>
-         * if the <tt>value</tt> argument is <tt>null</tt>. Instead, it should
+         * if the <tt>value</tt> argument is {@code null}. Instead, it should
          * store some "signal" value in the storage, that cannot be stored for any
          * possible non-null elements, or just some default ("empty") value.
          * In the first case, further {@link #get get(index, storage)} should
-         * return <tt>null</tt>; in the second case, it should return an instance
+         * return {@code null}; in the second case, it should return an instance
          * in the default state.
          *
          * @param index   an index in the combined array.
@@ -265,7 +265,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
         /**
          * Creates a new element that can be stored in or loaded from the combined array.
-         * Never returns <tt>null</tt>.
+         * Never returns {@code null}.
          *
          * @return some instance of an element of the combined array.
          */
@@ -279,7 +279,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * @param index       an index in the combined array.
          * @param resultValue the object where the retrieved content will be stored.
          * @param storage     a set of arrays where the retrieved content is stored now.
-         * @throws NullPointerException if <tt>resultValue</tt> is <tt>null</tt>.
+         * @throws NullPointerException if <tt>resultValue</tt> is {@code null}.
          */
         void getInPlace(long index, E resultValue, Array[] storage);
     }
@@ -332,11 +332,11 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * and {@link DataObjectBuffer#force(long, long)} methods.
          *
          * <p>Important: this method must not throw <tt>NullPointerException</tt>
-         * if some element of <tt>values</tt> Java array is <tt>null</tt>. Instead, it should
+         * if some element of <tt>values</tt> Java array is {@code null}. Instead, it should
          * store some "signal" value in the storage, that cannot be stored for any
          * possible non-null elements, or just some default ("empty") value.
          * In the first case, further {@link #get get(index, storage)} should
-         * return <tt>null</tt> for this element; in the second case, it should return an instance
+         * return {@code null} for this element; in the second case, it should return an instance
          * in the default state.
          *
          * @param index   starting index in the combined array.
@@ -393,7 +393,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          *                                 one usually provides better performance.
          * @param memoryModel              the {@link MemoryModel memory model} which will be used for creating
          *                                 combined arrays.
-         * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException     if one of the arguments is {@code null}.
          * @throws IllegalArgumentException if the passed ByteBuffer is read-only.
          */
         protected AbstractByteBufferCombiner(
@@ -484,7 +484,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          *                                 one usually provides better performance.
          * @param memoryModel              the {@link MemoryModel memory model} which will be used for creating
          *                                 combined arrays.
-         * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+         * @throws NullPointerException     if one of the arguments is {@code null}.
          * @throws IllegalArgumentException if the passed ByteBuffer is read-only.
          */
         protected AbstractByteBufferCombinerInPlace(
@@ -500,7 +500,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * Should fill the passed element of the combined array from {@link #workStorage}.
          *
          * @param resultElement the object where the retrieved content will be stored.
-         * @throws NullPointerException if the argument is <tt>null</tt>.
+         * @throws NullPointerException if the argument is {@code null}.
          */
         protected abstract void loadElementInPlace(E resultElement);
 
@@ -537,7 +537,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param <E>      the generic type of array elements.
      * @param combiner will be used for creation of combined arrays by this memory model.
      * @return created memory model.
-     * @throws NullPointerException if <tt>combiner</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>combiner</tt> is {@code null}.
      */
     public static <E> CombinedMemoryModel<E> getInstance(Combiner<E> combiner) {
         return new CombinedMemoryModel<E>(combiner);
@@ -548,7 +548,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param elementType the type of array elements.
      * @return created array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <tt>elementType</tt> is {@code null}.
      * @throws IllegalArgumentException        if <tt>elementType</tt> is not supported of <tt>void.class</tt>.
      * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
      */
@@ -566,7 +566,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param elementType     the type of array elements (non-primitive).
      * @param initialCapacity the initial capacity of the array.
      * @return created array.
-     * @throws NullPointerException            if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException            if <tt>elementType</tt> is {@code null}.
      * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
      *                                         or if the specified initial length is negative.
      * @throws UnsupportedElementTypeException if <tt>elementType</tt> is a primitive type.
@@ -639,7 +639,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param elementType the type of array elements.
      * @return maximal possible length of arrays supported by this memory model.
-     * @throws NullPointerException if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
      */
     public long maxSupportedLength(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -653,7 +653,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     /**
      * Returns <tt>true</tt> if the passed instance is a combined array created by some instance of
      * combined memory model.
-     * Returns <tt>false</tt> if the passed array is <tt>null</tt> or an AlgART array created by another memory model.
+     * Returns <tt>false</tt> if the passed array is {@code null} or an AlgART array created by another memory model.
      *
      * @param array the checked array.
      * @return <tt>true</tt> if this array is a combined array created by a combined memory model.
@@ -769,7 +769,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
@@ -792,7 +792,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
@@ -806,7 +806,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
@@ -822,7 +822,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of string representations of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
      *                                  (created by this memory model).
      */

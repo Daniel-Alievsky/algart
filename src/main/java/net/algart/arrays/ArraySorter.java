@@ -156,7 +156,7 @@ public abstract class ArraySorter {
      * @param to         index of the last checked element of some data array, exclusive.
      * @param comparator comparator for checking order.
      * @return <tt>true</tt> if the specified range of the data array is sorted.
-     * @throws NullPointerException if <tt>comparator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>comparator</tt> argument is {@code null}.
      */
     public static boolean areSorted(long from, long to, ArrayComparator comparator) {
         Objects.requireNonNull(comparator, "Null comparator argument");
@@ -188,7 +188,7 @@ public abstract class ArraySorter {
      * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
      * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
      * @param comparator comparator for checking order.
-     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
      *                                  or <tt>to &gt; indexes.length</tt>
      * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
@@ -206,7 +206,7 @@ public abstract class ArraySorter {
      * @param from       index of the first sorted element of <tt>indexes</tt> array, inclusive.
      * @param to         index of the last sorted element of <tt>indexes</tt> array, exclusive.
      * @param comparator comparator for checking order.
-     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>indexes</tt> or <tt>comparator</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt>, <tt>from &lt; 0</tt>
      *                                  or <tt>to &gt; indexes.length</tt>
      * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt>
@@ -271,7 +271,7 @@ public abstract class ArraySorter {
      * @param to         index of the last sorted element of some data array, exclusive.
      * @param comparator comparator for checking order of elements.
      * @param exchanger  exchanger for exchanging sorted elements.
-     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
      * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
      *                                       the <tt>exchanger</tt> does not implement interfaces, necessary
@@ -291,7 +291,7 @@ public abstract class ArraySorter {
      * @param to         index of the last sorted element of some data array, exclusive.
      * @param comparator comparator for checking order of elements.
      * @param exchanger  exchanger for exchanging sorted elements.
-     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException          if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
      * @throws IllegalArgumentException      if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>
      * @throws UnsupportedOperationException if {@link #isExchangingSorter()} returns <tt>false</tt> and
      *                                       the <tt>exchanger</tt> does not implement interfaces, necessary

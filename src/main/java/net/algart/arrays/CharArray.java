@@ -174,7 +174,7 @@ public interface CharArray extends PFixedArray {
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>array</tt> argument is {@code null}.
      */
     static UpdatableCharArray as(char[] array) {
         return SimpleMemoryModel.asUpdatableCharArray(array);

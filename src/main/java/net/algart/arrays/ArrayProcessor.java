@@ -35,7 +35,7 @@ package net.algart.arrays;
  * Usually, the context of execution is passed to constructor or instantiation method.</p>
  *
  * <p>Some array processors may have no current context. In this situation, {@link #context()}
- * method returns <tt>null</tt>.
+ * method returns {@code null}.
  * However, we recommend to provide correct context always,
  * because the context allows to show execution progress to the user, interrupt execution
  * and increase performance on multiprocessor systems by multithread execution.
@@ -50,10 +50,10 @@ package net.algart.arrays;
 public interface ArrayProcessor {
     /**
      * Returns the current context used by this instance for all operations.
-     * This method may return <tt>null</tt>; the classes, implementing this interface,
+     * This method may return {@code null}; the classes, implementing this interface,
      * should work in this situation as while using {@link ArrayContext#DEFAULT} context.
      *
-     * @return the current context used by this instance; can be <tt>null</tt>.
+     * @return the current context used by this instance; can be {@code null}.
      */
     ArrayContext context();
 }

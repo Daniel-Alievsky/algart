@@ -68,7 +68,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * created by <tt>Executors.newFixedThreadPool(N,...<i>(someOurFactory)</i>)</tt> (or analogous) operator
      * while the first call of this method and saved in an internal static field.
      * If this property contains an integer greater than 8192, this value is truncated to 8192.
-     * If this property contains 0 or a negative value, this method returns <tt>null</tt>
+     * If this property contains 0 or a negative value, this method returns {@code null}
      * (in this case, no global thread pool will be created).
      * If there is no such property, or if it contains not a number,
      * or if some exception occurred while calling <tt>Integer.getInteger</tt>,
@@ -88,7 +88,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * So, the application can be terminated by the usual way, even
      * if the global thread pool contains some working threads.
      *
-     * @return the global thread pool, usually returned by this factory, if it exists, or <tt>null</tt> in other case.
+     * @return the global thread pool, usually returned by this factory, if it exists, or {@code null} in other case.
      */
     public static ThreadPoolExecutor globalThreadPool() {
         return ConstantHolder.GLOBAL_THREAD_POOL;
@@ -149,7 +149,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * If it is zero, that method will use the common algorithm, based on the system property:
      * see comments to {@link #recommendedNumberOfTasks()}.
      *
-     * <p>If <tt>persistentThreadPool</tt> is not <tt>null</tt>,
+     * <p>If <tt>persistentThreadPool</tt> is not {@code null},
      * it will be always returned by {@link #getThreadPool(Array, ThreadFactory)} method and
      * {@link #releaseThreadPool(ExecutorService)} method will do nothing.
      * In this case, please note, that if the threads, created by this pool, are not daemons,
@@ -162,7 +162,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *
      * @param numberOfTasks        the desired number of tasks.
      * @param persistentThreadPool the desired thread pool,
-     *                             or <tt>null</tt> if {@link #getThreadPool(Array, ThreadFactory)}
+     *                             or {@code null} if {@link #getThreadPool(Array, ThreadFactory)}
      *                             should create new thread pool every time.
      * @throws IllegalArgumentException if <tt>numberOfTasks</tt> is negative.
      */
@@ -224,7 +224,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *
      * @param sourceArray some AlgART array that should be processed.
      * @return the recommended number of parallel tasks to perform the processing.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     public int recommendedNumberOfTasks(Array sourceArray) {
         Objects.requireNonNull(sourceArray, "Null sourceArray argument");
@@ -253,11 +253,11 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * <tt>Executors.newFixedThreadPool({@link #recommendedNumberOfTasks()},
      * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</tt>.
      *
-     * @param threadFactory if not <tt>null</tt> and there is no
+     * @param threadFactory if not {@code null} and there is no
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
      * @return the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null}.
      * @see #getThreadPool(Array, ThreadFactory)
      */
     public ExecutorService getThreadPool(ThreadFactory threadFactory) {
@@ -277,11 +277,11 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</tt>.
      *
      * @param sourceArray   some AlgART array that should be processed.
-     * @param threadFactory if not <tt>null</tt> and there is no
+     * @param threadFactory if not {@code null} and there is no
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
      * @return the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null}.
      */
     public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory) {
         Objects.requireNonNull(sourceArray, "Null sourceArray argument");
@@ -295,10 +295,10 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
     /**
      * This implementation calls <tt>pool.shutdown()</tt>, if there is no persistent thread pool
-     * ({@link #persistentThreadPool()} returns <tt>null</tt>), or does nothing in other case.
+     * ({@link #persistentThreadPool()} returns {@code null}), or does nothing in other case.
      *
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
-     * @throws NullPointerException if <tt>poll</tt> argument is <tt>null</tt> and there is no persistent thread pool.
+     * @throws NullPointerException if <tt>poll</tt> argument is {@code null} and there is no persistent thread pool.
      */
     public void releaseThreadPool(ExecutorService pool) {
         if (persistentThreadPool == null) {
@@ -309,7 +309,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     /**
      * Returns the persistent thread pool,
      * returned by all calls of {@link #getThreadPool(Array, ThreadFactory)} method,
-     * if it exists, or <tt>null</tt> in other case.
+     * if it exists, or {@code null} in other case.
      * (In the second case, every call of {@link #getThreadPool(Array, ThreadFactory)} method
      * creates new thread pool.)
      *
@@ -321,7 +321,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * or {@link #getDefaultThreadPoolFactory(int)},
      * this method returns the result of {@link #globalThreadPool()}.
      *
-     * @return the persistent thread pool and <tt>null</tt> if it exists, or <tt>null</tt> in other case.
+     * @return the persistent thread pool and {@code null} if it exists, or {@code null} in other case.
      */
     public final ExecutorService persistentThreadPool() {
         return persistentThreadPool;

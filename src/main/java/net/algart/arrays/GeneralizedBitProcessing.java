@@ -202,7 +202,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * {@link UpdatableBitArray bit arrays}. Arrays are allocated with help of the memory model,
  * returned by <tt>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</tt> method
  * of the <tt>context</tt>, specified while creating an instance of this class.
- * If the context is <tt>null</tt>, or if necessary amount of memory is less than
+ * If the context is {@code null}, or if necessary amount of memory is less than
  * {@link Arrays.SystemSettings#maxTempJavaMemory()}, then {@link SimpleMemoryModel} is used
  * for allocating temporary arrays. There is a special case when
  * {@link #process(UpdatablePArray, PArray, Range, long) process} method
@@ -305,10 +305,10 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long) process} method,
          * are {@link BitArray bit arrays}, then <tt>threadIndex=0</tt> and <tt>numberOfThreads=1</tt>.
          *
-         * @param context         the context of execution. It will be <tt>null</tt>, if (and only if)
+         * @param context         the context of execution. It will be {@code null}, if (and only if)
          *                        the same argument of
          *                        {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)
-         *                        process} method is <tt>null</tt>; in this case, the context should be ignored.
+         *                        process} method is {@code null}; in this case, the context should be ignored.
          *                        The main purpose of the context is to allow interruption of this method via
          *                        {@link ArrayContext#checkInterruption()} and to allocate
          *                        work memory via {@link ArrayContext#getMemoryModel()}.
@@ -326,7 +326,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          *                        where <tt>numberOfSlices</tt>=<i>n</i>+1 is the argument of
          *                        {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)
          *                        process} method.
-         * @throws NullPointerException if <tt>srcBits</tt> or <tt>destBits</tt> argument is <tt>null</tt>.
+         * @throws NullPointerException if <tt>srcBits</tt> or <tt>destBits</tt> argument is {@code null}.
          */
         void processBits(
                 ArrayContext context, UpdatableBitArray destBits, BitArray srcBits,
@@ -377,12 +377,12 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Returns new instance of this class.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       can be <tt>null</tt>, then it will be ignored, and all temporary arrays
+     *                       can be {@code null}, then it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
      * @return               new instance of this class.
-     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is {@code null}.
      * @see #getSingleThreadInstance(ArrayContext, SliceOperation, net.algart.arrays.GeneralizedBitProcessing.RoundingMode)
      */
     public static GeneralizedBitProcessing getInstance(ArrayContext context,
@@ -400,12 +400,12 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * already uses multithreading.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       can be <tt>null</tt>, then it will be ignored, and all temporary arrays
+     *                       can be {@code null}, then it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
      * @return               new instance of this class.
-     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is {@code null}.
      * @see #getInstance(ArrayContext, SliceOperation, net.algart.arrays.GeneralizedBitProcessing.RoundingMode)
      */
     public static GeneralizedBitProcessing getSingleThreadInstance(ArrayContext context,
@@ -422,7 +422,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
-     * @param newContext another context, used by the returned instance; can be <tt>null</tt>.
+     * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return           new instance with another context.
      */
     @Override
@@ -476,7 +476,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * <nobr>{@link
      * #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
      * getInstance}</nobr> method
-     * is <tt>null</tt>, then {@link DefaultThreadPoolFactory} is used.)
+     * is {@code null}, then {@link DefaultThreadPoolFactory} is used.)
      *
      * <p>Note that the real number of parallel threads will be a minimum from this value and
      * <i>n</i>, where <i>n</i>+1 is the desired number of slices (the last argument of
@@ -546,7 +546,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * @param range          the <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range,
      *                       used for splitting to bit slices.
      * @param numberOfSlices the number of bit slices (i.e. <i>n</i>+1); must be positive.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>dest</tt> and <tt>src</tt> arrays have different lengths
      *                                  or element types, or if <tt>numberOfSlices&lt;=0</tt>.
      */

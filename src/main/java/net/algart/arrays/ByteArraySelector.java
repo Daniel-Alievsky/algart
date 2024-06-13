@@ -80,7 +80,7 @@ public class ByteArraySelector {
      *                          must be returned.
      * @param array             array of bytes.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(byte[] results, int[] percentileIndexes, byte[] array, int length) {
@@ -171,7 +171,7 @@ public class ByteArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            array of bytes.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if one of the arguments is <tt>null</tt>.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(byte[] results, double[] percentileLevels, byte[] array, int length) {

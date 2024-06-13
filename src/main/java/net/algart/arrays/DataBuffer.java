@@ -484,7 +484,7 @@ public interface DataBuffer {
      * <p>The length of the returned array is always enough to fit
      * the <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt> positions range in it.
      *
-     * <p><i>Note:</i> this method returns <tt>null</tt> if <tt>map</tt> / <tt>mapNext</tt> methods
+     * <p><i>Note:</i> this method returns {@code null} if <tt>map</tt> / <tt>mapNext</tt> methods
      * were never called for this buffer yet, that is, if it is newly created.
      *
      * <p><i>Warning:</i> the reference, returned by this method, may change after any call of

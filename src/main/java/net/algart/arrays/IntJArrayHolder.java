@@ -54,7 +54,7 @@ public final class IntJArrayHolder {
      * @param matrix some AlgART matrix.
      * @return newly created <tt>"new int[newArrayLength]"</tt>
      * or previously allocated array, if it exists and has identical length.
-     * @throws NullPointerException   if the argument is <tt>null</tt>.
+     * @throws NullPointerException   if the argument is {@code null}.
      * @throws TooLargeArrayException if <tt>matrix.size() &gt; Integer.MAX_VALUE</tt>.
      */
     public int[] quickNew(Matrix<?> matrix) {
@@ -126,7 +126,7 @@ public final class IntJArrayHolder {
      *
      * @param array some array to clone.
      * @return exact copy of the source array.
-     * @throws NullPointerException if the passed array is <tt>null</tt>.
+     * @throws NullPointerException if the passed array is {@code null}.
      */
     public int[] quickClone(int[] array) {
         int[] result = quickNew(array.length);

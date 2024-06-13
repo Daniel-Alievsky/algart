@@ -921,7 +921,7 @@ abstract class DataStorage {
      * This method guarantees that all elements <tt>#fromIndex..#toIndex-1</tt> will be really initialized,
      * if it is necessary.
      *
-     * @param context the context of calculations; if not <tt>null</tt>, used for showing progress and interruption.
+     * @param context the context of calculations; if not {@code null}, used for showing progress and interruption.
      * @param fromIndex start index (inclusive) in the stored AlgART array (not sub-array).
      * @param toIndex   end index (exclusive) in the stored AlgART array (not sub-array).
      */

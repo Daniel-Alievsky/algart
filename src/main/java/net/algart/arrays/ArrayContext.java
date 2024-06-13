@@ -57,10 +57,10 @@ public interface ArrayContext {
      * <li>{@link #updateProgress(Event)} method does nothing;</li>
      * <li>{@link #currentThreadIndex()} method returns <tt>0</tt>;</li>
      * <li>{@link #numberOfThreads()} method returns <tt>1</tt>;</li>
-     * <li>{@link #customData()} method returns <tt>null</tt>.</li>
+     * <li>{@link #customData()} method returns {@code null}.</li>
      * </ul>
      *
-     * <p>In most methods, that use {@link ArrayContext} argument, you can specify <tt>null</tt> as context
+     * <p>In most methods, that use {@link ArrayContext} argument, you can specify {@code null} as context
      * with the same effect as passing this object.
      */
     ArrayContext DEFAULT = new AbstractArrayContext.Default();
@@ -78,11 +78,11 @@ public interface ArrayContext {
      * <li>{@link #updateProgress(Event)} method does nothing;</li>
      * <li>{@link #currentThreadIndex()} method returns <tt>0</tt>;</li>
      * <li>{@link #numberOfThreads()} method returns <tt>1</tt>;</li>
-     * <li>{@link #customData()} method returns <tt>null</tt>.</li>
+     * <li>{@link #customData()} method returns {@code null}.</li>
      * </ul>
      *
      * <p>This constant is useful, if you need some "default" single-thread context.
-     * If you specify <tt>null</tt> as a context (as well as {@link #DEFAULT} object),
+     * If you specify {@code null} as a context (as well as {@link #DEFAULT} object),
      * it leads to using {@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()}</tt>,
      * which tries to use all available processor kernels.
      * To get analogous behaviour without multithreading, you should use this object.</tt>.
@@ -102,7 +102,7 @@ public interface ArrayContext {
      * @param memoryModel memory model.
      * @param multithreading whether the returned context will use multithreading.
      * @return new array context.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      */
     static ArrayContext getSimpleContext(MemoryModel memoryModel, boolean multithreading) {
         if (memoryModel instanceof SimpleMemoryModel) {
@@ -283,7 +283,7 @@ public interface ArrayContext {
      * you can pass this information via {@link ArrayProcessorWithContextSwitching#context(ArrayContext) switching
      * the context} to the result of this method with an appropriate <tt>customData</tt> object.
      *
-     * @param customData some custom data; <tt>null</tt> is an allowed value.
+     * @param customData some custom data; {@code null} is an allowed value.
      * @return           the version of this context, where {@link #customData()} method returns the reference
      *                   to <tt>customData</tt> argument.
      */
@@ -292,7 +292,7 @@ public interface ArrayContext {
     /**
      * Returns the {@link MemoryModel memory model} that should be used
      * for creating any instances of AlgART arrays.
-     * This method never returns <tt>null</tt>.
+     * This method never returns {@code null}.
      *
      * @return the desired memory model.
      */
@@ -302,7 +302,7 @@ public interface ArrayContext {
      * Returns the {@link ThreadPoolFactory thread pool factory} that should be used for
      * planning parallel execution in multithreading methods alike
      * {@link Arrays.ParallelExecutor#process()}.
-     * This method never returns <tt>null</tt>.
+     * This method never returns {@code null}.
      *
      * @return the desired thread pool factory.
      */
@@ -346,7 +346,7 @@ public interface ArrayContext {
      * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</tt></nobr>.
      *
      * @param elementType           the result of {@link ArrayContext.Event#elementType()} method in the event;
-     *                              can be <tt>null</tt>.
+     *                              can be {@code null}.
      * @param readyCount            the only element in the result of {@link ArrayContext.Event#readyCountPerTask()}
      *                              method in the event.
      * @param length                the result of {@link ArrayContext.Event#length()} method in the created event.
@@ -396,17 +396,17 @@ public interface ArrayContext {
     int numberOfThreads();
 
     /**
-     * Usually returns <tt>null</tt>, but in a special environment this method may return some custom object,
+     * Usually returns {@code null}, but in a special environment this method may return some custom object,
      * containing additional information about the current execution context,
      * not provided by other methods of this class.
      *
-     * <p>To create a context, in which this method returns a value different from <tt>null</tt>, please use
+     * <p>To create a context, in which this method returns a value different from {@code null}, please use
      * <nobr>{@link #customDataVersion(Object)}</nobr> method.
      *
      * <p>The result of this method may belong to any type. So, it is a good idea to check its type
      * with <tt>instanceof</tt> operator before attempt to use this result.
      *
-     * <p>In {@link AbstractArrayContext} implementation, this method returns <tt>null</tt>.
+     * <p>In {@link AbstractArrayContext} implementation, this method returns {@code null}.
      *
      * @return some custom information about the current execution environment.
      */
@@ -431,7 +431,7 @@ public interface ArrayContext {
          * Equivalent to <tt>new&nbsp;Event(elementType, new long[] {length}, new long[] {readyCount})</tt>.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
-         *                              can be <tt>null</tt>.
+         *                              can be {@code null}.
          * @param readyCount            the only element in the result of {@link #readyCountPerTask()} method
          *                              in the created event.
          * @param length                the result of {@link #length()} method in the created event.
@@ -462,10 +462,10 @@ public interface ArrayContext {
          * are cloned by this method: no references to them are maintained by the created instance.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
-         *                              can be <tt>null</tt>.
+         *                              can be {@code null}.
          * @param readyCountPerTask     the result of {@link #readyCountPerTask()} method in the created event.
          * @param lengthPerTask         the result of {@link #lengthPerTask()} method in the created event.
-         * @throws NullPointerException     if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is <tt>null</tt>.
+         * @throws NullPointerException     if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is {@code null}.
          * @throws IllegalArgumentException if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is an empty array,
          *                                  or if their lengths are not equal,
          *                                  or if some their elements are negative,
@@ -519,7 +519,7 @@ public interface ArrayContext {
          * an array processing method alike
          * {@link Arrays.ParallelExecutor#process()}.
          * If the context of using cannot define a suitable type of array elements,
-         * this method may return <tt>null</tt>.
+         * this method may return {@code null}.
          *
          * @return the type of elements in the source array.
          * @see Array#elementType()

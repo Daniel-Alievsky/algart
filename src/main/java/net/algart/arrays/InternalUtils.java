@@ -185,12 +185,12 @@ class InternalUtils {
      * <p>More precisely, unlike <tt>System.getProperty</tt>,
      * this method catches all exceptions, including <tt>SecurityException</tt>, and returns
      * <tt>defaultValue</tt> in a case of an exception.
-     * In particular, this method returns <tt>defaultValue</tt> if <tt>propertyName</tt> is <tt>null</tt>
+     * In particular, this method returns <tt>defaultValue</tt> if <tt>propertyName</tt> is {@code null}
      * or an empty string (<tt>System.getProperty</tt> throws exceptions in these cases).
      * There is a guarantee that this method never throws exceptions.
      *
      * @param propertyName the name of property.
-     * @param defaultValue default value; <tt>null</tt> is an allowed value.
+     * @param defaultValue default value; {@code null} is an allowed value.
      * @return             the value of string property or default value in a case of any problems.
      */
     static String getStringProperty(String propertyName, String defaultValue) {

@@ -60,7 +60,7 @@ public final class JArrayPool {
      * @param elementType the type of elements in the arrays.
      * @param arrayLength the length of the arrays.
      * @return            new pool of Java arrays.
-     * @throws NullPointerException     if <tt>elementType</tt> is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>elementType</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>arrayLength</tt> is negative.
      */
     public static JArrayPool getInstance(Class<?> elementType, int arrayLength) {
@@ -121,10 +121,10 @@ public final class JArrayPool {
      *
      * <p>This method must not be called twice for the same object.
      *
-     * <p>This method does nothing if the passed argument is <tt>null</tt>.
+     * <p>This method does nothing if the passed argument is {@code null}.
      *
      * @param array some Java array, returned by previous {@link #requestArray()} call;
-     *        can be <tt>null</tt>, then the method does nothing.
+     *        can be {@code null}, then the method does nothing.
      * @throws IllegalArgumentException if the argument is not a Java array, or if its size or element type
      *                                  do not match the arguments of {@link #getInstance} method.
      */

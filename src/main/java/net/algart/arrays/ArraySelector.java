@@ -90,7 +90,7 @@ public class ArraySelector {
      * @param comparator        comparator for checking order of elements.
      * @param exchanger         exchanger for exchanging reordered elements.
      * @throws NullPointerException     if <tt>percentileIndexes</tt>, <tt>comparator</tt> or <tt>exchanger</tt>
-     *                                  argument is <tt>null</tt>.
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>,
      *                                  or if <tt>percentileIndexes</tt> array is empty,
      *                                  or if it contains indexes outside <tt>0..numberOfElements-1</tt> range,
@@ -135,7 +135,7 @@ public class ArraySelector {
      * @param comparator       comparator for checking order of elements.
      * @param exchanger        exchanger for exchanging sorted elements.
      * @throws NullPointerException     if <tt>percentileLevels</tt>, <tt>comparator</tt> or <tt>exchanger</tt>
-     *                                  argument is <tt>null</tt>.
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>numberOfElements&le;0</tt>, or
      *                                  if <tt>percentileLevels</tt> array is empty,
      *                                  or if it contains elements outside
@@ -178,7 +178,7 @@ public class ArraySelector {
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param comparator    comparator for checking order of elements.
      * @param exchanger     exchanger for exchanging reordered elements.
-     * @throws NullPointerException     if <tt>comparator</tt> or <tt>exchanger</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>comparator</tt> or <tt>exchanger</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  or if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      * @throws ClassCastException       may be thrown while calling methods of <tt>comparator</tt> or
@@ -333,7 +333,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, byte[] array, int length) {
@@ -364,7 +364,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, byte[] array, int length) {
@@ -391,7 +391,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -616,7 +616,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, char[] array, int length) {
@@ -643,7 +643,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, char[] array, int length) {
@@ -666,7 +666,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -895,7 +895,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, short[] array, int length) {
@@ -926,7 +926,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, short[] array, int length) {
@@ -953,7 +953,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -1178,7 +1178,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, int[] array, int length) {
@@ -1205,7 +1205,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, int[] array, int length) {
@@ -1228,7 +1228,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -1453,7 +1453,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, long[] array, int length) {
@@ -1480,7 +1480,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, long[] array, int length) {
@@ -1503,7 +1503,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -1732,7 +1732,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, float[] array, int length) {
@@ -1763,7 +1763,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, float[] array, int length) {
@@ -1790,7 +1790,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */
@@ -2019,7 +2019,7 @@ public class ArraySelector {
      *                          in increasing order.
      * @param array             data array.
      * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileIndexes</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(int[] percentileIndexes, double[] array, int length) {
@@ -2050,7 +2050,7 @@ public class ArraySelector {
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
      * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
-     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>percentileLevels</tt> or <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
      */
     public void select(double[] percentileLevels, double[] array, int length) {
@@ -2077,7 +2077,7 @@ public class ArraySelector {
      * @param to            index of the last analysed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
-     * @throws NullPointerException     if <tt>array</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>from &gt; to</tt> or <tt>from &lt; 0</tt>, or
      *                                  if <tt>requiredIndex</tt> is outside <tt>from..to-1</tt> range.
      */

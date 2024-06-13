@@ -82,7 +82,7 @@ class ArraysBufferedCopier {
      * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the argument
      * of {@link #getInstance(ArrayContext, UpdatableArray, Array, int, boolean, boolean) getInstance} method.
      *
-     * @param context the context of copying; can be <tt>null</tt>, then it will be ignored.
+     * @param context the context of copying; can be {@code null}, then it will be ignored.
      * @param dest    the destination array.
      * @param src     the source array.
      * @param compare whether this method must use {@link ArraysOpImpl.ComparingCopier}.
@@ -99,7 +99,7 @@ class ArraysBufferedCopier {
      * Copies <tt>src</tt> to <tt>dest</tt> via {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
      * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the passed argument.
      *
-     * @param context       the context of copying; can be <tt>null</tt>, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}, then it will be ignored.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of tasks; may be 0 for automatic detection.
@@ -411,7 +411,7 @@ class ArraysBufferedCopier {
          * and processing it in RAM by {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method.
          *
          * @return the result of {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method,
-         *         or <tt>null</tt> if copying by this algorithm is impossible or undesirable.
+         *         or {@code null} if copying by this algorithm is impossible or undesirable.
          */
         private Boolean copyWithBufferingWholeMatrix() {
             if (projectiveTransformation // in other case, we cannot estimate the parent tile size
@@ -474,7 +474,7 @@ class ArraysBufferedCopier {
          *
          * @return the logical OR of results of all calls
          *         of the {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method,
-         *         or <tt>null</tt> if copying by this algorithm is impossible.
+         *         or {@code null} if copying by this algorithm is impossible.
          */
         private Boolean copyWithBufferingLayers() {
             assert po instanceof LinearOperator;
@@ -607,7 +607,7 @@ class ArraysBufferedCopier {
          *
          * @return the logical OR of results of all calls
          *         of the {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method,
-         *         or <tt>null</tt> if copying by this algorithm is impossible.
+         *         or {@code null} if copying by this algorithm is impossible.
          */
         private Boolean copyWithRegularTiling() {
             assert po instanceof LinearOperator;
@@ -728,7 +728,7 @@ class ArraysBufferedCopier {
          *
          * @return the logical OR of results of all calls
          *         of the {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method,
-         *         or <tt>null</tt> if copying by this algorithm is impossible.
+         *         or {@code null} if copying by this algorithm is impossible.
          */
         private Boolean copyWithRecursiveTiling() {
             assert po instanceof ProjectiveOperator;
