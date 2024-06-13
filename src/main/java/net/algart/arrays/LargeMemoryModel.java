@@ -973,11 +973,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
 
     /*Repeat() boolean(?=\.class) ==> char,,byte,,short,,int,,long,,float,,double;;
-               Bit                ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double;;
-               (</tt>\.[\s\*]+)@  ==> $1@,,$1<p>In current implementation,
-     * <tt>byteOrder</tt> argument is not used in any way.
-     *
-     * @,,$1@,,... */
+               Bit                ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double */
 
     /**
      * Equivalent to <tt>(BitArray){@link #asArray
@@ -1101,9 +1097,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * Equivalent to <tt>(ByteArray){@link #asArray
      * asArray(filePath, byte.class, filePosition, fileAreaSize, byteOrder)}</tt>.
      *
-     * <p>In current implementation,
-     * <tt>byteOrder</tt> argument is not used in any way.
-     *
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
@@ -1113,9 +1106,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
      * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
-     * <p>In current implementation,
-     * <tt>byteOrder</tt> argument is not used in any way.
-     *
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1133,9 +1123,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * Equivalent to <tt>(UpdatableByteArray){@link #asUpdatableArray
      * asUpdatableArray(filePath, byte.class, filePosition, fileAreaSize, byteOrder)}</tt>.
      *
-     * <p>In current implementation,
-     * <tt>byteOrder</tt> argument is not used in any way.
-     *
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
@@ -1149,9 +1136,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
      * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
-     * <p>In current implementation,
-     * <tt>byteOrder</tt> argument is not used in any way.
-     *
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1621,42 +1605,50 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         DataStorage storage;
         if (elementType == boolean.class) {
             storage = new MappedDataStorages.MappedBitStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferBitArray result = new UpdatableBufferBitArray(storage, length, length, 0L, true);
+            UpdatableBufferBitArray result = new UpdatableBufferBitArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == char.class) {
             storage = new MappedDataStorages.MappedCharStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferCharArray result = new UpdatableBufferCharArray(storage, length, length, 0L, true);
+            UpdatableBufferCharArray result = new UpdatableBufferCharArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == byte.class) {
             storage = new MappedDataStorages.MappedByteStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferByteArray result = new UpdatableBufferByteArray(storage, length, length, 0L, true);
+            UpdatableBufferByteArray result = new UpdatableBufferByteArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == short.class) {
             storage = new MappedDataStorages.MappedShortStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferShortArray result = new UpdatableBufferShortArray(storage, length, length, 0L, true);
+            UpdatableBufferShortArray result = new UpdatableBufferShortArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == int.class) {
             storage = new MappedDataStorages.MappedIntStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferIntArray result = new UpdatableBufferIntArray(storage, length, length, 0L, true);
+            UpdatableBufferIntArray result = new UpdatableBufferIntArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == long.class) {
             storage = new MappedDataStorages.MappedLongStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferLongArray result = new UpdatableBufferLongArray(storage, length, length, 0L, true);
+            UpdatableBufferLongArray result = new UpdatableBufferLongArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == float.class) {
             storage = new MappedDataStorages.MappedFloatStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(storage, length, length, 0L, true);
+            UpdatableBufferFloatArray result = new UpdatableBufferFloatArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else if (elementType == double.class) {
             storage = new MappedDataStorages.MappedDoubleStorage(getMappingSettings((PArray) array, true));
-            UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(storage, length, length, 0L, true);
+            UpdatableBufferDoubleArray result = new UpdatableBufferDoubleArray(
+                    storage, length, length, 0L, true);
             BufferArraysImpl.forgetOnDeallocation(result);
             return result;
         } else {
