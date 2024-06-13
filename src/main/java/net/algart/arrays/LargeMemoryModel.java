@@ -67,11 +67,11 @@ import java.util.logging.Logger;
  * created by {@link CombinedMemoryModel}.</p>
  *
  * <p>The maximal theoretical limit for length and capacity of AlgART arrays,
- * supported by this memory model, is <tt>2<sup>63</sup>-64</tt> for bit arrays and
- * <tt>2<sup>63</sup>/<i>size</i>-1</tt> for all other element types,
- * where <tt><i>size</i></tt> is <tt>1,2,2,4,8,4,8</tt> for element types
- * <tt>byte</tt>, <tt>char</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
- * <tt>float</tt>, <tt>double</tt> correspondingly.</p>
+ * supported by this memory model, is <code>2<sup>63</sup>-64</code> for bit arrays and
+ * <code>2<sup>63</sup>/<i>size</i>-1</code> for all other element types,
+ * where <code><i>size</i></code> is <code>1,2,2,4,8,4,8</code> for element types
+ * <code>byte</code>, <code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+ * <code>float</code>, <code>double</code> correspondingly.</p>
  *
  * <p>Arrays, created by this memory model, never implement {@link DirectAccessible} interface.</p>
  *
@@ -98,8 +98,8 @@ import java.util.logging.Logger;
  * always uses the same data file, even after resizing. Increasing the array length, when necessary,
  * leads to increasing the underlying data file length ({@link DataFile#length(long)} method).
  * (Please compare: resizing arrays, created by {@link SimpleMemoryModel} / {@link BufferMemoryModel},
- * can lead to reallocation of the Java array / <tt>ByteBuffer</tt> and copying elements to
- * new array / <tt>ByteBuffer</tt>.)
+ * can lead to reallocation of the Java array / <code>ByteBuffer</code> and copying elements to
+ * new array / <code>ByteBuffer</code>.)
  * But the contrary assertion <i>is not true</i>: reducing the array size never leads to reducing
  * the data file length. In other words, <i>the data file length only increases, but never decreases</i>.
  *
@@ -161,11 +161,11 @@ import java.util.logging.Logger;
  * for all active mappings in the data file.</li>
  * </ul>
  *
- * <p>This class has the generic argument <tt>P</tt>, that describes <i>data file paths</i>
+ * <p>This class has the generic argument <code>P</code>, that describes <i>data file paths</i>
  * in the {@link DataFileModel data file model} used by this memory model.
  * The {@link #getInstance()} factory method always returns a file-oriented instance, where
- * <tt>P</tt> is <tt>java.io.File</tt>. But the {@link #getInstance(DataFileModel)} factory method
- * allows to create a memory model for any generic type <tt>P</tt>.</p>
+ * <code>P</code> is <code>java.io.File</code>. But the {@link #getInstance(DataFileModel)} factory method
+ * allows to create a memory model for any generic type <code>P</code>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of its instance returned by {@link #getInstance()}
@@ -262,11 +262,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * from the system property "net.algart.arrays.LargeMemoryModel.dataFileModel".
      * This property must contain the full name of the Java class implementing
      * {@link MemoryModel} interface. The class must have a public constructor
-     * without arguments or, as a variant, static <tt>getInstance()</tt> method
+     * without arguments or, as a variant, static <code>getInstance()</code> method
      * without arguments returning an instance of this memory model.
      * Moreover, the class of data file paths, used by this model
-     * ({@link DataFileModel#pathClass()}), must be <tt>java.io.File</tt>.
-     * This constructor or <tt>getInstance()</tt> method will be used for creating the data model instance.
+     * ({@link DataFileModel#pathClass()}), must be <code>java.io.File</code>.
+     * This constructor or <code>getInstance()</code> method will be used for creating the data model instance.
      *
      * <p>If there is not such system property, or if some of described conditions
      * is not fulfilled, the {@link DefaultDataFileModel} will be used as the data file model.
@@ -403,11 +403,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns <tt>true</tt> if the passed array was created by some instance of this memory model.
-     * Returns <tt>false</tt> if the passed array is <tt>null</tt> or an AlgART array created by another memory model.
+     * Returns <code>true</code> if the passed array was created by some instance of this memory model.
+     * Returns <code>false</code> if the passed array is {@code null}
+     * or an AlgART array created by another memory model.
      *
-     * @param array the checked array  (can be <tt>null</tt>, than the method returns <tt>false</tt>).
-     * @return <tt>true</tt> if this array is a large array created by a large memory model.
+     * @param array the checked array  (can be {@code null}, than the method returns <code>false</code>).
+     * @return <code>true</code> if this array is a large array created by a large memory model.
      */
     public static boolean isLargeArray(Array array) {
         return array instanceof AbstractBufferArray
@@ -415,24 +416,24 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns <tt>true</tt> is the passed array is temporary, that is if the corresponded
+     * Returns <code>true</code> is the passed array is temporary, that is if the corresponded
      * {@link DataFile data file} storing all its elements will be automatically deleted
      * when this AlgART array and all other arrays, sharing the same data (as {@link Array#subArray(long, long)
      * subarrays}), will become unreachable and will be finalized.
      *
-     * <p>Usually this flag is <tt>true</tt>, if the array was created in the normal way via
+     * <p>Usually this flag is <code>true</code>, if the array was created in the normal way via
      * {@link #newArray(Class, long)}
-     * and similar methods, and <tt>false</tt>, it the arrays was created as a view of some external
+     * and similar methods, and <code>false</code>, it the arrays was created as a view of some external
      * file by {@link #asArray asArray} or {@link #asUpdatableArray asUpdatableArray} methods.
      * However, you may change this flag via {@link #setTemporary(Array, boolean)} method.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
+     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return <tt>true</tt> if the corresponded data file is temporary and should be automatically deleted.
-     * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
+     * @return <code>true</code> if the corresponded data file is temporary and should be automatically deleted.
+     * @throws NullPointerException     if <code>largeArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>largeArray</code> is not large array
      *                                  (i.e. is not create by a large memory model).
      */
     public static boolean isTemporary(Array largeArray) {
@@ -446,15 +447,15 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     /**
      * Changes temporary status, returned by {@link #isTemporary(Array)} method.
      *
-     * <p>When <tt>value=false</tt>, this method allows to prevent from deletion of the data file
+     * <p>When <code>value=false</code>, this method allows to prevent from deletion of the data file
      * containing results of some algorithm,
      * which created an array with usual {@link #newArray(Class, long)} or similar method.
      * In this case, please not forget to call
-     * <tt>largeArray.{@link Array#flushResources(ArrayContext) flushResources}(context)</tt>
+     * <code>largeArray.{@link Array#flushResources(ArrayContext) flushResources}(context)</code>
      * after completion of filling this array;
      * in other case, some array elements can be lost while further garbage collection or JVM termination.
      *
-     * <p>When <tt>value=true</tt>, this method allows to safely delete the external data file,
+     * <p>When <code>value=true</code>, this method allows to safely delete the external data file,
      * mapped to an AlgART array via {@link #asArray asArray} or
      * {@link #asUpdatableArray asUpdatableArray} methods,
      * when the last mapping will be successfully closed.
@@ -462,12 +463,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * <p>This method also sets the temporary flag for <i>all</i> arrays, that share data with this one.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray}
-     * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
+     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @param value      new temporary status for this array.
-     * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
+     * @throws NullPointerException     if <code>largeArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>largeArray</code> is not large array
      *                                  (i.e. is not create by a large memory model).
      */
     public static void setTemporary(Array largeArray, boolean value) {
@@ -483,12 +484,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * storing all elements of the passed AlgART array.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
+     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @return the data file model used in this array.
-     * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
+     * @throws NullPointerException     if <code>largeArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>largeArray</code> is not large array
      *                                  (i.e. is not create by a large memory model).
      */
     public static DataFileModel<?> getDataFileModel(Array largeArray) {
@@ -517,23 +518,23 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * via {@link #asArray asArray} or {@link #asUpdatableArray asUpdatableArray} methods.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
+     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
      *
      * <p>The passed argument <i>may</i> be created by another instance of the large memory model
      * than this one. But the {@link #getDataFileModel(Array) data file model of that memory model},
      * which was used for creating the passed array, must use the same class (or an inheritor)
      * for data file paths (see {@link DataFileModel#pathClass()}),
-     * as the data file model of this large memory model. In other case, <tt>ClassCastException</tt>
+     * as the data file model of this large memory model. In other case, <code>ClassCastException</code>
      * will be thrown.
      *
      * @param largeArray the AlgART array.
      * @return the data file model used in this array.
-     * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
+     * @throws NullPointerException     if <code>largeArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>largeArray</code> is not large array
      *                                  (i.e. is not created by a large memory model).
-     * @throws ClassCastException       if <tt>largeArray</tt> is created by the large memory model,
+     * @throws ClassCastException       if <code>largeArray</code> is created by the large memory model,
      *                                  based on illegal data file model (incompatible with the required
-     *                                  <tt>P</tt> type of data file paths).
+     *                                  <code>P</code> type of data file paths).
      */
     public P getDataFilePath(Array largeArray) {
         Objects.requireNonNull(largeArray, "Null largeArray argument");
@@ -547,15 +548,15 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     /**
      * Returns this memory model, cast to the specified generic type of the data file paths,
-     * or throws <tt>ClassCastException</tt> if the current type
-     * <tt>{@link #getDataFileModel() getDataFileModel()}.{@link DataFileModel#pathClass() pathClass()}</tt>
-     * cannot be cast to the passed type <tt>pathClass</tt>.
+     * or throws <code>ClassCastException</code> if the current type
+     * <code>{@link #getDataFileModel() getDataFileModel()}.{@link DataFileModel#pathClass() pathClass()}</code>
+     * cannot be cast to the passed type <code>pathClass</code>.
      * This method always returns the reference to this instance
      * and is compiled without "unchecked cast" warning.
      *
      * @param pathClass the type of the data file paths in the returned memory model.
      * @return this memory model, cast to the required type of the data file paths.
-     * @throws NullPointerException if the argument is <tt>null</tt>.
+     * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the current type of the data file paths cannot be cast to the required type.
      */
     public <U> LargeMemoryModel<U> cast(Class<U> pathClass) {
@@ -569,7 +570,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns <tt>true</tt> if the passed large array was created by
+     * Returns <code>true</code> if the passed large array was created by
      * {@link #asArray(Object, Class, long, long, ByteOrder)} method
      * or one of its versions for concrete element types
      * ({@link #asBitArray(Object, long, long, ByteOrder)},
@@ -577,7 +578,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * or if the passed argument is a view of such an array.
      *
      * <p>This method allows to check whether the original array, reflecting some external data file,
-     * was created immutable. If (and only if) this method returns <tt>true</tt>,
+     * was created immutable. If (and only if) this method returns <code>true</code>,
      * you can be sure that this array and, moreover, <i>all</i> AlgART arrays,
      * possibly sharing the data with this one, are {@link Array#isImmutable() immutable}.
      *
@@ -589,12 +590,12 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * are immutable.)
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <tt>true</tt>. In other case, <tt>IllegalArgumentException</tt> will be thrown.
+     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
-     * @return <tt>true</tt> if this array and any other arrays, sharing data with it, are immutable.
-     * @throws NullPointerException     if <tt>largeArray</tt> is <tt>null</tt>.
-     * @throws IllegalArgumentException if <tt>largeArray</tt> is not large array
+     * @return <code>true</code> if this array and any other arrays, sharing data with it, are immutable.
+     * @throws NullPointerException     if <code>largeArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>largeArray</code> is not large array
      *                                  (i.e. is not created by a large memory model).
      */
     public static boolean isCreatedReadOnly(Array largeArray) {
@@ -606,60 +607,61 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     }
 
     /**
-     * The special value for <tt>fileAreaSize</tt> argument in {@link #asArray asArray}
+     * The special value for <code>fileAreaSize</code> argument in {@link #asArray asArray}
      * and {@link #asUpdatableArray asUpdatableArray}
      * methods, that means the region from the specified position to the file end.
      * Please note that this value is not applicable for {@link #asUpdatableArray asUpdatableArray}
-     * method when its <tt>truncate</tt> argument is <tt>true</tt> or if the current file length
-     * is less than <tt>filePosition</tt> argument: in these cases, <tt>ALL_FILE</tt> value is equivalent
-     * to <tt>0</tt>.
+     * method when its <code>truncate</code> argument is <code>true</code> or if the current file length
+     * is less than <code>filePosition</code> argument: in these cases, <code>ALL_FILE</code> value is equivalent
+     * to <code>0</code>.
      */
     public static final long ALL_FILE = -1;
 
     /**
      * Returns an {@link Array#isImmutable() immutable} AlgART array with specified element type,
      * backed by the content of a region of the {@link DataFile data file} with specified name.
-     * To access the file, this method will convert the <tt>filePath</tt> to {@link DataFile} instance
-     * by <tt>{@link DataFileModel#getDataFile dataFileModel.getDataFile(filePath,byteOrder)}</tt> call,
-     * where <tt>dataFileModel</tt> is the {@link #getDataFileModel() current data file model}
+     * To access the file, this method will convert the <code>filePath</code> to {@link DataFile} instance
+     * by <code>{@link DataFileModel#getDataFile dataFileModel.getDataFile(filePath,byteOrder)}</code> call,
+     * where <code>dataFileModel</code> is the {@link #getDataFileModel() current data file model}
      * used by this memory model instance.
      *
-     * <p>The array element <tt>#0</tt> will correspond to the <i>byte</i> <tt>#filePosition</tt>
-     * of the file. So, for bit array, the bit <tt>#0</tt> of the resulting array will be the low
-     * bit of the byte <tt>value</tt> at the specified position (<tt>value&amp;0x1</tt>);
-     * for <tt>int</tt> array, the <tt>int</tt> element <tt>#0</tt> will occupy
-     * the bytes <tt>#filePosition..#filePosition+3</tt>; etc.
+     * <p>The array element <code>#0</code> will correspond to the <i>byte</i> <code>#filePosition</code>
+     * of the file. So, for bit array, the bit <code>#0</code> of the resulting array will be the low
+     * bit of the byte <code>value</code> at the specified position (<code>value&amp;0x1</code>);
+     * for <code>int</code> array, the <code>int</code> element <code>#0</code> will occupy
+     * the bytes <code>#filePosition..#filePosition+3</code>; etc.
      *
-     * <p>The length of the returned array will be equal to <tt>fileAreaSize/bytesPerElement</tt>,
-     * where <tt>bytesPerElement</tt> is 2, 1, 2, 4, 8, 4, 8 for array of <tt>char</tt>,
-     * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>, <tt>float</tt>, <tt>double</tt>
+     * <p>The length of the returned array will be equal to <code>fileAreaSize/bytesPerElement</code>,
+     * where <code>bytesPerElement</code> is 2, 1, 2, 4, 8, 4, 8 for array of <code>char</code>,
+     * <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code>
      * correspondingly. For a case of bit array, the length of the returned array will be equal
-     * to <tt>(fileAreaSize/8)*64</tt>. So, all array content never exceeds the specified range
-     * <tt>filePosition..filePosition+fileAreaSize-1</tt>, but several bytes at the end of this range
+     * to <code>(fileAreaSize/8)*64</code>. So, all array content never exceeds the specified range
+     * <code>filePosition..filePosition+fileAreaSize-1</code>, but several bytes at the end of this range
      * may be unused.
      *
-     * <p>If the end of specified region, <tt>filePosition+fileAreaSize</tt>,
-     * exceeds the current file length, the <tt>IndexOutOfBoundsException</tt> is thrown.
+     * <p>If the end of specified region, <code>filePosition+fileAreaSize</code>,
+     * exceeds the current file length, the <code>IndexOutOfBoundsException</code> is thrown.
      *
-     * <p>The <tt>fileAreaSize</tt> is equal to the special value {@link #ALL_FILE}, then
-     * it is automatically replaced with <tt>fileLength-filePosition</tt>,
-     * where <tt>fileLength</tt> is the current file length in bytes.
-     * So, you may pass <tt>0</tt> as <tt>filePosition</tt> and {@link #ALL_FILE} value as
-     * <tt>fileAreaSize</tt> to view all the file as an AlgART array.
+     * <p>The <code>fileAreaSize</code> is equal to the special value {@link #ALL_FILE}, then
+     * it is automatically replaced with <code>fileLength-filePosition</code>,
+     * where <code>fileLength</code> is the current file length in bytes.
+     * So, you may pass <code>0</code> as <code>filePosition</code> and {@link #ALL_FILE} value as
+     * <code>fileAreaSize</code> to view all the file as an AlgART array.
      *
-     * <p>In all cases besides an array of <tt>bytes</tt>,
+     * <p>In all cases besides an array of <code>bytes</code>,
      * the order of bytes in every array element, placed in the file, or in some group of elements
-     * (probably 64) in a case of bit array, is specified by <tt>byteOrder</tt> argument.
+     * (probably 64) in a case of bit array, is specified by <code>byteOrder</code> argument.
      * However, for bit array, the order of bits inside every byte is always "little endian":
-     * the element <tt>#k</tt> in the returned bit array corresponds to the bit
-     * <tt>byteValue&amp;(1&lt;&lt;(k%8))</tt>, where <tt>byteValue</tt> is a byte at position
-     * depending on <tt>byteOrder</tt>.
+     * the element <code>#k</code> in the returned bit array corresponds to the bit
+     * <code>byteValue&amp;(1&lt;&lt;(k%8))</code>, where <code>byteValue</code> is a byte at position
+     * depending on <code>byteOrder</code>.
      *
      * <p>This method opens the data file in read-only mode
      * by {@link DataFile#open(boolean) DataFile.open(true)} method.
      *
-     * <p>If the data file with the specified path <tt>filePath</tt> does not exist yet,
-     * <tt>FileNotFoundException</tt> is thrown.
+     * <p>If the data file with the specified path <code>filePath</code> does not exist yet,
+     * <code>FileNotFoundException</code> is thrown.
      *
      * <p>After calling this method, you should not operate with this file in another ways
      * than using returned AlgART array, else the results ot such operations will be unspecified.
@@ -674,12 +676,13 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException               if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                   problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                   will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException      if <tt>filePath</tt>, <tt>elementType</tt> or <tt>byteOrder</tt> argument
-     *                                   is <tt>null</tt>.
-     * @throws IllegalArgumentException  if <tt>filePosition</tt> is negative or
-     *                                   if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE}.
+     *                                   problems while further accesses to returned array,
+     *                                   <code>java.io.IOError</code>
+     *                                   will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException      if <code>filePath</code>, <code>elementType</code> or
+     *                                   <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>filePosition</code> is negative or
+     *                                   if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE}.
      * @throws IndexOutOfBoundsException if the specified region exceeds the current file length.
      * @see #asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
      * @see #asBitArray(Object, long, long, ByteOrder)
@@ -787,9 +790,9 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
     /**
      * Returns an {@link Array#isUnresizable() unresizable} AlgART array with specified element type,
      * backed by the content of a region of the {@link DataFile data file} with specified name.
-     * To access the file, this method will convert the <tt>filePath</tt> to {@link DataFile} instance
-     * by <tt>{@link DataFileModel#getDataFile dataFileModel.getDataFile(filePath,byteOrder)}</tt> call,
-     * where <tt>dataFileModel</tt> is the {@link #getDataFileModel() current data file model}
+     * To access the file, this method will convert the <code>filePath</code> to {@link DataFile} instance
+     * by <code>{@link DataFileModel#getDataFile dataFileModel.getDataFile(filePath,byteOrder)}</code> call,
+     * where <code>dataFileModel</code> is the {@link #getDataFileModel() current data file model}
      * used by this memory model instance.
      *
      * <p>The changes performed in the returned array will be reflected in the specified data file.
@@ -797,50 +800,51 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * {@link Array#flushResources(ArrayContext) Array.flushResources} or
      * {@link Array#freeResources(ArrayContext) Array.freeResources} method.
      *
-     * <p>The array element <tt>#0</tt> will correspond to the <i>byte</i> <tt>#filePosition</tt>
-     * of the file. So, for bit array, the bit <tt>#0</tt> of the resulting array will be the low
-     * bit of the byte <tt>value</tt> at the specified position (<tt>value&amp;0x1</tt>);
-     * for <tt>int</tt> array, the <tt>int</tt> element <tt>#0</tt> will occupy
-     * the bytes <tt>#filePosition..#filePosition+3</tt>; etc.
+     * <p>The array element <code>#0</code> will correspond to the <i>byte</i> <code>#filePosition</code>
+     * of the file. So, for bit array, the bit <code>#0</code> of the resulting array will be the low
+     * bit of the byte <code>value</code> at the specified position (<code>value&amp;0x1</code>);
+     * for <code>int</code> array, the <code>int</code> element <code>#0</code> will occupy
+     * the bytes <code>#filePosition..#filePosition+3</code>; etc.
      *
-     * <p>The length of the returned array will be equal to <tt>fileAreaSize/bytesPerElement</tt>,
-     * where <tt>bytesPerElement</tt> is 2, 1, 2, 4, 8, 4, 8 for array of <tt>char</tt>,
-     * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>, <tt>float</tt>, <tt>double</tt>
+     * <p>The length of the returned array will be equal to <code>fileAreaSize/bytesPerElement</code>,
+     * where <code>bytesPerElement</code> is 2, 1, 2, 4, 8, 4, 8 for array of <code>char</code>,
+     * <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+     * <code>float</code>, <code>double</code>
      * correspondingly. For a case of bit array, the length of the returned array will be equal
-     * to <tt>(fileAreaSize/8)*64</tt>. So, all array content never exceeds the specified range
-     * <tt>filePosition..filePosition+fileAreaSize-1</tt>, but several bytes at the end of this range
+     * to <code>(fileAreaSize/8)*64</code>. So, all array content never exceeds the specified range
+     * <code>filePosition..filePosition+fileAreaSize-1</code>, but several bytes at the end of this range
      * may be unused.
      *
-     * <p>If the end of specified region (<tt>filePosition+fileAreaSize</tt>)
-     * exceeds the current file length, or if the <tt>truncate</tt> argument is <tt>true</tt>,
-     * the file length is automatically set to the <tt>filePosition+fileAreaSize</tt> bytes.
+     * <p>If the end of specified region (<code>filePosition+fileAreaSize</code>)
+     * exceeds the current file length, or if the <code>truncate</code> argument is <code>true</code>,
+     * the file length is automatically set to the <code>filePosition+fileAreaSize</code> bytes.
      *
-     * <p>The <tt>fileAreaSize</tt> is equal to the special value {@link #ALL_FILE}, then
-     * it is automatically replaced with <tt>fileLength-filePosition</tt>,
-     * where <tt>fileLength</tt> is the current file length in bytes.
-     * So, you may pass <tt>0</tt> as <tt>filePosition</tt> and {@link #ALL_FILE} value as
-     * <tt>fileAreaSize</tt> to view all the file as an AlgART array.
-     * In this case, if the current file length is less than <tt>filePosition</tt>
-     * or the <tt>truncate</tt> argument is <tt>true</tt>,
-     * the file length is automatically set to <tt>filePosition</tt>.
+     * <p>The <code>fileAreaSize</code> is equal to the special value {@link #ALL_FILE}, then
+     * it is automatically replaced with <code>fileLength-filePosition</code>,
+     * where <code>fileLength</code> is the current file length in bytes.
+     * So, you may pass <code>0</code> as <code>filePosition</code> and {@link #ALL_FILE} value as
+     * <code>fileAreaSize</code> to view all the file as an AlgART array.
+     * In this case, if the current file length is less than <code>filePosition</code>
+     * or the <code>truncate</code> argument is <code>true</code>,
+     * the file length is automatically set to <code>filePosition</code>.
      *
-     * <p>In all cases besides an array of <tt>bytes</tt>,
+     * <p>In all cases besides an array of <code>bytes</code>,
      * the order of bytes in every array element, placed in the file, or in some group of elements
-     * (probably 64) in a case of bit array, is specified by <tt>byteOrder</tt> argument.
+     * (probably 64) in a case of bit array, is specified by <code>byteOrder</code> argument.
      * However, for bit array, the order of bits inside every byte is always "little endian":
-     * the element <tt>#k</tt> in the returned bit array corresponds to the bit
-     * <tt>byteValue&amp;(1&lt;&lt;(k%8))</tt>, where <tt>byteValue</tt> is a byte at position
-     * depending on <tt>byteOrder</tt>.
+     * the element <code>#k</code> in the returned bit array corresponds to the bit
+     * <code>byteValue&amp;(1&lt;&lt;(k%8))</code>, where <code>byteValue</code> is a byte at position
+     * depending on <code>byteOrder</code>.
      *
      * <p>This method opens the data file in read-write mode
      * by {@link DataFile#open(boolean) DataFile.open(false)} method.
      *
-     * <p>If the data file with the specified path <tt>filePath</tt> does not exist yet,
+     * <p>If the data file with the specified path <code>filePath</code> does not exist yet,
      * this method tries to create it at the specified path (see comments to
      * {@link DataFile#open(boolean)}). In this case, the initial file length is set
-     * to <tt>filePosition+fileAreaSize</tt>, and the initial file content is unspecified.
-     * If <tt>fileAreaSize={@link #ALL_FILE}</tt>, the results will be the same as if
-     * <tt>fileAreaSize=0</tt>.
+     * to <code>filePosition+fileAreaSize</code>, and the initial file content is unspecified.
+     * If <code>fileAreaSize={@link #ALL_FILE}</code>, the results will be the same as if
+     * <code>fileAreaSize=0</code>.
      *
      * <p>After calling this method, you should not operate with this file in another ways
      * than using returned AlgART array, else the results ot such operations will be unspecified.
@@ -853,19 +857,20 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param elementType  the type of array elements.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set to
+     *                     <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt>, <tt>elementType</tt> or <tt>byteOrder</tt> argument
-     *                                  is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative or
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE}.
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code>, <code>elementType</code> or
+     *                                  <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative or
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE}.
      * @see #asArray(Object, Class, long, long, ByteOrder)
      * @see #asUpdatableBitArray(Object, long, long, boolean, ByteOrder)
      * @see #asUpdatableCharArray(Object, long, long, boolean, ByteOrder)
@@ -982,11 +987,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public BitArray asBitArray(
@@ -1005,18 +1010,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableBitArray asUpdatableBitArray(
@@ -1041,11 +1047,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public CharArray asCharArray(
@@ -1064,18 +1070,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableCharArray asUpdatableCharArray(
@@ -1100,11 +1107,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public ByteArray asByteArray(
@@ -1123,18 +1130,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableByteArray asUpdatableByteArray(
@@ -1159,11 +1167,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public ShortArray asShortArray(
@@ -1182,18 +1190,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableShortArray asUpdatableShortArray(
@@ -1218,11 +1227,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public IntArray asIntArray(
@@ -1241,18 +1250,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableIntArray asUpdatableIntArray(
@@ -1277,11 +1287,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public LongArray asLongArray(
@@ -1300,18 +1310,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableLongArray asUpdatableLongArray(
@@ -1336,11 +1347,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public FloatArray asFloatArray(
@@ -1359,18 +1370,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableFloatArray asUpdatableFloatArray(
@@ -1395,11 +1407,11 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public DoubleArray asDoubleArray(
@@ -1418,18 +1430,19 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @param filePath     the name of {@link DataFile data file} that will be viewed as an AlgART array.
      * @param filePosition the starting position of the viewed region in the data file, in bytes.
      * @param fileAreaSize the size of the viewed region in the data file, in bytes.
-     * @param truncate     if <tt>true</tt>, the file length is always set to <tt>filePosition+fileAreaSize</tt>
-     *                     (or to <tt>filePosition</tt> if <tt>fileAreaSize=={@link #ALL_FILE}</tt>);
-     *                     if <tt>false</tt>, the file length is set to this value only if it is greater
+     * @param truncate     if <code>true</code>, the file length is always set
+     *                     to <code>filePosition+fileAreaSize</code>
+     *                     (or to <code>filePosition</code> if <code>fileAreaSize=={@link #ALL_FILE}</code>);
+     *                     if <code>false</code>, the file length is set to this value only if it is greater
      *                     than the current file length.
      * @param byteOrder    the byte order that will be used for accessing the data file.
      * @return a view of the specified region of the data file as an AlgART array.
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
-     *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
-     *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
-     *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
+     *                                  problems while further accesses to returned array, <code>java.io.IOError</code>
+     *                                  will be thrown instead of <code>IOException</code>.)
+     * @throws NullPointerException     if <code>filePath</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>filePosition</code> is negative,
+     *                                  if <code>fileAreaSize</code> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
      */
     public UpdatableDoubleArray asUpdatableDoubleArray(
@@ -1702,7 +1715,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * in any instances of this class (as constructor arguments) since the application start.
      * The data file model is included into this set only
      * if its {@link DataFileModel#isAutoDeletionRequested()}
-     * method returns <tt>true</tt>.
+     * method returns <code>true</code>.
      *
      * <p>If some instance of data file model is absolutely unreachable,
      * because it was utilized by the garbage collector, and
