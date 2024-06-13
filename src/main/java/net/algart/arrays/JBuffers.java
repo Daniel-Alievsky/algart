@@ -28,7 +28,7 @@ import java.nio.*;
 
 /**
  * <p>Some operations for Java NIO buffers manipulation in the same manner as array operations from
- * {@link JArrays} and <tt>java.util.Arrays</tt> classes.</p>
+ * {@link JArrays} and <code>java.util.Arrays</code> classes.</p>
  *
  * <p>This class cannot be instantiated.</p>
  *
@@ -40,83 +40,91 @@ public class JBuffers {
     private static final int ZERO_FILL_BLOCK_LEN = 4 * 1024; // must be 2^k
     private static final boolean OPTIMIZE_BYTE_MIN_MAX_BY_TABLES = false; // antioptimization under Java 1.6+
 
-    private JBuffers() {}
+    private JBuffers() {
+    }
 
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double
      */
+
     /**
-     * Copies <tt>count</tt> byte elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for ByteBuffer.
+     * Copies <code>count</code> byte elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for ByteBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>ByteBuffer</tt>.
+     * @param dest    the destination <code>ByteBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>ByteBuffer</tt>.
+     * @param src     the source <code>ByteBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyByteBuffer(ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyByteBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> byte elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> byte elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyByteBuffer(ByteBuffer, int, ByteBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyByteBuffer(ByteBuffer, int, ByteBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>ByteBuffer</tt>.
+     * @param dest         the destination <code>ByteBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>ByteBuffer</tt>.
+     * @param src          the source <code>ByteBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyByteBuffer(ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyByteBuffer(
+            ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -134,27 +142,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> byte elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> byte elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> byte elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> byte elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>ByteBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>ByteBuffer</tt>.
-     * @param second    the second <tt>ByteBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>ByteBuffer</tt>.
+     * @param first     the first <code>ByteBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>ByteBuffer</code>.
+     * @param second    the second <code>ByteBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>ByteBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapByteBuffer(ByteBuffer first, int firstPos, ByteBuffer second, int secondPos, int count) {
@@ -167,78 +175,85 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Copies <tt>count</tt> char elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for CharBuffer.
+     * Copies <code>count</code> char elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for CharBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>CharBuffer</tt>.
+     * @param dest    the destination <code>CharBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>CharBuffer</tt>.
+     * @param src     the source <code>CharBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyCharBuffer(CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyCharBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> char elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> char elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyCharBuffer(CharBuffer, int, CharBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyCharBuffer(CharBuffer, int, CharBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>CharBuffer</tt>.
+     * @param dest         the destination <code>CharBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>CharBuffer</tt>.
+     * @param src          the source <code>CharBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyCharBuffer(CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyCharBuffer(
+            CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -256,27 +271,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> char elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> char elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> char elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> char elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>CharBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>CharBuffer</tt>.
-     * @param second    the second <tt>CharBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>CharBuffer</tt>.
+     * @param first     the first <code>CharBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>CharBuffer</code>.
+     * @param second    the second <code>CharBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>CharBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapCharBuffer(CharBuffer first, int firstPos, CharBuffer second, int secondPos, int count) {
@@ -289,78 +304,85 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Copies <tt>count</tt> short elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for ShortBuffer.
+     * Copies <code>count</code> short elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for ShortBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>ShortBuffer</tt>.
+     * @param dest    the destination <code>ShortBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>ShortBuffer</tt>.
+     * @param src     the source <code>ShortBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyShortBuffer(ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyShortBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> short elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> short elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyShortBuffer(ShortBuffer, int, ShortBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyShortBuffer(ShortBuffer, int, ShortBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>ShortBuffer</tt>.
+     * @param dest         the destination <code>ShortBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>ShortBuffer</tt>.
+     * @param src          the source <code>ShortBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyShortBuffer(ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyShortBuffer(
+            ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -378,27 +400,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> short elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> short elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> short elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> short elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>ShortBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>ShortBuffer</tt>.
-     * @param second    the second <tt>ShortBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>ShortBuffer</tt>.
+     * @param first     the first <code>ShortBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>ShortBuffer</code>.
+     * @param second    the second <code>ShortBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>ShortBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapShortBuffer(ShortBuffer first, int firstPos, ShortBuffer second, int secondPos, int count) {
@@ -411,78 +433,85 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Copies <tt>count</tt> int elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for IntBuffer.
+     * Copies <code>count</code> int elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for IntBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>IntBuffer</tt>.
+     * @param dest    the destination <code>IntBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>IntBuffer</tt>.
+     * @param src     the source <code>IntBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyIntBuffer(IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyIntBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> int elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> int elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyIntBuffer(IntBuffer, int, IntBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyIntBuffer(IntBuffer, int, IntBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>IntBuffer</tt>.
+     * @param dest         the destination <code>IntBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>IntBuffer</tt>.
+     * @param src          the source <code>IntBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyIntBuffer(IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyIntBuffer(
+            IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -500,27 +529,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> int elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> int elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> int elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> int elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>IntBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>IntBuffer</tt>.
-     * @param second    the second <tt>IntBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>IntBuffer</tt>.
+     * @param first     the first <code>IntBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>IntBuffer</code>.
+     * @param second    the second <code>IntBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>IntBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapIntBuffer(IntBuffer first, int firstPos, IntBuffer second, int secondPos, int count) {
@@ -533,78 +562,85 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Copies <tt>count</tt> long elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for LongBuffer.
+     * Copies <code>count</code> long elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for LongBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>LongBuffer</tt>.
+     * @param dest    the destination <code>LongBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>LongBuffer</tt>.
+     * @param src     the source <code>LongBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyLongBuffer(LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyLongBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> long elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> long elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyLongBuffer(LongBuffer, int, LongBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyLongBuffer(LongBuffer, int, LongBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>LongBuffer</tt>.
+     * @param dest         the destination <code>LongBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>LongBuffer</tt>.
+     * @param src          the source <code>LongBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyLongBuffer(LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyLongBuffer(
+            LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -622,27 +658,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> long elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> long elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> long elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> long elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>LongBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>LongBuffer</tt>.
-     * @param second    the second <tt>LongBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>LongBuffer</tt>.
+     * @param first     the first <code>LongBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>LongBuffer</code>.
+     * @param second    the second <code>LongBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>LongBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapLongBuffer(LongBuffer first, int firstPos, LongBuffer second, int secondPos, int count) {
@@ -655,78 +691,85 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Copies <tt>count</tt> float elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for FloatBuffer.
+     * Copies <code>count</code> float elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for FloatBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>FloatBuffer</tt>.
+     * @param dest    the destination <code>FloatBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>FloatBuffer</tt>.
+     * @param src     the source <code>FloatBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyFloatBuffer(FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyFloatBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> float elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> float elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyFloatBuffer(FloatBuffer, int, FloatBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyFloatBuffer(FloatBuffer, int, FloatBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>FloatBuffer</tt>.
+     * @param dest         the destination <code>FloatBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>FloatBuffer</tt>.
+     * @param src          the source <code>FloatBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyFloatBuffer(FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyFloatBuffer(
+            FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -744,27 +787,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> float elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> float elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> float elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> float elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>FloatBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>FloatBuffer</tt>.
-     * @param second    the second <tt>FloatBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>FloatBuffer</tt>.
+     * @param first     the first <code>FloatBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>FloatBuffer</code>.
+     * @param second    the second <code>FloatBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>FloatBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapFloatBuffer(FloatBuffer first, int firstPos, FloatBuffer second, int secondPos, int count) {
@@ -777,78 +820,85 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Copies <tt>count</tt> double elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index.
-     * It is an analog of standard <tt>System.arraycopy</tt> method for DoubleBuffer.
+     * Copies <code>count</code> double elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index.
+     * It is an analog of standard <code>System.arraycopy</code> method for DoubleBuffer.
      *
-     * <p>This method works correctly even if <tt>src == dest</tt>
+     * <p>This method works correctly even if <code>src == dest</code>
      * and the copied areas overlap,
-     * i.e. if <tt>Math.abs(destPos - srcPos) &lt; count</tt>.
+     * i.e. if <code>Math.abs(destPos - srcPos) &lt; count</code>.
      * More precisely, in this case the copying is performed as if the
-     * elements at positions <tt>srcPos..srcPos+count-1</tt> in <tt>src</tt> buffer
-     * were first copied to a temporary array with <tt>count</tt> elements
+     * elements at positions <code>srcPos..srcPos+count-1</code> in <code>src</code> buffer
+     * were first copied to a temporary array with <code>count</code> elements
      * and then the contents of the temporary array were copied into positions
-     * <tt>destPos..destPos+count-1</tt> in <tt>dest</tt> buffer.
+     * <code>destPos..destPos+count-1</code> in <code>dest</code> buffer.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest    the destination <tt>DoubleBuffer</tt>.
+     * @param dest    the destination <code>DoubleBuffer</code>.
      * @param destPos starting index of element to replace.
-     * @param src     the source <tt>DoubleBuffer</tt>.
+     * @param src     the source <code>DoubleBuffer</code>.
      * @param srcPos  starting index of element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyDoubleBuffer(DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count) {
         if (src == dest && srcPos == destPos && src != null)
             return;
         copyDoubleBuffer(dest, destPos, src, srcPos, count,
-            src == dest && srcPos <= destPos && srcPos + count > destPos);
+                src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
 
     /**
-     * Copies <tt>count</tt> double elements from <tt>src</tt> buffer,
-     * starting from <tt>srcPos</tt> index,
-     * to the <tt>dest</tt> buffer, starting from <tt>destPos</tt> index,
-     * in normal or reverse order depending on <tt>reverseOrder</tt> argument.
+     * Copies <code>count</code> double elements from <code>src</code> buffer,
+     * starting from <code>srcPos</code> index,
+     * to the <code>dest</code> buffer, starting from <code>destPos</code> index,
+     * in normal or reverse order depending on <code>reverseOrder</code> argument.
      *
-     * <p>If <tt>reverseOrder</tt> flag is <tt>false</tt>, this method copies elements in normal order:
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element <tt>#destPos</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+1</tt> of <tt>src</tt> to element <tt>#destPos+1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+2</tt> of <tt>src</tt> to element <tt>#destPos+2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>.
-     * If <tt>reverseOrder</tt> flag is <tt>true</tt>, this method copies elements in reverse order:
-     * element <tt>#srcPos+count-1</tt> of <tt>src</tt> to element  <tt>#destPos+count-1</tt> of <tt>dest</tt>, then
-     * element <tt>#srcPos+count-2</tt> of <tt>src</tt> to element  <tt>#destPos+count-2</tt> of <tt>dest</tt>, ..., then
-     * element <tt>#srcPos</tt> of <tt>src</tt> to element  <tt>#destPos</tt> of <tt>dest</tt>.
-     * Usually, copying in reverse order is slower, but it is necessary if <tt>src</tt>
-     * and <tt>dest</tt> are the same buffer or views or the same data (for example,
+     * <p>If <code>reverseOrder</code> flag is <code>false</code>, this method copies elements in normal order:
+     * element <code>#srcPos</code> of <code>src</code>
+     * to element <code>#destPos</code> of <code>dest</code>, then
+     * element <code>#srcPos+1</code> of <code>src</code>
+     * to element <code>#destPos+1</code> of <code>dest</code>, then
+     * element <code>#srcPos+2</code> of <code>src</code>
+     * to element <code>#destPos+2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>.
+     * If <code>reverseOrder</code> flag is <code>true</code>, this method copies elements in reverse order:
+     * element <code>#srcPos+count-1</code> of <code>src</code>
+     * to element  <code>#destPos+count-1</code> of <code>dest</code>, then
+     * element <code>#srcPos+count-2</code> of <code>src</code>
+     * to element  <code>#destPos+count-2</code> of <code>dest</code>, ..., then
+     * element <code>#srcPos</code> of <code>src</code> to element  <code>#destPos</code> of <code>dest</code>.
+     * Usually, copying in reverse order is slower, but it is necessary if <code>src</code>
+     * and <code>dest</code> are the same buffer or views or the same data (for example,
      * buffers mapped to the same file), the copied areas overlap and
      * destination position is greater than source position.
-     * If <tt>src==dest</tt>, you may use {@link #copyDoubleBuffer(DoubleBuffer, int, DoubleBuffer, int, int)}
+     * If <code>src==dest</code>, you may use {@link #copyDoubleBuffer(DoubleBuffer, int, DoubleBuffer, int, int)}
      * method that chooses the suitable order automatically.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param dest         the destination <tt>DoubleBuffer</tt>.
+     * @param dest         the destination <code>DoubleBuffer</code>.
      * @param destPos      starting index of element to replace.
-     * @param src          the source <tt>DoubleBuffer</tt>.
+     * @param src          the source <code>DoubleBuffer</code>.
      * @param srcPos       starting index of element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
-     * @param reverseOrder if <tt>true</tt>, the elements will be copied in the reverse order.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void copyDoubleBuffer(DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count,
-        boolean reverseOrder)
-    {
+    public static void copyDoubleBuffer(
+            DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count,
+            boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -866,27 +916,27 @@ public class JBuffers {
     }
 
     /**
-     * Swaps <tt>count</tt> double elements in <tt>first</tt> buffer,
-     * starting from <tt>firstPos</tt> index,
-     * with <tt>count</tt> double elements in <tt>second</tt> buffer,
-     * starting from <tt>secondPos</tt> index.
+     * Swaps <code>count</code> double elements in <code>first</code> buffer,
+     * starting from <code>firstPos</code> index,
+     * with <code>count</code> double elements in <code>second</code> buffer,
+     * starting from <code>secondPos</code> index.
      *
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
-     * i.e. if <tt>first==second</tt> and <tt>Math.abs(firstIndex - secondIndex) &lt; count</tt>,
-     * or if <tt>first</tt> and <tt>second</tt> are views of the same data
+     * i.e. if <code>first==second</code> and <code>Math.abs(firstIndex - secondIndex) &lt; count</code>,
+     * or if <code>first</code> and <code>second</code> are views of the same data
      * (for example, buffers mapped to the same file) and the corresponding areas of this data
      * overlap.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffers.
      *
-     * @param first     the first <tt>DoubleBuffer</tt>.
-     * @param firstPos  starting index of element to exchange in the first <tt>DoubleBuffer</tt>.
-     * @param second    the second <tt>DoubleBuffer</tt>.
-     * @param secondPos starting index of element to exchange in the second <tt>DoubleBuffer</tt>.
+     * @param first     the first <code>DoubleBuffer</code>.
+     * @param firstPos  starting index of element to exchange in the first <code>DoubleBuffer</code>.
+     * @param second    the second <code>DoubleBuffer</code>.
+     * @param secondPos starting index of element to exchange in the second <code>DoubleBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>first</tt> or <tt>second</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void swapDoubleBuffer(DoubleBuffer first, int firstPos, DoubleBuffer second, int secondPos, int count) {
@@ -903,21 +953,23 @@ public class JBuffers {
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double
      */
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>ByteBuffer</tt>.
+     * @param dest    the filled <code>ByteBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillByteBuffer(ByteBuffer dest, int destPos, int count, byte value) {
@@ -941,21 +993,23 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>CharBuffer</tt>.
+     * @param dest    the filled <code>CharBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillCharBuffer(CharBuffer dest, int destPos, int count, char value) {
@@ -979,21 +1033,23 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>ShortBuffer</tt>.
+     * @param dest    the filled <code>ShortBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillShortBuffer(ShortBuffer dest, int destPos, int count, short value) {
@@ -1017,21 +1073,23 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>IntBuffer</tt>.
+     * @param dest    the filled <code>IntBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillIntBuffer(IntBuffer dest, int destPos, int count, int value) {
@@ -1055,21 +1113,23 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>LongBuffer</tt>.
+     * @param dest    the filled <code>LongBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillLongBuffer(LongBuffer dest, int destPos, int count, long value) {
@@ -1093,21 +1153,23 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>FloatBuffer</tt>.
+     * @param dest    the filled <code>FloatBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillFloatBuffer(FloatBuffer dest, int destPos, int count, float value) {
@@ -1131,21 +1193,23 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Fills <tt>count</tt> elements in the <tt>dest</tt> buffer, starting from the element <tt>#destPos</tt>,
-     * by the specified value. <i>Be careful:</i> the second <tt>int</tt> argument in this method
+     * Fills <code>count</code> elements in the <code>dest</code> buffer,
+     * starting from the element <code>#destPos</code>,
+     * by the specified value. <i>Be careful:</i> the second <code>int</code> argument in this method
      * is the number of filled element, but not the end filled index
-     * as in <tt>java.util.Arrays.fill</tt> methods.
+     * as in <code>java.util.Arrays.fill</code> methods.
      *
      * <p>This method does not modify <i>limit</i>, <i>position</i> and <i>mark</i> properties
      * of the passed buffer.
      *
-     * @param dest    the filled <tt>DoubleBuffer</tt>.
+     * @param dest    the filled <code>DoubleBuffer</code>.
      * @param destPos starting index of element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
-     * @throws NullPointerException      if <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillDoubleBuffer(DoubleBuffer dest, int destPos, int count, double value) {
@@ -1173,24 +1237,26 @@ public class JBuffers {
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double
      */
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>ByteBuffer</tt>.
+     * @param buffer    the searched <code>ByteBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfByte(ByteBuffer, int, int, byte)
      */
     public static int indexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
@@ -1207,27 +1273,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfByte(ByteBuffer, int, int, byte)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfByte(ByteBuffer, int, int, byte)
      */
     public static int lastIndexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
@@ -1243,24 +1310,26 @@ public class JBuffers {
         return -1;
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>CharBuffer</tt>.
+     * @param buffer    the searched <code>CharBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfChar(CharBuffer, int, int, char)
      */
     public static int indexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
@@ -1277,27 +1346,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfChar(CharBuffer, int, int, char)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfChar(CharBuffer, int, int, char)
      */
     public static int lastIndexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
@@ -1313,24 +1383,26 @@ public class JBuffers {
         return -1;
     }
 
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>ShortBuffer</tt>.
+     * @param buffer    the searched <code>ShortBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfShort(ShortBuffer, int, int, short)
      */
     public static int indexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
@@ -1347,27 +1419,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfShort(ShortBuffer, int, int, short)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfShort(ShortBuffer, int, int, short)
      */
     public static int lastIndexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
@@ -1383,24 +1456,26 @@ public class JBuffers {
         return -1;
     }
 
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>IntBuffer</tt>.
+     * @param buffer    the searched <code>IntBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfInt(IntBuffer, int, int, int)
      */
     public static int indexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
@@ -1417,27 +1492,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfInt(IntBuffer, int, int, int)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfInt(IntBuffer, int, int, int)
      */
     public static int lastIndexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
@@ -1453,24 +1529,26 @@ public class JBuffers {
         return -1;
     }
 
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>LongBuffer</tt>.
+     * @param buffer    the searched <code>LongBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfLong(LongBuffer, int, int, long)
      */
     public static int indexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
@@ -1487,27 +1565,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfLong(LongBuffer, int, int, long)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfLong(LongBuffer, int, int, long)
      */
     public static int lastIndexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
@@ -1523,24 +1602,26 @@ public class JBuffers {
         return -1;
     }
 
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>FloatBuffer</tt>.
+     * @param buffer    the searched <code>FloatBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfFloat(FloatBuffer, int, int, float)
      */
     public static int indexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
@@ -1557,27 +1638,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfFloat(FloatBuffer, int, int, float)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfFloat(FloatBuffer, int, int, float)
      */
     public static int lastIndexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
@@ -1593,24 +1675,26 @@ public class JBuffers {
         return -1;
     }
 
+
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=buffer.limit()</tt> or <tt>lowIndex&gt;=highIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=buffer.limit()</code> or <code>lowIndex&gt;=highIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * @param buffer    the searched <tt>DoubleBuffer</tt>.
+     * @param buffer    the searched <code>DoubleBuffer</code>.
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive);
-     *                  pass <tt>buffer.limit()</tt> to search all remaining elements.
+     *                  pass <code>buffer.limit()</code> to search all remaining elements.
      * @param value     the value to be found.
-     * @return          the index of the first occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the first occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #lastIndexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int indexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
@@ -1627,27 +1711,28 @@ public class JBuffers {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>buffer.get(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such buffer element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>buffer.get(k)==value</code>,
+     * or <code>-1</code> if there is no such buffer element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=buffer.limit()</tt>, the result is the same as if <tt>highIndex==buffer.limit()</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=buffer.limit()</code>, the result
+     * is the same as if <code>highIndex==buffer.limit()</code>.
      *
-     * <p>Note that <tt>lowIndex</tt> and <tt>highIndex</tt> arguments have the same sense as in
+     * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfDouble(DoubleBuffer, int, int, double)} method:
-     * they describes the search index range <tt>lowIndex&lt;=k&lt;highIndex</tt>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param buffer    the searched Java array.
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return          the index of the last occurrence of this value in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this value does not occur
-     *                  or if <tt>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</tt>.
-     * @throws NullPointerException if <tt>buffer</tt> is {@code null}.
+     * @return the index of the last occurrence of this value in range <code>lowIndex..highIndex-1</code>,
+     * or <code>-1</code> if this value does not occur
+     * or if <code>max(lowIndex,0)&gt;=min(highIndex,buffer.limit())</code>.
+     * @throws NullPointerException if <code>buffer</code> is {@code null}.
      * @see #indexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int lastIndexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
@@ -1665,19 +1750,19 @@ public class JBuffers {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     * The byte elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFF)&lt;(b&amp;0xFF)?a:b</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
+     * The byte elements are considered to be unsigned: <code>min(a,b)=(a&amp;0xFF)&lt;(b&amp;0xFF)?a:b</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ByteBuffer</tt>.
+     * @param src     the source <code>ByteBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1686,7 +1771,7 @@ public class JBuffers {
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] = JArrays.MinMaxTables.MIN_TABLE[
-                    ((src.get(srcPos) & 0xFF) << 8) | (dest[destPos] & 0xFF)];
+                        ((src.get(srcPos) & 0xFF) << 8) | (dest[destPos] & 0xFF)];
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -1698,19 +1783,19 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     * The byte elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFF)&lt;(b&amp;0xFF)?a:b</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
+     * The byte elements are considered to be unsigned: <code>min(a,b)=(a&amp;0xFF)&lt;(b&amp;0xFF)?a:b</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ByteBuffer</tt>.
+     * @param src     the source <code>ByteBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1719,7 +1804,7 @@ public class JBuffers {
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] = JArrays.MinMaxTables.MAX_TABLE[
-                    ((src.get(srcPos) & 0xFF) << 8) | (dest[destPos] & 0xFF)];
+                        ((src.get(srcPos) & 0xFF) << 8) | (dest[destPos] & 0xFF)];
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -1733,22 +1818,22 @@ public class JBuffers {
     /*Repeat() short ==> char,,int,,long,,float,,double;;
                Short ==> Char,,Int,,Long,,Float,,Double;;
                (\s*&(?:amp;)?\s*0xFFFF) ==> ,,...;;
-               (The\s+\w+\s+elements.*?<\/tt>\.) ==> ,,...
-     */
+               (The\s+\w+\s+elements.*?<\/code>\.\s*\*) ==> ,,... */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     * The short elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFFFF)&lt;(b&amp;0xFFFF)?a:b</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
+     * The short elements are considered to be unsigned: <code>min(a,b)=(a&amp;0xFFFF)&lt;(b&amp;0xFFFF)?a:b</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ShortBuffer</tt>.
+     * @param src     the source <code>ShortBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1762,19 +1847,19 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     * The short elements are considered to be unsigned: <tt>min(a,b)=(a&amp;0xFFFF)&lt;(b&amp;0xFFFF)?a:b</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
+     * The short elements are considered to be unsigned: <code>min(a,b)=(a&amp;0xFFFF)&lt;(b&amp;0xFFFF)?a:b</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ShortBuffer</tt>.
+     * @param src     the source <code>ShortBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1787,20 +1872,20 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>CharBuffer</tt>.
+     * @param src     the source <code>CharBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1814,19 +1899,18 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>CharBuffer</tt>.
+     * @param src     the source <code>CharBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1839,20 +1923,20 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>IntBuffer</tt>.
+     * @param src     the source <code>IntBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1866,19 +1950,18 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>IntBuffer</tt>.
+     * @param src     the source <code>IntBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1891,20 +1974,20 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>LongBuffer</tt>.
+     * @param src     the source <code>LongBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1918,19 +2001,18 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>LongBuffer</tt>.
+     * @param src     the source <code>LongBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1943,20 +2025,20 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>FloatBuffer</tt>.
+     * @param src     the source <code>FloatBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1970,19 +2052,18 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>FloatBuffer</tt>.
+     * @param src     the source <code>FloatBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -1995,20 +2076,20 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>DoubleBuffer</tt>.
+     * @param src     the source <code>DoubleBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2022,19 +2103,18 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the minimum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the minimum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>DoubleBuffer</tt>.
+     * @param src     the source <code>DoubleBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2051,23 +2131,24 @@ public class JBuffers {
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
                (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF,, ,,...;;
-               (The\s+\w+\s+elements.*?\.) ==> ,,$1,, ,,...
+               (The\s+\w+\s+elements.*?\.\s*\*) ==> ,,$1,, ,,...
      */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFF)</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFF)</code>.
      * The byte elements are considered to be unsigned.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ByteBuffer</tt>.
+     * @param src     the source <code>ByteBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2079,28 +2160,28 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFF)*mult</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFF)*mult</code>.
      * The byte elements are considered to be unsigned.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ByteBuffer</tt>.
+     * @param src     the source <code>ByteBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addByteBufferToArray(double[] dest, int destPos, ByteBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addByteBufferToArray(
+            double[] dest, int destPos, ByteBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2119,21 +2200,21 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>CharBuffer</tt>.
+     * @param src     the source <code>CharBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2145,28 +2226,27 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))*mult</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))*mult</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>CharBuffer</tt>.
+     * @param src     the source <code>CharBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addCharBufferToArray(double[] dest, int destPos, CharBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addCharBufferToArray(
+            double[] dest, int destPos, CharBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2185,21 +2265,22 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFFFF)</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFFFF)</code>.
      * The short elements are considered to be unsigned.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ShortBuffer</tt>.
+     * @param src     the source <code>ShortBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2211,28 +2292,28 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFFFF)*mult</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i)&amp;0xFFFF)*mult</code>.
      * The short elements are considered to be unsigned.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>ShortBuffer</tt>.
+     * @param src     the source <code>ShortBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addShortBufferToArray(double[] dest, int destPos, ShortBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addShortBufferToArray(
+            double[] dest, int destPos, ShortBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2251,21 +2332,21 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>IntBuffer</tt>.
+     * @param src     the source <code>IntBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2277,28 +2358,27 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))*mult</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))*mult</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>IntBuffer</tt>.
+     * @param src     the source <code>IntBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addIntBufferToArray(double[] dest, int destPos, IntBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addIntBufferToArray(
+            double[] dest, int destPos, IntBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2317,21 +2397,21 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>LongBuffer</tt>.
+     * @param src     the source <code>LongBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2343,28 +2423,27 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))*mult</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))*mult</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>LongBuffer</tt>.
+     * @param src     the source <code>LongBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addLongBufferToArray(double[] dest, int destPos, LongBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addLongBufferToArray(
+            double[] dest, int destPos, LongBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2383,21 +2462,21 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>FloatBuffer</tt>.
+     * @param src     the source <code>FloatBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2409,28 +2488,27 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))*mult</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))*mult</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>FloatBuffer</tt>.
+     * @param src     the source <code>FloatBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addFloatBufferToArray(double[] dest, int destPos, FloatBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addFloatBufferToArray(
+            double[] dest, int destPos, FloatBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2449,21 +2527,21 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>DoubleBuffer</tt>.
+     * @param src     the source <code>DoubleBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
@@ -2475,28 +2553,27 @@ public class JBuffers {
     }
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the sum of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * multiplied by <tt>mult</tt> argument,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]+=(src.get(srcPos+i))*mult</tt>.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the sum of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * multiplied by <code>mult</code> argument,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]+=(src.get(srcPos+i))*mult</code>.
      *
      * @param dest    the destination array.
      * @param destPos position of the first replaced element in the destination array.
-     * @param src     the source <tt>DoubleBuffer</tt>.
+     * @param src     the source <code>DoubleBuffer</code>.
      * @param srcPos  position of the first read element in the source buffer.
      * @param count   the number of elements to be replaced (should be &gt;=0).
-     * @param mult    the elements from <tt>src</tt> array are multiplied by this value before adding.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param mult    the elements from <code>src</code> array are multiplied by this value before adding.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limit.
      */
-    public static void addDoubleBufferToArray(double[] dest, int destPos, DoubleBuffer src, int srcPos, int count,
-        double mult)
-    {
+    public static void addDoubleBufferToArray(
+            double[] dest, int destPos, DoubleBuffer src, int srcPos, int count,
+            double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0)
             return;
@@ -2523,37 +2600,38 @@ public class JBuffers {
                BYTE ==> CHAR,,SHORT;;
                (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF;;
                (0\.\.0xFF) ==> $1FF,,$1FF;;
-               (The\s+\w+\s+elements.*?\.) ==> ,,$1
+               (The\s+\w+\s+elements.*?\.\s*\*) ==> ,,$1
      */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
-     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
-     * to <tt>0..0xFF</tt> range before assigning to <tt>dest</tt> elements.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
+     * If <code>truncateOverflows</code> argument is <code>true</code>, the difference is truncated
+     * to <code>0..0xFF</code> range before assigning to <code>dest</code> elements.
      * The byte elements are considered to be unsigned.
      *
      * @param dest              the destination array.
      * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>ByteBuffer</tt>.
+     * @param src               the source <code>ByteBuffer</code>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param truncateOverflows whether the results should be truncated to <code>0..0xFF</code> range.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractByteBufferFromArray(byte[] dest, int destPos, ByteBuffer src, int srcPos, int count,
-        boolean truncateOverflows)
-    {
+    public static void subtractByteBufferFromArray(
+            byte[] dest, int destPos, ByteBuffer src, int srcPos, int count,
+            boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-                int v = ((int)dest[destPos] & 0xFF) - ((int)src.get(srcPos) & 0xFF);
-                dest[destPos] = v < 0 ? 0 : (byte)v;
+                int v = ((int) dest[destPos] & 0xFF) - ((int) src.get(srcPos) & 0xFF);
+                dest[destPos] = v < 0 ? 0 : (byte) v;
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2562,35 +2640,35 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
-     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
-     * to <tt>0..0xFFFF</tt> range before assigning to <tt>dest</tt> elements.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
+     * If <code>truncateOverflows</code> argument is <code>true</code>, the difference is truncated
+     * to <code>0..0xFFFF</code> range before assigning to <code>dest</code> elements.
      *
      * @param dest              the destination array.
      * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>CharBuffer</tt>.
+     * @param src               the source <code>CharBuffer</code>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param truncateOverflows whether the results should be truncated to <code>0..0xFFFF</code> range.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractCharBufferFromArray(char[] dest, int destPos, CharBuffer src, int srcPos, int count,
-        boolean truncateOverflows)
-    {
+    public static void subtractCharBufferFromArray(
+            char[] dest, int destPos, CharBuffer src, int srcPos, int count,
+            boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-                int v = ((int)dest[destPos]) - ((int)src.get(srcPos));
-                dest[destPos] = v < 0 ? 0 : (char)v;
+                int v = ((int) dest[destPos]) - ((int) src.get(srcPos));
+                dest[destPos] = v < 0 ? 0 : (char) v;
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2599,35 +2677,36 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
-     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
-     * to <tt>0..0xFFFF</tt> range before assigning to <tt>dest</tt> elements.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
+     * If <code>truncateOverflows</code> argument is <code>true</code>, the difference is truncated
+     * to <code>0..0xFFFF</code> range before assigning to <code>dest</code> elements.
      * The short elements are considered to be unsigned.
      *
      * @param dest              the destination array.
      * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>ShortBuffer</tt>.
+     * @param src               the source <code>ShortBuffer</code>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @param truncateOverflows whether the results should be truncated to <tt>0..0xFFFF</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param truncateOverflows whether the results should be truncated to <code>0..0xFFFF</code> range.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractShortBufferFromArray(short[] dest, int destPos, ShortBuffer src, int srcPos, int count,
-        boolean truncateOverflows)
-    {
+    public static void subtractShortBufferFromArray(
+            short[] dest, int destPos, ShortBuffer src, int srcPos, int count,
+            boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-                int v = ((int)dest[destPos] & 0xFFFF) - ((int)src.get(srcPos) & 0xFFFF);
-                dest[destPos] = v < 0 ? 0 : (short)v;
+                int v = ((int) dest[destPos] & 0xFFFF) - ((int) src.get(srcPos) & 0xFFFF);
+                dest[destPos] = v < 0 ? 0 : (short) v;
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2638,36 +2717,36 @@ public class JBuffers {
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
-     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
-     * to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range before assigning to <tt>dest</tt> elements.
-     *
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
+     * If <code>truncateOverflows</code> argument is <code>true</code>, the difference is truncated
+     * to <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code> range before assigning to <code>dest</code> elements.
      *
      * @param dest              the destination array.
      * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>IntBuffer</tt>.
+     * @param src               the source <code>IntBuffer</code>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param truncateOverflows whether the results should be truncated to
+     *                          <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code> range.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractIntBufferFromArray(int[] dest, int destPos, IntBuffer src, int srcPos, int count,
-        boolean truncateOverflows)
-    {
+    public static void subtractIntBufferFromArray(
+            int[] dest, int destPos, IntBuffer src, int srcPos, int count,
+            boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-                long v = (long)dest[destPos] - (long)src.get(srcPos);
+                long v = (long) dest[destPos] - (long) src.get(srcPos);
                 dest[destPos] = v < Integer.MIN_VALUE ? Integer.MIN_VALUE :
-                v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
-        }
+                        v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) v;
+            }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] -= src.get(srcPos);
@@ -2678,20 +2757,21 @@ public class JBuffers {
     /*Repeat() long ==> float,,double;;
                Long ==> Float,,Double
      */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
      *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>LongBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>LongBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
@@ -2702,20 +2782,21 @@ public class JBuffers {
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
      *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>FloatBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>FloatBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
@@ -2726,20 +2807,21 @@ public class JBuffers {
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
-     * with the difference of them and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</tt>.
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
+     * with the difference of them and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=dest[destPos+i]-src.get(srcPos+i)</code>.
      *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>DoubleBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>DoubleBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
@@ -2755,233 +2837,236 @@ public class JBuffers {
                Byte ==> Char,,Short,,Long,,Float,,Double;;
                (\s*&\s*0xFF) ==> ,,$1FF,, ,,...;;
                \((long|float|double)\) ==> ,,...;;
-               (\(The\s+\w+\s+elements.*?\.\)) ==> ,,$1,, ,,...
+               (\(The\s+\w+\s+elements.*?\.\)\s*\*) ==> ,,$1,, ,,...
      */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      * (The byte elements are considered to be unsigned.)
      *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>ByteBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>ByteBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfByteArrayAndBuffer(byte[] dest, int destPos, ByteBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfByteArrayAndBuffer(
+            byte[] dest, int destPos, ByteBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             byte v = src.get(srcPos);
             dest[destPos] = (dest[destPos] & 0xFF) >= (v & 0xFF) ?
-                (byte)(dest[destPos] - v) :
-                (byte)(v - dest[destPos]);
+                    (byte) (dest[destPos] - v) :
+                    (byte) (v - dest[destPos]);
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      *
-     *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>CharBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>CharBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfCharArrayAndBuffer(char[] dest, int destPos, CharBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfCharArrayAndBuffer(
+            char[] dest, int destPos, CharBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
             dest[destPos] = (dest[destPos]) >= (v) ?
-                (char)(dest[destPos] - v) :
-                (char)(v - dest[destPos]);
+                    (char) (dest[destPos] - v) :
+                    (char) (v - dest[destPos]);
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      * (The short elements are considered to be unsigned.)
      *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>ShortBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>ShortBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfShortArrayAndBuffer(short[] dest, int destPos, ShortBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfShortArrayAndBuffer(
+            short[] dest, int destPos, ShortBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
             dest[destPos] = (dest[destPos] & 0xFFFF) >= (v & 0xFFFF) ?
-                (short)(dest[destPos] - v) :
-                (short)(v - dest[destPos]);
+                    (short) (dest[destPos] - v) :
+                    (short) (v - dest[destPos]);
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      *
-     *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>LongBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>LongBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfLongArrayAndBuffer(long[] dest, int destPos, LongBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfLongArrayAndBuffer(
+            long[] dest, int destPos, LongBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
             dest[destPos] = (dest[destPos]) >= (v) ?
-                (dest[destPos] - v) :
-                (v - dest[destPos]);
+                     (dest[destPos] - v) :
+                     (v - dest[destPos]);
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      *
-     *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>FloatBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>FloatBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfFloatArrayAndBuffer(float[] dest, int destPos, FloatBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfFloatArrayAndBuffer(
+            float[] dest, int destPos, FloatBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
             dest[destPos] = (dest[destPos]) >= (v) ?
-                (dest[destPos] - v) :
-                (v - dest[destPos]);
+                     (dest[destPos] - v) :
+                     (v - dest[destPos]);
         }
     }
 
+
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</tt>.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src.get(srcPos+i)|</code>.
      *
-     *
-     * @param dest              the destination array.
-     * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>DoubleBuffer</tt>.
-     * @param srcPos            position of the first read element in the source buffer.
-     * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param dest    the destination array.
+     * @param destPos position of the first replaced element in the destination array.
+     * @param src     the source <code>DoubleBuffer</code>.
+     * @param srcPos  position of the first read element in the source buffer.
+     * @param count   the number of elements to be replaced (should be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfDoubleArrayAndBuffer(double[] dest, int destPos, DoubleBuffer src, int srcPos,
-        int count)
-    {
+    public static void absDiffOfDoubleArrayAndBuffer(
+            double[] dest, int destPos, DoubleBuffer src, int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
             dest[destPos] = (dest[destPos]) >= (v) ?
-                (dest[destPos] - v) :
-                (v - dest[destPos]);
+                     (dest[destPos] - v) :
+                     (v - dest[destPos]);
         }
     }
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Replaces <tt>count</tt> elements in <tt>dest</tt> array,
-     * starting from the element <tt>#destPos</tt>,
+     * Replaces <code>count</code> elements in <code>dest</code> array,
+     * starting from the element <code>#destPos</code>,
      * with the absolute value of the difference of them
-     * and corresponding <tt>count</tt> elements in <tt>src</tt> buffer,
-     * starting from the element <tt>#srcPos</tt>:
-     * <tt>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</tt>.
-     * If <tt>truncateOverflows</tt> argument is <tt>true</tt>, the difference is truncated
-     * to <tt>0..Integer.MAX_VALUE</tt> range before assigning to <tt>dest</tt> elements.
+     * and corresponding <code>count</code> elements in <code>src</code> buffer,
+     * starting from the element <code>#srcPos</code>:
+     * <code>dest[destPos+i]=|dest[destPos+i]-src[srcPos+i]|</code>.
+     * If <code>truncateOverflows</code> argument is <code>true</code>, the difference is truncated
+     * to <code>0..Integer.MAX_VALUE</code> range before assigning to <code>dest</code> elements.
      *
      * @param dest              the destination array.
      * @param destPos           position of the first replaced element in the destination array.
-     * @param src               the source <tt>IntBuffer</tt>.
+     * @param src               the source <code>IntBuffer</code>.
      * @param srcPos            position of the first read element in the source buffer.
      * @param count             the number of elements to be replaced (should be &gt;=0).
-     * @param truncateOverflows whether the results should be truncated to <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt> range.
-     * @throws NullPointerException      if either <tt>src</tt> or <tt>dest</tt> is {@code null}.
-     * @throws IllegalArgumentException  if <tt>count</tt> is negative.
+     * @param truncateOverflows whether the results should be truncated to
+     *                          <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code> range.
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void absDiffOfIntArrayAndBuffer(int[] dest, int destPos, IntBuffer src, int srcPos, int count,
-        boolean truncateOverflows)
-    {
+    public static void absDiffOfIntArrayAndBuffer(
+            int[] dest, int destPos, IntBuffer src, int srcPos, int count,
+            boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-                long v = (long)dest[destPos] - (long)src.get(srcPos);
+                long v = (long) dest[destPos] - (long) src.get(srcPos);
                 if (v < 0)
                     v = -v;
-                dest[destPos] = v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int)v;
+                dest[destPos] = v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) v;
             }
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 int v = src.get(srcPos);
                 dest[destPos] = dest[destPos] >= v ?
-                    dest[destPos] - v :
-                    v - dest[destPos];
+                        dest[destPos] - v :
+                        v - dest[destPos];
             }
         }
     }

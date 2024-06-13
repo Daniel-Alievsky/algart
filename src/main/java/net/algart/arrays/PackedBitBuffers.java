@@ -1725,7 +1725,7 @@ public class PackedBitBuffers {
      *
      * <p>Note that <code>lowIndex</code> and <code>highIndex</code> arguments have the same sense as in
      * {@link #indexOfBit(LongBuffer, long, long, boolean)} method:
-     * they describes the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
+     * they describe the search index range <code>lowIndex&lt;=k&lt;highIndex</code>.
      *
      * @param src       the searched packed bit buffer.
      * @param lowIndex  the low index in the array for search (inclusive);
