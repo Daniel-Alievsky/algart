@@ -39,7 +39,7 @@ import java.util.logging.Logger;
 /**
  * <p>The memory model, storing array elements in an external file.</p>
  *
- * <p>The idea of this model is alike mapping files by standard <tt>FileChannel.map</tt> method.
+ * <p>The idea of this model is alike mapping files by standard <code>FileChannel.map</code> method.
  * But this model has two important advantages.</p>
  *
  * <p>First, here is no 32-bit restriction for the number of elements.
@@ -49,17 +49,14 @@ import java.util.logging.Logger;
  *
  * <p>Second, the external files are represented by special abstraction named
  * "Data File Models" ({@link DataFileModel} interface).
- * This "data file" abstraction is much more simple than <tt>RandomAccessFile</tt> and similar classes,
+ * This "data file" abstraction is much more simple than <code>RandomAccessFile</code> and similar classes,
  * usually representing disk files.
  * The are two ready implementations {@link DefaultDataFileModel}
  * and {@link StandardIODataFileModel}, really corresponding to disk files;
  * but it's not a problem to create custom implementation of the data file,
  * that will correspond to almost any type of an external storage.
  * For example, it's possible to create very trivial implementation,
- * that will interpret a usual <tt>byte[]</tt> array or <tt>String</tt> object as a "data file".
- * More useful implementations may provide access, for example, to
- * <tt><a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/awt/image/BufferedImage.html">BufferedImage</a></tt>
- * or another existing storage as to an AlgART array.</p>
+ * that will interpret a usual <code>byte[]</code> array or <code>String</code> object as a "data file".</p>
  *
  * <p>Unlike the {@link SimpleMemoryModel simple memory model}, this model supports
  * primitive element types only:
@@ -866,7 +863,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
      * @throws NullPointerException     if <tt>filePath</tt>, <tt>elementType</tt> or <tt>byteOrder</tt> argument
-     *                                  is <tt>null</tt>.
+     *                                  is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative or
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE}.
      * @see #asArray(Object, Class, long, long, ByteOrder)
@@ -987,7 +984,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1017,7 +1014,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1046,7 +1043,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1076,7 +1073,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1105,7 +1102,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1135,7 +1132,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1164,7 +1161,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1194,7 +1191,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1223,7 +1220,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1253,7 +1250,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1282,7 +1279,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1312,7 +1309,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1341,7 +1338,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1371,7 +1368,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1400,7 +1397,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1430,7 +1427,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @throws IOException              if some I/O error occurred while opening the file. (In a case of any I/O
      *                                  problems while further accesses to returned array, <tt>java.io.IOError</tt>
      *                                  will be thrown instead of <tt>IOException</tt>.)
-     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is <tt>null</tt>.
+     * @throws NullPointerException     if <tt>filePath</tt> or <tt>byteOrder</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>filePosition</tt> is negative,
      *                                  if <tt>fileAreaSize</tt> is negative and not equal to {@link #ALL_FILE},
      *                                  or if the specified region exceeds the current file length.
@@ -1534,7 +1531,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *
      * @param array the source array.
      * @return the lazy copy of the source array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      */
@@ -1594,7 +1591,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      *
      * @param array the source array.
      * @return the lazy unresizable copy of the source array.
-     * @throws NullPointerException            if the argument is <tt>null</tt>.
+     * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
      */

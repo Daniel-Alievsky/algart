@@ -1699,7 +1699,7 @@ public class JArrays {
      *
      * <p>This method is an extended analog of <tt>java.util.Arrays.hashCode</tt> methods,
      * compatible with JRE 1.1 and using more safe algorithm, based on
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/zip/CRC32.html">CRC32</a>.
+     * {@link java.util.zip.CRC32}.</p>
      *
      * @param array     the array whose content-based hash code to compute.
      * @param fromIndex the initial index of the checked fragment, inclusive.

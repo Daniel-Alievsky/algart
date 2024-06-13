@@ -7296,8 +7296,7 @@ public class Arrays {
      * or <code>false</code> in a case of timeout.
      *
      * <p><i>Warning:</i> you must never call this method it there is at least one
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/ref/package-summary.html#reachability">
-     * <i>strongly</i> or <i>softly reachable</i></a> AlgART array instance,
+     * <i>strongly</i> or <i>softly reachable</i> AlgART array instance,
      * that was not released by {@link Array#freeResources(ArrayContext) Array.freeResources} method.
      * If you call this method in such situation, it's possible that the method
      * will wait for the specified timeout and return <code>false</code>.

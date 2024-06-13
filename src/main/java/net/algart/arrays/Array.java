@@ -1002,8 +1002,7 @@ public interface Array {
      * The returned instance implements the same set of interfaces as this array.
      *
      * <p>This method is an analog of the standard Java NIO
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html#duplicate()"
-     * ><code>ByteBuffer.duplicate()</code></a> method. However, unlike <code>ByteBuffer.duplicate()</code>,
+     * {@link java.nio.ByteBuffer#duplicate()} method. However, unlike <code>ByteBuffer.duplicate()</code>,
      * <i>this method is necessary very rarely</i>. Usually, you need another forms
      * of array views: {@link #asImmutable()}, {@link UpdatableArray#asUnresizable()}, etc.
      * The most often usage of this method is finalization

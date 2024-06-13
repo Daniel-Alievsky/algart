@@ -182,9 +182,7 @@ public final class Finalizer {
     /**
      * Schedules running of the given <tt>task</tt> (its <tt>run()</tt> method)
      * at the moment when the <tt>checkedForDeallocation</tt> object will become unreachable
-     * (more precisely,
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/ref/package-summary.html#reachability">phantomly
-     * reachable</a>).
+     * (more precisely, <i>phantom reachable</i>).
      *
      * <p>The first call of this method starts the internal thread in this object.
      * This thread will look, in an infinite loop, for the levels of reachability

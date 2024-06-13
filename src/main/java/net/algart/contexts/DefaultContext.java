@@ -39,7 +39,7 @@ import java.util.Objects;
  * with the argument <tt>useServiceLoader=true</tt>.
  * So, this class can serve requests not only for the standard context listed above,
  * but also for any other contexts, that are specified in
- * <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html"><i>service providers</i></a>
+ * {@link java.util.ServiceLoader service providers}
  * for {@link Context} interface.</p>
  *
  * <p>This class is a good possible superclass for implementation custom behavior of the contexts

@@ -37,7 +37,7 @@ import java.lang.reflect.Method;
  * to {@link #as(Class)} and {@link #is(Class)} methods below.</p>
  *
  * <p>The full set of
- * <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html"><i>service providers</i></a>
+ * {@link java.util.ServiceLoader service providers}
  * for {@link Context} interface, used by these methods, is loaded once
  * when they are needed for these methods for the first time.
  * Though a documented tool for loading service providers was added since Java 1.6,
@@ -89,7 +89,7 @@ public abstract class AbstractContext implements Context {
      * then this method returns the reference to this instance;</li>
      *
      * <li>else, if there is at least one
-     * <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html"><i>service provider</i></a>
+     * {@link java.util.ServiceLoader service providers}
      * for the {@link Context} interface (<i>not</i> for the passed <tt>contextClass</tt>!),
      * listed in <tt>META-INF/services/net.algart.contexts.Context</tt> file,
      * which implements (extends) the required interface (class) <tt>contextClass</tt>,
@@ -142,7 +142,7 @@ public abstract class AbstractContext implements Context {
      * then this method returns <tt>true</tt>;</li>
      *
      * <li>else, if there is at least one
-     * <a href="http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html"><i>service provider</i></a>
+     * {@link java.util.ServiceLoader service providers}
      * for the {@link Context} interface (<i>not</i> for the passed <tt>contextClass</tt>!),
      * listed in <tt>META-INF/services/net.algart.contexts.Context</tt> file,
      * which implements (extends) the required interface (class) <tt>contextClass</tt>,

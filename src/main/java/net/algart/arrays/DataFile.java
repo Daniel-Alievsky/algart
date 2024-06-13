@@ -136,8 +136,7 @@ public interface DataFile {
     /**
      * Maps a region of this data file directly into memory.
      * It is an analog (usually a wrapper) of standard
-     * <a href="http://docs.oracle.com/javase/1.5.0/docs/api/java/nio/channels/FileChannel.html#map%28java.nio.channels.FileChannel.MapMode,%20long,%20long%29">
-     * <tt>FileChannel.map</tt></a> method.
+     * {@link java.nio.channels.FileChannel#map} method.
      * The mapping mode (read-write or read-only) may depend on
      * the argument of the previous call of the {@link #open(boolean)} method.
      *
