@@ -358,8 +358,7 @@ public abstract class Histogram {
      * Creates new histogram, consisting of <i>M</i>=<code>histogramLength</code> empty bars.
      * In other words, all bars <b>b</b>[<i>k</i>]=0 at first; but they can be increased by
      * {@link #include(int)} method.
-     * <p>
-     * <!--Repeat.SectionStart bitLevels_description-->
+     *
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
@@ -400,7 +399,6 @@ public abstract class Histogram {
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
      * will work faster without <code>bitLevelsOfPyramid</code> arguments.
-     * <!--Repeat.SectionEnd bitLevels_description-->
      *
      * <p>The passed <code>bitLevelsOfPyramid</code> argument is cloned by this method:
      * no references to it are maintained by the created object.
@@ -437,10 +435,7 @@ public abstract class Histogram {
      * Creates new histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
      * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]</nobr> at first.
-     * <p>
-     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
-     * histogramLength ==> histogram.length
-     * !! Auto-generated: NOT EDIT !! -->
+     *
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
@@ -481,7 +476,7 @@ public abstract class Histogram {
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
      * will work faster without <code>bitLevelsOfPyramid</code> arguments.
-     * <!--Repeat.IncludeEnd-->
+     *
      * <p>The passed <code>histogram</code> and <code>bitLevelsOfPyramid</code> arguments are cloned by this method:
      * no references to them are maintained by the created object.
      *
@@ -523,8 +518,7 @@ public abstract class Histogram {
      * source array <b>A</b>) will not be able to exceed <code>Integer.MAX_VALUE</code>.
      * If you need to process greater numbers, please use {@link #newLongHistogram(int, int...)} method
      * instead of this one.
-     * <p>
-     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)   !! Auto-generated: NOT EDIT !! -->
+     *
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
@@ -565,7 +559,6 @@ public abstract class Histogram {
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
      * will work faster without <code>bitLevelsOfPyramid</code> arguments.
-     * <!--Repeat.IncludeEnd-->
      *
      * <p>The passed <code>bitLevelsOfPyramid</code> argument is cloned by this method:
      * no references to it are maintained by the created object.
@@ -601,10 +594,7 @@ public abstract class Histogram {
      * source array <b>A</b>) cannot exceed and will not be able to exceed <code>Integer.MAX_VALUE</code>.
      * If you need to process greater numbers, please use {@link #newLongHistogram(long[], int...)} method
      * instead of this one.
-     * <p>
-     * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, bitLevels_description)
-     * histogramLength ==> histogram.length
-     * !! Auto-generated: NOT EDIT !! -->
+     *
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
@@ -645,7 +635,7 @@ public abstract class Histogram {
      * value changes slightly.
      * If the histogram length <i>M</i> is not large, for example, 256 or less, it is possible that this class
      * will work faster without <code>bitLevelsOfPyramid</code> arguments.
-     * <!--Repeat.IncludeEnd-->
+     *
      * <p>The passed <code>histogram</code> and <code>bitLevelsOfPyramid</code> arguments are cloned by this method:
      * no references to them are maintained by the created object.
      *
@@ -2198,9 +2188,8 @@ public abstract class Histogram {
         private LongHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private LongHistogram(
-                long[][] histogram,
-                long total, int[] bitLevels) {
+        private LongHistogram(long[][] histogram,
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -2499,10 +2488,12 @@ public abstract class Histogram {
         }
 
 
+
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
+
 
 
         @Override
@@ -2971,6 +2962,9 @@ public abstract class Histogram {
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
                         + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
+                if (k == 0) {
+                } else {
+                }
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
@@ -3155,9 +3149,8 @@ public abstract class Histogram {
         private Long1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private long shareCount = 1; // the length of the sharing list
 
-        private Long1LevelHistogram(
-                long[][] histogram,
-                long total, int[] bitLevels) {
+        private Long1LevelHistogram(long[][] histogram,
+                                     long total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -3368,10 +3361,12 @@ public abstract class Histogram {
         }
 
 
+
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
+
 
 
         @Override
@@ -3629,6 +3624,9 @@ public abstract class Histogram {
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
                         + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
+                if (k == 0) {
+                } else {
+                }
                 long s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
@@ -3732,7 +3730,7 @@ public abstract class Histogram {
         private int shareCount = 1; // the length of the sharing list
 
         private IntHistogram(int[][] histogram,
-                             int total, int[] bitLevels) {
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4031,10 +4029,12 @@ public abstract class Histogram {
         }
 
 
+
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
+
 
 
         @Override
@@ -4693,9 +4693,8 @@ public abstract class Histogram {
         private Int1LevelHistogram nextSharing = this; // circular list of all objects sharing the same data
         private int shareCount = 1; // the length of the sharing list
 
-        private Int1LevelHistogram(
-                int[][] histogram,
-                int total, int[] bitLevels) {
+        private Int1LevelHistogram(int[][] histogram,
+                                     int total, int[] bitLevels) {
             super(histogram[0].length);
             assert bitLevels != null;
             this.m = bitLevels.length + 1;
@@ -4906,10 +4905,12 @@ public abstract class Histogram {
         }
 
 
+
         @Override
         public long currentIRank() {
             return currentIRanks[0];
         }
+
 
 
         @Override
@@ -5167,6 +5168,9 @@ public abstract class Histogram {
                 throw new AssertionError("Bug in " + this + ": currentIRank = " + currentIRanks[0]
                         + " is out of range 0.." + total);
             for (int k = 0; k < m; k++) {
+                if (k == 0) {
+                } else {
+                }
                 int s;
                 if (currentIRanks[k] != (s = sumOfAndCheck(histogram[k], 0, currentIValue >> bitLevels[k])))
                     throw new AssertionError("Bug in " + this + ": illegal currentIRanks[" + k + "] = "
