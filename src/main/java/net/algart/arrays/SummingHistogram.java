@@ -4557,7 +4557,7 @@ public abstract class SummingHistogram extends Histogram {
     //        \blong\b(?!\stotal\(|\scurrentIRank\(|\sbar\(|\sshareCount\(|\[\]\sbars\(|\srank\)) ==> int;;
     //        Long.MAX_VALUE ==> Integer.MAX_VALUE;;
     //        Long ==> Int;;
-    //        double(?!\)\(rank|\srank|\spreciseValue|\sfrac|\scurrentSum\() ==> long;;
+    //        double(?!\)\s*\(rank|\srank|\spreciseValue|\sfrac|\scurrentSum\() ==> long;;
     //        0\.0 ==> 0   !! Auto-generated: NOT EDIT !! ]]
     static class SummingIntHistogram extends SummingHistogram {
         private final int[][] histogram;
@@ -5215,7 +5215,7 @@ public abstract class SummingHistogram extends Histogram {
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
@@ -5834,7 +5834,7 @@ public abstract class SummingHistogram extends Histogram {
     //        \blong\b(?!\stotal\(|\scurrentIRank\(|\sbar\(|\sshareCount\(|\[\]\sbars\(|\srank\)) ==> int;;
     //        Long.MAX_VALUE ==> Integer.MAX_VALUE;;
     //        Long ==> Int;;
-    //        double(?!\)\(rank|\srank|\spreciseValue|\sfrac|\scurrentSum\() ==> long;;
+    //        double(?!\)\s*\(rank|\srank|\spreciseValue|\sfrac|\scurrentSum\() ==> long;;
     //        0\.0 ==> 0;;
     //        SummingIntHistogram ==> SummingInt1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
@@ -6246,7 +6246,7 @@ public abstract class SummingHistogram extends Histogram {
             if (rank == currentIRanks[0]) {
                 currentValue = currentIValue;
             } else {
-                double frac = (long) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
+                double frac = (double) (rank - currentIRanks[0]) / (long) histogram0[currentIValue];
                 if (DEBUG_MODE) {
                     assert frac >= 0 && frac < 1.0;
                 }
