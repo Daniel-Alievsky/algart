@@ -49,7 +49,7 @@ public class ArrayNewDemo {
         System.out.println(a7);
         MutableArray a8 = MutableArray.newArray(Arrays.BMM, short.class);
         System.out.println(a8);
-        // MutableArray a9 = MutablePArray.newEmpty(String.class);
+//        MutableArray a = MutablePArray.newArray(String.class);
         MutablePArray a9 = MutablePArray.newArray(char.class);
         System.out.println(a9);
         MutablePNumberArray a10 = MutablePNumberArray.newArray(float.class);

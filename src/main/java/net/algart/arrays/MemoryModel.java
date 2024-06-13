@@ -224,7 +224,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newBitArray(long)
-     * @see MutableBitArray#newEmpty(MemoryModel)
+     * @see MutableBitArray#newArray(MemoryModel)
      */
     MutableBitArray newEmptyBitArray();
 
@@ -291,7 +291,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newCharArray(long)
-     * @see MutableCharArray#newEmpty(MemoryModel)
+     * @see MutableCharArray#newArray(MemoryModel)
      */
     MutableCharArray newEmptyCharArray();
 
@@ -358,7 +358,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newByteArray(long)
-     * @see MutableByteArray#newEmpty(MemoryModel)
+     * @see MutableByteArray#newArray(MemoryModel)
      */
     MutableByteArray newEmptyByteArray();
 
@@ -425,7 +425,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newShortArray(long)
-     * @see MutableShortArray#newEmpty(MemoryModel)
+     * @see MutableShortArray#newArray(MemoryModel)
      */
     MutableShortArray newEmptyShortArray();
 
@@ -492,7 +492,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newIntArray(long)
-     * @see MutableIntArray#newEmpty(MemoryModel)
+     * @see MutableIntArray#newArray(MemoryModel)
      */
     MutableIntArray newEmptyIntArray();
 
@@ -559,7 +559,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newLongArray(long)
-     * @see MutableLongArray#newEmpty(MemoryModel)
+     * @see MutableLongArray#newArray(MemoryModel)
      */
     MutableLongArray newEmptyLongArray();
 
@@ -626,7 +626,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newFloatArray(long)
-     * @see MutableFloatArray#newEmpty(MemoryModel)
+     * @see MutableFloatArray#newArray(MemoryModel)
      */
     MutableFloatArray newEmptyFloatArray();
 
@@ -693,7 +693,7 @@ public interface MemoryModel {
      *                                         is not supported by this memory model.
      * @see #isElementTypeSupported(Class)
      * @see #newDoubleArray(long)
-     * @see MutableDoubleArray#newEmpty(MemoryModel)
+     * @see MutableDoubleArray#newArray(MemoryModel)
      */
     MutableDoubleArray newEmptyDoubleArray();
 

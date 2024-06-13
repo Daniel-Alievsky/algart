@@ -37,7 +37,7 @@
     <target name="javadoc">
         <delete dir="../docs"/>
         <javadoc destdir="../docs/api/" author="true" version="true" charset="UTF-8" Locale="en_US"
-                 additionalparam="-notimestamp -Xmaxwarns 20000 -Xmaxerrs 20000 -Xdoclint:all,-missing,-html --allow-script-in-comments">
+                 additionalparam="-notimestamp -Xmaxwarns 10000 -Xmaxerrs 10000 -Xdoclint:all,-missing,-html --allow-script-in-comments">
             <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="../src/main/java/">
                 <include name="net/algart/**"/>
