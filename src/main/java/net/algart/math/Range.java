@@ -28,13 +28,13 @@ import java.util.Objects;
 
 /**
  * <p>Numeric inclusive real range:
- * a set of <tt>double</tt> numbers <tt>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</tt>.
+ * a set of <code>double</code> numbers <code>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</code>.
  * An advanced analog of
  * <a href="http://commons.apache.org/lang/api-2.4/org/apache/commons/lang/math/DoubleRange.html"
  * id="dummy">org.apache.commons.lang.math.DoubleRange</a>.
  *
  * <p>The minimum number ({@link #min()}) is never greater than the maximum number ({@link #max()}),
- * and both numbers are never <tt>Double.NaN</tt>.
+ * and both numbers are never <code>Double.NaN</code>.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -53,14 +53,14 @@ public final class Range {
 
     /**
      * Returns an instance of this class describing the range
-     * <tt>min&lt;=<i>x</i>&lt;=max</tt>.
-     * The <tt>min</tt> value must not be greater than <tt>max</tt>,
-     * and both arguments must not be <tt>Double.NaN</tt>.
+     * <code>min&lt;=<i>x</i>&lt;=max</code>.
+     * The <code>min</code> value must not be greater than <code>max</code>,
+     * and both arguments must not be <code>Double.NaN</code>.
      *
      * @param min the minimum number in the range, inclusive.
      * @param max the maximum number in the range, inclusive.
      * @return    the new range.
-     * @throws IllegalArgumentException if <tt>min &gt; max</tt> or one of the arguments is <tt>Double.NaN</tt>.
+     * @throws IllegalArgumentException if <code>min &gt; max</code> or one of the arguments is <code>Double.NaN</code>.
      */
     public static Range valueOf(double min, double max) {
         if (Double.isNaN(min)) {
@@ -77,9 +77,9 @@ public final class Range {
 
     /**
      * Returns an instance of this class describing the same range as the given integer range.
-     * The <tt>long</tt> boundaries of the passed integer range are converted
-     * to <tt>double</tt> boundaries {@link #min()} and {@link #max()} of the returned range by standard
-     * Java typecast <tt>(double)longValue</tt>.
+     * The <code>long</code> boundaries of the passed integer range are converted
+     * to <code>double</code> boundaries {@link #min()} and {@link #max()} of the returned range by standard
+     * Java typecast <code>(double)longValue</code>.
      *
      * @param iRange the integer range.
      * @return       the equivalent real range.
@@ -109,16 +109,16 @@ public final class Range {
     }
 
     /**
-     * Returns <tt>{@link #max()}-{@link #min()}</tt>.
+     * Returns <code>{@link #max()}-{@link #min()}</code>.
      *
-     * @return <tt>{@link #max()}-{@link #min()}</tt>.
+     * @return <code>{@link #max()}-{@link #min()}</code>.
      */
     public double size() {
         return max - min;
     }
 
     /**
-     * Returns <tt>value&lt;{@link #min()}?{@link #min()}:value&gt;{@link #max()}?{@link #max()}:value</tt>.
+     * Returns <code>value&lt;{@link #min()}?{@link #min()}:value&gt;{@link #max()}?{@link #max()}:value</code>.
      * In other words, returns the passed number if it is in this range or the nearest range bound in other cases.
      *
      * @param value some number.
@@ -129,32 +129,32 @@ public final class Range {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=value&lt;={@link #max()}</tt>
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=value&lt;={@link #max()}</code>
      *
      * @param value the checked value.
-     * @return      <tt>true</tt> if the value is in this range.
+     * @return      <code>true</code> if the value is in this range.
      */
     public boolean contains(double value) {
         return min <= value && value <= max;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=range.{@link #min()}</tt>
-     * and <tt>range.{@link #max()}&lt;={@link #max()}</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=range.{@link #min()}</code>
+     * and <code>range.{@link #max()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <tt>true</tt> if the checked range is a subset of this range.
+     * @return      <code>true</code> if the checked range is a subset of this range.
      */
     public boolean contains(Range range) {
         return min <= range.min && range.max <= max;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=range.{@link #max()}</tt>
-     * and <tt>range.{@link #min()}&lt;={@link #max()}</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=range.{@link #max()}</code>
+     * and <code>range.{@link #min()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <tt>true</tt> if the checked range overlaps with this range.
+     * @return      <code>true</code> if the checked range overlaps with this range.
      */
     public boolean intersects(Range range) {
         return min <= range.max && range.min <= max;
@@ -164,12 +164,12 @@ public final class Range {
      * Returns an instance of this class describing the range
      * <nobr><tt>StrictMath.min(this.{@link #min() min()},value) &lt;= x
      * &lt;= StrictMath.max(this.{@link #max() max()},value)</tt></nobr>,
-     * excepting the case when the passed value is <tt>NaN</tt> &mdash;
+     * excepting the case when the passed value is <code>NaN</code> &mdash;
      * in the last situation, returns this instance without changes.
      * In other words, expands the current range to include the given value.
      *
      * @param value some value that should belong to the new range.
-     * @return      the expanded range (or this range if <tt>Double.isNaN(value)</tt>).
+     * @return      the expanded range (or this range if <code>Double.isNaN(value)</code>).
      */
     public Range expand(double value) {
         if (Double.isNaN(value)) {
@@ -187,26 +187,26 @@ public final class Range {
     }
 
     /**
-     * Equivalent to <tt>{@link IRange#valueOf(Range) IRange.valueOf}(thisInstance)</tt>,
-     * with the only difference that <tt>IllegalStateException</tt> is thrown instead of
-     * <tt>IllegalArgumentException</tt> for unallowed range.
+     * Equivalent to <code>{@link IRange#valueOf(Range) IRange.valueOf}(thisInstance)</code>,
+     * with the only difference that <code>IllegalStateException</code> is thrown instead of
+     * <code>IllegalArgumentException</code> for unallowed range.
      *
      * @return the integer range with same (cast) bounds.
      * @throws IllegalStateException in the same situations when
-     *                               {@link IRange#valueOf(Range)} method throws <tt>IllegalArgumentException</tt>.
+     *                               {@link IRange#valueOf(Range)} method throws <code>IllegalArgumentException</code>.
      */
     public IRange toIntegerRange() {
         return IRange.valueOf((long) min, (long) max, true);
     }
 
     /**
-     * Equivalent to <tt>{@link IRange#roundOf(Range) IRange.roundOf}(thisInstance)</tt>,
-     * with the only difference that <tt>IllegalStateException</tt> is thrown instead of
-     * <tt>IllegalArgumentException</tt> for unallowed range.
+     * Equivalent to <code>{@link IRange#roundOf(Range) IRange.roundOf}(thisInstance)</code>,
+     * with the only difference that <code>IllegalStateException</code> is thrown instead of
+     * <code>IllegalArgumentException</code> for unallowed range.
      *
      * @return the integer range with same (rounded) bounds.
      * @throws IllegalStateException in the same situations when
-     *                               {@link IRange#roundOf(Range)} method throws <tt>IllegalArgumentException</tt>.
+     *                               {@link IRange#roundOf(Range)} method throws <code>IllegalArgumentException</code>.
      */
     public IRange toRoundedRange() {
         return IRange.valueOf(StrictMath.round(min), StrictMath.round(max), true);
@@ -239,12 +239,12 @@ public final class Range {
 
     /**
      * Indicates whether some other range is equal to this instance.
-     * Returns <tt>true</tt> if and only if <tt>obj instanceof Range</tt>,
-     * <tt>Double.doubleToLongBits(((Range)obj).min())==Double.doubleToLongBits(thisInstance.min())</tt>
-     * and <tt>Double.doubleToLongBits(((Range)obj).max())==Double.doubleToLongBits(thisInstance.max())</tt>.
+     * Returns <code>true</code> if and only if <code>obj instanceof Range</code>,
+     * <code>Double.doubleToLongBits(((Range)obj).min())==Double.doubleToLongBits(thisInstance.min())</code>
+     * and <code>Double.doubleToLongBits(((Range)obj).max())==Double.doubleToLongBits(thisInstance.max())</code>.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <tt>true</tt> if the specified object is a range equal to this one.
+     * @return    <code>true</code> if the specified object is a range equal to this one.
      */
     public boolean equals(Object obj) {
         return obj instanceof Range

@@ -31,7 +31,7 @@ import java.util.*;
  * hyperparallelepiped in multidimensional space with real coordinates of vertices.
  * All edges of the hyperparallelepiped are parallel to coordinate axes.
  * In 1-dimensional case it is an equivalent of {@link Range} class,
- * in 2-dimensional case it is an analog of the standard <tt>java.awt.geom.Rectangle2D</tt> class.</p>
+ * in 2-dimensional case it is an analog of the standard <code>java.awt.geom.Rectangle2D</code> class.</p>
  *
  * <p>More precisely, the region, specified by this class, is defined by two <i>n</i>-dimensional points
  * with real coordinates ({@link Point}),
@@ -56,7 +56,7 @@ import java.util.*;
  * <b>min</b>.{@link Point#coord(int) coord(<i>i</i>)}
  * are never greater than the corresponding coordinates of the maximal vertex
  * <b>max</b>.{@link Point#coord(int) coord(<i>i</i>)},
- * and all coordinates of both vertices are never <tt>Double.NaN</tt>.
+ * and all coordinates of both vertices are never <code>Double.NaN</code>.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -81,14 +81,14 @@ public class RectangularArea {
      *
      * @param min the minimal vertex, inclusive.
      * @param max the maximal vertex, inclusive.
-     * @return    the new rectangular area "between" these vertices.
+     * @return the new rectangular area "between" these vertices.
      * @throws NullPointerException     if one of arguments is {@code null}.
-     * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in <tt>min</tt>
-     *                                  and <tt>max</tt> points are different,
+     * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in <code>min</code>
+     *                                  and <code>max</code> points are different,
      *                                  or if, for some <i>i</i>,
      *                                  <tt>min.{@link Point#coord(int) coord}(<i>i</i>)
      *                                  &gt; max.{@link Point#coord(int) coord}(<i>i</i>)</tt>,
-     *                                  or if one of these coordinates is <tt>Double.NaN</tt>.
+     *                                  or if one of these coordinates is <code>Double.NaN</code>.
      */
     public static RectangularArea valueOf(Point min, Point max) {
         Objects.requireNonNull(min, "Null min vertex");
@@ -96,7 +96,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (n != max.coordinates.length) {
             throw new IllegalArgumentException("min.coordCount() = " + n
-                + " does not match max.coordCount() = " + max.coordinates.length);
+                    + " does not match max.coordCount() = " + max.coordinates.length);
         }
         for (int k = 0; k < n; k++) {
             if (Double.isNaN(min.coordinates[k])) {
@@ -107,7 +107,7 @@ public class RectangularArea {
             }
             if (min.coordinates[k] > max.coordinates[k]) {
                 throw new IllegalArgumentException("min.coord(" + k + ") > max.coord(" + k + ")"
-                    + " (min = " + min + ", max = " + max + ")");
+                        + " (min = " + min + ", max = " + max + ")");
             }
         }
         return new RectangularArea(min, max);
@@ -117,17 +117,17 @@ public class RectangularArea {
      * Returns the Cartesian product of the specified coordinate ranges.
      * More precisely, return an <i>n</i>-dimensional {@link RectangularArea rectangular area}
      * with the minimal vertex <b>min</b> and maximal vertex <b>max</b>, where
-     * <i>n</i><tt>=coordRanges.length</tt>,
+     * <i>n</i><code>=coordRanges.length</code>,
      * <b>min</b>.{@link Point#coord(int)
-     * coord(<i>i</i>)}<tt>=coordRanges[<i>i</i>].{@link Range#min() min()}</tt>,
+     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link Range#min() min()}</code>,
      * <b>max</b>.{@link Point#coord(int)
-     * coord(<i>i</i>)}<tt>=coordRanges[<i>i</i>].{@link Range#max() max()}</tt>.
+     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link Range#max() max()}</code>.
      * See the {@link RectangularArea comments to this class} for more details.
      *
      * @param coordRanges the coordinate ranges.
-     * @return            the Cartesian product of the specified coordinate ranges.
+     * @return the Cartesian product of the specified coordinate ranges.
      * @throws NullPointerException     if the argument is {@code null}
-     *                                  or if one of specified <tt>coordRanges</tt> is {@code null}.
+     *                                  or if one of specified <code>coordRanges</code> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
     public static RectangularArea valueOf(Range... coordRanges) {
@@ -188,8 +188,8 @@ public class RectangularArea {
      */
     public static RectangularArea valueOf(double minX, double minY, double maxX, double maxY) {
         return valueOf(
-            Point.valueOf(minX, minY),
-            Point.valueOf(maxX, maxY));
+                Point.valueOf(minX, minY),
+                Point.valueOf(maxX, maxY));
     }
 
     /**
@@ -211,30 +211,29 @@ public class RectangularArea {
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
      */
     public static RectangularArea valueOf(
-        double minX,
-        double minY,
-        double minZ,
-        double maxX,
-        double maxY,
-        double maxZ)
-    {
+            double minX,
+            double minY,
+            double minZ,
+            double maxX,
+            double maxY,
+            double maxZ) {
         return valueOf(
-            Point.valueOf(minX, minY, minZ),
-            Point.valueOf(maxX, maxY, maxZ));
+                Point.valueOf(minX, minY, minZ),
+                Point.valueOf(maxX, maxY, maxZ));
     }
 
     /**
      * Returns a new rectangular area with the same coordinates as the given area.
-     * All <tt>long</tt> coordinates of the passed area are converted
-     * to <tt>double</tt> coordinates of the returned area by standard
-     * Java typecast <tt>(double)longValue</tt>.
+     * All <code>long</code> coordinates of the passed area are converted
+     * to <code>double</code> coordinates of the returned area by standard
+     * Java typecast <code>(double)longValue</code>.
      * Equivalent to <tt>{@link #valueOf(Point, Point) valueOf}({@link Point#valueOf(IPoint)
      * Point.valueOf}(iArea.{@link #min() min()}),&nbsp;{@link Point#valueOf(IPoint)
      * Point.valueOf}(iArea.{@link #max() max()}))</tt>.
      *
      * @param iArea the integer rectangular area.
-     * @return      the real rectangular area with same coordinates.
-     * @throws NullPointerException     if the passed area is {@code null}.
+     * @return the real rectangular area with same coordinates.
+     * @throws NullPointerException if the passed area is {@code null}.
      */
     public static RectangularArea valueOf(IRectangularArea iArea) {
         Objects.requireNonNull(iArea, "Null iArea argument");
@@ -244,8 +243,8 @@ public class RectangularArea {
 
     /**
      * Returns the number of dimensions of this rectangular area.
-     * Equivalent to <tt>{@link #min()}.{@link Point#coordCount() coordCount()}</tt>
-     * or <tt>{@link #max()}.{@link Point#coordCount() coordCount()}</tt>, but works faster.
+     * Equivalent to <code>{@link #min()}.{@link Point#coordCount() coordCount()}</code>
+     * or <code>{@link #max()}.{@link Point#coordCount() coordCount()}</code>, but works faster.
      *
      * <p>The result of this method is always positive (&gt;0).
      *
@@ -279,9 +278,9 @@ public class RectangularArea {
 
     /**
      * Returns all sizes of this rectangular area in a form of {@link Point}.
-     * Equivalent to <tt>{@link Point#valueOf(double...) Point.valueOf}({@link #sizes()})</tt>.
+     * Equivalent to <code>{@link Point#valueOf(double...) Point.valueOf}({@link #sizes()})</code>.
      * The returned point is equal to
-     * <tt>{@link #max()}.{@link Point#subtract(Point) subtract}({@link #min()})</tt>.
+     * <code>{@link #max()}.{@link Point#subtract(Point) subtract}({@link #min()})</code>.
      *
      * @return all sizes of this rectangular area in a form of {@link Point}.
      */
@@ -290,70 +289,73 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #min()}.{@link Point#coord(int) coord}(coordIndex)</tt>.
+     * Returns <code>{@link #min()}.{@link Point#coord(int) coord}(coordIndex)</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return           <tt>{@link #min()}.{@link Point#coord(int) coord}(coordIndex)</tt>.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #coordCount()}</tt>.
+     * @return <code>{@link #min()}.{@link Point#coord(int) coord}(coordIndex)</code>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #coordCount()}</code>.
      */
     public double min(int coordIndex) {
         return min.coordinates[coordIndex];
     }
 
     /**
-     * Returns <tt>{@link #max()}.{@link Point#coord(int) coord}(coordIndex)</tt>.
+     * Returns <code>{@link #max()}.{@link Point#coord(int) coord}(coordIndex)</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return           <tt>{@link #max()}.{@link Point#coord(int) coord}(coordIndex)</tt>.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #coordCount()}</tt>.
+     * @return <code>{@link #max()}.{@link Point#coord(int) coord}(coordIndex)</code>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #coordCount()}</code>.
      */
     public double max(int coordIndex) {
         return max.coordinates[coordIndex];
     }
 
     /**
-     * Returns <tt>{@link #max(int) max}(coordIndex) - {@link #min(int) min}(coordIndex)</tt>.
+     * Returns <code>{@link #max(int) max}(coordIndex) - {@link #min(int) min}(coordIndex)</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return           <tt>{@link #max(int) max}(coordIndex) - {@link #min(int) min}(coordIndex)</tt>.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #coordCount()}</tt>.
+     * @return <code>{@link #max(int) max}(coordIndex) - {@link #min(int) min}(coordIndex)</code>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #coordCount()}</code>.
      */
     public double size(int coordIndex) {
         return max.coordinates[coordIndex] - min.coordinates[coordIndex];
     }
 
     /**
-     * Returns <tt>{@link #min()}.{@link IPoint#x() x()}</tt>.
+     * Returns <code>{@link #min()}.{@link IPoint#x() x()}</code>.
      *
-     * @return  <tt>{@link #min()}.{@link IPoint#x() x()}</tt>.
+     * @return <code>{@link #min()}.{@link IPoint#x() x()}</code>.
      */
     public double minX() {
         return min.coordinates[0];
     }
 
     /**
-     * Returns <tt>{@link #max()}.{@link IPoint#x() x()}</tt>.
+     * Returns <code>{@link #max()}.{@link IPoint#x() x()}</code>.
      *
-     * @return  <tt>{@link #max()}.{@link IPoint#x() x()}</tt>.
+     * @return <code>{@link #max()}.{@link IPoint#x() x()}</code>.
      */
     public double maxX() {
         return max.coordinates[0];
     }
 
     /**
-     * Returns <tt>{@link #maxX() maxX()} - {@link #minX() minX()}</tt>.
+     * Returns <code>{@link #maxX() maxX()} - {@link #minX() minX()}</code>.
      *
-     * @return <tt>{@link #maxX() maxX()} - {@link #minX() minX()}</tt>.
+     * @return <code>{@link #maxX() maxX()} - {@link #minX() minX()}</code>.
      */
     public double sizeX() {
         return max.coordinates[0] - min.coordinates[0];
     }
 
     /**
-     * Returns <tt>{@link #min()}.{@link IPoint#y() y()}</tt>.
+     * Returns <code>{@link #min()}.{@link IPoint#y() y()}</code>.
      *
-     * @return  <tt>{@link #min()}.{@link IPoint#y() y()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     * @return <code>{@link #min()}.{@link IPoint#y() y()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;2</code>.
      */
     public double minY() {
         if (min.coordinates.length < 2) {
@@ -363,10 +365,10 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #max()}.{@link IPoint#y() y()}</tt>.
+     * Returns <code>{@link #max()}.{@link IPoint#y() y()}</code>.
      *
-     * @return  <tt>{@link #max()}.{@link IPoint#y() y()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     * @return <code>{@link #max()}.{@link IPoint#y() y()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;2</code>.
      */
     public double maxY() {
         if (min.coordinates.length < 2) {
@@ -376,10 +378,10 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #maxY() maxY()} - {@link #minY() minY()}</tt>.
+     * Returns <code>{@link #maxY() maxY()} - {@link #minY() minY()}</code>.
      *
-     * @return <tt>{@link #maxY() maxY()} - {@link #minY() minY()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;2</tt>.
+     * @return <code>{@link #maxY() maxY()} - {@link #minY() minY()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;2</code>.
      */
     public double sizeY() {
         if (min.coordinates.length < 2) {
@@ -389,10 +391,10 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #min()}.{@link IPoint#z() z()}</tt>.
+     * Returns <code>{@link #min()}.{@link IPoint#z() z()}</code>.
      *
-     * @return  <tt>{@link #min()}.{@link IPoint#z() z()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     * @return <code>{@link #min()}.{@link IPoint#z() z()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;3</code>.
      */
     public double minZ() {
         if (min.coordinates.length < 3) {
@@ -402,10 +404,10 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #max()}.{@link IPoint#z() z()}</tt>.
+     * Returns <code>{@link #max()}.{@link IPoint#z() z()}</code>.
      *
-     * @return  <tt>{@link #max()}.{@link IPoint#z() z()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     * @return <code>{@link #max()}.{@link IPoint#z() z()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;3</code>.
      */
     public double maxZ() {
         if (min.coordinates.length < 3) {
@@ -415,10 +417,10 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</tt>.
+     * Returns <code>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</code>.
      *
-     * @return <tt>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</tt>.
-     * @throws IllegalStateException if <tt>{@link #coordCount()}&lt;3</tt>.
+     * @return <code>{@link #maxZ() maxZ()} - {@link #minZ() minZ()}</code>.
+     * @throws IllegalStateException if <code>{@link #coordCount()}&lt;3</code>.
      */
     public double sizeZ() {
         if (min.coordinates.length < 3) {
@@ -430,7 +432,7 @@ public class RectangularArea {
     /**
      * Returns the sizes of this rectangular area along all dimensions.
      * The returned array consists of {@link #coordCount()} elements,
-     * and the element <tt>#k</tt> contains <tt>{@link #size(int) size}(k)</tt>.
+     * and the element <code>#k</code> contains <code>{@link #size(int) size}(k)</code>.
      *
      * @return the sizes of this rectangular area along all dimensions.
      */
@@ -457,12 +459,12 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>{@link Range}.{@link Range#valueOf(double, double)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</tt>.
+     * Returns <code>{@link Range}.{@link Range#valueOf(double, double)
+     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return           <tt>{@link Range}.{@link Range#valueOf(double, double)
-     *                   valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</tt>.
+     * @return <code>{@link Range}.{@link Range#valueOf(double, double)
+     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      */
     public Range range(int coordIndex) {
         return new Range(min.coordinates[coordIndex], max.coordinates[coordIndex]);
@@ -471,7 +473,7 @@ public class RectangularArea {
     /**
      * Returns the projections of this rectangular area to all axes.
      * The returned array consists of {@link #coordCount()} elements,
-     * and the element <tt>#k</tt> contains <tt>{@link #range(int) range}(k)</tt>.
+     * and the element <code>#k</code> contains <code>{@link #range(int) range}(k)</code>.
      *
      * @return the projections of this rectangular area to all axes.
      */
@@ -484,14 +486,14 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if
-     * <tt>{@link #min(int) min}(k)&lt;=point.{@link Point#coord(int) coord}(k)&lt;={@link #max(int) max}(k)</tt>
+     * Returns <code>true</code> if and only if
+     * <code>{@link #min(int) min}(k)&lt;=point.{@link Point#coord(int) coord}(k)&lt;={@link #max(int) max}(k)</code>
      * for all <i>k</i>.
      *
      * @param point the checked point.
-     * @return      <tt>true</tt> if this rectangular area contains the given point.
+     * @return <code>true</code> if this rectangular area contains the given point.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(Point point) {
@@ -499,7 +501,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (point.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + point.coordinates.length + " instead of " + n);
+                    + point.coordinates.length + " instead of " + n);
         }
         for (int k = 0; k < n; k++) {
             if (point.coordinates[k] < min.coordinates[k] || point.coordinates[k] > max.coordinates[k]) {
@@ -510,14 +512,15 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if at least one of the specified <tt>areas</tt> contains the passed <tt>point</tt>
+     * Returns <code>true</code> if at least one of the specified <code>areas</code> contains
+     * the passed <code>point</code>
      * (see {@link #contains(Point)} method).
      *
      * @param areas list of checked rectangular areas.
      * @param point the checked point.
-     * @return      <tt>true</tt> if one of the passed areas contains the given point.
+     * @return <code>true</code> if one of the passed areas contains the given point.
      * @throws NullPointerException     if one of the arguments or one of the areas is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas.
      */
     public static boolean contains(Collection<RectangularArea> areas, Point point) {
@@ -532,15 +535,15 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if
-     * <tt>{@link #min(int) min}(k)&lt;=area.{@link #min(int) min}(k)</tt>
-     * and <tt>area.{@link #max(int) max}(k)&lt;={@link #max(int) max}(k)</tt>
+     * Returns <code>true</code> if and only if
+     * <code>{@link #min(int) min}(k)&lt;=area.{@link #min(int) min}(k)</code>
+     * and <code>area.{@link #max(int) max}(k)&lt;={@link #max(int) max}(k)</code>
      * for all <i>k</i>.
      *
      * @param area the checked rectangular area.
-     * @return     <tt>true</tt> if the checked rectangular area is a subset of this area.
+     * @return <code>true</code> if the checked rectangular area is a subset of this area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean contains(RectangularArea area) {
@@ -548,7 +551,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + area.min.coordinates.length + " instead of " + n);
+                    + area.min.coordinates.length + " instead of " + n);
         }
         for (int k = 0; k < n; k++) {
             if (area.min.coordinates[k] < min.coordinates[k] || area.max.coordinates[k] > max.coordinates[k]) {
@@ -559,14 +562,15 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if at least one of the specified <tt>areas</tt> contains the passed <tt>area</tt>
+     * Returns <code>true</code> if at least one of the specified <code>areas</code> contains
+     * the passed <code>area</code>
      * (see {@link #contains(RectangularArea)} method).
      *
      * @param areas list of checked rectangular areas.
      * @param area  the checked area.
-     * @return      <tt>true</tt> if one of the passed areas (1st argument) contains the given area (2nd argument).
+     * @return <code>true</code> if one of the passed areas (1st argument) contains the given area (2nd argument).
      * @throws NullPointerException     if one of the arguments or one of the areas is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas
      *                                  in the 1st argument.
      */
@@ -582,16 +586,16 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if
-     * <tt>{@link #min(int) min}(k)&lt;=area.{@link #max(int) max}(k)</tt>
-     * and <tt>area.{@link #min(int) min}(k)&lt;={@link #max(int) max}(k)</tt>
+     * Returns <code>true</code> if and only if
+     * <code>{@link #min(int) min}(k)&lt;=area.{@link #max(int) max}(k)</code>
+     * and <code>area.{@link #min(int) min}(k)&lt;={@link #max(int) max}(k)</code>
      * for all <i>k</i>.
      *
      * @param area the checked rectangular area.
-     * @return     <tt>true</tt> if the checked rectangular area overlaps with this area,
-     *             maybe in boundary points only.
+     * @return <code>true</code> if the checked rectangular area overlaps with this area,
+     * maybe in boundary points only.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean intersects(RectangularArea area) {
@@ -599,7 +603,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + area.min.coordinates.length + " instead of " + n);
+                    + area.min.coordinates.length + " instead of " + n);
         }
         for (int k = 0; k < n; k++) {
             if (area.max.coordinates[k] < min.coordinates[k] || area.min.coordinates[k] > max.coordinates[k]) {
@@ -610,15 +614,15 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if
-     * <tt>{@link #min(int) min}(k)&lt;area.{@link #max(int) max}(k)</tt>
-     * and <tt>area.{@link #min(int) min}(k)&lt;{@link #max(int) max}(k)</tt>
+     * Returns <code>true</code> if and only if
+     * <code>{@link #min(int) min}(k)&lt;area.{@link #max(int) max}(k)</code>
+     * and <code>area.{@link #min(int) min}(k)&lt;{@link #max(int) max}(k)</code>
      * for all <i>k</i>.
      *
      * @param area the checked rectangular area.
-     * @return     <tt>true</tt> if the checked rectangular area overlaps with this area in some internal points.
+     * @return <code>true</code> if the checked rectangular area overlaps with this area in some internal points.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public boolean overlaps(RectangularArea area) {
@@ -626,7 +630,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + area.min.coordinates.length + " instead of " + n);
+                    + area.min.coordinates.length + " instead of " + n);
         }
         for (int k = 0; k < n; k++) {
             if (area.max.coordinates[k] <= min.coordinates[k] || area.min.coordinates[k] >= max.coordinates[k]) {
@@ -645,6 +649,7 @@ public class RectangularArea {
       saveMin\s*-\s*1 ==> saveMin;;
       saveMax\s*\+\s*1 ==> saveMax;;
       (\[k\])\s*[+-]\s*1 ==> $1 !! Auto-generated: NOT EDIT !! */
+
     /**
      * Returns the set-theoretical intersection <b>A</b>&nbsp;&cap;&nbsp;<b>B</b> of this (<b>A</b>) and
      * the passed rectangular area (<b>B</b>) or {@code null} if they
@@ -658,9 +663,9 @@ public class RectangularArea {
      * null</pre>.
      *
      * @param area the second rectangular area.
-     * @return     intersection of this and the second rectangular area or {@code null} if they do not intersect.
+     * @return intersection of this and the second rectangular area or {@code null} if they do not intersect.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea intersection(RectangularArea area) {
@@ -668,7 +673,7 @@ public class RectangularArea {
         int n = min.coordinates.length;
         if (area.min.coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + area.min.coordinates.length + " instead of " + n);
+                    + area.min.coordinates.length + " instead of " + n);
         }
         double[] newMin = new double[n];
         double[] newMax = new double[n];
@@ -685,7 +690,7 @@ public class RectangularArea {
     /**
      * Returns a list of set-theoretical intersections <b>A</b>&nbsp;&cap;&nbsp;<b>B<sub><i>i</i></sub></b>
      * of this rectangular area (<b>A</b>) and all rectangular areas (<b>B<sub><i>i</i></sub></b>), specified
-     * by <tt>areas</tt> argument.
+     * by <code>areas</code> argument.
      * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
      * <p>Equivalent to the following loop:
      * <pre>
@@ -699,7 +704,7 @@ public class RectangularArea {
      * </pre>.
      *
      * @param areas collection of areas (we find intersection with each from them).
-     * @return     intersection of this and the second rectangular area or {@code null} if they do not intersect.
+     * @return intersection of this and the second rectangular area or {@code null} if they do not intersect.
      * @throws NullPointerException     if the argument is {@code null} or one of its elements is {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
@@ -725,9 +730,9 @@ public class RectangularArea {
      * (<nobr><b>R</b><sub>1</sub>&cup;<b>R</b><sub>2</sub>&cup;...&cup;<b>R</b><sub><i>N</i></sub> =
      * <b>A</b>&nbsp;\&nbsp;<b>B</b>)</nobr>.
      * The resulting areas <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>
-     * are added into the collection <tt>results</tt> by <tt>Collection.add(...)</tt> method.
-     * So, the collection <tt>results</tt> must be not-null and support adding elements
-     * (usually it is <tt>List</tt> or <tt>Queue</tt>).
+     * are added into the collection <code>results</code> by <code>Collection.add(...)</code> method.
+     * So, the collection <code>results</code> must be not-null and support adding elements
+     * (usually it is <code>List</code> or <code>Queue</code>).
      *
      * <p>It is possible that the difference is empty (<b>A</b>&nbsp;\&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;),
      * i.e. this area <b>A</b> is a subset of the passed one <b>B</b>. In this case, this method does nothing.
@@ -735,7 +740,7 @@ public class RectangularArea {
      * <p>It is possible that the difference is equal to this area
      * (<b>A</b>&nbsp;\&nbsp;<b>B</b>&nbsp;=&nbsp;<b>A</b>),
      * i.e. this area <b>A</b> does not intersect the passed one <b>B</b>.
-     * In this case, this method is equivalent to <tt>results.add(thisInstance)</tt> call.
+     * In this case, this method is equivalent to <code>results.add(thisInstance)</code> call.
      *
      * <p>In other cases, there is more than 1 way to represent the resulting difference
      * in a form of union of several rectangular areas
@@ -746,9 +751,9 @@ public class RectangularArea {
      *
      * @param results the collection to store results (new areas will be added to this collection).
      * @param area    the area <b>B</b>, subtracted from this area <b>A</b>.
-     * @return        a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException     if <tt>result</tt> or <tt>area</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @return a reference to the <code>results</code> argument.
+     * @throws NullPointerException     if <code>result</code> or <code>area</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      * @see #subtractCollection(java.util.Queue, java.util.Collection)
      */
@@ -781,10 +786,10 @@ public class RectangularArea {
 
     /**
      * Calculates the set-theoretical difference <b>A</b>&nbsp;\&nbsp;<b>B</b> of
-     * the set-theoretical union <b>A</b> of all elements of the collection <tt>fromWhatToSubtract</tt>
-     * and the set-theoretical union <b>B</b> of all elements of the collection <tt>whatToSubtract</tt>,
+     * the set-theoretical union <b>A</b> of all elements of the collection <code>fromWhatToSubtract</code>
+     * and the set-theoretical union <b>B</b> of all elements of the collection <code>whatToSubtract</code>,
      * in a form of a union of <i>N</i> rectangular areas, and replaces
-     * the old content of <tt>fromWhatToSubtract</tt> with the resulting <i>N</i> areas.
+     * the old content of <code>fromWhatToSubtract</code> with the resulting <i>N</i> areas.
      *
      * <p>More precisely, this method is equivalent to the following loop:
      *
@@ -802,23 +807,22 @@ public class RectangularArea {
      *
      * <p>Note: if some exception occurs while execution of the listed loop (for example,
      * some elements of the collections are {@code null} or have different number of dimensions),
-     * the <tt>fromWhatToSubtract</tt> stays partially modified.
+     * the <code>fromWhatToSubtract</code> stays partially modified.
      * In other words, this method <b>is non-atomic regarding failures</b>.
      *
      * @param fromWhatToSubtract the minuend <b>A</b>, which will be replaced with <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @param whatToSubtract     the subtrahend <b>B</b>.
-     * @return                   a reference to <tt>fromWhatToSubtract</tt> argument, which will contain
-     *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
-     * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
+     * @return a reference to <code>fromWhatToSubtract</code> argument, which will contain
+     * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
+     * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if some of the elements of the passed collections
      *                                  have different {@link #coordCount()}.
      * @see #subtractCollection(java.util.Queue, RectangularArea...)
      */
     public static Queue<RectangularArea> subtractCollection(
-        Queue<RectangularArea> fromWhatToSubtract,
-        Collection<RectangularArea> whatToSubtract)
-    {
+            Queue<RectangularArea> fromWhatToSubtract,
+            Collection<RectangularArea> whatToSubtract) {
         Objects.requireNonNull(fromWhatToSubtract, "Null fromWhatToSubtract");
         Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         for (RectangularArea area : whatToSubtract) {
@@ -834,34 +838,33 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to <tt>{@link #subtractCollection(Queue, Collection)
-     * subtractCollection}(fromWhatToSubtract, java.util.Arrays.asList(whatToSubtract))</tt>.
+     * Equivalent to <code>{@link #subtractCollection(Queue, Collection)
+     * subtractCollection}(fromWhatToSubtract, java.util.Arrays.asList(whatToSubtract))</code>.
      *
      * @param fromWhatToSubtract the minuend <b>A</b>, which will be replaced with <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @param whatToSubtract     the subtrahend <b>B</b>.
-     * @return                   a reference to <tt>fromWhatToSubtract</tt> argument, which will contain
-     *                           the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
-     * @throws NullPointerException     if <tt>fromWhatToSubtract</tt> or <tt>whatToSubtract</tt> argument
+     * @return a reference to <code>fromWhatToSubtract</code> argument, which will contain
+     * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
+     * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if some of the elements of the passed collection and array
      *                                  have different {@link #coordCount()}.
      */
     public static Queue<RectangularArea> subtractCollection(
-        Queue<RectangularArea> fromWhatToSubtract,
-        RectangularArea... whatToSubtract)
-    {
+            Queue<RectangularArea> fromWhatToSubtract,
+            RectangularArea... whatToSubtract) {
         return subtractCollection(fromWhatToSubtract, java.util.Arrays.asList(whatToSubtract));
     }
 
     /**
-     * Equivalent to <tt>{@link #subtractCollection(Queue, Collection)
-     * subtractCollection}(fromWhatToSubtract, whatToSubtract</tt>,
-     * where <tt>fromWhatToSubtract</tt> contains this object as the only element.
+     * Equivalent to <code>{@link #subtractCollection(Queue, Collection)
+     * subtractCollection}(fromWhatToSubtract, whatToSubtract</code>,
+     * where <code>fromWhatToSubtract</code> contains this object as the only element.
      *
-     * @param whatToSubtract     the subtrahend <b>B</b>.
-     * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
-     *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
-     * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
+     * @param whatToSubtract the subtrahend <b>B</b>.
+     * @return new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
+     * (<b>A</b> = this object, <b>B</b> = union of all <code>whatToSubtract</code>).
+     * @throws NullPointerException     if <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed collection
      *                                  have different {@link #coordCount()}.
@@ -875,13 +878,13 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to <tt>{@link #subtract(Collection)
-     * subtract}(java.util.Arrays.asList(whatToSubtract))</tt>.
+     * Equivalent to <code>{@link #subtract(Collection)
+     * subtract}(java.util.Arrays.asList(whatToSubtract))</code>.
      *
-     * @param whatToSubtract     the subtrahend <b>B</b>.
-     * @return                   new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
-     *                           (<b>A</b> = this object, <b>B</b> = union of all <tt>whatToSubtract</tt>).
-     * @throws NullPointerException     if <tt>whatToSubtract</tt> argument
+     * @param whatToSubtract the subtrahend <b>B</b>.
+     * @return new collection, containing the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>
+     * (<b>A</b> = this object, <b>B</b> = union of all <code>whatToSubtract</code>).
+     * @throws NullPointerException     if <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
      * @throws IllegalArgumentException if this rectangular area or some of the elements of the passed array
      *                                  have different {@link #coordCount()}.
@@ -893,19 +896,19 @@ public class RectangularArea {
     /**
      * Returns the minimal rectangular area, containing this area and the given point.
      * In the returned area, the {@link #min() minimal vertex} is equal to
-     * <tt>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</tt> and
+     * <code>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</code> and
      * the {@link #max() maximal vertex} is equal to
-     * <tt>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</tt>.
+     * <code>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</code>.
      *
      * @param point some point that should be included to the new rectangular area.
-     * @return      the expanded rectangular area.
+     * @return the expanded rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the points
-     *                                  <tt>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</tt>
+     *                                  <code>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</code>
      *                                  and
-     *                                  <tt>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</tt>
+     *                                  <code>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</code>
      *                                  do not match requirements of {@link #valueOf(Point, Point)} method.
      */
     public RectangularArea expand(Point point) {
@@ -930,9 +933,9 @@ public class RectangularArea {
      * thisInstance.{@link #max()}.{@link Point#max(Point) max}(area.{@link #max()}))</pre>.
      *
      * @param area the second rectangular area.
-     * @return     the minimal rectangular area, containing this and the passed area.
+     * @return the minimal rectangular area, containing this and the passed area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>area.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea expand(RectangularArea area) {
@@ -957,9 +960,9 @@ public class RectangularArea {
      * <p>If the passed collection is empty, returns {@code null}.
      *
      * @param areas some collection of rectangular areas.
-     * @return      the minimal rectangular area, containing all them, or {@code null} for empty collection.
+     * @return the minimal rectangular area, containing all them, or {@code null} for empty collection.
      * @throws NullPointerException     if the argument or one of the passed areas is {@code null}.
-     * @throws IllegalArgumentException if <tt>{@link #coordCount() coordCount()}</tt> is not equal for all areas.
+     * @throws IllegalArgumentException if <code>{@link #coordCount() coordCount()}</code> is not equal for all areas.
      */
     public static RectangularArea minimalContainingArea(Collection<RectangularArea> areas) {
         Objects.requireNonNull(areas, "Null areas");
@@ -1014,11 +1017,10 @@ public class RectangularArea {
      * is defined as maximal value from all <i>d<sub>i</sub></i>:
      * <nobr>max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>)</nobr>.
      *
-     *
      * @param point some point.
-     * @return      the parallel distance from this point to this rectangular area.
+     * @return the parallel distance from this point to this rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public double parallelDistance(Point point) {
@@ -1032,9 +1034,9 @@ public class RectangularArea {
      * of {@link Point} class.
      *
      * @param coordinates coordinates of some point.
-     * @return      the parallel distance from this point to this rectangular area.
-     * @throws NullPointerException     if <tt>coordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>coordinates.length</tt> is not equal to
+     * @return the parallel distance from this point to this rectangular area.
+     * @throws NullPointerException     if <code>coordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>coordinates.length</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public double parallelDistance(double... coordinates) {
@@ -1042,7 +1044,7 @@ public class RectangularArea {
         int n = this.min.coordinates.length;
         if (coordinates.length != n) {
             throw new IllegalArgumentException("Dimensions count mismatch: "
-                + coordinates.length + " instead of " + n);
+                    + coordinates.length + " instead of " + n);
         }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
@@ -1064,12 +1066,12 @@ public class RectangularArea {
      * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
      * Point.valueOf}(x, y)), but works faster because does not require to allocate any objects.
      * Works only for 2-dimensional rectangular areas, in other cases throws
-     * <tt>IllegalArgumentException</tt>.
+     * <code>IllegalArgumentException</code>.
      *
      * @param x the 1st coordinate of some point.
      * @param y the 2nd coordinate of some point.
-     * @return  the parallel distance from this point to this rectangular area.
-     * @throws IllegalArgumentException if <tt>coordinates.length!=2</tt> .
+     * @return the parallel distance from this point to this rectangular area.
+     * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
     public double parallelDistance(double x, double y) {
         int n = min.coordinates.length;
@@ -1092,13 +1094,13 @@ public class RectangularArea {
      * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
      * Point.valueOf}(x, y, z)), but works faster because does not require to allocate any objects.
      * Works only for 3-dimensional rectangular areas, in other cases throws
-     * <tt>IllegalArgumentException</tt>.
+     * <code>IllegalArgumentException</code>.
      *
      * @param x the 1st coordinate of some point.
      * @param y the 2nd coordinate of some point.
      * @param z the 3rd coordinate of some point.
-     * @return  the parallel distance from this point to this rectangular area.
-     * @throws IllegalArgumentException if <tt>coordinates.length!=2</tt> .
+     * @return the parallel distance from this point to this rectangular area.
+     * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
     public double parallelDistance(double x, double y, double z) {
         int n = min.coordinates.length;
@@ -1132,9 +1134,9 @@ public class RectangularArea {
      * add}(vector), thisInstance.{@link #max()}.{@link Point#add(Point) add}(vector))</pre>
      *
      * @param vector the vector which is added to all vertices of this area.
-     * @return       the shifted area.
+     * @return the shifted area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>vector.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>vector.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea shift(Point vector) {
@@ -1150,7 +1152,7 @@ public class RectangularArea {
     }
 
     /**
-     * Shifts this rectangular area by <tt>vector.{@link Point#symmetric() symmetric()}</tt>
+     * Shifts this rectangular area by <code>vector.{@link Point#symmetric() symmetric()}</code>
      * and returns the shifted area.
      * Equivalent to
      * <pre>{@link #valueOf(Point, Point)
@@ -1158,9 +1160,9 @@ public class RectangularArea {
      * subtract}(vector), thisInstance.{@link #max()}.{@link Point#subtract(Point) subtract}(vector))</pre>
      *
      * @param vector the vector which is subtracted from all vertices of this area.
-     * @return       the shifted area.
+     * @return the shifted area.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>vector.{@link Point#coordCount() coordCount()}</tt> is not equal to
+     * @throws IllegalArgumentException if <code>vector.{@link Point#coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance.
      */
     public RectangularArea shiftBack(Point vector) {
@@ -1181,12 +1183,12 @@ public class RectangularArea {
      * <pre>RectangularArea.valueOf(
      * thisInstance.{@link #min() min()}.{@link Point#subtract(Point) subtract}(expansion),
      * thisInstance.{@link #max() max()}.{@link Point#add(Point) add}(expansion))</pre>
-     * (but if <tt>expansion.{@link Point#isOrigin() isOrigin()}</tt>, return this object without changes).</tt>
+     * (but if <code>expansion.{@link Point#isOrigin() isOrigin()}</code>, return this object without changes).</code>
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
-     * @throws NullPointerException if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>expansion.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
@@ -1204,12 +1206,12 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to <tt>{@link #dilate(Point) dilate}(Point.valueOfEqualCoordinates(thisObjects.{@link
-     * #coordCount() coordCount()}, expansion)</tt>.
+     * Equivalent to <code>{@link #dilate(Point) dilate}(Point.valueOfEqualCoordinates(thisObjects.{@link
+     * #coordCount() coordCount()}, expansion)</code>.
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
-     * @throws NullPointerException if the argument is {@code null}.
+     * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
      */
@@ -1230,26 +1232,26 @@ public class RectangularArea {
      *   bb<b>RRRRRRRRRRRR</b>cc
      *     ddddddddddd
      * </pre>
-     * This figure shows dilation of some 2-dimensional rectangle <tt><b>R</b></tt> by
-     * expansion=<tt>Point.valueOf(2,1)</tt>:
-     * the results consists of the original rectangle and 4 rectangles <tt>a</tt>, <tt>b</tt> (height 1) and
-     * <tt>c</tt>, <tt>d</tt> (width 2).
+     * This figure shows dilation of some 2-dimensional rectangle <code><b>R</b></code> by
+     * expansion=<code>Point.valueOf(2,1)</code>:
+     * the results consists of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
+     * <code>c</code>, <code>d</code> (width 2).
      *
-     * <p>Note: all coordinates of <tt>expansion</tt> argument <b>must</b> be non-negative
+     * <p>Note: all coordinates of <code>expansion</code> argument <b>must</b> be non-negative
      * (unlike {@link #dilate(Point)} method).
      *
-     * <p>If some of coordinates of the point <tt>expansion</tt> are zero, new areas adouble the corresponding
+     * <p>If some of coordinates of the point <code>expansion</code> are zero, new areas adouble the corresponding
      * facets are not added (recanglar area cannot be empty).
-     * In particular, if <tt>expansion.{@link Point#isOrigin() isOrigin()}</tt>,
+     * In particular, if <code>expansion.{@link Point#isOrigin() isOrigin()}</code>,
      * the result will contain this area as the only element.
      *
-     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param results   the list to store results (new areas will be added to the end of this list).
      * @param expansion how to dilate this area.
-     * @return a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @return a reference to the <code>results</code> argument.
+     * @throws NullPointerException     if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException if <code>expansion.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
-     *                                  or if one of coordinates of <tt>expansion</tt> is negative,
+     *                                  or if one of coordinates of <code>expansion</code> is negative,
      *                                  or if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
      */
@@ -1287,15 +1289,15 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to <tt>{@link #dilateStraightOnly(List, Point)
+     * Equivalent to <code>{@link #dilateStraightOnly(List, Point)
      * dilateStraightOnly}(results, Point.valueOfEqualCoordinates(thisObjects.{@link
-     * #coordCount() coordCount()}, expansion)</tt>.
+     * #coordCount() coordCount()}, expansion)</code>.
      *
-     * @param results the list to store results (new areas will be added to the end of this list).
+     * @param results   the list to store results (new areas will be added to the end of this list).
      * @param expansion how to dilate this area.
-     * @return a reference to the <tt>results</tt> argument.
-     * @throws NullPointerException if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>expansion &lt; 0</tt>
+     * @return a reference to the <code>results</code> argument.
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>expansion &lt; 0</code>
      *                                  or if the result area will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
      */
@@ -1307,29 +1309,30 @@ public class RectangularArea {
      * Dilates all areas, specified by the argument, by {@link #dilate(Point) dilate} or
      * {@link #dilateStraightOnly(List, Point) dilateStraightOnly} method,
      * and returns the list of dilated areas.
-     * <p>If <tt>straightOnly</tt> argument is <tt>false</tt>, this method is equivalent to the following code:
+     * <p>If <code>straightOnly</code> argument is <code>false</code>, this method is equivalent to the following code:
      * <pre>
      * final List<RectangularArea> result = new ArrayList<RectangularArea>();
      * for (RectangularArea area : areas) {
      *     result.add(area.{@link #dilate(Point) dilate}(expansion));
      * }</pre>
-     * <p>If <tt>straightOnly</tt> argument is <tt>true</tt>, this method is equivalent to the following code:
+     * <p>If <code>straightOnly</code> argument is <code>true</code>, this method is equivalent to the following code:
      * <pre>
      * final List<RectangularArea> result = new ArrayList<RectangularArea>();
      * for (RectangularArea area : areas) {
      *     area.{@link #dilateStraightOnly(List, Point) dilateStraightOnly}(result, expansion);
      * }</pre>
      * <p>Note that in the second case the resulting list will usually contain more elements than
-     * the source <tt>areas</tt> collection.
+     * the source <code>areas</code> collection.
      *
-     * @param areas areas to be dilated.
-     * @param expansion how to dilate these areas.
+     * @param areas        areas to be dilated.
+     * @param expansion    how to dilate these areas.
      * @param straightOnly dilation mode.
      * @return list of dilated areas.
-     * @throws NullPointerException  if one of the  arguments is {@code null} or one of areas is {@code null}.
-     * @throws IllegalArgumentException if <tt>expansion.{@link #coordCount() coordCount()}</tt> is not equal to
+     * @throws NullPointerException     if one of the  arguments is {@code null} or one of areas is {@code null}.
+     * @throws IllegalArgumentException if <code>expansion.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of one of areas,
-     *                                  or if <tt>straightOnly</tt> amd one of coordinates of <tt>expansion</tt>
+     *                                  or if <code>straightOnly</code> amd one of coordinates
+     *                                  of <code>expansion</code>
      *                                  is negative (and collection of areas is not empty),
      *                                  or if one of the result areas will be incorrect (see comments to
      *                                  {@link #valueOf(Point, Point)} method).
@@ -1352,13 +1355,13 @@ public class RectangularArea {
 
     /**
      * Equivalent to
-     * <tt>{@link IRectangularArea#valueOf(RectangularArea) IRectangularArea.valueOf}(thisInstance)</tt>,
-     * with the only difference that <tt>IllegalStateException</tt> is thrown instead of
-     * <tt>IllegalArgumentException</tt> for unallowed rectangular area.
+     * <code>{@link IRectangularArea#valueOf(RectangularArea) IRectangularArea.valueOf}(thisInstance)</code>,
+     * with the only difference that <code>IllegalStateException</code> is thrown instead of
+     * <code>IllegalArgumentException</code> for unallowed rectangular area.
      *
      * @return the integer rectangular area with same (cast) coordinates.
      * @throws IllegalStateException in the same situation when {@link IRectangularArea#valueOf(RectangularArea)}
-     *                               method throws <tt>IllegalArgumentException</tt>.
+     *                               method throws <code>IllegalArgumentException</code>.
      */
     public IRectangularArea toIntegerRectangularArea() {
         return IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max), true);
@@ -1366,13 +1369,13 @@ public class RectangularArea {
 
     /**
      * Equivalent to
-     * <tt>{@link IRectangularArea#roundOf(RectangularArea) IRectangularArea.roundOf}(thisInstance)</tt>,
-     * with the only difference that <tt>IllegalStateException</tt> is thrown instead of
-     * <tt>IllegalArgumentException</tt> for unallowed rectangular area.
+     * <code>{@link IRectangularArea#roundOf(RectangularArea) IRectangularArea.roundOf}(thisInstance)</code>,
+     * with the only difference that <code>IllegalStateException</code> is thrown instead of
+     * <code>IllegalArgumentException</code> for unallowed rectangular area.
      *
      * @return the integer rectangular area with same (rounded) coordinates.
      * @throws IllegalStateException in the same situation when {@link IRectangularArea#roundOf(RectangularArea)}
-     *                               method throws <tt>IllegalArgumentException</tt>.
+     *                               method throws <code>IllegalArgumentException</code>.
      */
     public IRectangularArea toRoundedRectangularArea() {
         return IRectangularArea.valueOf(IPoint.roundOf(min), IPoint.roundOf(max), true);
@@ -1405,15 +1408,15 @@ public class RectangularArea {
 
     /**
      * Indicates whether some other rectangular area is equal to this instance.
-     * Returns <tt>true</tt> if and only if <tt>obj instanceof RectangularArea</tt>,
-     * <tt>((RectangularArea)obj).min().equals(this.min())</tt> and
-     * <tt>((RectangularArea)obj).max().equals(this.max())</tt>.
+     * Returns <code>true</code> if and only if <code>obj instanceof RectangularArea</code>,
+     * <code>((RectangularArea)obj).min().equals(this.min())</code> and
+     * <code>((RectangularArea)obj).max().equals(this.max())</code>.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <tt>true</tt> if the specified object is a rectangular area equal to this one.
+     * @return <code>true</code> if the specified object is a rectangular area equal to this one.
      */
     public boolean equals(Object obj) {
         return obj instanceof RectangularArea
-            && ((RectangularArea)obj).min.equals(this.min) && ((RectangularArea)obj).max.equals(this.max);
+                && ((RectangularArea) obj).min.equals(this.min) && ((RectangularArea) obj).max.equals(this.max);
     }
 }

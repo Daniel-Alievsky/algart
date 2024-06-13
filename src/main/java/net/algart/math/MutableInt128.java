@@ -31,9 +31,9 @@ import java.util.Objects;
  * <p>Integer signed value with 128-bit precision: &minus;2<sup>128</sup>&lt;<i>x</i>&lt;2<sup>128</sup>.</p>
  *
  * <p>Note: this class cannot represent positive or negative values &plusmn;2<sup>128</sup>.
- * (In comparison, <tt>long</tt> 64-bit primitive type can represent &minus;2<sup>63</sup>.)</p>
+ * (In comparison, <code>long</code> 64-bit primitive type can represent &minus;2<sup>63</sup>.)</p>
  *
- * <p>Unlike <tt>BigInteger</tt>, this class is <b>mutable</b>, that allows to reuse one instance for 128-bit
+ * <p>Unlike <code>BigInteger</code>, this class is <b>mutable</b>, that allows to reuse one instance for 128-bit
  * calculation without memory allocation. This class is not thread-safe, but <b>is thread-compatible</b>
  * and can be synchronized manually if multithreading access is necessary.
  *
@@ -68,18 +68,18 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * @param high64Bits high 64 bits of the absolute value of the created integer value (unsigned value).
      * @param low64Bits  low 64 bits of the absolute value of the created integer value (unsigned value).
      * @param negative   the sign of the created integer value.
-     * @throws IllegalArgumentException if <tt>high64Bits&le;0</tt>.
+     * @throws IllegalArgumentException if <code>high64Bits&le;0</code>.
      */
     static MutableInt128 valueOfBits(long high64Bits, long low64Bits, boolean negative) {
         return new MutableInt128(high64Bits, low64Bits, negative);
     }
 
     /**
-     * Creates new instance of this class, equal to the passed <tt>long</tt> value.
+     * Creates new instance of this class, equal to the passed <code>long</code> value.
      *
-     * <p>This method is equivalent to <tt>new MutableInt128().setToLong(value)</tt>.</p>
+     * <p>This method is equivalent to <code>new MutableInt128().setToLong(value)</code>.</p>
      *
-     * @param value some <tt>long</tt> value.
+     * @param value some <code>long</code> value.
      * @return newly created object, containing this value.
      */
     public static MutableInt128 valueOf(long value) {
@@ -87,12 +87,12 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Creates new instance of this class, equal to the passed <tt>long</tt> value, interpreted
+     * Creates new instance of this class, equal to the passed <code>long</code> value, interpreted
      * as unsigned 64-bit value. The result is always non-negative.
      *
-     * <p>This method is equivalent to <tt>new MutableInt128().setToUnsignedLong(value)</tt>.</p>
+     * <p>This method is equivalent to <code>new MutableInt128().setToUnsignedLong(value)</code>.</p>
      *
-     * @param value some <tt>long</tt> value.
+     * @param value some <code>long</code> value.
      * @return newly created object, containing this value, interpreted as unsigned 64-bit integer.
      */
     public static MutableInt128 valueOfUnsigned(long value) {
@@ -101,12 +101,12 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Creates new instance of this class, equal to the truncated 128-bit long approximation
-     * of the passed <tt>double</tt> value.
-     * This conversion is similar to the <i>narrowing primitive conversion</i> <tt>(long)value</tt>.
+     * of the passed <code>double</code> value.
+     * This conversion is similar to the <i>narrowing primitive conversion</i> <code>(long)value</code>.
      *
-     * <p>This method is equivalent to <tt>new MutableInt128().setToDouble(value)</tt>.</p>
+     * <p>This method is equivalent to <code>new MutableInt128().setToDouble(value)</code>.</p>
      *
-     * @param value some <tt>long</tt> value.
+     * @param value some <code>long</code> value.
      * @return newly created object, containing the passed value, truncated to 128-bit integer.
      */
     public static MutableInt128 valueOfDouble(double value) {
@@ -152,7 +152,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the value of this number is zero.
+     * Returns <code>true</code> if and only if the value of this number is zero.
      *
      * @return if this value == 0.
      * @see #zero()
@@ -162,8 +162,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this number is positive. Note that {@link #isZero() zero number}
-     * is not positive: this method returns <tt>false</tt> for it.
+     * Returns <code>true</code> if and only if this number is positive. Note that {@link #isZero() zero number}
+     * is not positive: this method returns <code>false</code> for it.
      *
      * @return if this value &gt; 0.
      */
@@ -172,8 +172,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this number is negative. Note that {@link #isZero() zero number}
-     * is non-negative: this method returns <tt>false</tt> for it.
+     * Returns <code>true</code> if and only if this number is negative. Note that {@link #isZero() zero number}
+     * is non-negative: this method returns <code>false</code> for it.
      *
      * @return if this value &lt; 0.
      */
@@ -194,7 +194,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * Returns low 64 bits of the absolute value of this number. You can use this method together with
      * {@link #shiftRight(int)} to retrieve any bits of the absolute value.
      *
-     * @return low 64 bits of the absolute value (unsigned <tt>long</tt> value).
+     * @return low 64 bits of the absolute value (unsigned <code>long</code> value).
      */
     public long low64Bits() {
         return low64Bits;
@@ -208,38 +208,39 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *     thisNumber.{@link #shiftRight(int) shiftRight}(64).{@link #low64Bits()}</pre>
      * <p>but this method does not change the state of this object.
      *
-     * @return high 64 bits of the absolute value (unsigned <tt>long</tt> value).
+     * @return high 64 bits of the absolute value (unsigned <code>long</code> value).
      */
     public long high64Bits() {
         return high64Bits;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this number can be <b>exactly</b> represented by <tt>double</tt>
-     * primitive type, i.e. if the number of significant bits is &le;53 (maximal precision of <tt>double</tt> type).
-     * In particular, this method returns <tt>true</tt> if this number is in
+     * Returns <code>true</code> if and only if this number can be <b>exactly</b> represented by <code>double</code>
+     * primitive type, i.e. if the number of significant bits is &le;53
+     * (maximal precision of <code>double</code> type).
+     * In particular, this method returns <code>true</code> if this number is in
      * range&minus;2<sup>53</sup>&le;<i>x</i>&le;2<sup>53</sup>.
      *
-     * <p>In other words, this method returns <tt>true</tt> if and only if the method {@link #toDouble()}
+     * <p>In other words, this method returns <code>true</code> if and only if the method {@link #toDouble()}
      * is performed absolutely exactly, without precision loss.
      *
-     * @return <tt>true</tt> if this number can be <b>exactly</b> represented by <tt>double</tt> type.
+     * @return <code>true</code> if this number can be <b>exactly</b> represented by <code>double</code> type.
      */
     public boolean isExactlyConvertibleToDouble() {
         return numberOfLeadingZeros() + numberOfTrailingZeros() >= 75; // = 128 - 53;
     }
 
     /**
-     * Converts this number into <tt>double</tt> value.
+     * Converts this number into <code>double</code> value.
      * This conversion is similar to the <i>narrowing primitive conversion</i>,
-     * like described in comments to <tt>doubleValue()</tt> method
-     * of the standard <tt>BigInteger</tt>.
+     * like described in comments to <code>doubleValue()</code> method
+     * of the standard <code>BigInteger</code>.
      *
      * <p>Note: the returned value is en exact representation of this number,
      * if the method {@link #isExactlyConvertibleToDouble()} returns true.
      * In this case, the reverse
      *
-     * @return <tt>double</tt>, maximally close to this integer number.
+     * @return <code>double</code>, maximally close to this integer number.
      */
     public double toDouble() {
         if (high64Bits == 0 && low64Bits >= 0) {
@@ -298,26 +299,26 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this number can be represented by <tt>long</tt> primitive type,
+     * Returns <code>true</code> if and only if this number can be represented by <code>long</code> primitive type,
      * i.e. it is in range&minus;2<sup>63</sup>&le;<i>x</i>&le;2<sup>63</sup>&minus;1.
-     * <p>In other words, returns <tt>true</tt> if and only if the method {@link #toLongExact()} does not throw
+     * <p>In other words, returns <code>true</code> if and only if the method {@link #toLongExact()} does not throw
      * an exception.
      *
-     * @return <tt>true</tt> if this number can be represented as <tt>long</tt>.
+     * @return <code>true</code> if this number can be represented as <code>long</code>.
      */
     public boolean isConvertibleToLong() {
         return high64Bits == 0 && (low64Bits >= 0 || (low64Bits == Long.MIN_VALUE && negative));
     }
 
     /**
-     * Returns this number as <tt>long</tt> value, if it is possible (this number is in range
+     * Returns this number as <code>long</code> value, if it is possible (this number is in range
      * &minus;2<sup>63</sup>&le;<i>x</i>&le;2<sup>63</sup>&minus;1). If it is impossible, throws
-     * <tt>ArithmeticException</tt>.
+     * <code>ArithmeticException</code>.
      *
-     * <p>You can check, whether this number can be represented as <tt>long</tt>, with help of
+     * <p>You can check, whether this number can be represented as <code>long</code>, with help of
      * {@link #isConvertibleToLong()} method.
      *
-     * @return this number, represented by <tt>long</tt> type.
+     * @return this number, represented by <code>long</code> type.
      * @throws ArithmeticException in a case of arithmetic overflow.
      */
     public long toLongExact() {
@@ -329,9 +330,9 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Converts this number into <tt>BigInteger</tt>.
+     * Converts this number into <code>BigInteger</code>.
      *
-     * @return <tt>BigInteger</tt> value, containing the same integer value.
+     * @return <code>BigInteger</code> value, containing the same integer value.
      */
     public BigInteger toBigInteger() {
         BigInteger result = BigInteger.valueOf(high64Bits & Long.MAX_VALUE);
@@ -364,9 +365,9 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this number to be equal to the passed <tt>long</tt> value.
+     * Sets this number to be equal to the passed <code>long</code> value.
      *
-     * @param value some <tt>long</tt> value.
+     * @param value some <code>long</code> value.
      * @return a reference to this object.
      */
     public MutableInt128 setToLong(long value) {
@@ -378,9 +379,9 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this number to be equal to the passed <tt>long</tt> value, interpreted as unsigned 64-bit value.
+     * Sets this number to be equal to the passed <code>long</code> value, interpreted as unsigned 64-bit value.
      *
-     * @param value some <tt>long</tt> value (interpreted as unsigned 64-bit integer).
+     * @param value some <code>long</code> value (interpreted as unsigned 64-bit integer).
      * @return a reference to this object.
      */
     public MutableInt128 setToUnsignedLong(long value) {
@@ -391,10 +392,10 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this number to be truncated 128-bit long approximation of the passed <tt>double</tt> value.
-     * This conversion is similar to the <i>narrowing primitive conversion</i> <tt>(long)value</tt>.
+     * Sets this number to be truncated 128-bit long approximation of the passed <code>double</code> value.
+     * This conversion is similar to the <i>narrowing primitive conversion</i> <code>(long)value</code>.
      *
-     * @param value some <tt>double</tt> value.
+     * @param value some <code>double</code> value.
      * @return a reference to this object.
      */
     public MutableInt128 setToDouble(double value) {
@@ -470,13 +471,13 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns the bit #<tt>index</tt> of the absolute value of this number. For example,
-     * if <tt>index==0</tt>, this method returns <tt>true</tt> when this number is odd.
-     * If <tt>index</tt> is too large (&ge;128), this method returns <tt>false</tt>.
+     * Returns the bit #<code>index</code> of the absolute value of this number. For example,
+     * if <code>index==0</code>, this method returns <code>true</code> when this number is odd.
+     * If <code>index</code> is too large (&ge;128), this method returns <code>false</code>.
      *
      * @param index index of the bit of this number.
      * @return value of this bit.
-     * @throws IllegalArgumentException if <tt>index</tt> argument is negative.
+     * @throws IllegalArgumentException if <code>index</code> argument is negative.
      */
     public boolean getBit(int index) {
         if (index < 0) {
@@ -493,13 +494,13 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets the bit #<tt>index</tt> of the absolute value of this number to the given value.
-     * If <tt>index</tt> is too large (&ge;128), this method does nothing.
+     * Sets the bit #<code>index</code> of the absolute value of this number to the given value.
+     * If <code>index</code> is too large (&ge;128), this method does nothing.
      *
      * @param index index of the bit of this number.
-     * @param value new value of the bit (<tt>true</tt> is 1, <tt>false</tt> is 0).
+     * @param value new value of the bit (<code>true</code> is 1, <code>false</code> is 0).
      * @return a reference to this object.
-     * @throws IllegalArgumentException if <tt>index</tt> argument is negative.
+     * @throws IllegalArgumentException if <code>index</code> argument is negative.
      */
     public MutableInt128 setBit(int index, boolean value) {
         if (index < 0) {
@@ -529,14 +530,14 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * As the result, this number <i>x</i> is changed to
      * <pre>    <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)/2<sup>shift</sup> : <i>x</i>/2<sup>shift</sup>.</pre>
      *
-     * <p>If the argument <tt>shift</tt> is too large (&ge;128), the method sets this number to zero.
+     * <p>If the argument <code>shift</code> is too large (&ge;128), the method sets this number to zero.
      *
-     * <p>Shifting by 0 bits (<tt>shift=0</tt>) or shifting zero value with any <tt>shift</tt>
+     * <p>Shifting by 0 bits (<code>shift=0</code>) or shifting zero value with any <code>shift</code>
      * does not change the number.</p>
      *
      * @param shift number of bits to shift.
      * @return a reference to this object.
-     * @throws IllegalArgumentException if <tt>shift</tt> argument is negative.
+     * @throws IllegalArgumentException if <code>shift</code> argument is negative.
      */
     public MutableInt128 shiftRight(int shift) {
         if (shift < 0) {
@@ -566,14 +567,14 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <pre>    <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)*2<sup>shift</sup> : <i>x</i>*2<sup>shift</sup>.</pre>
      *
      * <p>If the resulting absolute value cannot be represented by 128-bit number, in particular,
-     * if current number is non-zero and shift&ge;128, the method throws <tt>ArithmeticException</tt>.
+     * if current number is non-zero and shift&ge;128, the method throws <code>ArithmeticException</code>.
      *
-     * <p>Shifting by 0 bits (<tt>shift=0</tt>) or shifting zero value with any <tt>shift</tt>
+     * <p>Shifting by 0 bits (<code>shift=0</code>) or shifting zero value with any <code>shift</code>
      * does not change the number.
      *
      * @param shift number of bits to shift.
      * @return a reference to this object.
-     * @throws IllegalArgumentException if <tt>shift</tt> argument is negative.
+     * @throws IllegalArgumentException if <code>shift</code> argument is negative.
      * @throws ArithmeticException      in a case of arithmetic overflow.
      */
     public MutableInt128 shiftLeft(int shift) {
@@ -613,17 +614,17 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * the result is the 128-bit integer value, which is even.
      * In other words, this number <i>x</i> is changed to
      * <pre>    [<i>x</i>/2.0<sup>shift</sup>],</pre>
-     * where <tt>[<i>w</i>]</tt> means the mathematical integer, closest to <tt><i>w</i></tt>,
-     * like in <tt>Math.rint()</tt> method.
+     * where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
+     * like in <code>Math.rint()</code> method.
      *
-     * <p>If the argument <tt>shift</tt> is too large (&ge;128), the method sets this number to zero.
+     * <p>If the argument <code>shift</code> is too large (&ge;128), the method sets this number to zero.
      *
-     * <p>Shifting by 0 bits (<tt>shift=0</tt>) or shifting zero value with any <tt>shift</tt>
+     * <p>Shifting by 0 bits (<code>shift=0</code>) or shifting zero value with any <code>shift</code>
      * does not change the number.</p>
      *
      * @param shift number of bits to shift.
      * @return a reference to this object.
-     * @throws IllegalArgumentException if <tt>shift</tt> argument is negative.
+     * @throws IllegalArgumentException if <code>shift</code> argument is negative.
      */
     public MutableInt128 shiftRightRounding(int shift) {
         if (shift < 0) {
@@ -685,7 +686,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Replaces all bits of the absolute value of this number with bitwise AND of this and other number:
-     * <tt>|this| = |this| &amp; |other|</tt>.
+     * <code>|this| = |this| &amp; |other|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number was non-zero,
      * but the result is zero (i.e. not positive and not negative).
@@ -701,7 +702,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Replaces all bits of the absolute value of this number with bitwise OR of this and other number:
-     * <tt>|this| = |this| | |other|</tt>.
+     * <code>|this| = |this| | |other|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number was zero,
      * but the result is nonzero (i.e. positive or negative).
@@ -717,7 +718,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Replaces all bits of the absolute value of this number with bitwise XOR of this and other number:
-     * <tt>|this| = |this| ^ |other|</tt>.
+     * <code>|this| = |this| ^ |other|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number or the result
      * is zero (i.e. not positive and not negative).
@@ -733,7 +734,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Inverts all bits of the absolute value of this number:
-     * <tt>|this| = ~|this|</tt>.
+     * <code>|this| = ~|this|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number or the result
      * is zero (i.e. not positive and not negative).
@@ -751,7 +752,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * ("leftmost") one-bit in the 128-bit absolute value of this number.
      * Returns 128 if this number is zero.
      *
-     * <p>It is a 128-bit analogue of the standard <tt>Long.numberOfLeadingZeros</tt> method,
+     * <p>It is a 128-bit analogue of the standard <code>Long.numberOfLeadingZeros</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
      * @return the number of leading zero bits in the absolute value of this number, or 128 for zero number.
@@ -765,7 +766,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * one-bit in the 128-bit absolute value of this number.
      * Returns 128 if this number is zero.
      *
-     * <p>It is a 128-bit analogue of the standard <tt>Long.numberOfTrailingZeros</tt> method,
+     * <p>It is a 128-bit analogue of the standard <code>Long.numberOfTrailingZeros</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
      * @return the number of trailing zero bits in the absolute value of this number, or 128 for zero number.
@@ -777,7 +778,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Returns the number of one-bits in the 128-bit absolute value of this number.
      *
-     * <p>It is a 128-bit analogue of the standard <tt>Long.bitCount</tt> method,
+     * <p>It is a 128-bit analogue of the standard <code>Long.bitCount</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
      * @return the number of one-bits in the binary representation of the absolute value of this number.
@@ -810,7 +811,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Adds the given <tt>other</tt> number to this one and stores the sum in this object.
+     * Adds the given <code>other</code> number to this one and stores the sum in this object.
      *
      * @return a reference to this object.
      * @throws ArithmeticException  in a case of arithmetic overflow.
@@ -822,7 +823,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Subtracts the given <tt>other</tt> number from this one and stores the difference in this object.
+     * Subtracts the given <code>other</code> number from this one and stores the difference in this object.
      *
      * @return a reference to this object.
      * @throws ArithmeticException  in a case of arithmetic overflow.
@@ -836,7 +837,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Adds the given integer value to this number.
      *
-     * @param value any <tt>long</tt> value to add.
+     * @param value any <code>long</code> value to add.
      * @return a reference to this object.
      * @throws ArithmeticException in a case of arithmetic overflow.
      */
@@ -847,7 +848,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this object to be equal to the exact product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt>.
+     * Sets this object to be equal to the exact product <code>firstMultiplier</code>*<code>secondMultiplier</code>.
      *
      * @param firstMultiplier  first multiplicand.
      * @param secondMultiplier second multiplicand.
@@ -885,7 +886,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this object to be equal to the exact product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt>.
+     * Sets this object to be equal to the exact product <code>firstMultiplier</code>*<code>secondMultiplier</code>.
      *
      * <p>Note: this method works faster than {@link #setToLongLongProduct(long, long)}.
      *
@@ -910,7 +911,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this object to be equal to the exact unsigned product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt>,
+     * Sets this object to be equal to the exact unsigned product
+     * <code>firstMultiplier</code>*<code>secondMultiplier</code>,
      * where the arguments are interpreted as unsigned 64-bit integers. The result is always non-negative.
      *
      * <p>Note: this method works little faster than {@link #setToLongLongProduct(long, long)}.
@@ -948,7 +950,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this object to be equal to the exact square of the given value: <tt>value</tt>*<tt>value</tt>.
+     * Sets this object to be equal to the exact square of the given value: <code>value</code>*<code>value</code>.
      * Equivalent to
      * <pre>    {@link #setToLongLongProduct(long, long) setToLongLongProduct(value, value)}
      * </pre>
@@ -983,7 +985,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Calculate exact product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt> and adds it to this number.
+     * Calculate exact product <code>firstMultiplier</code>*<code>secondMultiplier</code> and adds it to this number.
      * Equivalent to
      * <pre>    {@link #add(MutableInt128) add}(new {@link #MutableInt128()
      * MutableLongLong}().{@link #setToLongLongProduct(long, long)
@@ -1027,7 +1029,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Calculate exact product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt> and adds it to this number.
+     * Calculate exact product <code>firstMultiplier</code>*<code>secondMultiplier</code> and adds it to this number.
      * Equivalent to
      * <pre>    {@link #add(MutableInt128) add}(new {@link #MutableInt128()
      * MutableLongLong}().{@link #setToLongIntProduct(long, int)
@@ -1058,7 +1060,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Calculate exact unsigned product <tt>firstMultiplier</tt>*<tt>secondMultiplier</tt>,
+     * Calculate exact unsigned product <code>firstMultiplier</code>*<code>secondMultiplier</code>,
      * where the arguments are interpreted as unsigned (non-negative) 64-bit integers,
      * and adds it to this number.
      * Equivalent to
@@ -1102,7 +1104,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Calculate exact exact square of the given value: <tt>value</tt>*<tt>value</tt>
+     * Calculate exact exact square of the given value: <code>value</code>*<code>value</code>
      * and adds it to this number.
      * Equivalent to
      * <pre>    {@link #add(MutableInt128) add}(new {@link #MutableInt128()
@@ -1205,7 +1207,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * are always equal, regardless on possible calling {@link #negate()} method.
      *
      * @param o the object to be compared for equality with this instance.
-     * @return <tt>true</tt> if and only if the specified object is an instance of {@link MutableInt128},
+     * @return <code>true</code> if and only if the specified object is an instance of {@link MutableInt128},
      * containing the same mathematical integer number as this object.
      */
     @Override
@@ -1240,14 +1242,14 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Converts the passed value, interpreted as unsigned 64-bit value, into <tt>double</tt>, and returns it.
+     * Converts the passed value, interpreted as unsigned 64-bit value, into <code>double</code>, and returns it.
      * The result of this method is always non-negative.
      * This conversion is similar to the <i>narrowing primitive conversion</i>,
-     * like described in comments to <tt>doubleValue()</tt> method
-     * of the standard <tt>BigInteger</tt>.
+     * like described in comments to <code>doubleValue()</code> method
+     * of the standard <code>BigInteger</code>.
      *
-     * @param value some <tt>long</tt> value (interpreted as unsigned 64-bit integer).
-     * @return <tt>double</tt>, maximally close to this unsigned 64-bit integer number.
+     * @param value some <code>long</code> value (interpreted as unsigned 64-bit integer).
+     * @return <code>double</code>, maximally close to this unsigned 64-bit integer number.
      */
     public static double unsignedToDouble(long value) {
         if (value >= 0) {
@@ -1279,21 +1281,21 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Divides the given value by 2<sup>shift</sup> and rounds the result to the closest
-     * <tt>long</tt> value. If two integer numbers are equally close to the result of division,
-     * the result is the <tt>long</tt> integer value, which is even.
+     * <code>long</code> value. If two integer numbers are equally close to the result of division,
+     * the result is the <code>long</code> integer value, which is even.
      * In other words, this method returns
      * <pre>    [value/2.0<sup>shift</sup>],</pre>
-     * where <tt>[<i>w</i>]</tt> means the mathematical integer, closest to <tt><i>w</i></tt>,
-     * like in <tt>Math.rint()</tt> method.
+     * where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
+     * like in <code>Math.rint()</code> method.
      *
-     * <p>If the argument <tt>shift</tt> is too large (&ge;64), the method returns 0.
+     * <p>If the argument <code>shift</code> is too large (&ge;64), the method returns 0.
      *
-     * <p>Shifting by 0 bits (<tt>shift=0</tt>) returns unchanged <tt>value</tt>.</p>
+     * <p>Shifting by 0 bits (<code>shift=0</code>) returns unchanged <code>value</code>.</p>
      *
-     * @param value some (signed) <tt>long</tt> value.
+     * @param value some (signed) <code>long</code> value.
      * @param shift number of bits to shift.
-     * @return the <tt>long</tt> integer, closest to <tt>value/2.0<sup>shift</sup></tt>.
-     * @throws IllegalArgumentException if <tt>shift</tt> argument is negative.
+     * @return the <code>long</code> integer, closest to <code>value/2.0<sup>shift</sup></code>.
+     * @throws IllegalArgumentException if <code>shift</code> argument is negative.
      */
     public static long shiftRightRounding(long value, int shift) {
         if (shift < 0) {
@@ -1317,19 +1319,19 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
 
     /**
      * Divides the given value, interpreted as unsigned 64-bit value, by 2<sup>shift</sup>
-     * and rounds the result to the closest unsigned 64-bit <tt>long</tt> value.
+     * and rounds the result to the closest unsigned 64-bit <code>long</code> value.
      * If two integer numbers are equally close to the result of division,
      * the result is the unsigned 64-bit integer value, which is even.
      * It is an unsigned analogue of {@link #shiftRightRounding(long, int)} method.
      *
-     * <p>If the argument <tt>shift</tt> is too large (&ge;64), the method returns 0.
+     * <p>If the argument <code>shift</code> is too large (&ge;64), the method returns 0.
      *
-     * <p>Shifting by 0 bits (<tt>shift=0</tt>) returns unchanged <tt>value</tt>.</p>
+     * <p>Shifting by 0 bits (<code>shift=0</code>) returns unchanged <code>value</code>.</p>
      *
      * @param value some (unsigned) 64-bit integer value.
      * @param shift number of bits to shift.
-     * @return the 64-bit unsigned integer, closest to <tt>value/2.0<sup>shift</sup></tt>.
-     * @throws IllegalArgumentException if <tt>shift</tt> argument is negative.
+     * @return the 64-bit unsigned integer, closest to <code>value/2.0<sup>shift</sup></code>.
+     * @throws IllegalArgumentException if <code>shift</code> argument is negative.
      */
     public static long unsignedShiftRightRounding(long value, int shift) {
         if (shift < 0) {

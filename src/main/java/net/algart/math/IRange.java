@@ -28,29 +28,29 @@ import java.util.Objects;
 
 /**
  * <p>Numeric inclusive integer range:
- * a set of <tt>long</tt> numbers <tt>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</tt>.
+ * a set of <code>long</code> numbers <code>{@link #min() min()}&lt;=<i>x</i>&lt;={@link #max() max()}</code>.
  * An advanced analog of
  * <a href="http://commons.apache.org/lang/api-2.4/org/apache/commons/lang/math/LongRange.html"
  * id="dummy">org.apache.commons.lang.math.LongRange</a>.
  *
  * <p>The minimum number ({@link #min()}) is never greater than the maximum number ({@link #max()}),
  * both minimal and maximum numbers {@link #min()} and ({@link #max()}) are always in range
- * <nobr><tt>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</tt></nobr>,
- * and their difference is always <i>less</i> than <tt>Long.MAX_VALUE</tt>.
- * In other words, <nobr>"<tt>{@link #max()}-{@link #min()}+1</tt>"</nobr> expression,
+ * <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>,
+ * and their difference is always <i>less</i> than <code>Long.MAX_VALUE</code>.
+ * In other words, <nobr>"<code>{@link #max()}-{@link #min()}+1</code>"</nobr> expression,
  * returned by {@link #size()} method, and also
- * <nobr>"<tt>{@link #min()}-1</tt>"</nobr>, <nobr>"<tt>{@link #min()}-2</tt>"</nobr> and
- * <nobr>"<tt>{@link #max()}+1</tt>"</nobr> expressions
+ * <nobr>"<code>{@link #min()}-1</code>"</nobr>, <nobr>"<code>{@link #min()}-2</code>"</nobr> and
+ * <nobr>"<code>{@link #max()}+1</code>"</nobr> expressions
  * are always calculated without overflow.
  *
  * <p>Please draw attention to the important effect of the requirement above.
  * <b>If <i>a</i>..<i>b</i> is an allowed range</b> (<i>a</i>={@link #min()}, <i>b</i>={@link #max()}),
  * <b>then 0..<i>b</i>&minus;<i>a</i> and <i>a</i>&minus;<i>b</i>..0 are also allowed ranges</b>.
  * Really, they have the same difference
- * <nobr><tt>{@link #max()}-{@link #min()}</tt>=<i>b</i>&minus;<i>a</i>=<i>diff</i></nobr>,
- * and so far as this difference <i>diff</i>&lt;<tt>Long.MAX_VALUE</tt>, both new bounds
+ * <nobr><code>{@link #max()}-{@link #min()}</code>=<i>b</i>&minus;<i>a</i>=<i>diff</i></nobr>,
+ * and so far as this difference <i>diff</i>&lt;<code>Long.MAX_VALUE</code>, both new bounds
  * <i>b</i>&minus;<i>a</i>=<i>diff</i> and <i>a</i>&minus;<i>b</i>=&minus;<i>diff</i> are also
- * inside the required range <nobr><tt>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</tt></nobr>.</p>
+ * inside the required range <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -70,19 +70,19 @@ public final class IRange {
 
     /**
      * Returns an instance of this class describing the range
-     * <tt>min&lt;=<i>x</i>&lt;=max</tt>.
-     * The <tt>min</tt> value must not be greater than <tt>max</tt>,
-     * both values must be in range <nobr><tt>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</tt></nobr>,
-     * and the difference <tt>max-min</tt> must be <i>less</i> than <tt>Long.MAX_VALUE</tt>.
+     * <code>min&lt;=<i>x</i>&lt;=max</code>.
+     * The <code>min</code> value must not be greater than <code>max</code>,
+     * both values must be in range <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>,
+     * and the difference <code>max-min</code> must be <i>less</i> than <code>Long.MAX_VALUE</code>.
      *
      * @param min the minimum number in the range, inclusive.
      * @param max the maximum number in the range, inclusive.
      * @return    the new range.
-     * @throws IllegalArgumentException if <tt>min &gt; max</tt>, or if <tt>max-min &gt;= Long.MAX_VALUE</tt>
-     *                                  (more precisely, if the Java expression <tt>max-min+1</tt> is nonpositive
+     * @throws IllegalArgumentException if <code>min &gt; max</code>, or if <code>max-min &gt;= Long.MAX_VALUE</code>
+     *                                  (more precisely, if the Java expression <code>max-min+1</code> is nonpositive
      *                                  due to integer overflow),
-     *                                  or if <nobr><tt>min&lt;=-Long.MAX_VALUE</tt></nobr>,
-     *                                  or if <nobr><tt>max==Long.MAX_VALUE</tt></nobr>.
+     *                                  or if <nobr><code>min&lt;=-Long.MAX_VALUE</code></nobr>,
+     *                                  or if <nobr><code>max==Long.MAX_VALUE</code></nobr>.
      */
     public static IRange valueOf(long min, long max) {
         return valueOf(min, max, false);
@@ -90,7 +90,7 @@ public final class IRange {
 
     /**
      * Returns an instance of this class describing the same range as the given real range,
-     * with bounds, truncated to integers by Java typecast <tt>(long)doubleValue</tt>.
+     * with bounds, truncated to integers by Java typecast <code>(long)doubleValue</code>.
      * Equivalent to
      * <pre>{@link #valueOf(long, long) valueOf}((long)range.{@link Range#min()
      * min()}, (long)range.{@link Range#max() max())}</pre>
@@ -125,10 +125,10 @@ public final class IRange {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the arguments <tt>min</tt> and <tt>max</tt> are allowed
+     * Returns <code>true</code> if and only if the arguments <code>min</code> and <code>max</code> are allowed
      * {@link #min()}/{@link #max()} bounds for some instance of this class. In other words,
-     * this method returns <tt>false</tt> in the same situations, when {@link #valueOf(long min, long max)}
-     * method, called with the same arguments, throws <tt>IllegalArgumentException</tt>.
+     * this method returns <code>false</code> in the same situations, when {@link #valueOf(long min, long max)}
+     * method, called with the same arguments, throws <code>IllegalArgumentException</code>.
      *
      * <p>Equivalent to the following check:
      * <pre>
@@ -163,16 +163,16 @@ public final class IRange {
     }
 
     /**
-     * Returns <tt>{@link #max()}-{@link #min()}+1</tt>.
+     * Returns <code>{@link #max()}-{@link #min()}+1</code>.
      *
-     * @return <tt>{@link #max()}-{@link #min()}+1</tt>.
+     * @return <code>{@link #max()}-{@link #min()}+1</code>.
      */
     public long size() {
         return max - min + 1;
     }
 
     /**
-     * Returns <tt>value&lt;{@link #min()}?{@link #min()}:value&gt;{@link #max()}?{@link #max()}:value</tt>.
+     * Returns <code>value&lt;{@link #min()}?{@link #min()}:value&gt;{@link #max()}?{@link #max()}:value</code>.
      * In other words, returns the passed number if it is in this range or the nearest range bound in other cases.
      *
      * @param value some number.
@@ -183,32 +183,32 @@ public final class IRange {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=value&lt;={@link #max()}</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=value&lt;={@link #max()}</code>.
      *
      * @param value the checked value.
-     * @return      <tt>true</tt> if the value is in this range.
+     * @return      <code>true</code> if the value is in this range.
      */
     public boolean contains(long value) {
         return min <= value && value <= max;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=range.{@link #min()}</tt>
-     * and <tt>range.{@link #max()}&lt;={@link #max()}</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=range.{@link #min()}</code>
+     * and <code>range.{@link #max()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <tt>true</tt> if the checked range is a subset of this range.
+     * @return      <code>true</code> if the checked range is a subset of this range.
      */
     public boolean contains(IRange range) {
         return min <= range.min && range.max <= max;
     }
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #min()}&lt;=range.{@link #max()}</tt>
-     * and <tt>range.{@link #min()}&lt;={@link #max()}</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=range.{@link #max()}</code>
+     * and <code>range.{@link #min()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <tt>true</tt> if the checked range overlaps with this range.
+     * @return      <code>true</code> if the checked range overlaps with this range.
      */
     public boolean intersects(IRange range) {
         return min <= range.max && range.min <= max;
@@ -222,9 +222,10 @@ public final class IRange {
      *
      * @param value some value that should belong to the new range.
      * @return      the expanded range.
-     * @throws IllegalArgumentException if <nobr><tt>value==Long.MAX_VALUE</tt></nobr>,
-     *                                  <nobr><tt>value&lt;=-Long.MAX_VALUE</tt></nobr> or
-     *                                  if in the resulting range <nobr><tt>max-min &gt;= Long.MAX_VALUE</tt></nobr>.
+     * @throws IllegalArgumentException if <nobr><code>value==Long.MAX_VALUE</code></nobr>,
+     *                                  <nobr><code>value&lt;=-Long.MAX_VALUE</code></nobr> or
+     *                                  if in the resulting range
+     *                                  <nobr><code>max-min &gt;= Long.MAX_VALUE</code></nobr>.
      */
     public IRange expand(long value) {
         if (value == Long.MAX_VALUE)
@@ -240,7 +241,7 @@ public final class IRange {
     }
 
     /**
-     * Equivalent to <tt>{@link Range#valueOf(IRange) Range.valueOf}(thisInstance)</tt>.
+     * Equivalent to <code>{@link Range#valueOf(IRange) Range.valueOf}(thisInstance)</code>.
      *
      * @return the equivalent real range.
      */
@@ -273,11 +274,11 @@ public final class IRange {
 
     /**
      * Indicates whether some other range is equal to this instance.
-     * Returns <tt>true</tt> if and only if <tt>obj instanceof IRange</tt>,
-     * <tt>((IRange)obj).min()==this.min()</tt> and <tt>((IRange)obj).max==this.max</tt>.
+     * Returns <code>true</code> if and only if <code>obj instanceof IRange</code>,
+     * <code>((IRange)obj).min()==this.min()</code> and <code>((IRange)obj).max==this.max</code>.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <tt>true</tt> if the specified object is a range equal to this one.
+     * @return    <code>true</code> if the specified object is a range equal to this one.
      */
     public boolean equals(Object obj) {
         return obj instanceof IRange && ((IRange)obj).min == this.min && ((IRange)obj).max == this.max;
