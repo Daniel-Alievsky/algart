@@ -110,8 +110,13 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         String formatName = extension(file);
+        writeBufferedImage(file, image, formatName);
+    }
+
+    public static void writeBufferedImage(Path file, BufferedImage image, String formatName) throws IOException {
+        Objects.requireNonNull(formatName, "Null formatName");
         if (!ImageIO.write(image, formatName, file.toFile())) {
-            throw new IOException("Cannot write " + file + ": no \"" + formatName +
+            throw new UnsupportedImageFormatException("Cannot write " + file + ": no \"" + formatName +
                     "\" format writer for this image type (" + image + ")");
         }
     }
@@ -123,7 +128,7 @@ public class MatrixIO {
         }
         BufferedImage image = ImageIO.read(file.toFile());
         if (image == null) {
-            throw new IIOException("Cannot read " + file + ": no suitable reader");
+            throw new UnsupportedImageFormatException("Cannot read " + file + ": no suitable reader");
         }
         return image;
     }
