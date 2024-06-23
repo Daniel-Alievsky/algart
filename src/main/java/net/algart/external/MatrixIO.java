@@ -199,7 +199,9 @@ public class MatrixIO {
         if (image.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
         }
-        Files.createDirectory(folder);
+        if (!Files.exists(folder)) {
+            Files.createDirectory(folder);
+        }
         File f = folder.toFile();
         Files.writeString(new File(f, "version").toPath(), "1.0");
         int index = 0;
@@ -215,10 +217,8 @@ public class MatrixIO {
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(m, 0);
                 PArray raw = LargeMemoryModel.getRawArrayForSavingInFile(m);
                 assert raw != null : "Null raw array for LargeMemoryModel";
-                String text1 = mi.toChars();
-                Files.writeString(infFile.toPath(), text1);
-                String text = lmm.getDataFilePath(raw).toString();
-                Files.writeString(refFile.toPath(), text);
+                Files.writeString(infFile.toPath(), mi.toChars());
+                Files.writeString(refFile.toPath(), lmm.getDataFilePath(raw).toString());
                 raw.flushResources(null, true);
             } else {
                 File infFile = new File(f, index + ".inf");
@@ -229,8 +229,7 @@ public class MatrixIO {
                 LargeMemoryModel.setTemporary(clone.array(), false);
                 clone = clone.structureLike(m);
                 MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(clone, 0);
-                String text = mi.toChars();
-                Files.writeString(infFile.toPath(), text);
+                Files.writeString(infFile.toPath(), mi.toChars());
                 clone.array().copy(m.array());
                 clone.array().freeResources(null, true);
                 // - close file to allow possible deletion
