@@ -601,8 +601,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
-     * loadResources}(context)</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
+     * loadResources}(context)</nobr></code> call.
      * This default implementation calls {@link #loadResources(ArrayContext) loadResources(c)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray
@@ -628,8 +628,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
-     * flushResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
+     * flushResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #flushResources(ArrayContext, boolean)
      * flushResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
@@ -661,8 +661,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
-     * freeResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
+     * freeResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #freeResources(ArrayContext, boolean)
      * freeResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)

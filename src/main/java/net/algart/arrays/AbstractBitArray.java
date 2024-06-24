@@ -844,7 +844,7 @@ public abstract class AbstractBitArray extends AbstractArray implements BitArray
      * @param destArray       the target packed bit array.
      * @param destArrayOffset starting position in the target packed bit array.
      * @param count           the number of bits to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
      * @see BitArray#getData(long, Object, int, int)
      * @see UpdatableBitArray#setBits(long, long[], long, long)
@@ -867,10 +867,10 @@ public abstract class AbstractBitArray extends AbstractArray implements BitArray
     }
 
     /**
-     * This implementation returns <tt>-1</tt> always.
+     * This implementation returns <code>-1</code> always.
      *
      * @param position some index inside this bit array.
-     * @return <tt>-1</tt>.
+     * @return <code>-1</code>.
      */
     public long nextQuickPosition(long position) {
         return -1;

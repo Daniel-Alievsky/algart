@@ -40,15 +40,15 @@ public interface MutablePFixedArray
         extends UpdatablePFixedArray, MutablePArray {
     /**
      * Removes the last element at this array and returns its value,
-     * converted to <tt>long</tt>:
-     * <tt>(long)value&amp;0xFF</tt> for <tt>byte</tt> value,
-     * <tt>(long)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(long)value</tt> for <tt>int</tt>, <tt>long</tt> or <tt>char</tt> values,
-     * or as <tt>value?1:0</tt> for <tt>boolean</tt> values.
+     * converted to <code>long</code>:
+     * <code>(long)value&amp;0xFF</code> for <code>byte</code> value,
+     * <code>(long)value&amp;0xFFFF</code> for <code>short</code> value,
+     * <code>(long)value</code> for <code>int</code>, <code>long</code> or <code>char</code> values,
+     * or as <code>value?1:0</code> for <code>boolean</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * excepting the case of very large <tt>long</tt> elements.
-     * If this array {@link #isEmpty() is empty}, the method throws <tt>EmptyStackException</tt>.
+     * excepting the case of very large <code>long</code> elements.
+     * If this array {@link #isEmpty() is empty}, the method throws <code>EmptyStackException</code>.
      *
      * <p>Depending on the specific subinterface implemented by the object,
      * this method is equivalent to one of the following expressions:</p>
@@ -70,18 +70,18 @@ public interface MutablePFixedArray
 
     /**
      * Removes the last element at this array and returns its value,
-     * converted to <tt>long</tt>:
-     * <tt>(int)value&amp;0xFF</tt> for <tt>byte</tt> value,
-     * <tt>(int)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(int)value</tt> for <tt>int</tt> or <tt>char</tt> values,
-     * <tt>value?1:0</tt> for <tt>boolean</tt> values,
-     * <tt>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</tt> (i&#46;e&#46; the value
-     * truncated to the range <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt>)
-     * for <tt>long</tt> values.
+     * converted to <code>long</code>:
+     * <code>(int)value&amp;0xFF</code> for <code>byte</code> value,
+     * <code>(int)value&amp;0xFFFF</code> for <code>short</code> value,
+     * <code>(int)value</code> for <code>int</code> or <code>char</code> values,
+     * <code>value?1:0</code> for <code>boolean</code> values,
+     * <code>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</code> (i&#46;e&#46; the value
+     * truncated to the range <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code>)
+     * for <code>long</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * if it is not an array of <tt>long</tt>, <tt>float</tt> or <tt>double</tt> elements.
-     * If this array {@link #isEmpty() is empty}, the method throws <tt>EmptyStackException</tt>.
+     * if it is not an array of <code>long</code>, <code>float</code> or <code>double</code> elements.
+     * If this array {@link #isEmpty() is empty}, the method throws <code>EmptyStackException</code>.
      *
      * <p>Depending on the specific subinterface implemented by the object,
      * this method is equivalent to one of the following expressions:</p>

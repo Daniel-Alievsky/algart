@@ -31,8 +31,8 @@ package net.algart.arrays;
  */
 interface DataBitStorage {
     /**
-     * Copies <tt>count</tt> bits of this storage, starting from <tt>pos</tt> index,
-     * into the specified packed bit array, starting from <tt>destArrayOffset</tt> index.
+     * Copies <code>count</code> bits of this storage, starting from <code>pos</code> index,
+     * into the specified packed bit array, starting from <code>destArrayOffset</code> index.
      *
      * @param pos             starting position in the stored AlgART array (not sub-array).
      * @param destArray       the target packed bit array.
@@ -43,9 +43,9 @@ interface DataBitStorage {
     void getBits(long pos, long[] destArray, long destArrayOffset, long count);
 
     /**
-     * Copies <tt>count</tt> bits from the specified packed bit array,
-     * starting from <tt>srcArrayOffset</tt> index,
-     * into this storage, starting from <tt>pos</tt> index.
+     * Copies <code>count</code> bits from the specified packed bit array,
+     * starting from <code>srcArrayOffset</code> index,
+     * into this storage, starting from <code>pos</code> index.
      *
      * @param pos            starting position in the stored AlgART array (not sub-array).
      * @param srcArray       the source packed bit array.
@@ -56,10 +56,10 @@ interface DataBitStorage {
     void setBits(long pos, long[] srcArray, long srcArrayOffset, long count);
 
     /**
-     * Replaces <tt>count</tt> bits in the specified packed bit array,
-     * starting from <tt>destArrayOffset</tt> index,
-     * with the logical AND of them and corresponding <tt>count</tt>
-     * bits of this storage, starting from <tt>pos</tt> index.
+     * Replaces <code>count</code> bits in the specified packed bit array,
+     * starting from <code>destArrayOffset</code> index,
+     * with the logical AND of them and corresponding <code>count</code>
+     * bits of this storage, starting from <code>pos</code> index.
      *
      * @param pos             starting position in the stored AlgART array (not sub-array).
      * @param destArray       the target Java array.
@@ -69,10 +69,10 @@ interface DataBitStorage {
     void andBits(long pos, long[] destArray, long destArrayOffset, long count);
 
     /**
-     * Replaces <tt>count</tt> bits in the specified packed bit array,
-     * starting from <tt>destArrayOffset</tt> index,
-     * with the logical OR of them and corresponding <tt>count</tt>
-     * bits of this storage, starting from <tt>pos</tt> index.
+     * Replaces <code>count</code> bits in the specified packed bit array,
+     * starting from <code>destArrayOffset</code> index,
+     * with the logical OR of them and corresponding <code>count</code>
+     * bits of this storage, starting from <code>pos</code> index.
      *
      * @param pos             starting position in the stored AlgART array (not sub-array).
      * @param destArray       the target Java array.
@@ -82,10 +82,10 @@ interface DataBitStorage {
     void orBits(long pos, long[] destArray, long destArrayOffset, long count);
 
     /**
-     * Replaces <tt>count</tt> bits in the specified packed bit array,
-     * starting from <tt>destArrayOffset</tt> index,
-     * with the logical XOR of them and corresponding <tt>count</tt>
-     * bits of this storage, starting from <tt>pos</tt> index.
+     * Replaces <code>count</code> bits in the specified packed bit array,
+     * starting from <code>destArrayOffset</code> index,
+     * with the logical XOR of them and corresponding <code>count</code>
+     * bits of this storage, starting from <code>pos</code> index.
      *
      * @param pos             starting position in the stored AlgART array (not sub-array).
      * @param destArray       the target Java array.
@@ -95,10 +95,10 @@ interface DataBitStorage {
     void xorBits(long pos, long[] destArray, long destArrayOffset, long count);
 
     /**
-     * Replaces <tt>count</tt> bits in the specified packed bit array,
-     * starting from <tt>destArrayOffset</tt> index,
-     * with the logical AND of them and <i>inverted</i> corresponding <tt>count</tt>
-     * bits of this storage, starting from <tt>pos</tt> index.
+     * Replaces <code>count</code> bits in the specified packed bit array,
+     * starting from <code>destArrayOffset</code> index,
+     * with the logical AND of them and <i>inverted</i> corresponding <code>count</code>
+     * bits of this storage, starting from <code>pos</code> index.
      *
      * @param pos             starting position in the stored AlgART array (not sub-array).
      * @param destArray       the target Java array.
