@@ -191,8 +191,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * always corresponds to the element of the source matrix <code>m</code>
          * with the coordinates
-         * <nobr><tt><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></tt></nobr>,
+         * <nobr><code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code></nobr>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -220,9 +220,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><tt>m.{@link Matrix#cyclicIndex(long...)
+         * with the index <nobr><code>m.{@link Matrix#cyclicIndex(long...)
          * cyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</tt></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -245,9 +245,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><tt>m.{@link Matrix#pseudoCyclicIndex(long...)
+         * with the index <nobr><code>m.{@link Matrix#pseudoCyclicIndex(long...)
          * pseudoCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</tt></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -272,9 +272,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><tt>m.{@link Matrix#mirrorCyclicIndex(long...)
+         * with the index <nobr><code>m.{@link Matrix#mirrorCyclicIndex(long...)
          * mirrorCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</tt></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -333,8 +333,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the source matrix <code>m</code>
          * with the coordinates
-         * <nobr><tt><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></tt></nobr>
+         * <nobr><code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code></nobr>
          * (where <nobr><code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code></nobr>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -376,7 +376,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * see {@link #NULL_CONSTANT});</li>
          *
          * <li>if the wrapper type corresponds to the element primitive type, the trivial default conversion
-         * is used; in all other cases:</tt>
+         * is used; in all other cases:
          *
          * <li><code>Boolean</code> value <code>v</code> is converted to <code>v?1:0</code> for numeric element types
          * and to <code>v?(char)1:(char)0</code> for <code>char</code> element type;
@@ -385,26 +385,26 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code>(short)v</code>, <code>(int)v</code>, <code>(long)v</code>,
          * <code>(float)v</code>, <code>(double)v</code>
          * for corresponding numeric element types
-         * and to <code>v!=0</code> for <code>boolean</code> element type;</tt></li>
+         * and to <code>v!=0</code> for <code>boolean</code> element type;</li>
          *
          * <li><code>Byte</code> value <code>v</code> is converted to <code>(char)(v&amp;0xFF)</code>,
          * <code>(short)(v&amp;0xFF)</code>, <code>(int)(v&amp;0xFF)</code>, <code>(long)(v&amp;0xFF)</code>,
          * <code>(float)(v&amp;0xFF)</code>, <code>(double)(v&amp;0xFF)</code>
          * for corresponding numeric or character element types
-         * and to <code>v!=0</code> for <code>boolean</code> element type;</tt></li>
+         * and to <code>v!=0</code> for <code>boolean</code> element type;</li>
          *
          * <li><code>Short</code> value <code>v</code> is converted to <code>(char)v</code>,
          * <code>(byte)v</code>, <code>(int)(v&amp;0xFFFF)</code>, <code>(long)(v&amp;0xFFFF)</code>,
          * <code>(float)(v&amp;0xFFFF)</code>, <code>(double)(v&amp;0xFFFF)</code>
          * for corresponding numeric or character element types
-         * and to <code>v!=0</code> for <code>boolean</code> element type;</tt></li>
+         * and to <code>v!=0</code> for <code>boolean</code> element type;</li>
          *
          * <li><code>Integer</code>, <code>Long</code>, <code>Float</code> or <code>Double</code> value <code>v</code>
          * is converted to <code>(char)v</code>,
          * <code>(byte)v</code>, <code>(short)v</code>, <code>(int)v</code>, <code>(long)v</code>,
          * <code>(float)v</code>, <code>(double)</code>v
          * for corresponding numeric or character element types
-         * and to <code>v!=0</code> for <code>boolean</code> element type.</tt></li>
+         * and to <code>v!=0</code> for <code>boolean</code> element type.</li>
          * </ul>
          *
          * @param continuationConstant the value returned while reading elements, lying outside this matrix.
@@ -713,7 +713,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * Returns <code>true</code> if and only if the {@link #elementType() element type} is <code>boolean.class</code>,
      * <code>short.class</code>, <code>byte.class</code> or <code>short.class</code>.
      *
-     * <p>Equivalent to <tt>{@link Arrays#isUnsignedElementType(Class)
+     * <p>Equivalent to {@link Arrays#isUnsignedElementType(Class)
      * Arrays.isUnsignedElementType}(thisMatrix.{@link #elementType() elementType()}).
      *
      * @return whether the element type of this matrix should be interpreted as unsigned primitive type.
@@ -723,7 +723,7 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Returns the number of in bits, required for each element of this matrix, if they are
      * {@link #isPrimitive() primitive}; in other case returns &minus;1.
-     * Equivalent to <tt>{@link Arrays#bitsPerElement(Class)
+     * Equivalent to {@link Arrays#bitsPerElement(Class)
      * Arrays.bitsPerElement}(thisMatrix.{@link #elementType() elementType()}).
      *
      * @return the size of each element in bits or &minus;1 if for non-primitive elements.
@@ -926,8 +926,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Returns the coordinates in the matrix, corresponding to the given linear index in the built-in AlgART array.
      * This method is reverse to {@link #index(long...)}: for any index,
-     * <nobr><tt>{@link #index(long...) index}({@link #coordinates(long, long[])
-     * coordinates}(index, null)) == index</tt></nobr>.
+     * <nobr><code>{@link #index(long...) index}({@link #coordinates(long, long[])
+     * coordinates}(index, null)) == index</code></nobr>.
      *
      * <p>The <code>result</code> argument can be {@code null} or some array,
      * containing at least {@link #dimCount()}
@@ -944,9 +944,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * else newly created Java array contains all calculated coordinates.
      * @throws IllegalArgumentException  if <code>result!=null</code>,
      *                                   but <code>result.length&lt;{@link #dimCount()}</code>.
-     * @throws IndexOutOfBoundsException if <code>index&lt;0</code> or <tt>index&gt;={@link #dim(int)
+     * @throws IndexOutOfBoundsException if <code>index&lt;0</code> or <code>index&gt;={@link #dim(int)
      *                                   dim}(0)*{@link #dim(int) dim}(1)*...={@link #array()}.{@link
-     *                                   Array#length() length()}</tt>.
+     *                                   Array#length() length()}</code>.
      */
     long[] coordinates(long index, long[] result);
 
@@ -969,8 +969,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>All calculations are performed with <code>long</code> type without any overflow checks.
      * All elements of <code>coordinates</code> array are always used, regardless of the number of matrix dimensions.
      * Please remember that <code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)=1</code>
-     * for <tt><i>k</i>&gt;={@link #dimCount()}
-     * (extra elements of <code>coordinates</code> array).</tt>.
+     * for <code><i>k</i>&gt;={@link #dimCount()}
+     * (extra elements of <code>coordinates</code> array).</code>.
      *
      * @param coordinates all coordinates.
      * @return the linear index of the matrix element with specified coordinates, without range checks.
@@ -1037,13 +1037,13 @@ public interface Matrix<T extends Array> extends Cloneable {
      * where <code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)</code>.
      * Here we <i>do no require</i> that the passed indexes <code><i>i<sub>k</sub></i></code>
      * are in ranges <code>0..<i>d<sub>k</sub></i>-1</code>.
-     * Then, let <tt><i>len</i>={@link #array()}.{@link Array#length()
-     * length()}=d<sub>n-1</sub>...d<sub>1</sub>d<sub>0</sub></i></tt>.
+     * Then, let <code><i>len</i>={@link #array()}.{@link Array#length()
+     * length()}=d<sub>n-1</sub>...d<sub>1</sub>d<sub>0</sub></i></code>.
      * The result of this method is the following:
      *
      * <blockquote>
-     * <tt><i>len</i> == 0 ? 0 : <i>index</i> % <i>len</i> &gt;= 0 ?
-     * <i>index</i> % <i>len</i> : <i>index</i> % <i>len</i> + <i>len</i></tt>
+     * <code><i>len</i> == 0 ? 0 : <i>index</i> % <i>len</i> &gt;= 0 ?
+     * <i>index</i> % <i>len</i> : <i>index</i> % <i>len</i> + <i>len</i></code>
      * </blockquote>
      * <p>
      * (It is in the <code>0..<i>len</i>-1</code> range always,
@@ -1148,7 +1148,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @param x the first coordinate.
      * @param y the second coordinate.
-     * @return tt>true</tt> if all specified coordinates are inside the matrix.
+     * @return code>true</code> if all specified coordinates are inside the matrix.
      */
     boolean inside(long x, long y);
 
@@ -1159,14 +1159,14 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param x the first coordinate.
      * @param y the second coordinate.
      * @param z the third coordinate.
-     * @return tt>true</tt> if all specified coordinates are inside the matrix.
+     * @return code>true</code> if all specified coordinates are inside the matrix.
      */
     boolean inside(long x, long y, long z);
 
     /**
      * Returns the new matrix backed by the specified AlgART array with the same dimensions as this one.
-     * Equivalent to <tt>{@link Matrices#matrix(Array, long...)
-     * Matrices.matrix}(anotherArray, {@link #dimensions()})</tt>.
+     * Equivalent to <code>{@link Matrices#matrix(Array, long...)
+     * Matrices.matrix}(anotherArray, {@link #dimensions()})</code>.
      *
      * <p>The array <code>anotherArray</code> must be {@link Array#isUnresizable() unresizable},
      * and its length must be equal to the length of the array built-in this matrix.
@@ -1220,8 +1220,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * of this matrix.
      *
      * <p>This method is equivalent to the call
-     * <nobr><tt>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(from,to,{@link Matrix.ContinuationMode#NONE})</tt></nobr>.
+     * <nobr><code>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(from,to,{@link Matrix.ContinuationMode#NONE})</code></nobr>.
      *
      * <p>The built-in AlgART array of the returned matrix is backed by the built-in array of this matrix,
      * so &mdash; if this matrix is not {@link #isImmutable() immutable}
@@ -1239,8 +1239,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <code>from.length</code> or <code>to.length</code>
      *                                   is not equal to {@link #dimCount()}.
      * @throws IndexOutOfBoundsException if, for some <code>k</code>,
-     *                                   <tt>from[k]&lt;0 || to[k]&gt;{@link #dim(int) dim(k)} ||
-     *                                   from[k]&gt;to[k]</tt>.
+     *                                   <code>from[k]&lt;0 || to[k]&gt;{@link #dim(int) dim(k)} ||
+     *                                   from[k]&gt;to[k]</code>.
      * @see #subMatrix(long[], long[], ContinuationMode)
      * @see #subMatrix(IRectangularArea)
      * @see #subMatr(long[], long[], ContinuationMode)
@@ -1262,16 +1262,16 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   is not equal to {@link #dimCount()}.
      * @throws IndexOutOfBoundsException if, for some <code>k</code>,
      *                                   <code>min[k]&lt;0 || max[k]&gt;={@link #dim(int) dim(k)}</code>, where
-     *                                   <tt>min=area.{@link IRectangularArea#min()
-     *                                   min()}.{@link IPoint#coordinates() coordinates()}</tt> and,
-     *                                   <tt>max=area.{@link IRectangularArea#max()
-     *                                   max()}.{@link IPoint#coordinates() coordinates()}</tt>.
+     *                                   <code>min=area.{@link IRectangularArea#min()
+     *                                   min()}.{@link IPoint#coordinates() coordinates()}</code> and,
+     *                                   <code>max=area.{@link IRectangularArea#max()
+     *                                   max()}.{@link IPoint#coordinates() coordinates()}</code>.
      */
     Matrix<T> subMatrix(IRectangularArea area);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[])
-     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY})</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[])
+     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY})</nobr></code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
@@ -1285,8 +1285,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[])
-     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ})</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[])
+     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ})</nobr></code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
@@ -1403,8 +1403,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(IRectangularArea area, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY}, continuationMode)</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY}, continuationMode)</nobr></code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
@@ -1434,8 +1434,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ}, continuationMode)</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ}, continuationMode)</nobr></code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
@@ -1480,15 +1480,15 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException  if <code>position.length</code> or <code>dimensions.length</code>
      *                                   is not equal to {@link #dimCount()}.
      * @throws IndexOutOfBoundsException if, for some <code>k</code>,
-     *                                   <tt>position[k]&lt;0 || dimensions[k]&lt;0 ||
-     *                                   position[k]+dimensions[k]&gt;{@link #dim(int) dim(k)}</tt>.
+     *                                   <code>position[k]&lt;0 || dimensions[k]&lt;0 ||
+     *                                   position[k]+dimensions[k]&gt;{@link #dim(int) dim(k)}</code>.
      * @see #subMatr(long[], long[], ContinuationMode)
      */
     Matrix<T> subMatr(long[] position, long[] dimensions);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatr(long[], long[])
-     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY})</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatr(long[], long[])
+     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY})</nobr></code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
@@ -1502,8 +1502,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long x, long y, long dimX, long dimY);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatr(long[], long[])
-     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ})</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatr(long[], long[])
+     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ})</nobr></code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
@@ -1551,8 +1551,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long[] position, long[] dimensions, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatr(long[], long[], ContinuationMode)
-     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY}, continuationMode)</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatr(long[], long[], ContinuationMode)
+     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY}, continuationMode)</nobr></code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
@@ -1583,8 +1583,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long x, long y, long dimX, long dimY, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <tt><nobr>{@link #subMatr(long[], long[], ContinuationMode)
-     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ}, continuationMode)</nobr></tt>.
+     * Equivalent to <code><nobr>{@link #subMatr(long[], long[], ContinuationMode)
+     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ}, continuationMode)</nobr></code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
@@ -1782,8 +1782,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * Let <i>i<sub>0</sub></i>, <i>i<sub>1</sub></i>, ..., <i>i<sub>n&minus;1</sub></i>
      * (<i>n</i><code>={@link #dimCount()}</code>) be coordinates of some element it the tiled matrix <b>T</b>,
      * that is located in <b>T</b><code>.{@link #array() array()}</code>
-     * at the index <i>i</i>=<b>T</b><tt>.{@link #index(long...)
-     * index}</tt>(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>).
+     * at the index <i>i</i>=<b>T</b><code>.{@link #index(long...)
+     * index}</code>(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>).
      * This element is located in the original array <b>M</b><code>.{@link #array() array()}</code> at another index
      * <i>j</i>, which is calculated by the following algorithm.
      *
@@ -1969,8 +1969,8 @@ public interface Matrix<T extends Array> extends Cloneable {
 
     /**
      * Returns <code>true</code> if and only if the built-in AlgART array implements {@link DirectAccessible}
-     * interface and <tt>(({@link DirectAccessible}){@link #array()}).{@link DirectAccessible#hasJavaArray()
-     * hasJavaArray()}</tt> method returns <code>true</code>.
+     * interface and <code>(({@link DirectAccessible}){@link #array()}).{@link DirectAccessible#hasJavaArray()
+     * hasJavaArray()}</code> method returns <code>true</code>.
      *
      * <p>There is a guarantee that this method works very quickly.
      *
