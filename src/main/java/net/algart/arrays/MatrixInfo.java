@@ -427,8 +427,8 @@ public abstract class MatrixInfo {
 
     /**
      * Returns the size in bits, required for each matrix element.
-     * Equivalent to <tt>{@link Arrays#bitsPerElement(Class)
-     * Arrays.bitsPerElement}(thisInstance.{@link #elementType()})</tt>.
+     * Equivalent to <code>{@link Arrays#bitsPerElement(Class)
+     * Arrays.bitsPerElement}(thisInstance.{@link #elementType()})</code>.
      *
      * @return the size in bits, required for each matrix element.
      * @see PArray#bitsPerElement()
@@ -688,8 +688,8 @@ public abstract class MatrixInfo {
      * Indicates whether this information correctly describes the given matrix.
      * Returns <code>true</code> if and only if:<ol>
      * <li><code>matrix.{@link Matrix#elementType() elementType()}.equals(this.{@link #elementType()})</code>;</li>
-     * <li><tt>matrix.{@link Matrix#array() array()}.{@link Array#byteOrder()
-     * byteOrder()} == this.{@link #byteOrder()}</tt>;</li>
+     * <li><code>matrix.{@link Matrix#array() array()}.{@link Array#byteOrder()
+     * byteOrder()} == this.{@link #byteOrder()}</code>;</li>
      * <li><code>matrix.{@link Matrix#dimensions() dimensions()}</code> and this {@link #dimensions()}
      * arrays are identical.</li>
      * </ol>

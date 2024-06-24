@@ -287,8 +287,8 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * because this processor did not process the matrix yet.</li>
      *
      * <li>{@link #result()} in the returned instance returns
-     * <tt>!thisInstance.{@link #done()} ? thisInstance.{@link #result()} :
-     * followingProcessor.{@link #result()}</tt>.</li>
+     * <code>!thisInstance.{@link #done()} ? thisInstance.{@link #result()} :
+     * followingProcessor.{@link #result()}</code>.</li>
      *
      * <li>{@link #freeResources(ArrayContext) freeResources(context)} in the returned instance calls
      * <code>thisInstance.{@link #freeResources(ArrayContext) freeResources(c1)}</code> and

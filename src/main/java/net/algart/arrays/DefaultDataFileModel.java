@@ -262,16 +262,16 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * Equivalent to <tt>new {@link #DefaultDataFileModel(File, long, boolean)
-     * DefaultDataFileModel}(null, 0, {@link #defaultLazyWriting()})</tt>.
+     * Equivalent to <code>new {@link #DefaultDataFileModel(File, long, boolean)
+     * DefaultDataFileModel}(null, 0, {@link #defaultLazyWriting()})</code>.
      */
     public DefaultDataFileModel() {
         this(null, DEFAULT_PREFIX_SIZE, defaultLazyWriting());
     }
 
     /**
-     * Equivalent to <tt>new {@link #DefaultDataFileModel(File, long, boolean)
-     * DefaultDataFileModel}(null, 0, lazyWriting)</tt>.
+     * Equivalent to <code>new {@link #DefaultDataFileModel(File, long, boolean)
+     * DefaultDataFileModel}(null, 0, lazyWriting)</code>.
      *
      * @param lazyWriting it <code>true</code>, lazy-writing mode will be used.
      */
@@ -280,8 +280,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * Equivalent to <tt>new {@link #DefaultDataFileModel(File, long, boolean)
-     * DefaultDataFileModel}(tempPath, 0, {@link #defaultLazyWriting()})</tt>.
+     * Equivalent to <code>new {@link #DefaultDataFileModel(File, long, boolean)
+     * DefaultDataFileModel}(tempPath, 0, {@link #defaultLazyWriting()})</code>.
      *
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
@@ -292,8 +292,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * Equivalent to <tt>new {@link #DefaultDataFileModel(File, long, boolean)
-     * DefaultDataFileModel}(tempPath, 0, lazyWriting)</tt>.
+     * Equivalent to <code>new {@link #DefaultDataFileModel(File, long, boolean)
+     * DefaultDataFileModel}(tempPath, 0, lazyWriting)</code>.
      *
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
@@ -414,8 +414,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     /**
      * <p>This implementation returns the value
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",&nbsp;3)
-     * * {@link Arrays.SystemSettings#availableProcessors()}</tt>,
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",&nbsp;3)
+     * * {@link Arrays.SystemSettings#availableProcessors()}</code>,
      * stored while initializing this {@link DefaultDataFileModel} class,
      * or default value <code>3&nbsp;*&nbsp;{@link Arrays.SystemSettings#availableProcessors()}</code>,
      * if some exception occurred while calling <code>Integer.getInteger</code>.
