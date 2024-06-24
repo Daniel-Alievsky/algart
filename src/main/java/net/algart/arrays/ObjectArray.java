@@ -56,8 +56,8 @@ public interface ObjectArray<E> extends Array {
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
-     * and <tt>value!=null?value.equals(thisArray.{@link #get(long)
-     * get}(k)):thisArray.{@link #get(long) get}(k)==null</tt>,
+     * and <code>value!=null?value.equals(thisArray.{@link #get(long)
+     * get}(k)):thisArray.{@link #get(long) get}(k)==null</code>,
      * or <code>-1</code> if there is no such array element.
      *
      * <p>In particular, if <code>lowIndex&gt;=thisArray.{@link #length() length()}}</code>
@@ -82,8 +82,8 @@ public interface ObjectArray<E> extends Array {
 
     /**
      * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
-     * and <tt>value!=null?value.equals(thisArray.{@link #get(long)
-     * get}(k)):thisArray.{@link #get(long) get}(k)==null</tt>,
+     * and <code>value!=null?value.equals(thisArray.{@link #get(long)
+     * get}(k)):thisArray.{@link #get(long) get}(k)==null</code>,
      * or <code>-1</code> if there is no such array element.
      *
      * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
