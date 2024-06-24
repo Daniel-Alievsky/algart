@@ -39,7 +39,7 @@ import java.util.logging.Level;
 
 /**
  * <p>Default implementation of {@link DataFileModel} that creates usual Java files,
- * which are mapped via standard Java technique (<tt>FileChannel.map</tt> method).</p>
+ * which are mapped via standard Java technique (<code>FileChannel.map</code> method).</p>
  *
  * <p>The {@link DataFile data files}, returned by this class, creates
  * {@link DataFile.BufferHolder buffer holders} with the
@@ -48,7 +48,7 @@ import java.util.logging.Level;
  * File mapping will be released automatically by the built-in finalizers.</p>
  *
  * <p>The {@link DataFile#close() close()} method in data files, returned by this class,
- * perform closing via <tt>RandomAccessFile.close()</tt> method,
+ * perform closing via <code>RandomAccessFile.close()</code> method,
  * but it <i>may not completely close the disk file</i>!
  * The disk file will be completely closed and all connected system resources will be freed
  * only while the following garbage collection at the unspecified moment,
@@ -71,10 +71,10 @@ import java.util.logging.Level;
  * <li>In {@link #isLazyWriting() lazy-writing mode}, this model is <b>unstable at all</b>:
  * processing large arrays can lead to internal error while garbage collection,
  * that will lead to immediate abnormal JVM termination.
- * Due to this reason, the {@link #defaultLazyWriting() default lazy-writing mode} is <tt>false</tt>
- * in Java versions prior to 1.7, but <tt>true</tt> in Java 1.7+.</li>
+ * Due to this reason, the {@link #defaultLazyWriting() default lazy-writing mode} is <code>false</code>
+ * in Java versions prior to 1.7, but <code>true</code> in Java 1.7+.</li>
  *
- * <li>In usual mode, this model can occasionally lead to unexpected <tt>IOError</tt>
+ * <li>In usual mode, this model can occasionally lead to unexpected <code>IOError</code>
  * while processing large arrays. Unlike an internal error in the lazy-writing mode,
  * this exception can be normally caught and shown to the user in GUI applications.
  * It can occur with large {@link #recommendedBankSize(boolean) bank size}
@@ -196,16 +196,17 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     /**
      * Default {@link #isLazyWriting() lazy-writing mode}, used when this this class
-     * is instantiated by a constructor without <tt>lazyWriting</tt> argument.
+     * is instantiated by a constructor without <code>lazyWriting</code> argument.
      * More precisely, if there is the system property
-     * "<tt>net.algart.arrays.DefaultDataFileModel.lazyWriting</tt>",
-     * containing "<tt>true</tt>" or "<tt>false</tt>" string (in lower case),
-     * this method returns <tt>true</tt> if this property contains "<tt>true</tt>"
-     * and <tt>false</tt> if this property contains "<tt>false</tt>".
-     * If there is no such property, or if it contains illegal string (not "<tt>true</tt>" or "<tt>false</tt>"),
-     * or if some exception occurred while calling <tt>System.getProperty</tt>,
-     * this method returns <tt>true</tt> in Java 1.7 or higher Java version
-     * and <tt>false</tt> in Java 1.5 and Java 1.6.
+     * "<code>net.algart.arrays.DefaultDataFileModel.lazyWriting</code>",
+     * containing "<code>true</code>" or "<code>false</code>" string (in lower case),
+     * this method returns <code>true</code> if this property contains "<code>true</code>"
+     * and <code>false</code> if this property contains "<code>false</code>".
+     * If there is no such property, or if it contains illegal string
+     * (not "<code>true</code>" or "<code>false</code>"),
+     * or if some exception occurred while calling <code>System.getProperty</code>,
+     * this method returns <code>true</code> in Java 1.7 or higher Java version
+     * and <code>false</code> in Java 1.5 and Java 1.6.
      * The value of this system property is loaded and checked only once
      * while initializing {@link DefaultDataFileModel} class.
      *
@@ -216,27 +217,27 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * The maximal amount of RAM (in bytes), allowed for simultaneous mapping by <tt>FileChannel.map</tt> method
-     * without flushing data to the disk by <tt>MappedByteBuffer.force()</tt> method.
+     * The maximal amount of RAM (in bytes), allowed for simultaneous mapping by <code>FileChannel.map</code> method
+     * without flushing data to the disk by <code>MappedByteBuffer.force()</code> method.
      *
      * <p>This value is important while using {@link #isLazyWriting() lazy-writing mode}.
-     * In this case, a lot of mapping requests (calls of <tt>FileChannel.map</tt>),
-     * with modifications of the mapped data and without further <tt>MappedByteBuffer.force()</tt>,
+     * In this case, a lot of mapping requests (calls of <code>FileChannel.map</code>),
+     * with modifications of the mapped data and without further <code>MappedByteBuffer.force()</code>,
      * will use RAM for storing the changed data in the system cache.
      * When all (or almost all) available RAM will be spent, it may lead to intensive disk swapping.
      * The reason is that the mapped memory is not controlled by Java garbage collector:
-     * it is possible to map much more disk memory than <tt>Runtime.maxMemory()</tt>.
+     * it is possible to map much more disk memory than <code>Runtime.maxMemory()</code>.
      * The result may be extremely slowing down of all other applications, working on the computer,
      * and even practical impossibility of any work: all RAM will be occupied by your application.
      *
      * <p>To avoid this behavior, this class controls the total amount of mapped memory
      * (summary size of all mapped buffers in all files),
      * and when it exceeds the limit, returned by this method,
-     * calls <tt>MappedByteBuffer.force()</tt> for all currently mapped buffers
+     * calls <code>MappedByteBuffer.force()</code> for all currently mapped buffers
      * and, so, flushs the data to the disk and frees the system memory.
      *
      * <p>This value, returned by this method, is retrieved from the system property
-     * "<tt>net.algart.arrays.maxMappedMemory</tt>",
+     * "<code>net.algart.arrays.maxMappedMemory</code>",
      * if it exists and contains a valid integer number.
      * If this property contains zero or negative integer, this method returns 0, and
      * it means that the amount of RAM for simultaneous mapping is not limited at all:
@@ -244,8 +245,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * If this property contains an integer greater than the limit 2<sup>56</sup>~7.2*10<sup>16</sup>,
      * this limit is used instead: it guarantees that using this value will not lead to integer overflow.
      * If there is no such property, or if it contains not a number,
-     * or if some exception occurred while calling <tt>Long.getLong</tt>,
-     * this method returns the default value <tt>536870912</tt> (512 MB).
+     * or if some exception occurred while calling <code>Long.getLong</code>,
+     * this method returns the default value <code>536870912</code> (512 MB).
      * The value of this system property is loaded and checked only once
      * while initializing {@link DefaultDataFileModel} class.
      *
@@ -272,7 +273,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * Equivalent to <tt>new {@link #DefaultDataFileModel(File, long, boolean)
      * DefaultDataFileModel}(null, 0, lazyWriting)</tt>.
      *
-     * @param lazyWriting it <tt>true</tt>, lazy-writing mode will be used.
+     * @param lazyWriting it <code>true</code>, lazy-writing mode will be used.
      */
     public DefaultDataFileModel(boolean lazyWriting) {
         this(null, DEFAULT_PREFIX_SIZE, lazyWriting);
@@ -297,7 +298,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * @param tempPath    the path where new temporary files will be created
      *                    by {@link #createTemporaryFile(boolean)} method
      *                    or {@code null} if the default temporary-file directory is to be used.
-     * @param lazyWriting it <tt>true</tt>, lazy-writing mode will be used.
+     * @param lazyWriting it <code>true</code>, lazy-writing mode will be used.
      */
     public DefaultDataFileModel(File tempPath, boolean lazyWriting) {
         this(tempPath, DEFAULT_PREFIX_SIZE, lazyWriting);
@@ -307,9 +308,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * Creates new instance with specified lazy-writing mode.
      *
      * <p>Please see {@link AbstractDataFileModel#AbstractDataFileModel(File, long)} about
-     * <tt>tempPath</tt> and <tt>prefixSize</tt> arguments.
+     * <code>tempPath</code> and <code>prefixSize</code> arguments.
      *
-     * <p>The <tt>lazyWriting</tt> argument specifies whether the data files
+     * <p>The <code>lazyWriting</code> argument specifies whether the data files
      * will use lazy writing mode. Namely, if this flag is set, flushing or unmapping
      * the mapped regions via {@link DataFile.BufferHolder#flush(boolean) DataFile.BufferHolder.flush(false)},
      * {@link DataFile.BufferHolder#unmap(boolean) DataFile.BufferHolder.unmap(false)} calls
@@ -319,28 +320,28 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * If this flag is not set, any call of {@link DataFile.BufferHolder#flush(boolean)}
      * or {@link DataFile.BufferHolder#unmap(boolean)} method
      * forces writing data to the disk by
-     * <tt>force()</tt> method of <tt>MappedByteBuffer</tt> class.
+     * <code>force()</code> method of <code>MappedByteBuffer</code> class.
      *
-     * <p>By default, if you use constructors without <tt>lazyWriting</tt> argument,
+     * <p>By default, if you use constructors without <code>lazyWriting</code> argument,
      * this flag is retrieved from the system property
-     * "<tt>net.algart.arrays.DefaultDataFileModel.lazyWriting</tt>"
+     * "<code>net.algart.arrays.DefaultDataFileModel.lazyWriting</code>"
      * or, if there is no such property,
-     * is set to <tt>true</tt> in Java 1.7+ or <tt>false</tt> in Java 1.5 and 1.6.
+     * is set to <code>true</code> in Java 1.7+ or <code>false</code> in Java 1.5 and 1.6.
      * Please see {@link #defaultLazyWriting()}.
      *
-     * <p>Usually, you should set <tt>lazyWriting</tt> flag to <tt>true</tt>.
+     * <p>Usually, you should set <code>lazyWriting</code> flag to <code>true</code>.
      * It can essentially increase the performance, if you create and modify many large AlgART arrays,
      * because OS will store the new data in the cache and will not physically write data to the disk.
      * Even in this case, this class periodically flushs the unsaved data, when the summary
      * amount of mapped buffers exceeds the limit returned by {@link #maxMappedMemory()} method.
      *
-     * <p>The <tt>false</tt> value of this flag may be recommended if the stable behavior of your application
+     * <p>The <code>false</code> value of this flag may be recommended if the stable behavior of your application
      * is more important than the speed. If lazy writing is disabled,
      * the application will use less RAM and the risk of swapping will be much less,
      * because each new data will be immediately saved to the disk and will not be cached in RAM.
      *
      * <p>Unfortunately, <b>lazy-writing mode leads to internal Sun's bug in Java 1.5 and 1.6</b>:
-     * we recommend never set it to <tt>true</tt> in these Java versions.
+     * we recommend never set it to <code>true</code> in these Java versions.
      * The detailed description of this bug is here:
      * "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677"
      * >(fc)&nbsp;"Cleaner terminated abnormally" error in simple mapping test</a>".
@@ -349,7 +350,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *                    by {@link #createTemporaryFile(boolean)} method
      *                    or {@code null} if the default temporary-file directory is to be used.
      * @param prefixSize  the value returned by {@link #recommendedPrefixSize()} implementation in this class.
-     * @param lazyWriting it <tt>true</tt>, lazy-writing mode will be used.
+     * @param lazyWriting it <code>true</code>, lazy-writing mode will be used.
      * @see #maxMappedMemory()
      */
     public DefaultDataFileModel(File tempPath, long prefixSize, boolean lazyWriting) {
@@ -358,23 +359,23 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * Returns the <tt>lazyWriting</tt> argument, passed to
+     * Returns the <code>lazyWriting</code> argument, passed to
      * {@link #DefaultDataFileModel(boolean) the constructor} while creating this instance.
      *
-     * @return the <tt>lazyWriting</tt> flag, passed to the constructor.
+     * @return the <code>lazyWriting</code> flag, passed to the constructor.
      */
     public final boolean isLazyWriting() {
         return this.lazyWriting;
     }
 
     /**
-     * This implementation returns the data file corresponding to usual Java file <tt>new java.io.File(path)</tt>
+     * This implementation returns the data file corresponding to usual Java file <code>new java.io.File(path)</code>
      * with {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) DataFile.map}
      * method based on standard Java mapping.
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
-     * @param path      the path to disk file (as the argument of <tt>new java.io.File(path)</tt>).
+     * @param path      the path to disk file (as the argument of <code>new java.io.File(path)</code>).
      * @param byteOrder the byte order that will be always used for mapping this file.
      * @return          new instance of {@link DataFile} object.
      * @throws NullPointerException if one of the passed arguments is {@code null}.
@@ -386,10 +387,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * Returns the absolute path to the disk file (<tt>java.io.File.getAbsoluteFile()</tt>).
+     * Returns the absolute path to the disk file (<code>java.io.File.getAbsoluteFile()</code>).
      * The argument may be created by this data file model or by {@link StandardIODataFileModel}.
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
      * @param dataFile the data file.
      * @return         the absolute path to the disk file.
@@ -402,9 +403,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * <p>This implementation returns <tt>true</tt>.
+     * <p>This implementation returns <code>true</code>.
      *
-     * @return <tt>true</tt>.
+     * @return <code>true</code>.
      */
     @Override
     public boolean isAutoDeletionRequested() {
@@ -416,8 +417,8 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",&nbsp;3)
      * * {@link Arrays.SystemSettings#availableProcessors()}</tt>,
      * stored while initializing this {@link DefaultDataFileModel} class,
-     * or default value <tt>3&nbsp;*&nbsp;{@link Arrays.SystemSettings#availableProcessors()}</tt>,
-     * if some exception occurred while calling <tt>Integer.getInteger</tt>.
+     * or default value <code>3&nbsp;*&nbsp;{@link Arrays.SystemSettings#availableProcessors()}</code>,
+     * if some exception occurred while calling <code>Integer.getInteger</code>.
      * If this value is less than 2, returns 2.
      * If "net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU" property contains negative or zero integer,
      * returns 2.
@@ -439,17 +440,17 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     /**
      * <p>This implementation returns the value
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize",16777216)</tt> (16 MB)
-     * when the argument is <tt>true</tt> and
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize",4194304)</tt> (4 MB)
-     * when the argument is <tt>false</tt> on 64-bit Java machines.
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize",16777216)</code> (16 MB)
+     * when the argument is <code>true</code> and
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize",4194304)</code> (4 MB)
+     * when the argument is <code>false</code> on 64-bit Java machines.
      * On 32-bit JVM, this method returns
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize32",4194304)</tt> (4 MB)
-     * when the argument is <tt>true</tt> and
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize32",2097152)</tt> (2 MB)
-     * when the argument is <tt>false</tt>.
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.bankSize32",4194304)</code> (4 MB)
+     * when the argument is <code>true</code> and
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.resizableBankSize32",2097152)</code> (2 MB)
+     * when the argument is <code>false</code>.
      * These values are stored while initializing {@link DefaultDataFileModel} class.
-     * If some exceptions occur while calling <tt>Integer.getInteger</tt>,
+     * If some exceptions occur while calling <code>Integer.getInteger</code>,
      * the default values 16777216 / 4194304 (for 64-bit Java) or
      * 4194304 / 2097152 (for 32-bit Java) are returned.
      * If this property contains invalid value (for example, not a power of two),
@@ -460,7 +461,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * so, please not specify too high values if you are not quite sure that your JVM is not 32-bit
      * and has no 32-bit limitations for the address space.
      *
-     * @param unresizable <tt>true</tt> if this bank size will be used for unresizable arrays only.
+     * @param unresizable <code>true</code> if this bank size will be used for unresizable arrays only.
      * @return            the recommended size of every memory bank in bytes.
      */
     @Override
@@ -470,11 +471,11 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     /**
      * <p>This implementation returns the value
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit",268435456)</tt> (256 MB)
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit",268435456)</code> (256 MB)
      * on 64-bit Java machines. On 32-bit JVM, this method returns
-     * <tt>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit32",4194304)</tt> (4 MB).
+     * <code>Integer.getInteger("net.algart.arrays.DefaultDataFileModel.singleMappingLimit32",4194304)</code> (4 MB).
      * This value is stored while initializing {@link DefaultDataFileModel} class.
-     * If some exceptions occur while calling <tt>Integer.getInteger</tt>,
+     * If some exceptions occur while calling <code>Integer.getInteger</code>,
      * the default value 268435456 (or 4194304 for 32-bit Java) is returned.
      *
      * <p>This method distinguishes between 32-bit and 64-bit Java via {@link Arrays.SystemSettings#isJava32()} method.
@@ -492,12 +493,12 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     /**
      * <p>This implementation returns the value
-     * <tt>Boolean.getBoolean("net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping")</tt>,
+     * <code>Boolean.getBoolean("net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping")</code>,
      * stored while initializing {@link DefaultDataFileModel} class,
-     * or <tt>false</tt> if there is no such system property or some exception occurred while
-     * calling <tt>Boolean.getBoolean</tt>.
+     * or <code>false</code> if there is no such system property or some exception occurred while
+     * calling <code>Boolean.getBoolean</code>.
      *
-     * @return <tt>true</tt> if mapping outside the file length automatically increase the length.
+     * @return <code>true</code> if mapping outside the file length automatically increase the length.
      */
     @Override
     public boolean autoResizingOnMapping() {
@@ -505,9 +506,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     }
 
     /**
-     * This implementation returns <tt>"mapmm"</tt>;
+     * This implementation returns <code>"mapmm"</code>;
      *
-     * @return <tt>"mapmm"</tt>.
+     * @return <code>"mapmm"</code>.
      */
     @Override
     public String temporaryFilePrefix() {

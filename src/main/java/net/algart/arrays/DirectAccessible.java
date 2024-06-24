@@ -37,10 +37,10 @@ package net.algart.arrays;
  *
  * <ol>
  * <li>it implements this {@link DirectAccessible} interface;</li>
- * <li>its {@link #hasJavaArray()} method returns <tt>true</tt>.</li>
+ * <li>its {@link #hasJavaArray()} method returns <code>true</code>.</li>
  * </ol>
  *
- * <p>If you need quick access to some AlgART <tt>array</tt>, it's a good idea to create
+ * <p>If you need quick access to some AlgART <code>array</code>, it's a good idea to create
  * a special branch it the algorithm:</p>
  *
  * <pre>
@@ -88,19 +88,19 @@ package net.algart.arrays;
  * <p><i>Warning</i>: immutable arrays, created by {@link Array#asImmutable() asImmutable()} method,
  * never can be directly accessed via this interface:
  * they either do not implement this interface, or
- * their {@link #hasJavaArray()} method returns <tt>false</tt>.
+ * their {@link #hasJavaArray()} method returns <code>false</code>.
  * However, if you trust the method processing an AlgART array,
  * you can use {@link Array#asTrustedImmutable() asTrustedImmutable()} method: "trusted" immutable
  * arrays can implement this interface.</p>
  *
- * <p><i>Warning</i>: if an AlgART array implements <tt>DirectAccessible</tt> interface,
+ * <p><i>Warning</i>: if an AlgART array implements <code>DirectAccessible</code> interface,
  * it still can be impossible to create its array-view via {@link #javaArray()} method:
  * you must also call {@link #hasJavaArray()} to be ensured that array-view is really possible.</p>
  *
  * <p><i>Note</i>: {@link BitArray bit arrays} in this package never implement {@link DirectAccessible} interface.
  * According the contract, the Java array returned by {@link #javaArray()} method
  * must contain elements of the same type as the AlgART array,
- * but the bits in bit AlgART arrays are packed and cannot be viewed as <tt>boolean[]</tt> array.
+ * but the bits in bit AlgART arrays are packed and cannot be viewed as <code>boolean[]</code> array.
  * However, you can use {@link DataBuffer data buffers} and {@link BitArray#jaBit()} method
  * for direct block access to bit arrays.</p>
  *
@@ -111,12 +111,12 @@ package net.algart.arrays;
  */
 public interface DirectAccessible {
     /**
-     * Returns <tt>true</tt> if, and only if, this object (usually AlgART array)
+     * Returns <code>true</code> if, and only if, this object (usually AlgART array)
      * is backed by an accessible Java array, that can be gotten by {@link #javaArray()} method.
-     * If (and only if) this method returns <tt>false</tt>,
+     * If (and only if) this method returns <code>false</code>,
      * then {@link #javaArray()} method throws {@link NoJavaArrayException}.
      *
-     * @return <tt>true</tt> if this object is mutable and it is backed by an accessible Java array.
+     * @return <code>true</code> if this object is mutable and it is backed by an accessible Java array.
      */
     boolean hasJavaArray();
 
@@ -129,7 +129,7 @@ public interface DirectAccessible {
      *
      * <p>Returned array can contain extra elements besides the content of this object.
      * Really, this object (usually AlgART array) corresponds to elements
-     * <tt>#{@link #javaArrayOffset()}..#{@link #javaArrayOffset()}+{@link #javaArrayLength()}-1</tt>
+     * <code>#{@link #javaArrayOffset()}..#{@link #javaArrayOffset()}+{@link #javaArrayLength()}-1</code>
      * of the returned array.
      * Changes to this range of the returned array "write through" to this object.
      *
@@ -143,16 +143,16 @@ public interface DirectAccessible {
      *
      * <p>It this object is an AlgART array, the type of returned Java array
      * is always one of the following:<ul>
-     * <li><tt>boolean[]</tt> for {@link BitArray}
+     * <li><code>boolean[]</code> for {@link BitArray}
      * (this case never occurs for AlgART arrays from this package);
-     * <li><tt>char[]</tt> for {@link CharArray},
-     * <li><tt>byte[]</tt> for {@link ByteArray},
-     * <li><tt>short[]</tt> for {@link ShortArray},
-     * <li><tt>int[]</tt> for {@link IntArray},
-     * <li><tt>long[]</tt> for {@link LongArray},
-     * <li><tt>float[]</tt> for {@link FloatArray},
-     * <li><tt>double[]</tt> for {@link DoubleArray},
-     * <li><tt><i>type</i>[]</tt>, where <i>type</i> is the result of {@link Array#elementType()
+     * <li><code>char[]</code> for {@link CharArray},
+     * <li><code>byte[]</code> for {@link ByteArray},
+     * <li><code>short[]</code> for {@link ShortArray},
+     * <li><code>int[]</code> for {@link IntArray},
+     * <li><code>long[]</code> for {@link LongArray},
+     * <li><code>float[]</code> for {@link FloatArray},
+     * <li><code>double[]</code> for {@link DoubleArray},
+     * <li><code><i>type</i>[]</code>, where <i>type</i> is the result of {@link Array#elementType()
      * elementType()} method, in all other cases.
      * </ul>
      *
@@ -166,10 +166,10 @@ public interface DirectAccessible {
      * corresponding to the first element of this object.
      *
      * <p>The result is undefined if this object is not backed by an accessible Java array.
-     * However, if this object is an immutable view of another mutable object <tt>a</tt>,
-     * then this method returns the same result as <tt>a.{@link #javaArrayOffset()}</tt>.
+     * However, if this object is an immutable view of another mutable object <code>a</code>,
+     * then this method returns the same result as <code>a.{@link #javaArrayOffset()}</code>.
      *
-     * <p>Unlike {@link #javaArray()} method, and unlike <tt>java.nio.ByteBuffer.arrayOffset()</tt>,
+     * <p>Unlike {@link #javaArray()} method, and unlike <code>java.nio.ByteBuffer.arrayOffset()</code>,
      * this method does not throw any exceptions.
      *
      * @return the start offset in the array returned by {@link #javaArray()} call.
@@ -179,11 +179,12 @@ public interface DirectAccessible {
     /**
      * Returns the actual number of elements in the Java array returned by {@link #javaArray()} call,
      * corresponding to all elements of this object.
-     * If this object is an AlgART array <tt>a</tt>, equivalent to <tt>(int)a.{@link Array#length() length()}</tt>.
+     * If this object is an AlgART array <code>a</code>, equivalent to
+     * <code>(int)a.{@link Array#length() length()}</code>.
      *
      * <p>The result is undefined if this object is not backed by an accessible Java array.
-     * However, if this object is an immutable view of another mutable object <tt>a</tt>,
-     * then this method returns the same result as <tt>a.arrayLength()</tt>.
+     * However, if this object is an immutable view of another mutable object <code>a</code>,
+     * then this method returns the same result as <code>a.arrayLength()</code>.
      *
      * <p>Unlike {@link #javaArray()} method, this method does not throw any exceptions.
      *

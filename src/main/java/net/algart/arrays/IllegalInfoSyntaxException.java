@@ -27,7 +27,7 @@ package net.algart.arrays;
 import java.io.Serial;
 
 /**
- * <p>Checked exception thrown if the format of <tt>byte[]</tt> or <tt>String</tt>
+ * <p>Checked exception thrown if the format of <code>byte[]</code> or <code>String</code>
  * serialized form of the {@link MatrixInfo} is invalid.
  *
  * @author Daniel Alievsky

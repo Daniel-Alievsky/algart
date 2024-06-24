@@ -31,7 +31,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * <p>A simple pool of the {@link UpdatableArray unresizable AlgART arrays}
  * (usually work buffers) with the same size and type of elements,
- * based on a list of <tt>SoftReference</tt> or <tt>WeakReference</tt>.
+ * based on a list of <code>SoftReference</code> or <code>WeakReference</code>.
  * This class is useful in algorithms that frequently need to allocate buffers in AlgART arrays,
  * because it allows to reduce time spent by the allocation of AlgART arrays and the garbage collection.</p>
  *
@@ -65,8 +65,8 @@ public class ArrayPool {
      * @param elementType the type of elements in the arrays.
      * @param arrayLength the length of the arrays.
      * @return            new pool of AlgART arrays.
-     * @throws NullPointerException     if <tt>memoryModel</tt> or <tt>elementType</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>arrayLength</tt> is negative.
+     * @throws NullPointerException     if <code>memoryModel</code> or <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>arrayLength</code> is negative.
      */
     public static ArrayPool getInstance(MemoryModel memoryModel, Class<?> elementType, long arrayLength) {
         return new ArrayPool(memoryModel, elementType, arrayLength);

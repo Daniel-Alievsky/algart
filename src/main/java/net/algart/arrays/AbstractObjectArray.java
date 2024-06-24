@@ -469,14 +469,6 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         return -1;
     }
 
-    /*Repeat(INCLUDE_FROM_FILE, AbstractFloatArray.java, service)
-      \(\w+FloatArray\)\s*(super\.\w+Clone\(\w*?\)) ==> InternalUtils.cast($1) ;;
-      FloatArray ==> ObjectArray<E> ;;
-      Float(?!ing) ==> Object ;;
-      public\s+float\[\]\s*ja ==> @SuppressWarnings("unchecked") public E[] ja ;;
-      \(float\[\]\) ==> (E[]) ;;
-      array\s+float\[\" ==> array " + elementType.getName() + "["   !! Auto-generated: NOT EDIT !! */
-
     /**
      * This implementation returns <code>true</code>.
      * Should be overridden if the inheritor is mutable.
@@ -713,5 +705,4 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     int javaArrayOffsetInternal() {
         return 0;
     }
-    /*Repeat.IncludeEnd*/
 }

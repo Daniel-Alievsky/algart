@@ -42,8 +42,9 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>This class implements the following common idea. Let we have some algorithm,
  * that transforms the source bit array ({@link BitArray}) <b>b</b> to another bit array &fnof;(<b>b</b>).
  * (Here is an interface {@link GeneralizedBitProcessing.SliceOperation} representing such algorithm.)
- * Let we want to generalize this algorithm for a case of any element types &mdash; <tt>byte</tt>, <tt>int</tt>,
- * <tt>double</tt>, etc.; in other words, for the common case of {@link PArray}.
+ * Let we want to generalize this algorithm for a case of any element types &mdash;
+ * <code>byte</code>, <code>int</code>,
+ * <code>double</code>, etc.; in other words, for the common case of {@link PArray}.
  * This class allows to do this.</p>
  *
  * <p><a name="bitslice"></a>Namely, let we have the source array ({@link PArray}) <b>a</b>,
@@ -175,7 +176,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * is performed by the main
  * method of this class: {@link #process(UpdatablePArray c, PArray a, Range range, long numberOfSlices)}.
  * The <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range and the number of slices
- * <tt>numberOfSlices</tt>=<i>n</i>+1 are specified as arguments of this method.
+ * <code>numberOfSlices</code>=<i>n</i>+1 are specified as arguments of this method.
  * The original bitwise algorithm should be specified while creating an instance of this class by
  * {@link #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
  * getInstance} method.</p>
@@ -200,20 +201,20 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * <p>This class allocates, in {@link #process(UpdatablePArray, PArray, Range, long) process} method, some temporary
  * {@link UpdatableBitArray bit arrays}. Arrays are allocated with help of the memory model,
- * returned by <tt>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</tt> method
- * of the <tt>context</tt>, specified while creating an instance of this class.
+ * returned by <code>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</code> method
+ * of the <code>context</code>, specified while creating an instance of this class.
  * If the context is {@code null}, or if necessary amount of memory is less than
  * {@link Arrays.SystemSettings#maxTempJavaMemory()}, then {@link SimpleMemoryModel} is used
  * for allocating temporary arrays. There is a special case when
  * {@link #process(UpdatablePArray, PArray, Range, long) process} method
- * is called for bit arrays (element type is <tt>boolean</tt>); in this case, no AlgART arrays
+ * is called for bit arrays (element type is <code>boolean</code>); in this case, no AlgART arrays
  * are allocated.
  *
  * <p>When this class allocates temporary AlgART arrays, it also checks whether the passed (source and destination)
  * arrays are <i>tiled</i>, i.e. they are underlying arrays of some matrices, created by
  * {@link Matrix#tile(long...)} or {@link Matrix#tile()} method.
  * Only the case, when these methods are implemented in this package, is recognized.
- * In this case, if the <tt>src</tt> array, passed to {@link #process(UpdatablePArray, PArray, Range, long) process}
+ * In this case, if the <code>src</code> array, passed to {@link #process(UpdatablePArray, PArray, Range, long) process}
  * method, is tiled, then the temporary AlgART arrays are tiled with the same tile structure.
  *
  * <p>This class uses multithreading (alike {@link Arrays#copy(ArrayContext, UpdatableArray, Array)}
@@ -255,55 +256,57 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      */
     public interface SliceOperation {
         /**
-         * Processes the source bit array <tt>srcBits</tt> and saves the results in <tt>destBits</tt> bit array.
+         * Processes the source bit array <code>srcBits</code> and saves the results in
+         * <code>destBits</code> bit array.
          * This method is called by
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)} method
          * for every {@link GeneralizedBitProcessing bit slice}</a> of the source non-bit array.
          * It is the main method, which you should implement to generalize some bit algorithm for non-bit case.
          *
-         * <p>The <tt>destBits</tt> and <tt>srcBits</tt> arrays will be different bit arrays, allocated by
+         * <p>The <code>destBits</code> and <code>srcBits</code> arrays will be different bit arrays, allocated by
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long) process} method
          * (according to the memory model, recommended by the {@link GeneralizedBitProcessing#context() context}),
-         * if the {@link #isInPlaceProcessingAllowed()} method returns <tt>false</tt>.
-         * If that method returns <tt>true</tt>, the <tt>destBits</tt> and <tt>srcBits</tt> arguments
+         * if the {@link #isInPlaceProcessingAllowed()} method returns <code>false</code>.
+         * If that method returns <code>true</code>, the <code>destBits</code> and <code>srcBits</code> arguments
          * will be references to the same bit array.
          *
-         * <p>The index <i>i</i> of the slice, processed by this method, is passed via <tt>sliceIndex</tt> argument.
+         * <p>The index <i>i</i> of the slice, processed by this method, is passed via
+         * <code>sliceIndex</code> argument.
          * In other words, the threshold, corresponding to this slice, is
          *
          * <blockquote>
          * <i>t</i><sub><i>i</i></sub> =
          * <i>a<sub>min</sub></i> + <i>i</i> * (<i>a<sub>max</sub></i>&minus;<i>a<sub>min</sub></i>)/<i>n</i>,
-         * &nbsp;<i>i</i> = <tt>sliceIndex</tt>
+         * &nbsp;<i>i</i> = <code>sliceIndex</code>
          * </blockquote>
          *
          * <p>(here <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> is the range of processed values and
-         * <i>n</i>+1 is the desired number of slices, passed via <tt>range</tt> and <tt>numberOfSlices</tt>
+         * <i>n</i>+1 is the desired number of slices, passed via <code>range</code> and <code>numberOfSlices</code>
          * arguments of
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long) process} method).
-         * In the round-down mode <tt>sliceIndex</tt> is always in range <tt>1..</tt><i>n</i>,
-         * and in the round-up mode it is always in range <tt>0..</tt><i>n</i><tt>-1</tt>.
+         * In the round-down mode <code>sliceIndex</code> is always in range <code>1..</code><i>n</i>,
+         * and in the round-up mode it is always in range <code>0..</code><i>n</i><code>-1</code>.
          * The slice with index <i>i</i>=0 (round-down mode) or <i>i</i>=<i>n</i> (round-up mode)
          * is never processed, because the end result does not depend on it.
          * See comments to {@link GeneralizedBitProcessing} class for more details.
          *
          * <p>Please note that this method can be called simultaneously in different threads,
          * when {@link GeneralizedBitProcessing} class uses multithreading optimization.
-         * In this case, <tt>threadIndex</tt> argument will be the index of the thread,
+         * In this case, <code>threadIndex</code> argument will be the index of the thread,
          * in which this method is called, i.e. an integer in
          *
          * <blockquote>
-         * <tt>0..min(</tt><i>n</i><tt>-1,{@link GeneralizedBitProcessing#numberOfTasks()}&minus;1)</tt>
+         * <code>0..min(</code><i>n</i><code>-1,{@link GeneralizedBitProcessing#numberOfTasks()}&minus;1)</code>
          * </blockquote>
          *
          * <p>range, where <i>n</i>+1 is the desired number of slices.
-         * The high bound of this range, increased by 1, is also passed via <tt>numberOfThreads</tt> argument.
-         * The <tt>threadIndex</tt> can be very useful if your algorithm requires some work memory or other objects:
+         * The high bound of this range, increased by 1, is also passed via <code>numberOfThreads</code> argument.
+         * The <code>threadIndex</code> can be very useful if your algorithm requires some work memory or other objects:
          * in this case, your should allocate different work memory for different threads.
          *
          * <p>If multithreading optimization is not used, in particular, if the arrays, processed by
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long) process} method,
-         * are {@link BitArray bit arrays}, then <tt>threadIndex=0</tt> and <tt>numberOfThreads=1</tt>.
+         * are {@link BitArray bit arrays}, then <code>threadIndex=0</code> and <code>numberOfThreads=1</code>.
          *
          * @param context         the context of execution. It will be {@code null}, if (and only if)
          *                        the same argument of
@@ -315,18 +318,18 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * @param destBits        the destination bit array, where results of processing should be stored.
          * @param srcBits         the source bit array for processing.
          * @param sliceIndex      the index of the currently processed slice,
-         *                        from <tt>1</tt> to <i>n</i> in the round-down mode or
-         *                        from <tt>0</tt> to <i>n</i><tt>-1</tt> the round-up mode
+         *                        from <code>1</code> to <i>n</i> in the round-down mode or
+         *                        from <code>0</code> to <i>n</i><code>-1</code> the round-up mode
          *                        (<i>n</i> is the desired number of slices minus 1).
          * @param threadIndex     the index of the current thread (different for different threads in a case of
          *                        multithreading optimization).
-         * @param numberOfThreads the maximal possible value of <tt>threadIndex+1</tt>: equal to
+         * @param numberOfThreads the maximal possible value of <code>threadIndex+1</code>: equal to
          *                        <nobr><tt>min(numberOfSlices&minus;1,{@link
          *                        GeneralizedBitProcessing#numberOfTasks()})</tt></nobr>,
-         *                        where <tt>numberOfSlices</tt>=<i>n</i>+1 is the argument of
+         *                        where <code>numberOfSlices</code>=<i>n</i>+1 is the argument of
          *                        {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)
          *                        process} method.
-         * @throws NullPointerException if <tt>srcBits</tt> or <tt>destBits</tt> argument is {@code null}.
+         * @throws NullPointerException if <code>srcBits</code> or <code>destBits</code> argument is {@code null}.
          */
         void processBits(
                 ArrayContext context, UpdatableBitArray destBits, BitArray srcBits,
@@ -336,18 +339,19 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * Indicates whether this algorithm can work in place.
          *
          * <p>Some algorithms, processing bit arrays, can work in place, when the results are stored in the source
-         * array. In this case, this method should return <tt>true</tt>. If it returns <tt>true</tt>,
+         * array. In this case, this method should return <code>true</code>. If it returns <code>true</code>,
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)} method
-         * saves memory and time by passing the same bit array as <tt>destBits</tt> and <tt>srcBits</tt> arguments
+         * saves memory and time by passing the same bit array as <code>destBits</code> and
+         * <code>srcBits</code> arguments
          * of {@link #processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int) processBits} method.
-         * If it returns <tt>false</tt>,
+         * If it returns <code>false</code>,
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)} method
          * allocates 2 different bit arrays for source and resulting bit arrays and passes
-         * them as <tt>destBits</tt> and <tt>srcBits</tt> arguments
+         * them as <code>destBits</code> and <code>srcBits</code> arguments
          * of {@link #processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int) processBits} method.
          *
-         * @return <tt>true</tt> if {@link #processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)
-         *         processBits} method can work correctly when <tt>destBits==srcBits</tt> or <tt>false</tt>
+         * @return <code>true</code> if {@link #processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)
+         *         processBits} method can work correctly when <code>destBits==srcBits</code> or <code>false</code>
          *         if that method requires different source and destination arrays.
          */
         boolean isInPlaceProcessingAllowed();
@@ -382,7 +386,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
      * @return               new instance of this class.
-     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>sliceOperation</code> or <code>roundingMode</code> argument is {@code null}.
      * @see #getSingleThreadInstance(ArrayContext, SliceOperation, net.algart.arrays.GeneralizedBitProcessing.RoundingMode)
      */
     public static GeneralizedBitProcessing getInstance(ArrayContext context,
@@ -396,7 +400,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Usually this class performs calculations in many threads
      * (different slides in different threads), according to information from the passed context,
      * but an instance, created by this method, does not perform this.
-     * It is the best choice if the operation, implemented by passed <tt>sliceOperation</tt> object,
+     * It is the best choice if the operation, implemented by passed <code>sliceOperation</code> object,
      * already uses multithreading.
      *
      * @param context        the {@link #context() context} that will be used by this object;
@@ -405,7 +409,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
      * @return               new instance of this class.
-     * @throws NullPointerException if <tt>sliceOperation</tt> or <tt>roundingMode</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>sliceOperation</code> or <code>roundingMode</code> argument is {@code null}.
      * @see #getInstance(ArrayContext, SliceOperation, net.algart.arrays.GeneralizedBitProcessing.RoundingMode)
      */
     public static GeneralizedBitProcessing getSingleThreadInstance(ArrayContext context,
@@ -416,7 +420,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      * The returned instance is a clone of this one, but there is no guarantees
      * that it is a deep clone.
      * Usually, the returned instance is used only for performing a
@@ -433,7 +437,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
 
     /**
      * Returns the bit processing algorithm, used by this instance.
-     * More precisely, this method just returns a reference to the <tt>sliceOperation</tt> object,
+     * More precisely, this method just returns a reference to the <code>sliceOperation</code> object,
      * passed to {@link
      * #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
      * getInstance} or {@link #getSingleThreadInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation,
@@ -447,7 +451,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
 
     /**
      * Returns the rounding mode, used by this instance.
-     * More precisely, this method just returns a reference to the <tt>roundingMode</tt> object,
+     * More precisely, this method just returns a reference to the <code>roundingMode</code> object,
      * passed to {@link
      * #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
      * getInstance} or {@link #getSingleThreadInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation,
@@ -472,7 +476,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * GeneralizedBitProcessing.RoundingMode) getInstance} method.</li>
      * </ul>
      *
-     * <p>(As in {@link Arrays#copy(ArrayContext, UpdatableArray, Array)}, if the <tt>context</tt> argument of
+     * <p>(As in {@link Arrays#copy(ArrayContext, UpdatableArray, Array)}, if the <code>context</code> argument of
      * <nobr>{@link
      * #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
      * getInstance}</nobr> method
@@ -489,57 +493,60 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
     }
 
     /**
-     * Performs processing of the source array <tt>src</tt>, with saving results in <tt>dest</tt> array,
+     * Performs processing of the source array <code>src</code>, with saving results in <code>dest</code> array,
      * on the base of the bit processing algorithm, specified for this instance.
-     * Namely, the source array <tt>src</tt> is splitted to bit slices, each slice is processed by
+     * Namely, the source array <code>src</code> is splitted to bit slices, each slice is processed by
      * {@link
      * GeneralizedBitProcessing.SliceOperation#processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)}
      * method of the {@link #sliceOperation()} object (representing the used bit processing algorithm),
-     * and the processed slices are joined to the resulting array <tt>dest</tt>.
+     * and the processed slices are joined to the resulting array <code>dest</code>.
      * See the precise description of this generalization of a bit processing algorithm
      * in the {@link GeneralizedBitProcessing comments to this class}.
      *
-     * <p>The <tt>src</tt> and <tt>dest</tt> arrays must not be the same array or views of the same array;
+     * <p>The <code>src</code> and <code>dest</code> arrays must not be the same array or views of the same array;
      * in other case, the results will be incorrect.
      * These arrays must have the same element types and the same lengths; in other case,
      * an exception will occur.
      *
-     * <p>The <tt>range</tt> argument specifies the <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range,
+     * <p>The <code>range</code> argument specifies the <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range,
      * used for splitting to bit slices.
      * If you do not want to lose too little or too big values in the processed array, this range should
-     * contain all possible values of <tt>src</tt> array.
+     * contain all possible values of <code>src</code> array.
      * The simplest way to provide this is using the result of {@link Arrays#rangeOf(PArray) Arrays.rangeOf(src)}.
      *
-     * <p>The <tt>numberOfSlices</tt> argument is the number of bit slices, used for splitting the <tt>src</tt> array,
+     * <p>The <code>numberOfSlices</code> argument is the number of bit slices, used
+     * for splitting the <code>src</code> array,
      * which is equal to <i>n</i>+1 in the {@link GeneralizedBitProcessing comments to this class}.
      * Less values of this argument increases speed, larger values increases precision of the result
-     * (only <tt>numberOfSlices</tt> different values are possible for <tt>dest</tt> elements).
-     * If the element type is a fixed-point type (<tt>src</tt> and <tt>dest</tt> are {@link PFixedArray} instance),
+     * (only <code>numberOfSlices</code> different values are possible for <code>dest</code> elements).
+     * If the element type is a fixed-point type (<code>src</code> and <code>dest</code>
+     * are {@link PFixedArray} instance),
      * this argument is automatically truncated to
-     * <nobr><tt>min(numberOfSlices, (long)(range.{@link Range#size() size()}+1.0))</tt></nobr>,
+     * <nobr><code>min(numberOfSlices, (long)(range.{@link Range#size() size()}+1.0))</code></nobr>,
      * because larger values cannot increase the precision.
      *
-     * <p>Please remember that <tt>numberOfSlices=1</tt> (<i>n</i>=0) is a degenerated case: in this case,
-     * the <tt>dest</tt> array is just filled by <tt>range.min()</tt>
-     * (round-down mode) or <tt>range.min()</tt> (round-up mode),
+     * <p>Please remember that <code>numberOfSlices=1</code> (<i>n</i>=0) is a degenerated case: in this case,
+     * the <code>dest</code> array is just filled by <code>range.min()</code>
+     * (round-down mode) or <code>range.min()</code> (round-up mode),
      * alike in {@link UpdatablePArray#fill(double)} method.
      *
-     * <p>If the element type is <tt>boolean</tt> ({@link BitArray}), then a generalization of the bitwise algorithm
-     * is not necessary. In this case, if <tt>numberOfSlices&gt;1</tt>, this method just calls
+     * <p>If the element type is <code>boolean</code> ({@link BitArray}),
+     * then a generalization of the bitwise algorithm
+     * is not necessary. In this case, if <code>numberOfSlices&gt;1</code>, this method just calls
      * <tt>{@link #sliceOperation()}.{@link
      * GeneralizedBitProcessing.SliceOperation#processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)
-     * processBits}</tt> method for the passed <tt>dest</tt> and <tt>src</tt> arrays.
+     * processBits}</tt> method for the passed <code>dest</code> and <code>src</code> arrays.
      * (However, according to the specification of {@link GeneralizedBitProcessing.SliceOperation}, if its
      * {@link GeneralizedBitProcessing.SliceOperation#isInPlaceProcessingAllowed() isInPlaceProcessingAllowed()}
-     * method returns <tt>true</tt>, then <tt>src</tt> arrays is firstly copied into <tt>dest</tt>,
-     * and then the <tt>dest</tt> arrays is passed as both <tt>srcBits</tt> and <tt>destBits</tt> arguments.)
+     * method returns <code>true</code>, then <code>src</code> arrays is firstly copied into <code>dest</code>,
+     * and then the <code>dest</code> arrays is passed as both <code>srcBits</code> and <code>destBits</code> arguments.)
      *
-     * <p>Note: if the element type is <tt>boolean</tt>, then multithreading is never used:
+     * <p>Note: if the element type is <code>boolean</code>, then multithreading is never used:
      * {@link
      * GeneralizedBitProcessing.SliceOperation#processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)
      * processBits} method is called
-     * in the current thread, and its <tt>threadIndex</tt> and <tt>numberOfThreads</tt> arguments are
-     * <tt>0</tt> and <tt>1</tt> correspondingly.
+     * in the current thread, and its <code>threadIndex</code> and <code>numberOfThreads</code> arguments are
+     * <code>0</code> and <code>1</code> correspondingly.
      *
      * @param dest           the result of processing.
      * @param src            the source AlgART array.
@@ -547,8 +554,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      *                       used for splitting to bit slices.
      * @param numberOfSlices the number of bit slices (i.e. <i>n</i>+1); must be positive.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>dest</tt> and <tt>src</tt> arrays have different lengths
-     *                                  or element types, or if <tt>numberOfSlices&lt;=0</tt>.
+     * @throws IllegalArgumentException if <code>dest</code> and <code>src</code> arrays have different lengths
+     *                                  or element types, or if <code>numberOfSlices&lt;=0</code>.
      */
     public void process(UpdatablePArray dest, PArray src, Range range, long numberOfSlices) {
         Objects.requireNonNull(dest, "Null dest argument");

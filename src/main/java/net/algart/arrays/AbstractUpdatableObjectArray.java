@@ -33,11 +33,10 @@ import java.util.Objects;
  * all other methods are implemented via calls of these 2 methods.</p>
  *
  * @param <E> the generic type of array elements.
- *
  * @author Daniel Alievsky
  */
 public abstract class AbstractUpdatableObjectArray<E>
-    extends AbstractObjectArray<E> implements UpdatableObjectArray<E> {
+        extends AbstractObjectArray<E> implements UpdatableObjectArray<E> {
 
     /**
      * Creates an array with the given initial capacity and length.
@@ -56,26 +55,26 @@ public abstract class AbstractUpdatableObjectArray<E>
      *                                    {@link AbstractFloatArray#AbstractFloatArray(long, long, boolean, Array...)}.
      * @param underlyingArrays            see the same argument of
      *                                    {@link AbstractArray#AbstractArray(long, long, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument or some of
+     *                                  <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
+     * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractUpdatableObjectArray(
-        Class<E> elementType, long initialCapacity, long initialLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            Class<E> elementType, long initialCapacity, long initialLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         super(elementType, initialCapacity, initialLength, underlyingArraysAreParallel, underlyingArrays);
     }
 
     /**
      * Equivalent to the constructor
      * {@link #AbstractUpdatableObjectArray(Class, long, long, boolean, Array...)},
-     * where both <tt>initialCapacity</tt> and <tt>initialLength</tt> arguments are equal to
-     * <tt>initialCapacityAndLength</tt>.
+     * where both <code>initialCapacity</code> and <code>initialLength</code> arguments are equal to
+     * <code>initialCapacityAndLength</code>.
      *
      * @param elementType                 the {@link #elementType() element type} of this array.
      * @param initialCapacityAndLength    initial capacity and length of the array.
@@ -86,11 +85,10 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @throws IllegalArgumentException if the passed argument are illegal (negative).
      */
     protected AbstractUpdatableObjectArray(
-        Class<E> elementType, long initialCapacityAndLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            Class<E> elementType, long initialCapacityAndLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         this(elementType,
-            initialCapacityAndLength, initialCapacityAndLength, underlyingArraysAreParallel, underlyingArrays);
+                initialCapacityAndLength, initialCapacityAndLength, underlyingArraysAreParallel, underlyingArrays);
     }
 
 
@@ -105,7 +103,7 @@ public abstract class AbstractUpdatableObjectArray<E>
      * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
-     * that also call the same methods of this instance with corresponding correction of their <tt>fromIndex</tt>
+     * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
      * <p>The returned instance also have overridden method {@link #isLazy()},
@@ -122,7 +120,7 @@ public abstract class AbstractUpdatableObjectArray<E>
         final AbstractUpdatableObjectArray<E> parent = this;
         final long offset = fromIndex;
         return new AbstractUpdatableObjectArray<E>(elementType, toIndex - fromIndex,
-            underlyingArraysAreParallel, underlyingArrays) {
+                underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public E get(long index) {
                 if (index < 0 || index >= length) {
@@ -221,17 +219,15 @@ public abstract class AbstractUpdatableObjectArray<E>
 
             @Override
             protected void flushResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.flushResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
 
             @Override
             protected void freeResources(
-                ArrayContext context, long fromIndex, long toIndex,
-                boolean forcePhysicalWriting)
-            {
+                    ArrayContext context, long fromIndex, long toIndex,
+                    boolean forcePhysicalWriting) {
                 parent.freeResources(context, offset + fromIndex, offset + toIndex, forcePhysicalWriting);
             }
         };
@@ -244,7 +240,8 @@ public abstract class AbstractUpdatableObjectArray<E>
     public abstract void set(long index, E value);
 
     /**
-     * This implementation just calls <tt>{@link #fill(long, long, Object) fill}(0, thisArray.length(), value)</tt>.
+     * This implementation just calls
+     * <code>{@link #fill(long, long, Object) fill}(0, thisArray.length(), value)</code>.
      *
      * @param value the value to be stored in all elements of the array.
      * @return a reference to this array.
@@ -263,8 +260,9 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @param count    number of filled elements.
      * @param value    the value to be stored in the elements of the array.
      * @return a reference to this array.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
-     *                                   (<tt>position &lt; 0 || count &lt; 0 || position + count &gt; length()</tt>).
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
+     *                                   (<code>position &lt; 0 || count &lt; 0
+     *                                   || position + count &gt; length()</code>).
      */
     public UpdatableObjectArray<E> fill(long position, long count, E value) {
         UpdatableObjectArray<?> a = position == 0 && count == length() ? this : subArr(position, count);
@@ -274,9 +272,9 @@ public abstract class AbstractUpdatableObjectArray<E>
 
 
     /**
-     * This implementation returns <tt>false</tt>.
+     * This implementation returns <code>false</code>.
      *
-     * @return <tt>true</tt> if this instance is immutable.
+     * @return <code>true</code> if this instance is immutable.
      */
     @Override
     public boolean isImmutable() {
@@ -364,16 +362,16 @@ public abstract class AbstractUpdatableObjectArray<E>
     }
 
     /**
-     * This implementation calls <tt>set(index, value)</tt>.
+     * This implementation calls <code>set(index, value)</code>.
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
-     * @throws NullPointerException      if <tt>value == null</tt> and it is an array of primitive elements
-     * @throws ClassCastException        if it is an array of primitive elements and <tt>value</tt>
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
+     * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements
+     * @throws ClassCastException        if it is an array of primitive elements and <code>value</code>
      *                                   is not a corresponding wrapped class
-     *                                   (<tt>Boolean</tt>, <tt>Integer</tt>, etc.)
-     * @throws ArrayStoreException       if it is an array of non-primitive elements and <tt>value</tt>
+     *                                   (<code>Boolean</code>, <code>Integer</code>, etc.)
+     * @throws ArrayStoreException       if it is an array of non-primitive elements and <code>value</code>
      *                                   is not an instance of {@link #elementType()} class
      */
     public void setElement(long index, Object value) {
@@ -390,14 +388,14 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray, int srcArrayOffset, int count) {
@@ -425,14 +423,14 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @param arrayPos starting position in this AlgART array.
      * @param srcArray the source Java array.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>srcArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     public UpdatableArray setData(long arrayPos, Object srcArray) {
@@ -449,11 +447,11 @@ public abstract class AbstractUpdatableObjectArray<E>
     }
 
     /**
-     * This implementation calls <tt>set(destIndex, get(srcIndex))</tt>.
+     * This implementation calls <code>set(destIndex, get(srcIndex))</code>.
      *
      * @param destIndex index of element to replace.
      * @param srcIndex  index of element to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void copy(long destIndex, long srcIndex) {
         set(destIndex, get(srcIndex));
@@ -465,12 +463,12 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @param destIndex starting index of element to replace.
      * @param srcIndex  starting index of element to be copied.
      * @param count     the number of elements to be copied.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void copy(long destIndex, long srcIndex, long count) {
         if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of copied elements (count = " + count
-                + ") in " + getClass());
+                    + ") in " + getClass());
         }
         if (srcIndex <= destIndex && srcIndex + count > destIndex) {
             srcIndex += count;
@@ -491,7 +489,7 @@ public abstract class AbstractUpdatableObjectArray<E>
      *
      * @param firstIndex  first index of element to exchange.
      * @param secondIndex second index of element to exchange.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void swap(long firstIndex, long secondIndex) {
         E temp = get(firstIndex);
@@ -505,12 +503,12 @@ public abstract class AbstractUpdatableObjectArray<E>
      * @param firstIndex  starting first index of element to exchange.
      * @param secondIndex starting second index of element to exchange.
      * @param count       the number of elements to be exchanged.
-     * @throws IndexOutOfBoundsException if one of indexes is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void swap(long firstIndex, long secondIndex, long count) {
         if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of swapped elements (count = " + count
-                + ") in " + getClass());
+                    + ") in " + getClass());
         }
         for (long k = 0; k < count; k++) {
             swap(firstIndex++, secondIndex++);
@@ -522,7 +520,7 @@ public abstract class AbstractUpdatableObjectArray<E>
      *
      * @param src the source array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      */
     public UpdatableArray copy(Array src) {
@@ -535,7 +533,7 @@ public abstract class AbstractUpdatableObjectArray<E>
      *
      * @param another another array.
      * @return a reference to this array.
-     * @throws NullPointerException     if <tt>another</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>another</code> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public UpdatableArray swap(UpdatableArray another) {
@@ -579,6 +577,6 @@ public abstract class AbstractUpdatableObjectArray<E>
     @Override
     public String toString() {
         return "unresizable AlgART array Object[" + length + "]" + (underlyingArrays.length == 0 ? "" :
-            " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
+                " based on " + underlyingArrays.length + " underlying array" + (underlyingArrays.length > 1 ? "s" : ""));
     }
 }

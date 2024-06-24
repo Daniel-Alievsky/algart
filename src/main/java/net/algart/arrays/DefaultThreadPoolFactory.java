@@ -32,10 +32,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>A simple implementation of {@link ThreadPoolFactory} interface.
- * It uses a thread pool, created by <tt>Executors.newFixedThreadPool</tt> method,
+ * It uses a thread pool, created by <code>Executors.newFixedThreadPool</code> method,
  * and uses {@link Arrays.SystemSettings#cpuCount()} method to determine
  * the desired number of parallel tasks, if you did not specify another number in
- * <tt>numberOfTasks</tt> argument of the {@link #DefaultThreadPoolFactory constructor}
+ * <code>numberOfTasks</code> argument of the {@link #DefaultThreadPoolFactory constructor}
  * or {@link #getDefaultThreadPoolFactory(int)} method.
  * See details below in comments to the methods and fields.
  *
@@ -46,43 +46,43 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implements ThreadPoolFactory {
     private static final long MIN_MULTITHREADING_LENGTH = InternalUtils.getLongProperty(
-        "net.algart.arrays.minMultithreadingLength", 16);
+            "net.algart.arrays.minMultithreadingLength", 16);
 
     private static final int GLOBAL_THREAD_POOLS_PER_CPU = Math.min(128, Math.max(1, InternalUtils.getIntProperty(
-        "net.algart.arrays.globalThreadPoolsPerCPU", 2)));
+            "net.algart.arrays.globalThreadPoolsPerCPU", 2)));
 
     private static final int GLOBAL_THREAD_POOL_SIZE = Math.min(8192, InternalUtils.getIntProperty(
-        "net.algart.arrays.globalThreadPoolSize",
-        1 + GLOBAL_THREAD_POOLS_PER_CPU * InternalUtils.availableProcessors()));
+            "net.algart.arrays.globalThreadPoolSize",
+            1 + GLOBAL_THREAD_POOLS_PER_CPU * InternalUtils.availableProcessors()));
 
     private static final int GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME = Math.max(0, InternalUtils.getIntProperty(
-        "net.algart.arrays.globalThreadPoolKeepAliveTime", 30000)); // 30 sec keep-alive for core threads
+            "net.algart.arrays.globalThreadPoolKeepAliveTime", 30000)); // 30 sec keep-alive for core threads
 
     /**
      * Returns the global thread pool, returned by {@link #getThreadPool(Array, ThreadFactory)} method
      * in factories, created by {@link #getDefaultThreadPoolFactory()}
      * and {@link #getDefaultThreadPoolFactory(int)} methods.
      *
-     * <p>More precisely, if there is the system property "<tt>net.algart.arrays.globalThreadPoolSize</tt>",
-     * containing a positive integer value <tt>N</tt>, this method returns a global thread pool,
-     * created by <tt>Executors.newFixedThreadPool(N,...<i>(someOurFactory)</i>)</tt> (or analogous) operator
+     * <p>More precisely, if there is the system property "<code>net.algart.arrays.globalThreadPoolSize</code>",
+     * containing a positive integer value <code>N</code>, this method returns a global thread pool,
+     * created by <code>Executors.newFixedThreadPool(N,...<i>(someOurFactory)</i>)</code> (or analogous) operator
      * while the first call of this method and saved in an internal static field.
      * If this property contains an integer greater than 8192, this value is truncated to 8192.
      * If this property contains 0 or a negative value, this method returns {@code null}
      * (in this case, no global thread pool will be created).
      * If there is no such property, or if it contains not a number,
-     * or if some exception occurred while calling <tt>Integer.getInteger</tt>,
+     * or if some exception occurred while calling <code>Integer.getInteger</code>,
      * this method returns the default value, which is equal (in the current implementation) to
-     * <tt><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></tt>,
-     * where MULT is an integer value, stored in "<tt>net.algart.arrays.globalThreadPoolsPerCPU</tt>"
+     * <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></code>,
+     * where MULT is an integer value, stored in "<code>net.algart.arrays.globalThreadPoolsPerCPU</code>"
      * system property, or default multiplier 2 if there is no such property or it contains not a number.
      * Default value MULT=2 provides a suitable choice for most multiprocessor configurations.
      * The value of these system properties are loaded and checked only once
      * while initializing {@link DefaultThreadPoolFactory} class.
      *
-     * <p>Note: the default value <tt><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></tt>
+     * <p>Note: the default value <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></code>
      * can be changed in future implementations. It is only guaranteed that this value is chosen
-     * not less than <tt><nobr>{@link Arrays.SystemSettings#availableProcessors()}</nobr></tt>.
+     * not less than <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}</nobr></code>.
      *
      * <p>Note: the threads, created in the global thread pool (if it exists), are <i>daemons</i>.
      * So, the application can be terminated by the usual way, even
@@ -113,7 +113,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     /**
      * Returns an instance of this class with the specified recommended number of tasks.
      *
-     * <p>If <tt>numberOfTasks</tt> argument is positive,
+     * <p>If <code>numberOfTasks</code> argument is positive,
      * it will be always returned by {@link #recommendedNumberOfTasks()} and
      * {@link #recommendedNumberOfTasks(Array)} methods.
      * If it is zero, that method will use the common algorithm, based on the system property:
@@ -123,11 +123,11 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * DefaultThreadPoolFactory}(numberOfTasks, {@link #globalThreadPool()})</tt>.
      *
      * <p>Note: this method works very quickly (it just returns global internal constants) in cases
-     * <tt>numberOfTasks=0</tt> and <tt>numberOfTasks=1</tt>.
+     * <code>numberOfTasks=0</code> and <code>numberOfTasks=1</code>.
      *
      * @param numberOfTasks the desired number of tasks.
      * @return an instance of this class with the specified recommended number of tasks.
-     * @throws IllegalArgumentException if <tt>numberOfTasks</tt> is negative.
+     * @throws IllegalArgumentException if <code>numberOfTasks</code> is negative.
      */
     public static DefaultThreadPoolFactory getDefaultThreadPoolFactory(int numberOfTasks) {
         if (numberOfTasks == 0) {
@@ -143,20 +143,20 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * Creates new instance of this class with the specified recommended number of tasks
      * and the specified thread pool.
      *
-     * <p>If <tt>numberOfTasks</tt> argument is positive,
+     * <p>If <code>numberOfTasks</code> argument is positive,
      * it will be always returned by {@link #recommendedNumberOfTasks()} and
      * {@link #recommendedNumberOfTasks(Array)} methods.
      * If it is zero, that method will use the common algorithm, based on the system property:
      * see comments to {@link #recommendedNumberOfTasks()}.
      *
-     * <p>If <tt>persistentThreadPool</tt> is not {@code null},
+     * <p>If <code>persistentThreadPool</code> is not {@code null},
      * it will be always returned by {@link #getThreadPool(Array, ThreadFactory)} method and
      * {@link #releaseThreadPool(ExecutorService)} method will do nothing.
      * In this case, please note, that if the threads, created by this pool, are not daemons,
-     * then the application will probably not be exited until you will directly call <tt>shutdown()</tt>
-     * method for the passed <tt>persistentThreadPool</tt>.
+     * then the application will probably not be exited until you will directly call <code>shutdown()</code>
+     * method for the passed <code>persistentThreadPool</code>.
      *
-     * <p>If <tt>persistentThreadPool==null</tt>, {@link #getThreadPool(Array, ThreadFactory)} method
+     * <p>If <code>persistentThreadPool==null</code>, {@link #getThreadPool(Array, ThreadFactory)} method
      * will always create new thread pool and
      * {@link #releaseThreadPool(ExecutorService)} method will shutdown the passed pool.
      *
@@ -164,7 +164,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @param persistentThreadPool the desired thread pool,
      *                             or {@code null} if {@link #getThreadPool(Array, ThreadFactory)}
      *                             should create new thread pool every time.
-     * @throws IllegalArgumentException if <tt>numberOfTasks</tt> is negative.
+     * @throws IllegalArgumentException if <code>numberOfTasks</code> is negative.
      */
     public DefaultThreadPoolFactory(int numberOfTasks, ThreadPoolExecutor persistentThreadPool) {
         if (numberOfTasks < 0) {
@@ -176,22 +176,22 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
     /**
      * If this instance was created by the {@link #DefaultThreadPoolFactory constructor}
-     * with <tt>numberOfTasks=0</tt> argument
+     * with <code>numberOfTasks=0</code> argument
      * (or via {@link #getDefaultThreadPoolFactory()} method), this implementation returns
      * the result of {@link Arrays.SystemSettings#cpuCount()} method.
      *
      * <p>If this instance was created by the {@link #DefaultThreadPoolFactory constructor}
-     * with non-zero <tt>numberOfTasks</tt> argument
+     * with non-zero <code>numberOfTasks</code> argument
      * (or via <nobr>{@link #getDefaultThreadPoolFactory(int numberOfTask)}</nobr> method
-     * with <tt>numberOfTasks&gt;0</tt> method),
-     * the given <tt>numberOfTasks</tt> argument is returned always
+     * with <code>numberOfTasks&gt;0</code> method),
+     * the given <code>numberOfTasks</code> argument is returned always
      * regardless of any system properties.
      *
      * <p>If this instance uses persistent thread pool, that is if
-     * <nobr><tt>{@link #persistentThreadPool()}!=null</tt></nobr> (a typical situation),
+     * <nobr><code>{@link #persistentThreadPool()}!=null</code></nobr> (a typical situation),
      * then the result of this method, calculated by the rules above,
      * is also truncated by the limit
-     * <tt>Math.max(1, <nobr>((ThreadPoolExecutor){@link #persistentThreadPool()}).getCorePoolSize())</nobr></tt>
+     * <code>Math.max(1, <nobr>((ThreadPoolExecutor){@link #persistentThreadPool()}).getCorePoolSize())</nobr></code>
      * &mdash; if the previously calculated result is greater then this limit, then this limit is returned instead.
      * So, there is a guarantee, that this method never returns a value greater than
      * the core number of threads in a thread pool, returned by
@@ -214,12 +214,12 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
     /**
      * This method returns the same value as {@link #recommendedNumberOfTasks()}, excepting that
-     * when the passed array is very little, this method may return less value (usually <tt>1</tt>).
+     * when the passed array is very little, this method may return less value (usually <code>1</code>).
      *
      * <p>However, if this instance was created by the {@link #DefaultThreadPoolFactory constructor}
-     * with non-zero <tt>numberOfTasks</tt> argument
+     * with non-zero <code>numberOfTasks</code> argument
      * (or via <nobr>{@link #getDefaultThreadPoolFactory(int numberOfTask)}</nobr> method
-     * with <tt>numberOfTasks&gt;0</tt> method),
+     * with <code>numberOfTasks&gt;0</code> method),
      * then this method is strictly equivalent to {@link #recommendedNumberOfTasks()}.
      *
      * @param sourceArray some AlgART array that should be processed.
@@ -257,7 +257,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
      * @return the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>sourceArray</code> argument is {@code null}.
      * @see #getThreadPool(Array, ThreadFactory)
      */
     public ExecutorService getThreadPool(ThreadFactory threadFactory) {
@@ -265,7 +265,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
             return persistentThreadPool;
         } else {
             return Executors.newFixedThreadPool(recommendedNumberOfTasks(),
-                threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
+                    threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
         }
     }
 
@@ -281,7 +281,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *                      {@link #persistentThreadPool() persistent thread pool},
      *                      specifies the desired thread factory for using by new thread pool.
      * @return the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>sourceArray</code> argument is {@code null}.
      */
     public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory) {
         Objects.requireNonNull(sourceArray, "Null sourceArray argument");
@@ -289,16 +289,17 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
             return persistentThreadPool;
         } else {
             return Executors.newFixedThreadPool(recommendedNumberOfTasks(sourceArray),
-                threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
+                    threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
         }
     }
 
     /**
-     * This implementation calls <tt>pool.shutdown()</tt>, if there is no persistent thread pool
+     * This implementation calls <code>pool.shutdown()</code>, if there is no persistent thread pool
      * ({@link #persistentThreadPool()} returns {@code null}), or does nothing in other case.
      *
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
-     * @throws NullPointerException if <tt>poll</tt> argument is {@code null} and there is no persistent thread pool.
+     * @throws NullPointerException if <code>poll</code> argument is {@code null}
+     *                              and there is no persistent thread pool.
      */
     public void releaseThreadPool(ExecutorService pool) {
         if (persistentThreadPool == null) {
@@ -329,19 +330,19 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
     private static class ConstantHolder {
         private static final ThreadPoolExecutor GLOBAL_THREAD_POOL = GLOBAL_THREAD_POOL_SIZE <= 0 ? null :
-            new ThreadPoolExecutor(GLOBAL_THREAD_POOL_SIZE, GLOBAL_THREAD_POOL_SIZE,
-                GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(),
-                new ThreadFactory() {
-                    private final AtomicInteger threadNumber = new AtomicInteger(1);
+                new ThreadPoolExecutor(GLOBAL_THREAD_POOL_SIZE, GLOBAL_THREAD_POOL_SIZE,
+                        GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME, TimeUnit.MILLISECONDS,
+                        new LinkedBlockingQueue<Runnable>(),
+                        new ThreadFactory() {
+                            private final AtomicInteger threadNumber = new AtomicInteger(1);
 
-                    public Thread newThread(Runnable r) {
-                        Thread t = new Thread(r, "AlgART-arrays-thread-" + threadNumber.getAndIncrement());
-                        t.setDaemon(true);
-                        return t;
-                    }
-                }
-            );
+                            public Thread newThread(Runnable r) {
+                                Thread t = new Thread(r, "AlgART-arrays-thread-" + threadNumber.getAndIncrement());
+                                t.setDaemon(true);
+                                return t;
+                            }
+                        }
+                );
 
         static {
             if (GLOBAL_THREAD_POOL != null && GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME > 0) {
@@ -357,8 +358,8 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
         }
 
         private static final DefaultThreadPoolFactory DEFAULT =
-            new DefaultThreadPoolFactory(0, GLOBAL_THREAD_POOL);
+                new DefaultThreadPoolFactory(0, GLOBAL_THREAD_POOL);
         private static final DefaultThreadPoolFactory DEFAULT_SINGLE_THREAD =
-            new DefaultThreadPoolFactory(1, GLOBAL_THREAD_POOL);
+                new DefaultThreadPoolFactory(1, GLOBAL_THREAD_POOL);
     }
 }

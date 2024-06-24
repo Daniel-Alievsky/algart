@@ -118,16 +118,16 @@ abstract class DataStorage {
      * Creates new empty storage with characteristics identical to this one
      * (in particular, with the same element type).
      *
-     * @param unresizable <tt>true</tt> if this storage will be used for unresizable array.
+     * @param unresizable <code>true</code> if this storage will be used for unresizable array.
      * @return            new compatible empty storage.
      */
     abstract DataStorage newCompatibleEmptyStorage(boolean unresizable);
 
     /**
-     * Returns the binary logarithm of the number of bytes per one <tt>Buffer</tt> element
-     * used by this storage. For bit storages, returns 3, as for <tt>long</tt> values.
+     * Returns the binary logarithm of the number of bytes per one <code>Buffer</code> element
+     * used by this storage. For bit storages, returns 3, as for <code>long</code> values.
      *
-     * @return the binary logarithm of the number of bytes per one <tt>Buffer</tt> element.
+     * @return the binary logarithm of the number of bytes per one <code>Buffer</code> element.
      */
     abstract int bytesPerBufferElementLog();
 
@@ -139,26 +139,26 @@ abstract class DataStorage {
     abstract ByteOrder byteOrder();
 
     /**
-     * Creates new <tt>a</tt> zero-filled array, currently stored in this storage.
-     * The only usage of <tt>a</tt> argument should
+     * Creates new <code>a</code> zero-filled array, currently stored in this storage.
+     * The only usage of <code>a</code> argument should
      * be correction of information about it that may be stored here.
      *
      * @param capacity    new array capacity.
-     * @param unresizable if <tt>true</tt>, the {@link #changeCapacity(long, long, long)} method
+     * @param unresizable if <code>true</code>, the {@link #changeCapacity(long, long, long)} method
      * should never be called.
      */
     abstract void allocate(long capacity, boolean unresizable);
 
     /**
-     * Changes the capacity of <tt>a</tt> array, currently stored in this storage
-     * starting from <tt>offset</tt> position,
-     * to <tt>newCapacity</tt>, copies elements <tt>offset..offset+length-1</tt>
+     * Changes the capacity of <code>a</code> array, currently stored in this storage
+     * starting from <code>offset</code> position,
+     * to <code>newCapacity</code>, copies elements <code>offset..offset+length-1</code>
      * to new allocated array, and returns the resulting storage.
      * Result may be equal to this one or may be a new instance,
      * if all data were really copied into new created storage.
      *
      * <p>If the capacity is increased, all new elements
-     * are zero. The only usage of <tt>a</tt> argument should
+     * are zero. The only usage of <code>a</code> argument should
      * be correction of information about it that may be stored here.
      *
      * @param newCapacity new array capacity.
@@ -169,7 +169,7 @@ abstract class DataStorage {
     abstract DataStorage changeCapacity(long newCapacity, long offset, long length);
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a bit storage
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a bit storage
      * <b>in a non-thread-safe manner</b>.
      *
      * @param index the index of the data element in the source array (not sub-array).
@@ -196,7 +196,7 @@ abstract class DataStorage {
                Bit         ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double
      */
     /**
-     * Returns the bit #<tt>index</tt> if it is a bit storage.
+     * Returns the bit #<code>index</code> if it is a bit storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the bit at the specified position in the source array.
@@ -207,7 +207,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a bit storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a bit storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the bit to be stored at the specified position.
@@ -218,18 +218,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getBit(long) getBit}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getBit(long) getBit}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a bit storage.
      */
     long indexOfBit(long lowIndex, long highIndex, boolean value) {
@@ -237,19 +237,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getBit(long) getBit}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getBit(long) getBit}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this bit in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this bit does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this bit in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this bit does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfBit(long lowIndex, long highIndex, boolean value) {
         throw new UnsupportedOperationException("It is not a bit storage");
@@ -257,7 +257,7 @@ abstract class DataStorage {
 
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     /**
-     * Returns the char #<tt>index</tt> if it is a char storage.
+     * Returns the char #<code>index</code> if it is a char storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the char at the specified position in the source array.
@@ -268,7 +268,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a char storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a char storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the char to be stored at the specified position.
@@ -279,18 +279,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getChar(long) getChar}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getChar(long) getChar}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a char storage.
      */
     long indexOfChar(long lowIndex, long highIndex, char value) {
@@ -298,19 +298,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getChar(long) getChar}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getChar(long) getChar}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this char in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this char does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this char in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this char does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfChar(long lowIndex, long highIndex, char value) {
         throw new UnsupportedOperationException("It is not a char storage");
@@ -318,7 +318,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the byte #<tt>index</tt> if it is a byte storage.
+     * Returns the byte #<code>index</code> if it is a byte storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the byte at the specified position in the source array.
@@ -329,7 +329,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a byte storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a byte storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the byte to be stored at the specified position.
@@ -340,18 +340,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getByte(long) getByte}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getByte(long) getByte}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a byte storage.
      */
     long indexOfByte(long lowIndex, long highIndex, byte value) {
@@ -359,19 +359,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getByte(long) getByte}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getByte(long) getByte}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this byte in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this byte does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this byte in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this byte does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfByte(long lowIndex, long highIndex, byte value) {
         throw new UnsupportedOperationException("It is not a byte storage");
@@ -379,7 +379,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the short #<tt>index</tt> if it is a short storage.
+     * Returns the short #<code>index</code> if it is a short storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the short at the specified position in the source array.
@@ -390,7 +390,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a short storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a short storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the short to be stored at the specified position.
@@ -401,18 +401,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getShort(long) getShort}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getShort(long) getShort}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a short storage.
      */
     long indexOfShort(long lowIndex, long highIndex, short value) {
@@ -420,19 +420,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getShort(long) getShort}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getShort(long) getShort}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this short in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this short does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this short in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this short does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfShort(long lowIndex, long highIndex, short value) {
         throw new UnsupportedOperationException("It is not a short storage");
@@ -440,7 +440,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the int #<tt>index</tt> if it is a int storage.
+     * Returns the int #<code>index</code> if it is a int storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the int at the specified position in the source array.
@@ -451,7 +451,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a int storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a int storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the int to be stored at the specified position.
@@ -462,18 +462,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getInt(long) getInt}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getInt(long) getInt}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a int storage.
      */
     long indexOfInt(long lowIndex, long highIndex, int value) {
@@ -481,19 +481,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getInt(long) getInt}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getInt(long) getInt}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this int in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this int does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this int in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this int does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfInt(long lowIndex, long highIndex, int value) {
         throw new UnsupportedOperationException("It is not a int storage");
@@ -501,7 +501,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the long #<tt>index</tt> if it is a long storage.
+     * Returns the long #<code>index</code> if it is a long storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the long at the specified position in the source array.
@@ -512,7 +512,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a long storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a long storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the long to be stored at the specified position.
@@ -523,18 +523,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getLong(long) getLong}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getLong(long) getLong}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a long storage.
      */
     long indexOfLong(long lowIndex, long highIndex, long value) {
@@ -542,19 +542,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getLong(long) getLong}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getLong(long) getLong}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this long in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this long does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this long in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this long does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfLong(long lowIndex, long highIndex, long value) {
         throw new UnsupportedOperationException("It is not a long storage");
@@ -562,7 +562,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the float #<tt>index</tt> if it is a float storage.
+     * Returns the float #<code>index</code> if it is a float storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the float at the specified position in the source array.
@@ -573,7 +573,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a float storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a float storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the float to be stored at the specified position.
@@ -584,18 +584,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getFloat(long) getFloat}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getFloat(long) getFloat}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a float storage.
      */
     long indexOfFloat(long lowIndex, long highIndex, float value) {
@@ -603,19 +603,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getFloat(long) getFloat}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getFloat(long) getFloat}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this float in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this float does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this float in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this float does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfFloat(long lowIndex, long highIndex, float value) {
         throw new UnsupportedOperationException("It is not a float storage");
@@ -623,7 +623,7 @@ abstract class DataStorage {
 
 
     /**
-     * Returns the double #<tt>index</tt> if it is a double storage.
+     * Returns the double #<code>index</code> if it is a double storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @return      the double at the specified position in the source array.
@@ -634,7 +634,7 @@ abstract class DataStorage {
     }
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> if it is a double storage.
+     * Sets the element #<code>index</code> to the specified <code>value</code> if it is a double storage.
      *
      * @param index the index of the data element in the source array (not sub-array).
      * @param value the double to be stored at the specified position.
@@ -645,18 +645,18 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that <tt>lowIndex&lt;=k&lt;highIndex</tt>
-     * and <tt>{@link #getDouble(long) getDouble}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the minimal index <code>k</code>, so that <code>lowIndex&lt;=k&lt;highIndex</code>
+     * and <code>{@link #getDouble(long) getDouble}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index for search (inclusive).
      * @param highIndex the high index for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the first occurrence of this element in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this element does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the first occurrence of this element in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this element does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      * @throws UnsupportedOperationException if it is not a double storage.
      */
     long indexOfDouble(long lowIndex, long highIndex, double value) {
@@ -664,19 +664,19 @@ abstract class DataStorage {
     }
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=lowIndex</tt>
-     * and <tt>{@link #getDouble(long) getDouble}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=lowIndex</code>
+     * and <code>{@link #getDouble(long) getDouble}(k)==value</code>,
+     * or <code>-1</code> if there is no such element.
      *
-     * <p>If <tt>highIndex&lt;=lowIndex</tt>, this method returns <tt>-1</tt>.
+     * <p>If <code>highIndex&lt;=lowIndex</code>, this method returns <code>-1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive);
-     *                  pass <tt>0</tt> to search all remaining elements.
+     *                  pass <code>0</code> to search all remaining elements.
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value of element to be found.
-     * @return          the index of the last occurrence of this double in range <tt>lowIndex..highIndex-1</tt>,
-     *                  or <tt>-1</tt> if this double does not occur
-     *                  or if <tt>lowIndex&gt;=highIndex</tt>.
+     * @return          the index of the last occurrence of this double in range <code>lowIndex..highIndex-1</code>,
+     *                  or <code>-1</code> if this double does not occur
+     *                  or if <code>lowIndex&gt;=highIndex</code>.
      */
     long lastIndexOfDouble(long lowIndex, long highIndex, double value) {
         throw new UnsupportedOperationException("It is not a double storage");

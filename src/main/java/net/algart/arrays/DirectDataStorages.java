@@ -38,7 +38,7 @@ class DirectDataStorages {
 
     /**
      * The simple implementation of data storage, based on buffers in RAM
-     * created by <tt>ByteBuffer.allocateDirect</tt>.
+     * created by <code>ByteBuffer.allocateDirect</code>.
      */
     static abstract class DirectStorage extends DataStorage {
         ByteBuffer bb;

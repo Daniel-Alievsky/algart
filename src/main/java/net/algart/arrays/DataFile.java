@@ -33,7 +33,7 @@ import java.nio.*;
  * <p>The instances of this class are returned by methods of {@link DataFileModel} interface.</p>
  *
  * <p>Note: all implementations of this interface from this package do not override standard
- * <tt>equals</tt> and <tt>hashCode</tt> methods of <tt>Object</tt> class.
+ * <code>equals</code> and <code>hashCode</code> methods of <code>Object</code> class.
  * Illegal overriding these methods may lead to losing some file instances by
  * {@link DataFileModel#allTemporaryFiles()} method.</p>
  *
@@ -53,7 +53,7 @@ public interface DataFile {
          */
         OPENED,
         /**
-         * Returned by link {@link DataFile#open(boolean)} method if its argument is <tt>false</tt>
+         * Returned by link {@link DataFile#open(boolean)} method if its argument is <code>false</code>
          * and the data file was created by the method call.
          */
         CREATED
@@ -77,29 +77,29 @@ public interface DataFile {
      * It is not necessary to call this method before deletion the file
      * by {@link DataFileModel#delete(DataFile)} method.
      *
-     * <p>If <tt>readOnly</tt> argument is <tt>true</tt>, this file
+     * <p>If <code>readOnly</code> argument is <code>true</code>, this file
      * will be used only for reading data.
      * In particular, the {@link #length(long)} method will not be called.
      * The read-only mode will be actual until {@link #close() closing} file;
-     * the next <tt>open</tt> method may change this mode.
+     * the next <code>open</code> method may change this mode.
      *
      * <p>If the file does not exist yet, then behavior of this method depends on
-     * <tt>readOnly</tt> argument. If it is <tt>false</tt> (read/write mode),
+     * <code>readOnly</code> argument. If it is <code>false</code> (read/write mode),
      * this method tries to create it at the position <tt>theModelWhichCreatedThisFile.{@link
      * DataFileModel#getPath(DataFile) getPath}(thisFile)</tt>.
-     * If it is <tt>true</tt> (read-only mode), this method just throws
-     * <tt>IOError</tt> with the corresponding cause (usually <tt>FileNotFoundException</tt>).
+     * If it is <code>true</code> (read-only mode), this method just throws
+     * <code>IOError</code> with the corresponding cause (usually <code>FileNotFoundException</code>).
      * In the first case, the length of the newly created file is always 0.
      *
      * <p>This method returns {@link OpenResult#CREATED} if and only if
-     * <tt>readOnly</tt> argument is <tt>false</tt> and the data file was successfully created.
+     * <code>readOnly</code> argument is <code>false</code> and the data file was successfully created.
      * In all other cases this method returns {@link OpenResult#OPENED}.
      *
-     * @param readOnly if <tt>true</tt>, the file data will be read but will not be changed.
+     * @param readOnly if <code>true</code>, the file data will be read but will not be changed.
      * @return         {@link OpenResult#CREATED} if this method has successfully created the new file,
      *                 {@link OpenResult#OPENED} in all other cases.
      * @see #close()
-     * @throws java.io.IOError in a case of some disk errors or if the argument is <tt>true</tt>
+     * @throws java.io.IOError in a case of some disk errors or if the argument is <code>true</code>
      *                         and there is no file with the given position.
      */
     OpenResult open(boolean readOnly);
@@ -129,7 +129,7 @@ public interface DataFile {
      *
      * <p>This method never throws exceptions.
      *
-     * @return <tt>true</tt> if the file is opened in read-only mode.
+     * @return <code>true</code> if the file is opened in read-only mode.
      */
     boolean isReadOnly();
 
@@ -144,10 +144,10 @@ public interface DataFile {
      * If you implement this method in your own {@link DataFileModel}, you can be sure that
      * the arguments the following conditions are true:
      * <ol>
-     * <li><tt>range.position()=bankSize*k</tt>, where <tt>bankSize</tt> is the result of
+     * <li><code>range.position()=bankSize*k</code>, where <code>bankSize</code> is the result of
      * {@link DataFileModel#recommendedBankSize(boolean)} method of your data file model
-     * and <tt>k</tt> is some non-negative integer;
-     * <li><tt>range.length()&lt;=bankSize</tt>;
+     * and <code>k</code> is some non-negative integer;
+     * <li><code>range.length()&lt;=bankSize</code>;
      * <li>the same positions are never mapped 2 or more times simultaneously for one file:
      * {@link BufferHolder#unmap(boolean)} method is always called before the same
      * position will be mapped again.
@@ -155,16 +155,16 @@ public interface DataFile {
      * <p>In particular, it means that the regions mapped by this package
      * never overlap.
      *
-     * <p>If <tt>notLoadDataFromFile</tt> argument is <tt>true</tt>, this method
+     * <p>If <code>notLoadDataFromFile</code> argument is <code>true</code>, this method
      * may ignore the current data in this data file. This method is called by this package with
-     * <tt>notLoadDataFromFile==true</tt> if the returned buffer will be immediately
+     * <code>notLoadDataFromFile==true</code> if the returned buffer will be immediately
      * filled by some values, not depending on the previous file content.
      *
      * @param range               the position within the file at which the mapped region
      *                            starts and the size of the region to be mapped.
      *                            In current version, the region size ({@link Range#length() range.length()}
-     *                            must not be greater than <tt>Integer.MAX_VALUE</tt>.
-     * @param notLoadDataFromFile if <tt>true</tt>, this method may discard the previous content
+     *                            must not be greater than <code>Integer.MAX_VALUE</code>.
+     * @param notLoadDataFromFile if <code>true</code>, this method may discard the previous content
      *                            of the specified region of the data file.
      * @return                    an object allowing to access mapped data.
      * @throws java.io.IOError in a case of some disk errors.
@@ -188,8 +188,8 @@ public interface DataFile {
     void length(long newLength);
 
     /**
-     * <p>Pair of 2 <tt>long</tt> values <tt>position</tt>
-     * and <tt>length</tt>, describing the range <tt>position..position+length-1</tt>
+     * <p>Pair of 2 <code>long</code> values <code>position</code>
+     * and <code>length</code>, describing the range <code>position..position+length-1</code>
      * of linear addresses in some {@link DataFile data file}.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>.</p>
@@ -210,12 +210,12 @@ public interface DataFile {
         }
 
         /**
-         * Creates new range <tt>position..position+length-1</tt>.
+         * Creates new range <code>position..position+length-1</code>.
 
          * @param position the starting range position.
          * @param length   the length of range.
          * @return         new range instance.
-         * @throws IllegalArgumentException of <tt>position</tt> or <tt>length</tt> is negative.
+         * @throws IllegalArgumentException of <code>position</code> or <code>length</code> is negative.
          */
         public static Range valueOf(long position, long length) {
             return new Range(position, length);
@@ -279,7 +279,7 @@ public interface DataFile {
          * contains the same starting position and length.
          *
          * @param obj some another range.
-         * @return    <tt>true</tt> if the passed object is an instance of this class and
+         * @return    <code>true</code> if the passed object is an instance of this class and
          *            contains the same starting position and length.
          */
         public boolean equals(Object obj) {
@@ -310,7 +310,7 @@ public interface DataFile {
         Range range();
 
         /**
-         * Returns the mapped data. Usually returns <tt>MappedByteBuffer</tt>/
+         * Returns the mapped data. Usually returns <code>MappedByteBuffer</code>/
          *
          * <p>This method never throws exceptions.
          *
@@ -357,7 +357,7 @@ public interface DataFile {
          * while JVM shutdown.)
          * </ul>
          *
-         * <p>If the <tt>forcePhysicalWriting</tt> argument is <tt>true</tt>, this
+         * <p>If the <code>forcePhysicalWriting</code> argument is <code>true</code>, this
          * method tries to write data to the storage device immediately.
          * For data file models implemented in this package,
          * it means that the data will be really stored on the disk and will be immediately
@@ -373,15 +373,15 @@ public interface DataFile {
          * Unmaps the data: releases all system resources associated with this mapping.
          *
          * <p>This method always performs, at least, the same actions as {@link #flush(boolean)
-         * flush(forcePhysicalWriting)} method with the same <tt>forcePhysicalWriting</tt> argument.
+         * flush(forcePhysicalWriting)} method with the same <code>forcePhysicalWriting</code> argument.
          *
          * <p>This method may do not actual unmapping. For example, its implementation
          * for {@link DefaultDataFileModel} does not unmap the data.
          *
          * <p>After calling this method, this instance must not be used, excepting calling methods
-         * {@link #mappingObject()}, {@link #isLoadedFromCache()} and <tt>toString()</tt>.
+         * {@link #mappingObject()}, {@link #isLoadedFromCache()} and <code>toString()</code>.
          * In particular, this method must not be called twice.
-         * Moreover, behavior of the <tt>ByteBuffer</tt> returned by the last call of {@link #data()} method
+         * Moreover, behavior of the <code>ByteBuffer</code> returned by the last call of {@link #data()} method
          * becomes undefined.
          *
          * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
@@ -392,8 +392,8 @@ public interface DataFile {
 
         /**
          * This method either performs the same actions as {@link #unmap(boolean) unmap(false)} method
-         * and returns <tt>true</tt>,
-         * or performs some reduced form of unmapping (or even does nothing) and returns <tt>false</tt>.
+         * and returns <code>true</code>,
+         * or performs some reduced form of unmapping (or even does nothing) and returns <code>false</code>.
          *
          * <p>This method is called by AlgART array manager for temporary data files
          * when we are absolutely sure that the this buffer's content will never be useful in future
@@ -406,18 +406,18 @@ public interface DataFile {
          *
          * <p>In {@link DefaultDataFileModel}, this method is equivalent to
          * {@link #unmap(boolean) unmap(false)}} and always
-         * returns <tt>true</tt>. If {@link StandardIODataFileModel} (that does not associate
-         * any resources with every buffer), this method does nothing and always returns <tt>false</tt>.
+         * returns <code>true</code>. If {@link StandardIODataFileModel} (that does not associate
+         * any resources with every buffer), this method does nothing and always returns <code>false</code>.
          *
          * <p>After calling this method, this instance must not be used, excepting calling methods
-         * {@link #mappingObject()}, {@link #isLoadedFromCache()} and <tt>toString()</tt>.
+         * {@link #mappingObject()}, {@link #isLoadedFromCache()} and <code>toString()</code>.
          * In particular, this method must not be called twice.
-         * Moreover, behavior of the <tt>ByteBuffer</tt> returned by the last call of {@link #data()} method
+         * Moreover, behavior of the <code>ByteBuffer</code> returned by the last call of {@link #data()} method
          * becomes undefined.
          *
-         * @return <tt>true</tt> if this method has performed all actions that are performed by
+         * @return <code>true</code> if this method has performed all actions that are performed by
          *         {@link #unmap(boolean) unmap(false)}.
-         *         If (and only if) the result is <tt>true</tt>, we can be sure that the same data
+         *         If (and only if) the result is <code>true</code>, we can be sure that the same data
          *         will be loaded by next call {@link DataFile#map} method.
          *
          * @throws java.io.IOError in a case of some disk errors.
@@ -426,14 +426,14 @@ public interface DataFile {
         // Result of dispose() method is ignored in current implementation of AlgART arrays.
 
         /**
-         * Returns <tt>true</tt> if this object was not actually read from the file by
+         * Returns <code>true</code> if this object was not actually read from the file by
          * {@link DataFile#map(Range, boolean)} method, but was quickly loaded from some cache.
          *
          * <p>This method is used only for debugging (logging).
          *
          * <p>This method never throws exceptions.
          *
-         * @return <tt>true</tt> if this object was quickly loaded from some cache.
+         * @return <code>true</code> if this object was quickly loaded from some cache.
          */
         boolean isLoadedFromCache();
     }

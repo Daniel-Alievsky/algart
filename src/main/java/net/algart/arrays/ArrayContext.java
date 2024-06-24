@@ -35,7 +35,7 @@ import java.util.Objects;
  * {@link Arrays#sumOf(ArrayContext, PArray)},
  * {@link Arrays#preciseSumOf(ArrayContext, PFixedArray)}.</p>
  *
- * <p>We recommend to use <tt>net.algart.contexts.DefaultArrayContext</tt>
+ * <p>We recommend to use <code>net.algart.contexts.DefaultArrayContext</code>
  * as an object implementing this interface.</p>
  *
  * <p>Objects implementing this interface are usually <b>immutable</b> and <b>thread-safe</b>:
@@ -52,11 +52,11 @@ public interface ArrayContext {
      * <ul>
      * <li>{@link #getMemoryModel()} method returns {@link SimpleMemoryModel#getInstance()};</li>
      * <li>{@link #getThreadPoolFactory()} method returns
-     * <tt>new&nbsp;{@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()}</tt>;</li>
+     * <code>new&nbsp;{@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()}</code>;</li>
      * <li>{@link #checkInterruption()} method does nothing;</li>
      * <li>{@link #updateProgress(Event)} method does nothing;</li>
-     * <li>{@link #currentThreadIndex()} method returns <tt>0</tt>;</li>
-     * <li>{@link #numberOfThreads()} method returns <tt>1</tt>;</li>
+     * <li>{@link #currentThreadIndex()} method returns <code>0</code>;</li>
+     * <li>{@link #numberOfThreads()} method returns <code>1</code>;</li>
      * <li>{@link #customData()} method returns {@code null}.</li>
      * </ul>
      *
@@ -76,8 +76,8 @@ public interface ArrayContext {
      * DefaultThreadPoolFactory.getDefaultThreadPoolFactory(1)}</tt>;</li>
      * <li>{@link #checkInterruption()} method does nothing;</li>
      * <li>{@link #updateProgress(Event)} method does nothing;</li>
-     * <li>{@link #currentThreadIndex()} method returns <tt>0</tt>;</li>
-     * <li>{@link #numberOfThreads()} method returns <tt>1</tt>;</li>
+     * <li>{@link #currentThreadIndex()} method returns <code>0</code>;</li>
+     * <li>{@link #numberOfThreads()} method returns <code>1</code>;</li>
      * <li>{@link #customData()} method returns {@code null}.</li>
      * </ul>
      *
@@ -88,7 +88,7 @@ public interface ArrayContext {
      * To get analogous behaviour without multithreading, you should use this object.</tt>.
      *
      * <p>Note: this object is also returned by
-     * <tt>ArrayContext.{@link #DEFAULT}.{@link #singleThreadVersion() singleThreadVersion()}</tt> call.
+     * <code>ArrayContext.{@link #DEFAULT}.{@link #singleThreadVersion() singleThreadVersion()}</code> call.
      */
     ArrayContext DEFAULT_SINGLE_THREAD = new AbstractArrayContext.DefaultSingleThread();
 
@@ -96,8 +96,8 @@ public interface ArrayContext {
      * Creates the simplest implementation of {@link ArrayContext} with the only difference from
      * the {@link #DEFAULT}/{@link #DEFAULT_SINGLE_THREAD} objects,
      * that {@link #getMemoryModel()} method will return the specified memory model.
-     * (If <tt>multithreading</tt> argument is <tt>true</tt>, the result will work as
-     * {@link #DEFAULT} object, if <tt>false</tt>, it will work as {@link #DEFAULT_SINGLE_THREAD}.)
+     * (If <code>multithreading</code> argument is <code>true</code>, the result will work as
+     * {@link #DEFAULT} object, if <code>false</code>, it will work as {@link #DEFAULT_SINGLE_THREAD}.)
      *
      * @param memoryModel memory model.
      * @param multithreading whether the returned context will use multithreading.
@@ -115,20 +115,21 @@ public interface ArrayContext {
 
     /**
      * Returns new context, describing the execution of some subtask of the current task,
-     * from <tt>fromPart*100%</tt> of total execution until <tt>toPart*100%</tt> of total execution.
+     * from <code>fromPart*100%</code> of total execution until <code>toPart*100%</code> of total execution.
      * The returned context works alike the current context with the only exception, that
      * its {@link #updateProgress updateProgress} method passes to this (parent) context little
      * corrected event. Namely, its {@link ArrayContext.Event#readyPart()} method of the passed event
-     * returns <tt>fromPart+event.readyPart()*(toPart-fromPart)</tt>.
+     * returns <code>fromPart+event.readyPart()*(toPart-fromPart)</code>.
      * The methods {@link #getMemoryModel()}, {@link #getThreadPoolFactory()}, {@link #checkInterruption()}
      * of the returned instance call the same methods of this one.
      *
      * <p>Below is an example of the situation when this method is necessary.
      * Let we have 3 methods in some class:
-     * <tt>fullTask({@link ArrayContext})</tt>,
-     * <tt>subTask1({@link ArrayContext})</tt>,
-     * <tt>subTask2({@link ArrayContext})</tt>.
-     * The only function of <tt>fullTask</tt> method is sequential call of <tt>subTask1</tt> and <tt>subTask2</tt>.
+     * <code>fullTask({@link ArrayContext})</code>,
+     * <code>subTask1({@link ArrayContext})</code>,
+     * <code>subTask2({@link ArrayContext})</code>.
+     * The only function of <code>fullTask</code> method is sequential call of
+     * <code>subTask1</code> and <code>subTask2</code>.
      * We can implement it in the following way:</p>
      *
      * <pre>
@@ -143,7 +144,7 @@ public interface ArrayContext {
      * for example, shows the percents of performed calculations, from 0% to 100%.
      * This information is returned by {@link ArrayContext.Event#readyPart()} method.
      * But the implementation, listed above, will show the change of percents from 0% to 100% twice:
-     * first time in <tt>subTask1</tt> method, second time in <tt>subTask2</tt> method.</p>
+     * first time in <code>subTask1</code> method, second time in <code>subTask2</code> method.</p>
      *
      * <p>This class provides solutions of this problem. Namely:</p>
      *
@@ -154,8 +155,8 @@ public interface ArrayContext {
      * }
      * </pre>
      *
-     * <p>Now the execution of <tt>subTask1</tt> method will change percents from 0% to 50%
-     * and the execution of <tt>subTask2</tt> method will change percents from 50% to 100%.</p>
+     * <p>Now the execution of <code>subTask1</code> method will change percents from 0% to 50%
+     * and the execution of <code>subTask2</code> method will change percents from 50% to 100%.</p>
      *
      * <p>In many case the overloaded method {@link #part(long, long, long)} is more convenient.
      *
@@ -165,10 +166,10 @@ public interface ArrayContext {
      * @param toPart   the estimated ready part, from 0.0 to 1.0,
      *                 of the total algorithm at the finish of the subtask:
      *                 see {@link #updateProgress updateProgress} method;
-     *                 must be not less than <tt>fromPart</tt> range.
+     *                 must be not less than <code>fromPart</code> range.
      * @return         new context, describing the execution of the subtask of the current task.
-     * @throws IllegalArgumentException if <tt>fromPart</tt> or <tt>toPart</tt> is not in
-     *                                  <tt>0.0..1.0</tt> range or if <tt>fromPart&gt;toPart</tt>.
+     * @throws IllegalArgumentException if <code>fromPart</code> or <code>toPart</code> is not in
+     *                                  <code>0.0..1.0</code> range or if <code>fromPart&gt;toPart</code>.
      * @see #part(long, long, long)
      * @see #noProgressVersion()
      */
@@ -176,39 +177,39 @@ public interface ArrayContext {
 
     /**
      * Returns new context, describing the execution of some subtask of the current task,
-     * from <tt>from/total*100%</tt> of total execution until <tt>to/total*100%</tt> of total execution.
+     * from <code>from/total*100%</code> of total execution until <code>to/total*100%</code> of total execution.
      * More precisely, equivalent to the following call:
      * <pre>
      * {@link #part(double, double) part}((double)from/(double)total, to==total ? 1.0: (double)to/(double)total)
      * </pre>
-     * excepting the case <tt>from=to=total=0</tt>, when it is equivalent to
+     * excepting the case <code>from=to=total=0</code>, when it is equivalent to
      * <pre>
      * {@link #part(double, double) part}(0.0, 1.0)
      * </pre>
      *
-     * @param from  the estimated ready part, from 0 to <tt>total</tt>,
+     * @param from  the estimated ready part, from 0 to <code>total</code>,
      *              of the total algorithm at the start of the subtask.
-     * @param to    the estimated ready part, from 0.0 to <tt>total</tt>,
+     * @param to    the estimated ready part, from 0.0 to <code>total</code>,
      *              of the total algorithm at the finish of the subtask.
      * @param total the number of some operation in the full task.
      * @return      new context, describing the execution of the subtask of the current task.
-     * @throws IllegalArgumentException if <tt>from</tt> or <tt>to</tt> is not in <tt>0..total</tt> range,
-     *                                  or if <tt>from&gt;to</tt>, or if <tt>total&lt;0</tt>.
+     * @throws IllegalArgumentException if <code>from</code> or <code>to</code> is not in <code>0..total</code> range,
+     *                                  or if <code>from&gt;to</code>, or if <code>total&lt;0</code>.
      * @see #part(double, double)
      * @see #noProgressVersion()
      */
     ArrayContext part(long from, long to, long total);
 
     /**
-     * Equivalent to {@link #part(long, long, long)} for <tt>int</tt> arguments.
-     * @param from  the estimated ready part, from 0 to <tt>total</tt>,
+     * Equivalent to {@link #part(long, long, long)} for <code>int</code> arguments.
+     * @param from  the estimated ready part, from 0 to <code>total</code>,
      *              of the total algorithm at the start of the subtask.
-     * @param to    the estimated ready part, from 0.0 to <tt>total</tt>,
+     * @param to    the estimated ready part, from 0.0 to <code>total</code>,
      *              of the total algorithm at the finish of the subtask.
      * @param total the number of some operation in the full task.
      * @return      new context, describing the execution of the subtask of the current task.
-     * @throws IllegalArgumentException if <tt>from</tt> or <tt>to</tt> is not in <tt>0..total</tt> range,
-     *                                  or if <tt>from&gt;to</tt>, or if <tt>total&lt;0</tt>.
+     * @throws IllegalArgumentException if <code>from</code> or <code>to</code> is not in <code>0..total</code> range,
+     *                                  or if <code>from&gt;to</code>, or if <code>total&lt;0</code>.
      */
     ArrayContext part(int from, int to, int total);
 
@@ -239,7 +240,7 @@ public interface ArrayContext {
     /**
      * Returns new context, identical to this one with the only exception that
      * {@link #currentThreadIndex()} and {@link #numberOfThreads()} methods in the result return
-     * the values, specified in the arguments <tt>currentThreadIndex</tt> and <tt>numberOfThreads</tt>.
+     * the values, specified in the arguments <code>currentThreadIndex</code> and <code>numberOfThreads</code>.
      *
      * <p>You can use this method, if you need to inform some algorithm, having own context
      * (like {@link ArrayProcessor}), about the number of threads, which will simultaneously execute
@@ -255,19 +256,20 @@ public interface ArrayContext {
      * in a multithreading environment simultaneously with other threads.
      *
      * @param currentThreadIndex an index of the thread, which should be executed simultaneously with another threads;
-     *                           must be <tt>&ge;0</tt> and <tt>&lt;numberOfThreads</tt>.
+     *                           must be <code>&ge;0</code> and <code>&lt;numberOfThreads</code>.
      * @param numberOfThreads    the number of threads in a group of parallel threads; must be positive.
      * @return                   the version of this context, considered to be used in the thread
-     *                           <tt>#currentThreadIndex</tt> in a group of <tt>numberOfThreads</tt> parallel threads.
-     * @throws IllegalArgumentException if <tt>numberOfThreads&le;0</tt> or if <tt>currentThreadIndex</tt>
-     *                                  does not lie in <nobr><tt>0..numberOfThreads-1</tt></nobr> range.
+     *                           <code>#currentThreadIndex</code> in a group of
+     *                           <code>numberOfThreads</code> parallel threads.
+     * @throws IllegalArgumentException if <code>numberOfThreads&le;0</code> or if <code>currentThreadIndex</code>
+     *                                  does not lie in <nobr><code>0..numberOfThreads-1</code></nobr> range.
      */
     ArrayContext multithreadingVersion(int currentThreadIndex, int numberOfThreads);
 
     /**
      * Returns new context, identical to this one with the only exception that
      * {@link #customData()} method in the result returns
-     * the value, specified in the argument <tt>customData</tt>.
+     * the value, specified in the argument <code>customData</code>.
      *
      * <p>You can use this method, if you need to inform some algorithm, having own context
      * (like {@link ArrayProcessor}), about some additional details of the current execution process,
@@ -275,17 +277,17 @@ public interface ArrayContext {
      * For example: let's have some algorithm, processing some AlgART array,
      * in a form of an abstract class or interface (implementing/extending {@link ArrayProcessorWithContextSwitching})
      * with the method<br>
-     * &nbsp;&nbsp;&nbsp;&nbsp;<tt>process({@link Array} arrayToProcess).</tt><br>
+     * &nbsp;&nbsp;&nbsp;&nbsp;<code>process({@link Array} arrayToProcess).</code><br>
      * Then, let's have a special application, where this algorithm is applied to a sequence of
      * {@link Array#subArray(long, long) subarrays} of another large array.
-     * It is very probable that your <tt>process</tt> method does not need to know which subarray
+     * It is very probable that your <code>process</code> method does not need to know which subarray
      * (from which position) is processed now, but if you still need this (maybe for debugging),
      * you can pass this information via {@link ArrayProcessorWithContextSwitching#context(ArrayContext) switching
-     * the context} to the result of this method with an appropriate <tt>customData</tt> object.
+     * the context} to the result of this method with an appropriate <code>customData</code> object.
      *
      * @param customData some custom data; {@code null} is an allowed value.
      * @return           the version of this context, where {@link #customData()} method returns the reference
-     *                   to <tt>customData</tt> argument.
+     *                   to <code>customData</code> argument.
      */
     ArrayContext customDataVersion(Object customData);
 
@@ -311,7 +313,7 @@ public interface ArrayContext {
     /**
      * This method is called periodically by long-working methods alike
      * {@link Arrays.ParallelExecutor#process()}.
-     * If this method throws some <tt>RuntimeException</tt>, the execution of all running threads
+     * If this method throws some <code>RuntimeException</code>, the execution of all running threads
      * is stopped and this exception is re-thrown.
      * You may override this method to allow the user to interrupt the algorithm.
      * Please note that this method may be called from several threads;
@@ -334,14 +336,14 @@ public interface ArrayContext {
      * <p>This method may skip updating the corresponding visual element,
      * if it is called too often, to avoid slowing down the program.
      * However, it <i>should</i> update the visual element if {@link ArrayContext.Event#readyPart()}
-     * method returns <tt>1.0</tt>.
+     * method returns <code>1.0</code>.
      *
      * @param event information about the execution progress.
      */
     void updateProgress(Event event);
 
     /**
-     * Equivalent to 2 sequential calls: <nobr><tt>{@link #checkInterruption()}</tt></nobr> and
+     * Equivalent to 2 sequential calls: <nobr><code>{@link #checkInterruption()}</code></nobr> and
      * <nobr><tt>{@link #updateProgress
      * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</tt></nobr>.
      *
@@ -354,26 +356,27 @@ public interface ArrayContext {
     void checkInterruptionAndUpdateProgress(Class<?> elementType, long readyCount, long length);
 
     /**
-     * Usually returns <tt>0</tt>, but in multithreading environment this method may return the index
+     * Usually returns <code>0</code>, but in multithreading environment this method may return the index
      * of the currently executing thread in a group of {@link #numberOfThreads()} parallel threads.
      * This information can be useful, if you create a group of tasks (for example, with help of
      * {@link ThreadPoolFactory} class), which are executed parallel in several threads
      * (usually, to optimize calculations on multiprocessor or multicore computers).
      *
-     * <p>To create a context, in which this method returns a value different than <tt>0</tt>, please use
+     * <p>To create a context, in which this method returns a value different than <code>0</code>, please use
      * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
      *
-     * <p>The result of this method always lies in <tt>0..{@link #numberOfThreads() numberOfThreads()}-1</tt> range.
+     * <p>The result of this method always lies in
+     * <code>0..{@link #numberOfThreads() numberOfThreads()}-1</code> range.
      *
-     * <p>In {@link AbstractArrayContext} implementation, this method returns <tt>0</tt>.
+     * <p>In {@link AbstractArrayContext} implementation, this method returns <code>0</code>.
      *
      * @return the index of the currently executing thread in a group of {@link #numberOfThreads()} parallel threads,
-     *         or <tt>0</tt> if this feature is not used.
+     *         or <code>0</code> if this feature is not used.
      */
     int currentThreadIndex();
 
     /**
-     * Usually returns <tt>1</tt>, but in multithreading environment this method <i>may</i> return the number
+     * Usually returns <code>1</code>, but in multithreading environment this method <i>may</i> return the number
      * of currently executing threads in some group of parallel threads (but not must: in most contexts
      * it still returns 1 even in multithreading environment).
      * This value is not the number of <i>all</i> executing threads and not the number of threads, which are
@@ -383,15 +386,15 @@ public interface ArrayContext {
      * via {@link #currentThreadIndex()} method. The main goal of this method is to estimate
      * the maximal possible value of {@link #currentThreadIndex()}.
      *
-     * <p>To create a context, in which this method returns a value different from <tt>1</tt>, please use
+     * <p>To create a context, in which this method returns a value different from <code>1</code>, please use
      * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
      *
-     * <p>The result of this method is always positive (<tt>&ge;1</tt>).
+     * <p>The result of this method is always positive (<code>&ge;1</code>).
      *
-     * <p>In {@link AbstractArrayContext} implementation, this method returns <tt>1</tt>.
+     * <p>In {@link AbstractArrayContext} implementation, this method returns <code>1</code>.
      *
      * @return the number of executing threads in a group of parallel threads,
-     *         or <tt>1</tt> if this feature is not used.
+     *         or <code>1</code> if this feature is not used.
      */
     int numberOfThreads();
 
@@ -404,7 +407,7 @@ public interface ArrayContext {
      * <nobr>{@link #customDataVersion(Object)}</nobr> method.
      *
      * <p>The result of this method may belong to any type. So, it is a good idea to check its type
-     * with <tt>instanceof</tt> operator before attempt to use this result.
+     * with <code>instanceof</code> operator before attempt to use this result.
      *
      * <p>In {@link AbstractArrayContext} implementation, this method returns {@code null}.
      *
@@ -427,16 +430,16 @@ public interface ArrayContext {
          * Creates new event with the specified {@link #elementType()}, {@link #length()},
          * {@link #readyCount()} for the case of 1 {@link #numberOfParallelTasks() parallel task}.
          * The {@link #readyPart()} method in the created instance returns
-         * <tt>(double)readyCount/(double)length</tt>.
-         * Equivalent to <tt>new&nbsp;Event(elementType, new long[] {length}, new long[] {readyCount})</tt>.
+         * <code>(double)readyCount/(double)length</code>.
+         * Equivalent to <code>new&nbsp;Event(elementType, new long[] {length}, new long[] {readyCount})</code>.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
          *                              can be {@code null}.
          * @param readyCount            the only element in the result of {@link #readyCountPerTask()} method
          *                              in the created event.
          * @param length                the result of {@link #length()} method in the created event.
-         * @throws IllegalArgumentException if <tt>length</tt> or <tt>readyCount</tt> is negative,
-         *                                  or if <tt>readyCount&gt;length</tt>.
+         * @throws IllegalArgumentException if <code>length</code> or <code>readyCount</code> is negative,
+         *                                  or if <code>readyCount&gt;length</code>.
          */
         public Event(Class<?> elementType, long readyCount, long length) {
             this(elementType, new long[] {readyCount}, new long[] {length});
@@ -446,33 +449,36 @@ public interface ArrayContext {
          * Creates new event with the specified {@link #elementType()}, {@link #lengthPerTask()}
          * and {@link #readyCountPerTask()}.
          * The {@link #length()} method in the created instance returns
-         * the sum of all elements of <tt>lengthPerTask</tt> argument.
+         * the sum of all elements of <code>lengthPerTask</code> argument.
          * The {@link #readyCount()} method returns
-         * the sum of all elements of <tt>readyCountPerTask</tt> argument.
+         * the sum of all elements of <code>readyCountPerTask</code> argument.
          * The {@link #numberOfParallelTasks()} method returns
          * the length of each of the passed arrays (their lengths must be equal).
          * The {@link #readyPart()} method returns
-         * <tt>(double){@link #readyCount()}/(double){@link #length()}</tt>.
+         * <code>(double){@link #readyCount()}/(double){@link #length()}</code>.
          *
-         * <p>All elements of the <tt>readyCountPerTask</tt> array must not be greater than
-         * the corresponding elements of the <tt>lengthsPerTask</tt> array.
+         * <p>All elements of the <code>readyCountPerTask</code> array must not be greater than
+         * the corresponding elements of the <code>lengthsPerTask</code> array.
          * All elements of these arrays must not be negative.
          *
-         * <p>The passed <tt>lengthPerTask</tt> and <tt>readyCountPerTask</tt> arguments
+         * <p>The passed <code>lengthPerTask</code> and <code>readyCountPerTask</code> arguments
          * are cloned by this method: no references to them are maintained by the created instance.
          *
          * @param elementType           the result of {@link #elementType()} method in the created event;
          *                              can be {@code null}.
          * @param readyCountPerTask     the result of {@link #readyCountPerTask()} method in the created event.
          * @param lengthPerTask         the result of {@link #lengthPerTask()} method in the created event.
-         * @throws NullPointerException     if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is {@code null}.
-         * @throws IllegalArgumentException if <tt>lengthPerTask</tt> or <tt>readyCountPerTask</tt> is an empty array,
+         * @throws NullPointerException     if <code>lengthPerTask</code> or
+         * <code>readyCountPerTask</code> is {@code null}.
+         * @throws IllegalArgumentException if <code>lengthPerTask</code> or
+         * <code>readyCountPerTask</code> is an empty array,
          *                                  or if their lengths are not equal,
          *                                  or if some their elements are negative,
-         *                                  or if <tt>readyCountPerTask[k]</tt> is than <tt>lengthPerTask[k]</tt>
-         *                                  for some index <tt>k</tt>,
+         *                                  or if <code>readyCountPerTask[k]</code> is greater
+         *                                  than <code>lengthPerTask[k]</code>
+         *                                  for some index <code>k</code>,
          *                                  or if the sum of all elements of one of these arrays is
-         *                                  greater than <tt>Long.MAX_VALUE</tt>.
+         *                                  greater than <code>Long.MAX_VALUE</code>.
          */
         public Event(Class<?> elementType, long[] readyCountPerTask, long[] lengthPerTask) {
             Objects.requireNonNull(readyCountPerTask, "Null readyCountPerTask argument");
@@ -551,11 +557,11 @@ public interface ArrayContext {
          * {@link #lengthPerTask()} method.
          *
          * <p>For {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} method,
-         * returns <tt>min(dest.{@link Array#length() length()}, src.{@link Array#length() length()})</tt>,
-         * where <tt>dest</tt> and <tt>src</tt> are the AlgART arrays passed this method.
+         * returns <code>min(dest.{@link Array#length() length()}, src.{@link Array#length() length()})</code>,
+         * where <code>dest</code> and <code>src</code> are the AlgART arrays passed this method.
          * For {@link Arrays.ParallelExecutor#process()} method and another methods based on it,
-         * return <tt>src.{@link Array#length()}</tt>,
-         * where <tt>src</tt> is the processed AlgART array.
+         * return <code>src.{@link Array#length()}</code>,
+         * where <code>src</code> is the processed AlgART array.
          *
          * @return the total number of processing elements.
          */
@@ -606,11 +612,11 @@ public interface ArrayContext {
 
         /**
          * Returns the ready part of total algorithm execution.
-         * In simple cases, returns <tt>(double){@link #readyCount()}/(double){@link #length()}</tt>.
-         * Returns <tt>1.0</tt> if and only if all calculations are finished.
-         * Also returns <tt>1.0</tt> if {@link #length()} is zero.
+         * In simple cases, returns <code>(double){@link #readyCount()}/(double){@link #length()}</code>.
+         * Returns <code>1.0</code> if and only if all calculations are finished.
+         * Also returns <code>1.0</code> if {@link #length()} is zero.
          *
-         * @return the ready part of total algorithm execution (from <tt>0.0</tt> to <tt>1.0</tt>).
+         * @return the ready part of total algorithm execution (from <code>0.0</code> to <code>1.0</code>).
          * @see ArrayContext#part(double, double)
          */
         public double readyPart() {
