@@ -118,6 +118,13 @@ public class MatrixIO {
     public static void writeBufferedImageBySuffix(
             Path file,
             BufferedImage image,
+            String fileSuffix) throws IOException {
+        writeBufferedImageBySuffix(file, image, fileSuffix, null);
+    }
+
+    public static void writeBufferedImageBySuffix(
+            Path file,
+            BufferedImage image,
             String fileSuffix,
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
@@ -136,7 +143,14 @@ public class MatrixIO {
             throw new UnsupportedImageFormatException("Cannot write " + file +
                     ": no writers found for file suffix \"" + fileSuffix + "\"");
         }
-        writeBufferedImage(file, image, customizer, writer);
+        writeBufferedImage(file, image, writer, customizer);
+    }
+
+    public static void writeBufferedImageByFormatName(
+            Path file,
+            BufferedImage image,
+            String formatName) throws IOException {
+        writeBufferedImageByFormatName(file, image, formatName, null);
     }
 
     public static void writeBufferedImageByFormatName(
@@ -155,14 +169,14 @@ public class MatrixIO {
                     ": no writers found for format name \"" + formatName +
                     "\" for writing " + image);
         }
-        writeBufferedImage(file, image, customizer, writer);
+        writeBufferedImage(file, image, writer, customizer);
     }
 
     public static void writeBufferedImage(
             Path file,
             BufferedImage image,
-            Consumer<ImageWriteParam> customizer,
-            ImageWriter writer) throws IOException {
+            ImageWriter writer,
+            Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         Objects.requireNonNull(writer, "Null writer");
