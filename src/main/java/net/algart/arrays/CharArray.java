@@ -169,8 +169,8 @@ public interface CharArray extends PFixedArray {
     int getInt(long index);
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableCharArray(char[])
-     * SimpleMemoryModel.asUpdatableCharArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableCharArray(char[])
+     * SimpleMemoryModel.asUpdatableCharArray}(array)</code>.
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.

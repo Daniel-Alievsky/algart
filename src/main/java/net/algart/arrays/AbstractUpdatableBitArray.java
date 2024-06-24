@@ -755,10 +755,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     /*Repeat.IncludeEnd*/
 
     /**
-     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, true)}</tt>.
+     * This implementation calls <code>{@link #setBit(long, boolean) setBit(index, true)}</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     @Override
     public void setBit(long index) {
@@ -766,10 +766,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     }
 
     /**
-     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, false)}</tt>.
+     * This implementation calls <code>{@link #setBit(long, boolean) setBit(index, false)}</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     @Override
     public void clearBit(long index) {
@@ -777,10 +777,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     }
 
     /**
-     * This implementation calls <tt>{@link #setBit(long, boolean) setBit(index, value)}</tt>.
+     * This implementation calls <code>{@link #setBit(long, boolean) setBit(index, value)}</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     @Override
     public void setBitNoSync(long index, boolean value) {
@@ -788,10 +788,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     }
 
     /**
-     * This implementation calls <tt>{@link #setBitNoSync(long, boolean) setBitNoSync(index, true)}</tt>.
+     * This implementation calls <code>{@link #setBitNoSync(long, boolean) setBitNoSync(index, true)}</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     @Override
     public void setBitNoSync(long index) {
@@ -799,10 +799,10 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
     }
 
     /**
-     * This implementation calls <tt>{@link #setBitNoSync(long, boolean) setBitNoSync(index, false)}</tt>.
+     * This implementation calls <code>{@link #setBitNoSync(long, boolean) setBitNoSync(index, false)}</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     @Override
     public void clearBitNoSync(long index) {
@@ -819,7 +819,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
      */
     public UpdatableBitArray setBits(long arrayPos, long[] srcArray, long srcArrayOffset, long count) {

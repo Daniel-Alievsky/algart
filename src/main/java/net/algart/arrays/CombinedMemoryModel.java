@@ -219,8 +219,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * <p>The initial lengths of created arrays should be calculated on the base of
          * passed <code>length</code> argument, that means the length of necessary
          * <i>combined</i> array. Namely, the length of returned array #<code>k</code>
-         * should be equal to <tt>length*{@link #numbersOfElementsPerOneCombinedElement(int)
-         * numbersOfElementsPerOneCombinedElement}(k)</tt>. This condition is automatically
+         * should be equal to <code>length*{@link #numbersOfElementsPerOneCombinedElement(int)
+         * numbersOfElementsPerOneCombinedElement}(k)</code>. This condition is automatically
          * verified while creating combined arrays.
          *
          * <p>If <code>unresizable</code> argument is <code>true</code>, it means that this method
@@ -698,12 +698,12 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     /**
      * Returns an unresizable combined array backed by the storage,
      * which consists of shallow unresizable copies of the passed argument
-     * (<tt>storage[0].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
-     * Array#shallowClone() shallowClone()}</tt>,
-     * (<tt>storage[1].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
-     * Array#shallowClone() shallowClone()}</tt>, ...,
-     * (<tt>storage[storage.length-1].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
-     * Array#shallowClone() shallowClone()}</tt>,
+     * (<code>storage[0].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
+     * Array#shallowClone() shallowClone()}</code>,
+     * (<code>storage[1].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
+     * Array#shallowClone() shallowClone()}</code>, ...,
+     * (<code>storage[storage.length-1].{@link UpdatableArray#asUnresizable() asUnresizable()}.{@link
+     * Array#shallowClone() shallowClone()}</code>,
      * with the current combiner (specified while creating this memory model).
      * Changes of elements of the passed arrays
      * will be reflected in the returned combined array, and vice-versa.

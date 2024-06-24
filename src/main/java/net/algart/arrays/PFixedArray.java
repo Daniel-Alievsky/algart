@@ -38,13 +38,13 @@ package net.algart.arrays;
 public interface PFixedArray extends PArray {
     /**
      * Returns 0 for {@link BitArray}, {@link ByteArray}, {@link CharArray} and {@link ShortArray},
-     * <tt>Integer.MIN_VALUE</tt> for {@link IntArray},
-     * <tt>Long.MIN_VALUE</tt> for {@link LongArray}.
+     * <code>Integer.MIN_VALUE</code> for {@link IntArray},
+     * <code>Long.MIN_VALUE</code> for {@link LongArray}.
      * It is the minimal possible value,
      * that can stored in elements of this array
-     * (<tt>byte</tt> and <tt>short</tt> elements are interpreted as unsigned).
+     * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
-     * <tt>{@link Arrays#minPossibleIntegerValue(Class) minPossibleIntegerValue}(thisArray.getClass())</tt>.
+     * <code>{@link Arrays#minPossibleIntegerValue(Class) minPossibleIntegerValue}(thisArray.getClass())</code>.
      *
      * @return the minimal possible value, that can stored in elements of this array.
      * @see PArray#minPossibleValue(double)
@@ -55,14 +55,14 @@ public interface PFixedArray extends PArray {
      * Returns 1 for {@link BitArray},
      * 0xFF for {@link ByteArray},
      * 0xFFFF for {@link CharArray} and {@link ShortArray},
-     * <tt>Integer.MAX_VALUE</tt> for {@link IntArray},
-     * <tt>Long.MAX_VALUE</tt> for {@link LongArray}.
-     * <tt>valueForFloatingPoint</tt> for {@link FloatArray} and {@link DoubleArray}.
+     * <code>Integer.MAX_VALUE</code> for {@link IntArray},
+     * <code>Long.MAX_VALUE</code> for {@link LongArray}.
+     * <code>valueForFloatingPoint</code> for {@link FloatArray} and {@link DoubleArray}.
      * It is the maximal possible value,
      * that can stored in elements of this array
-     * (<tt>byte</tt> and <tt>short</tt> elements are interpreted as unsigned).
+     * (<code>byte</code> and <code>short</code> elements are interpreted as unsigned).
      * This method is equivalent to
-     * <tt>{@link Arrays#maxPossibleIntegerValue(Class) maxPossibleIntegerValue}(thisArray.getClass())</tt>.
+     * <code>{@link Arrays#maxPossibleIntegerValue(Class) maxPossibleIntegerValue}(thisArray.getClass())</code>.
      *
      * @return the maximal possible value, that can stored in elements of this array.
      * @see PArray#maxPossibleValue(double)
@@ -70,83 +70,83 @@ public interface PFixedArray extends PArray {
     long maxPossibleValue();
 
     /**
-     * Returns the element #<tt>index</tt> converted to <tt>long</tt>:
-     * <tt>(long)value&amp;0xFF</tt> for <tt>byte</tt> value,
-     * <tt>(long)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(long)value</tt> for <tt>int</tt>, <tt>long</tt> or <tt>char</tt> values,
-     * or as <tt>value?1:0</tt> for <tt>boolean</tt> values.
+     * Returns the element #<code>index</code> converted to <code>long</code>:
+     * <code>(long)value&amp;0xFF</code> for <code>byte</code> value,
+     * <code>(long)value&amp;0xFFFF</code> for <code>short</code> value,
+     * <code>(long)value</code> for <code>int</code>, <code>long</code> or <code>char</code> values,
+     * or as <code>value?1:0</code> for <code>boolean</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * if it is not an array of <tt>float</tt> or <tt>double</tt> elements.
+     * if it is not an array of <code>float</code> or <code>double</code> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setLong(long, long)
      */
     long getLong(long index);
 
     /**
-     * Returns the element #<tt>index</tt> converted to <tt>int</tt>:
-     * <tt>(int)value&amp;0xFF</tt> for <tt>byte</tt> value,
-     * <tt>(int)value&amp;0xFFFF</tt> for <tt>short</tt> value,
-     * <tt>(int)value</tt> for <tt>int</tt> or <tt>char</tt> values,
-     * <tt>value?1:0</tt> for <tt>boolean</tt> values,
-     * <tt>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</tt> (i&#46;e&#46; the value
-     * truncated to the range <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt>)
-     * for <tt>long</tt> values.
+     * Returns the element #<code>index</code> converted to <code>int</code>:
+     * <code>(int)value&amp;0xFF</code> for <code>byte</code> value,
+     * <code>(int)value&amp;0xFFFF</code> for <code>short</code> value,
+     * <code>(int)value</code> for <code>int</code> or <code>char</code> values,
+     * <code>value?1:0</code> for <code>boolean</code> values,
+     * <code>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</code> (i&#46;e&#46; the value
+     * truncated to the range <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code>)
+     * for <code>long</code> values.
      * Please note that this method returns unsigned values for byte and short arrays.
      * Returned value contains full information stored in the element,
-     * if it is not an array of <tt>long</tt>, <tt>float</tt> or <tt>double</tt> elements.
+     * if it is not an array of <code>long</code>, <code>float</code> or <code>double</code> elements.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setInt(long, int)
      */
     int getInt(long index);
 
     /**
-     * Returns the minimal index <tt>k</tt>, so that
-     * <tt>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</tt>
-     * and <tt>{@link #getLong(long) getLong}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the minimal index <code>k</code>, so that
+     * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
+     * and <code>{@link #getLong(long) getLong}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>lowIndex&gt;=thisArray.{@link #length() length()}}</tt>
-     * or <tt>lowIndex&gt;=highIndex</tt>, this method returns <tt>-1</tt>,
-     * and if <tt>lowIndex&lt;0</tt>, the result is the same as if <tt>lowIndex==0</tt>.
+     * <p>In particular, if <code>lowIndex&gt;=thisArray.{@link #length() length()}}</code>
+     * or <code>lowIndex&gt;=highIndex</code>, this method returns <code>-1</code>,
+     * and if <code>lowIndex&lt;0</code>, the result is the same as if <code>lowIndex==0</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return          the index of the first occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     *                  in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     *                  or <code>-1</code> if this value does not occur in this range.
      */
     long indexOf(long lowIndex, long highIndex, long value);
 
     /**
-     * Returns the maximal index <tt>k</tt>, so that <tt>highIndex&gt;k&gt;=max(lowIndex,0)</tt>
-     * and <tt>{@link #getLong(long) getLong}(k)==value</tt>,
-     * or <tt>-1</tt> if there is no such array element.
+     * Returns the maximal index <code>k</code>, so that <code>highIndex&gt;k&gt;=max(lowIndex,0)</code>
+     * and <code>{@link #getLong(long) getLong}(k)==value</code>,
+     * or <code>-1</code> if there is no such array element.
      *
-     * <p>In particular, if <tt>highIndex&lt;=0</tt> or <tt>highIndex&lt;=lowIndex</tt>,
-     * this method returns <tt>-1</tt>,
-     * and if <tt>highIndex&gt;=thisArray.{@link #length() length()}</tt>,
-     * the result is the same as if <tt>highIndex==thisArray.{@link #length() length()}</tt>.
+     * <p>In particular, if <code>highIndex&lt;=0</code> or <code>highIndex&lt;=lowIndex</code>,
+     * this method returns <code>-1</code>,
+     * and if <code>highIndex&gt;=thisArray.{@link #length() length()}</code>,
+     * the result is the same as if <code>highIndex==thisArray.{@link #length() length()}</code>.
      *
-     * <p>You may specify <tt>lowIndex=0</tt> and <tt>highIndex=Long.MAX_VALUE</tt> to search
+     * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return          the index of the last occurrence of this value in this array
-     *                  in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *                  or <tt>-1</tt> if this value does not occur in this range.
+     *                  in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     *                  or <code>-1</code> if this value does not occur in this range.
      */
     long lastIndexOf(long lowIndex, long highIndex, long value);
 

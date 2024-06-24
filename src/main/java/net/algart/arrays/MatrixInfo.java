@@ -37,8 +37,9 @@ import java.util.Objects;
  * <p>Full structural information about the {@link Matrix AlgART matrix}, consisting of elements
  * of some primitive types, in a form convenient for serialization.
  * This class contains information about the matrix element type, matrix dimensions and byte order,
- * and allows to pack this information, with special signature, into a byte array or <tt>String</tt>
- * (serialize, {@link #toBytes()} / {@link #toChars()} methods) and, vice versa, convert such byte array or <tt>String</tt> to an instance
+ * and allows to pack this information, with special signature, into a byte array or <code>String</code>
+ * (serialize, {@link #toBytes()} / {@link #toChars()} methods) and, vice versa,
+ * to convert such byte array or <code>String</code> to an instance
  * of this class (deserialize, {@link #valueOf(byte[])} / {@link #valueOf(String)} methods).</p>
  *
  * <p>This tool helps to store AlgART matrices in external files.
@@ -53,9 +54,9 @@ import java.util.Objects;
  * <p>methods. However, if you want to load a matrix from a file, you need structural information
  * about it, that should be passed to these methods and to {@link Matrices#matrix(Array, long...)}.
  * This class encapsulates all this information and allows to represent it
- * in a form of Java byte array <tt>byte[]</tt> or in a usual <tt>String</tt>,
+ * in a form of Java byte array <code>byte[]</code> or in a usual <code>String</code>,
  * that can be stored in a separate file or in a prefix
- * of the given data file (before the <tt>filePosition</tt>, passed to
+ * of the given data file (before the <code>filePosition</code>, passed to
  * {@link LargeMemoryModel#asArray asArray} /
  * {@link LargeMemoryModel#asUpdatableArray asUpdatableArray} methods).
  * This class can be used together with higher-level methods</p>
@@ -78,19 +79,19 @@ import java.util.Objects;
  *
  * <ol start="4">
  * <li><i>Version</i>: some string determining the format of conversion of this information
- * to byte array by {@link #toBytes()} method or to <tt>String</tt> by {@link #toChars()} method.
+ * to byte array by {@link #toBytes()} method or to <code>String</code> by {@link #toChars()} method.
  * The version is always stored in the serialized form returned by {@link #toBytes()} / {@link #toChars()} methods.
  * If the instance of this class was created by {@link #valueOf(Matrix, long)} method,
  * its version is equal to the current default version {@link #DEFAULT_VERSION}
  * (but you may specify some older version via {@link #valueOf(Matrix, long, String)} method).
  * If the instance was created by {@link #valueOf(byte[])} or {@link #valueOf(String)},
- * the version is equal to the version stored in this <tt>byte</tt>/<tt>char</tt> sequence.
+ * the version is equal to the version stored in this <code>byte</code>/<code>char</code> sequence.
  * Future implementations of this class will support all old serialization formats.</li>
  *
- * <li><i>Data offset</i>: some <tt>long</tt> value, that usually means the offset of
+ * <li><i>Data offset</i>: some <code>long</code> value, that usually means the offset of
  * the matrix content in the data file. This offset is necessary for mapping the array to a disk file
  * via {@link LargeMemoryModel#asArray asArray} / {@link LargeMemoryModel#asUpdatableArray asUpdatableArray} methods
- * (it is their <tt>filePosition</tt> argument). For example, if you use this class to add
+ * (it is their <code>filePosition</code> argument). For example, if you use this class to add
  * a fixed-size prefix to the file containing the matrix, this value may contain the prefix length.
  * You also may ignore this offset and always pass 0 (or any other value) as an argument
  * of {@link #valueOf(Matrix, long)} method.</li>
@@ -104,8 +105,8 @@ import java.util.Objects;
  * </ol>
  *
  * <p>This class does work with primitive element types only:
- * <tt>boolean</tt>, <tt>char</tt>, <tt>byte</tt>, <tt>short</tt>, <tt>int</tt>, <tt>long</tt>,
- * <tt>float</tt> and <tt>double</tt>.
+ * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>,
+ * <code>float</code> and <code>double</code>.
  * The number of matrix dimensions ({@link Matrix#dimCount()}) must be not greater
  * than {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.</p>
  *
@@ -162,7 +163,7 @@ import java.util.Objects;
 public abstract class MatrixInfo {
 
     /**
-     * The maximal allowed length of byte array or <tt>String</tt>, returned by
+     * The maximal allowed length of byte array or <code>String</code>, returned by
      * {@link #toBytes()} / {@link #toChars()} methods: {@value}.
      * This length is enough to store
      * <nobr>{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS} =
@@ -170,7 +171,7 @@ public abstract class MatrixInfo {
      * matrix dimensions, start signature, element type, byte order and more than 7 KB of additional information.
      *
      * <p>Note that this limit guarantees that the string {@link #toChars()} can be written and restored via
-     * <tt>DataOutput.writeUTF</tt> and <tt>DataInput.readUTF</tt> methods, because the required number of
+     * <code>DataOutput.writeUTF</code> and <code>DataInput.readUTF</code> methods, because the required number of
      * bytes in the modified UTF-8 representation is much less than 65535 (the limit for these Java I/O methods).
      *
      * @see #toBytes()
@@ -312,7 +313,7 @@ public abstract class MatrixInfo {
      * @param bytes the byte array produced by some previous call of {@link #toBytes()} method.
      * @return new instance of this class, built on the base of the passed byte array.
      * @throws NullPointerException       if the argument is {@code null}.
-     * @throws IllegalInfoSyntaxException if the format of <tt>bytes</tt> argument is illegal.
+     * @throws IllegalInfoSyntaxException if the format of <code>bytes</code> argument is illegal.
      * @see #toBytes()
      * @see #valueOf(String)
      */
@@ -325,7 +326,7 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Deserializes the char array (passed as <tt>String</tt> argument)
+     * Deserializes the char array (passed as <code>String</code> argument)
      * and creates new instance of this class on the base of information,
      * stored in this char array.
      *
@@ -342,7 +343,7 @@ public abstract class MatrixInfo {
      * @param chars the string produced by some previous call of {@link #toChars()} method.
      * @return new instance of this class, built on the base of the passed string.
      * @throws NullPointerException       if the argument is {@code null}.
-     * @throws IllegalInfoSyntaxException if the format of <tt>chars</tt> argument is illegal.
+     * @throws IllegalInfoSyntaxException if the format of <code>chars</code> argument is illegal.
      * @see #toChars()
      * @see #valueOf(byte[])
      */
@@ -357,12 +358,12 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if the passed string is an allowed name for an additional property,
+     * Returns <code>true</code> if and only if the passed string is an allowed name for an additional property,
      * that can be stored via {@link #cloneWithOtherAdditionalProperties(Map)} method.
-     * Namely, this method returns <tt>true</tt> if and only if:
+     * Namely, this method returns <code>true</code> if and only if:
      *
      * <ul>
-     * <li>the passed name is not empty (<tt>name.length()&gt;0</tt>);</li>
+     * <li>the passed name is not empty (<code>name.length()&gt;0</code>);</li>
      * <li>the passed name contains only characters from the following set: digits '0'..'9',
      * latin letters 'a'..'z' and 'A'..'Z', the dot '.' and the underline character '_';</li>
      * <li>the first character of the name is a letter 'a'..'z' or 'A'..'Z'.</li>
@@ -475,7 +476,7 @@ public abstract class MatrixInfo {
     /**
      * Returns the number of the matrix dimensions.
      * This value is always positive (&gt;=1).
-     * Equivalent to <tt>{@link #dimensions()}.length</tt>, but works faster.
+     * Equivalent to <code>{@link #dimensions()}.length</code>, but works faster.
      *
      * @return the number of the matrix dimensions.
      * @see Matrix#dimCount()
@@ -485,13 +486,13 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Returns the dimension <tt>#n</tt> of the matrix
-     * or <tt>1</tt> if <tt>n&gt;={@link #dimCount()}</tt>.
-     * Equivalent to <tt>n&lt;{@link #dimCount()}?{@link #dimensions()}[n]:1</tt>, but works faster.
+     * Returns the dimension <code>#n</code> of the matrix
+     * or <code>1</code> if <code>n&gt;={@link #dimCount()}</code>.
+     * Equivalent to <code>n&lt;{@link #dimCount()}?{@link #dimensions()}[n]:1</code>, but works faster.
      *
      * @param n the index of matrix dimension.
-     * @return the dimension <tt>#n</tt> of the matrix.
-     * @throws IndexOutOfBoundsException if <tt>n&lt;0</tt> (but <i>not</i> if <tt>n</tt> is too large).
+     * @return the dimension <code>#n</code> of the matrix.
+     * @throws IndexOutOfBoundsException if <code>n&lt;0</code> (but <i>not</i> if <code>n</code> is too large).
      * @see Matrix#dim(int)
      */
     public final long dim(int n) {
@@ -514,12 +515,12 @@ public abstract class MatrixInfo {
      * methods or added by {@link #cloneWithOtherAdditionalProperties(Map)} method.
      *
      * <p>There is a guarantee that the keys and values, returned by this method,
-     * are always non-null <tt>String</tt> instances, and that the keys
+     * are always non-null <code>String</code> instances, and that the keys
      * always fulfil the {@link #isCorrectAdditionalPropertyName(String)} method.
      *
      * <p>The returned map is a clone of the internal map stored in this object.
-     * The returned map is always mutable and allows to add/remove elements, alike <tt>HashMap</tt>
-     * or <tt>TreeMap</tt> classes.
+     * The returned map is always mutable and allows to add/remove elements, alike <code>HashMap</code>
+     * or <code>TreeMap</code> classes.
      * The returned object is never {@code null}.
      *
      * <p>Note that the first version 1.1 of serialization format does not support this feature.
@@ -550,7 +551,7 @@ public abstract class MatrixInfo {
      * and cannot create fully identical instance.
      * In particular, it is possible if the specified version is 1.1 and the map of properties, returned by
      * {@link #additionalProperties()} method, is not empty.
-     * In this case, this method throws <tt>UnsupportedOperationException</tt>.
+     * In this case, this method throws <code>UnsupportedOperationException</code>.
      *
      * @param version required version.
      * @return modified instance of this class.
@@ -604,9 +605,9 @@ public abstract class MatrixInfo {
      *
      * <p>The names of all specified properties must fulfil the {@link #isCorrectAdditionalPropertyName(String)}
      * method. In addition to this requirement, we recommend not to use (for your own goals) properties starting
-     * with "<tt>net.algart.arrays.</tt>" substring, because some methods of this package use such properties.
+     * with "<code>net.algart.arrays.</code>" substring, because some methods of this package use such properties.
      *
-     * <p>The values of all specified properties must be non-null <tt>String</tt> instances,
+     * <p>The values of all specified properties must be non-null <code>String</code> instances,
      * that can contain any characters.
      *
      * <p>Please avoid very large number or size of properties. There are limits for the number of
@@ -616,10 +617,10 @@ public abstract class MatrixInfo {
      *
      * <p>Note that the first version 1.1 of serialization format does not support this feature.
      * So, if the current {@link #version() version} of serialization format of this instance is 1.1,
-     * this method throws <tt>UnsupportedOperationException</tt>.
+     * this method throws <code>UnsupportedOperationException</code>.
      * The method {@link #additionalProperties()} still works in the version 1.1 and returns an empty map.
      *
-     * <p>The passed <tt>additionalProperties</tt> argument is cloned by this method: no references to it
+     * <p>The passed <code>additionalProperties</code> argument is cloned by this method: no references to it
      * are maintained by the created instance.
      *
      * @param additionalProperties another additional properties.
@@ -627,12 +628,12 @@ public abstract class MatrixInfo {
      * @throws UnsupportedOperationException if the {@link #version() version} of this instance is 1.1.
      * @throws NullPointerException          if the argument is {@code null}
      *                                       or if some keys or values are {@code null}.
-     * @throws ClassCastException            if some of keys or values are not <tt>String</tt> instances
-     *                                       (this situation is possible while passing raw <tt>Map</tt> type
+     * @throws ClassCastException            if some of keys or values are not <code>String</code> instances
+     *                                       (this situation is possible while passing raw <code>Map</code> type
      *                                       without generics).
      * @throws IllegalArgumentException      if one of the passed properties has incorrect name
      *                                       (for which {@link #isCorrectAdditionalPropertyName(String)} method
-     *                                       returns <tt>false</tt>)
+     *                                       returns <code>false</code>)
      *                                       or if the number of passed properties is greater than
      *                                       {@link #MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO}.
      * @see #additionalProperties()
@@ -685,16 +686,16 @@ public abstract class MatrixInfo {
 
     /**
      * Indicates whether this information correctly describes the given matrix.
-     * Returns <tt>true</tt> if and only if:<ol>
-     * <li><tt>matrix.{@link Matrix#elementType() elementType()}.equals(this.{@link #elementType()})</tt>;</li>
+     * Returns <code>true</code> if and only if:<ol>
+     * <li><code>matrix.{@link Matrix#elementType() elementType()}.equals(this.{@link #elementType()})</code>;</li>
      * <li><tt>matrix.{@link Matrix#array() array()}.{@link Array#byteOrder()
      * byteOrder()} == this.{@link #byteOrder()}</tt>;</li>
-     * <li><tt>matrix.{@link Matrix#dimensions() dimensions()}</tt> and this {@link #dimensions()}
+     * <li><code>matrix.{@link Matrix#dimensions() dimensions()}</code> and this {@link #dimensions()}
      * arrays are identical.</li>
      * </ol>
      *
      * @param matrix the matrix to be compared with this matrix information.
-     * @return <tt>true</tt> if this information correctly describes the given matrix.
+     * @return <code>true</code> if this information correctly describes the given matrix.
      * @throws NullPointerException if the argument is {@code null}.
      */
     public boolean matches(Matrix<?> matrix) {
@@ -762,14 +763,14 @@ public abstract class MatrixInfo {
 
     /**
      * Indicates whether some other matrix information is equal to this instance.
-     * Returns <tt>true</tt> if and only if:<ol>
+     * Returns <code>true</code> if and only if:<ol>
      * <li>the specified object is a non-null {@link MatrixInfo} instance;</li>
      * <li>both instances have the same {@link #elementType() element type} and
      * {@link #byteOrder() byte order};</li>
      * <li>both instances have equal {@link #dimensions() dimension arrays};</li>
      * <li>both instances have the same {@link #dataOffset() data offset};</li>
      * <li>both instances have the equal {@link #additionalProperties() additional properties maps},
-     * in terms of <tt>Map.equals</tt> method.</li>
+     * in terms of <code>Map.equals</code> method.</li>
      * </ol>
      *
      * <p>Please note that this method, unlike {@link Matrix#equals(Object)},
@@ -777,7 +778,7 @@ public abstract class MatrixInfo {
      * {@link #version() versions} of the objects.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return <tt>true</tt> if the specified object is a matrix information equal to this one.
+     * @return <code>true</code> if the specified object is a matrix information equal to this one.
      */
     public boolean equals(Object obj) {
         if (!(obj instanceof MatrixInfo)) {

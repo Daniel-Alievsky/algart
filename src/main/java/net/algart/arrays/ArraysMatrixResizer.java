@@ -186,7 +186,7 @@ class ArraysMatrixResizer {
         }
         if (result.dimEquals(src)) {
             // note: we do this even in cases, when optimization of ArraysMatrixResizer is not applicable:
-            // for example, if <tt>result</tt> matrix is not directly accessible
+            // for example, if result matrix is not directly accessible
 //            System.out.println("SAME");
             Matrices.copy(context, result, src, 0, false); // no resizing
             return true;
