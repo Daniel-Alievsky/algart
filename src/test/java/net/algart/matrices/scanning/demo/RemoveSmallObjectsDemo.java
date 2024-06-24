@@ -25,7 +25,7 @@
 package net.algart.matrices.scanning.demo;
 
 import net.algart.arrays.*;
-import net.algart.external.MatrixIO;
+import net.algart.io.MatrixIO;
 import net.algart.math.functions.RectangularFunc;
 import net.algart.matrices.scanning.ConnectedObjectScanner;
 import net.algart.matrices.scanning.ConnectivityType;

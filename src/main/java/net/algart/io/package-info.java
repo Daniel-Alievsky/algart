@@ -23,8 +23,8 @@
  */
 
 /**
- <p>Conversions AlgART matrices from/to AWT images.</p>
+ <p>I/O functions: interface between AlgART arrays/matrices and AWT, disk files etc.</p>
 
  @author Daniel Alievsky
  */
-package net.algart.external.awt;
+package net.algart.io;

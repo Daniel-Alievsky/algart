@@ -27,7 +27,7 @@ package net.algart.math.rectangles.demo;
 import net.algart.arrays.Arrays;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
-import net.algart.external.MatrixIO;
+import net.algart.io.MatrixIO;
 import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 import net.algart.math.rectangles.IRectanglesUnion;

@@ -25,7 +25,7 @@
 package net.algart.arrays.demo;
 
 import net.algart.arrays.*;
-import net.algart.external.MatrixIO;
+import net.algart.io.MatrixIO;
 import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
 import net.algart.math.functions.Func2;

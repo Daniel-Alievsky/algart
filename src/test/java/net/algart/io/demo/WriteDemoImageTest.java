@@ -22,14 +22,12 @@
  * SOFTWARE.
  */
 
-package net.algart.external.demo;
+package net.algart.io.demo;
 
 import net.algart.arrays.*;
-import net.algart.external.MatrixIO;
-import net.algart.external.awt.MatrixToBufferedImage;
+import net.algart.io.MatrixIO;
+import net.algart.io.awt.MatrixToBufferedImage;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;

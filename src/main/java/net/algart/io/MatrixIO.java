@@ -22,14 +22,14 @@
  * SOFTWARE.
  */
 
-package net.algart.external;
+package net.algart.io;
 
 import net.algart.arrays.*;
-import net.algart.external.awt.BufferedImageToMatrix;
-import net.algart.external.awt.MatrixToBufferedImage;
+import net.algart.io.awt.BufferedImageToMatrix;
+import net.algart.io.awt.MatrixToBufferedImage;
 
-import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteOrder;
@@ -38,6 +38,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class MatrixIO {
     private static final boolean USE_DEPRECATED_READ_WRITE = false;
@@ -107,13 +108,22 @@ public class MatrixIO {
     }
 
     public static void writeBufferedImage(Path file, BufferedImage image) throws IOException {
+        writeBufferedImage(file, image, null);
+    }
+
+    public static void writeBufferedImage(Path file, BufferedImage image, Consumer<ImageWriteParam> customizer)
+            throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         String formatName = extension(file);
-        writeBufferedImage(file, image, formatName);
+        writeBufferedImage(file, image, customizer, formatName);
     }
 
-    public static void writeBufferedImage(Path file, BufferedImage image, String formatName) throws IOException {
+    public static void writeBufferedImage(
+            Path file,
+            BufferedImage image,
+            Consumer<ImageWriteParam> customizer,
+            String formatName) throws IOException {
         Objects.requireNonNull(formatName, "Null formatName");
         if (!ImageIO.write(image, formatName, file.toFile())) {
             throw new UnsupportedImageFormatException("Cannot write " + file + ": no \"" + formatName +
@@ -134,15 +144,22 @@ public class MatrixIO {
     }
 
     public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
+        writeImage(file, image, null);
+    }
+
+    public static void writeImage(
+            Path file,
+            List<? extends Matrix<? extends PArray>> image,
+            Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
-        BufferedImage bufferedImage;
         if (USE_DEPRECATED_READ_WRITE) {
-            writeBufferedImage(file, (new ColorImageFormatter.Simple()).toBufferedImage(image));
+            writeBufferedImage(file, (new ColorImageFormatter.Simple()).toBufferedImage(image), customizer);
             return;
         }
         final Matrix<PArray> matrix = Matrices.interleave(null, image);
-        writeBufferedImage(file, new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix));
+        BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
+        writeBufferedImage(file, bufferedImage, customizer);
     }
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {

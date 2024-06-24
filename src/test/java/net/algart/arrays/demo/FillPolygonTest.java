@@ -25,7 +25,7 @@
 package net.algart.arrays.demo;
 
 import net.algart.arrays.*;
-import net.algart.external.MatrixIO;
+import net.algart.io.MatrixIO;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

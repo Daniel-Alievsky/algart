@@ -23,8 +23,8 @@
  */
 
 /**
- <p>Interaction with other systems outside AlgART and JVM.</p>
+ <p>Conversions AlgART matrices from/to AWT images.</p>
 
  @author Daniel Alievsky
  */
-package net.algart.external;
+package net.algart.io.awt;

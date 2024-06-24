@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.external.awt;
+package net.algart.io.awt;
 
 import net.algart.arrays.*;
 
