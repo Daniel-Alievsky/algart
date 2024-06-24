@@ -27,11 +27,11 @@ package net.algart.arrays;
 /**
  * <p>Resizable stack of any elements.</p>
  *
- * <p><tt>Stack</tt> is a restricted version (inheritor) of {@link MutableArray} interface,
+ * <p><code>Stack</code> is a restricted version (inheritor) of {@link MutableArray} interface,
  * allowing only access to the top element.
  *
  * <p>Please keep in mind: this package does not contain classes
- * that implements <tt>Stack</tt> but not implements {@link MutableArray}.
+ * that implements <code>Stack</code> but not implements {@link MutableArray}.
  * It means that the following operation usually works successfully:</p><pre>
  * void someMyMethod(Stack stack) {
  * &#32;   MutableArray a = (MutableArray)stack;
@@ -39,18 +39,18 @@ package net.algart.arrays;
  * }</pre>
  *
  * <p>Of course, it is not an example of good programming style, and there are no guarantees
- * that such operator will not throw <tt>ClassCastException</tt>.
+ * that such operator will not throw <code>ClassCastException</code>.
  * But such an operation is usually posssible. Please compare:</p><pre>
  * void someMyMethod(Array readOnlyArray) {
  * &#32;   MutableArray a = (MutableArray)readOnlyArray;
  * &#32;   ... // attempt to modify elements
  * }</pre>
  *
- * <p>This code will throw <tt>ClassCastException</tt>, if the caller of <tt>someMyMethod</tt>
+ * <p>This code will throw <code>ClassCastException</code>, if the caller of <code>someMyMethod</code>
  * does not forget to use {@link UpdatableArray#asImmutable() asImmutable()} method for
- * creating <tt>readOnlyArray</tt> argument.</p>
+ * creating <code>readOnlyArray</code> argument.</p>
  *
- * <p>If this stack elements are primitive values (<tt>byte</tt>, <tt>short</tt>, etc.),
+ * <p>If this stack elements are primitive values (<code>byte</code>, <code>short</code>, etc.),
  * the stack <b>must</b> implement one of
  * {@link BitStack}, {@link CharStack}, {@link ByteStack}, {@link ShortStack},
  * {@link IntStack}, {@link LongStack}, {@link FloatStack}, {@link DoubleStack}
@@ -74,7 +74,7 @@ public interface Stack {
 
     /**
      * Removes the element at the top of this stack and returns it,
-     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * or throws <code>EmptyStackException</code> if the stack is empty.
      *
      * <p>It this object is an AlgART array, implementing {@link MutableArray} interface,
      * and it is not empty, the same action may be performed by the following code:</p>
@@ -101,7 +101,7 @@ public interface Stack {
     Object popElement();
 
     /**
-     * Appends <tt>value</tt> element to the top of this stack.
+     * Appends <code>value</code> element to the top of this stack.
      *
      * <p>It this object is an AlgART array, implementing {@link MutableArray} interface,
      * the same action may be performed by the following code:</p>
@@ -123,17 +123,18 @@ public interface Stack {
      * we recommend to use {@link ObjectStack#push(Object)}.
      *
      * @param value to be added to the top of this stack.
-     * @throws ClassCastException        if it is a stack of primitive elements and <tt>value</tt> is not
-     *                                   a corresponding wrapped class (<tt>Boolean</tt>, <tt>Integer</tt>, etc.).
-     * @throws ArrayStoreException       if it is a stack of non-primitive elements and <tt>value</tt> is not
-     *                                   an instance of the class of stack elements.
+     * @throws ClassCastException     if it is a stack of primitive elements and <code>value</code> is not
+     *                                a corresponding wrapped class
+     *                                (<code>Boolean</code>, <code>Integer</code>, etc.).
+     * @throws ArrayStoreException    if it is a stack of non-primitive elements and <code>value</code> is not
+     *                                an instance of the class of stack elements.
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
     void pushElement(Object value);
 
     /**
      * Removes the element at the top of this stack and returns it,
-     * or throws <tt>EmptyStackException</tt> if the stack is empty.
+     * or throws <code>EmptyStackException</code> if the stack is empty.
      * This method differs from {@link #popElement()} only in that it does not return any result,
      * so it works slightly faster.
      *

@@ -150,8 +150,8 @@ public class ByteArraySelector {
      *     {@link #select(byte[], int[], byte[], int)
      * select}(results, percentileIndexes, array, length)
      * </pre>
-     * call, where <tt>percentileIndexes[k]={@link ArraySelector#percentileIndex(double, int)
-     * ArraySelector.percentileIndex}(percentileLevels[k], length)</tt>
+     * call, where <code>percentileIndexes[k]={@link ArraySelector#percentileIndex(double, int)
+     * ArraySelector.percentileIndex}(percentileLevels[k], length)</code>
      * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:

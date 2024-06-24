@@ -142,7 +142,7 @@ class InternalUtils {
     /**
      * Implementation of {@link Arrays.SystemSettings#availableProcessors()}.
      *
-     * @return the number of processor units among <tt>Runtime.getRuntime().availableProcessors()</tt>,
+     * @return the number of processor units among <code>Runtime.getRuntime().availableProcessors()</code>,
      *         allowed for usage by AlgART libraries.
      */
     public static int availableProcessors() {
@@ -154,39 +154,39 @@ class InternalUtils {
     }
 
     /*
-     * If <tt>true</tt>, the algorithms, processing AlgART arrays,
+     * If <code>true</code>, the algorithms, processing AlgART arrays,
      * should suppose that the application is executed in the server mode,
      * in particular, with "-server" JVM option.
-     * In this case, the algorithms may suppose that access to <tt>ByteBuffer</tt> elements by
-     * <tt>get(int index)</tt>, <tt>put(int index, byte b)</tt> methods
+     * In this case, the algorithms may suppose that access to <code>ByteBuffer</code> elements by
+     * <code>get(int index)</code>, <code>put(int index, byte b)</code> methods
      * works with the same (or almost same) speed as access to usual Java array elements.
      * In other case, the algorithm should prefer to process Java arrays.
      *
      * <p>This value is determined while initializing {@link Arrays} class
      * from the system property "net.algart.arrays.serverOptimization", that can contain
-     * "<tt>true</tt>" or "<tt>false</tt>" value.
-     * If there is no such property, this method returns the default <tt>false</tt> value.
+     * "<code>true</code>" or "<code>false</code>" value.
+     * If there is no such property, this method returns the default <code>false</code> value.
      * If you call an application, that uses this library, in the server mode ("-server" option),
      * you may try to specify "-Dnet.algart.arrays.serverOptimization=true":
      * it may little increase the execution speed of some algorithms.
      *
      * // Deprecated and become undocumented - this property usually just slows down execution
      *
-     * @return the value of "net.algart.arrays.serverOptimization" system property, <tt>false</tt> by default.
+     * @return the value of "net.algart.arrays.serverOptimization" system property, <code>false</code> by default.
      */
     public static boolean serverOptimizationMode() {
         return SERVER_OPTIMIZATION;
     }
 
     /**
-     * An analog of <tt>System.getProperty</tt>, but returns <tt>defaultValue</tt>
+     * An analog of <code>System.getProperty</code>, but returns <code>defaultValue</code>
      * even in a case of exception.
      *
-     * <p>More precisely, unlike <tt>System.getProperty</tt>,
-     * this method catches all exceptions, including <tt>SecurityException</tt>, and returns
-     * <tt>defaultValue</tt> in a case of an exception.
-     * In particular, this method returns <tt>defaultValue</tt> if <tt>propertyName</tt> is {@code null}
-     * or an empty string (<tt>System.getProperty</tt> throws exceptions in these cases).
+     * <p>More precisely, unlike <code>System.getProperty</code>,
+     * this method catches all exceptions, including <code>SecurityException</code>, and returns
+     * <code>defaultValue</code> in a case of an exception.
+     * In particular, this method returns <code>defaultValue</code> if <code>propertyName</code> is {@code null}
+     * or an empty string (<code>System.getProperty</code> throws exceptions in these cases).
      * There is a guarantee that this method never throws exceptions.
      *
      * @param propertyName the name of property.
@@ -202,8 +202,8 @@ class InternalUtils {
     }
 
     /**
-     * An analog of <tt>Integer.getInteger</tt>, but "understands" suffixes K, M, G, that mean "Kilo" (1024),
-     * "Mega" (1048576) and "Giga" (1073741824) and returns <tt>defaultValue</tt>
+     * An analog of <code>Integer.getInteger</code>, but "understands" suffixes K, M, G, that mean "Kilo" (1024),
+     * "Mega" (1048576) and "Giga" (1073741824) and returns <code>defaultValue</code>
      * even in a case of any exception (including security exception).
      *
      * @param propertyName the name of property.
@@ -232,7 +232,7 @@ class InternalUtils {
     }
 
     /**
-     * An analog of <tt>Integer.getInteger</tt>, but returns <tt>defaultValue</tt>
+     * An analog of <code>Integer.getInteger</code>, but returns <code>defaultValue</code>
      * even in a case of any exception (including security exception).
      *
      * @param propertyName the name of property.
@@ -248,8 +248,8 @@ class InternalUtils {
     }
 
     /**
-     * An analog of <tt>Long.getLong</tt>, but "understands" suffixes K, M, G, T, that mean "Kilo" (1024),
-     * "Mega" (1048576), "Giga" (1073741824) and "Tera" (1099511627776) and returns <tt>defaultValue</tt>
+     * An analog of <code>Long.getLong</code>, but "understands" suffixes K, M, G, T, that mean "Kilo" (1024),
+     * "Mega" (1048576), "Giga" (1073741824) and "Tera" (1099511627776) and returns <code>defaultValue</code>
      * even in a case of any exception (including security exception).
      *
      * @param propertyName the name of property.
@@ -277,8 +277,8 @@ class InternalUtils {
     }
 
     /**
-     * An analog of <tt>Integer.getInteger</tt>, but works with double values and
-     * returns <tt>defaultValue</tt>
+     * An analog of <code>Integer.getInteger</code>, but works with double values and
+     * returns <code>defaultValue</code>
      * even in a case of any exception (including security exception).
      *
      * @param propertyName the name of property.
@@ -294,13 +294,13 @@ class InternalUtils {
     }
 
     /**
-     * An analog of <tt>Boolean.getBoolean</tt>, but returns <tt>defaultValue</tt>
-     * if there is no required property, or it doesn't equal "<tt>true</tt>" or "<tt>false</tt>",
+     * An analog of <code>Boolean.getBoolean</code>, but returns <code>defaultValue</code>
+     * if there is no required property, or it doesn't equal "<code>true</code>" or "<code>false</code>",
      * or in a case of any exception. (The test of this string is case insensitive.)
      *
-     * <p>Unlike <tt>Boolean.getBoolean</tt>,
-     * this method catches all exceptions, including <tt>SecurityException</tt>, and returns
-     * <tt>defaultValue</tt> in a case of an exception.
+     * <p>Unlike <code>Boolean.getBoolean</code>,
+     * this method catches all exceptions, including <code>SecurityException</code>, and returns
+     * <code>defaultValue</code> in a case of an exception.
      * There is a guarantee that this method never throws exceptions.
      *
      * @param propertyName the name of property.
@@ -372,7 +372,7 @@ class InternalUtils {
     }
 
     /**
-     * Returns <tt>(T)object</tt>. Allows to minimize unchecked warning in another classes.
+     * Returns <code>(T)object</code>. Allows to minimize unchecked warning in another classes.
      *
      * @param object some object.
      * @return T     the same object.

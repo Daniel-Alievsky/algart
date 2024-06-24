@@ -25,14 +25,15 @@
 package net.algart.arrays;
 
 /**
- * <p>Version of {@link ArrayExchanger} for a case of 32-bit indexes (<tt>int</tt> instead of <tt>long</tt>).
+ * <p>Version of {@link ArrayExchanger} for a case of 32-bit indexes (<code>int</code> instead of <code>long</code>).
  *
  * @author Daniel Alievsky
  */
 @FunctionalInterface
 public interface ArrayExchanger32 extends ArrayExchanger {
     /**
-     * This method, implemented in this interface, just calls another <tt>swap</tt> method with <tt>int</tt> indexes:
+     * This method, implemented in this interface, just calls another
+     * <code>swap</code> method with <code>int</code> indexes:
      * <pre>
      *     {@link #swap(int, int) swap}((int) first, (int) second);
      * </pre>
@@ -47,7 +48,7 @@ public interface ArrayExchanger32 extends ArrayExchanger {
     }
 
     /**
-     * Should exchange the elements at position <tt>first</tt> and <tt>second</tt> in the data array.
+     * Should exchange the elements at position <code>first</code> and <code>second</code> in the data array.
      *
      * @param first  index of the first exchanged element.
      * @param second index of the second exchanged element.
