@@ -155,8 +155,8 @@ public interface ThreadPoolFactory {
     void releaseThreadPool(ExecutorService pool);
 
     /**
-     * Equivalent to <tt>{@link #performTasks(java.util.concurrent.ThreadFactory, Runnable[])
-     * performTasks}(null, tasks)</tt> call.
+     * Equivalent to <code>{@link #performTasks(java.util.concurrent.ThreadFactory, Runnable[])
+     * performTasks}(null, tasks)</code> call.
      *
      * @param tasks the tasks which should be performed.
      * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
@@ -241,8 +241,8 @@ public interface ThreadPoolFactory {
     void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks);
 
     /**
-     * Equivalent to <tt>{@link #performTasks(Runnable[])
-     * performTasks}(java.util.Arrays.copyOfRange(tasks, from, to))</tt> call.
+     * Equivalent to <code>{@link #performTasks(Runnable[])
+     * performTasks}(java.util.Arrays.copyOfRange(tasks, from, to))</code> call.
      *
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
@@ -255,8 +255,8 @@ public interface ThreadPoolFactory {
     void performTasks(Runnable[] tasks, int from, int to);
 
     /**
-     * Equivalent to <tt>{@link #performTasks(ThreadFactory, Runnable[])
-     * performTasks}(threadFactory, java.util.Arrays.copyOfRange(tasks, from, to))</tt> call.
+     * Equivalent to <code>{@link #performTasks(ThreadFactory, Runnable[])
+     * performTasks}(threadFactory, java.util.Arrays.copyOfRange(tasks, from, to))</code> call.
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;

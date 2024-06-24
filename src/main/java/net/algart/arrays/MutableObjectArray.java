@@ -25,7 +25,7 @@
 package net.algart.arrays;
 
 /**
- * <p>Resizable AlgART array of some objects (non-primitive values) with the specified generic type <tt>E</tt>,
+ * <p>Resizable AlgART array of some objects (non-primitive values) with the specified generic type <code>E</code>,
  * read-write and resize access.</p>
  *
  * <p>Any class implementing this interface <b>must</b> contain non-primitive elements

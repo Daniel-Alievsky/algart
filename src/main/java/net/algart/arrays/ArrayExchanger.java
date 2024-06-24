@@ -32,7 +32,7 @@ package net.algart.arrays;
  * So, every object, implementing this interface, is supposed to be working with some fixed linear data array.
  * The method of storing data in the array can be any; for example, it can be an
  * {@link UpdatableArray updatable AlgART array} or a usual Java array.
- * The length of the array is limited only by 2<sup>63</sup>&minus;1 (maximal possible value for <tt>long</tt>
+ * The length of the array is limited only by 2<sup>63</sup>&minus;1 (maximal possible value for <code>long</code>
  * indexes).</p>
  *
  * <p>This interface is used by {@link ArraySorter} class.</p>
@@ -46,7 +46,7 @@ package net.algart.arrays;
 @FunctionalInterface
 public interface ArrayExchanger {
     /**
-     * Should exchange the elements at position <tt>firstIndex</tt> and <tt>secondIndex</tt> in the data array.
+     * Should exchange the elements at position <code>firstIndex</code> and <code>secondIndex</code> in the data array.
      *
      * @param firstIndex  index of the first exchanged element.
      * @param secondIndex index of the second exchanged element.

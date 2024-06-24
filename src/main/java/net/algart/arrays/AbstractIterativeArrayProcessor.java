@@ -49,7 +49,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <tt>{@link #context}!=null</tt>, in other case equal to
+     * <code>{@link #context}!=null</code>, in other case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     protected final MemoryModel memoryModel;
@@ -79,8 +79,8 @@ public abstract class AbstractIterativeArrayProcessor<T>
     }
 
     /**
-     * <p>This method returns <tt><nobr>context == null ? null :
-     * context.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</nobr></tt>.
+     * <p>This method returns <code><nobr>context == null ? null :
+     * context.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</nobr></code>.
      * This operation is needful very often while implementing {@link #performIteration(ArrayContext)} method.
      *
      * @param context  some array context.
@@ -92,10 +92,10 @@ public abstract class AbstractIterativeArrayProcessor<T>
      *                 of the total algorithm at the finish of the subtask:
      *                 see {@link ArrayContext#updateProgress(net.algart.arrays.ArrayContext.Event)
      *                 ArrayContext.updateProgress} method;
-     *                 must be not less than <tt>fromPart</tt> range.
+     *                 must be not less than <code>fromPart</code> range.
      * @return         new context, describing the execution of the subtask of the current task.
-     * @throws IllegalArgumentException if <tt>fromPart</tt> or <tt>toPart</tt> is not in
-     *                                  <tt>0.0..1.0</tt> range or if <tt>fromPart&gt;toPart</tt>.
+     * @throws IllegalArgumentException if <code>fromPart</code>3 or <code>toPart</code> is not in
+     *                                  <code>0.0..1.0</code> range or if <code>fromPart&gt;toPart</code>.
      */
     public static ArrayContext part(ArrayContext context, double fromPart, double toPart) {
         return context == null ? null : context.part(fromPart, toPart);

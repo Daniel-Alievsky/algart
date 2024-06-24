@@ -30,10 +30,10 @@ import java.io.Serial;
  * <p>Unchecked exception thrown if the current or desired array length is extremely large.
  * It is thrown by methods, creating new arrays or resizing existing arrays,
  * if the desired array length is too large (regardless of the amount of memory,
- * for example, greater than <tt>Long.MAX_VALUE</tt>),
+ * for example, greater than <code>Long.MAX_VALUE</code>),
  * or by methods trying to convert the array into a Java array (as {@link Arrays#toJavaArray(Array)}),
  * if the array is too large for storing its content in a form of Java array
- * (Java arrays can contain, as a maximum, <tt>Integer.MAX_VALUE</tt> (2<sup>31</sup>-1) elements).</p>
+ * (Java arrays can contain, as a maximum, <code>Integer.MAX_VALUE</code> (2<sup>31</sup>-1) elements).</p>
  *
  * @author Daniel Alievsky
  */

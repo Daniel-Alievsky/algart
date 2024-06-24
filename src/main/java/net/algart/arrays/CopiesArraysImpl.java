@@ -30,7 +30,7 @@ import java.nio.ByteOrder;
 import java.util.Objects;
 
 /**
- * <p>Implementations of <tt>Arrays.nXxxCopies</tt> arrays.
+ * <p>Implementations of <code>Arrays.nXxxCopies</code> arrays.
  *
  * @author Daniel Alievsky
  */
