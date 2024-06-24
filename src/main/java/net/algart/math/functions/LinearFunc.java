@@ -40,7 +40,7 @@ import java.util.Objects;
  * according Java specification, it means that this function never returns &minus;0.0 double value.</p>
  *
  * <p>The {@link #get} method of the instance of this class requires at least <i>n</i> arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is less.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is less.</p>
  *
  * <p>Please note: if all <i>a</i><sub><i>i</i></sub> coefficients are equal (averaging function),
  * this class does not spend Java memory for storing them.
@@ -128,7 +128,7 @@ public abstract class LinearFunc implements Func {
      * <i>b</i> + <i>a</i><sub>0</sub><i>x</i><sub>0</sub> + <i>a</i><sub>1</sub><i>x</i><sub>1</sub>
      * +...+ <i>a</i><sub><i>n</i>-1</sub><i>x</i><sub><i>n</i>-1</sub>.
      *
-     * <p>The passed reference <tt>a</tt> is not maintained by the created instance:
+     * <p>The passed reference <code>a</code> is not maintained by the created instance:
      * if necessary, the Java array is cloned.
      *
      * @param b the <i>b</i> coefficient.
@@ -348,10 +348,10 @@ public abstract class LinearFunc implements Func {
 
     /**
      * Equivalent to {@link #getNonweightedInstance(double, double, int) getNonweightedInstance(0.0, 1.0/n, n)}:
-     * the average from <tt>n</tt> numbers.
+     * the average from <code>n</code> numbers.
      *
      * @param n the number of <i>a</i><sub><i>i</i></sub> coefficients.
-     * @return  the function calculating average from <tt>n</tt> numbers.
+     * @return  the function calculating average from <code>n</code> numbers.
      */
     public static LinearFunc getAveragingInstance(int n) {
         return getNonweightedInstance(0.0, 1.0 / n, n);
@@ -361,11 +361,11 @@ public abstract class LinearFunc implements Func {
      * Returns an instance of this class describing the following linear function with one argument:
      * <i><i>d</i><sub>min</sub> + (<i>d</i><sub>max</sub>-<i>d</i><sub>min</sub>) *
      * (x</i>-<i>s</i><sub>min</sub>) / (<i>s</i><sub>max</sub>-<i>s</i><sub>min</sub>),
-     * where <i>s</i><sub>min</sub>..<i>s</i><sub>max</sub> is <tt>srcRange</tt>
-     * and <i>d</i><sub>min</sub>..<i>d</i><sub>max</sub> is <tt>destRange</tt>.
-     * This function maps the source range <tt>srcRange</tt>
-     * to the destination range <tt>destRange</tt>,
-     * excepting the only case when <tt>srcRange.{@link Range#size() size()}==0</tt>.
+     * where <i>s</i><sub>min</sub>..<i>s</i><sub>max</sub> is <code>srcRange</code>
+     * and <i>d</i><sub>min</sub>..<i>d</i><sub>max</sub> is <code>destRange</code>.
+     * This function maps the source range <code>srcRange</code>
+     * to the destination range <code>destRange</code>,
+     * excepting the only case when <code>srcRange.{@link Range#size() size()}==0</code>.
      * In that special case the behavior of the returned function is not specified
      * (but no exceptions are thrown).
      *
@@ -385,7 +385,7 @@ public abstract class LinearFunc implements Func {
      * describing the linear function with specified coefficients:
      * <i>b</i> + <i>a</i><i>x</i><sub>0</sub>.</p>
      * The {@link Func.Updatable#set set} method of this instance sets
-     * <tt>x[0]=(newResult-b)*aInv</tt>, where <tt>aInv=1.0/a</tt>
+     * <code>x[0]=(newResult-b)*aInv</code>, where <code>aInv=1.0/a</code>
      * is calculated while the instance creation.
      *
      * @param b the <i>b</i> coefficient.
@@ -446,9 +446,9 @@ public abstract class LinearFunc implements Func {
     /**
      * Returns an array containing all <i>a</i><sub><i>i</i></sub> coefficients of this linear function.
      *
-     * <p>If {@link #isNonweighted()} method returns <tt>true</tt>, it can be more efficient, to save memory,
+     * <p>If {@link #isNonweighted()} method returns <code>true</code>, it can be more efficient, to save memory,
      * not to use this method, but to get the common value of all coefficients via {@link #a(int) a(0)} call
-     * (please not forget to check that <tt>{@link #n()}&gt;0</tt>).
+     * (please not forget to check that <code>{@link #n()}&gt;0</code>).
      *
      * <p>The returned array is never a reference to an internal array stored in this object:
      * if necessary, the internal Java array is cloned.
@@ -467,13 +467,13 @@ public abstract class LinearFunc implements Func {
     }
 
     /**
-     * Returns <tt>true</tt> if <tt>{@link #n() n()}&lt;=1</tt> or
+     * Returns <code>true</code> if <code>{@link #n() n()}&lt;=1</code> or
      * if all <i>a</i><sub><i>i</i></sub> coefficients are equal.
      * This function works little faster in this case, because it can be simplified as
      * <i>b</i> + <i>a</i><sub>0</sub>(<i>x</i><sub>0</sub> + <i>x</i><sub>1</sub>
      * +...+ <i>x</i><sub><i>n</i>-1</sub>).
      *
-     * @return <tt>true</tt> if <tt>{@link #n() n()}&lt;=1</tt> or
+     * @return <code>true</code> if <code>{@link #n() n()}&lt;=1</code> or
      *         if all <i>a</i><sub><i>i</i></sub> coefficients are equal.
      */
     public boolean isNonweighted() {

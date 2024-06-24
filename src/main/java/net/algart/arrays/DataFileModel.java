@@ -47,10 +47,10 @@ import java.util.Set;
  * the methods {@link #recommendedNumberOfBanks()}, {@link #recommendedBankSize(boolean)}
  * to specify custom values of number of banks and bank size in a concrete data file model.</p>
  *
- * <p>The data file model uses a class, specified as the generic argument <tt>P</tt>
+ * <p>The data file model uses a class, specified as the generic argument <code>P</code>
  * and returned by {@link #pathClass()} method, for working with <i>data file paths</i>
  * &mdash; some unique names identifying file position in the file system.
- * Usually, this class is <tt>java.io.File</tt>, and it describes standard path to a disk file.
+ * Usually, this class is <code>java.io.File</code>, and it describes standard path to a disk file.
  * Custom implementations (not inherited from {@link AbstractDataFileModel})
  * may use another classes for specifying file paths.
  *
@@ -79,14 +79,14 @@ public interface DataFileModel<P> {
      *
      * <p>The passed byte order will be used for mapping this file:
      * the {@link DataFile#map(DataFile.Range, boolean)} method of the data file
-     * will return <tt>ByteBuffer</tt> with this byte order.
+     * will return <code>ByteBuffer</code> with this byte order.
      *
-     * <p>The physical object (for example, disk file), described by <tt>path</tt>
+     * <p>The physical object (for example, disk file), described by <code>path</code>
      * string, should already exist.
      * This method does not attempt to create physical file;
      * it only creates new Java object associated with an existing file.
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
      * @param path      the path describing unique position of the existing data file.
      * @param byteOrder the byte order that will be always used for mapping this file.
@@ -98,7 +98,7 @@ public interface DataFileModel<P> {
     /**
      * Returns the path describing unique position of the data file (usually the absolute path to the disk file).
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
      * @param dataFile the data file.
      * @return         the path describing unique position of the data file.
@@ -112,7 +112,7 @@ public interface DataFileModel<P> {
      * object corresponding to it.
      *
      * <p>The {@link DataFile#map(DataFile.Range, boolean)} method of the created data file
-     * will return <tt>ByteBuffer</tt> with some byte order: it depends on implementation.
+     * will return <code>ByteBuffer</code> with some byte order: it depends on implementation.
      *
      * <p>The returned instance is added to some internal collection,
      * returned by {@link #allTemporaryFiles()} method.
@@ -127,7 +127,7 @@ public interface DataFileModel<P> {
      * Automatic deletion performed by this package includes closing the file, that allow
      * to avoid this bug.)
      *
-     * @param unresizable <tt>true</tt> if this file will be used for unresizable arrays only.
+     * @param unresizable <code>true</code> if this file will be used for unresizable arrays only.
      *                    It is information flag: for example, it may be used for choosing file name
      *                    or directory. If this flag is set, it does not mean that {@link DataFile#length(long)}
      *                    method will not be called to change the file length; it will be called at least once.
@@ -138,17 +138,17 @@ public interface DataFileModel<P> {
 
     /**
      * Deletes the data file.
-     * Returns <tt>true</tt> if the file was successfully deleted
-     * or <tt>false</tt> this file does not exists (nothing to do).
+     * Returns <code>true</code> if the file was successfully deleted
+     * or <code>false</code> this file does not exists (nothing to do).
      * Usually means deletion of the disk file, but some file models
      * may override this behavior (for example, may move the file in some special directory).
      *
      * <p>This method is called automatically for temporary files by garbage collector
      * and by standard cleanup procedure, performed by this package.
      *
-     * <p>Warning: unlike <tt>java.io.File.delete()</tt>, this method
-     * must throw an exception (<tt>java.io.IOError</tt>) in a case of some problems while file deletion.
-     * (<tt>java.io.File.delete()</tt> returns <tt>false</tt> in this situation.)
+     * <p>Warning: unlike <code>java.io.File.delete()</code>, this method
+     * must throw an exception (<code>java.io.IOError</code>) in a case of some problems while file deletion.
+     * (<code>java.io.File.delete()</code> returns <code>false</code> in this situation.)
      *
      * <p>In a case of successful deletion, this method excludes the path of this file from the internal set
      * returned by {@link #allTemporaryFiles()} method.
@@ -164,8 +164,8 @@ public interface DataFileModel<P> {
      * that the file "cannot be deleted".
      *
      * @param dataFile the data file that should be deleted.
-     * @return         <tt>true</tt> if and only if the data file existed and was successfully deleted,
-     *                 <tt>false</tt> if the data file does not exist (maybe was deleted already).
+     * @return         <code>true</code> if and only if the data file existed and was successfully deleted,
+     *                 <code>false</code> if the data file does not exist (maybe was deleted already).
      * @throws NullPointerException if the passed data file is {@code null}.
      * @throws ClassCastException   if the data file was created by incompatible data file model.
      * @throws java.io.IOError in a case of any problems while file deletion.
@@ -197,12 +197,12 @@ public interface DataFileModel<P> {
      * {@link LargeMemoryModel#asUpdatableArray LargeMemoryModel.asUpdatableArray} methods
      * are called several times for the same external file, then each call produces separate
      * {@link DataFile} instance. So, this method will be called several times for this file
-     * (with the same <tt>dataFilePath</tt> argument).
+     * (with the same <code>dataFilePath</code> argument).
      *
      * @param dataFilePath          the path describing unique position of the data file.
-     * @param isApplicationShutdown <tt>true</tt> if this method is called by the cleanup procedure,
+     * @param isApplicationShutdown <code>true</code> if this method is called by the cleanup procedure,
      *                              performed by this package, while finishing the application;
-     *                              <tt>false</tt> if it is called from the garbage collector.
+     *                              <code>false</code> if it is called from the garbage collector.
      */
     void finalizationNotify(P dataFilePath, boolean isApplicationShutdown);
 
@@ -219,7 +219,7 @@ public interface DataFileModel<P> {
      * <p>This package includes automatic cleanup procedure, that is performed in
      * the internal shutdown hook and calls {@link #delete(DataFile)} for all data files,
      * returned by this method for all instances of this class, which
-     * were used since the application start and returned <tt>true</tt> as a result
+     * were used since the application start and returned <code>true</code> as a result
      * of {@link #isAutoDeletionRequested()} method.
      * You may install additional cleanup procedures, that will be called before or after this,
      * via {@link Arrays#addShutdownTask(Runnable, Arrays.TaskExecutionOrder)} method.
@@ -229,11 +229,11 @@ public interface DataFileModel<P> {
     Set<DataFile> allTemporaryFiles();
 
     /**
-     * If <tt>value</tt> is <tt>true</tt>, adds the passed data file instance into
+     * If <code>value</code> is <code>true</code>, adds the passed data file instance into
      * the internal collection returned by {@link #allTemporaryFiles()} method;
-     * if <tt>value</tt> is <tt>false</tt>, removes it from that collection.
+     * if <code>value</code> is <code>false</code>, removes it from that collection.
      *
-     * <p>This method does nothing if {@link #isAutoDeletionRequested()} returns <tt>false</tt>.
+     * <p>This method does nothing if {@link #isAutoDeletionRequested()} returns <code>false</code>.
      *
      * <p>This method is called in {@link LargeMemoryModel#setTemporary} method only.
      *
@@ -248,30 +248,30 @@ public interface DataFileModel<P> {
     void setTemporary(DataFile dataFile, boolean value);
 
     /**
-     * Returns <tt>true</tt> if the standard cleanup procedure, that deletes all temporary files
+     * Returns <code>true</code> if the standard cleanup procedure, that deletes all temporary files
      * (as described in comments to {@link #allTemporaryFiles()} method), is necessary for this file model.
      * In this case, the instance of this model is automatically registered,
      * while creating any {@link LargeMemoryModel} instance with this model,
      * in the internal static collection
      * that can be retrieved by {@link LargeMemoryModel#allUsedDataFileModelsWithAutoDeletion()} method.
      *
-     * <p>This method returns <tt>true</tt> for all implementations from this package.
+     * <p>This method returns <code>true</code> for all implementations from this package.
      * If you implemented own cleanup procedure in your implementation of this class,
-     * you may return <tt>false</tt> in this method. If this method returns <tt>false</tt>,
+     * you may return <code>false</code> in this method. If this method returns <code>false</code>,
      * the implementations of {@link #createTemporary(boolean)} method in this package
      * do not add the file name into the internal collection,
      * returned by {@link #allTemporaryFiles()} method.
      *
-     * <p>If this method returns <tt>false</tt>, <i>it does not mean</i> that temporary files will
+     * <p>If this method returns <code>false</code>, <i>it does not mean</i> that temporary files will
      * not be deleted automatically. It only means that this data file model instance
      * will not be registered in the internal static collection
      * (available via {@link LargeMemoryModel#allUsedDataFileModelsWithAutoDeletion()} method)
      * and that the {@link #createTemporary(boolean)} method will not register the file name in
      * {@link #allTemporaryFiles()} collection. To avoid automatic file deletion,
      * you must call {@link LargeMemoryModel#setTemporary(Array, boolean)} method
-     * with <tt>false</tt> second argument.
+     * with <code>false</code> second argument.
      *
-     * @return <tt>true</tt> if the temporary data files, created by this model, should be automatically
+     * @return <code>true</code> if the temporary data files, created by this model, should be automatically
      *         deleted by the standard cleanup procedure.
      */
     boolean isAutoDeletionRequested();
@@ -303,12 +303,12 @@ public interface DataFileModel<P> {
      * AlgART arrays, based on data file mapping, allocate memory banks with this size
      * and load there portions of large data file.
      *
-     * <p>The <tt>unresizable</tt> flag specifies whether this bank size will be used for
+     * <p>The <code>unresizable</code> flag specifies whether this bank size will be used for
      * data file, which stores unresizable arrays only. In this case, this method may return greater value
-     * than if <tt>unresizable</tt> is <tt>false</tt>. The reason is that the data files,
+     * than if <code>unresizable</code> is <code>false</code>. The reason is that the data files,
      * containing resizable arrays, may grow per blocks, which size is equal to the bank size.
      * If bank size is 8 MB, then any resizable array, created by {@link MemoryModel#newIntArray(long)}
-     * or similar method, will occupy at least 8 MB of disk space, even its length is only several <tt>int</tt>
+     * or similar method, will occupy at least 8 MB of disk space, even its length is only several <code>int</code>
      * values. For unresizable arrays, created by {@link MemoryModel#newUnresizableIntArray(long)} and similar
      * methods, the file size is usually fixed while its creation and bank size information is not used.
      *
@@ -317,13 +317,13 @@ public interface DataFileModel<P> {
      *
      * <p>We recommend use large banks to reduce bank swapping.
      * But do not specify too large values here: every opened data file
-     * use <tt>{@link #recommendedNumberOfBanks()}*{@link #recommendedBankSize(boolean)}</tt>
+     * use <code>{@link #recommendedNumberOfBanks()}*{@link #recommendedBankSize(boolean)}</code>
      * bytes of the address space, which is limited by ~1.0-1.5 GB under 32-bit OS.
      * Typical value is 2-8 MB for unresizable arrays
-     * (when the argument is <tt>true</tt>) and 64-256 KB for resizable
-     * ones (when the argument is <tt>false</tt>).
+     * (when the argument is <code>true</code>) and 64-256 KB for resizable
+     * ones (when the argument is <code>false</code>).
      *
-     * @param unresizable <tt>true</tt> if this bank size will be used for unresizable arrays only.
+     * @param unresizable <code>true</code> if this bank size will be used for unresizable arrays only.
      * @return            the recommended size of every memory bank in bytes.
      * @see #recommendedSingleMappingLimit()
      */
@@ -369,21 +369,21 @@ public interface DataFileModel<P> {
     long recommendedPrefixSize();
 
     /**
-     * If this method returns <tt>true</tt>, then mapping the data file by
+     * If this method returns <code>true</code>, then mapping the data file by
      * {@link DataFile#map(DataFile.Range, boolean) map(position, size)} call
-     * automatically increases the file length to <tt>position+size</tt>
+     * automatically increases the file length to <code>position+size</code>
      * if the current file length is less than this value.
      * In this case, this package will not call {@link DataFile#length(long)}
      * method for increasing the temporary file length.
      *
      * <p>The described behavior of mapping usually depends on the platform.
-     * So, this method should return <tt>false</tt> in most cases.
+     * So, this method should return <code>false</code> in most cases.
      *
      * <p>For unresizable files (i.e. for arrays that are created unresizable),
      * the result of this method is not used: these files are never mapped outside their
      * original lengths.
      *
-     * @return <tt>true</tt> if mapping outside the file length automatically increase the length.
+     * @return <code>true</code> if mapping outside the file length automatically increase the length.
      */
     boolean autoResizingOnMapping();
 }

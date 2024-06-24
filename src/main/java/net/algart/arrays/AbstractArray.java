@@ -34,7 +34,7 @@ import java.util.zip.CRC32;
  *
  * <p>This class implements only {@link Array} interface and doesn't implement
  * {@link UpdatableArray} / {@link MutableArray}. (It is necessary to allow read-only arrays,
- * implementing {@link Array} only, to be inheritors of <tt>AbstractArray</tt>.
+ * implementing {@link Array} only, to be inheritors of <code>AbstractArray</code>.
  * In other case, the user would be able to use illegal constructions as the following:</p>
  * <pre>
  * &nbsp;&nbsp;&nbsp;&nbsp;Array ar = some immutable array (inheritor of AbstractArray);
@@ -76,14 +76,14 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * Creates an array with the given initial capacity and length.
-     * Does not check the <tt>initialCapacity</tt> and <tt>initialLength</tt> arguments:
+     * Does not check the <code>initialCapacity</code> and <code>initialLength</code> arguments:
      * they may contain any values, for example, negative.
      * Some implementations may use bit #63 for service goals.
      *
      * <p>If the created array is a view of some another AlgART arrays,
      * as result of
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...) Arrays.asFuncArray}
-     * method, all these arrays should be passed by <tt>underlyingArrays</tt> argument.
+     * method, all these arrays should be passed by <code>underlyingArrays</code> argument.
      * The {@link Array#flushResources(ArrayContext)}, {@link Array#flushResources(ArrayContext, boolean)} and
      * {@link Array#freeResources(ArrayContext, boolean)} methods in the created instance,
      * and also in all its views created by
@@ -93,7 +93,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param initialCapacity  initial capacity of the array.
      * @param initialLength    initial length of the array.
      * @param underlyingArrays the created arrays is a view of the arrays passed by this argument.
-     * @throws NullPointerException if <tt>underlyingArrays</tt> is {@code null}.
+     * @throws NullPointerException if <code>underlyingArrays</code> is {@code null}.
      */
     protected AbstractArray(long initialCapacity, long initialLength, Array... underlyingArrays) {
         Objects.requireNonNull(underlyingArrays, "Null underlyingArrays argument");
@@ -135,7 +135,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     public abstract Class<? extends MutableArray> mutableType();
 
     /**
-     * This implementation returns <tt>{@link #length} &amp; Long.MAX_VALUE</tt>.
+     * This implementation returns <code>{@link #length} &amp; Long.MAX_VALUE</code>.
      * (The high bit of length may be used for service goals.)
      *
      * @return the number of elements in this array.
@@ -145,7 +145,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This implementation returns <tt>{@link #capacity} &amp; Long.MAX_VALUE</tt>.
+     * This implementation returns <code>{@link #capacity} &amp; Long.MAX_VALUE</code>.
      * (The high bit of capacity may be used for service goals.)
      *
      * @return the capacity of this array.
@@ -161,11 +161,11 @@ public abstract class AbstractArray implements Array, Cloneable {
     public abstract void getData(long arrayPos, Object destArray);
 
     /**
-     * This implementation returns <tt>java.lang.reflect.Array.newInstance(elementType(),&nbsp;length)</tt>.
+     * This implementation returns <code>java.lang.reflect.Array.newInstance(elementType(),&nbsp;length)</code>.
      *
      * @param length the length of created Java-array.
      * @return Java-array with the specified length and the same type of elements.
-     * @throws NegativeArraySizeException if the specified <tt>length</tt> is negative.
+     * @throws NegativeArraySizeException if the specified <code>length</code> is negative.
      */
     public Object newJavaArray(int length) {
         return java.lang.reflect.Array.newInstance(elementType(), length);
@@ -174,9 +174,9 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * This method of {@link PArray} interface is fully implemented in this class.
      * If this instance does not implement {@link PArray} (i.e. if it is {@link ObjectArray}),
-     * this method throws <tt>UnsupportedOperationException</tt>.
+     * this method throws <code>UnsupportedOperationException</code>.
      *
-     * @return <tt>true</tt> if and only if all elements of this array are zero, or if this array is empty.
+     * @return <code>true</code> if and only if all elements of this array are zero, or if this array is empty.
      * @throws UnsupportedOperationException if this instance is an array of non-primitive elements.
      */
     public boolean isZeroFilled() {
@@ -219,9 +219,9 @@ public abstract class AbstractArray implements Array, Cloneable {
     public abstract Array subArray(long fromIndex, long toIndex);
 
     /**
-     * This implementation returns <tt>{@link #subArray(long, long) subArray}(position, position + count)</tt>.
+     * This implementation returns <code>{@link #subArray(long, long) subArray}(position, position + count)</code>.
      * Please note that the exception message can be not fully correct for the very exotic case
-     * <tt>position+count&gt;Long.MAX_VALUE</tt>.
+     * <code>position+count&gt;Long.MAX_VALUE</code>.
      *
      * @param position start position (inclusive) of the subarray.
      * @param count    number of elements in the subarray.
@@ -237,20 +237,20 @@ public abstract class AbstractArray implements Array, Cloneable {
      * This method is fully implemented in this class.
      *
      * <p>The returned buffer will be <i><a href="DataBuffer.html#directAndIndirect">direct</a></i>,
-     * if <tt>mode</tt> is not {@link DataBuffer.AccessMode#PRIVATE PRIVATE},
+     * if <code>mode</code> is not {@link DataBuffer.AccessMode#PRIVATE PRIVATE},
      * this array is not {@link Array#asImmutable() immutable},
      * is not {@link Array#asCopyOnNextWrite() copy-on-next-write},
      * and either it implements {@link DirectAccessible} interface and
-     * its {@link DirectAccessible#hasJavaArray() hasJavaArray()} method returns <tt>true</tt>,
+     * its {@link DirectAccessible#hasJavaArray() hasJavaArray()} method returns <code>true</code>,
      * or it is a bit array created by the {@link SimpleMemoryModel simple memory model}.
      *
      * @param mode     the access mode for new buffer.
      * @param capacity the capacity of the buffer
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
+     * @throws NullPointerException     if <code>mode</code> argument is {@code null}.
+     * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
-     *                                  or if the specified <tt>capacity</tt> is negative or too high
+     *                                  or if the specified <code>capacity</code> is negative or too high
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      */
@@ -260,14 +260,14 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation returns {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
-     * buffer(mode, someCapacity)}, where <tt>mode</tt> is the argument of this method
-     * and <tt>someCapacity</tt> is the result of {@link #defaultBufferCapacity(Array)
+     * buffer(mode, someCapacity)}, where <code>mode</code> is the argument of this method
+     * and <code>someCapacity</code> is the result of {@link #defaultBufferCapacity(Array)
      * defaultBufferCapacity(thisArray)} method.
      *
      * @param mode the access mode for new buffer.
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
+     * @throws NullPointerException     if <code>mode</code> argument is {@code null}.
+     * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface.
      */
     public DataBuffer buffer(DataBuffer.AccessMode mode) {
@@ -276,15 +276,15 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation returns {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
-     * buffer(suitableMode, capacity)}, where <tt>capacity</tt> is the argument of this method
-     * and <tt>suitableMode</tt> is
+     * buffer(suitableMode, capacity)}, where <code>capacity</code> is the argument of this method
+     * and <code>suitableMode</code> is
      * <tt>this instanceof UpdatableArray ?
      * DataBuffer.AccessMode.READ_WRITE :
      * DataBuffer.AccessMode.READ</tt>.
      *
      * @param capacity the capacity of the buffer.
      * @return new data buffer for accessing this array.
-     * @throws IllegalArgumentException if the specified <tt>capacity</tt> is negative or too high
+     * @throws IllegalArgumentException if the specified <code>capacity</code> is negative or too high
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      */
@@ -297,7 +297,7 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation returns {@link #buffer(net.algart.arrays.DataBuffer.AccessMode)
-     * buffer(suitableMode)}, where <tt>suitableMode</tt> is
+     * buffer(suitableMode)}, where <code>suitableMode</code> is
      * <tt>this instanceof UpdatableArray ?
      * DataBuffer.AccessMode.READ_WRITE :
      * DataBuffer.AccessMode.READ</tt>.
@@ -326,7 +326,7 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation returns a private boolean field, that is
-     * <tt>false</tt> by default, but can be changed by protected
+     * <code>false</code> by default, but can be changed by protected
      * {@link #setNewStatus(boolean)} method.
      *
      * @return whether this array instance if <i>new</i>: a new object, allocated by some {@link MemoryModel}.
@@ -337,7 +337,7 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation returns a private boolean field, that is
-     * <tt>false</tt> by default, but can be changed by protected
+     * <code>false</code> by default, but can be changed by protected
      * {@link #setNewReadOnlyViewStatus()} method.
      *
      * @return whether this array instance is a newly created <i>view</i> of some
@@ -348,22 +348,22 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This implementation returns <tt>{@link #underlyingArrays}.length &gt; 0</tt>.
+     * This implementation returns <code>{@link #underlyingArrays}.length &gt; 0</code>.
      * Please override this if the access to underlying arrays is very quick
      * (as for {@link Matrix#subMatrix(long[], long[])}) or,
      * vice versa, if there are no underlying arrays, but getting an element requires some calculation
      * (as for {@link Arrays#asIndexFuncArray(net.algart.math.functions.Func, Class, long)}).
      *
-     * @return <tt>true</tt> if and only if {@link #underlyingArrays} is non-empty.
+     * @return <code>true</code> if and only if {@link #underlyingArrays} is non-empty.
      */
     public boolean isLazy() {
         return underlyingArrays.length > 0;
     }
 
     /**
-     * This implementation returns <tt>ByteOrder.nativeOrder()</tt>.
+     * This implementation returns <code>ByteOrder.nativeOrder()</code>.
      *
-     * @return <tt>ByteOrder.nativeOrder()</tt>
+     * @return <code>ByteOrder.nativeOrder()</code>
      */
     public ByteOrder byteOrder() {
         return ByteOrder.nativeOrder();
@@ -391,7 +391,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
      * @throws NullPointerException            if the argument is {@code null}.
-     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
      *                                         for this the specified memory model.
@@ -409,7 +409,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
      * @throws NullPointerException            if the argument is {@code null}.
-     * @throws UnsupportedElementTypeException if <tt>thisArray.{@link Array#elementType()}</tt> is not supported
+     * @throws UnsupportedElementTypeException if <code>thisArray.{@link Array#elementType()}</code> is not supported
      *                                         by the specified memory model.
      * @throws TooLargeArrayException          if the {@link Array#length() length} of this array is too large
      *                                         for this the specified memory model.
@@ -500,7 +500,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * <p>For non-primitive element type ({@link ObjectArray} subinterfaces),
      * this implementation is based on calls
-     * of <tt>hashCode</tt> method of the class of elements ({@link #elementType()}).
+     * of <code>hashCode</code> method of the class of elements ({@link #elementType()}).
      *
      * <p>This method is equivalent to the following call: {@link #hashCode(Array) hashCode(this)}.
      *
@@ -516,17 +516,17 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * <p>For non-primitive element type ({@link ObjectArray} subinterface),
      * this implementation is based on calls
-     * of <tt>equals</tt> method of the class of elements ({@link #elementType()}).
+     * of <code>equals</code> method of the class of elements ({@link #elementType()}).
      *
      * <p>This method is equivalent to the following call:
      * {@link #equals(Array, Object) equals(this, obj)}.
      *
      * <p>In some cases, you may override this method to provide better performance
-     * or to exclude dependence on elements' <tt>equals</tt> method.
+     * or to exclude dependence on elements' <code>equals</code> method.
      * (For example, this method is overridden in {@link CombinedMemoryModel combined arrays}.)
      *
      * @param obj the object to be compared for equality with this array.
-     * @return <tt>true</tt> if the specified object is an AlgART array equal to this one.
+     * @return <code>true</code> if the specified object is an AlgART array equal to this one.
      */
     @Override
     public boolean equals(Object obj) {
@@ -591,7 +591,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param obj1 first compared object.
      * @param obj2 second compared object.
-     * @return <tt>true</tt> if <tt>obj2</tt> is an array and the specified arrays are equal.
+     * @return <code>true</code> if <code>obj2</code> is an array and the specified arrays are equal.
      */
     public static boolean equals(Array obj1, Object obj2) {
         if (!(obj2 instanceof Array))
@@ -666,7 +666,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * and {@link #buffer()} methods. The result is calculated so that
      * the buffer occupies ~16-32 KB RAM.
      *
-     * <p>In any case, you can be sure that the result will not be greater than <tt>Integer.MAX_VALUE-64</tt>.
+     * <p>In any case, you can be sure that the result will not be greater than <code>Integer.MAX_VALUE-64</code>.
      *
      * @param thisArray this array.
      * @return default data buffer capacity, suitable for this array.
@@ -695,8 +695,8 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * Checks whether the passed arguments correct for
      * {@link UpdatableArray#copy(Array)} and throws corresponding exception if no.
-     * More precisely, this method throws <tt>IllegalArgumentException</tt>
-     * if is not possible to assign elements of <tt>src</tt> array to elements of <tt>thisArray</tt>,
+     * More precisely, this method throws <code>IllegalArgumentException</code>
+     * if is not possible to assign elements of <code>src</code> array to elements of <code>thisArray</code>,
      * i.e. if <tt>!thisArray.{@link #elementType() elementType()}.isAssignableFrom(src.{@link #elementType()
      * elementType()})</tt>.
      *
@@ -706,7 +706,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param src       the source array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     public static void checkCopyArguments(UpdatableArray thisArray, Array src) {
@@ -720,14 +720,14 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * Checks whether the passed arguments correct for
      * {@link UpdatableArray#swap(UpdatableArray)} and throws corresponding exception if no.
-     * More precisely, this method throws <tt>IllegalArgumentException</tt>
-     * if <tt>another</tt> array <tt>thisArray</tt> have different element types,
+     * More precisely, this method throws <code>IllegalArgumentException</code>
+     * if <code>another</code> array <code>thisArray</code> have different element types,
      * i.e. if <tt>thisArray.{@link #elementType() elementType()}!=another.{@link #elementType()
      * elementType()}</tt>.
      *
      * @param thisArray this array.
      * @param another   another array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     public static void checkSwapArguments(UpdatableArray thisArray, UpdatableArray another) {
@@ -739,11 +739,11 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Performs default <tt>Object.clone()</tt> call
+     * Performs default <code>Object.clone()</code> call
      * and clears in its result both {@link Array#isNew() <i>new</i> status}
      * and {@link Array#isNewReadOnlyView() <i>new-read-only-view</i> status}.
      * In other words, it is a usual clone with the only difference,
-     * that {@link Array#isNew()} and {@link Array#isNewReadOnlyView()} methods returns <tt>false</tt>
+     * that {@link Array#isNew()} and {@link Array#isNewReadOnlyView()} methods returns <code>false</code>
      * in the returned object. (It is a requirement of the contracts of these methods.)
      *
      * <p>The call of this method is a suitable implementation of
@@ -752,7 +752,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * <p>Please note that this method clones a reference {@link #underlyingArrays} and does not try
      * to create a clone of this Java array.
      *
-     * @return result of default <tt>Object.clone()</tt>
+     * @return result of default <code>Object.clone()</code>
      */
     protected final AbstractArray standardObjectClone() {
         try {
@@ -770,7 +770,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param fromIndex low endpoint (inclusive) of the subarray.
      * @param toIndex   high endpoint (exclusive) of the subarray.
-     * @throws IndexOutOfBoundsException for illegal <tt>fromIndex</tt> and <tt>toIndex</tt>
+     * @throws IndexOutOfBoundsException for illegal <code>fromIndex</code> and <code>toIndex</code>
      *                                   (<tt>fromIndex &lt; 0 || toIndex &gt; {@link #length()}
      *                                   || fromIndex &gt; toIndex</tt>).
      */
@@ -790,7 +790,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param position start position (inclusive) of the subarray.
      * @param count    number of elements in the subarray.
-     * @throws IndexOutOfBoundsException for illegal <tt>position</tt> and <tt>count</tt>
+     * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
      *                                   (<tt>position &lt; 0 || count &lt; 0
      *                                   || position + count &gt; {@link #length()}</tt>).
      */
@@ -808,24 +808,24 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * Sets the value of the private boolean field returned by {@link #isNew()} method.
      *
-     * <p>This method is called with <tt>true</tt> argument while allocating new AlgART array
+     * <p>This method is called with <code>true</code> argument while allocating new AlgART array
      * and reallocating internal storage, for example, in {@link #asCopyOnNextWrite()
      * copy-on-next-write} arrays.
-     * This method is called with <tt>false</tt> argument in {@link UpdatableArray#setNonNew()}
+     * This method is called with <code>false</code> argument in {@link UpdatableArray#setNonNew()}
      * method only.
      * In your inheritors of this class, you <i>must not</i> provide an ability (via public methods)
-     * to call this method with <tt>true</tt> argument.
+     * to call this method with <code>true</code> argument.
      *
-     * <p>If the argument is <tt>false</tt>, this instance must implement {@link UpdatableArray}
-     * interface. In other case, <tt>UnsupportedOperationException</tt> will be thrown.
+     * <p>If the argument is <code>false</code>, this instance must implement {@link UpdatableArray}
+     * interface. In other case, <code>UnsupportedOperationException</code> will be thrown.
      *
      * <p>The access to the "new status", provided by this and {@link #isNew()} method,
-     * is always internally synchronized (the corresponding private field is <tt>volatile</tt>).
+     * is always internally synchronized (the corresponding private field is <code>volatile</code>).
      * So, changing "new-read-only-view status" by this method
      * will be immediately visible in all threads using this instance.
      *
      * @param value new "new status".
-     * @throws UnsupportedOperationException if the argument is <tt>false</tt> and this instance does not
+     * @throws UnsupportedOperationException if the argument is <code>false</code> and this instance does not
      *                                       implement {@link UpdatableArray} interface.
      */
     protected final void setNewStatus(boolean value) {
@@ -836,7 +836,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Sets to <tt>true</tt> the value of the private boolean field returned by {@link #isNewReadOnlyView()} method.
+     * Sets to <code>true</code> the value of the private boolean field returned by {@link #isNewReadOnlyView()} method.
      *
      * <p>This method is called creating a view of external data,
      * providing <i>read-only</i> access to this data. In this package, it is called only by
@@ -851,11 +851,11 @@ public abstract class AbstractArray implements Array, Cloneable {
      * <p>In your inheritors of this class, you <i>must not</i> provide an ability (via public methods)
      * to call this method.
      *
-     * <p>If the argument is <tt>false</tt>, this instance must implement {@link UpdatableArray}
-     * interface. In other case, <tt>UnsupportedOperationException</tt> will be thrown.
+     * <p>If the argument is <code>false</code>, this instance must implement {@link UpdatableArray}
+     * interface. In other case, <code>UnsupportedOperationException</code> will be thrown.
      *
      * <p>The access to the "new-read-only-view status", provided by this and {@link #isNewReadOnlyView()} method,
-     * is always internally synchronized (the corresponding private field is <tt>volatile</tt>).
+     * is always internally synchronized (the corresponding private field is <code>volatile</code>).
      * So, changing "new-read-only-view status" by this method
      * will be immediately visible in all threads using this instance.
      *
@@ -876,10 +876,10 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param mode      the access mode for new buffer.
      * @param capacity  the capacity of the buffer
      * @return new data buffer for accessing this array.
-     * @throws NullPointerException     if <tt>mode</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if the <tt>mode</tt> is not the {@link DataBuffer.AccessMode#READ},
+     * @throws NullPointerException     if <code>mode</code> argument is {@code null}.
+     * @throws IllegalArgumentException if the <code>mode</code> is not the {@link DataBuffer.AccessMode#READ},
      *                                  but this arrays does not implement {@link UpdatableArray} interface,
-     *                                  or if the specified <tt>capacity</tt> is negative or too high
+     *                                  or if the specified <code>capacity</code> is negative or too high
      *                                  (&gt;=0..2<sup>37</sup> for bits or &gt;=0..2<sup>31</sup> for
      *                                  other element types).
      */
@@ -893,7 +893,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *
      * @param thisArray this array.
      * @param src       the source array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     protected static void defaultCopy(UpdatableArray thisArray, Array src) {
@@ -905,20 +905,20 @@ public abstract class AbstractArray implements Array, Cloneable {
      * based on {@link Array#getData(long, Object)} and {@link UpdatableArray#setData(long, Object)}
      * methods (for some temporary array).
      * Usually called in {@link UpdatableArray#copy(Array)} method in a case
-     * when <tt>src.getClass() != this.getClass()</tt>.
+     * when <code>src.getClass() != this.getClass()</code>.
      *
-     * <p>If <tt>allowNulls</tt> argument is <tt>true</tt>, then this method,
-     * in addition to standard behavior, always allows to copy <tt>src</tt>
+     * <p>If <code>allowNulls</code> argument is <code>true</code>, then this method,
+     * in addition to standard behavior, always allows to copy <code>src</code>
      * when it is result of
      * Arrays.{@link Arrays#nObjectCopies(long, Object) nObjectCopies(..., null)}
-     * and when <tt>thisArray</tt> is {@link UpdatableObjectArray}.
-     * (The element type of such source array is <tt>Object</tt> and usually cannot be assigned
-     * to element type of <tt>thisArray</tt>.)
+     * and when <code>thisArray</code> is {@link UpdatableObjectArray}.
+     * (The element type of such source array is <code>Object</code> and usually cannot be assigned
+     * to element type of <code>thisArray</code>.)
      *
      * @param thisArray  this array.
      * @param src        the source array.
      * @param allowNulls whether this method should always allow filling object array by {@code null}.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>src</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
      */
     protected static void defaultCopy(UpdatableArray thisArray, Array src, boolean allowNulls) {
@@ -938,12 +938,12 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Possible implementation of {@link UpdatableArray#swap(UpdatableArray)}
      * based on {@link UpdatableArray#getData(long, Object)} and {@link UpdatableArray#setData(long, Object)}
      * methods (for some temporary array).
-     * Usually called in <tt>swap</tt> method in a case
-     * when <tt>src.getClass() != this.getClass()</tt>.
+     * Usually called in <code>swap</code> method in a case
+     * when <code>src.getClass() != this.getClass()</code>.
      *
      * @param thisArray this array.
      * @param another   another array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>another</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>another</code> argument is {@code null}.
      * @throws IllegalArgumentException if another and this element types do not match.
      */
     protected static void defaultSwap(UpdatableArray thisArray, UpdatableArray another) {
@@ -973,7 +973,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param thisArray     this array.
      * @param appendedArray appended array.
      * @return this array.
-     * @throws NullPointerException     if <tt>thisArray</tt> or <tt>appendedArray</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>thisArray</code> or <code>appendedArray</code> argument
+     *                                  is {@code null}.
      * @throws IllegalArgumentException if the source and this element types do not match.
      * @throws TooLargeArrayException   if the resulting array length is too large for this type of arrays.
      */

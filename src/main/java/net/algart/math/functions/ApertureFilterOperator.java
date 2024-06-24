@@ -199,8 +199,8 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Equivalent to {@link #getInstance(Func, long[], double[], double[])
-     * getInstance(apertureFunc, apertureDim, apertureFrom, apertureSteps)}</tt>,
+     * Equivalent to <code>{@link #getInstance(Func, long[], double[], double[])
+     * getInstance(apertureFunc, apertureDim, apertureFrom, apertureSteps)}</code>,
      * where <code>averagingFrom</code> and <code>apertureSteps</code> are chosen automatically
      * to get an aperture <code>1.0x1.0x...</code> starting from the origin of coordinates
      * (0&lt;=<i>a</i><sub><i>ij</i></sub>&lt;1).
@@ -229,8 +229,8 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Equivalent to {@link #getInstance(Func, long[], double[], double[])
-     * getInstance(averagingFunc, apertureDim, apertureFrom, apertureSteps)}</tt>,
+     * Equivalent to <code>{@link #getInstance(Func, long[], double[], double[])
+     * getInstance(averagingFunc, apertureDim, apertureFrom, apertureSteps)}</code>,
      * where <code>averagingFunc</code> is the averaging linear function
      * {@link LinearFunc#getAveragingInstance(int) LinearFunc.getAveragingInstance(<i>m</i>)},
      * <code><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</code>.
@@ -253,8 +253,8 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Equivalent to {@link #getInstance(Func, long[])
-     * getInstance(averagingFunc, apertureDim)}</tt>,
+     * Equivalent to <code>{@link #getInstance(Func, long[])
+     * getInstance(averagingFunc, apertureDim)}</code>,
      * where <code>averagingFunc</code> is the averaging linear function
      * {@link LinearFunc#getAveragingInstance(int) LinearFunc.getAveragingInstance(<i>m</i>)},
      * <code><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</code>.
@@ -375,8 +375,8 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Equivalent to <tt>{@link #apertureFrom()}[coordIndex] + ({@link #apertureDim()}[coordIndex] - 1)
-     * * {@link #apertureSteps()}[coordIndex]</tt>.
+     * Equivalent to <code>{@link #apertureFrom()}[coordIndex] + ({@link #apertureDim()}[coordIndex] - 1)
+     * * {@link #apertureSteps()}[coordIndex]</code>.
      *
      * @param coordIndex the index of coordinate.
      * @return the last coordinate of the points in the aperture of this filter.

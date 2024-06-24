@@ -86,8 +86,8 @@ public class RectangularArea {
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in <code>min</code>
      *                                  and <code>max</code> points are different,
      *                                  or if, for some <i>i</i>,
-     *                                  <tt>min.{@link Point#coord(int) coord}(<i>i</i>)
-     *                                  &gt; max.{@link Point#coord(int) coord}(<i>i</i>)</tt>,
+     *                                  <code>min.{@link Point#coord(int) coord}(<i>i</i>)
+     *                                  &gt; max.{@link Point#coord(int) coord}(<i>i</i>)</code>,
      *                                  or if one of these coordinates is <code>Double.NaN</code>.
      */
     public static RectangularArea valueOf(Point min, Point max) {
@@ -227,9 +227,9 @@ public class RectangularArea {
      * All <code>long</code> coordinates of the passed area are converted
      * to <code>double</code> coordinates of the returned area by standard
      * Java typecast <code>(double)longValue</code>.
-     * Equivalent to <tt>{@link #valueOf(Point, Point) valueOf}({@link Point#valueOf(IPoint)
+     * Equivalent to <code>{@link #valueOf(Point, Point) valueOf}({@link Point#valueOf(IPoint)
      * Point.valueOf}(iArea.{@link #min() min()}),&nbsp;{@link Point#valueOf(IPoint)
-     * Point.valueOf}(iArea.{@link #max() max()}))</tt>.
+     * Point.valueOf}(iArea.{@link #max() max()}))</code>.
      *
      * @param iArea the integer rectangular area.
      * @return the real rectangular area with same coordinates.

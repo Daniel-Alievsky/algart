@@ -76,7 +76,7 @@ package net.algart.math.functions;
  * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>)</nobr>.
  *
  * <p>The {@link #get} method of the instances of this class requires at least 3 arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1 or 2.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0, 1 or 2.</p>
  *
  * <p>All implementations of this class are <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -136,9 +136,9 @@ public abstract class ContrastingFunc implements Func {
     /**
      * This method is fully implemented in this class:
      * it returns {@link #get(double, double, double, double) get(x[0],x[1],x[2],x[3])},
-     * if <tt>x.length&gt;=4</tt>,
-     * returns {@link #get(double, double, double) get(x[0],x[1],x[2])}, if <tt>x.length==3</tt>,
-     * and throws <tt>IndexOutOfBoundsException</tt>, if <tt>x.length&lt;3</tt>.
+     * if <code>x.length&gt;=4</code>,
+     * returns {@link #get(double, double, double) get(x[0],x[1],x[2])}, if <code>x.length==3</code>,
+     * and throws <code>IndexOutOfBoundsException</code>, if <code>x.length&lt;3</code>.
      *
      * @param x the function arguments.
      * @return  the function result.
@@ -169,7 +169,7 @@ public abstract class ContrastingFunc implements Func {
 
     /**
      * This method is fully implemented in this class:
-     * it returns <tt>x0/x1*{@link #get(double, double, double) get(x1,x2,x3)}.
+     * it returns <code>x0/x1*{@link #get(double, double, double) get(x1,x2,x3)}</code>.
      * You can override it toe provide better performance or precision.
      *
      * @param x0 the first function argument.

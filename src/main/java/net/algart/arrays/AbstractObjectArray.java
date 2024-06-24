@@ -32,7 +32,6 @@ import java.util.Objects;
  * all other methods are implemented via calls of {@link ObjectArray#get(long)}.</p>
  *
  * @param <E> the generic type of array elements.
- *
  * @author Daniel Alievsky
  */
 public abstract class AbstractObjectArray<E> extends AbstractArray implements ObjectArray<E> {
@@ -42,19 +41,20 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     /**
      * Creates an array with the given initial capacity and length.
      *
-     * <p>The <tt>underlyingArraysAreParallel</tt> informs whether the passed underlying arrays (if they exist)
+     * <p>The <code>underlyingArraysAreParallel</code> informs whether the passed underlying arrays (if they exist)
      * are "parallel" to this one and to each other.
-     * Intuitively, it means that every element #<tt>k</tt> of this array is connected (for example, depends on)
-     * the elements #<tt>k</tt> (of, maybe, #<tt>k&plusmn;i</tt>, where <tt>i</tt> is little) of the
+     * Intuitively, it means that every element #<code>k</code> of this array is connected (for example, depends on)
+     * the elements #<code>k</code> (of, maybe, #<code>k&plusmn;i</code>, where <code>i</code> is little) of the
      * underlying arrays.
      * Precisely, this argument affects the following in this implementation:
      *
      * <ol>
-     * <li>If it is <tt>true</tt>, then all passed underlying arrays (if <tt>underlyingArrays.length&gt;1</tt>)
+     * <li>If it is <code>true</code>, then all passed underlying arrays
+     * if <code>underlyingArrays.length&gt;1</code>)
      * must have identical length &mdash; in other case, this constructor throws {@link SizeMismatchException}.
      * </li>
      *
-     * <li>If it is <tt>true</tt>, then<ul>
+     * <li>If it is <code>true</code>, then<ul>
      * <li>{@link #loadResources(ArrayContext context, long fromIndex, long toIndex)},</li>
      * <li>{@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and</li>
@@ -65,16 +65,16 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * {@link #flushResources(ArrayContext context, boolean forcePhysicalWriting)} and
      * {@link #freeResources(ArrayContext context, boolean forcePhysicalWriting)}
      * methods for the corresponding {@link #subArray subarrays} of all underlying
-     * arrays. If this argument is <tt>false</tt>, then<ul>
+     * arrays. If this argument is <code>false</code>, then<ul>
      * <li>{@link #loadResources(ArrayContext context, long fromIndex, long toIndex)} does nothing,</li>
      * <li>{@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and {@link #freeResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
-     * methods ignore their <tt>fromIndex</tt> / <tt>toIndex</tt> arguments and call
+     * methods ignore their <code>fromIndex</code> / <code>toIndex</code> arguments and call
      * {@link #loadResources(ArrayContext context)},
      * {@link #flushResources(ArrayContext context, boolean forcePhysicalWriting)} and
      * {@link #freeResources(ArrayContext context, boolean forcePhysicalWriting)}
      * methods for <i>original</i> underlying arrays (not their subarrays).</li>
-     * </ul>Of course, if you specify <tt>underlyingArraysAreParallel=false</tt>, you can override
+     * </ul>Of course, if you specify <code>underlyingArraysAreParallel=false</code>, you can override
      * {@link #loadResources(ArrayContext context, long fromIndex, long toIndex)},
      * {@link #flushResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
      * and {@link #freeResources(ArrayContext context, long fromIndex, long toIndex, boolean forcePhysicalWriting)}
@@ -91,7 +91,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * the constructor of your subclass.
      *
      * <p>The created array never has <i>new-read-only-view</i> status:
-     * {@link Array#isNewReadOnlyView()} method always returns <tt>false</tt> in this class and its inheritors.
+     * {@link Array#isNewReadOnlyView()} method always returns <code>false</code> in this class and its inheritors.
      *
      * @param elementType                 the {@link #elementType() element type} of this array.
      * @param initialCapacity             initial capacity of the array.
@@ -99,18 +99,18 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param underlyingArraysAreParallel whether the underlying arrays are "parallel" to this.
      * @param underlyingArrays            see the same argument of
      *                                    {@link AbstractArray#AbstractArray(long, long, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument or some
+     *                                  of <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if the <tt>initialCapacity</tt> or <tt>initialLength</tt> arguments
+     * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractObjectArray(
-        Class<E> elementType, long initialCapacity, long initialLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            Class<E> elementType, long initialCapacity, long initialLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         super(initialCapacity, initialLength, underlyingArrays);
         Objects.requireNonNull(elementType, "Null elementType argument");
         if (initialLength < 0) {
@@ -132,7 +132,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
                     len = underlyingArrays[k].length();
                 } else if (underlyingArrays[k].length() != len) {
                     throw new SizeMismatchException("underlyingArrays[" + k
-                        + "].length() and underlyingArrays[0].length() mismatch");
+                            + "].length() and underlyingArrays[0].length() mismatch");
                 }
             }
         }
@@ -141,8 +141,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * Equivalent to the constructor {@link #AbstractObjectArray(Class, long, long, boolean, Array...)},
-     * where both <tt>initialCapacity</tt> and <tt>initialLength</tt> arguments are equal to
-     * <tt>initialCapacityAndLength</tt>.
+     * where both <code>initialCapacity</code> and <code>initialLength</code> arguments are equal to
+     * <code>initialCapacityAndLength</code>.
      *
      * @param elementType                 the {@link #elementType() element type} of this array.
      * @param initialCapacityAndLength    initial capacity and length of the array.
@@ -150,19 +150,19 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      *                                    #AbstractObjectArray(Class, long, long, boolean, Array...)}.
      * @param underlyingArrays            see {@link
      *                                    #AbstractObjectArray(Class, long, long, boolean, Array...)}.
-     * @throws NullPointerException     if <tt>underlyingArrays</tt> argument or some of <tt>underlyingArrays[k]</tt>
+     * @throws NullPointerException     if <code>underlyingArrays</code> argument or some
+     *                                  of <code>underlyingArrays[k]</code>
      *                                  elements is {@code null}.
-     * @throws IllegalArgumentException if <tt>initialCapacityAndLength</tt> argument is negative.
-     * @throws SizeMismatchException    if <tt>underlyingArraysAreParallel=true</tt>,
-     *                                  <tt>underlyingArrays.length&gt;1</tt> and some of passed arrays
+     * @throws IllegalArgumentException if <code>initialCapacityAndLength</code> argument is negative.
+     * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
      *                                  have different lengths.
      */
     protected AbstractObjectArray(
-        Class<E> elementType, long initialCapacityAndLength,
-        boolean underlyingArraysAreParallel, Array... underlyingArrays)
-    {
+            Class<E> elementType, long initialCapacityAndLength,
+            boolean underlyingArraysAreParallel, Array... underlyingArrays) {
         this(elementType, initialCapacityAndLength, initialCapacityAndLength,
-            underlyingArraysAreParallel, underlyingArrays);
+                underlyingArraysAreParallel, underlyingArrays);
     }
 
     @Override
@@ -194,14 +194,14 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target array.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     @Override
@@ -228,14 +228,14 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      *
      * @param arrayPos  starting position in this AlgART array.
      * @param destArray the target Java array.
-     * @throws NullPointerException      if <tt>destArray</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>destArray</tt> argument is not an array.
-     * @throws IndexOutOfBoundsException if <tt>arrayPos</tt> is out of range <tt>0..length()-1</tt>.
-     * @throws ArrayStoreException       if <tt>destArray</tt> element type mismatches with this array
+     * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array.
+     * @throws IndexOutOfBoundsException if <code>arrayPos</code> is out of range <code>0..length()-1</code>.
+     * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
-     * @throws ClassCastException        if <tt>destArray</tt> element type mismatches with this array
+     * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}
-     *                                   (both this and <tt>ArrayStoreException</tt> are possible,
+     *                                   (both this and <code>ArrayStoreException</code> are possible,
      *                                   depending on implementation).
      */
     @Override
@@ -252,11 +252,11 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
     }
 
     /**
-     * This implementation returns <tt>get(index)</tt>.
+     * This implementation returns <code>get(index)</code>.
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     @Override
     public Object getElement(long index) {
@@ -281,7 +281,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
-     * that also call the same methods of this instance with corresponding correction of their <tt>fromIndex</tt>
+     * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
      * <p>The returned instance also have overridden method {@link #isLazy()},
@@ -406,7 +406,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * This implementation is based on a loop of calls of {@link #get(long)} method
-     * from index <tt>max(lowIndex,0)</tt> until index <tt>min({@link #length()},highIndex)-1</tt>.
+     * from index <code>max(lowIndex,0)</code> until index <code>min({@link #length()},highIndex)-1</code>.
      * Please override this method if it's possible to perform the same task more efficiently
      * than such a loop.
      *
@@ -414,8 +414,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the first occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long indexOf(long lowIndex, long highIndex, E value) {
         long k = Math.max(lowIndex, 0);
@@ -438,7 +438,7 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
 
     /**
      * This implementation is based on a loop of calls of {@link #get(long)} method
-     * from index <tt>min({@link #length()},highIndex)-1</tt> back until index <tt>max(lowIndex,0)</tt>.
+     * from index <code>min({@link #length()},highIndex)-1</code> back until index <code>max(lowIndex,0)</code>.
      * Please override this method if it's possible to perform the same task more efficiently
      * than such a loop.
      *
@@ -446,8 +446,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
      * @return the index of the last occurrence of this value in this array
-     *         in range <tt>lowIndex&lt;=index&lt;highIndex</tt>,
-     *         or <tt>-1</tt> if this value does not occur in this range.
+     * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
+     * or <code>-1</code> if this value does not occur in this range.
      */
     public long lastIndexOf(long lowIndex, long highIndex, E value) {
         long k = Math.min(length(), highIndex);
@@ -563,7 +563,8 @@ public abstract class AbstractObjectArray<E> extends AbstractArray implements Ob
         return InternalUtils.cast(super.updatableClone(memoryModel));
     }
 
-    @SuppressWarnings("unchecked") public E[] ja() {
+    @SuppressWarnings("unchecked")
+    public E[] ja() {
         return (E[]) super.ja();
     }
 

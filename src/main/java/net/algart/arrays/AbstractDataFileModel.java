@@ -79,31 +79,31 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * Creates a new instance with the specified temporary-file path and the starting gap size
      * in all temporary files.
      *
-     * <p>The <tt>tempPath</tt> argument may refer both to a directory and to a file.
+     * <p>The <code>tempPath</code> argument may refer both to a directory and to a file.
      * The following 4 cases are possible.
      *
      * <ol>
-     * <li><tt>tempPath</tt> is an existing directory or another non-file disk resource;
-     * more precisely, <nobr><tt>tempPath.exists() &amp;&amp; !tempPath.isFile()</tt></nobr>.
+     * <li><code>tempPath</code> is an existing directory or another non-file disk resource;
+     * more precisely, <nobr><code>tempPath.exists() &amp;&amp; !tempPath.isFile()</code></nobr>.
      * In this case, new temporary files, created by {@link #createTemporaryFile(boolean)} method,
      * will be placed in this directory with unique names.</li>
      *
-     * <li><tt>tempPath</tt> is {@code null}. In this case, new temporary files, created by
+     * <li><code>tempPath</code> is {@code null}. In this case, new temporary files, created by
      * {@link #createTemporaryFile(boolean)} method, will be placed in the default system-dependent
      * temporary-file directory.</li>
      *
-     * <li><tt>tempPath</tt> is an existing file (<nobr><tt>tempPath.isFile()</tt></nobr>) or
+     * <li><code>tempPath</code> is an existing file (<nobr><code>tempPath.isFile()</code></nobr>) or
      *
-     * <li><tt>tempPath</tt> does not exists (<nobr><tt>!tempPath.exists()</tt></nobr>).
+     * <li><code>tempPath</code> does not exists (<nobr><code>!tempPath.exists()</code></nobr>).
      * These are <b>special cases</b>! The {@link #createTemporaryFile(boolean)} will create the file
-     * at this position (<tt>tempPath.createNewFile()</tt>) and return <tt>tempPath</tt>.
+     * at this position (<code>tempPath.createNewFile()</code>) and return <code>tempPath</code>.
      * In other words, this data file model will not be able to create more than one temporary file,
      * and all further temporary files, if will be requested, will overwrite the same file.
      * </li>
      * </ol>
      *
      * <p>The last variants 3 and 4 can be useful for creating a single array mapped to some required file.
-     * For example, the following code will create new array, containing 1024 <tt>int</tt> values,
+     * For example, the following code will create new array, containing 1024 <code>int</code> values,
      * in the file "myfile.dat":
      *
      * <pre>
@@ -118,9 +118,9 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * <p>Please be careful: if there is an existing subdirectory with the same "myfile.dat" name,
      * the behavior of the data file model will be another (the variant #1).
      *
-     * <p>The <tt>prefixSize</tt> defines the starting gap in all temporary files,
+     * <p>The <code>prefixSize</code> defines the starting gap in all temporary files,
      * returned by {@link DataFileModel#recommendedPrefixSize() recommendedPrefixSize()} implementation
-     * in this class. Usually you may pass <tt>0</tt> here. The only case when it makes sense to
+     * in this class. Usually you may pass <code>0</code> here. The only case when it makes sense to
      * pass positive value is if you are planning to clear temporary status of the created array
      * via {@link LargeMemoryModel#setTemporary(Array, boolean)} method and save some additional
      * meta-information in the file prefix &mdash; element type, array length, etc.
@@ -137,9 +137,9 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * This implementation returns <tt>File.class</tt>.
+     * This implementation returns <code>File.class</code>.
      *
-     * @return <tt>File.class</tt>
+     * @return <code>File.class</code>
      */
     public Class<File> pathClass() {
         return File.class;
@@ -160,11 +160,11 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * protected method. You may override it to specify custom byte order in temporary files.
      *
      * <p>This method adds the created instance into {@link #allTemporaryFiles},
-     * if {@link #isAutoDeletionRequested()} method returns <tt>true</tt>.
+     * if {@link #isAutoDeletionRequested()} method returns <code>true</code>.
      *
      * @param unresizable the argument passed to {@link #createTemporaryFile(boolean)}.
      * @return            new instance of {@link DataFile} object corresponding newly created temporary data file.
-     * @throws java.io.IOError if {@link #createTemporaryFile(boolean)} throws <tt>IOException</tt>.
+     * @throws java.io.IOError if {@link #createTemporaryFile(boolean)} throws <code>IOException</code>.
      */
     public DataFile createTemporary(boolean unresizable) {
         File fileName;
@@ -181,9 +181,9 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * This implementation removes the file by the call of standard <tt>java.io.File.delete()</tt> method:
-     * <tt>{@link #getPath getPath}(dataFile).delete()</tt>
-     * (if <tt>java.io.File.exists()</tt> method returns <tt>true</tt>).
+     * This implementation removes the file by the call of standard <code>java.io.File.delete()</code> method:
+     * <code>{@link #getPath getPath}(dataFile).delete()</code>
+     * (if <code>java.io.File.exists()</code> method returns <code>true</code>).
      * After deletion, this implementation removes the passed instance from
      * {@link #allTemporaryFiles}.
      *
@@ -193,8 +193,8 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * <p>You should override this method if the data files in this model do not correspond to usual disk files.
      *
      * @param dataFile the data file that should be deleted.
-     * @return         <tt>true</tt> if and only if the data file existed and was successfully deleted,
-     *                 <tt>false</tt> if the data file does not exist (maybe was deleted already).
+     * @return         <code>true</code> if and only if the data file existed and was successfully deleted,
+     *                 <code>false</code> if the data file does not exist (maybe was deleted already).
      * @throws java.io.IOError      in a case of any problems while file deletion.
      * @throws NullPointerException if the passed data file is {@code null}.
      */
@@ -265,8 +265,8 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * <p>This implementation returns {@link #prefixSize} &mdash; the <tt>long</tt> value passed
-     * to the constructor, or <tt>0</tt> if the constructor without <tt>long</tt> argument was used.
+     * <p>This implementation returns {@link #prefixSize} &mdash; the <code>long</code> value passed
+     * to the constructor, or <code>0</code> if the constructor without <code>long</code> argument was used.
      *
      * @return {@link #prefixSize}.
      */
@@ -275,9 +275,9 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * <p>This implementation returns <tt>false</tt>.
+     * <p>This implementation returns <code>false</code>.
      *
-     * @return <tt>false</tt>.
+     * @return <code>false</code>.
      */
     public boolean autoResizingOnMapping() {
         return false;
@@ -294,13 +294,13 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #tempPath} field is not {@code null} and
+     * Returns <code>true</code> if the {@link #tempPath} field is not {@code null} and
      * corresponds to existing file or non-existing file/directory:
-     * <tt>tempPath != null &amp;&amp; (!tempPath.exists() || tempPath.isFile())</tt>
+     * <code>tempPath != null &amp;&amp; (!tempPath.exists() || tempPath.isFile())</code>
      * In such situations, this data file model always works with the only one constant file,
      * specified in {@link #tempPath} field.
      *
-     * <p>This method returns <tt>true</tt> is the cases #3 and #4, described in
+     * <p>This method returns <code>true</code> is the cases #3 and #4, described in
      * the {@link #AbstractDataFileModel(File, long) comments to the constructor}.
      *
      * @return whether this data file model always works with the fixed file {@link #tempPath}.
@@ -317,13 +317,13 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *
      * <p>The result of this method must be at least three characters long.
      * In other case, its result will be automatically appended with "_" to fulfil
-     * the requirements of the standard <tt>File.createTempFile</tt> method.
+     * the requirements of the standard <code>File.createTempFile</code> method.
      *
      * <p>This method must not return {@code null}.
      *
-     * <p>This implementation returns <tt>"lmm"</tt>.
-     * The implementation from {@link DefaultDataFileModel} class returns <tt>"mapmm"</tt>.
-     * The implementation from {@link StandardIODataFileModel} class returns <tt>"stdmm"</tt>.
+     * <p>This implementation returns <code>"lmm"</code>.
+     * The implementation from {@link DefaultDataFileModel} class returns <code>"mapmm"</code>.
+     * The implementation from {@link StandardIODataFileModel} class returns <code>"stdmm"</code>.
      *
      * @return the prefix (3 characters minimum), which will be added to the name of the temporary files,
      *         created by {@link #createTemporary(boolean)} method.
@@ -337,31 +337,31 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * This method is used by {@link #createTemporary(boolean)} method, if it was not overridden,
      * in particular, in both {@link DefaultDataFileModel} and {@link StandardIODataFileModel} classes.
      *
-     * <p>If {@link #isConcreteFile()} method returns <tt>false</tt>
+     * <p>If {@link #isConcreteFile()} method returns <code>false</code>
      * (i.e. if {@link #tempPath} is {@code null} or an existing directory:
-     * <nobr><tt>tempPath.exists() &amp;&amp; !tempPath.isFile()</tt></nobr>),
+     * <nobr><code>tempPath.exists() &amp;&amp; !tempPath.isFile()</code></nobr>),
      * this implementation returns the following result:
-     * <tt>File.createTempFile(prefix,suffix,{@link #tempPath}).getAbsolutePath()</tt>, where
-     * <tt>tempPath</tt> is the constructor argument ({@code null} for constructor without
-     * <tt>File</tt> argument), <tt>prefix</tt> is the result of {@link #temporaryFilePrefix()}
+     * <code>File.createTempFile(prefix,suffix,{@link #tempPath}).getAbsolutePath()</code>, where
+     * <code>tempPath</code> is the constructor argument ({@code null} for constructor without
+     * <code>File</code> argument), <code>prefix</code> is the result of {@link #temporaryFilePrefix()}
      * method, padded to length 3 with "_" character if its length &lt;3,
-     * <tt>suffix</tt> is calculated as<pre>
+     * <code>suffix</code> is calculated as<pre>
      * String suffix = (unresizable ? ".uarray." : ".marray.")
      * + ({@link #byteOrderInTemporaryFiles()} == ByteOrder.BIG_ENDIAN ? "be.tmp" : "le.tmp");
      * </pre>
      *
-     * <p>If {@link #isConcreteFile()} method returns <tt>true</tt>
+     * <p>If {@link #isConcreteFile()} method returns <code>true</code>
      * (i.e. if {@link #tempPath} is not {@code null}, and it is a file or does not exist:
-     * <nobr><tt>!tempPath.exists() || tempPath.isFile()</tt></nobr>),
-     * this implementation calls <tt>tempPath.createNewFile()</tt> and returns <tt>tempPath</tt>.
+     * <nobr><code>!tempPath.exists() || tempPath.isFile()</code></nobr>),
+     * this implementation calls <code>tempPath.createNewFile()</code> and returns <code>tempPath</code>.
      *
      * <p>You may override this method to change this behavior.
      *
-     * <p>This method does not try to use <tt>File.deleteOnExit()</tt> method
+     * <p>This method does not try to use <code>File.deleteOnExit()</code> method
      * for created files.
      * Instead, the temporary files will be deleted via built-in
      * cleanup procedure (described in comments to {@link #allTemporaryFiles()} method),
-     * if {@link #isAutoDeletionRequested()} method returns <tt>true</tt>.
+     * if {@link #isAutoDeletionRequested()} method returns <code>true</code>.
      * The reasons are the Sun's bugs #6359560:
      * "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6359560"
      * >(fs)&nbsp;File.deleteOnExit() doesn't work when MappedByteBuffer exists (win)</a>"
@@ -374,7 +374,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * You may call {@link Arrays#gcAndAwaitFinalization(int)} method before system exit
      * to reduce the probability of appearing non-deleted files.
      *
-     * @param unresizable <tt>true</tt> if this file will be used for unresizable arrays only.
+     * @param unresizable <code>true</code> if this file will be used for unresizable arrays only.
      *                    It is an information flag: for example, it may be used for choosing file name
      *                    or directory. If this flag is set, it does not mean that {@link DataFile#length(long)}
      *                    method will not be called to change the file length; it will be called at least once.
@@ -400,7 +400,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * Returns byte order that is used for new temporary files by {@link #createTemporary(boolean)} method
      * in this class. Never returns {@code null}.
      *
-     * <p>This implementation returns <tt>ByteOrder.nativeOrder()</tt>: in most situations,
+     * <p>This implementation returns <code>ByteOrder.nativeOrder()</code>: in most situations,
      * the best choice for temporary data, that will be automatically deleted
      * before application exit and, probably, will never be transferred to another computers.
      * You may override this method to specify another byte order;

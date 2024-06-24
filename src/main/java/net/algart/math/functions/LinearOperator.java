@@ -142,12 +142,12 @@ public final class LinearOperator extends ProjectiveOperator {
      * Almost equivalent to <code>{@link #getInstance(double[], double[]) getInstance}(a,b)</code>,
      * where:
      * <ul>
-     * <li><nobr><code>a = {cos,sin,-sin,cos}</code></nobr> &mdash; matrix <b>A</b>
+     * <li><code>a = {cos,sin,-sin,cos}</code> &mdash; matrix <b>A</b>
      * (<code>cos=StrictMath.cos(angle)</code>),
      * <code>sin=StrictMath.sin(angle)</code>);</li>
      *
-     * <li><tt><nobr>b = {centerX-a[0]*centerX-a[1]*centerY,</nobr>
-     * <nobr>centerY-a[2]*centerX-a[3]*centerY}</nobr></tt> &mdash; vector
+     * <li><code>b = {centerX-a[0]*centerX-a[1]*centerY,
+     * <nobr>centerY-a[2]*centerX-a[3]*centerY}</nobr></code> &mdash; vector
      * <nobr><b>b</b>=<b>c</b>&minus;<b>Ac</b></nobr> (<nobr><b>c</b>=<code>{centerX, centerY}</code></nobr>).</li>
      * </ul>
      *

@@ -52,7 +52,7 @@ public class ApertureFilteredFunc implements Func {
 
     /**
      * Returns an instance of this class for the given parent function and operator.
-     * Equivalent to <tt>{@link ApertureFilterOperator#apply(Func) operator.apply}(parent)</tt>.
+     * Equivalent to <code>{@link ApertureFilterOperator#apply(Func) operator.apply}(parent)</code>.
      *
      * @param parent   the parent function.
      * @param operator the operator, transforming this function.
