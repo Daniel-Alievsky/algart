@@ -85,8 +85,8 @@ public interface DataFile {
      *
      * <p>If the file does not exist yet, then behavior of this method depends on
      * <code>readOnly</code> argument. If it is <code>false</code> (read/write mode),
-     * this method tries to create it at the position <tt>theModelWhichCreatedThisFile.{@link
-     * DataFileModel#getPath(DataFile) getPath}(thisFile)</tt>.
+     * this method tries to create it at the position <code>theModelWhichCreatedThisFile.{@link
+     * DataFileModel#getPath(DataFile) getPath}(thisFile)</code>.
      * If it is <code>true</code> (read-only mode), this method just throws
      * <code>IOError</code> with the corresponding cause (usually <code>FileNotFoundException</code>).
      * In the first case, the length of the newly created file is always 0.

@@ -25,7 +25,7 @@
 package net.algart.arrays;
 
 /**
- * <p>Data buffer for <tt>Object</tt> elements.</p>
+ * <p>Data buffer for <code>Object</code> elements.</p>
  *
  * @param <E> the generic type of array elements.
  *

@@ -316,8 +316,8 @@ class MappedDataStorages {
         long indexHighBits;
 
         /**
-         * Current number of used banks: <tt>0..bh.length-1</tt>.
-         * For all unused banks <tt>bh[k]==null</tt>.
+         * Current number of used banks: <code>0..bh.length-1</code>.
+         * For all unused banks <code>bh[k]==null</code>.
          */
         private int bankCount = 0;
 
@@ -334,8 +334,8 @@ class MappedDataStorages {
         // Should be final to avoid partial object initialization in shutdown hook!
 
         /**
-         * The array element <tt>#bankPos[k]</tt> corresponds to
-         * element (bit, char, etc.) <tt>#0</tt> in the bank <tt>#k</tt>.
+         * The array element <code>#bankPos[k]</code> corresponds to
+         * element (bit, char, etc.) <code>#0</code> in the bank <code>#k</code>.
          * Do not include subarray offsets.
          * -1 indicates empty banks.
          */
@@ -355,28 +355,28 @@ class MappedDataStorages {
         private MutableBitArray lazyFillMapOfBanks;
 
         /**
-         * All data since the <i>byte</i> <tt>#lazyFillPosInBytes</tt>
+         * All data since the <i>byte</i> <code>#lazyFillPosInBytes</code>
          * are supposed to be lazy filled and are not loaded from the file.
          * Start padding ({@link MappingSettings#dataFileStartOffset}) is included into this value:
-         * it is the offset from the file begin, not from <tt>dataFileStartOffset</tt>.
+         * it is the offset from the file begin, not from <code>dataFileStartOffset</code>.
          */
         private long lazyFillPosInBytes;
 
         /**
-         * If <tt>true</tt>, only first and second banks will be used and all the file will be mapped always.
+         * If <code>true</code>, only first and second banks will be used and all the file will be mapped always.
          * Is set in the constructor for existing files and in allocate method for temporary unresizable file.
          */
         boolean singleMapping = false;
 
         /**
-         * <tt>true</tt> if all methods must be synchronized via {@link #lock}.
-         * May be cleared to <tt>false</tt> by {@link #setSingleMappingModeIfNecessary()} method
-         * (only in a case when {@link #singleMapping} is <tt>true</tt>).
+         * <code>true</code> if all methods must be synchronized via {@link #lock}.
+         * May be cleared to <code>false</code> by {@link #setSingleMappingModeIfNecessary()} method
+         * (only in a case when {@link #singleMapping} is <code>true</code>).
          */
         boolean syncNecessary = true;
 
         /**
-         * If {@link #syncNecessary} is <tt>false</tt>, this field is filled by a copy of the
+         * If {@link #syncNecessary} is <code>false</code>, this field is filled by a copy of the
          * only {@link #specBufs specific buffer}, used for file mapping, or by {@code null}
          * in a case of releasing resources, every time when the file is mapped or released
          * (in a synchronized block). Non-synchronized access method must check this field
@@ -385,14 +385,14 @@ class MappedDataStorages {
         volatile Object validSingleSpecBufForThisThread = new Object();
 
         /**
-         * The number of non-finalized attached <tt>Array</tt> instances.
+         * The number of non-finalized attached <code>Array</code> instances.
          * If 0, then the {@link #autoDeleted auto-deleted} file will be planned to be deleted.
          */
         private int arrayCounter = 0;
 
         /**
          * The number of non-finalized mappings.
-         * If 0, the {@link #autoDeleted auto-deleted} file will be deleted (if <tt>arrayCounter==0</tt>).
+         * If 0, the {@link #autoDeleted auto-deleted} file will be deleted (if <code>arrayCounter==0</code>).
          */
         private int mappingCounter = 0;
 
@@ -403,7 +403,7 @@ class MappedDataStorages {
         private final AtomicInteger mappingInUseCounter = new AtomicInteger(0);
 
         /**
-         * Indicates whether <tt>mappingInUseCounter</tt> was overflown at least once.
+         * Indicates whether <code>mappingInUseCounter</code> was overflown at least once.
          */
         private volatile boolean mappingInUseCounterOverflow = false;
 
@@ -424,7 +424,7 @@ class MappedDataStorages {
         private volatile DataFile dataFileForDeletion = null;
 
         /**
-         * This field is set to <tt>true</tt> after successful disposing via {@link #dispose()} method
+         * This field is set to <code>true</code> after successful disposing via {@link #dispose()} method
          * or standard standard shutdown cleanup procedure. It informs finalizers that there is no
          * sense to try to delete the data file.
          */
@@ -461,7 +461,7 @@ class MappedDataStorages {
         private final Object dataFilePath;
 
         /**
-         * <tt>true</tt> if this storage is unresizable.
+         * <code>true</code> if this storage is unresizable.
          * It is set by {@link #allocate} method, not in the constructor.
          */
         private boolean unresizable = false;
@@ -599,7 +599,7 @@ class MappedDataStorages {
         }
 
         /**
-         * Returns <tt>index&~indexHighBits</tt>.
+         * Returns <code>index&~indexHighBits</code>.
          * The same offset will be returned by {@link #translateIndex(long)} method.
          *
          * @param index the index of some data element in the source array (not sub-array).
@@ -626,18 +626,18 @@ class MappedDataStorages {
         /**
          * Returns the index of the element of the <b>first or second</b>
          * {@link #specBufs specific buffer}
-         * (bank #0 or #1), depending on <tt>useSecondBank</tt> argument,
-         * which contains the data element <tt>#index</tt>.
+         * (bank #0 or #1), depending on <code>useSecondBank</code> argument,
+         * which contains the data element <code>#index</code>.
          * If this data element is not in the first / second bank,
          * changes order of banks and, if necessary, remaps the first / second bank to assure
-         * that the element <tt>#index</tt> is in it.
+         * that the element <code>#index</code> is in it.
          *
-         * <p>If <tt>useSecondBank</tt> is <tt>true</tt>, the content of the bank #0
+         * <p>If <code>useSecondBank</code> is <code>true</code>, the content of the bank #0
          * is not changed. So, you may call:<pre>
          * long i1 = translateIndex(index, false);
          * long i2 = translateIndex(index, true);
          * </pre>
-         * and be sure that the <tt>i1</tt> will remain actual after the second "translateIndex".
+         * and be sure that the <code>i1</code> will remain actual after the second "translateIndex".
          *
          * <p><b>Important: the reverse statement is not true!</b> If you call:<pre>
          * long i2 = translateIndex(index, true);
@@ -649,7 +649,7 @@ class MappedDataStorages {
          * (it is the only case when it can be greater than 2^31).
          *
          * @param index         the index of the data element in the source array (not sub-array).
-         * @param useSecondBank if <tt>true</tt>, works with bank #1 and doesn't correct bank #0;
+         * @param useSecondBank if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                      else works with bank #0.
          * @return              the index of the data element in the bank #0 or #1.
          */
@@ -690,7 +690,7 @@ class MappedDataStorages {
          * Never used in the {@link #singleMapping single mapping mode}.
          *
          * @param index         the index of the data element in the source array (not sub-array).
-         * @param useSecondBank if <tt>true</tt>, works with bank #1 and doesn't correct bank #0;
+         * @param useSecondBank if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                      else works with bank #0.
          * @return              the index of the data element in the bank #0 or #1.
          */
@@ -705,13 +705,13 @@ class MappedDataStorages {
         }
 
         /**
-         * Equivalent to {@link #translateIndex(long, boolean)} if <tt>notLoadDataFromFile</tt>
-         * is <tt>false</tt> or {@link #translateIndexWO(long, boolean)} if it is <tt>true</tt>.
+         * Equivalent to {@link #translateIndex(long, boolean)} if <code>notLoadDataFromFile</code>
+         * is <code>false</code> or {@link #translateIndexWO(long, boolean)} if it is <code>true</code>.
          *
          * @param index               the index of the data element in the source array (not sub-array).
-         * @param useSecondBank       if <tt>true</tt>, works with bank #1 and doesn't correct bank #0;
+         * @param useSecondBank       if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                            else works with bank #0.
-         * @param notLoadDataFromFile if <tt>true</tt> and there is no required bank in memory,
+         * @param notLoadDataFromFile if <code>true</code> and there is no required bank in memory,
          *                            the data may be not really loaded from the data file: the old content
          *                            of the corresponding file block will be ignored.
          * @return                    the index of the data element in the bank #0 or #1.
@@ -735,7 +735,7 @@ class MappedDataStorages {
          * (Full method calls this one.)
          *
          * @param index          the index of the data element in the source array (not sub-array).
-         * @param useSecondBank  if <tt>true</tt>, works with bank #1 and doesn't correct bank #0;
+         * @param useSecondBank  if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                       else works with bank #0.
          * @param loadingMode    if {@link LoadingMode#NOT_LOAD_DATA_FROM_FILE} and
          *                       there is no required bank in memory,
@@ -1762,10 +1762,10 @@ class MappedDataStorages {
         }
 
         /**
-         * This implementation just loads 1 element at the specified position <tt>fromIndex</tt> and
+         * This implementation just loads 1 element at the specified position <code>fromIndex</code> and
          * calls {@link DataFile.BufferHolder#load()} for the bank containing this element.
-         * The <tt>toIndex</tt> argument is ignored by this method, excepting the only case
-         * when it is equal to <tt>fromIndex</tt> (when this method does nothing).
+         * The <code>toIndex</code> argument is ignored by this method, excepting the only case
+         * when it is equal to <code>fromIndex</code> (when this method does nothing).
          *
          * @param fromIndex start index (inclusive) in the stored AlgART array (not sub-array).
          * @param toIndex   end index (exclusive) in the stored AlgART array (not sub-array).

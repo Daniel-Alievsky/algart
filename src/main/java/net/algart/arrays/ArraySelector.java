@@ -118,8 +118,8 @@ public class ArraySelector {
      *     {@link #select(long, long[], ArrayComparator, ArrayExchanger)
      * select}(numberOfElements, percentileIndexes, comparator, exchanger)
      * </pre>
-     * call, where <tt>percentileIndexes[k]={@link #percentileIndex(double, long)
-     * percentileIndex}(percentileLevels[k], numberOfElements)</tt>
+     * call, where <code>percentileIndexes[k]={@link #percentileIndex(double, long)
+     * percentileIndex}(percentileLevels[k], numberOfElements)</code>
      * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *
      * <p>For example, <code>percentileLevels={0.0, 0.5, 1.0}</code> requests to find the minimum, median and maximum

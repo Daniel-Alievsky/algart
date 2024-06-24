@@ -84,7 +84,7 @@ public interface MutableCharArray extends CharStack, UpdatableCharArray, Mutable
     /*Repeat.IncludeEnd*/
 
     /**
-     * Appends all characters of <tt>value</tt> to the end of this array and returns this array.
+     * Appends all characters of <code>value</code> to the end of this array and returns this array.
      * @param value a string to be appended to this array.
      * @return      a reference to this object.
      * @throws TooLargeArrayException if the resulting array length is too large for this type of arrays.

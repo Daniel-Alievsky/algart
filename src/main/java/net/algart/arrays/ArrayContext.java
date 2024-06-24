@@ -72,8 +72,8 @@ public interface ArrayContext {
      * <ul>
      * <li>{@link #getMemoryModel()} method returns {@link SimpleMemoryModel#getInstance()};</li>
      * <li>{@link #getThreadPoolFactory()} method returns
-     * <tt>new&nbsp;{@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory(int)
-     * DefaultThreadPoolFactory.getDefaultThreadPoolFactory(1)}</tt>;</li>
+     * <code>new&nbsp;{@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory(int)
+     * DefaultThreadPoolFactory.getDefaultThreadPoolFactory(1)}</code>;</li>
      * <li>{@link #checkInterruption()} method does nothing;</li>
      * <li>{@link #updateProgress(Event)} method does nothing;</li>
      * <li>{@link #currentThreadIndex()} method returns <code>0</code>;</li>
@@ -83,9 +83,9 @@ public interface ArrayContext {
      *
      * <p>This constant is useful, if you need some "default" single-thread context.
      * If you specify {@code null} as a context (as well as {@link #DEFAULT} object),
-     * it leads to using {@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()}</tt>,
+     * it leads to using {@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()},
      * which tries to use all available processor kernels.
-     * To get analogous behaviour without multithreading, you should use this object.</tt>.
+     * To get analogous behaviour without multithreading, you should use this object.
      *
      * <p>Note: this object is also returned by
      * <code>ArrayContext.{@link #DEFAULT}.{@link #singleThreadVersion() singleThreadVersion()}</code> call.
@@ -230,8 +230,8 @@ public interface ArrayContext {
     /**
      * Returns new context, identical to this one with the only exception that the thread pool factory,
      * returned by {@link #getThreadPoolFactory()} method, returns
-     * <tt>thisInstance.{@link #getThreadPoolFactory()
-     * getThreadPoolFactory()}.{@link ThreadPoolFactory#singleThreadVersion() singleThreadVersion()}</tt>.
+     * <code>thisInstance.{@link #getThreadPoolFactory()
+     * getThreadPoolFactory()}.{@link ThreadPoolFactory#singleThreadVersion() singleThreadVersion()}</code>.
      *
      * @return the single-thread version of this context.
      */
@@ -249,8 +249,8 @@ public interface ArrayContext {
      * which must be unique in every thread.
      *
      * <p>Note: this method may be used together with {@link #singleThreadVersion()}, for example:<br>
-     * <tt>&nbsp;&nbsp;&nbsp;&nbsp;arrayContext.{@link #singleThreadVersion()
-     * singleThreadVersion()}.multithreadingVersion(k,n)</tt>.<br>
+     * <code>&nbsp;&nbsp;&nbsp;&nbsp;arrayContext.{@link #singleThreadVersion()
+     * singleThreadVersion()}.multithreadingVersion(k,n)</code>.<br>
      * Really, there is usually no sense to allow using multithreading (creating thread pools
      * by {@link ThreadPoolFactory} with more than 1 thread) in a thread, which is already called
      * in a multithreading environment simultaneously with other threads.
@@ -344,8 +344,8 @@ public interface ArrayContext {
 
     /**
      * Equivalent to 2 sequential calls: <nobr><code>{@link #checkInterruption()}</code></nobr> and
-     * <nobr><tt>{@link #updateProgress
-     * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</tt></nobr>.
+     * <nobr><code>{@link #updateProgress
+     * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</code></nobr>.
      *
      * @param elementType           the result of {@link ArrayContext.Event#elementType()} method in the event;
      *                              can be {@code null}.

@@ -78,8 +78,8 @@ class ArraysBufferedCopier {
     }
 
     /**
-     * Copies <tt>src</tt> to <tt>dest</tt> via {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
-     * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the argument
+     * Copies <code>src</code> to <code>dest</code> via {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
+     * The <code>numberOfTasks</code> argument of the constructors of that classes will be equal to the argument
      * of {@link #getInstance(ArrayContext, UpdatableArray, Array, int, boolean, boolean) getInstance} method.
      *
      * @param context the context of copying; can be {@code null}, then it will be ignored.
@@ -87,17 +87,18 @@ class ArraysBufferedCopier {
      * @param src     the source array.
      * @param compare whether this method must use {@link ArraysOpImpl.ComparingCopier}.
      * @return the {@link ArraysOpImpl.ComparingCopier#changed} field
-     *         if <tt>compare</tt> argument is <tt>true</tt>
-     *         (i.e. <tt>true</tt> if and only if the <tt>dest</tt> array was changed),
-     *         <tt>false</tt> <tt>compare</tt> argument is <tt>false</tt>.
+     *         if <code>compare</code> argument is <code>true</code>
+     *         (i.e. <code>true</code> if and only if the <code>dest</code> array was changed),
+     *         <code>false</code> <code>compare</code> argument is <code>false</code>.
      */
     final boolean copy(ArrayContext context, UpdatableArray dest, Array src, boolean compare) {
         return copy(context, dest, src, this.numberOfTasks, compare);
     }
 
     /**
-     * Copies <tt>src</tt> to <tt>dest</tt> via {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
-     * The <tt>numberOfTasks</tt> argument of the constructors of that classes will be equal to the passed argument.
+     * Copies <code>src</code> to <code>dest</code> via
+     * {@link ArraysOpImpl.ComparingCopier} or {@link Arrays.Copier}.
+     * The <code>numberOfTasks</code> argument of the constructors of that classes will be equal to the passed argument.
      *
      * @param context       the context of copying; can be {@code null}, then it will be ignored.
      * @param dest          the destination array.
@@ -105,9 +106,9 @@ class ArraysBufferedCopier {
      * @param numberOfTasks the desired number of tasks; may be 0 for automatic detection.
      * @param compare       whether this method must use {@link ArraysOpImpl.ComparingCopier}.
      * @return the {@link ArraysOpImpl.ComparingCopier#changed} field
-     *         if <tt>compare</tt> argument is <tt>true</tt>
-     *         (i.e. <tt>true</tt> if and only if the <tt>dest</tt> array was changed),
-     *         <tt>false</tt> <tt>compare</tt> argument is <tt>false</tt>.
+     *         if <code>compare</code> argument is <code>true</code>
+     *         (i.e. <code>true</code> if and only if the <code>dest</code> array was changed),
+     *         <code>false</code> <code>compare</code> argument is <code>false</code>.
      */
     final boolean copy(ArrayContext context, UpdatableArray dest, Array src, int numberOfTasks, boolean compare) {
         if (compare) {
@@ -378,10 +379,10 @@ class ArraysBufferedCopier {
         }
 
         /**
-         * Returns <tt>true</tt> if we have compression in many times that can be performed quickly
+         * Returns <code>true</code> if we have compression in many times that can be performed quickly
          * without any optimization.
          *
-         * @return <tt>true</tt> if we have compression in many times that can be performed quickly
+         * @return <code>true</code> if we have compression in many times that can be performed quickly
          *         without any optimization.
          */
         private boolean isVeryQuickCompression() {
@@ -940,17 +941,17 @@ class ArraysBufferedCopier {
         }
 
         /**
-         * Returns the maximal last dimension <tt>dim</tt> of the layer submatrix of the source matrix,
+         * Returns the maximal last dimension <code>dim</code> of the layer submatrix of the source matrix,
          * so that any such submatrix depends on, as a maximum, the layer submatrix
-         * in the parent matrix with the last dimension <tt>dimParent</tt>.
+         * in the parent matrix with the last dimension <code>dimParent</code>.
          * Here the "layer" submatrix means a submatrix where all dimension, besides the last one,
          * are the same as in the original matrix.
-         * Returns <tt>0</tt> if there is no such submatrix.
+         * Returns <code>0</code> if there is no such submatrix.
          * Must be called only in a case of a resizing.
          *
          * @param dimParent dimensions in the parent matrix.
          * @return the maximal last dimension in the source layer submatrix, so that
-         *         <tt>dimParent</tt> layer submatrix is enough to calculate it.
+         *         <code>dimParent</code> layer submatrix is enough to calculate it.
          */
         private long parentLayerToSrcCoordSystem(long dimParent) {
             assert po instanceof LinearOperator;
@@ -977,10 +978,10 @@ class ArraysBufferedCopier {
         }
 
         /**
-         * Returns the maximal side <tt>dim</tt> of the square (cubic, ...) submatrix of the source matrix,
-         * so that any such submatrix (<tt><nobr>dim x dim x ...</nobr></tt>) depends on, as a maximum,
-         * <tt>dimParent x dimParent x ...</tt> submatrix in the parent matrix.
-         * Returns <tt>0</tt> if there is no such submatrix.
+         * Returns the maximal side <code>dim</code> of the square (cubic, ...) submatrix of the source matrix,
+         * so that any such submatrix (<code><nobr>dim x dim x ...</nobr></code>) depends on, as a maximum,
+         * <code>dimParent x dimParent x ...</code> submatrix in the parent matrix.
+         * Returns <code>0</code> if there is no such submatrix.
          * Must be called only in a case of an affine transformation.
          *
          * <p>In other words, let <i>O</i> be our linear (affine) transformation <i>x</i>=<i>O</i>(<i>y</i>),
@@ -989,7 +990,7 @@ class ArraysBufferedCopier {
          * (for example, rotated) by this copier.
          * This method finds the maximal (or, at least, as large as possible) hypercube <b>C</b>
          * in the destination and source matrices, so that its transformation <i>O</i>(<b>C</b>)
-         * is a subset of a hypercube <nobr><b>D</b> = <tt>dimParent x dimParent x ...</tt></nobr>
+         * is a subset of a hypercube <nobr><b>D</b> = <code>dimParent x dimParent x ...</code></nobr>
          *
          * <p>The obvious, "direct" way to do this is finding the inverse affine transformation
          * <i>O</i><sup>-1</sup>, getting the figure <i>O</i><sup>-1</sup>(<b>D</b>) and calculating
@@ -997,18 +998,19 @@ class ArraysBufferedCopier {
          * algorithm, including finding the inverse matrix and finding maximal inscribed hypercube.
          * But there is much simpler algorithm.
          *
-         * <p>Let <b>c</b> is a hypercube <tt><nobr>1 x 1 x ...</nobr></tt>. We find <b>d</b>: the hypercube
-         * <tt><nobr>d x d x ...</nobr></tt>, circumscribed around <i>O</i>(<b>c</b>).
-         * The required <tt>dim</tt> is just <tt>dimParent/d</tt>!
+         * <p>Let <b>c</b> is a hypercube <code><nobr>1 x 1 x ...</nobr></code>. We find <b>d</b>: the hypercube
+         * <code><nobr>d x d x ...</nobr></code>, circumscribed around <i>O</i>(<b>c</b>).
+         * The required <code>dim</code> is just <code>dimParent/d</code>!
          * It is true because resizing the argument of an affine transformation leads to the same resizing
-         * of the result. If we shall resize <b>c</b> in <tt>dim</tt> times and get
-         * <nobr><b>C</b> = <tt>dim x dim x ...</tt></nobr> hypercube, then <i>O</i>(<b>c</b>)
-         * will be also resized in <tt>dim</tt> times and will be subset of
-         * <nobr><b>D</b> = <tt>dimParent x dimParent x ...</tt></nobr>: <tt>dimParent</tt>=<tt>dim</tt>*<tt>d</tt>.
+         * of the result. If we shall resize <b>c</b> in <code>dim</code> times and get
+         * <nobr><b>C</b> = <code>dim x dim x ...</code></nobr> hypercube, then <i>O</i>(<b>c</b>)
+         * will be also resized in <code>dim</code> times and will be subset of
+         * <nobr><b>D</b> = <code>dimParent x dimParent x ...</code></nobr>:
+         * <code>dimParent</code>=<code>dim</code>*<code>d</code>.
          *
          * @param dimParent dimensions in the parent matrix.
          * @return the maximal dimensions in the source submatrix, so that
-         *         <tt>dimParent x dimParent x ...</tt> submatrix is enough to calculate it.
+         *         <code>dimParent x dimParent x ...</code> submatrix is enough to calculate it.
          */
         private long parentRegularSquareTileToSrcCoordSystem(long dimParent) {
             assert po instanceof LinearOperator;
@@ -1076,9 +1078,9 @@ class ArraysBufferedCopier {
 
         /**
          * Returns the minimal rectangular area in the parent matrix,
-         * so that the given submatrix <tt>srcFrom..srcTo</tt> of the target lazy matrix
+         * so that the given submatrix <code>srcFrom..srcTo</code> of the target lazy matrix
          * depends only on elements of this area.
-         * The results are saved in <tt>parentFrom</tt> and <tt>parentTo</tt> arrays.
+         * The results are saved in <code>parentFrom</code> and <code>parentTo</code> arrays.
          *
          * @param parentFrom the minimal coordinates of the found area, inclusive.
          * @param parentTo   the maximal coordinates of the found area, exclusive.

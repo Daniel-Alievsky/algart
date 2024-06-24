@@ -46,7 +46,7 @@ public interface ObjectStack<E> extends Stack {
      * Equivalent to {@link #pushElement(Object) pushElement(value)}.
      *
      * @param value to be added to the top of this stack.
-     * @throws ArrayStoreException    if <tt>value</tt> is notan instance of the class of stack elements.
+     * @throws ArrayStoreException    if <code>value</code> is notan instance of the class of stack elements.
      * @throws TooLargeArrayException if the resulting stack length is too large for this type of stacks.
      */
     void push(E value);

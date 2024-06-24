@@ -45,13 +45,13 @@ class SimpleArraysImpl {
      * </pre>
      *
      * @param array     the source packed bits array.
-     * @param fromIndex the initial bit index in <tt>array</tt>, inclusive.
-     * @param toIndex   the end bit index in <tt>array</tt>, exclusive.
+     * @param fromIndex the initial bit index in <code>array</code>, inclusive.
+     * @param toIndex   the end bit index in <code>array</code>, exclusive.
      * @return the specified packed subarray.
-     * @throws NullPointerException      if the <tt>array</tt> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <tt>fromIndex</tt> or <tt>toIndex</tt> are negative,
-     *                                   if <tt>toIndex</tt> is greater than <tt>array.length * 64</tt>,
-     *                                   or if <tt>fromIndex</tt> is greater than <tt>startIndex</tt>
+     * @throws NullPointerException      if the <code>array</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>fromIndex</code> or <code>toIndex</code> are negative,
+     *                                   if <code>toIndex</code> is greater than <code>array.length * 64</code>,
+     *                                   or if <code>fromIndex</code> is greater than <code>startIndex</code>
      * @see PackedBitArrays#copyBits(long[], long, long[], long, long)
      */
     static long[] cloneBitSubArray(long[] array, long fromIndex, long toIndex) {
@@ -75,7 +75,7 @@ class SimpleArraysImpl {
         // "JAArray" means "Java-Array based (AlgART) Array"
         protected static final long HIGH_BIT = 1L << 63;
         /**
-         * All AlgART array elements should be <tt>array[0..length-1]</tt>.
+         * All AlgART array elements should be <code>array[0..length-1]</code>.
          */
         protected Object array;
 
@@ -389,8 +389,8 @@ class SimpleArraysImpl {
         }
 
         /*
-         * Should fill elements of internal storage from <tt>fromIndex</tt> to <tt>toIndex-1</tt> by zero.
-         * Should not check indexes: they may be greater than <tt>length()</tt>.
+         * Should fill elements of internal storage from <code>fromIndex</code> to <code>toIndex-1</code> by zero.
+         * Should not check indexes: they may be greater than <code>length()</code>.
          */
         void clearElements(long fromIndex, long toIndex) {
         }

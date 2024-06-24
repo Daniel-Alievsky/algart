@@ -37,10 +37,10 @@ import java.nio.ByteOrder;
 class BufferArraysImpl {
     /**
      * This method <b>must</b> be called after creating any {@link AbstractBufferArray} instance
-     * via <tt>new</tt> operator.
+     * via <code>new</code> operator.
      *
      * <p>This method is not called automatically (from the constructor) to provide a guarantee
-     * that JVM will not store any references to <tt>a</tt> instance in the <tt>Runntable</tt> implementation
+     * that JVM will not store any references to <code>a</code> instance in the <code>Runntable</code> implementation
      * of the finalization task.
      *
      * @param a new created array.
@@ -90,7 +90,7 @@ class BufferArraysImpl {
          * <p>If it is {@code null}, this instance must be attached to the {@link #storage}
          * and controlled by {@link LargeMemoryModel#globalArrayFinalizer}.
          * But creating a lot of such objects leads to much workload for the garbage collector and even
-         * can lead to unexpected <tt>OutOfMemory</tt>.
+         * can lead to unexpected <code>OutOfMemory</code>.
          *
          * <p>If it is not {@code null}, this field is a strong reference guaranteeing that the parent array
          * will be collected as garbage only after its views &mdash; and, so, that the data storage
@@ -103,10 +103,10 @@ class BufferArraysImpl {
         /**
          * The finalizer that fill be called after deallocation this instance by the garbage collector.
          * If this instance switches to another {@link DataStorage}, the
-         * <tt>finalizer.{@link AbstractBufferArrayFinalizer#storageRef}</tt> field must be corrected.
+         * <code>finalizer.{@link AbstractBufferArrayFinalizer#storageRef}</code> field must be corrected.
          * (See the implementation of {@link #reallocateStorage()}.)
          *
-         * <p>This field is initialized by <tt>forgetOnDeallocation</tt> method.
+         * <p>This field is initialized by <code>forgetOnDeallocation</code> method.
          */
         volatile AbstractBufferArrayFinalizer finalizer = null;
 

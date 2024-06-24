@@ -29,7 +29,7 @@ import java.io.Serial;
 /**
  * <p>Unchecked exception thrown by {@link DataBuffer} methods {@link DataBuffer#from() from()},
  * {@link DataBuffer#to() to()} and {@link DataBuffer#cnt() cnt()}, if the values, they should be returned
- * by these methods, are greater than <tt>Integer.MAX_VALUE</tt>.</p>
+ * by these methods, are greater than <code>Integer.MAX_VALUE</code>.</p>
  *
  * @author Daniel Alievsky
  */
