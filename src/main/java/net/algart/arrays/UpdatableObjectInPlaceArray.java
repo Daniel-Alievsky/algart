@@ -29,7 +29,7 @@ package net.algart.arrays;
  * to load an element without creating new Java object.</p>
  *
  * <p>The arrays of object created via some {@link MemoryModel memory models} may not implement this interface.
- * You may check, is this interface implemented, by <tt>intstanceof</tt> operator.</p>
+ * You may check, is this interface implemented, by <code>intstanceof</code> operator.</p>
  *
  * @param <E> the generic type of array elements.
  *

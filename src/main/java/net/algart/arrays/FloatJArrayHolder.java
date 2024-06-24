@@ -30,12 +30,12 @@ import java.util.Objects;
 /*Repeat.SectionStart all*/
 
 /**
- * A simple class allowing to reuse Java <tt>float[]</tt> array many times.
- * It can be useful, when the algorithm usually allocates  <tt>float[]</tt> array with the same size
- * many times (changing the size is a rare event). In this case, you can replace <tt>"new"</tt> operator
+ * A simple class allowing to reuse Java <code>float[]</code> array many times.
+ * It can be useful, when the algorithm usually allocates  <code>float[]</code> array with the same size
+ * many times (changing the size is a rare event). In this case, you can replace <code>"new"</code> operator
  * (that spends time for zero-initialing new array) with {@link #quickNew(int)} method,
  * that probably will work very quickly.
- * The previously allocated array is stored inside the object in a <tt>SoftReference</tt>.
+ * The previously allocated array is stored inside the object in a <code>SoftReference</code>.
  *
  * <p>This class is <b>thread-safe</b>: you may use the same instance of this class in several threads.</p>
  *
@@ -46,13 +46,13 @@ public final class FloatJArrayHolder {
     private final Object lock = new Object();
 
     /**
-     * Equivalent to <tt>{@link #quickNew(long) quickNew}(matrix.{@link Matrix#size() size()})</tt>.
+     * Equivalent to <code>{@link #quickNew(long) quickNew}(matrix.{@link Matrix#size() size()})</code>.
      *
      * @param matrix some AlgART matrix.
-     * @return newly created <tt>"new float[newArrayLength]"</tt>
+     * @return newly created <code>"new float[newArrayLength]"</code>
      * or previously allocated array, if it exists and has identical length.
      * @throws NullPointerException   if the argument is {@code null}.
-     * @throws TooLargeArrayException if <tt>matrix.size() &gt; Integer.MAX_VALUE</tt>.
+     * @throws TooLargeArrayException if <code>matrix.size() &gt; Integer.MAX_VALUE</code>.
      */
     public float[] quickNew(Matrix<?> matrix) {
         Objects.requireNonNull(matrix, "Null matrix argument");
@@ -62,14 +62,14 @@ public final class FloatJArrayHolder {
 
     /**
      * Equivalent of {@link #quickNew(int)} method, but in addition it checks that
-     * <tt>newArrayLength</tt> is actually 32-bit value (<tt>newArrayLength==(int)newArrayLength</tt>)
+     * <code>newArrayLength</code> is actually 32-bit value (<code>newArrayLength==(int)newArrayLength</code>)
      * and, if not, throws {@link TooLargeArrayException}.
      *
      * @param newArrayLength required array length.
-     * @return newly created <tt>"new float[newArrayLength]"</tt>
+     * @return newly created <code>"new float[newArrayLength]"</code>
      * or previously allocated array, if it exists and has identical length.
-     * @throws IllegalArgumentException if <tt>newArrayLength &lt; 0</tt>.
-     * @throws TooLargeArrayException   if <tt>newArrayLength &gt; Integer.MAX_VALUE</tt>.
+     * @throws IllegalArgumentException if <code>newArrayLength &lt; 0</code>.
+     * @throws TooLargeArrayException   if <code>newArrayLength &gt; Integer.MAX_VALUE</code>.
      */
     public float[] quickNew(long newArrayLength) {
         if (newArrayLength < 0) {
@@ -82,20 +82,20 @@ public final class FloatJArrayHolder {
     }
 
     /**
-     * Quick analog of <tt>new float[newArrayLength]}</tt>.
+     * Quick analog of <code>new float[newArrayLength]}</code>.
      * If this method is called several times for allocating data with the same size,
      * this method returns previously allocated array.
-     * (Previous array is stored in <tt>SoftReference</tt> and, if there is not enough memory,
-     * can be utilized by garbage collector; in this case, this method will just use <tt>"new"</tt>
+     * (Previous array is stored in <code>SoftReference</code> and, if there is not enough memory,
+     * can be utilized by garbage collector; in this case, this method will just use <code>"new"</code>
      * operator.)
      *
-     * <p>Please remember: unlike standard <tt>new</tt> operator, the returned array is usually <b>not</b>
+     * <p>Please remember: unlike standard <code>new</code> operator, the returned array is usually <b>not</b>
      * filled by zeros.
      *
      * @param newArrayLength required array length.
-     * @return newly created <tt>"new float[newArrayLength]"</tt>
+     * @return newly created <code>"new float[newArrayLength]"</code>
      * or previously allocated array, if it exists and has identical length.
-     * @throws IllegalArgumentException if <tt>newArrayLength &lt; 0</tt>
+     * @throws IllegalArgumentException if <code>newArrayLength &lt; 0</code>
      */
     public float[] quickNew(int newArrayLength) {
         if (newArrayLength < 0) {
@@ -113,7 +113,7 @@ public final class FloatJArrayHolder {
     }
 
     /**
-     * Quick analog of <tt>array.clone()</tt>.
+     * Quick analog of <code>array.clone()</code>.
      * Equivalent to the following operators:
      * <pre>
      *     float[] result = {@link #quickNew(int)} quickNew}(array.length);

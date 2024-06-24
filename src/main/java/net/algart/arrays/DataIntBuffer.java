@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> int
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>int</tt> elements.</p>
+ * <p>Data buffer for <code>int</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

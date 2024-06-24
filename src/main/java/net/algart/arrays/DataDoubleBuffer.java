@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> double
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>double</tt> elements.</p>
+ * <p>Data buffer for <code>double</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

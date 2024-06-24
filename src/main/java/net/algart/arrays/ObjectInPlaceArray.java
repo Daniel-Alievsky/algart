@@ -29,7 +29,7 @@ package net.algart.arrays;
  * to load an element without creating new Java object.</p>
  *
  * <p>The arrays of object created via some {@link MemoryModel memory models} may not implement this interface.
- * You may check, is this interface implemented, by <tt>intstanceof</tt> operator.</p>
+ * You may check, is this interface implemented, by <code>intstanceof</code> operator.</p>
  *
  * @param <E> the generic type of array elements.
  *
@@ -38,17 +38,17 @@ package net.algart.arrays;
 public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
 
     /**
-     * Copies the content of element #<tt>index</tt> to the passed <tt>resultValue</tt>
-     * and returns <tt>resultValue</tt>. Never returns {@code null}.
+     * Copies the content of element #<code>index</code> to the passed <code>resultValue</code>
+     * and returns <code>resultValue</code>. Never returns {@code null}.
      *
      * <p>This method may work much faster than {@link #getElement(long)} in long loops,
      * because allows to avoid allocating Java objects in the heap.
      *
-     * @return            a reference to <tt>resultValue</tt>.
+     * @return            a reference to <code>resultValue</code>.
      * @param index       index of element to load.
      * @param resultValue the object where the retrieved content will be stored.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
-     * @throws NullPointerException if <tt>resultValue</tt> is {@code null}.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
+     * @throws NullPointerException if <code>resultValue</code> is {@code null}.
      */
     E getInPlace(long index, Object resultValue);
 

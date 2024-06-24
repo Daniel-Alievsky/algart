@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> char
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>char</tt> elements.</p>
+ * <p>Data buffer for <code>char</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

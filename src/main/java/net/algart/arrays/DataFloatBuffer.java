@@ -26,7 +26,7 @@ package net.algart.arrays;
 
 /*Repeat.SectionStart all*/
 /**
- * <p>Data buffer for <tt>float</tt> elements.</p>
+ * <p>Data buffer for <code>float</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

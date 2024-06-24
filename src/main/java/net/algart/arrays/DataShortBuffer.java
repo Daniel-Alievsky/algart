@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> short
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>short</tt> elements.</p>
+ * <p>Data buffer for <code>short</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

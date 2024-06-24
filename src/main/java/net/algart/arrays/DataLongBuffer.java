@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> long
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>long</tt> elements.</p>
+ * <p>Data buffer for <code>long</code> elements.</p>
  *
  * @author Daniel Alievsky
  */

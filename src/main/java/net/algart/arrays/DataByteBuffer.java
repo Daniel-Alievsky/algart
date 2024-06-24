@@ -29,7 +29,7 @@ package net.algart.arrays;
   float ==> byte
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <tt>byte</tt> elements.</p>
+ * <p>Data buffer for <code>byte</code> elements.</p>
  *
  * @author Daniel Alievsky
  */
