@@ -39,7 +39,7 @@ public interface ArrayProcessorWithContextSwitching extends ArrayProcessor {
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      * The returned instance is usually a clone of this one, but there is no guarantees
      * that it is a deep clone.
      * Usually, the returned instance is used only for performing a

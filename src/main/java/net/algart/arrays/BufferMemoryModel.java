@@ -419,7 +419,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&lt;0</code> or
      *                                  if the passed <code>byteBuffer</code> is too short to store
-     *                                  <code>(length+63)/64</code> full 64-bit <code>long</code> values.</tt>
+     *                                  <code>(length+63)/64</code> full 64-bit <code>long</code> values.
      */
     public static UpdatableBitArray asUpdatableBitArray(ByteBuffer byteBuffer, long length) {
         Objects.requireNonNull(byteBuffer, "Null byteBuffer");
