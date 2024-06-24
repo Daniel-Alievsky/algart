@@ -26,7 +26,7 @@ package net.algart.arrays;
 
 /*Repeat(INCLUDE_FROM_FILE, AbstractFloatArray.java, all)
   value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFFFF) ;;
-  (\<tt\>value\s*==\s*\(\(int\)\s*value\s*&)\s*\s*0xFFFF ==> $1amp; 0xFFFF ;;
+  (\<code\>value\s*==\s*\(\(int\)\s*value\s*&)\s*\s*0xFFFF ==> $1amp; 0xFFFF ;;
   float\s+getFloat ==> int getShort ;;
   (?<!\#|\.|\) )getFloat\( ==> (short) getShort( ;;
   Float(?!ing) ==> Short ;;
@@ -409,7 +409,7 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFFFF) ? {@link #indexOf(long, long, short)
+     * <code>value == ((int) value &amp; 0xFFFF) ? {@link #indexOf(long, long, short)
      * indexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -426,7 +426,7 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFFFF) ? {@link #lastIndexOf(long, long, short)
+     * <code>value == ((int) value &amp; 0xFFFF) ? {@link #lastIndexOf(long, long, short)
      * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -451,7 +451,7 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFFFF) ? {@link #indexOf(long, long, short)
+     * <code>value == ((int) value &amp; 0xFFFF) ? {@link #indexOf(long, long, short)
      * indexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -468,7 +468,7 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFFFF) ? {@link #lastIndexOf(long, long, short)
+     * <code>value == ((int) value &amp; 0xFFFF) ? {@link #lastIndexOf(long, long, short)
      * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).

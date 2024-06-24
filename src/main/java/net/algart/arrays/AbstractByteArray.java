@@ -26,7 +26,7 @@ package net.algart.arrays;
 
 /*Repeat(INCLUDE_FROM_FILE, AbstractFloatArray.java, all)
   value\s*==\s*\(float\)\s*value ==> value == ((int) value & 0xFF) ;;
-  (\<tt\>value\s*==\s*\(\(int\)\s*value\s*&)\s*\s*0xFF ==> $1amp; 0xFF ;;
+  (\<code\>value\s*==\s*\(\(int\)\s*value\s*&)\s*\s*0xFF ==> $1amp; 0xFF ;;
   float\s+getFloat ==> int getByte ;;
   (?<!\#|\.|\) )getFloat\( ==> (byte) getByte( ;;
   Float(?!ing) ==> Byte ;;
@@ -409,7 +409,7 @@ public abstract class AbstractByteArray extends AbstractArray implements ByteArr
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFF) ? {@link #indexOf(long, long, byte)
+     * <code>value == ((int) value &amp; 0xFF) ? {@link #indexOf(long, long, byte)
      * indexOf}(lowIndex, highIndex, (byte)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -426,7 +426,7 @@ public abstract class AbstractByteArray extends AbstractArray implements ByteArr
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFF) ? {@link #lastIndexOf(long, long, byte)
+     * <code>value == ((int) value &amp; 0xFF) ? {@link #lastIndexOf(long, long, byte)
      * lastIndexOf}(lowIndex, highIndex, (byte)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -451,7 +451,7 @@ public abstract class AbstractByteArray extends AbstractArray implements ByteArr
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFF) ? {@link #indexOf(long, long, byte)
+     * <code>value == ((int) value &amp; 0xFF) ? {@link #indexOf(long, long, byte)
      * indexOf}(lowIndex, highIndex, (byte)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
@@ -468,7 +468,7 @@ public abstract class AbstractByteArray extends AbstractArray implements ByteArr
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <code>value == ((int) value & 0xFF) ? {@link #lastIndexOf(long, long, byte)
+     * <code>value == ((int) value &amp; 0xFF) ? {@link #lastIndexOf(long, long, byte)
      * lastIndexOf}(lowIndex, highIndex, (byte)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
