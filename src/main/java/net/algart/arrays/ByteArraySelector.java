@@ -27,11 +27,11 @@ package net.algart.arrays;
 import java.util.Arrays;
 
 /**
- * <p>Special version of {@link ArraySelector} class, optimized for selecting from <tt>byte[]</tt> arrays.</p>
+ * <p>Special version of {@link ArraySelector} class, optimized for selecting from <code>byte[]</code> arrays.</p>
  *
  * <p>We recommend to use methods of this class, instead of {@link ArraySelector#select(int[], byte[], int)} and
  * {@link ArraySelector#select(double[], byte[], int)}, for relatively large byte arrays.
- * Typically, short <tt>byte[]</tt> arrays (&le;50&ndash;100 elements) are sorted faster by {@link ArraySelector}
+ * Typically, short <code>byte[]</code> arrays (&le;50&ndash;100 elements) are sorted faster by {@link ArraySelector}
  * methods, and arrays larger than 200&ndash;300 bytes are sorted faster by this class.
  * But if you need to find a lot of percentiles for the same array, for example &ge;5 levels,
  * this class may provide better speed even for shorter arrays (50&ndash;100 bytes).
@@ -52,36 +52,36 @@ public class ByteArraySelector {
     private final int[] histogram16 = new int[16];
 
     /**
-     * Finds the percentiles with the specified indexes among first <tt>length</tt>
-     * elements of the passed array of bytes and returns them in <tt>results</tt> argument.
-     * Percentile with <tt>index=percentileIndexes[k]</tt> is the value of the element of the passed array,
-     * which will be placed at position <tt>array[index]</tt> after sorting this array in increasing order;
+     * Finds the percentiles with the specified indexes among first <code>length</code>
+     * elements of the passed array of bytes and returns them in <code>results</code> argument.
+     * Percentile with <code>index=percentileIndexes[k]</code> is the value of the element of the passed array,
+     * which will be placed at position <code>array[index]</code> after sorting this array in increasing order;
      * but this method does not actually modify this array.
      *
-     * <p>For example, <tt>percentileIndexes={0, length/2, length-1}</tt> requests to find
+     * <p>For example, <code>percentileIndexes={0, length/2, length-1}</code> requests to find
      * the minimum, median and maximum and return them in
-     * <tt>results[0]</tt>, <tt>results[1]</tt>, <tt>results[2]</tt>.
+     * <code>results[0]</code>, <code>results[1]</code>, <code>results[2]</code>.
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] &amp; 0xFF</tt> and <tt>array[j] &amp; 0xFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare <code>array[i] &amp; 0xFF</code> and <code>array[j] &amp; 0xFF</code>
+     * instead of simple <code>array[i]</code> and <code>array[j]</code>.</p>
      *
-     * <p>Note: list of indexes <tt>percentileIndexes</tt> <b>must be sorted</b> in increasing order.
+     * <p>Note: list of indexes <code>percentileIndexes</code> <b>must be sorted</b> in increasing order.
      * You can provide this, for example, but simple call of standard Java sorting method
-     * <tt>Arrays.sort(percentileIndexes)</tt> before calling this method.
-     * If these indexes are not sorted, or if they are out of range <tt>0..length</tt>,
+     * <code>Arrays.sort(percentileIndexes)</code> before calling this method.
+     * If these indexes are not sorted, or if they are out of range <code>0..length</code>,
      * the results will be unpredictable.
      * You can check these indexes yourself by {@link ArraySelector#checkPercentileIndexes(int[], int)} method.</p>
      *
-     * <p>This method does not modify the passed <tt>array</tt>.</p>
+     * <p>This method does not modify the passed <code>array</code>.</p>
      *
      * @param results           results of this method: values of some elements of the passed array.
      * @param percentileIndexes list of indexes inside the array, the values of which, in increasing order,
      *                          must be returned.
      * @param array             array of bytes.
-     * @param length            number of elements: only elements <tt>array[0..length-1</tt> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(byte[] results, int[] percentileIndexes, byte[] array, int length) {
         if (length <= 0) {
@@ -139,11 +139,11 @@ public class ByteArraySelector {
     }
 
     /**
-     * Finds the percentiles with the specified levels (from 0.0 to 1.0) among first <tt>length</tt>
-     * elements of the passed array of bytes and returns them in <tt>results</tt> argument.
+     * Finds the percentiles with the specified levels (from 0.0 to 1.0) among first <code>length</code>
+     * elements of the passed array of bytes and returns them in <code>results</code> argument.
      *
-     * <p>For example, <tt>percentileLevels={0.0, 0.5, 1.0}</tt> requests to find the minimum, median and maximum
-     * and return them in <tt>results[0]</tt>, <tt>results[1]</tt>, <tt>results[2]</tt>.
+     * <p>For example, <code>percentileLevels={0.0, 0.5, 1.0}</code> requests to find the minimum, median and maximum
+     * and return them in <code>results[0]</code>, <code>results[1]</code>, <code>results[2]</code>.
      *
      * <p>This method is equivalent to
      * <pre>
@@ -152,27 +152,27 @@ public class ByteArraySelector {
      * </pre>
      * call, where <tt>percentileIndexes[k]={@link ArraySelector#percentileIndex(double, int)
      * ArraySelector.percentileIndex}(percentileLevels[k], length)</tt>
-     * for every <tt>k=0,...,percentileLevels.length-1</tt>.</p>
+     * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
-     * we always compare <tt>array[i] &amp; 0xFF</tt> and <tt>array[j] &amp; 0xFF</tt>
-     * instead of simple <tt>array[i]</tt> and <tt>array[j]</tt>.</p>
+     * we always compare <code>array[i] &amp; 0xFF</code> and <code>array[j] &amp; 0xFF</code>
+     * instead of simple <code>array[i]</code> and <code>array[j]</code>.</p>
      *
-     * <p>Note: list of levels <tt>percentileLevels</tt> <b>must be sorted</b> in increasing order.
+     * <p>Note: list of levels <code>percentileLevels</code> <b>must be sorted</b> in increasing order.
      * You can provide this, for example, but simple call of standard Java sorting method
-     * <tt>Arrays.sort(percentileLevels)</tt> before calling this method.
-     * If these levels are not sorted, or if they are out of range <tt>0.0..1.0</tt>,
+     * <code>Arrays.sort(percentileLevels)</code> before calling this method.
+     * If these levels are not sorted, or if they are out of range <code>0.0..1.0</code>,
      * the results will be unpredictable.
      * You can check these levels yourself by {@link ArraySelector#checkPercentileLevels(double[])} method.</p>
      *
-     * <p>This method does not modify the passed <tt>array</tt>.</p>
+     * <p>This method does not modify the passed <code>array</code>.</p>
      *
      * @param results          results of this method: values of some elements of the passed array.
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            array of bytes.
-     * @param length           number of elements: only elements <tt>array[0..length-1</tt> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>length&le;0</tt>, or <tt>length&gt;array.length</tt>.
+     * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
     public void select(byte[] results, double[] percentileLevels, byte[] array, int length) {
         if (length <= 0) {

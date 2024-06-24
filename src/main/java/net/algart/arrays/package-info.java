@@ -377,7 +377,7 @@
          <i>{@link net.algart.arrays.UpdatableObjectInPlaceArray}</i> (optional)
          </td>
          <td valign="top">Interfaces:<br>
-         <tt><i>{@link net.algart.arrays.ObjectStack}</i>
+         <i>{@link net.algart.arrays.ObjectStack}</i>
          </td>
          <td valign="top">Interfaces:<br>
          <i>{@link net.algart.arrays.MutableArray}</i>,<br>

@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * <p>The factory allowing to get a thread pool (<tt>ExecutorService</tt>)
+ * <p>The factory allowing to get a thread pool (<code>ExecutorService</code>)
  * for processing some AlgART array.</p>
  *
  * <p>The object, implementing this interface, should be used when you need to
@@ -39,7 +39,7 @@ import java.util.concurrent.ThreadFactory;
  * Then you need to call {@link #getThreadPool(Array, ThreadFactory)
  * getThreadPool(sourceArray, someThreadFactory)}
  * method of this object, submit all your tasks to the returned thread pool,
- * wait until all tasks will be completed (for example, by <tt>Future.get</tt> method)
+ * wait until all tasks will be completed (for example, by <code>Future.get</code> method)
  * and, at the end, call {@link #releaseThreadPool(ExecutorService)} method
  * to finish working with the thread pool.
  * The number of tasks, which your algorithm is split into, should be
@@ -70,7 +70,7 @@ public interface ThreadPoolFactory {
      * Returns the recommended number of tasks, which your algorithm is split into
      * for optimizing processing large data.
      * The returned value can be equal (or depend on) the result of
-     * <tt>{@link Arrays.SystemSettings#availableProcessors()}</tt>,
+     * <code>{@link Arrays.SystemSettings#availableProcessors()}</code>,
      * or can be specified in some system property or environment variable.
      *
      * <p>The returned value is always positive.
@@ -83,10 +83,10 @@ public interface ThreadPoolFactory {
      * Returns the recommended number of tasks, which your algorithm is split into
      * for optimizing processing the given AlgART on multiprocessor computers.
      * The returned value can be equal (or depend on) the result of
-     * <tt>{@link Arrays.SystemSettings#availableProcessors()}</tt>,
+     * <code>{@link Arrays.SystemSettings#availableProcessors()}</code>,
      * or can be specified in some system property or environment variable.
      * For little arrays, that are usually processed very quickly,
-     * we recommend to return <tt>1</tt> regardless of the number of processors.
+     * we recommend to return <code>1</code> regardless of the number of processors.
      *
      * <p>The returned value is always positive.
      *
@@ -111,11 +111,11 @@ public interface ThreadPoolFactory {
      * Returns the thread pool that should be used for multithreading processing large data.
      * Depending on implementation, this method may either create a new thread pool,
      * or return some already existing pool, for example, the global thread pool of the application.
-     * In any case, you <b>must</b> call, in a <tt>finally</tt> section,
+     * In any case, you <b>must</b> call, in a <code>finally</code> section,
      * the {@link #releaseThreadPool(ExecutorService)} method for this pool
      * after finishing your algorithm.
      *
-     * <p>The <tt>threadFactory</tt> can be used for creation new thread pool.
+     * <p>The <code>threadFactory</code> can be used for creation new thread pool.
      * This argument <i>can be {@code null}</i>: in this case, some default thread factory should be used.
      *
      * @param threadFactory if not {@code null}, specifies the desired thread factory for using by the thread pool.
@@ -127,26 +127,26 @@ public interface ThreadPoolFactory {
      * Returns the thread pool that should be used for multithreading processing an AlgART array.
      * Depending on implementation, this method may either create a new thread pool,
      * or return some already existing pool, for example, the global thread pool of the application.
-     * In any case, you <b>must</b> call, in a <tt>finally</tt> section,
+     * In any case, you <b>must</b> call, in a <code>finally</code> section,
      * the {@link #releaseThreadPool(ExecutorService)} method for this pool
      * after finishing your algorithm.
      *
-     * <p>The <tt>threadFactory</tt> may be used for creation new thread pool.
+     * <p>The <code>threadFactory</code> may be used for creation new thread pool.
      * This argument <i>can be {@code null}</i>: in this case, some default thread factory should be used.
      *
      * @param sourceArray   some AlgART array that should be processed.
      * @param threadFactory if not {@code null}, specifies the desired thread factory for using by the thread pool.
      * @return              the thread pool for parallel processing the array.
-     * @throws NullPointerException if <tt>sourceArray</tt> argument is {@code null} (not necessary).
+     * @throws NullPointerException if <code>sourceArray</code> argument is {@code null} (not necessary).
      */
     ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory);
 
     /**
      * Finishes using the thread pool returned by {@link #getThreadPool(Array, ThreadFactory)} method.
-     * This method <b>must be called</b> in a <tt>finally</tt> section
+     * This method <b>must be called</b> in a <code>finally</code> section
      * after finishing usage of the pool.
      * The reason is that if the implementation of {@link #getThreadPool(Array, ThreadFactory)} method
-     * has created a new thread pool, this method probably calls its <tt>shutdown</tt>
+     * has created a new thread pool, this method probably calls its <code>shutdown</code>
      * method to remove extra system threads.
      *
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
@@ -159,7 +159,7 @@ public interface ThreadPoolFactory {
      * performTasks}(null, tasks)</tt> call.
      *
      * @param tasks the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
+     * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
      */
     void performTasks(Runnable[] tasks);
 
@@ -168,10 +168,10 @@ public interface ThreadPoolFactory {
      * {@link #getThreadPool(java.util.concurrent.ThreadFactory) getThreadPool(threadFactory)} method
      * in the beginning of execution.
      *
-     * <p>More precisely, if <tt>tasks.length==0</tt>, this method does nothing,
-     * if <tt>tasks.length==1</tt>, this method just calls <tt>tasks[0].run()</tt>,
-     * and if <tt>tasks.length&gt;1</tt>, the tasks are performed by the following code
-     * (where <tt>pool</tt> is the result of
+     * <p>More precisely, if <code>tasks.length==0</code>, this method does nothing,
+     * if <code>tasks.length==1</code>, this method just calls <code>tasks[0].run()</code>,
+     * and if <code>tasks.length&gt;1</code>, the tasks are performed by the following code
+     * (where <code>pool</code> is the result of
      * {@link #getThreadPool(java.util.concurrent.ThreadFactory) getThreadPool(threadFactory)} call):
      *
      * <pre>
@@ -198,25 +198,26 @@ public interface ThreadPoolFactory {
      * </pre>
      *
      * <p>Before finishing, this method calls {@link #releaseThreadPool} method for the used pool
-     * (in <tt>finally</tt> section).
+     * (in <code>finally</code> section).
      *
-     * <p>As you see, if <tt>java.util.concurrent.ExecutionException</tt> is thrown
-     * while calling one of <tt>results[...].get()</tt>, this exception is caught,
-     * and this method throws the result of its <tt>getCause()</tt> method.
+     * <p>As you see, if <code>java.util.concurrent.ExecutionException</code> is thrown
+     * while calling one of <code>results[...].get()</code>, this exception is caught,
+     * and this method throws the result of its <code>getCause()</code> method.
      * In other words, all possible exceptions while performing tasks are thrown as if they would be
      * performed in the current thread.
      *
-     * <p>If <tt>java.lang.InterruptedException</tt> is thrown while calling one of <tt>results[...].get()</tt>,
-     * this exception is also caught, and this method throws <tt>java.io.IOError</tt>.
+     * <p>If <code>java.lang.InterruptedException</code> is thrown
+     * while calling one of <code>results[...].get()</code>,
+     * this exception is also caught, and this method throws <code>java.io.IOError</code>.
      * Usually, you should avoid interrupting the threads, processing AlgART arrays,
-     * via <tt>Thread.interrupt()</tt> technique (which leads to <tt>java.lang.InterruptedException</tt>):
+     * via <code>Thread.interrupt()</code> technique (which leads to <code>java.lang.InterruptedException</code>):
      * see the package description about runtime exceptions issue.
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
      *                      can be {@code null}, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
+     * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
      * @see #performTasks(Array, java.util.concurrent.ThreadFactory, Runnable[])
      */
     void performTasks(ThreadFactory threadFactory, Runnable[] tasks);
@@ -235,7 +236,7 @@ public interface ThreadPoolFactory {
      *                      method to get the necessary thread pool;
      *                      can be {@code null}, then some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
-     * @throws NullPointerException if <tt>tasks</tt> argument or one of the tasks is {@code null}.
+     * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
      */
     void performTasks(Array sourceArray, ThreadFactory threadFactory, Runnable[] tasks);
 
@@ -246,10 +247,10 @@ public interface ThreadPoolFactory {
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.
-     * @throws NullPointerException      if <tt>tasks</tt> argument
+     * @throws NullPointerException      if <code>tasks</code> argument
      *                                   or one of tasks in the specified range is {@code null}.
-     * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
-     * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
+     * @throws IndexOutOfBoundsException if <code>from &lt; 0</code> or <code>from &gt; tasks.length</code>.
+     * @throws IllegalArgumentException  if <code>from &gt; to</code>.
      */
     void performTasks(Runnable[] tasks, int from, int to);
 
@@ -263,10 +264,10 @@ public interface ThreadPoolFactory {
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.
-     * @throws NullPointerException      if <tt>tasks</tt> argument or
+     * @throws NullPointerException      if <code>tasks</code> argument or
      *                                   or one of tasks in the specified range is {@code null}.
-     * @throws IndexOutOfBoundsException if <tt>from &lt; 0</tt> or <tt>from &gt; tasks.length</tt>.
-     * @throws IllegalArgumentException  if <tt>from &gt; to</tt>.
+     * @throws IndexOutOfBoundsException if <code>from &lt; 0</code> or <code>from &gt; tasks.length</code>.
+     * @throws IllegalArgumentException  if <code>from &gt; to</code>.
      */
     void performTasks(ThreadFactory threadFactory, Runnable[] tasks, int from, int to);
 }
