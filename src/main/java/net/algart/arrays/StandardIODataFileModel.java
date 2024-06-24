@@ -47,18 +47,18 @@ import java.util.concurrent.Callable;
  *
  * <p>The {@link DataFile data files}, returned by this class, creates
  * {@link DataFile.BufferHolder buffer holders} containing NIO byte buffers, which can be direct or non-direct
- * &mdash; it depends on the argument <tt>directBuffers</tt> of the constructors, having such argument,
+ * &mdash; it depends on the argument <code>directBuffers</code> of the constructors, having such argument,
  * or on the {@link #defaultDirectBuffers()} value for other constructors.
  * The {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) map} method in a data file
- * allocates such byte buffer (<tt>ByteBuffer.allocateDirect(size)</tt> or <tt>ByteBuffer.allocate(size)</tt>)
+ * allocates such byte buffer (<code>ByteBuffer.allocateDirect(size)</code> or <code>ByteBuffer.allocate(size)</code>)
  * and loads the file fragment into it ({@link #readAllBuffer(FileChannel, long, ByteBuffer)}).
  * The {@link DataFile.BufferHolder#unmap(boolean) unmap(true/false)} and
  * {@link DataFile.BufferHolder#flush(boolean) flush(true/false)} methods of the created buffer holder
  * writes all data back to file ({@link #writeAllBuffer(FileChannel, long, ByteBuffer)}).
- * Reading data is cached in free Java memory via <tt>WeakReference</tt> technique,
+ * Reading data is cached in free Java memory via <code>WeakReference</code> technique,
  * if this class was created via {@link #StandardIODataFileModel()} or some other constructor,
- * having no <tt>cacheReading</tt> argument, of via
- * or some constructor with the argument <tt>cacheReading=true</tt>.
+ * having no <code>cacheReading</code> argument, of via
+ * or some constructor with the argument <code>cacheReading=true</code>.
  * Writing data is not cached.</p>
  *
  * <p>The {@link DataFile#close() close()} method in data files, returned by this class,
@@ -82,7 +82,7 @@ import java.util.concurrent.Callable;
  * >(fc)&nbsp;"Cleaner terminated abnormally" error in simple mapping test</a>".
  * Right now, this bug is usually avoided in current implementation of
  * {@link DefaultDataFileModel}, but there is a little risk to get
- * unexpected <tt>IOError</tt>.
+ * unexpected <code>IOError</code>.
  * If you need maximal stability with Java 1.5 or 1.6, and the performance is enough,
  * you may choose this data file model.</p>
  *
@@ -95,27 +95,27 @@ import java.util.concurrent.Callable;
 public class StandardIODataFileModel extends AbstractDataFileModel implements DataFileModel<File> {
 
     private static final int STANDARD_IO_NUMBER_OF_BANKS =
-        MappedDataStorages.MappingSettings.nearestCorrectNumberOfBanks(
-            InternalUtils.getIntProperty("net.algart.arrays.StandardIODataFileModel.numberOfBanks", 32));
+            MappedDataStorages.MappingSettings.nearestCorrectNumberOfBanks(
+                    InternalUtils.getIntProperty("net.algart.arrays.StandardIODataFileModel.numberOfBanks", 32));
 
     private static final int STANDARD_IO_BANK_SIZE = MappedDataStorages.MappingSettings.nearestCorrectBankSize(
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.StandardIODataFileModel.bankSize", 65536)); // 64 KB
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.StandardIODataFileModel.bankSize", 65536)); // 64 KB
 
     private static final boolean DEFAULT_DIRECT_BUFFERS =
-        InternalUtils.getBooleanProperty(
-            "net.algart.arrays.StandardIODataFileModel.directBuffers", true);
+            InternalUtils.getBooleanProperty(
+                    "net.algart.arrays.StandardIODataFileModel.directBuffers", true);
 
     private static final long STANDARD_IO_PREFIX_SIZE = Math.max(0L,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.StandardIODataFileModel.prefixSize", 0)); // for debugging only
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.StandardIODataFileModel.prefixSize", 0)); // for debugging only
 
     private static final int ALLOCATE_NUMBER_OF_ATTEMPTS = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.StandardIODataFileModel.allocateNumberOfAttempts", 2));  // 2 attempts
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.StandardIODataFileModel.allocateNumberOfAttempts", 2));  // 2 attempts
     private static final int ALLOCATE_NUMBER_OF_ATTEMPTS_WITH_GC = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.StandardIODataFileModel.allocateNumberOfAttemptsWithGc", 6));  // and 6 with gc
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.StandardIODataFileModel.allocateNumberOfAttemptsWithGc", 6));  // and 6 with gc
 
     private static final boolean DEFAULT_CACHE_READING = true;
     // - please do not change, excepting debugging needs: "true" value is required by the contract of this class
@@ -125,15 +125,16 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
 
     /**
      * Default {@link #isDirectBuffers() directBuffer} flag, used when this this class
-     * is instantiated by a constructor without <tt>directBuffer</tt> argument.
+     * is instantiated by a constructor without <code>directBuffer</code> argument.
      * More precisely, if there is the system property
-     * "<tt>net.algart.arrays.StandardIODataFileModel.directBuffers</tt>",
-     * containing "<tt>true</tt>" or "<tt>false</tt>" string (in lower case),
-     * this method returns <tt>true</tt> if this property contains "<tt>true</tt>"
-     * and <tt>false</tt> if this property contains "<tt>false</tt>"
-     * If there is no such property, or if it contains illegal string (not "<tt>true</tt>" or "<tt>false</tt>"),
-     * or if some exception occurred while calling <tt>System.getProperty</tt>,
-     * this method returns <tt>true</tt> (default value).
+     * "<code>net.algart.arrays.StandardIODataFileModel.directBuffers</code>",
+     * containing "<code>true</code>" or "<code>false</code>" string (in lower case),
+     * this method returns <code>true</code> if this property contains "<code>true</code>"
+     * and <code>false</code> if this property contains "<code>false</code>"
+     * If there is no such property, or if it contains illegal string
+     * (not "<code>true</code>" or "<code>false</code>"),
+     * or if some exception occurred while calling <code>System.getProperty</code>,
+     * this method returns <code>true</code> (default value).
      * The value of this system property is loaded and checked only once
      * while initializing {@link StandardIODataFileModel} class.
      *
@@ -157,9 +158,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
-     *                      byte buffers for mapping by <tt>ByteBuffer.allocateDirect(size)</tt>
-     *                      (if this argument is <tt>true</tt>) or by <tt>ByteBuffer.allocate(size)</tt>
-     *                      (if this argument is <tt>false</tt>).
+     *                      byte buffers for mapping by <code>ByteBuffer.allocateDirect(size)</code>
+     *                      (if this argument is <code>true</code>) or by <code>ByteBuffer.allocate(size)</code>
+     *                      (if this argument is <code>false</code>).
      */
     public StandardIODataFileModel(boolean cacheReading, boolean directBuffers) {
         this(null, STANDARD_IO_PREFIX_SIZE, cacheReading, directBuffers);
@@ -199,9 +200,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      *                      or {@code null} if the default temporary-file directory is to be used.
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
-     *                      byte buffers for mapping by <tt>ByteBuffer.allocateDirect(size)</tt>
-     *                      (if this argument is <tt>true</tt>) or by <tt>ByteBuffer.allocate(size)</tt>
-     *                      (if this argument is <tt>false</tt>).
+     *                      byte buffers for mapping by <code>ByteBuffer.allocateDirect(size)</code>
+     *                      (if this argument is <code>true</code>) or by <code>ByteBuffer.allocate(size)</code>
+     *                      (if this argument is <code>false</code>).
      */
     public StandardIODataFileModel(File tempPath, boolean cacheReading, boolean directBuffers) {
         this(tempPath, STANDARD_IO_PREFIX_SIZE, cacheReading, directBuffers);
@@ -211,41 +212,43 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * Creates new instance of this class.
      *
      * <p>Please see {@link AbstractDataFileModel#AbstractDataFileModel(File, long)} about
-     * <tt>tempPath</tt> and <tt>prefixSize</tt> arguments.
+     * <code>tempPath</code> and <code>prefixSize</code> arguments.
      *
      * <p>The data files, created by this model, will cache all loaded data
-     * in free Java memory (via <tt>WeakReference</tt> technique),
-     * if and only if <tt>cacheReading</tt> argument is <tt>true</tt>.
+     * in free Java memory (via <code>WeakReference</code> technique),
+     * if and only if <code>cacheReading</code> argument is <code>true</code>.
      * In many cases, caching can improve performance.
      * But if you are sure that the data will be usually read once,
-     * it is better to pass <tt>false</tt> as the constructor argument,
+     * it is better to pass <code>false</code> as the constructor argument,
      * because needless caching may increase disk swapping.
      *
-     * <p>The <tt>directBuffers</tt> argument defines the kind of byte buffers, which
+     * <p>The <code>directBuffers</code> argument defines the kind of byte buffers, which
      * will be allocated in Java memory by {@link DataFile data files}, created by this class.
-     * If this argument is <tt>true</tt>, their {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) map}
-     * method will use direct byte buffers, i.e. will allocate them by <tt>ByteBuffer.allocateDirect(size)</tt> call.
-     * If this argument is <tt>false</tt>, the {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) map}
-     * method will use non-direct byte buffers, i.e. will allocate them by <tt>ByteBuffer.allocate(size)</tt> call.
+     * If this argument is <code>true</code>, their {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) map}
+     * method will use direct byte buffers, i.e. will allocate them
+     * by <code>ByteBuffer.allocateDirect(size)</code> call.
+     * If this argument is <code>false</code>, the {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) map}
+     * method will use non-direct byte buffers, i.e. will allocate them by <code>ByteBuffer.allocate(size)</code> call.
      *
-     * <p>Note: the value <tt>directBuffers=false</tt> can slow down processing AlgART arrays, created with help
-     * of this data file model, if the element type is other than <tt>byte</tt>.
+     * <p>Note: the value <code>directBuffers=false</code> can slow down processing AlgART arrays, created with help
+     * of this data file model, if the element type is other than <code>byte</code>.
      * The reason is that byte buffers, created by this model, are converted to the necessary element type by methods
-     * <tt>ByteBuffer.asShortBuffer</tt>, <tt>ByteBuffer.asIntBuffer()</tt>, <tt>ByteBuffer.asDoubleBuffer()</tt>,
+     * <code>ByteBuffer.asShortBuffer</code>,
+     * <code>ByteBuffer.asIntBuffer()</code>, <code>ByteBuffer.asDoubleBuffer()</code>,
      * etc., and accessing to content of the AlgART arrays is performed via these views of the original byte buffers.
      * In a case of direct byte buffers such conversion is usually performed at the low processor level
-     * in a native code, and access to their views like <tt>ByteBuffer.asDoubleBuffer()</tt> is performed with
+     * in a native code, and access to their views like <code>ByteBuffer.asDoubleBuffer()</code> is performed with
      * the maximal possible speed. Unlike this, in a case of non-direct byte buffers such conversion is
      * performed in Java code, and access to each element of these views requires some calculations.
-     * For example, reading any element of <tt>ByteBuffer.asDoubleBuffer()</tt> means reading 8 bytes,
-     * joining them into a long by "&lt;&lt;" and "|" operators and calling <tt>Double.longBitsToDouble</tt> method
+     * For example, reading any element of <code>ByteBuffer.asDoubleBuffer()</code> means reading 8 bytes,
+     * joining them into a long by "&lt;&lt;" and "|" operators and calling <code>Double.longBitsToDouble</code> method
      * &mdash; and these operations will be performed while any form of reading elements from
      * the AlgART array {@link DoubleArray}. Thus, access to AlgART arrays, excepting {@link ByteArray},
      * becomes slower. The speed difference is usually not very large, but can be appreciable for simple
      * applications with intensive accessing AlgART arrays.
      *
-     * <p>On the other hand, please note: the value <tt>directBuffers=true</tt> can increase requirements
-     * to memory and the risk of unexpected <tt>OutOfMemoryError</tt>, if you are using
+     * <p>On the other hand, please note: the value <code>directBuffers=true</code> can increase requirements
+     * to memory and the risk of unexpected <code>OutOfMemoryError</code>, if you are using
      * {@link #recommendedNumberOfBanks() a lot} of {@link #recommendedBankSize(boolean) large} banks,
      * especially for 32-bit JVM. Direct byte buffers are usually allocated not in the usual Java heap,
      * but in some separate address space. As a result, on 32-bit JVM the maximal amount of memory,
@@ -253,7 +256,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * when -Xmx is 500&ndash;1000&nbsp;MB or greater.
      * If you need maximally stable application and you are planning to use all or almost all available memory,
      * specified via -Xmx JVM argument, for banks of this data file model (to reduce disk swapping),
-     * you should prefer non-direct buffers (<tt>directBuffers=false</tt>).
+     * you should prefer non-direct buffers (<code>directBuffers=false</code>).
      * Of course, this problem should not occur while using default settings for {@link #recommendedNumberOfBanks()}
      * and {@link #recommendedBankSize(boolean)} &mdash; 32 banks per 64&nbsp;KB.
      *
@@ -263,9 +266,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * @param prefixSize    the value returned by {@link #recommendedPrefixSize()} implementation in this class.
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
-     *                      byte buffers for mapping by <tt>ByteBuffer.allocateDirect(size)</tt>
-     *                      (if this argument is <tt>true</tt>) or by <tt>ByteBuffer.allocate(size)</tt>
-     *                      (if this argument is <tt>false</tt>).
+     *                      byte buffers for mapping by <code>ByteBuffer.allocateDirect(size)</code>
+     *                      (if this argument is <code>true</code>) or by <code>ByteBuffer.allocate(size)</code>
+     *                      (if this argument is <code>false</code>).
      * @see #defaultDirectBuffers()
      */
     public StandardIODataFileModel(File tempPath, long prefixSize, boolean cacheReading, boolean directBuffers) {
@@ -275,29 +278,29 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Returns the <tt>directBuffers</tt> argument, passed to
+     * Returns the <code>directBuffers</code> argument, passed to
      * {@link #StandardIODataFileModel(File, long, boolean, boolean) the main constructor}
      * (or to other constructors, having such argument) while creating this instance.
-     * If this instance was created by constructors, which have no <tt>directBuffers</tt>,
+     * If this instance was created by constructors, which have no <code>directBuffers</code>,
      * the result of this method is equal to {@link #defaultDirectBuffers()} value.
      *
      * @return whether the {@link DataFile data files}, created by this class, should allocate
-     *         byte buffers for mapping by <tt>ByteBuffer.allocateDirect(size)</tt>
-     *         (if this flag is <tt>true</tt>) or by <tt>ByteBuffer.allocate(size)</tt>
-     *         (if this flag is <tt>false</tt>).
+     * byte buffers for mapping by <code>ByteBuffer.allocateDirect(size)</code>
+     * (if this flag is <code>true</code>) or by <code>ByteBuffer.allocate(size)</code>
+     * (if this flag is <code>false</code>).
      */
     public final boolean isDirectBuffers() {
         return this.directBuffers;
     }
 
     /**
-     * This implementation returns the data file corresponding to usual Java file <tt>new java.io.File(path)</tt>,
+     * This implementation returns the data file corresponding to usual Java file <code>new java.io.File(path)</code>,
      * with {@link DataFile#map(net.algart.arrays.DataFile.Range, boolean) DataFile.map}
      * method that use usual read/write operation instead of Java mapping.
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
-     * @param path      the path to disk file (as the argument of <tt>new java.io.File(path)</tt>).
+     * @param path      the path to disk file (as the argument of <code>new java.io.File(path)</code>).
      * @param byteOrder the byte order that will be always used for mapping this file.
      * @return new instance of {@link DataFile} object.
      * @throws NullPointerException if one of the passed arguments is {@code null}.
@@ -309,10 +312,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Returns the absolute path to the disk file (<tt>java.io.File.getAbsoluteFile()</tt>).
+     * Returns the absolute path to the disk file (<code>java.io.File.getAbsoluteFile()</code>).
      * The argument may be created by this data file model or by {@link DefaultDataFileModel}.
      *
-     * <p>This method never throws <tt>java.io.IOError</tt>.
+     * <p>This method never throws <code>java.io.IOError</code>.
      *
      * @param dataFile the data file.
      * @return the absolute path to the disk file.
@@ -325,9 +328,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * <p>This implementation returns <tt>true</tt>.
+     * <p>This implementation returns <code>true</code>.
      *
-     * @return <tt>true</tt>.
+     * @return <code>true</code>.
      */
     @Override
     public boolean isAutoDeletionRequested() {
@@ -336,9 +339,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
 
     /**
      * <p>This implementation returns the value
-     * <tt>Integer.getInteger("net.algart.arrays.StandardIODataFileModel.numberOfBanks",&nbsp;32)</tt>,
+     * <code>Integer.getInteger("net.algart.arrays.StandardIODataFileModel.numberOfBanks",&nbsp;32)</code>,
      * stored while initializing this {@link StandardIODataFileModel} class,
-     * or default value 32 if some exception occurred while calling <tt>Integer.getInteger</tt>.
+     * or default value 32 if some exception occurred while calling <code>Integer.getInteger</code>.
      * If this value is less than 2, returns 2.
      *
      * @return the recommended number of memory banks.
@@ -350,10 +353,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
 
     /**
      * <p>This implementation returns the value
-     * <tt>Integer.getInteger("net.algart.arrays.StandardIODataFileModel.bankSize",65536)</tt> (64&nbsp;KB)
+     * <code>Integer.getInteger("net.algart.arrays.StandardIODataFileModel.bankSize",65536)</code> (64&nbsp;KB)
      * (regardless of the argument),
      * stored while initializing {@link StandardIODataFileModel} class,
-     * or default value 65536 if some exception occurred while calling <tt>Integer.getInteger</tt>.
+     * or default value 65536 if some exception occurred while calling <code>Integer.getInteger</code>.
      * If this property contains invalid value (for example, not a power of two),
      * this value is automatically corrected to the nearest valid one.
      *
@@ -366,9 +369,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * This implementation returns <tt>"stdmm"</tt>;
+     * This implementation returns <code>"stdmm"</code>;
      *
-     * @return <tt>"stdmm"</tt>.
+     * @return <code>"stdmm"</code>.
      */
     @Override
     public String temporaryFilePrefix() {
@@ -384,24 +387,24 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      */
     public String toString() {
         return "standard I/O data file model: " + recommendedNumberOfBanks()
-            + " banks per " + recommendedBankSize(false) + " bytes"
-            + (directBuffers ? ", direct buffers" : ", Java heap buffers")
-            + (cacheReading ? ", cached reading" : "");
+                + " banks per " + recommendedBankSize(false) + " bytes"
+                + (directBuffers ? ", direct buffers" : ", Java heap buffers")
+                + (cacheReading ? ", cached reading" : "");
     }
 
     /**
-     * Reads all content of the byte buffer (<tt>dest.limit()</tt> bytes) from the given position
+     * Reads all content of the byte buffer (<code>dest.limit()</code> bytes) from the given position
      * of the file channel.
      * Current positions in the file channel and byte buffer are ignored and not changed.
      *
-     * <p>Unlike <tt>FileChannel.read(ByteBuffer dst, long position)</tt>, this method
-     * <i>guarantees</i> that all <tt>dest.limit()</tt> bytes will be really read from the file channel.
-     * (<tt>FileChannel.read</tt> method might not fill all buffer:
+     * <p>Unlike <code>FileChannel.read(ByteBuffer dst, long position)</code>, this method
+     * <i>guarantees</i> that all <code>dest.limit()</code> bytes will be really read from the file channel.
+     * (<code>FileChannel.read</code> method might not fill all buffer:
      * it returns the number of successfully read bytes.)
-     * To provide this guarantee, this method performs a loop of calls of <tt>FileChannel.read</tt> method;
-     * if it cannot load all bytes, it throws <tt>EOFException</tt>.
+     * To provide this guarantee, this method performs a loop of calls of <code>FileChannel.read</code> method;
+     * if it cannot load all bytes, it throws <code>EOFException</code>.
      *
-     * <p>In a case of exception, the content of <tt>dest</tt> byte buffer can be partially changed
+     * <p>In a case of exception, the content of <code>dest</code> byte buffer can be partially changed
      * (loaded from the file). The file channel position and byte buffer positions are not changed
      * in any case.
      *
@@ -410,11 +413,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * @param dest        the destination byte buffer.
      * @throws IllegalArgumentException if the position is negative.
      * @throws EOFException             if the byte buffer cannot be fully read.
-     * @throws IOException              in the same situations as <tt>FileChannel.read(ByteBuffer dst)</tt> method.
+     * @throws IOException              in the same situations as <code>FileChannel.read(ByteBuffer dst)</code> method.
      */
     public static void readAllBuffer(FileChannel fileChannel, long position, ByteBuffer dest)
-        throws IOException
-    {
+            throws IOException {
         if (position < 0) {
             throw new IllegalArgumentException("Negative position");
         }
@@ -430,7 +432,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                 int res = fileChannel.read(dup);
                 if (res < 0) {
                     throw new EOFException("Cannot read " + n + " bytes from the file at the position " + position
-                        + ": file is exhausted");
+                            + ": file is exhausted");
                 }
                 ofs += res;
             }
@@ -440,16 +442,16 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Writes all content of the byte buffer (<tt>src.limit()</tt> bytes) to the given position
+     * Writes all content of the byte buffer (<code>src.limit()</code> bytes) to the given position
      * of the file channel.
      * Current positions in the file channel and byte buffer are ignored and not changed.
      *
-     * <p>Unlike <tt>FileChannel.write(ByteBuffer dst, long position)</tt>, this method
-     * <i>guarantees</i> that all <tt>src.limit()</tt> bytes will be really written to the file channel.
-     * (<tt>FileChannel.write</tt> method might not write all buffer:
+     * <p>Unlike <code>FileChannel.write(ByteBuffer dst, long position)</code>, this method
+     * <i>guarantees</i> that all <code>src.limit()</code> bytes will be really written to the file channel.
+     * (<code>FileChannel.write</code> method might not write all buffer:
      * it returns the number of successfully written bytes.)
-     * To provide this guarantee, this method performs a loop of calls of <tt>FileChannel.write</tt> method;
-     * if it cannot write all bytes, it throws <tt>IOException</tt>.
+     * To provide this guarantee, this method performs a loop of calls of <code>FileChannel.write</code> method;
+     * if it cannot write all bytes, it throws <code>IOException</code>.
      *
      * <p>In a case of exception, the content of the file can be partially changed
      * (written from the byte buffer). The file channel position and byte buffer positions are not changed
@@ -459,12 +461,12 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
      * @param position    the file position at which the transfer is to begin; must be non-negative.
      * @param src         the source byte buffer.
      * @throws IllegalArgumentException if the position is negative.
-     * @throws IOException              in the same situations as <tt>FileChannel.write(ByteBuffer dst)</tt> method,
+     * @throws IOException              in the same situations as
+     *                                  <code>FileChannel.write(ByteBuffer dst)</code> method,
      *                                  and also if the byte buffer cannot be fully written.
      */
     public static void writeAllBuffer(FileChannel fileChannel, long position, ByteBuffer src)
-        throws IOException
-    {
+            throws IOException {
         if (position < 0) {
             throw new IllegalArgumentException("Negative position");
         }
@@ -482,7 +484,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                 int res = fileChannel.write(dup);
                 if (res < 0) {
                     throw new EOFException("Cannot write " + n + " bytes to the file at the position " + position
-                        + ": the disk if probably full");
+                            + ": the disk if probably full");
                 }
                 ofs += res;
             }
@@ -503,8 +505,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
         for (int count = ALLOCATE_NUMBER_OF_ATTEMPTS + ALLOCATE_NUMBER_OF_ATTEMPTS_WITH_GC; ; count--) {
             try {
                 result = directBuffers ?
-                    ByteBuffer.allocateDirect(capacity) :
-                    ByteBuffer.allocate(capacity);
+                        ByteBuffer.allocateDirect(capacity) :
+                        ByteBuffer.allocate(capacity);
                 break;
             } catch (Error e) { // probably OutOfMemoryError
                 error = e;
@@ -515,8 +517,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             }
             boolean doGc = count <= ALLOCATE_NUMBER_OF_ATTEMPTS_WITH_GC;
             LargeMemoryModel.LOGGER.config(
-                "SSSS allocate" + (directBuffers ? "Direct" : "") + ": problem with allocating memory, new attempt #"
-                    + numberOfAttempts + (doGc ? " with gc" : ""));
+                    "SSSS allocate" + (directBuffers ? "Direct" : "") + ": problem with allocating memory, new attempt #"
+                            + numberOfAttempts + (doGc ? " with gc" : ""));
             if (doGc) {
                 System.gc();
                 numberOfGc++;
@@ -526,10 +528,10 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
         if (result == null) {
             assert error != null;
             LargeMemoryModel.LOGGER.warning(String.format(Locale.US,
-                "SSSS allocate" + (directBuffers ? "Direct" : "") + ": cannot allocate data in %.2f sec, "
-                    + numberOfAttempts + " attempts" + (numberOfGc > 0 ? ", " + numberOfGc + " with gc" : "")
-                    + " (%s)",
-                (t2 - t1) * 1e-9, error));
+                    "SSSS allocate" + (directBuffers ? "Direct" : "") + ": cannot allocate data in %.2f sec, "
+                            + numberOfAttempts + " attempts" + (numberOfGc > 0 ? ", " + numberOfGc + " with gc" : "")
+                            + " (%s)",
+                    (t2 - t1) * 1e-9, error));
             throw error;
         }
         return result;
@@ -598,12 +600,12 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     final ByteBuffer bbLocal = bb;
                     try {
                         Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(file.getPath(),
-                            new Callable<Object>() {
-                                public Object call() throws Exception {
-                                    readAllBuffer(fc, range.position(), bbLocal);
-                                    return null;
-                                }
-                            });
+                                new Callable<Object>() {
+                                    public Object call() throws Exception {
+                                        readAllBuffer(fc, range.position(), bbLocal);
+                                        return null;
+                                    }
+                                });
                     } catch (IOException ex) {
                         throw new IOError(ex);
                     } catch (Exception ex) {
@@ -613,13 +615,13 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                 }
                 if (cacheReading) {
                     mappingCache.put(range, new DefaultDataFileModel.RangeWeakReference<ByteBuffer>(
-                        bb, fileIndex, file.getPath(), range, reaped));
+                            bb, fileIndex, file.getPath(), range, reaped));
 //                    System.out.println("SSSS caching " + range + " of " + file);
                     LargeMemoryModel.LOGGER.finest("SSSS caching " + range + " of " + file);
                 }
             }
             return new DirectByteBufferHolder(bb, file.getPath(), fc, range, foundInCache, isReadOnly(),
-                unusedBuffersPool);
+                    unusedBuffersPool);
         }
 
         // no necessity to override MappableFile.force() method here: it checks getClass() inside
@@ -634,9 +636,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             private final List<ByteBuffer> unusedBuffersPool;
 
             DirectByteBufferHolder(
-                ByteBuffer bb, String fileName, FileChannel fc, Range range,
-                boolean fromCache, boolean readOnly, List<ByteBuffer> unusedBuffersPool)
-            {
+                    ByteBuffer bb, String fileName, FileChannel fc, Range range,
+                    boolean fromCache, boolean readOnly, List<ByteBuffer> unusedBuffersPool) {
                 this.bb = bb;
                 this.fileName = fileName;
                 this.fc = fc;
@@ -673,12 +674,12 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     try {
 //                        System.out.println("SSSS flushing " + this);
                         Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName,
-                            new Callable<Object>() {
-                                public Object call() throws Exception {
-                                    writeAllBuffer(fc, range.position(), bb);
-                                    return null;
-                                }
-                            });
+                                new Callable<Object>() {
+                                    public Object call() throws Exception {
+                                        writeAllBuffer(fc, range.position(), bb);
+                                        return null;
+                                    }
+                                });
                     } catch (IOException ex) {
                         throw new IOError(ex);
                     } catch (Exception ex) {

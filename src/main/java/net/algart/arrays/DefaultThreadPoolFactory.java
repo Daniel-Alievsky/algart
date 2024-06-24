@@ -24,8 +24,6 @@
 
 package net.algart.arrays;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -119,8 +117,8 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * If it is zero, that method will use the common algorithm, based on the system property:
      * see comments to {@link #recommendedNumberOfTasks()}.
      *
-     * <p>This method is equivalent to <tt>new&nbsp;{@link #DefaultThreadPoolFactory(int, ThreadPoolExecutor)
-     * DefaultThreadPoolFactory}(numberOfTasks, {@link #globalThreadPool()})</tt>.
+     * <p>This method is equivalent to <code>new&nbsp;{@link #DefaultThreadPoolFactory(int, ThreadPoolExecutor)
+     * DefaultThreadPoolFactory}(numberOfTasks, {@link #globalThreadPool()})</code>.
      *
      * <p>Note: this method works very quickly (it just returns global internal constants) in cases
      * <code>numberOfTasks=0</code> and <code>numberOfTasks=1</code>.
@@ -250,8 +248,8 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     /**
      * This implementation returns the {@link #persistentThreadPool() persistent thread pool},
      * if it exists, or creates new thread pool by the following call:
-     * <tt>Executors.newFixedThreadPool({@link #recommendedNumberOfTasks()},
-     * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</tt>.
+     * <code>Executors.newFixedThreadPool({@link #recommendedNumberOfTasks()},
+     * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</code>.
      *
      * @param threadFactory if not {@code null} and there is no
      *                      {@link #persistentThreadPool() persistent thread pool},
@@ -272,9 +270,9 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     /**
      * This implementation returns the {@link #persistentThreadPool() persistent thread pool},
      * if it exists, or creates new thread pool by the following call:
-     * <tt>Executors.newFixedThreadPool({@link #recommendedNumberOfTasks(Array)
+     * <code>Executors.newFixedThreadPool({@link #recommendedNumberOfTasks(Array)
      * recommendedNumberOfTasks}(sourceArray),
-     * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</tt>.
+     * threadFactory==null ? Executors.defaultThreadFactory() : threadFactory)</code>.
      *
      * @param sourceArray   some AlgART array that should be processed.
      * @param threadFactory if not {@code null} and there is no
