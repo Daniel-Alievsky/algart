@@ -30,20 +30,20 @@ import java.util.*;
 /**
  * <p><i>Finalizer</i>: an universal tool allowing to perform any task on deallocation of some object.</p>
  *
- * <p>This class can be a helpful alternative to the standard <tt>finalize()</tt> method.
+ * <p>This class can be a helpful alternative to the standard <code>finalize()</code> method.
  * It is based on the mechanism of phantom references and may be better solution
- * than <tt>finalize()</tt> method in many situations.</p>
+ * than <code>finalize()</code> method in many situations.</p>
  *
- * <p>The main advantages of <tt>Finalizer</tt> class are the following.</p>
+ * <p>The main advantages of <code>Finalizer</code> class are the following.</p>
  *
  * <ol>
- * <li>Declaration of <tt>finalize()</tt> method slows down instantiation of objects.
- * Finalization via <tt>Finalizer</tt> class does not lead to any slowing.</li>
+ * <li>Declaration of <code>finalize()</code> method slows down instantiation of objects.
+ * Finalization via <code>Finalizer</code> class does not lead to any slowing.</li>
  *
- * <li><tt>Finalizer</tt> class allows to control the thread, which performs finalization tasks,
+ * <li><code>Finalizer</code> class allows to control the thread, which performs finalization tasks,
  * in particular, to stop it or to set its priority.</li>
  *
- * <li><tt>Finalizer</tt> class allows to do something on deallocation of any object,
+ * <li><code>Finalizer</code> class allows to do something on deallocation of any object,
  * even if we have no ability to override its methods.</li>
  * </ol>
  *
@@ -73,19 +73,19 @@ import java.util.*;
  * &#32;   }
  * });
  * </pre>
- * <p>In this example, <tt>run()</tt> method will be performed at the moment when
- * <tt>data</tt> object will be ready for deallocation by garbage collector.</p>
+ * <p>In this example, <code>run()</code> method will be performed at the moment when
+ * <code>data</code> object will be ready for deallocation by garbage collector.</p>
  *
- * <p>Important note: the implementation of <tt>Runnable</tt> interface <b>must not contain any
- * direct or indirect references to <tt>data</tt> object</b>.
- * In other case, the <tt>data</tt> instance will never become unreachable and the <tt>run()</tt> method
- * will never be called. In particular, <tt>largeResources</tt> object, processed by
- * <tt>run()</tt> method and accessible there via "<tt>final</tt>" declaration,
- * must not refer to <tt>data</tt> instance in any ways.
- * In other words, unlike the standard <tt>finalize()</tt> method,
+ * <p>Important note: the implementation of <code>Runnable</code> interface <b>must not contain any
+ * direct or indirect references to <code>data</code> object</b>.
+ * In other case, the <code>data</code> instance will never become unreachable and the <code>run()</code> method
+ * will never be called. In particular, <code>largeResources</code> object, processed by
+ * <code>run()</code> method and accessible there via "<code>final</code>" declaration,
+ * must not refer to <code>data</code> instance in any ways.
+ * In other words, unlike the standard <code>finalize()</code> method,
  * the finalization code, scheduled by this class, cannot refer to the finalized data.</p>
  *
- * <p>Every <tt>Finalizer</tt> instance contains a daemon thread, that is started on the first
+ * <p>Every <code>Finalizer</code> instance contains a daemon thread, that is started on the first
  * call of {@link #invokeOnDeallocation(Object, Runnable)
  * invokeOnDeallocation(checkedForDeallocation,task)} method.
  * This thread looks, in an infinite loop, for deallocation of all objects,
@@ -93,10 +93,10 @@ import java.util.*;
  * ("checked for deallocation") become unreachable.
  * This thread will run all time until closing the application,
  * if you will not stop it by {@link #shutdownNow()} method.
- * So, you should avoid creating extra instances of <tt>Finalizer</tt>:
+ * So, you should avoid creating extra instances of <code>Finalizer</code>:
  * please use one or several global finalizers for a package or application.</p>
  *
- * <p>As well as for the classic <tt>finalize()</tt> method, <b>there is no guarantee
+ * <p>As well as for the classic <code>finalize()</code> method, <b>there is no guarantee
  * that finalization tasks scheduled by this class will be really performed before
  * finishing the application</b>. Usually, exiting the application just stops all daemon
  * threads inside all instances of this class, and the tasks, which were not completed yet,
@@ -117,19 +117,19 @@ import java.util.*;
  * }
  * </pre>
  *
- * <p>This "<tt>while</tt>" loop here waits until all tasks, scheduled in <tt>myFinalizer</tt>,
+ * <p>This "<code>while</code>" loop here waits until all tasks, scheduled in <code>myFinalizer</code>,
  * will be successfully finished. The loop should be restricted by some suitable, not too long timeout:</p>
  *
  * <ul>
- * <li>firstly, because <tt>System.runFinalization()</tt> and <tt>System.gc()</tt> do not guarantee
+ * <li>firstly, because <code>System.runFinalization()</code> and <code>System.gc()</code> do not guarantee
  * finalization of any object,</li>
- * <li>secondly, because the <tt>activeTasksCount</tt> value
+ * <li>secondly, because the <code>activeTasksCount</code> value
  * will never become zero, if some references to data instances, scheduled for finalization,
  * were not "forgotten" (have not become unreachable) due to some bug in the other application code.</li>
  * </ul>
  *
  * <p>If your system use several finalizers, you should
- * perform the same loop for each one, or replace the single call of <tt>activeTasksCount()</tt>
+ * perform the same loop for each one, or replace the single call of <code>activeTasksCount()</code>
  * with the sum of results of this method for all finalizers:</p>
  *
  * <pre>
@@ -141,12 +141,12 @@ import java.util.*;
  * ...
  * </pre>
  *
- * <p>It's possible that your <tt>task</tt> object contains references to some other "large" objects,
+ * <p>It's possible that your <code>task</code> object contains references to some other "large" objects,
  * which also should be finalized before finishing your application and which implement
- * finalization in another way (for example, some standard Java objects as <tt>MappedByteBuffer</tt>).
- * When the "<tt>while</tt>" loop, listed above, finishes, such objects become unreachable,
+ * finalization in another way (for example, some standard Java objects as <code>MappedByteBuffer</code>).
+ * When the "<code>while</code>" loop, listed above, finishes, such objects become unreachable,
  * but not really finalized yet. To be on the safe side, we recommend to add the following loop
- * <i>after</i> the "<tt>while</tt>" loop listed above:</p>
+ * <i>after</i> the "<code>while</code>" loop listed above:</p>
  *
  * <pre>
  * for (int k = 0; k &lt; 5; k++) {
@@ -180,31 +180,31 @@ public final class Finalizer {
     }
 
     /**
-     * Schedules running of the given <tt>task</tt> (its <tt>run()</tt> method)
-     * at the moment when the <tt>checkedForDeallocation</tt> object will become unreachable
+     * Schedules running of the given <code>task</code> (its <code>run()</code> method)
+     * at the moment when the <code>checkedForDeallocation</code> object will become unreachable
      * (more precisely, <i>phantom reachable</i>).
      *
      * <p>The first call of this method starts the internal thread in this object.
      * This thread will look, in an infinite loop, for the levels of reachability
-     * of all objects passed to this method as <tt>checkedForDeallocation</tt> argument,
+     * of all objects passed to this method as <code>checkedForDeallocation</code> argument,
      * and will call corresponding tasks when these objects will become phantomly
      * reachable.
      *
-     * <p>Important: the implementation of <tt>task</tt> <i>must not contain references
-     * to the passed <tt>checkedForDeallocation</tt> instance</i>! In other case,
-     * this instance will never become unreachable and <tt>task.run()</tt> method
+     * <p>Important: the implementation of <code>task</code> <i>must not contain references
+     * to the passed <code>checkedForDeallocation</code> instance</i>! In other case,
+     * this instance will never become unreachable and <code>task.run()</code> method
      * will never be called.
      *
-     * <p>Note: if the class of <tt>checkedForDeallocation</tt> object,
-     * or the class of the last object which allows to reach <tt>checkedForDeallocation</tt>,
-     * declares standard <tt>finalize()</tt> method, then the <tt>task</tt> may not be called
-     * while the <i>first</i> <tt>System.gc()</tt> call after the moment when
-     * <tt>checkedForDeallocation</tt> object will become phantomly reachable,
-     * but only while <i>second or further</i> <tt>System.gc()</tt> calls.
+     * <p>Note: if the class of <code>checkedForDeallocation</code> object,
+     * or the class of the last object which allows to reach <code>checkedForDeallocation</code>,
+     * declares standard <code>finalize()</code> method, then the <code>task</code> may not be called
+     * while the <i>first</i> <code>System.gc()</code> call after the moment when
+     * <code>checkedForDeallocation</code> object will become phantomly reachable,
+     * but only while <i>second or further</i> <code>System.gc()</code> calls.
      *
      * @param checkedForDeallocation some object.
      * @param task                   a task thah will be performed on deallocation
-     *                               of <tt>checkedForDeallocation</tt> object.
+     *                               of <code>checkedForDeallocation</code> object.
      */
     public void invokeOnDeallocation(Object checkedForDeallocation, Runnable task) {
         synchronized (taskSet) {
@@ -240,7 +240,7 @@ public final class Finalizer {
      * Shutdown the finalizer. If some task is running now, it will be completed.
      * All tasks that are not running yet will be removed and will not be performed.
      *
-     * <p><i>You should not use this <tt>Finalizer</tt> instance after calling this method.</i>
+     * <p><i>You should not use this <code>Finalizer</code> instance after calling this method.</i>
      *
      * <p>You may call this method if you are absolutely sure that this finalizer will not be useful more.
      * It is the only way to stop the thread serving this finalizer before finishing the application.
@@ -256,15 +256,15 @@ public final class Finalizer {
 
     /**
      * Sets the priority of the thread serving this finalizer.
-     * The argument of this method will be passed to standard <tt>Thread.setPriority</tt> method.
+     * The argument of this method will be passed to standard <code>Thread.setPriority</code> method.
      *
-     * <p>Unlike <tt>Thread.setPriority</tt> method, the <tt>SecurityException</tt>
+     * <p>Unlike <code>Thread.setPriority</code> method, the <code>SecurityException</code>
      * (that can occur while setting priority) will be ignored: if it occurs,
      * the priority is not changed.
      *
      * @param priority priority to set the internal thread to.
      * @throws IllegalArgumentException if the priority is not in the
-     *                                  range <tt>Thread.MIN_PRIORITY</tt>..<tt>Thread.MAX_PRIORITY</tt>.
+     *                                  range <code>Thread.MIN_PRIORITY</code>..<code>Thread.MAX_PRIORITY</code>.
      */
     public void setPriority(int priority) {
         synchronized (taskSet) {

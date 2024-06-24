@@ -31,15 +31,15 @@ package net.algart.contexts;
  */
 public interface ProgressUpdater extends Context {
     /**
-     * Informs the user that <tt>readyPart*100</tt> percents of calculations are done.
+     * Informs the user that <code>readyPart*100</code> percents of calculations are done.
      *
-     * <p>The <tt>force</tt> argument determines whether this information must be
-     * shown to the user with a guarantee. If this argument is <tt>false</tt>,
+     * <p>The <code>force</code> argument determines whether this information must be
+     * shown to the user with a guarantee. If this argument is <code>false</code>,
      * this method <i>may</i> do nothing to save processing time if it's called very often.
-     * Usual implementation of this method contains a time check (<tt>System.currentTimeMillis()</tt>)
-     * and, if <tt>!force</tt>, does nothing if the previous call (for the same context)
+     * Usual implementation of this method contains a time check (<code>System.currentTimeMillis()</code>)
+     * and, if <code>!force</code>, does nothing if the previous call (for the same context)
      * was performed several tens of milliseconds ago.
-     * Please avoid too frequent calls of this method with <tt>force=true</tt>:
+     * Please avoid too frequent calls of this method with <code>force=true</code>:
      * millions of such calls may require long time.
      *
      * <p>For example, if the main work of some method is a long loop, this method
@@ -54,7 +54,8 @@ public interface ProgressUpdater extends Context {
      * </pre>
      *
      * @param readyPart the part of calculations that is already done (from 0.0 to 1.0).
-     * @param force     whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
+     * @param force     whether this information must be shown always (<code>true</code>)
+     *                  or may be lost (<code>false</code>).
      */
     void updateProgress(double readyPart, boolean force);
 }

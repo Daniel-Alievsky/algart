@@ -175,7 +175,7 @@ public final class ContourHeader {
     }
 
     /**
-     * Returns <tt>true</tt> if the header contains information about the rectangle, containing the contour.
+     * Returns <code>true</code> if the header contains information about the rectangle, containing the contour.
      * Note that headers, read from {@link Contours}, always contains this information,
      * but headers, created via constructors, never contain it.
      *

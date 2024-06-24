@@ -144,8 +144,8 @@ public class DefaultContext extends AbstractContext
 
     /**
      * This implementation returns
-     * <tt>mm.{@link MemoryModel#isElementTypeSupported
-     * isElementTypeSupported}(elementType) ? mm : {@link SimpleMemoryModel#getInstance()}</tt>,
+     * <code>mm.{@link MemoryModel#isElementTypeSupported
+     * isElementTypeSupported}(elementType) ? mm : {@link SimpleMemoryModel#getInstance()}</code>,
      * where <code>mm</code> is the result of {@link #getMemoryModel()} method.
      *
      * @param elementType the required element type.

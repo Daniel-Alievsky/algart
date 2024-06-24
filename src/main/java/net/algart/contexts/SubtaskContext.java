@@ -83,8 +83,8 @@ import java.util.Objects;
  *     <code>sc.is(contextClass)</code> and <code>sc.as(contextClass)</code>;</li>
  *
  *     <li><code>spu.{@link ProgressUpdater#updateProgress updateProgress}(readyPart,force)</code>
- *     calls <tt>pu.{@link ProgressUpdater#updateProgress
- *     updateProgress}(fromPart+readyPart*(toPart-fromPart),force)</tt>.</li>
+ *     calls <code>pu.{@link ProgressUpdater#updateProgress
+ *     updateProgress}(fromPart+readyPart*(toPart-fromPart),force)</code>.</li>
  *     </ul>
  * <p>
  * Note: if the parent context does not support {@link ProgressUpdater}
