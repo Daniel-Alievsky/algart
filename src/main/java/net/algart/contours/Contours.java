@@ -34,7 +34,7 @@ import java.util.stream.IntStream;
 
 /**
  * <p>Array of 2D contours.</p>
- * <p>Every contour is a sequence of 32-bit <tt>int</tt> values, describing N integer points (xk,yk).
+ * <p>Every contour is a sequence of 32-bit <code>int</code> values, describing N integer points (xk,yk).
  * Every contours starts from the header, containing K 32-bit special values.
  * In current version, K is 8 or 10,
  * Format:</p>
@@ -51,21 +51,22 @@ import java.util.stream.IntStream;
  *      xN,                yN
  *
  * </pre>
- * <p>Here <tt>MAGIC_WORD</tt> contains (in low bits) the value K. Value 2*N+K is the total number of 32-bit
+ * <p>Here <code>MAGIC_WORD</code> contains (in low bits) the value K. Value 2*N+K is the total number of 32-bit
  * integers, occupied by this contour: the next contours starts at the position "offset of this contour"+2*N+K.</p>
  *
- * <p><tt>minX, maxX, minY, maxY</tt> are the minimal/maximal coordinates of all points in this contour,
+ * <p><code>minX, maxX, minY, maxY</code> are the minimal/maximal coordinates of all points in this contour,
  * i.e. the rectangle, containing all this contour.
  * (It is allowed to store here some greater rectangle, <i>containing</i> it, but if the contour
- * is created by standard methods, <tt>minX, maxX, minY, maxY</tt> will contain correct minimums and maximums.)</p>
+ * is created by standard methods, <code>minX, maxX, minY, maxY</code>
+ * will contain correct minimums and maximums.)</p>
  *
- * <p><tt>RESERVED | FLAGS</tt> contains in low bits some additional information (see {@link ContourHeader} class),
+ * <p><code>RESERVED | FLAGS</code> contains in low bits some additional information (see {@link ContourHeader} class),
  * in particular, whether this contour is external or internal and whether this header contains
- * frameID (see below). <tt>objectLabel</tt> is an integer label of the object, the boundary of which
+ * frameID (see below). <code>objectLabel</code> is an integer label of the object, the boundary of which
  * is represented by this contour.</p>
  *
- * <p>The last pair is optional. <tt>RESERVED</tt> is a special indicator 0x7FFF0000;
- * <tt>frameID</tt> is some integer ID, that can be stored together with contour
+ * <p>The last pair is optional. <code>RESERVED</code> is a special indicator 0x7FFF0000;
+ * <code>frameID</code> is some integer ID, that can be stored together with contour
  * and should have some unique ID of the frame in a multi-frame map, from which this contour has been scanned.</p>
  */
 public final class Contours {
@@ -77,9 +78,9 @@ public final class Contours {
 
     /**
      * Coordinates of points, saved in the contour, cannot be out of range
-     * <tt>-0x40000000</tt> &le; <i>x, y</i> &le;<tt>0x3FFFFFFF</tt>
+     * <code>-0x40000000</code> &le; <i>x, y</i> &le;<code>0x3FFFFFFF</code>
      * This allows to guarantee that {@link ContourHeader#containingRectangle() containing rectangle}
-     * of each contour has sizes, less than <tt>Integer.MAX_VALUE</tt>.
+     * of each contour has sizes, less than <code>Integer.MAX_VALUE</code>.
      * Also, this allows to use positive values with bit #30 = 1 as reserved.
      */
     public static final int MIN_ABSOLUTE_COORDINATE = -0x40000000;
@@ -91,16 +92,16 @@ public final class Contours {
 
     /**
      * Maximal allowed number of contours: {@value}.<br>
-     * It is essentially less than <tt>Integer.MAX_VALUE</tt>, that allows to simplify
+     * It is essentially less than <code>Integer.MAX_VALUE</code>, that allows to simplify
      * arithmetic operations with number of contours.
-     * <p>More precisely, we guarantee that this value is less than <tt>Integer.MAX_VALUE</tt> / 4:
+     * <p>More precisely, we guarantee that this value is less than <code>Integer.MAX_VALUE</code> / 4:
      * for example, you can freely multiply number of contours by 4.
      */
     public static final int MAX_NUMBER_OF_CONTOURS = 500_000_000;
 
     /**
      * Number of points, saved in the contour, cannot be greater than {@value} ~ 2<sup>30</sup>.
-     * It allows to guarantee that each contour can be successfully stored in simple Java <tt>int[]</tt> array.
+     * It allows to guarantee that each contour can be successfully stored in simple Java <code>int[]</code> array.
      */
     public static final int MAX_CONTOUR_NUMBER_OF_POINTS =
             (Integer.MAX_VALUE - ContourHeader.MAX_ALLOWED_HEADER_LENGTH) >> 1;
@@ -351,11 +352,11 @@ public final class Contours {
      * Finishes adding points and closes the contour.
      *
      * <p>Note: touching matrix boundary flags, stored in the contour array, are defined by previous
-     * <tt>addPoint</tt> calls, <b>not</b> by these 4 flags from the header.
+     * <code>addPoint</code> calls, <b>not</b> by these 4 flags from the header.
      * Corresponding 4 flags in the specified header are <b>ignored</b>.
      * {@link ContourHeader#containingRectangle() Containing rectangle} in the specified header is also <b>ignored</b>;
      * instead, this function stores in the contour array the rectangle, calculated while previous
-     * <tt>addPoint</tt> calls.
+     * <code>addPoint</code> calls.
      *
      * @param header additional information about contour.
      */

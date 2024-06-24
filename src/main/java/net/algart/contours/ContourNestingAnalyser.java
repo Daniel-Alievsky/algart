@@ -24,6 +24,7 @@
 
 package net.algart.contours;
 
+import net.algart.arrays.Arrays;
 import net.algart.math.rectangles.IRectangleFinder;
 
 import java.awt.geom.Point2D;
@@ -183,11 +184,17 @@ public class ContourNestingAnalyser {
     // Cannot be used while multithreading
     public ContourNestingAnalyser analyseAllContours() {
         final int n = contours.numberOfContours();
-        final int numberOfRanges = Multithreading.recommendedNumberOfParallelRanges(n);
-        final int[] splitters = Multithreading.splitToRanges(n, numberOfRanges);
+        final int cpuCount = Arrays.SystemSettings.cpuCount();
+        final int numberOfRanges = cpuCount == 1 ? 1 : (int) Math.min(n, 4L * (long) cpuCount);
+        // - splitting into more than cpuCount ranges provides better performance
+        final int[] splitters = new int[numberOfRanges + 1];
+        Arrays.splitToRanges(splitters, n);
         final MinimalContourFinder[] finders = new MinimalContourFinder[numberOfRanges];
         java.util.Arrays.setAll(finders, value -> getFinder());
-        Multithreading.loopStream(numberOfRanges).forEach(rangeIndex -> {
+        IntStream stream = Arrays.SystemSettings.cpuCount() > 1 ?
+                IntStream.range(0, numberOfRanges).parallel() :
+                IntStream.range(0, numberOfRanges);
+        stream.forEach(rangeIndex -> {
             MinimalContourFinder finder = finders[rangeIndex];
             final int from = splitters[rangeIndex];
             final int to = splitters[rangeIndex + 1];
