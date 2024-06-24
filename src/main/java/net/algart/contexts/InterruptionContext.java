@@ -28,13 +28,13 @@ import java.util.EventListener;
 
 /**
  * <p>The context allowing the user to interrupt any algorithm.
- * It is an extension of standard technique based on <tt>thread.interrupt()</tt> and
- * <tt>Thread.interrupted()</tt> calls.</p>
+ * It is an extension of standard technique based on <code>thread.interrupt()</code> and
+ * <code>Thread.interrupted()</code> calls.</p>
  *
  * <p>The basic way of using this context is calling {@link #checkInterruption()} method
  * in the points of algorithm that are "safe" for interruption.
  * In other words, this method should be called in the places
- * where <tt>Thread.interrupted()</tt> is called in the standard technique.
+ * where <code>Thread.interrupted()</code> is called in the standard technique.
  * For example:</p>
  *
  * <pre>
@@ -50,20 +50,20 @@ import java.util.EventListener;
  * }
  * </pre>
  *
- * <p>Unlike <tt>Thread.interrupted()</tt>, the {@link #checkInterruption()} method informs
+ * <p>Unlike <code>Thread.interrupted()</code>, the {@link #checkInterruption()} method informs
  * about interruption request by throwing special {@link InterruptionException}.
  * This behavior complies with the {@link Context context definition}:
  * the method results do not depend on the presense or features of the context.
- * This exception, unlike the standard <tt>InterruptedException</tt>,
+ * This exception, unlike the standard <code>InterruptedException</code>,
  * is unchecked, so you don't need to specify it in the method declaration.</p>
  *
  * <p>Another possible way of using this context is {@link #addInterruptionListener adding}
  * a {@link Listener listener}, which will be invoked when the application
  * will attempt to interrupt the executing module.
  * The implementation of this listener, provided by the algorithm, for example,
- * can set some volatile flag "<tt>isInterrupted</tt>", which is checked inside the main loop.
+ * can set some volatile flag "<code>isInterrupted</code>", which is checked inside the main loop.
  * Please not forget to {@link #removeInterruptionListener remove} all added listeners
- * (usually in the <tt>finally</tt> section).</p>
+ * (usually in the <code>finally</code> section).</p>
  *
  * <p><i>Please note</i>: some interruption contexts may provide empty implementations of
  * {@link #addInterruptionListener addInterruptionListener} /
@@ -112,10 +112,10 @@ public interface InterruptionContext extends Context {
      * Adds the listener to receive interruption requests.
      * May do nothing in some implementations of this interface.
      * Please not forget to remove all added listener
-     * by {@link #removeInterruptionListener(Listener)} method (usually in the <tt>finally</tt>
+     * by {@link #removeInterruptionListener(Listener)} method (usually in the <code>finally</code>
      * section of your method).
      *
-     * <p>If <tt>listener</tt> is {@code null}, no exception is thrown and no action is performed.
+     * <p>If <code>listener</code> is {@code null}, no exception is thrown and no action is performed.
      *
      * @param listener the listener that will be invoked when the application attempts to interrupt module execution.
      */
@@ -124,7 +124,7 @@ public interface InterruptionContext extends Context {
     /**
      * Removes the listener added by {@link #addInterruptionListener(Listener)} method.
      *
-     * <p>If <tt>listener</tt> is {@code null}, no exception is thrown and no action is performed.
+     * <p>If <code>listener</code> is {@code null}, no exception is thrown and no action is performed.
      *
      * @param listener the listener that should be removed.
      */

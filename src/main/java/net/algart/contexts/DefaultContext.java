@@ -36,7 +36,7 @@ import java.util.Objects;
  *
  * <p>This class is an inheritor of {@link AbstractContext},
  * and all its constructors calls {@link AbstractContext#AbstractContext(boolean) the superconstructor}
- * with the argument <tt>useServiceLoader=true</tt>.
+ * with the argument <code>useServiceLoader=true</code>.
  * So, this class can serve requests not only for the standard context listed above,
  * but also for any other contexts, that are specified in
  * {@link java.util.ServiceLoader service providers}
@@ -48,11 +48,10 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public class DefaultContext extends AbstractContext
-    implements
-    Context, InterruptionContext,
-    ArrayMemoryContext, ArrayThreadPoolContext,
-    ProgressUpdater, StatusUpdater
-{
+        implements
+        Context, InterruptionContext,
+        ArrayMemoryContext, ArrayThreadPoolContext,
+        ProgressUpdater, StatusUpdater {
     private final MemoryModel memoryModel;
     private final ThreadPoolFactory threadPoolFactory;
 
@@ -80,7 +79,7 @@ public class DefaultContext extends AbstractContext
 
 
     /**
-     * Returns an instance of this class, created by "<tt>new&nbsp;{@link DefaultContext}(){}</tt>" call.
+     * Returns an instance of this class, created by "<code>new&nbsp;{@link DefaultContext}(){}</code>" call.
      * This instance can be used as a simplest default implementation of most standard contexts,
      * offered by this package: {@link InterruptionContext},
      * {@link ArrayMemoryContext}, {@link ArrayThreadPoolContext},
@@ -147,7 +146,7 @@ public class DefaultContext extends AbstractContext
      * This implementation returns
      * <tt>mm.{@link MemoryModel#isElementTypeSupported
      * isElementTypeSupported}(elementType) ? mm : {@link SimpleMemoryModel#getInstance()}</tt>,
-     * where <tt>mm</tt> is the result of {@link #getMemoryModel()} method.
+     * where <code>mm</code> is the result of {@link #getMemoryModel()} method.
      *
      * @param elementType the required element type.
      * @return the desired memory model.
@@ -161,7 +160,7 @@ public class DefaultContext extends AbstractContext
      * This implementation calls {@link #getMemoryModel()} and returns its result.
      *
      * @param settings additional desires about the required memory model.
-     * @return         the desired memory model.
+     * @return the desired memory model.
      * @throws NullPointerException if the argument is {@code null}.
      */
     public MemoryModel getMemoryModel(String settings) {
@@ -177,13 +176,15 @@ public class DefaultContext extends AbstractContext
     public ThreadPoolFactory getThreadPoolFactory() {
         return threadPoolFactory;
     }
+
     /**
      * This implementation calls {@link #updateStatus(String, boolean)}
-     * with the first argument alike <tt>Math.round(readyPart*100)+"%"</tt>
-     * and the second argument <tt>force</tt>.
+     * with the first argument alike <code>Math.round(readyPart*100)+"%"</code>
+     * and the second argument <code>force</code>.
      *
      * @param readyPart the part of calculations that is already done (from 0.0 to 1.0).
-     * @param force     whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
+     * @param force     whether this information must be shown always (<code>true</code>)
+     *                  or may be lost (<code>false</code>).
      */
     public void updateProgress(double readyPart, boolean force) {
         updateStatus(Math.round(readyPart * 100) + "%", force);
@@ -202,12 +203,14 @@ public class DefaultContext extends AbstractContext
      * This implementation does nothing.
      *
      * @param message some information message.
-     * @param force   whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
+     * @param force   whether this information must be shown always (<code>true</code>)
+     *                or may be lost (<code>false</code>).
      */
     public void updateStatus(String message, boolean force) {
     }
 
     private static class DefaultContextHolder {
-        private static final DefaultContext INSTANCE = new DefaultContext() {};
+        private static final DefaultContext INSTANCE = new DefaultContext() {
+        };
     }
 }

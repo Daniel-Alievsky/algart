@@ -43,8 +43,8 @@ package net.algart.contexts;
  * the task.</li>
  *
  * <li><i>Global application settings</i> or even <i>global OS settings</i>.
- * They may be passed to the algorithm via system properties (<tt>System.getProperty</tt>)
- * or environment variables (<tt>System.getenv</tt>).
+ * They may be passed to the algorithm via system properties (<code>System.getProperty</code>)
+ * or environment variables (<code>System.getenv</code>).
  * The global directory for temporary files is a good example.
  * Another example: behavior of {@link net.algart.arrays} package can be customized
  * via <a href="../arrays/package-summary.html#systemProperties">several special system properties</a>.</li>
@@ -105,21 +105,21 @@ public interface Context {
     /**
      * Retrieves a specific context according to the passed context class
      * or throws {@link UnsupportedContextException} if this context cannot serve this request.
-     * The <tt>contextClass</tt> argument is an interface, that will be implemented
+     * The <code>contextClass</code> argument is an interface, that will be implemented
      * by the returned context, or (rarely) a class or superclass of the returned context.
      *
-     * <p>If this instance already implements the required <tt>contextClass</tt>
-     * (more precisely, if <tt>contextClass.isAssignableFrom(thisInstance.getClass())</tt>),
+     * <p>If this instance already implements the required <code>contextClass</code>
+     * (more precisely, if <code>contextClass.isAssignableFrom(thisInstance.getClass())</code>),
      * this method usually returns a reference to this instance.
      * In particular, it's true for all context implementations provided by this package.
      *
-     * <p>If <tt>contextClass</tt> is {@code null} or is not an inheritor of {@link Context} interface,
+     * <p>If <code>contextClass</code> is {@code null} or is not an inheritor of {@link Context} interface,
      * this method throws an exception.
      *
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             the required context.
-     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
-     * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
+     * @throws NullPointerException        if <code>contextClass</code> is {@code null}.
+     * @throws IllegalArgumentException    if <code>contextClass</code> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if this context cannot serve the request.
      * @see #is(Class)
@@ -127,14 +127,14 @@ public interface Context {
     <T extends Context> T as(Class<T> contextClass);
 
     /**
-     * Returns <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
-     * Returns <tt>false</tt> if and only if <tt>contextClass==null</tt>,
-     * <tt>contextClass</tt> is not an inheritor of {@link Context} interface or
+     * Returns <code>true</code> if this context class can be processed by {@link #as(Class)} method.
+     * Returns <code>false</code> if and only if <code>contextClass==null</code>,
+     * <code>contextClass</code> is not an inheritor of {@link Context} interface or
      * the corresponding call {@link #as(Class) as(contextClass)} throws
      * {@link UnsupportedContextException}.
      *
      * @param contextClass the class or interface of a context.
-     * @return             <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
+     * @return             <code>true</code> if this context class can be processed by {@link #as(Class)} method.
      * @see #as(Class)
      */
     boolean is(Class<? extends Context> contextClass);

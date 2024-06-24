@@ -27,7 +27,7 @@ package net.algart.contexts;
 import java.io.Serial;
 
 /**
- * <p>Unchecked analog of the standard <tt>InterruptedException</tt>.
+ * <p>Unchecked analog of the standard <code>InterruptedException</code>.
  * Thrown by {@link InterruptionContext#checkInterruption()} method.</p>
  *
  * @author Daniel Alievsky

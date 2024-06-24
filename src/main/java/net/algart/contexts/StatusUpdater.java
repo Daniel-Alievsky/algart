@@ -41,7 +41,7 @@ public interface StatusUpdater extends Context {
     /**
      * Equivalent to {@link #updateStatus(String, boolean) updateStatus(message, true)}.
      *
-     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is {@code null},
+     * <p>This method can throw <code>NullPointerException</code>, if its <code>message</code> argument is {@code null},
      * but it is not guaranteed.
      *
      * @param message some information message; must not be {@code null}.
@@ -52,20 +52,21 @@ public interface StatusUpdater extends Context {
      * Shows some information message to the user.
      * The message should be one line and brief, to allow an application to show it inside a little status line.
      *
-     * <p>The <tt>force</tt> argument determines whether this information must be
-     * shown to the user with a guarantee. If this argument is <tt>false</tt>,
+     * <p>The <code>force</code> argument determines whether this information must be
+     * shown to the user with a guarantee. If this argument is <code>false</code>,
      * this method <i>may</i> do nothing to save processing time when very often calls.
-     * Usual implementation of this method contains a time check (<tt>System.currentTimeMillis()</tt>)
-     * and, if <tt>!force</tt>, does nothing if the previous call (for the same context)
+     * Usual implementation of this method contains a time check (<code>System.currentTimeMillis()</code>)
+     * and, if <code>!force</code>, does nothing if the previous call (for the same context)
      * was performed several tens of milliseconds ago.
-     * Please avoid too frequent calls of this method with <tt>force=true</tt>:
+     * Please avoid too frequent calls of this method with <code>force=true</code>:
      * millions of such calls may require long time.
      *
-     * <p>This method can throw <tt>NullPointerException</tt>, if its <tt>message</tt> argument is {@code null},
+     * <p>This method can throw <code>NullPointerException</code>, if its <code>message</code> argument is {@code null},
      * but it is not guaranteed.
      *
      * @param message some information message; must not be {@code null}.
-     * @param force   whether this information must be shown always (<tt>true</tt>) or may be lost (<tt>false</tt>).
+     * @param force   whether this information must be shown always (<code>true</code>)
+     *                or may be lost (<code>false</code>).
      */
     void updateStatus(String message, boolean force);
 }

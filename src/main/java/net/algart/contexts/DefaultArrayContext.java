@@ -70,7 +70,7 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
 
     /**
      * Creates new instance of this class, based on the passed context,
-     * which returns the specified <tt>threadPoolFactory</tt> by
+     * which returns the specified <code>threadPoolFactory</code> by
      * {@link #getThreadPoolFactory()} method.
      * The passed context must {@link Context#is allow to get} the following specific contexts:
      * {@link ArrayMemoryContext},
@@ -82,7 +82,7 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
      *
      * @param context           the context that will be used by methods of this class.
      * @param threadPoolFactory the thread pool factory that will be used by this object.
-     * @throws NullPointerException        if the <tt>context</tt> or <tt>threadPoolFactory</tt> argument
+     * @throws NullPointerException        if the <code>context</code> or <code>threadPoolFactory</code> argument
      *                                     is {@code null}.
      * @throws UnsupportedContextException if this context cannot serve at least one from
      *                                     the requested 3 specified contexts.
@@ -99,9 +99,9 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
     }
 
     /**
-     * Returns the result of <tt>context.{@link Context#as(Class)
+     * Returns the result of <code>context.{@link Context#as(Class)
      * as}({@link ArrayMemoryContext}.class).{@link ArrayMemoryContext#getMemoryModel()
-     * getMemoryModel()}</tt> call, where <tt>context</tt> is the argument of the construcor.
+     * getMemoryModel()}</code> call, where <code>context</code> is the argument of the constructor.
      *
      * @return the desired thread pool factory.
      */
@@ -110,10 +110,10 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
     }
 
     /**
-     * Returns the result of <tt>context.{@link Context#as(Class)
+     * Returns the result of <code>context.{@link Context#as(Class)
      * as}({@link ArrayThreadPoolContext}.class).{@link ArrayThreadPoolContext#getThreadPoolFactory()
-     * getThreadPoolFactory()}</tt> call, where <tt>context</tt> is the argument of the construcor,
-     * or <tt>threadPoolFactory</tt> constructor argument,
+     * getThreadPoolFactory()}</code> call, where <code>context</code> is the argument of the constructor,
+     * or <code>threadPoolFactory</code> constructor argument,
      * if this instance was created with
      * {@link DefaultArrayContext#DefaultArrayContext(Context, ThreadPoolFactory)
      * the corresponding variant of the constructor}.
@@ -125,9 +125,9 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
     }
 
     /**
-     * Calls <tt>context.{@link Context#as(Class)
+     * Calls <code>context.{@link Context#as(Class)
      * as}({@link InterruptionContext}.class).{@link InterruptionContext#checkInterruption()
-     * checkInterruption()}</tt>, where <tt>context</tt> is the argument of the construcor.
+     * checkInterruption()}</code>, where <code>context</code> is the argument of the constructor.
      *
      * @throws RuntimeException if the application has requested to interrupt the currently executing module;
      *                          in this implementation, it will be always {@link InterruptionException} instance.
@@ -137,11 +137,11 @@ public class DefaultArrayContext extends AbstractArrayContext implements ArrayCo
     }
 
     /**
-     * Calls <tt>context.{@link Context#as(Class)
+     * Calls <code>context.{@link Context#as(Class)
      * as}({@link ProgressUpdater}.class).{@link ProgressUpdater#updateProgress(double, boolean)
-     * updateProgress}(part, part==1.0)</tt>, where <tt>context</tt> is the argument of the construcor
-     * and <tt>part=event.{@link net.algart.arrays.ArrayContext.Event#readyPart()
-     * readyPart()}</tt>.
+     * updateProgress}(part, part==1.0)</code>, where <code>context</code> is the argument of the constructor
+     * and <code>part=event.{@link net.algart.arrays.ArrayContext.Event#readyPart()
+     * readyPart()}</code>.
      *
      * @param event information about the execution progress.
      */

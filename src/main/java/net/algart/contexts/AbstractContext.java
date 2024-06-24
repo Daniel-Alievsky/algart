@@ -45,12 +45,12 @@ import java.lang.reflect.Method;
  *
  * <p>If some exception occurs while loading the set of service providers
  * (for example, if some of the service providers, listed in
- * <tt>META-INF/services/net.algart.contexts.Context</tt> file,
+ * <code>META-INF/services/net.algart.contexts.Context</code> file,
  * have no public constructors without arguments), this fact is logged via
- * standard <tt>java.util.logging</tt> tools
- * with the <tt>SEVERE</tt> level.
+ * standard <code>java.util.logging</code> tools
+ * with the <code>SEVERE</code> level.
  * The following logger is used for this purpose:
- * <tt>Logger.getLogger("{@link net.algart.contexts.AbstractContext net.algart.contexts.AbstractContext}")</tt>.
+ * <code>Logger.getLogger("{@link net.algart.contexts.AbstractContext net.algart.contexts.AbstractContext}")</code>.
  * In this case, the execution of the called {@link #as(Class)} or {@link #is(Class)} method is not interrupted,
  * but some (or all) service providers may be ignored in this and futher requests.</p>
  *
@@ -72,7 +72,7 @@ public abstract class AbstractContext implements Context {
      *                         check all service providers for the {@link Context} interface
      *                         to find a suitable provider, in a case when this instance
      *                         does not implement the required interface (or extends the class)
-     *                         <tt>contextClass</tt>.
+     *                         <code>contextClass</code>.
      */
     protected AbstractContext(boolean useServiceLoader) {
         this.useServiceLoader = useServiceLoader;
@@ -84,29 +84,29 @@ public abstract class AbstractContext implements Context {
      * More precisely:
      *
      * <ol>
-     * <li>if this instance implements (extends) the required interface (class) <tt>contextClass</tt>,
-     * i.e. if <tt>contextClass.isAssignableFrom(thisInstance.getClass())</tt>,
+     * <li>if this instance implements (extends) the required interface (class) <code>contextClass</code>,
+     * i.e. if <code>contextClass.isAssignableFrom(thisInstance.getClass())</code>,
      * then this method returns the reference to this instance;</li>
      *
      * <li>else, if there is at least one
      * {@link java.util.ServiceLoader service providers}
-     * for the {@link Context} interface (<i>not</i> for the passed <tt>contextClass</tt>!),
-     * listed in <tt>META-INF/services/net.algart.contexts.Context</tt> file,
-     * which implements (extends) the required interface (class) <tt>contextClass</tt>,
+     * for the {@link Context} interface (<i>not</i> for the passed <code>contextClass</code>!),
+     * listed in <code>META-INF/services/net.algart.contexts.Context</code> file,
+     * which implements (extends) the required interface (class) <code>contextClass</code>,
      * then an instance of this service provider is returned;</li>
      *
      * <li>else {@link UnsupportedContextException} is thrown.</li>
      * </ol>
      *
-     * <p>The 2nd check is performed only if the <tt>useServiceLoader</tt> argument, passed to
-     * the constructor, was <tt>true</tt>.
-     * If it was <tt>false</tt>, the service providers are not loaded and not checked.</p>
+     * <p>The 2nd check is performed only if the <code>useServiceLoader</code> argument, passed to
+     * the constructor, was <code>true</code>.
+     * If it was <code>false</code>, the service providers are not loaded and not checked.</p>
      *
      * @param contextClass the class of returned object (or superclass, or implemented interface).
      * @return             this instance, if it is suitable, or some service provider of {@link Context}
-     *                     interface that implements (extends) required <tt>contextClass</tt>.
-     * @throws NullPointerException        if <tt>contextClass</tt> is {@code null}.
-     * @throws IllegalArgumentException    if <tt>contextClass</tt> does not extends or implements
+     *                     interface that implements (extends) required <code>contextClass</code>.
+     * @throws NullPointerException        if <code>contextClass</code> is {@code null}.
+     * @throws IllegalArgumentException    if <code>contextClass</code> does not extends or implements
      *                                     {@link Context} interface.
      * @throws UnsupportedContextException if this context cannot serve the request.
      * @see #is(Class)
@@ -130,33 +130,33 @@ public abstract class AbstractContext implements Context {
     }
 
     /**
-     * Returns <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
+     * Returns <code>true</code> if this context class can be processed by {@link #as(Class)} method.
      * More precisely:
      *
      * <ol>
-     * <li>if <tt>contextClass==null</tt> or <tt>contextClass</tt> is not an inheritor
-     * of {@link Context} interface, this method returns <tt>false</tt>;</li>
+     * <li>if <code>contextClass==null</code> or <code>contextClass</code> is not an inheritor
+     * of {@link Context} interface, this method returns <code>false</code>;</li>
      *
-     * <li>if this instance implements (extends) the required interface (class) <tt>contextClass</tt>,
-     * i.e. if <tt>contextClass.isAssignableFrom(thisInstance.getClass())</tt>,
-     * then this method returns <tt>true</tt>;</li>
+     * <li>if this instance implements (extends) the required interface (class) <code>contextClass</code>,
+     * i.e. if <code>contextClass.isAssignableFrom(thisInstance.getClass())</code>,
+     * then this method returns <code>true</code>;</li>
      *
      * <li>else, if there is at least one
      * {@link java.util.ServiceLoader service providers}
-     * for the {@link Context} interface (<i>not</i> for the passed <tt>contextClass</tt>!),
-     * listed in <tt>META-INF/services/net.algart.contexts.Context</tt> file,
-     * which implements (extends) the required interface (class) <tt>contextClass</tt>,
-     * then this method returns <tt>true</tt>;</li>
+     * for the {@link Context} interface (<i>not</i> for the passed <code>contextClass</code>!),
+     * listed in <code>META-INF/services/net.algart.contexts.Context</code> file,
+     * which implements (extends) the required interface (class) <code>contextClass</code>,
+     * then this method returns <code>true</code>;</li>
      *
-     * <li>else this method returns <tt>false</tt>.</li>
+     * <li>else this method returns <code>false</code>.</li>
      * </ol>
      *
-     * <p>The 3rd check is performed only if the <tt>useServiceLoader</tt> argument, passed to
-     * the constructor, was <tt>true</tt>.
-     * If it was <tt>false</tt>, the service providers are not loaded and not checked.</p>
+     * <p>The 3rd check is performed only if the <code>useServiceLoader</code> argument, passed to
+     * the constructor, was <code>true</code>.
+     * If it was <code>false</code>, the service providers are not loaded and not checked.</p>
      *
      * @param contextClass the class or interface of a sub-context.
-     * @return             <tt>true</tt> if this context class can be processed by {@link #as(Class)} method.
+     * @return             <code>true</code> if this context class can be processed by {@link #as(Class)} method.
      * @see #as(Class)
      */
     public boolean is(Class<? extends Context> contextClass) {

@@ -30,7 +30,7 @@ import java.util.Objects;
  * <p>The class allowing to execute some action, interruptible via standard Java technique,
  * in terms of some {@link InterruptionContext}.
  * This is a bridge between {@link InterruptionContext} and standard interruption technique
- * based on <tt>thread.interrupt()</tt> and <tt>Thread.interrupted()</tt> calls.</p>
+ * based on <code>thread.interrupt()</code> and <code>Thread.interrupted()</code> calls.</p>
  *
  * <p>To use this class, please override its {@link #run()} method and call {@link #doInterruptibly()}.</p>
  *
@@ -58,18 +58,18 @@ public abstract class InterruptibleAction<T> {
      * <p>If the interruption context requests an interruption
      * (i.e. an {@link InterruptionContext.Event interruption event} occurs),
      * the current thread, executing {@link #run()} method, is interrupted
-     * by its <tt>interrupt()</tt> method.
+     * by its <code>interrupt()</code> method.
      * As a result, the {@link #run()} method should stop and
-     * throw the standard <tt>InterruptedException</tt>.
+     * throw the standard <code>InterruptedException</code>.
      * This method catches it and translates into {@link InterruptionException} with the corresponding cause;
      * this {@link InterruptionException} is thrown.
      *
      * <p>So, this method can be interrupted by both ways: by the standard
-     * <tt>thread.interrupt()</tt> call and by interruption mechanism
+     * <code>thread.interrupt()</code> call and by interruption mechanism
      * provided by the {@link InterruptionContext}.
      *
      * @return the result of {@link #run()} method.
-     * @throws InterruptionException if the {@link #run()} method throws <tt>InterruptedException</tt>.
+     * @throws InterruptionException if the {@link #run()} method throws <code>InterruptedException</code>.
      */
     public T doInterruptibly() throws InterruptionException {
         final Thread currentThread = Thread.currentThread();
@@ -89,11 +89,11 @@ public abstract class InterruptibleAction<T> {
     }
 
     /**
-     * This method performs some action or throws <tt>InterruptedException</tt>
-     * in a case when the current thread is interrupted via <tt>thread.interrupt()</tt> call.
+     * This method performs some action or throws <code>InterruptedException</code>
+     * in a case when the current thread is interrupted via <code>thread.interrupt()</code> call.
      *
      * @return the computed result.
-     * @throws InterruptedException if the current thread is interrupted via <tt>thread.interrupt()</tt> call.
+     * @throws InterruptedException if the current thread is interrupted via <code>thread.interrupt()</code> call.
      */
     public abstract T run() throws InterruptedException;
 }

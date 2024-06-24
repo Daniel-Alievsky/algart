@@ -69,9 +69,9 @@ public interface ArrayMemoryContext extends Context {
      * Returns the {@link MemoryModel memory model} that should be used
      * for creating any instances of AlgART arrays
      * with specified type of elements.
-     * The typical implementation returns <tt>mm.{@link MemoryModel#isElementTypeSupported
-     * isElementTypeSupported}(elementType) ? mm : {@link SimpleMemoryModel#getInstance()}</tt>,
-     * where <tt>mm</tt> is the result of {@link #getMemoryModel()} method.
+     * The typical implementation returns <code>mm.{@link MemoryModel#isElementTypeSupported
+     * isElementTypeSupported}(elementType) ? mm : {@link SimpleMemoryModel#getInstance()}</code>,
+     * where <code>mm</code> is the result of {@link #getMemoryModel()} method.
      *
      * @param elementType the required element type.
      * @return            the desired memory model.
@@ -83,13 +83,13 @@ public interface ArrayMemoryContext extends Context {
      * Returns the {@link MemoryModel memory model} that should be used
      * for creating any instances of AlgART arrays with some additional settings
      * (recommendations). Additional settings should be passed via
-     * <tt>settings</tt> argument (usually in JSON or analogous format);
+     * <code>settings</code> argument (usually in JSON or analogous format);
      * you can specify here some details about desired memory model.
      * The context may consider your recommendations, specified in this argument,
      * but also may ingnore them and return the same result as the
      * simple {@link #getMemoryModel()} method.
      *
-     * <p>If <tt>settings</tt> is <tt>""</tt> (empty string), this methods
+     * <p>If <code>settings</code> is <code>""</code> (empty string), this methods
      * must be equivalent to {@link #getMemoryModel()}.
      *
      * @param settings additional desires about the required memory model.
