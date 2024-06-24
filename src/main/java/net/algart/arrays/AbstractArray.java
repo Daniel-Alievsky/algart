@@ -278,9 +278,9 @@ public abstract class AbstractArray implements Array, Cloneable {
      * This implementation returns {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
      * buffer(suitableMode, capacity)}, where <code>capacity</code> is the argument of this method
      * and <code>suitableMode</code> is
-     * <tt>this instanceof UpdatableArray ?
+     * <code>this instanceof UpdatableArray ?
      * DataBuffer.AccessMode.READ_WRITE :
-     * DataBuffer.AccessMode.READ</tt>.
+     * DataBuffer.AccessMode.READ</code>.
      *
      * @param capacity the capacity of the buffer.
      * @return new data buffer for accessing this array.
@@ -298,9 +298,9 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * This implementation returns {@link #buffer(net.algart.arrays.DataBuffer.AccessMode)
      * buffer(suitableMode)}, where <code>suitableMode</code> is
-     * <tt>this instanceof UpdatableArray ?
+     * <code>this instanceof UpdatableArray ?
      * DataBuffer.AccessMode.READ_WRITE :
-     * DataBuffer.AccessMode.READ</tt>.
+     * DataBuffer.AccessMode.READ</code>.
      *
      * @return new data buffer for accessing this array.
      */
@@ -385,8 +385,8 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation performs the following:
-     * <tt>memoryModel.{@link MemoryModel#newArray(Array)
-     * newArray}(thisArray).{@link UpdatableArray#copy(Array) copy}(thisArray)</tt>.
+     * <code>memoryModel.{@link MemoryModel#newArray(Array)
+     * newArray}(thisArray).{@link UpdatableArray#copy(Array) copy}(thisArray)</code>.
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return a mutable copy of this array.
@@ -403,8 +403,8 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This implementation performs the following:
-     * <tt>memoryModel.{@link MemoryModel#newUnresizableArray(Array)
-     * newUnresizableArray}(thisArray).{@link UpdatableArray#copy(Array) copy}(thisArray)</tt>.
+     * <code>memoryModel.{@link MemoryModel#newUnresizableArray(Array)
+     * newUnresizableArray}(thisArray).{@link UpdatableArray#copy(Array) copy}(thisArray)</code>.
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @return an updatable copy of this array.
@@ -697,12 +697,12 @@ public abstract class AbstractArray implements Array, Cloneable {
      * {@link UpdatableArray#copy(Array)} and throws corresponding exception if no.
      * More precisely, this method throws <code>IllegalArgumentException</code>
      * if is not possible to assign elements of <code>src</code> array to elements of <code>thisArray</code>,
-     * i.e. if <tt>!thisArray.{@link #elementType() elementType()}.isAssignableFrom(src.{@link #elementType()
-     * elementType()})</tt>.
+     * i.e. if <code>!thisArray.{@link #elementType() elementType()}.isAssignableFrom(src.{@link #elementType()
+     * elementType()})</code>.
      *
      * <p>Note: for primitive array types ({@link PArray} and its inheritors), this method throws an exception
-     * if and only if <nobr><tt>thisArray.{@link #elementType() elementType()}!=src.{@link #elementType()
-     * elementType()}</tt></nobr>.
+     * if and only if <nobr><code>thisArray.{@link #elementType() elementType()}!=src.{@link #elementType()
+     * elementType()}</code></nobr>.
      *
      * @param thisArray this array.
      * @param src       the source array.
@@ -722,8 +722,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      * {@link UpdatableArray#swap(UpdatableArray)} and throws corresponding exception if no.
      * More precisely, this method throws <code>IllegalArgumentException</code>
      * if <code>another</code> array <code>thisArray</code> have different element types,
-     * i.e. if <tt>thisArray.{@link #elementType() elementType()}!=another.{@link #elementType()
-     * elementType()}</tt>.
+     * i.e. if <code>thisArray.{@link #elementType() elementType()}!=another.{@link #elementType()
+     * elementType()}</code>.
      *
      * @param thisArray this array.
      * @param another   another array.
@@ -771,8 +771,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param fromIndex low endpoint (inclusive) of the subarray.
      * @param toIndex   high endpoint (exclusive) of the subarray.
      * @throws IndexOutOfBoundsException for illegal <code>fromIndex</code> and <code>toIndex</code>
-     *                                   (<tt>fromIndex &lt; 0 || toIndex &gt; {@link #length()}
-     *                                   || fromIndex &gt; toIndex</tt>).
+     *                                   (<code>fromIndex &lt; 0 || toIndex &gt; {@link #length()}
+     *                                   || fromIndex &gt; toIndex</code>).
      */
     protected final void checkSubArrayArguments(long fromIndex, long toIndex) {
         if (fromIndex < 0)
@@ -791,8 +791,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @param position start position (inclusive) of the subarray.
      * @param count    number of elements in the subarray.
      * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
-     *                                   (<tt>position &lt; 0 || count &lt; 0
-     *                                   || position + count &gt; {@link #length()}</tt>).
+     *                                   (<code>position &lt; 0 || count &lt; 0
+     *                                   || position + count &gt; {@link #length()}</code>).
      */
     protected final void checkSubArrArguments(long position, long count) {
         if (position < 0)

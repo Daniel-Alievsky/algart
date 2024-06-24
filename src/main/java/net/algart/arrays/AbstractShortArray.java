@@ -409,8 +409,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value == ((int) value &amp; 0xFFFF) ? {@link #indexOf(long, long, short)
-     * indexOf}(lowIndex, highIndex, (short)value) : -1</tt>.
+     * <code>value == ((int) value & 0xFFFF) ? {@link #indexOf(long, long, short)
+     * indexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -426,8 +426,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value == ((int) value &amp; 0xFFFF) ? {@link #lastIndexOf(long, long, short)
-     * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</tt>.
+     * <code>value == ((int) value & 0xFFFF) ? {@link #lastIndexOf(long, long, short)
+     * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -451,8 +451,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value == ((int) value &amp; 0xFFFF) ? {@link #indexOf(long, long, short)
-     * indexOf}(lowIndex, highIndex, (short)value) : -1</tt>.
+     * <code>value == ((int) value & 0xFFFF) ? {@link #indexOf(long, long, short)
+     * indexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -468,8 +468,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
     /**
      * <!--index_long (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value == ((int) value &amp; 0xFFFF) ? {@link #lastIndexOf(long, long, short)
-     * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</tt>.
+     * <code>value == ((int) value & 0xFFFF) ? {@link #lastIndexOf(long, long, short)
+     * lastIndexOf}(lowIndex, highIndex, (short)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -660,8 +660,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
-     * loadResources}(context)</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
+     * loadResources}(context)</nobr></code> call.
      * This default implementation calls {@link #loadResources(ArrayContext) loadResources(c)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray
@@ -687,8 +687,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
-     * flushResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
+     * flushResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #flushResources(ArrayContext, boolean)
      * flushResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
@@ -720,8 +720,8 @@ public abstract class AbstractShortArray extends AbstractArray implements ShortA
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
-     * freeResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
+     * freeResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #freeResources(ArrayContext, boolean)
      * freeResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)

@@ -406,8 +406,8 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value==(long)value ? {@link #indexOf(long, long, long)
-     * indexOf}(lowIndex, highIndex, (long)value) : -1</tt>.
+     * <code>value==(long)value ? {@link #indexOf(long, long, long)
+     * indexOf}(lowIndex, highIndex, (long)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -423,8 +423,8 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
     /**
      * <!--index_double (necessary for preprocessing)-->
      * This implementation returns
-     * <tt>value==(long)value ? {@link #lastIndexOf(long, long, long)
-     * lastIndexOf}(lowIndex, highIndex, (long)value) : -1</tt>.
+     * <code>value==(long)value ? {@link #lastIndexOf(long, long, long)
+     * lastIndexOf}(lowIndex, highIndex, (long)value) : -1</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
@@ -619,8 +619,8 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
-     * loadResources}(context)</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #loadResources(ArrayContext)
+     * loadResources}(context)</nobr></code> call.
      * This default implementation calls {@link #loadResources(ArrayContext) loadResources(c)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray
@@ -646,8 +646,8 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
-     * flushResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #flushResources(ArrayContext, boolean)
+     * flushResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #flushResources(ArrayContext, boolean)
      * flushResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
@@ -679,8 +679,8 @@ public abstract class AbstractLongArray extends AbstractArray implements LongArr
 
     /**
      * This method implements all actions that should be performed by
-     * <tt><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
-     * freeResources(context, forcePhysicalWriting)}</nobr></tt> call.
+     * <code><nobr>{@link #subArray subArray}(fromIndex, toIndex).{@link #freeResources(ArrayContext, boolean)
+     * freeResources(context, forcePhysicalWriting)}</nobr></code> call.
      * This default implementation calls {@link #freeResources(ArrayContext, boolean)
      * freeResources(c, forcePhysicalWriting)}
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
