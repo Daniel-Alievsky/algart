@@ -26,11 +26,11 @@ package net.algart.arrays;
 
 /*Repeat(INCLUDE_FROM_FILE, DataFloatBuffer.java, all)
   Float ==> Bit ;;
-  <tt>float</tt>\s+elements ==> bit elements ;;
+  <code>float</code>\s+elements ==> bit elements ;;
   float ==> long
      !! Auto-generated: NOT EDIT !! */
 /**
- * <p>Data buffer for <code>long</code> elements.</p>
+ * <p>Data buffer for bit elements.</p>
  *
  * @author Daniel Alievsky
  */

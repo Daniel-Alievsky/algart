@@ -31,7 +31,7 @@ package net.algart.arrays;
  * It is the recommended basic way for block accessing {@link Array AlgART arrays}.</p>
  *
  * <p>Theoretically, this technology can be used for accessing any types of data storages:
- * <tt>java.nio.*</tt> buffers, <tt>RandomAccessFile</tt>, etc.
+ * <code>java.nio.*</code> buffers, <code>RandomAccessFile</code>, etc.
  * But the main application area of data buffers is accessing AlgART arrays &mdash;
  * the only storage variant, for which this package offers a ready implementation.
  * Below we shall suppose that data buffers are used for accessing AlgART arrays.</p>
@@ -52,7 +52,7 @@ package net.algart.arrays;
  * <p>Unlike the block read / write methods, the <i>data buffer</i>
  * provides the most efficient and convenient read / write block access to any kinds of AlgART arrays.</p>
  *
- * <p>The scheme of usage is alike file mapping by <tt>java.nio.channels.FileChannel</tt> class,
+ * <p>The scheme of usage is alike file mapping by <code>java.nio.channels.FileChannel</code> class,
  * with some little differences.</p>
  *
  * <p>The model of data buffers is the following.
@@ -65,7 +65,7 @@ package net.algart.arrays;
  * (see <i>actual region</i> in the section C below).
  * The type of elements of the Java array is the same as the type of AlgART array elements
  * ({@link Array#elementType()}), excepting the only case of {@link BitArray bit arrays}.
- * For bit arrays, the elements are packed into <tt>long[]</tt> array (64 bits per every <tt>long</tt>),
+ * For bit arrays, the elements are packed into <code>long[]</code> array (64 bits per every <code>long</code>),
  * as specified in {@link PackedBitArrays} class.
  * <br>&nbsp;</li>
  *
@@ -73,19 +73,19 @@ package net.algart.arrays;
  * in the data buffer, or, in other words, the maximal possible number of elements in a mapped region.
  * This value can be got by {@link #capacity()} method. Please note that the <i>data array</i>
  * may contain more than <i>capacity</i> elements; but the length of its <i>actual region</i>
- * (<tt><i>toIndex</i>-<i>fromIndex</i></tt>) never exceeds <i>capacity</i>.
+ * (<code><i>toIndex</i>-<i>fromIndex</i></code>) never exceeds <i>capacity</i>.
  * <br>&nbsp;</li>
  *
- * <li>The <i>actual region</i> <tt><i>fromIndex</i>..<i>toIndex</i></tt> in the <i>data array</i>:
- * the elements of the AlgART array are always placed at the positions <tt><i>fromIndex</i>..<i>toIndex</i>-1</tt>
+ * <li>The <i>actual region</i> <code><i>fromIndex</i>..<i>toIndex</i></code> in the <i>data array</i>:
+ * the elements of the AlgART array are always placed at the positions <code><i>fromIndex</i>..<i>toIndex</i>-1</code>
  * in this Java array. The region boundaries can be got by {@link #fromIndex()} and {@link #toIndex()} methods.
- * The number of actual elements is <tt><i>count</i>=<i>toIndex</i>-<i>fromIndex</i></tt>
+ * The number of actual elements is <code><i>count</i>=<i>toIndex</i>-<i>fromIndex</i></code>
  * and can be also got by {@link #count()} method.
  * <br>&nbsp;</li>
  *
  * <li>Current <i>mapping position</i> in the AlgART array.
  * The actual region in the Java array corresponds to the region of the same size in the AlgART array,
- * starting from current mapping position: <tt><i>position</i>..<i>position</i>+<i>count</i>-1</tt>.
+ * starting from current mapping position: <code><i>position</i>..<i>position</i>+<i>count</i>-1</code>.
  * This value can be got by {@link #position()} method.
  * <br>&nbsp;</li>
  *
@@ -95,17 +95,18 @@ package net.algart.arrays;
  *
  * <p>Please note that all integer values, described above &mdash; <i>capacity</i>,
  * <i>fromIndex</i>, <i>toIndex</i>, <i>count</i>, <i>position</i> &mdash;
- * are <tt>long</tt>, not <tt>int</tt> values.
- * The reason is that data buffers for bit arrays are packed into <tt>long[]</tt> arrays and, so,
- * can contain <tt>2<sup>31</sup></tt> or more bits.
- * In any case, all describied integer characteristics cannot be greater than <tt>2<sup>37</sup>-1</tt> for bit arrays
- * and cannot be greater than <tt>Integer.MAX_VALUE==2<sup>31</sup>-1</tt> for all other element types.</p>
+ * are <code>long</code>, not <code>int</code> values.
+ * The reason is that data buffers for bit arrays are packed into <code>long[]</code> arrays and, so,
+ * can contain <code>2<sup>31</sup></code> or more bits.
+ * In any case, all describied integer characteristics cannot be greater
+ * than <code>2<sup>37</sup>-1</code> for bit arrays
+ * and cannot be greater than <code>Integer.MAX_VALUE==2<sup>31</sup>-1</code> for all other element types.</p>
  *
  * <p>There are additional methods {@link #from()}, {@link #to()}, {@link #cnt()},
  * that return the results of full methods {@link #fromIndex()}, {@link #toIndex()}, {@link #count()},
- * cast to <tt>int</tt> type.
- * If the precise long values cannot be cast to <tt>int</tt>, because they are greater
- * than <tt>Integer.MAX_VALUE</tt>, these methods throw {@link DataBufferIndexOverflowException}.
+ * cast to <code>int</code> type.
+ * If the precise long values cannot be cast to <code>int</code>, because they are greater
+ * than <code>Integer.MAX_VALUE</code>, these methods throw {@link DataBufferIndexOverflowException}.
  * You may use these methods to simplify your code, if the element type is not bit.  </p>
  *
  * <p>The scheme of using data buffers is the following.</p>
@@ -119,7 +120,7 @@ package net.algart.arrays;
  * You also may use one of overloaded simplified variants of this method,
  * allowing to choose its arguments automatically, for example, {@link Array#buffer()}.
  * <br>&nbsp;<br>
- * Note: the newly created data buffer, unlike <tt>java.nio.MappedByteBuffer</tt>, contains no elements!
+ * Note: the newly created data buffer, unlike <code>java.nio.MappedByteBuffer</code>, contains no elements!
  * Now <i>count</i> is zero, the value <i>fromIndex</i>=<i>toIndex</i> is unspecified,
  * <i>mapping position</i> is zero.
  * <br>&nbsp;<br>
@@ -131,16 +132,16 @@ package net.algart.arrays;
  * <li>Then you call {@link #map(long) map(long position)} method of the created data buffer
  * for any desired <i>mapping position</i> in the AlgART array.
  * After this call, the <i>mapping position</i> becomes equal to the passed position,
- * and the number of actual elements <tt><i>count</i></tt> <tt>(=<i>toIndex</i>-<i>fromIndex</i>)</tt>
- * becomes equal to <tt>min(<i>capacity</i>,<i>length</i>-<i>position</i>)</tt>,
- * where <tt>length</tt> is the length of the AlgART array ({@link Array#length()})
- * and <tt><i>capacity</i></tt> is the buffer capacity specified while its creation at the step 1.
+ * and the number of actual elements <code><i>count</i></code> <code>(=<i>toIndex</i>-<i>fromIndex</i>)</code>
+ * becomes equal to <code>min(<i>capacity</i>,<i>length</i>-<i>position</i>)</code>,
+ * where <code>length</code> is the length of the AlgART array ({@link Array#length()})
+ * and <code><i>capacity</i></code> is the buffer capacity specified while its creation at the step 1.
  * <br>&nbsp;<br>
  * If you don't need access all <i>capacity</i> elements (for example, the capacity, specified while
  * buffer creation, is 32 KB, but you need to read 100 elements only), you may use
  * {@link #map(long, long) map(long position, long maxCount)} method: it may work faster.
  * <br>&nbsp;<br>
- * Please compare: <tt>java.nio.MappedByteBuffer</tt> instance is always mapped to
+ * Please compare: <code>java.nio.MappedByteBuffer</code> instance is always mapped to
  * the fixed file position, but an instance of this data buffer may be (and usually should be)
  * remapped to another positions of AlgART array by its
  * {@link #map(long) map(long position)} or
@@ -150,13 +151,14 @@ package net.algart.arrays;
  * <li>Now you may access the data elements via the Java array, the reference to which
  * is returned by {@link #data()} method.
  * The actual elements will be placed in this Java array at indexes
- * <tt><i>fromIndex</i>..<i>toIndex</i>-1</tt>. For bits arrays, it means the indexes
+ * <code><i>fromIndex</i>..<i>toIndex</i>-1</code>. For bits arrays, it means the indexes
  * in terms of {@link PackedBitArrays} class; so, these elements may be get and set via
  * {@link PackedBitArrays#getBit(long[], long) getBit(src,index)} and
  * {@link PackedBitArrays#setBit(long[], long, boolean) setBit(dest,index,value)} methods of that class,
- * where <tt><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></tt>. For other element types,
- * the actual elements may be accessed via Java operator <tt>data[index]</tt>,
- * <tt><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></tt>, where <tt><i>elementType</i>[]&nbsp;data</tt> is the result
+ * where <code><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></code>. For other element types,
+ * the actual elements may be accessed via Java operator <code>data[index]</code>,
+ * <code><i>fromIndex</i>&lt;=index&lt;<i>toIndex</i></code>,
+ * where <code><i>elementType</i>[]&nbsp;data</code> is the result
  * of {@link #data()} method.
  * <br>&nbsp;<br>
  * Note: you may change elements of the returned Java array, but these changes may reflect or not reflect
@@ -167,7 +169,7 @@ package net.algart.arrays;
  * <br>&nbsp;<br>
  * Note also: for bit arrays, you must modify bits in the packed Java array
  * <i>only</i> by methods of {@link PackedBitArrays} class or by fully equivalent code, containing
- * the same synchronization while changing not all bits in some packed <tt>long</tt> element.
+ * the same synchronization while changing not all bits in some packed <code>long</code> element.
  * Without synchronization, some elements can be written incorrectly while multithreading using.
  * See comments to {@link PackedBitArrays} class for more details.
  * <br>&nbsp;<br>
@@ -205,7 +207,7 @@ package net.algart.arrays;
  * <li>and:
  * <ul>
  * <li>either it implements {@link DirectAccessible} interface and its
- * {@link DirectAccessible#hasJavaArray() hasJavaArray()} method returns <tt>true</tt>,
+ * {@link DirectAccessible#hasJavaArray() hasJavaArray()} method returns <code>true</code>,
  * <li>or it is a {@link BitArray bit array} created by the {@link SimpleMemoryModel simple memory model};
  * </ul>
  * <li>and the <i>access mode</i>, specified while buffer creation, is not
@@ -214,7 +216,7 @@ package net.algart.arrays;
  *
  * <p>Direct buffers do not allocate any memory and work with maximal possible speed.
  * For these buffers, the {@link #data()} method returns a reference to the internal Java array
- * where the elements are stored. All <tt>map</tt> and <tt>mapNext</tt> methods work very quickly:
+ * where the elements are stored. All <code>map</code> and <code>mapNext</code> methods work very quickly:
  * they just correct the <i>fromIndex</i> and <i>toIndex</i> offsets.
  * Any changes, made in the {@link #data()} array, immediately reflect in the original data storage;
  * the {@link #force()} method, in {@link DataBuffer.AccessMode#READ_WRITE READ_WRITE} access mode,
@@ -239,7 +241,7 @@ package net.algart.arrays;
  * methods load data into this Java array by {@link Array#getData(long, Object, int, int)} or,
  * for bit arrays, {@link BitArray#getBits(long, long[], long, long)} method.
  * (The {@link #map(long, boolean)}, {@link #map(long, long, boolean)} and {@link #mapNext(boolean)}
- * methods allows to skip loading data by specifying the argument <tt>readData=false</tt>,
+ * methods allows to skip loading data by specifying the argument <code>readData=false</code>,
  * if you really don't need the current data.)
  * The {@link #force()} method, in {@link DataBuffer.AccessMode#READ_WRITE READ_WRITE} access mode,
  * writes data back to the AlgART array
@@ -257,7 +259,7 @@ package net.algart.arrays;
  * {@link Arrays#nFloatCopies}, {@link Arrays#nDoubleCopies},
  * {@link Arrays#nObjectCopies} methods,
  * the returned data buffer is also indirect, but works quickly:
- * the sequential calls of all <tt>map</tt> and <tt>mapNext</tt> methods
+ * the sequential calls of all <code>map</code> and <code>mapNext</code> methods
  * do nothing, because the elements in {@link #data()} array are always the same.</p>
  *
  * <p>For custom arrays, created by you (via custom {@link MemoryModel memory model} implemented by you,
@@ -275,33 +277,34 @@ package net.algart.arrays;
  *
  * <ul>
  * <li>the <i>mapped position</i> is always inside the range
- * <nobr><tt>0 &lt;= <i>position</i> &lt;= <i>length</i></tt></nobr>,
+ * <nobr><code>0 &lt;= <i>position</i> &lt;= <i>length</i></code></nobr>,
  * where <i>length</i> is the total number of elements in the data storage
  * ({@link Array#length()} in a case of AlgART arrays);
  * <br>&nbsp;</li>
  *
- * <li>the <i>mapped position</i> is <tt>0</tt> if
- * the buffer is newly created and <tt>map</tt> / <tt>mapNext</tt> methods were never called yet;
+ * <li>the <i>mapped position</i> is <code>0</code> if
+ * the buffer is newly created and <code>map</code> / <code>mapNext</code> methods were never called yet;
  * <br>&nbsp;</li>
  *
- * <li>for bit arrays <tt>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>37</sup></tt>,
- * for all other element types <tt>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>31</sup></tt>;
+ * <li>for bit arrays <code>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>37</sup></code>,
+ * for all other element types <code>0&nbsp;&lt;&nbsp;<i>capacity</i>&nbsp;&lt;&nbsp;2<sup>31</sup></code>;
  * <br>&nbsp;</li>
  *
- * <li>for bit arrays <tt>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= 64*<i>bufferDataLength</i></tt>,
- * for all other element types <tt>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= <i>bufferDataLength</i></tt>,
- * where <tt><i>bufferDataLength</i></tt> is the length of data array returned by {@link #data()} method.
+ * <li>for bit arrays <code>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= 64*<i>bufferDataLength</i></code>,
+ * for all other element types
+ * <code>0 &lt;= <i>fromIndex</i> &lt;= <i>toIndex</i> &lt;= <i>bufferDataLength</i></code>,
+ * where <code><i>bufferDataLength</i></code> is the length of data array returned by {@link #data()} method.
  * <br>&nbsp;</li>
  *
- * <li><tt><i>count</i> = <i>toIndex</i> - <i>fromIndex</i> =...</tt>
+ * <li><code><i>count</i> = <i>toIndex</i> - <i>fromIndex</i> =...</code>
  * <ul>
- * <li><tt>...= 0</tt>, if the buffer is newly created and
- * <tt>map</tt> / <tt>mapNext</tt> methods were never called yet;</li>
- * <li><tt>...= min(<i>capacity</i>, <i>length</i> - <i>position</i>)</tt>
+ * <li><code>...= 0</code>, if the buffer is newly created and
+ * <code>map</code> / <code>mapNext</code> methods were never called yet;</li>
+ * <li><code>...= min(<i>capacity</i>, <i>length</i> - <i>position</i>)</code>
  * after any call of {@link #map(long)}, {@link #map(long, boolean)}, {@link #mapNext()} or {@link #mapNext(boolean)}
  * method, where <i>length</i> is the total number of elements in the data storage
  * ({@link Array#length()} in a case of AlgART arrays),</li>
- * <li><tt>...= min(<i>capacity</i>, <i>maxCount</i>, <i>length</i> - <i>position</i>)</tt>
+ * <li><code>...= min(<i>capacity</i>, <i>maxCount</i>, <i>length</i> - <i>position</i>)</code>
  * after any call of {@link #map(long, long)} or {@link #map(long, long, boolean)} methods,
  * where <i>maxCount</i> is the second argument of these methods.</li>
  * </ul>
@@ -312,7 +315,7 @@ package net.algart.arrays;
  *
  * <h2><a name="subInterface"></a>Specific subinterfaces</h2>
  *
- * <p>The {@link #data()} method, declared in this interface, returns <tt>Object</tt>
+ * <p>The {@link #data()} method, declared in this interface, returns <code>Object</code>
  * (the only existing superclass for all Java arrays), that is not too convenient.
  * But there are subinterfaces
  * {@link DataBitBuffer}, {@link DataCharBuffer},
@@ -320,7 +323,7 @@ package net.algart.arrays;
  * {@link DataIntBuffer}, {@link DataLongBuffer},
  * {@link DataFloatBuffer}, {@link DataDoubleBuffer},
  * {@link DataObjectBuffer}, where this method is overridden and returns corresponding type of Java array:
- * <tt>long[]</tt> (packed bit array), <tt>char[]</tt>, <tt>byte[]</tt>, <tt>short[]</tt>, etc.
+ * <code>long[]</code> (packed bit array), <code>char[]</code>, <code>byte[]</code>, <code>short[]</code>, etc.
  * The basic {@link Array#buffer(net.algart.arrays.DataBuffer.AccessMode, long)} method (as well as its overloaded
  * simplified versions) is overridden in specific AlgART arrays ({@link BitArray}, {@link CharArray}, etc.)
  * and returns one of the listed subinterfaces.</p>
@@ -331,12 +334,12 @@ package net.algart.arrays;
  * or get its <i>length</i>. But you may check,
  * whether all elements of the AlgART array were already mapped by sequential calls
  * of {@link #mapNext()} method, by {@link #hasData()} method
- * (which is equivalent to "<tt>{@link #count()}&gt;0</tt>" check).
+ * (which is equivalent to "<code>{@link #count()}&gt;0</code>" check).
  * If {@link #mapNext()} is called when
- * <tt><i>mapping position</i>&nbsp;+&nbsp;{@link #count()}&nbsp;=&nbsp;<i>length</i></tt>,
+ * <code><i>mapping position</i>&nbsp;+&nbsp;{@link #count()}&nbsp;=&nbsp;<i>length</i></code>,
  * then new mapping position becomes equal to <i>length</i> and,
  * so, the buffer size {@link #count()} becomes zero.
- * But please remember that {@link #hasData()} returns <tt>false</tt> also before the first mapping
+ * But please remember that {@link #hasData()} returns <code>false</code> also before the first mapping
  * of a newly created data buffer.</p>
  *
  * <h2><a name="usageExamples"></a>Usage examples</h2>
@@ -407,8 +410,8 @@ package net.algart.arrays;
  *
  * <h2><a name="notes"></a>Additional notes</h2>
  *
- * <p>The data buffers are allowed not to implement <tt>hashCode</tt> and <tt>equals</tt> method.
- * Usually, the default implementation of these methods from <tt>Object</tt> class are used.</p>
+ * <p>The data buffers are allowed not to implement <code>hashCode</code> and <code>equals</code> method.
+ * Usually, the default implementation of these methods from <code>Object</code> class are used.</p>
  *
  * <p>The data buffers are not thread-safe, but <b>are thread-compatible</b>
  * and can be synchronized manually (together with AlgART arrays accessed via the buffers)
@@ -477,18 +480,18 @@ public interface DataBuffer {
 
     /**
      * Returns the Java array which contains the mapped region of the data.
-     * The actual data elements are placed at the positions <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt>.
-     * For bit elements, returned Java array is a packed <tt>long[]</tt> array,
+     * The actual data elements are placed at the positions <code>{@link #fromIndex()}..{@link #toIndex()}-1</code>.
+     * For bit elements, returned Java array is a packed <code>long[]</code> array,
      * and the positions in this array should be considered in terms of {@link PackedBitArrays} class.
      *
      * <p>The length of the returned array is always enough to fit
-     * the <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt> positions range in it.
+     * the <code>{@link #fromIndex()}..{@link #toIndex()}-1</code> positions range in it.
      *
-     * <p><i>Note:</i> this method returns {@code null} if <tt>map</tt> / <tt>mapNext</tt> methods
+     * <p><i>Note:</i> this method returns {@code null} if <code>map</code> / <code>mapNext</code> methods
      * were never called for this buffer yet, that is, if it is newly created.
      *
      * <p><i>Warning:</i> the reference, returned by this method, may change after any call of
-     * <tt>map</tt> or <tt>mapNext</tt> methods.
+     * <code>map</code> or <code>mapNext</code> methods.
      *
      * @return the Java array which contains the mapped region of the data.
      */
@@ -496,20 +499,20 @@ public interface DataBuffer {
 
     /**
      * Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
-     * for accessing first <tt>{@link #capacity()}</tt> elements starting from this position.
+     * for accessing first <code>{@link #capacity()}</code> elements starting from this position.
      * The fragment of the data storage will be loaded and accessible in the {@link #data()} Java array
-     * at the positions <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt>.
-     * Equivalent to <tt>{@link #map(long, long, boolean) map}({@link #position()},{@link #capacity()},true)</tt>.
+     * at the positions <code>{@link #fromIndex()}..{@link #toIndex()}-1</code>.
+     * Equivalent to <code>{@link #map(long, long, boolean) map}({@link #position()},{@link #capacity()},true)</code>.
      *
-     * <p>The passed argument must be in range <tt>0..<i>length</i></tt>,
-     * where <tt><i>length</i></tt> is the total number of elements in the underlying data storage
+     * <p>The passed argument must be in range <code>0..<i>length</i></code>,
+     * where <code><i>length</i></code> is the total number of elements in the underlying data storage
      * (for an AlgART array, its {@link Array#length()}).
      * The number of actually mapped elements ({@link #count()}) will be equal to
-     * <tt>min({@link #capacity},<i>length</i>-<i>position</i>)</tt>.
+     * <code>min({@link #capacity},<i>length</i>-<i>position</i>)</code>.
      *
      * @param position new mapping position.
      * @return a reference to this data buffer.
-     * @throws IndexOutOfBoundsException if the specified position is out of range <tt>0..<i>length</i></tt>.
+     * @throws IndexOutOfBoundsException if the specified position is out of range <code>0..<i>length</i></code>.
      * @see #mapNext()
      * @see #map(long, long)
      * @see #map(long, boolean)
@@ -517,19 +520,20 @@ public interface DataBuffer {
     DataBuffer map(long position);
 
     /**
-     * An analog of {@link #map(long)} with the only exception, that when <tt>readData=false</tt>,
+     * An analog of {@link #map(long)} with the only exception, that when <code>readData=false</code>,
      * <i>reading data from the data storage is not guaranteed</i>.
-     * (When <tt>readData=true</tt>, there is no difference with {@link #map(long)} method.)
-     * Equivalent to <tt>{@link #map(long, long, boolean) map}({@link #position()},{@link #capacity()},readData)</tt>.
-     * The mode <tt>readData=false</tt> can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
+     * (When <code>readData=true</code>, there is no difference with {@link #map(long)} method.)
+     * Equivalent to
+     * <code>{@link #map(long, long, boolean) map}({@link #position()},{@link #capacity()},readData)</code>.
+     * The mode <code>readData=false</code> can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
      * if you are sure that you will fully rewrite all mapped elements and, so, want
      * to save time by avoiding useless reading them.
      *
      * @param position new mapping position.
-     * @param readData if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
-     *                 if <tt>false</tt>, there is no such a guarantee.
+     * @param readData if <code>true</code>, all mapped elements will be really loaded from the data storage;
+     *                 if <code>false</code>, there is no such a guarantee.
      * @return a reference to this data buffer.
-     * @throws IndexOutOfBoundsException if the specified position is out of range <tt>0..<i>length</i></tt>.
+     * @throws IndexOutOfBoundsException if the specified position is out of range <code>0..<i>length</i></code>.
      * @see #mapNext(boolean)
      * @see #map(long, long, boolean)
      */
@@ -538,8 +542,8 @@ public interface DataBuffer {
     /**
      * Maps the next region in the underlying data storage (usually AlgART array).
      * Equivalent to {@link #map(long) map}({@link #position()}&nbsp;+&nbsp;{@link #count()}).
-     * In particular, if the buffer is newly created and {@link #map(long)} and <tt>mapNext()</tt>
-     * were never called yet, this method is equivalent to <tt>{@link #map(long) map}(0)</tt>.
+     * In particular, if the buffer is newly created and {@link #map(long)} and <code>mapNext()</code>
+     * were never called yet, this method is equivalent to <code>{@link #map(long) map}(0)</code>.
      *
      * <p>The following loop allows to sequentially map all elements of the underlying data storage:
      * <pre>
@@ -555,17 +559,17 @@ public interface DataBuffer {
     DataBuffer mapNext();
 
     /**
-     * An analog of {@link #mapNext()} with the only exception, that when <tt>readData=false</tt>,
+     * An analog of {@link #mapNext()} with the only exception, that when <code>readData=false</code>,
      * <i>reading data from the data storage is not guaranteed</i>.
-     * (When <tt>readData=true</tt>, there is no difference with {@link #mapNext()} method.)
+     * (When <code>readData=true</code>, there is no difference with {@link #mapNext()} method.)
      * Equivalent to
-     * <tt>{@link #map(long, boolean) map}({@link #position()}&nbsp;+&nbsp;{@link #count()},&nbsp;readData)</tt>.
-     * The mode <tt>readData=false</tt> can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
+     * <code>{@link #map(long, boolean) map}({@link #position()}&nbsp;+&nbsp;{@link #count()},&nbsp;readData)</code>.
+     * The mode <code>readData=false</code> can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
      * if you are sure that you will fully rewrite all mapped elements and, so, want
      * to save time by avoiding useless reading them.
      *
-     * @param readData if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
-     *                 if <tt>false</tt>, there is no such a guarantee.
+     * @param readData if <code>true</code>, all mapped elements will be really loaded from the data storage;
+     *                 if <code>false</code>, there is no such a guarantee.
      * @return a reference to this data buffer.
      * @see #map(long, boolean)
      */
@@ -575,45 +579,45 @@ public interface DataBuffer {
      * Equivalent to {@link #map(long, long, boolean) map(position, maxCount, true)}.
      *
      * @param position new mapping position.
-     * @param maxCount this method does not guarantee that the elements after <tt>#position+maxCount-1</tt>
+     * @param maxCount this method does not guarantee that the elements after <code>#position+maxCount-1</code>
      *                 will be loaded into the buffer.
      * @return a reference to this data buffer.
-     * @throws IndexOutOfBoundsException if the specified position is out of range <tt>0..<i>length</i></tt>.
-     * @throws IllegalArgumentException  if the specified <tt>maxCount</tt> is negative.
+     * @throws IndexOutOfBoundsException if the specified position is out of range <code>0..<i>length</i></code>.
+     * @throws IllegalArgumentException  if the specified <code>maxCount</code> is negative.
      * @see #map(long)
      */
     DataBuffer map(long position, long maxCount);
 
     /**
      * Maps this data buffer to the specified position of the underlying data storage (usually AlgART array)
-     * for accessing first <tt>min(maxCount,{@link #capacity()})</tt> elements starting from this position.
-     * If <tt>readData=true</tt>, the fragment of the data storage will be loaded
+     * for accessing first <code>min(maxCount,{@link #capacity()})</code> elements starting from this position.
+     * If <code>readData=true</code>, the fragment of the data storage will be loaded
      * and accessible in the {@link #data()} Java array at the positions
-     * <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt>.
-     * If <tt>readData=false</tt>, the behaviour is the same with the exception of
+     * <code>{@link #fromIndex()}..{@link #toIndex()}-1</code>.
+     * If <code>readData=false</code>, the behaviour is the same with the exception of
      * <i>reading data from the data storage is not guaranteed</i>.
      * This mode can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
      * if you are sure that you will fully rewrite all mapped elements and, so, want
      * to save time by avoiding useless reading them.
      *
-     * <p>The passed position must be in range <tt>0..<i>length</i></tt>,
-     * where <tt><i>length</i></tt> is the total number of elements in the underlying data storage
+     * <p>The passed position must be in range <code>0..<i>length</i></code>,
+     * where <code><i>length</i></code> is the total number of elements in the underlying data storage
      * (for an AlgART array, its {@link Array#length()}).
      * The number of actually mapped elements ({@link #count()}) will be equal to
-     * <tt>min(maxCount,{@link #capacity},<i>length</i>-<i>position</i>)</tt>.
+     * <code>min(maxCount,{@link #capacity},<i>length</i>-<i>position</i>)</code>.
      *
      * <p>This method should be used instead of the full {@link #map(long) map(position)} version,
      * if you need to access a less number of elements than the full buffer capacity
      * or if you are going to fully rewrite all mapped elements.
      *
      * @param position new mapping position.
-     * @param maxCount this method does not guarantee that the elements after <tt>#position+maxCount-1</tt>
+     * @param maxCount this method does not guarantee that the elements after <code>#position+maxCount-1</code>
      *                 will be loaded into the buffer.
-     * @param readData if <tt>true</tt>, all mapped elements will be really loaded from the data storage;
-     *                 if <tt>false</tt>, there is no such a guarantee.
+     * @param readData if <code>true</code>, all mapped elements will be really loaded from the data storage;
+     *                 if <code>false</code>, there is no such a guarantee.
      * @return a reference to this data buffer.
-     * @throws IndexOutOfBoundsException if the specified position is out of range <tt>0..<i>length</i></tt>.
-     * @throws IllegalArgumentException  if the specified <tt>maxCount</tt> is negative.
+     * @throws IndexOutOfBoundsException if the specified position is out of range <code>0..<i>length</i></code>.
+     * @throws IllegalArgumentException  if the specified <code>maxCount</code> is negative.
      * @see #map(long)
      * @see #map(long, long)
      */
@@ -640,7 +644,7 @@ public interface DataBuffer {
 
     /**
      * Writes all elements in the specified region of the {@link #data()} Java array
-     * (from the passed <tt>fromIndex</tt>, inclusive, to the passed <tt>toIndex</tt>, exclusive)
+     * (from the passed <code>fromIndex</code>, inclusive, to the passed <code>toIndex</code>, exclusive)
      * back to the underlying data storage (usually AlgART array).
      * May do nothing if the changes in this Java array reflect in the storage immediately
      * (for example, for <a href="#directAndIndirect">direct buffers</a>).
@@ -649,7 +653,7 @@ public interface DataBuffer {
      * if you changed only part of mapped elements (for example, only one or several elements).
      * In this case, this method may work faster.
      * The {@link #force()} method is equivalent to the call
-     * <tt>force({@link #fromIndex()}, {@link #toIndex()})</tt>.
+     * <code>force({@link #fromIndex()}, {@link #toIndex()})</code>.
      *
      * <p>This method must not be called in the {@link DataBuffer.AccessMode#READ READ} access mode.
      * This method does nothing in the {@link DataBuffer.AccessMode#PRIVATE PRIVATE} access mode.
@@ -658,9 +662,9 @@ public interface DataBuffer {
      * @param toIndex   high boundary (inclusive) of the written region.
      * @return a reference to this data buffer.
      * @throws IllegalStateException    if the access mode is {@link DataBuffer.AccessMode#READ READ}.
-     * @throws IllegalArgumentException if <tt>fromIndex&gt;toIndex</tt> or if the passed region is not
+     * @throws IllegalArgumentException if <code>fromIndex&gt;toIndex</code> or if the passed region is not
      *                                  a fragment of full actual region
-     *                                  <tt>{@link #fromIndex()}..{@link #toIndex()}-1</tt>.
+     *                                  <code>{@link #fromIndex()}..{@link #toIndex()}-1</code>.
      * @see #force()
      */
     DataBuffer force(long fromIndex, long toIndex);
@@ -699,7 +703,7 @@ public interface DataBuffer {
 
     /**
      * Returns the number of elements in the current <i>actual region</i>.
-     * Equivalent to <tt>{@link #toIndex()}-{@link #fromIndex()}</tt>.
+     * Equivalent to <code>{@link #toIndex()}-{@link #fromIndex()}</code>.
      * Cannot be negative.
      *
      * @return the number of elements in the current <i>actual region</i>.
@@ -707,69 +711,69 @@ public interface DataBuffer {
     long count();
 
     /**
-     * Returns <tt>true</tt> if and only if <tt>{@link #count()}&gt;0</tt>.
+     * Returns <code>true</code> if and only if <code>{@link #count()}&gt;0</code>.
      *
      * <p>After a call of {@link #map(long)} or {@link #mapNext()},
      * this method may be used to check that the current mapping position
      * is equal to the <i>length</i> of the underlying data storage.
-     * For sequential calls of {@link #mapNext()}, this method returns <tt>false</tt>
+     * For sequential calls of {@link #mapNext()}, this method returns <code>false</code>
      * when all elements from the data storage have been already mapped.
      *
-     * @return <tt>true</tt> if this buffer is non-empty.
+     * @return <code>true</code> if this buffer is non-empty.
      */
     boolean hasData();
 
     /**
-     * Returns <tt>true</tt> if this buffer is <i>direct</i>.
+     * Returns <code>true</code> if this buffer is <i>direct</i>.
      *
      * <p>For buffers, created by this package, the "direct" term is quite specified:
      * please see "<a href="#directAndIndirect">Direct and indirect data buffers</a>" section above.
      *
-     * <p>For any kind of buffer, "direct" term means that all <tt>map</tt> and <tt>mapNext</tt> methods,
+     * <p>For any kind of buffer, "direct" term means that all <code>map</code> and <code>mapNext</code> methods,
      * {@link #force()} and {@link #force(long, long)} methods,
      * <i>probably</i>, work very quickly, and the changes in the {@link #data()} array,
      * <i>probably</i>, reflect in the original data storage immediately.
      *
-     * @return <tt>true</tt> if this buffer is direct.
+     * @return <code>true</code> if this buffer is direct.
      */
     boolean isDirect();
 
     /**
-     * Returns <tt>(int){@link #fromIndex()}</tt>, if <tt>{@link #fromIndex()}&lt;=Integer.MAX_VALUE</tt>,
+     * Returns <code>(int){@link #fromIndex()}</code>, if <code>{@link #fromIndex()}&lt;=Integer.MAX_VALUE</code>,
      * or throws {@link DataBufferIndexOverflowException} in other case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
-     * is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+     * is not longer than <code>Integer.MAX_VALUE</code> elements.
      *
-     * @return <tt>(int){@link #fromIndex()}</tt>.
+     * @return <code>(int){@link #fromIndex()}</code>.
      * @throws DataBufferIndexOverflowException
-     *          if <tt>{@link #fromIndex()}&gt;Integer.MAX_VALUE</tt>.
+     *          if <code>{@link #fromIndex()}&gt;Integer.MAX_VALUE</code>.
      */
     int from();
 
     /**
-     * Returns <tt>(int){@link #toIndex()}</tt>, if <tt>{@link #toIndex()}&lt;=Integer.MAX_VALUE</tt>,
+     * Returns <code>(int){@link #toIndex()}</code>, if <code>{@link #toIndex()}&lt;=Integer.MAX_VALUE</code>,
      * or throws {@link DataBufferIndexOverflowException} in other case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
-     * is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+     * is not longer than <code>Integer.MAX_VALUE</code> elements.
      *
-     * @return <tt>(int){@link #toIndex()}</tt>.
+     * @return <code>(int){@link #toIndex()}</code>.
      * @throws DataBufferIndexOverflowException
-     *          if <tt>{@link #toIndex()}&gt;Integer.MAX_VALUE</tt>.
+     *          if <code>{@link #toIndex()}&gt;Integer.MAX_VALUE</code>.
      */
     int to();
 
     /**
-     * Returns <tt>(int){@link #count()}</tt>, if <tt>{@link #count()}&lt;=Integer.MAX_VALUE</tt>,
+     * Returns <code>(int){@link #count()}</code>, if <code>{@link #count()}&lt;=Integer.MAX_VALUE</code>,
      * or throws {@link DataBufferIndexOverflowException} in other case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
-     * is not longer than <tt>Integer.MAX_VALUE</tt> elements.
+     * is not longer than <code>Integer.MAX_VALUE</code> elements.
      *
-     * @return <tt>(int){@link #count()}</tt>.
+     * @return <code>(int){@link #count()}</code>.
      * @throws DataBufferIndexOverflowException
-     *          if <tt>{@link #count()}&gt;Integer.MAX_VALUE</tt>.
+     *          if <code>{@link #count()}&gt;Integer.MAX_VALUE</code>.
      */
     int cnt();
 }
