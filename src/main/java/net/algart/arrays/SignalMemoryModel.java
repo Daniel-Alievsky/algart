@@ -29,8 +29,8 @@ import java.util.Objects;
 /**
  * <p>The degenerate memory model that does not allow to create any AlgART arrays.
  * Any attempt to create an array by methods of this class leads to
- * {@link UnsupportedElementTypeException} (or, maybe, <tt>NullPointerException</tt>,
- * <tt>IllegalArgumentException</tt> or <tt>ClassCastException</tt>,
+ * {@link UnsupportedElementTypeException} (or, maybe, <code>NullPointerException</code>,
+ * <code>IllegalArgumentException</code> or <code>ClassCastException</code>,
  * if the comments to the method require this).
  *
  * <p>This class may be useful to detect a bug, when some method have a {@link MemoryModel} argument,
@@ -86,11 +86,11 @@ public class SignalMemoryModel extends AbstractMemoryModel {
     }
 
     /**
-     * This implementation always returns <tt>false</tt>.
+     * This implementation always returns <code>false</code>.
      *
      * @param elementType the type of array elements.
-     * @return            <tt>false</tt> always.
-     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
+     * @return            <code>false</code> always.
+     * @throws NullPointerException if <code>elementType</code> is {@code null}.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -98,29 +98,29 @@ public class SignalMemoryModel extends AbstractMemoryModel {
     }
 
     /**
-     * This implementation always returns <tt>false</tt>.
+     * This implementation always returns <code>false</code>.
      *
-     * @return <tt>false</tt> always.
+     * @return <code>false</code> always.
      */
     public boolean areAllPrimitiveElementTypesSupported() {
         return false;
     }
 
     /**
-     * This implementation always returns <tt>false</tt>.
+     * This implementation always returns <code>false</code>.
      *
-     * @return <tt>false</tt> always.
+     * @return <code>false</code> always.
      */
     public boolean areAllElementTypesSupported() {
         return false;
     }
 
     /**
-     * This implementation always returns <tt>-1</tt>.
+     * This implementation always returns <code>-1</code>.
      *
      * @param elementType the type of array elements.
-     * @return            <tt>-1</tt> always.
-     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
+     * @return            <code>-1</code> always.
+     * @throws NullPointerException if <code>elementType</code> is {@code null}.
      */
     public long maxSupportedLength(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -128,9 +128,9 @@ public class SignalMemoryModel extends AbstractMemoryModel {
     }
 
     /**
-     * This implementation always returns <tt>false</tt>.
+     * This implementation always returns <code>false</code>.
      *
-     * @return <tt>false</tt> always.
+     * @return <code>false</code> always.
      */
     public boolean isCreatedBy(Array array) {
         return false;

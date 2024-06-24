@@ -31,12 +31,12 @@ package net.algart.arrays;
  * Processing starts from creating an instance of this interface, usually associated with
  * some source array or matrix and implementing some processing algorithm.
  * Then the loop of {@link #performIteration iterations} is performed,
- * until the boolean flag {@link #done() done} will be set to <tt>true</tt>.
- * Usually, each iteration modifies some AlgART array or matrix, and the flag <tt>done</tt> means
+ * until the boolean flag {@link #done() done} will be set to <code>true</code>.
+ * Usually, each iteration modifies some AlgART array or matrix, and the flag <code>done</code> means
  * that further modifications are impossible.
  * Last, the result of calculations is returned by {@link #result()} method.
  * The type of the result is the generic parameter of this interface; usually it is {@link UpdatableArray}
- * or <tt>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableArray}&gt;</tt>.</p>
+ * or <code>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableArray}&gt;</code>.</p>
  *
  * <p>Using of this interface is more convenient than manual programming the loop of iterations.
  * Typical scheme of using this interface is the following:</p>
@@ -83,18 +83,18 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
     /**
      * Performs the next iteration of the iterative algorithm.
      * If the algorithm is {@link #done()}, the results are unspecified:
-     * please never call this method if {@link #done()} returns <tt>true</tt>.
+     * please never call this method if {@link #done()} returns <code>true</code>.
      *
      * <p>You usually don't need to call this method: please call
      * {@link #process()} instead.
-     * If you need to perform only one or <tt>n</tt> iterations, you may use
+     * If you need to perform only one or <code>n</code> iterations, you may use
      * {@link #limitIterations(long) limitIterations(n)} call.
      *
      * <p><i>Warning: this method should ignore the {@link #context() current execution context} of this object</i>.
-     * Instead, this method should use the context of execution specified by <tt>context</tt> argument.
+     * Instead, this method should use the context of execution specified by <code>context</code> argument.
      * This method is called by {@link #process()} method with the argument,
      * describing {@link ArrayContext#part(double, double) a&nbsp;subtrask} of the full algorithm.
-     * The <tt>context</tt> argument can be {@code null}:
+     * The <code>context</code> argument can be {@code null}:
      * this method should work properly in this case (ignore the context).
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
@@ -104,7 +104,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
     void performIteration(ArrayContext context);
 
     /**
-     * Returns <tt>true</tt> if and only if the algorithm was successfully finished and there is
+     * Returns <code>true</code> if and only if the algorithm was successfully finished and there is
      * no sense to perform further iterations.
      *
      * <p>This method usually does not perform actual calculations and works very quickly (just returns
@@ -115,13 +115,13 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
      *
-     * @return <tt>true</tt> if and only if the algorithm was successfully finished.
+     * @return <code>true</code> if and only if the algorithm was successfully finished.
      */
     boolean done();
 
     /**
      * Estimates the number of iterations, that should be performed from this moment to finish the algorithm.
-     * Returns <tt>0</tt> if it is impossible or too difficult to estimate this number:
+     * Returns <code>0</code> if it is impossible or too difficult to estimate this number:
      * it means that the remaining number of iteration is unknown.
      *
      * <p>This method may require some time for its execution.
@@ -139,9 +139,9 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
     /**
      * Returns the result of the previous iteration.
      * Usually it is {@link UpdatableArray} or
-     * <tt>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableArray}&gt;</tt>.
+     * <code>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableArray}&gt;</code>.
      * This method returns valid result even if no iterations were performed yet.
-     * If {@link #done()} method returns <tt>true</tt>, the result of this method
+     * If {@link #done()} method returns <code>true</code>, the result of this method
      * is the final result of iterative processing performed by this instance.
      *
      * <p>This method may return {@code null}.
@@ -184,7 +184,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
 
     /**
      * Performs a loop of calls of {@link #performIteration performIteration} method, while
-     * {@link #done()} method returns <tt>false</tt>.
+     * {@link #done()} method returns <code>false</code>.
      * It is the main method of this interface, used by application.
      *
      * <p>This method uses its {@link #context() current context} to create an array context, that will be passed
@@ -194,13 +194,13 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * If the {@link #context() current context} is {@code null}, this method pass {@code null}
      * to {@link #performIteration(ArrayContext)}.
      *
-     * <p>The <tt>maxNumberOfIterations</tt> argument allows to restrict the total number of
+     * <p>The <code>maxNumberOfIterations</code> argument allows to restrict the total number of
      * calls of {@link #performIteration performIteration},
      * that can be useful when the algorithm can work for very long time
      * (thousands or millions iterations).
      * If this argument is zero or positive,
-     * this method will perform, as a maximum, <tt>maxNumberOfIterations</tt> iterations
-     * (or less, if {@link #done()} will return <tt>true</tt> before this).
+     * this method will perform, as a maximum, <code>maxNumberOfIterations</code> iterations
+     * (or less, if {@link #done()} will return <code>true</code> before this).
      * If it is zero, this method does nothing and immediately returns the {@link #result()}.
      * If it is negative, this argument is ignored.
      *
@@ -221,46 +221,46 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * to the current context of this instance.</li>
      *
      * <li>{@link #performIteration(ArrayContext context)} in the returned instance always calls
-     * <tt>thisInstance.{@link #performIteration performIteration}(context)</tt>.</li>
+     * <code>thisInstance.{@link #performIteration performIteration}(context)</code>.</li>
      *
      * <li>{@link #done()} in the returned instance is equivalent to
-     * <tt>count&gt;=maxNumberOfIterations||thisInstance.{@link #done()}</tt>,
-     * where <tt>count</tt> is the total number of performed calls of
+     * <code>count&gt;=maxNumberOfIterations||thisInstance.{@link #done()}</code>,
+     * where <code>count</code> is the total number of performed calls of
      * {@link #performIteration(ArrayContext context) performIteration} method.</li>
      *
      * <li>{@link #estimatedNumberOfIterations()} in the returned instance always returns
-     * <tt>max(0,maxNumberOfIterations-count)</tt>,
-     * where <tt>count</tt> is the total number of performed calls of
+     * <code>max(0,maxNumberOfIterations-count)</code>,
+     * where <code>count</code> is the total number of performed calls of
      * {@link #performIteration(ArrayContext context) performIteration} method.</li>
      *
      * <li>{@link #result()} in the returned instance always returns
-     * <tt>!thisInstance.{@link #result()}</tt>.</li>
+     * <code>!thisInstance.{@link #result()}</code>.</li>
      *
      * <li>{@link #freeResources(ArrayContext) freeResources(context)} in the returned instance calls
-     * <tt>thisInstance.{@link #freeResources(ArrayContext) freeResources(context)}</tt>.</li>
+     * <code>thisInstance.{@link #freeResources(ArrayContext) freeResources(context)}</code>.</li>
      * </ul>
      *
      * <p>As a result, the basic {@link #process()} method in the returned instance
-     * will perform, as a maximum, <tt>maxNumberOfIterations</tt> only.
-     * In particular, if <tt>maxNumberOfIterations==0</tt>, {@link #process()} method does nothing
+     * will perform, as a maximum, <code>maxNumberOfIterations</code> only.
+     * In particular, if <code>maxNumberOfIterations==0</code>, {@link #process()} method does nothing
      * and immediately returns {@link #result()} object.
      *
-     * <p>If <tt>maxNumberOfIterations&lt;0</tt>, this method just returns the reference to this instance.
-     * In other words, negative <tt>maxNumberOfIterations</tt> means unlimited number of iterations.
+     * <p>If <code>maxNumberOfIterations&lt;0</code>, this method just returns the reference to this instance.
+     * In other words, negative <code>maxNumberOfIterations</code> means unlimited number of iterations.
      *
      * @param maxNumberOfIterations the number of iterations, after which the {@link #done()} method
-     *                              in the returned instance always returns <tt>true</tt>.
+     *                              in the returned instance always returns <code>true</code>.
      * @return                      new algorithm, equivalent to this algorithm with limited number of iterations.
      */
     IterativeArrayProcessor<T> limitIterations(long maxNumberOfIterations);
 
     /**
      * Returns new object, implementing this interface, equivalent to the chain of this algorithm
-     * and <tt>followingProcessor</tt> algorithm, executed after this.
+     * and <code>followingProcessor</code> algorithm, executed after this.
      * In other words, {@link #process()} method of the returned instance performs
-     * iterations of this instance, while its {@link #done()} method returns <tt>false</tt>,
-     * and then performs iterations of <tt>followingProcessor</tt>, while
-     * <tt>followingProcessor.{@link #done()}</tt> method returns <tt>false</tt>.
+     * iterations of this instance, while its {@link #done()} method returns <code>false</code>,
+     * and then performs iterations of <code>followingProcessor</code>, while
+     * <code>followingProcessor.{@link #done()}</code> method returns <code>false</code>.
      *
      * <p>More precisely:
      *
@@ -269,21 +269,21 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * to the current context of this instance.</li>
      *
      * <li>{@link #performIteration(ArrayContext context)} in the returned instance calls
-     * <tt>thisInstance.{@link #performIteration performIteration}(context)</tt>, if
-     * <tt>!thisInstance.{@link #done()}</tt>, or calls
-     * <tt>followingProcessor.{@link #performIteration performIteration}(context)</tt> in other case.</li>
+     * <code>thisInstance.{@link #performIteration performIteration}(context)</code>, if
+     * <code>!thisInstance.{@link #done()}</code>, or calls
+     * <code>followingProcessor.{@link #performIteration performIteration}(context)</code> in other case.</li>
      *
      * <li>{@link #done()} in the returned instance is equivalent to
-     * <tt>thisInstance.{@link #done()}&amp;&amp;followingProcessor.{@link #done()}</tt>.</li>
+     * <code>thisInstance.{@link #done()}&amp;&amp;followingProcessor.{@link #done()}</code>.</li>
      *
      * <li>{@link #estimatedNumberOfIterations()} in the returned instance calls
-     * <tt>n1=thisInstance.{@link #estimatedNumberOfIterations()}</tt> and
-     * <tt>n2=followingProcessor.{@link #estimatedNumberOfIterations()}</tt>,
-     * and returns <tt>n2</tt> if <tt>thisInstance.{@link #done()}</tt>,
-     * or, in other case, <tt>n1+Math.round(weight*n2)</tt>, where <tt>weight</tt>
-     * is the 2nd argument if this method. (If <tt>n1==0</tt> or <tt>n2==0</tt>, <tt>0</tt> is returned.)
+     * <code>n1=thisInstance.{@link #estimatedNumberOfIterations()}</code> and
+     * <code>n2=followingProcessor.{@link #estimatedNumberOfIterations()}</code>,
+     * and returns <code>n2</code> if <code>thisInstance.{@link #done()}</code>,
+     * or, in other case, <code>n1+Math.round(weight*n2)</code>, where <code>weight</code>
+     * is the 2nd argument if this method. (If <code>n1==0</code> or <code>n2==0</code>, <code>0</code> is returned.)
      * The necessity of the weight here is connected with the fact, that
-     * the <tt>followingProcessor</tt> may return illegal results,
+     * the <code>followingProcessor</code> may return illegal results,
      * because this processor did not process the matrix yet.</li>
      *
      * <li>{@link #result()} in the returned instance returns
@@ -291,14 +291,14 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * followingProcessor.{@link #result()}</tt>.</li>
      *
      * <li>{@link #freeResources(ArrayContext) freeResources(context)} in the returned instance calls
-     * <tt>thisInstance.{@link #freeResources(ArrayContext) freeResources(c1)}</tt> and
-     * <tt>followingProcessor.{@link #freeResources(ArrayContext) freeResources(c2)}</tt>,
-     * where <tt>c1</tt> and <tt>c2</tt> are {@link ArrayContext#part(long, long, long) parts}
+     * <code>thisInstance.{@link #freeResources(ArrayContext) freeResources(c1)}</code> and
+     * <code>followingProcessor.{@link #freeResources(ArrayContext) freeResources(c2)}</code>,
+     * where <code>c1</code> and <code>c2</code> are {@link ArrayContext#part(long, long, long) parts}
      * of the passed context.</li>
      * </ul>
      *
-     * <p>It is obvious that both instances of iterative algorithms, this and <tt>followingProcessor</tt>,
-     * must share the same processed data. In other words, <tt>followingProcessor</tt>
+     * <p>It is obvious that both instances of iterative algorithms, this and <code>followingProcessor</code>,
+     * must share the same processed data. In other words, <code>followingProcessor</code>
      * (its {@link #performIteration(ArrayContext)} and {@link #done()} methods) must
      * be able to "see" the results of execution of this processor.
      * To provide this, the constructors (or generation methods) of both instances
@@ -310,9 +310,9 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *                           estimated number of iterations} of the next algorithm,
      *                           used while first (this) one is not finished yet.
      * @return                   new algorithm, equivalent to the chain of this algorithm and
-     *                           <tt>followingProcessor</tt>.
-     * @throws NullPointerException     if <tt>followingProcessor</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>weight</tt> argument is negative.
+     *                           <code>followingProcessor</code>.
+     * @throws NullPointerException     if <code>followingProcessor</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>weight</code> argument is negative.
      */
     IterativeArrayProcessor<T> chain(IterativeArrayProcessor<T> followingProcessor, double weight);
 }

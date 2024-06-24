@@ -145,16 +145,16 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Equivalent to <tt>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
-     * StandardIODataFileModel}(null, 0, true, {@link #defaultDirectBuffers()})</tt>.
+     * Equivalent to <code>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
+     * StandardIODataFileModel}(null, 0, true, {@link #defaultDirectBuffers()})</code>.
      */
     public StandardIODataFileModel() {
         this(null, STANDARD_IO_PREFIX_SIZE, true, defaultDirectBuffers());
     }
 
     /**
-     * Equivalent to <tt>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
-     * StandardIODataFileModel}(null, 0, cacheReading, directBuffers)</tt>.
+     * Equivalent to <code>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
+     * StandardIODataFileModel}(null, 0, cacheReading, directBuffers)</code>.
      *
      * @param cacheReading  whether reading data should be cached in free Java memory.
      * @param directBuffers whether the {@link DataFile data files}, created by this class, should allocate
@@ -167,8 +167,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Equivalent to <tt>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
-     * StandardIODataFileModel}(tempPath, 0, true, {@link #defaultDirectBuffers()})</tt>.
+     * Equivalent to <code>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
+     * StandardIODataFileModel}(tempPath, 0, true, {@link #defaultDirectBuffers()})</code>.
      *
      * @param tempPath the path where new temporary files will be created
      *                 by {@link #createTemporaryFile(boolean)} method
@@ -179,8 +179,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Equivalent to <tt>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
-     * StandardIODataFileModel}(tempPath, 0, cacheReading, {@link #defaultDirectBuffers()})</tt>.
+     * Equivalent to <code>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
+     * StandardIODataFileModel}(tempPath, 0, cacheReading, {@link #defaultDirectBuffers()})</code>.
      *
      * @param tempPath     the path where new temporary files will be created
      *                     by {@link #createTemporaryFile(boolean)} method
@@ -192,8 +192,8 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
     }
 
     /**
-     * Equivalent to <tt>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
-     * StandardIODataFileModel}(tempPath, 0, cacheReading, directBuffers)</tt>.
+     * Equivalent to <code>new {@link #StandardIODataFileModel(File, long, boolean, boolean)
+     * StandardIODataFileModel}(tempPath, 0, cacheReading, directBuffers)</code>.
      *
      * @param tempPath      the path where new temporary files will be created
      *                      by {@link #createTemporaryFile(boolean)} method

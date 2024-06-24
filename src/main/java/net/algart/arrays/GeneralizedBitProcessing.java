@@ -324,8 +324,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * @param threadIndex     the index of the current thread (different for different threads in a case of
          *                        multithreading optimization).
          * @param numberOfThreads the maximal possible value of <code>threadIndex+1</code>: equal to
-         *                        <nobr><tt>min(numberOfSlices&minus;1,{@link
-         *                        GeneralizedBitProcessing#numberOfTasks()})</tt></nobr>,
+         *                        <nobr><code>min(numberOfSlices&minus;1,{@link
+         *                        GeneralizedBitProcessing#numberOfTasks()})</code></nobr>,
          *                        where <code>numberOfSlices</code>=<i>n</i>+1 is the argument of
          *                        {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)
          *                        process} method.
@@ -470,8 +470,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * <li>1 if this instance was created by
      * {@link #getSingleThreadInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation,
      * GeneralizedBitProcessing.RoundingMode) getSingleThreadInstance} method or</li>
-     * <li><tt>context.{@link ArrayContext#getThreadPoolFactory()
-     * getThreadPoolFactory()}.{@link ThreadPoolFactory#recommendedNumberOfTasks() recommendedNumberOfTasks()}</tt>
+     * <li><code>context.{@link ArrayContext#getThreadPoolFactory()
+     * getThreadPoolFactory()}.{@link ThreadPoolFactory#recommendedNumberOfTasks() recommendedNumberOfTasks()}</code>
      * if it was created by {@link #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation,
      * GeneralizedBitProcessing.RoundingMode) getInstance} method.</li>
      * </ul>
@@ -533,13 +533,14 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * <p>If the element type is <code>boolean</code> ({@link BitArray}),
      * then a generalization of the bitwise algorithm
      * is not necessary. In this case, if <code>numberOfSlices&gt;1</code>, this method just calls
-     * <tt>{@link #sliceOperation()}.{@link
+     * <code>{@link #sliceOperation()}.{@link
      * GeneralizedBitProcessing.SliceOperation#processBits(ArrayContext, UpdatableBitArray, BitArray, long, int, int)
-     * processBits}</tt> method for the passed <code>dest</code> and <code>src</code> arrays.
+     * processBits}</code> method for the passed <code>dest</code> and <code>src</code> arrays.
      * (However, according to the specification of {@link GeneralizedBitProcessing.SliceOperation}, if its
      * {@link GeneralizedBitProcessing.SliceOperation#isInPlaceProcessingAllowed() isInPlaceProcessingAllowed()}
      * method returns <code>true</code>, then <code>src</code> arrays is firstly copied into <code>dest</code>,
-     * and then the <code>dest</code> arrays is passed as both <code>srcBits</code> and <code>destBits</code> arguments.)
+     * and then the <code>dest</code> arrays
+     * is passed as both <code>srcBits</code> and <code>destBits</code> arguments.)
      *
      * <p>Note: if the element type is <code>boolean</code>, then multithreading is never used:
      * {@link

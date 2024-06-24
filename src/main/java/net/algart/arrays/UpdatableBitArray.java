@@ -90,28 +90,28 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Equivalent to <tt>{@link #setBit(long, boolean) setBit}(index, true)</tt>.
+     * Equivalent to <code>{@link #setBit(long, boolean) setBit}(index, true)</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void setBit(long index);
 
     /**
-     * Equivalent to <tt>{@link #setBit(long, boolean) setBit}(index, false)</tt>.
+     * Equivalent to <code>{@link #setBit(long, boolean) setBit}(index, false)</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void clearBit(long index);
 
     /**
-     * Sets the element #<tt>index</tt> to the specified <tt>value</tt> <b>in a non-thread-safe manner</b>:
+     * Sets the element #<code>index</code> to the specified <code>value</code> <b>in a non-thread-safe manner</b>:
      * without a strict requirement for internal synchronization.
      * This means that when calling this method from different threads for the same instance,
-     * it can cause modification (corruption) of some bits "around" the bit <tt>#index</tt>,
-     * namely the bits inside the same 64-bit block with indexes <tt>64k...64k+63</tt>,
-     * where <tt>k=index/64</tt>.
+     * it can cause modification (corruption) of some bits "around" the bit <code>#index</code>,
+     * namely the bits inside the same 64-bit block with indexes <code>64k...64k+63</code>,
+     * where <code>k=index/64</code>.
      *
      * <p>In contrast, {@link #setBit(long, boolean)} method guarantees that setting a bit at index
      * <i>i</i> will never affect to any bit with other index <i>j&ne;i</i>.
@@ -131,31 +131,31 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *
      * @param index index of element to replace.
      * @param value element to be stored at the specified position.
-     * @throws IndexOutOfBoundsException if <tt>index</tt> is out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
     void setBitNoSync(long index, boolean value);
 
     /**
-     * Equivalent to <tt>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, true)</tt>.
+     * Equivalent to <code>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, true)</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void setBitNoSync(long index);
 
     /**
-     * Equivalent to <tt>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, false)</tt>.
+     * Equivalent to <code>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, false)</code>.
      *
      * @param index index of element to replace.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void clearBitNoSync(long index);
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>.
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#arrayPos</code>.
      * This is the reverse operation of {@link #getBits64(long, int)}.
      *
-     * <p>This function is equivalent to the following loop (for correct <tt>count</tt> in the range 0..64):</p>
+     * <p>This function is equivalent to the following loop (for correct <code>count</code> in the range 0..64):</p>
      *
      * <pre>
      *      for (int k = 0; k &lt; count; k++) {
@@ -164,13 +164,13 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      *      }</pre>
      *
      * <p>But this method works significantly faster in basic implementations of this interface,
-     * if <tt>count</tt> is greater than 1.</p>
+     * if <code>count</code> is greater than 1.</p>
      *
      * @param arrayPos position of the first bit written in the destination array.
      * @param bits     sequence of new bits to be copied into the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     default void setBits64(long arrayPos, long bits, int count) {
         if (arrayPos < 0) {
@@ -192,13 +192,13 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     }
 
     /**
-     * Sets the sequence of <tt>count</tt> bits (maximum 64 bits), starting from the bit <tt>#arrayPos</tt>
+     * Sets the sequence of <code>count</code> bits (maximum 64 bits), starting from the bit <code>#arrayPos</code>
      * <b>in a non-thread-safe manner</b>:
      * without a strict requirement for internal synchronization.
      * This means that when calling this method from different threads for the same instance,
-     * it can cause modification (corruption) of some bits "around" the bit <tt>#index</tt>,
-     * namely the bits inside the same 64-bit block with indexes <tt>64k...64k+63</tt>,
-     * where <tt>k=index/64</tt>.
+     * it can cause modification (corruption) of some bits "around" the bit <code>#index</code>,
+     * namely the bits inside the same 64-bit block with indexes <code>64k...64k+63</code>,
+     * where <code>k=index/64</code>.
      *
      * <p>Note that this method is usually <b>much</b> faster than {@link #setBits64(long, long, int)}.
      * If you are not going to work with this array from different threads, you should prefer this method.
@@ -215,7 +215,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param bits     sequence of new bits to be copied into the destination array.
      * @param count    the number of bits to be written (must be in range 0..64).
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt> or <tt>count &gt; 64</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     default void setBits64NoSync(long arrayPos, long bits, int count) {
         if (arrayPos < 0) {
@@ -237,9 +237,9 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     }
 
     /**
-     * Copies <tt>count</tt> bits from the specified <i>packed</i> bit array,
-     * starting from <tt>srcArrayOffset</tt> index,
-     * into this array, starting from <tt>arrayPos</tt> index.
+     * Copies <code>count</code> bits from the specified <i>packed</i> bit array,
+     * starting from <code>srcArrayOffset</code> index,
+     * into this array, starting from <code>arrayPos</code> index.
      *
      * <p>This method is equivalent to the following loop:<pre>
      * for (long k = 0; k &lt; count; k++)
@@ -249,7 +249,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * </pre>
      * <p>but usually works much faster.</p>
      *
-     * <p>Note: if <tt>IndexOutOfBoundsException</tt> occurs due to attempt to read data outside the passed
+     * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to read data outside the passed
      * Java array, this AlgART array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
      * All other possible exceptions are checked in the very beginning of this method
@@ -260,9 +260,9 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
      * @return a reference to this AlgART array.
-     * @throws NullPointerException      if <tt>srcArray</tt> argument is {@code null}.
+     * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
-     * @throws IllegalArgumentException  if <tt>count &lt; 0</tt>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code>.
      * @see #getData(long, Object, int, int)
      * @see #getBits(long, long[], long, long)
      * @see PackedBitArrays
