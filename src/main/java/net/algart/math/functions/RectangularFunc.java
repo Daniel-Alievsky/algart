@@ -78,7 +78,7 @@ public final class RectangularFunc implements Func {
     /**
      * Returns an instance of this class describing the rectangular function with the passed parameters.
      * The {@link #get get} method of the function will return <code>in</code> if
-     * <code><tt>min&lt;=<i>x</i><sub>0</sub>&lt;=max</code>
+     * <code>min&lt;=<i>x</i><sub>0</sub>&lt;=max</code>
      * and <code>out</code> otherwise.
      *
      * @param min the minimum number in the range, inclusive.

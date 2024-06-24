@@ -30,7 +30,7 @@ package net.algart.math.functions;
  * <i>scale</i>*<i>x</i><sub>0</sub>/<i>x</i><sub>1</sub></sup> ,
  * where <i>scale</i> is a constant, passed to {@link #getInstance(double)} method.
  * The {@link #get} method of the instance of this class requires at least 2 arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0 or 1.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>

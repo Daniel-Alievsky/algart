@@ -30,11 +30,11 @@ package net.algart.math.functions;
  * <i>b</i><sup><i>x</i><sub>0</sub></sup>
  * (<i>b</i> is the base of the exponent).
  * More precisely, the result of this function is
- * <tt>Math.exp(x[0]*Math.log(b))</tt> for the instance returned by {@link #getInstance(double)} method
- * or <tt>StrictMath.exp(x[0]*StrictMath.log(b))</tt> for the instance
+ * <code>Math.exp(x[0]*Math.log(b))</code> for the instance returned by {@link #getInstance(double)} method
+ * or <code>StrictMath.exp(x[0]*StrictMath.log(b))</code> for the instance
  * returned by {@link #getStrictInstance(double)} method.
  * The {@link #get} method of the instance of this class requires at least 1 argument
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -49,11 +49,11 @@ public abstract class ExpFunc implements Func {
     }
 
     /**
-     * Returns an instance of this class for the given logarithm base <tt>b</tt>
-     * using <tt>Math.exp</tt> and <tt>Math.log</tt> methods.</p>
+     * Returns an instance of this class for the given logarithm base <code>b</code>
+     * using <code>Math.exp</code> and <code>Math.log</code> methods.</p>
      *
      * @param b the base of the logarithm.
-     * @return  an instance of this class using <tt>Math.exp</tt> and <tt>Math.log</tt> methods.
+     * @return  an instance of this class using <code>Math.exp</code> and <code>Math.log</code> methods.
      */
     public static ExpFunc getInstance(double b) {
         if (b == Math.E) {
@@ -105,11 +105,11 @@ public abstract class ExpFunc implements Func {
     }
 
     /**
-     * Returns an instance of this class for the given logarithm base <tt>b</tt>
-     * using <tt>StrictMath.exp</tt> and <tt>StrictMath.log</tt> methods.</p>
+     * Returns an instance of this class for the given logarithm base <code>b</code>
+     * using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.</p>
      *
      * @param b the base of the exponent.
-     * @return  an instance of this class using <tt>StrictMath.exp</tt> and <tt>StrictMath.log</tt> methods.
+     * @return  an instance of this class using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.
      */
     public static ExpFunc getStrictInstance(double b) {
         if (b == Math.E) {

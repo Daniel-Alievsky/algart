@@ -65,12 +65,12 @@ public class CoordinateTransformedFunc implements Func {
 
     /**
      * Returns an instance of this class for the given parent function and operator.
-     * (If <tt>operator</tt> is {@link Operator#IDENTITY} or equivalent, this method may return
-     * the <tt>parent</tt> argument.)
+     * (If <code>operator</code> is {@link Operator#IDENTITY} or equivalent, this method may return
+     * the <code>parent</code> argument.)
      *
-     * <p>The result is almost always an instance of this class, but there is an exception: if <tt>operator</tt>
+     * <p>The result is almost always an instance of this class, but there is an exception: if <code>operator</code>
      * is an identity operator, which does not change the passed parent function at all, this method
-     * can just return <tt>parent</tt> argument.
+     * can just return <code>parent</code> argument.
      *
      * @param parent   the parent function.
      * @param operator the operator, transforming the arguments of this function before passing them to the parent one.
