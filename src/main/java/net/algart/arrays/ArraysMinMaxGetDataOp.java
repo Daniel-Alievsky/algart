@@ -55,6 +55,7 @@ class ArraysMinMaxGetDataOp {
     private final JArrayPool bufferPool; // one of static pools
     private final ArrayMinMaxOp ammo;
     private final boolean isMin;
+
     ArraysMinMaxGetDataOp(PArray result, PArray[] x, ArrayMinMaxOp ammo, boolean isMin) {
         if (x.length == 0) {
             throw new AssertionError("Empty x[] argument");
@@ -82,27 +83,27 @@ class ArraysMinMaxGetDataOp {
                 array = Arrays.getUnderlyingArrays(array)[0];
             }
             this.jaOrDStor[k] = isBit ?
-                Arrays.longJavaArrayInternal((BitArray)array) :
-                Arrays.javaArrayInternal(array);
+                    Arrays.longJavaArrayInternal((BitArray) array) :
+                    Arrays.javaArrayInternal(array);
             if (this.jaOrDStor[k] != null) {
                 this.subArrayOffset[k] = isBit ?
-                    Arrays.longJavaArrayOffsetInternal((BitArray)array) :
-                    Arrays.javaArrayOffsetInternal(array);
+                        Arrays.longJavaArrayOffsetInternal((BitArray) array) :
+                        Arrays.javaArrayOffsetInternal(array);
             } else if (array instanceof AbstractBufferArray) {
-                this.jaOrDStor[k] = ((AbstractBufferArray)array).storage;
-                this.subArrayOffset[k] = ((AbstractBufferArray)array).offset;
+                this.jaOrDStor[k] = ((AbstractBufferArray) array).storage;
+                this.subArrayOffset[k] = ((AbstractBufferArray) array).offset;
             }
         }
         this.jaOrDStorOffsetsPool = ArraysFuncImpl.smallLongBuffers(this.x.length);
         this.bufferPool =
-            this.x[0] instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS :
-            this.x[0] instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS :
-            this.x[0] instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS :
-            this.x[0] instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS :
-            this.x[0] instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS :
-            this.x[0] instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS :
-            this.x[0] instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS :
-            null;
+                this.x[0] instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS
+                        : this.x[0] instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS
+                        : this.x[0] instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS
+                        : this.x[0] instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS
+                        : this.x[0] instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS
+                        : this.x[0] instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS
+                        : this.x[0] instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS
+                        : null;
         this.ammo = ammo;
         this.isMin = isMin;
     }
@@ -118,27 +119,27 @@ class ArraysMinMaxGetDataOp {
         if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len;
             if (isBit) {
                 len = Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
-                long[] buf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                long[] buf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
                 try {
-                    int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray)result, arrayPos,
-                        ArraysFuncImpl.BITS_GAP);
-                    ((BitArray)result).getBits(arrayPos, buf, gap, len);
-                    PackedBitArrays.unpackBits((boolean[])destArray, destArrayOffset, buf, gap, len);
+                    int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray) result, arrayPos,
+                            ArraysFuncImpl.BITS_GAP);
+                    ((BitArray) result).getBits(arrayPos, buf, gap, len);
+                    PackedBitArrays.unpackBits((boolean[]) destArray, destArrayOffset, buf, gap, len);
                 } finally {
                     ArraysFuncImpl.BIT_BUFFERS.releaseArray(buf);
                 }
             } else {
                 Object destBuf = null;
-                long[] jaOrDStorOffsets = (long[])jaOrDStorOffsetsPool.requestArray();
+                long[] jaOrDStorOffsets = (long[]) jaOrDStorOffsetsPool.requestArray();
                 // Necessary to use new array (instead of global long[] field), because this method modifies it
                 try {
                     len = Math.min(count, bufferPool.arrayLength());
                     long analyzeResult = analyzeSourceArrays(jaOrDStor, saShift, subArrayOffset,
-                        arrayPos, length, len, destArray, destArrayOffset, ALL_OFFSETS, jaOrDStorOffsets);
+                            arrayPos, length, len, destArray, destArrayOffset, ALL_OFFSETS, jaOrDStorOffsets);
                     Object dest = destArray;
                     int destOffset = destArrayOffset;
                     if (analyzeResult == DANGEROUS) {
@@ -157,14 +158,14 @@ class ArraysMinMaxGetDataOp {
                             optimizeJArray = !optimizeJBuffer;
                         }
                         if (OPTIMIZE_MIN_MAX_FOR_JBUFFERS && optimizeJBuffer) {
-                            DataStorage storage = (DataStorage)jaOrDStor[k];
+                            DataStorage storage = (DataStorage) jaOrDStor[k];
                             if (isMin) {
                                 storage.minData(jaOrDStorOffsets[k], dest, destOffset, len);
                             } else {
                                 storage.maxData(jaOrDStorOffsets[k], dest, destOffset, len);
                             }
                         } else if (OPTIMIZE_MIN_MAX_FOR_JARRAYS && optimizeJArray) {
-                            ammo.process(dest, destOffset, jaOrDStor[k], (int)jaOrDStorOffsets[k], len);
+                            ammo.process(dest, destOffset, jaOrDStor[k], (int) jaOrDStorOffsets[k], len);
                         } else {
                             Object buf = null;
                             try {
@@ -210,20 +211,20 @@ class ArraysMinMaxGetDataOp {
         if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), getClass());
         }
-        final BitArray x0 = (BitArray)x[0];
-        for (; count > 0; ) {
-            final int len = (int)Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
+        final BitArray x0 = (BitArray) x[0];
+        while (count > 0) {
+            final int len = (int) Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
             int processedArraysCount = 0; // for debugging
             long positionsMap = 0L, goodPositionsMap = 0L; // - arrays of 64 bits
             long analyzeResult = analyzeSourceArrays(jaOrDStor, saShift, subArrayOffset,
-                arrayPos, length, len, destArray, destArrayOffset, ALL_OFFSETS, null);
+                    arrayPos, length, len, destArray, destArrayOffset, ALL_OFFSETS, null);
             long[] longBuf = null;
             long[] destLongBuf = null;
             long[] quickPositions = null;
             try {
-                longBuf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
-                destLongBuf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
-                quickPositions = (long[])quickPositionsPool.requestArray();
+                longBuf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                destLongBuf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                quickPositions = (long[]) quickPositionsPool.requestArray();
                 // Necessary to use new array (instead of global long[] field), because this method modifies it
                 long[] dest = destArray;
                 long destOffset = destArrayOffset;
@@ -231,9 +232,9 @@ class ArraysMinMaxGetDataOp {
                 if (OPTIMIZE_AND_OR_ALIGNMENT && x.length >= 3) {
                     // for 1 or 2 arrays there is no sense to avoid non-aligned and/or: use the simple algorithm
                     for (int k = 0; k < x.length; k++) {
-                        quickPositions[k] = ((BitArray)x[k]).nextQuickPosition(arrayPos);
+                        quickPositions[k] = ((BitArray) x[k]).nextQuickPosition(arrayPos);
                         if (quickPositions[k] != -1) {
-                            int sh = (int)(arrayPos - quickPositions[k]) & 63;
+                            int sh = (int) (arrayPos - quickPositions[k]) & 63;
                             if ((positionsMap & (1L << sh)) != 0) {
                                 goodPositionsMap |= 1L << sh;
                             }
@@ -254,11 +255,11 @@ class ArraysMinMaxGetDataOp {
                             PackedBitArrays.copyBits(destLongBuf, sh, destLongBuf, lastSh, len);
                         }
                         for (int k = 0; k < x.length; k++) {
-                            if (quickPositions[k] == -1 || ((int)(arrayPos - quickPositions[k]) & 63) != sh) {
+                            if (quickPositions[k] == -1 || ((int) (arrayPos - quickPositions[k]) & 63) != sh) {
                                 continue; // - this array does not correspond to this shift
                             }
                             if (firstArray) {
-                                ((BitArray)x[k]).getBits(arrayPos, destLongBuf, sh, len); // - aligned copying
+                                ((BitArray) x[k]).getBits(arrayPos, destLongBuf, sh, len); // - aligned copying
                                 firstArray = false;
                             } else {
                                 processBits(k, arrayPos, destLongBuf, sh, len, sh, longBuf);
@@ -267,8 +268,8 @@ class ArraysMinMaxGetDataOp {
                         }
                         lastSh = sh;
                     }
-                    assert lastSh != -1:
-                        "lastSh == -1: goodPositionsMap = " + Long.toBinaryString(goodPositionsMap);
+                    assert lastSh != -1 :
+                            "lastSh == -1: goodPositionsMap = " + Long.toBinaryString(goodPositionsMap);
                     // Here is the situation alike DANGEROUS: in the further simple algorithm,
                     // we should process destLongBuf (that is partially ready now) instead of destArray.
                     // Alternative solution could be copying here:
@@ -290,9 +291,9 @@ class ArraysMinMaxGetDataOp {
                 // the simple algorithm: processing all or (if goodPositionsMap!=0) some of arrays
                 for (int k = goodPositionsMap != 0L ? 0 : 1; k < x.length; k++) {
                     if (goodPositionsMap != 0L) {
-                        long qp = ((BitArray)x[k]).nextQuickPosition(arrayPos);
+                        long qp = ((BitArray) x[k]).nextQuickPosition(arrayPos);
                         if (qp != -1) {
-                            int sh = (int)(arrayPos - qp) & 63;
+                            int sh = (int) (arrayPos - qp) & 63;
                             if ((goodPositionsMap & (1L << sh)) != 0) {
                                 continue; // this array was already processed in the complex algorithm
                             }
@@ -312,7 +313,7 @@ class ArraysMinMaxGetDataOp {
             }
             if (processedArraysCount != x.length) {
                 throw new AssertionError("Not all or too many arrays are processed: "
-                    + processedArraysCount + " instead of " + x.length);
+                        + processedArraysCount + " instead of " + x.length);
             }
             destArrayOffset += len;
             arrayPos += len;
@@ -322,12 +323,14 @@ class ArraysMinMaxGetDataOp {
 
     static final long SAFE = -100;
     static final long SAFE_IN_PLACE_TO_ARRAY_0_WITH_SAME_OFFSET = -101;
-    static final long DANGEROUS = - 102;
+    static final long DANGEROUS = -102;
     static final int ALL_OFFSETS = -1;
-    static long analyzeSourceArrays(Object[] jaOrDStor, long[] saShift, long[] subArrayOffset,
-        long arrayPos, long arrayLength, long len, Object destArray, long destArrayOffset,
-        int desiredOffsetIndex, long[] jaOrDStorOffsets)
-        // long result allows to avoid allocation of jaOrDStorOffsets in some situations
+
+    static long analyzeSourceArrays(
+            Object[] jaOrDStor, long[] saShift, long[] subArrayOffset,
+            long arrayPos, long arrayLength, long len, Object destArray, long destArrayOffset,
+            int desiredOffsetIndex, long[] jaOrDStorOffsets)
+    // long result allows to avoid allocation of jaOrDStorOffsets in some situations
     {
         boolean dangerousDestOverlapPossible = false, inPlaceOp = false;
         int inPlaceCount = 0;
@@ -389,9 +392,9 @@ class ArraysMinMaxGetDataOp {
         }
     }
 
-    private void processBits(int xIndex, long arrayPos, long[] dest, long destOffset, int len,
-        int gap, long[] longBuf)
-    {
+    private void processBits(
+            int xIndex, long arrayPos, long[] dest, long destOffset, int len,
+            int gap, long[] longBuf) {
         long p = arrayPos;
         boolean optimizeJBuffer = jaOrDStor[xIndex] instanceof DataStorage;
         boolean optimizeJArray = !optimizeJBuffer && jaOrDStor[xIndex] != null;
@@ -405,7 +408,7 @@ class ArraysMinMaxGetDataOp {
             }
         }
         if (optimizeJBuffer) {
-            DataBitStorage storage = (DataBitStorage)jaOrDStor[xIndex];
+            DataBitStorage storage = (DataBitStorage) jaOrDStor[xIndex];
             if (isMin) {
                 storage.andBits(p + subArrayOffset[xIndex], dest, destOffset, len);
             } else {
@@ -413,12 +416,12 @@ class ArraysMinMaxGetDataOp {
             }
         } else if (optimizeJArray) {
             if (isMin) {
-                PackedBitArrays.andBits(dest, destOffset, (long[])jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
+                PackedBitArrays.andBits(dest, destOffset, (long[]) jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
             } else {
-                PackedBitArrays.orBits(dest, destOffset, (long[])jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
+                PackedBitArrays.orBits(dest, destOffset, (long[]) jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
             }
         } else {
-            ((BitArray)x[xIndex]).getBits(arrayPos, longBuf, gap, len);
+            ((BitArray) x[xIndex]).getBits(arrayPos, longBuf, gap, len);
             if (isMin) {
                 PackedBitArrays.andBits(dest, destOffset, longBuf, gap, len);
             } else {
@@ -437,7 +440,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getByteMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minByteArray((byte[])dest, destOffset, (byte[])src, srcOffset, len);
+                JArrays.minByteArray((byte[]) dest, destOffset, (byte[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -449,7 +452,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getByteMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxByteArray((byte[])dest, destOffset, (byte[])src, srcOffset, len);
+                JArrays.maxByteArray((byte[]) dest, destOffset, (byte[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -462,7 +465,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getCharMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minCharArray((char[])dest, destOffset, (char[])src, srcOffset, len);
+                JArrays.minCharArray((char[]) dest, destOffset, (char[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -474,7 +477,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getCharMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxCharArray((char[])dest, destOffset, (char[])src, srcOffset, len);
+                JArrays.maxCharArray((char[]) dest, destOffset, (char[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -486,7 +489,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getShortMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minShortArray((short[])dest, destOffset, (short[])src, srcOffset, len);
+                JArrays.minShortArray((short[]) dest, destOffset, (short[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -498,7 +501,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getShortMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxShortArray((short[])dest, destOffset, (short[])src, srcOffset, len);
+                JArrays.maxShortArray((short[]) dest, destOffset, (short[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -510,7 +513,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getIntMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minIntArray((int[])dest, destOffset, (int[])src, srcOffset, len);
+                JArrays.minIntArray((int[]) dest, destOffset, (int[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -522,7 +525,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getIntMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxIntArray((int[])dest, destOffset, (int[])src, srcOffset, len);
+                JArrays.maxIntArray((int[]) dest, destOffset, (int[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -534,7 +537,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getLongMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minLongArray((long[])dest, destOffset, (long[])src, srcOffset, len);
+                JArrays.minLongArray((long[]) dest, destOffset, (long[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -546,7 +549,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getLongMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxLongArray((long[])dest, destOffset, (long[])src, srcOffset, len);
+                JArrays.maxLongArray((long[]) dest, destOffset, (long[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -558,7 +561,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getFloatMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minFloatArray((float[])dest, destOffset, (float[])src, srcOffset, len);
+                JArrays.minFloatArray((float[]) dest, destOffset, (float[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -570,7 +573,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getFloatMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxFloatArray((float[])dest, destOffset, (float[])src, srcOffset, len);
+                JArrays.maxFloatArray((float[]) dest, destOffset, (float[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -582,7 +585,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getDoubleMinOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.minDoubleArray((double[])dest, destOffset, (double[])src, srcOffset, len);
+                JArrays.minDoubleArray((double[]) dest, destOffset, (double[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -594,7 +597,7 @@ class ArraysMinMaxGetDataOp {
     static ArrayMinMaxOp getDoubleMaxOp() {
         return new ArrayMinMaxOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.maxDoubleArray((double[])dest, destOffset, (double[])src, srcOffset, len);
+                JArrays.maxDoubleArray((double[]) dest, destOffset, (double[]) src, srcOffset, len);
             }
 
             public String toString() {
