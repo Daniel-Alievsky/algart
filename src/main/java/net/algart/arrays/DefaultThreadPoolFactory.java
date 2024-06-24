@@ -346,14 +346,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
         static {
             if (GLOBAL_THREAD_POOL != null && GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME > 0) {
-                try {
-                    Method method = GLOBAL_THREAD_POOL.getClass().getMethod("allowCoreThreadTimeOut", boolean.class);
-                    method.invoke(GLOBAL_THREAD_POOL, true);
-                } catch (NoSuchMethodException e) {
-                    // System.out.println("Probably Java 1.5");
-                } catch (InvocationTargetException | IllegalAccessException e) {
-                    e.printStackTrace(); // strange situation
-                }
+                GLOBAL_THREAD_POOL.allowCoreThreadTimeOut(true);
             }
         }
 
