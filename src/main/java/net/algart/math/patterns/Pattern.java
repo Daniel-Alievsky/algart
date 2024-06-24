@@ -35,7 +35,7 @@ import net.algart.math.*;
  *
  * <p>Usually patterns are relatively little point sets: from tens to millions of points not too far from
  * the origin of coordinates. However, please note that the number of points <i>is not limited
- * by any value</i>. In particular, it can be greater than <tt>Long.MAX_VALUE</tt>.
+ * by any value</i>. In particular, it can be greater than <code>Long.MAX_VALUE</code>.
  * For example, it may occur for {@link Patterns#newRectangularUniformGridPattern(Point, double[], IRange...)
  * rectangular <i>n</i>-dimensional patterns</i>}.</p>
  *
@@ -48,7 +48,7 @@ import net.algart.math.*;
  * consisting of points with integer coordinates. More precisely, a pattern is called <i>integer</i>,
  * if for all pattern's points
  * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
- * we have <i>x</i><sub><i>j</i></sub><tt>==(double)(long)</tt><i>x</i><sub><i>j</i></sub> for any index <i>j</i>.
+ * we have <i>x</i><sub><i>j</i></sub><code>==(double)(long)</code><i>x</i><sub><i>j</i></sub> for any index <i>j</i>.
  * There is the standard method {@link #round()},
  * rounding any pattern to the nearest integer pattern &mdash; the result of this method is always integer.</p>
  *
@@ -103,7 +103,7 @@ import net.algart.math.*;
  * <pre>    new {@link SimplePattern#SimplePattern(java.util.Collection)
  * SimplePattern}(pattern.{@link #points() points()}),</pre>
  *
- * <p>where <tt>pattern</tt> is a uniform-grid pattern. The resulting pattern is geometrically identical
+ * <p>where <code>pattern</code> is a uniform-grid pattern. The resulting pattern is geometrically identical
  * to the original uniform-grid one, but it does not implement
  * {@link UniformGridPattern} and is not considered to be uniform-grid, because there are no ways
  * to get information about the grid (origin and steps).</p>
@@ -147,13 +147,13 @@ import net.algart.math.*;
  * represented by the subinterface {@link DirectPointSetPattern}.
  * The pattern is called <i>direct point-set</i> or, briefly, <i>direct</i>,
  * if it is internally represented as an actual set of points
- * like <tt>Set&lt;{@link Point}&gt;</tt>.</p>
+ * like <code>Set&lt;{@link Point}&gt;</code>.</p>
  *
  * <p>Of course, any pattern is a set of points. The main feature of this subclass is that
  * the point-set is stored directly in a form of some collection &mdash; and, so, can be directly accessed
  * at any time via {@link #points()} or {@link #roundedPoints()} methods.
- * As a result, direct point-set pattern cannot contain more than <tt>Integer.MAX_VALUE</tt> points
- * (because Java <tt>Set</tt> object cannot contain more than <tt>Integer.MAX_VALUE</tt> elements).</p>
+ * As a result, direct point-set pattern cannot contain more than <code>Integer.MAX_VALUE</code> points
+ * (because Java <code>Set</code> object cannot contain more than <code>Integer.MAX_VALUE</code> elements).</p>
  *
  * <p>Unlike direct patterns, other forms of pattern, like rectangular or complex (see below),
  * do not actually store the set of their points, though still can build and return it by a request,
@@ -197,7 +197,7 @@ import net.algart.math.*;
  * <pre>    new {@link SimplePattern#SimplePattern(java.util.Collection)
  * SimplePattern}(pattern.{@link #points() points()}),</pre>
  *
- * <p>where <tt>pattern</tt> is a rectangular pattern.
+ * <p>where <code>pattern</code> is a rectangular pattern.
  * However, the resulting pattern is considered to be direct, but not rectangular.</p>
  *
  * <p>The main difference between direct point-set and rectangular patterns is the behaviour of methods,
@@ -207,7 +207,7 @@ import net.algart.math.*;
  * are correct), but calculation of pattern boundaries can require some time, proportional to the number
  * of points in the pattern.
  * In rectangular patterns, an attempt to get all points by {@link #points()} or {@link #roundedPoints()}
- * method can lead to {@link TooManyPointsInPatternError} or to <tt>OutOfMemoryError</tt>,
+ * method can lead to {@link TooManyPointsInPatternError} or to <code>OutOfMemoryError</code>,
  * because the number of points can be extremely large (for example, 10000x10000x10000 3-dimensional parallelepiped
  * consists of 10<sup>12</sup> points); but the information about boundaries is available very quickly.
  * See the details in comments to {@link DirectPointSetPattern} and {@link RectangularPattern} interfaces.</p>
@@ -240,7 +240,7 @@ import net.algart.math.*;
  * An attempt to get actual information about the figure of such a pattern via its methods
  * {@link #points()}, {@link #roundedPoints()}, and even usage of the simplest methods
  * {@link #pointCount()}, {@link #largePointCount()}, {@link #isSurelyOriginPoint()}
- * can lead to very long calculations and even to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+ * can lead to very long calculations and even to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
  * However, such patterns can be used indirectly, usually via their decompositions into more simple patterns
  * by {@link #minkowskiDecomposition(int)} and {@link #unionDecomposition(int)} methods.
  * For example, it is possible to perform morphological dilation filter over an image
@@ -269,7 +269,7 @@ import net.algart.math.*;
  * #MAX_COORDINATE} for all <i>j</i>, where
  * |<i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup>| means
  * <i>the absolute value of mathematically precise difference</i> (not the result of Java operators
- * <tt>Math.abs(</tt><i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup><tt>)</tt>).
+ * <code>Math.abs(</code><i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup><code>)</code>).
  * (This condition can be checked with help of
  * {@link Patterns#isAllowedDifference(double, double)} method.)</li>
  * </ol>
@@ -279,7 +279,7 @@ import net.algart.math.*;
  * Any attempt to create a pattern, the set of points of which is not allowed,
  * leads to {@link TooLargePatternCoordinatesException}.</p>
  *
- * <p>Note: though patterns are sets of real points, their coordinates are restricted by <tt>long</tt>-type constant
+ * <p>Note: though patterns are sets of real points, their coordinates are restricted by <code>long</code>-type constant
  * {@link #MAX_COORDINATE}.</p>
  *
  * <p>Also note: uniform-grid patterns must fulfil, in addition, two similar restrictions for their grid indexes.
@@ -292,12 +292,12 @@ import net.algart.math.*;
  * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr> with a new point
  * <nobr>(round(<i>x</i><sub>0</sub>), round(<i>x</i><sub>1</sub>), ...,
  * round(<i>x</i><sub><i>n</i>&minus;1</sub>))</nobr>,
- * where "round(a)" means the result of <tt>(double)StrictMath.round(a)</tt> call,
+ * where "round(a)" means the result of <code>(double)StrictMath.round(a)</code> call,
  * then the resulting point set will also be allowed. The same statement is true for the point set,
- * consisting of precise integer points, without type cast to <tt>double</tt>,
- * i.e. for points <nobr>(<tt>StrictMath.round</tt>(<i>x</i><sub>0</sub>),
- * <tt>StrictMath.round</tt>(<i>x</i><sub>1</sub>), ...,
- * <tt>StrictMath.round</tt>(<i>x</i><sub><i>n</i>&minus;1</sub>))</nobr> &mdash;
+ * consisting of precise integer points, without type cast to <code>double</code>,
+ * i.e. for points <nobr>(<code>StrictMath.round</code>(<i>x</i><sub>0</sub>),
+ * <code>StrictMath.round</code>(<i>x</i><sub>1</sub>), ...,
+ * <code>StrictMath.round</code>(<i>x</i><sub><i>n</i>&minus;1</sub>))</nobr> &mdash;
  * such mathematical point set also fulfils both restrictions 1 and 2.</p>
  *
  * <p>The proof of this is complex enough. The paper
@@ -313,7 +313,7 @@ import net.algart.math.*;
  * <p><b>Theorem II.</b> If all points of a pattern are integer, i.e.
  * for all pattern's points
  * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
- * we have <i>x</i><sub><i>j</i></sub><tt>==(double)(long)</tt><i>x</i><sub><i>j</i></sub> for any index <i>j</i>,
+ * we have <i>x</i><sub><i>j</i></sub><code>==(double)(long)</code><i>x</i><sub><i>j</i></sub> for any index <i>j</i>,
  * and (<i>X</i><sub>0</sub>,<i>X</i><sub>1</sub>,...,<i>X</i><sub><i>n</i>&minus;1</sub>)
  * is some point of this pattern, then you can subtract (using Java &ldquo;&minus;&rdquo; operator)
  * the coordinate <i>X</i><sub><i>j</i></sub> (<i>j</i> is any index)
@@ -325,18 +325,18 @@ import net.algart.math.*;
  * <i>x</i><sub><i>j</i></sub>&#x2296;<i>X</i><sub><i>j</i></sub>,
  * <i>x</i><sub><i>j</i>+1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>,
  * and the resulting point set will also be allowed.
- * Here and below <i>a</i>&#x2296;<i>b</i> (<i>a</i> and <i>b</i> are real values of <tt>double</tt>
+ * Here and below <i>a</i>&#x2296;<i>b</i> (<i>a</i> and <i>b</i> are real values of <code>double</code>
  * Java type) means the computer difference (not strict mathematical),
- * i.e. the result of execution of Java operator &ldquo;<tt><i>a</i>&minus;<i>b</i></tt>&rdquo;.</p>
+ * i.e. the result of execution of Java operator &ldquo;<code><i>a</i>&minus;<i>b</i></code>&rdquo;.</p>
  *
  * <p>Proof.</p>
  *
  * <p>First of all, let's remind that the computer difference <i>a</i>&#x2296;<i>b</i>, according
- * IEEE&nbsp;754 standard and Java language specification, is the nearest <tt>double</tt> value to
+ * IEEE&nbsp;754 standard and Java language specification, is the nearest <code>double</code> value to
  * the precise mathematical difference <i>a</i>&minus;<i>b</i>.
  * Because all pattern's points are integer, the restriction 2 allows to state that
  * any difference <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub>
- * can be represented precisely by <tt>double</tt> type (see the comments to {@link #MAX_COORDINATE} constant).
+ * can be represented precisely by <code>double</code> type (see the comments to {@link #MAX_COORDINATE} constant).
  * So, we have
  * <nobr><i>x</i><sub><i>j</i></sub>&#x2296;<i>X</i><sub><i>j</i></sub>
  * = <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub></nobr>:
@@ -358,28 +358,28 @@ import net.algart.math.*;
  *
  * <p>Note: this proof is really correct only for patterns, consisting of integer points only.
  * The reason is that all integer coordinates, fulfilling the restriction 1, and all their differences
- * <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub> are represented precisely by <tt>double</tt>
+ * <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub> are represented precisely by <code>double</code>
  * Java type. If a pattern contains non-integer points, the statement of this theorem is not true.
  * For example, for 1-dimensional pattern, consisting of three points
  * <i>x</i><sub>1</sub>=2251799813685248.00 (={@link #MAX_COORDINATE}/2),
  * <i>x</i><sub>2</sub>=&minus;2251799813685248.00 (=&minus;{@link #MAX_COORDINATE}/2) and
  * <i>x</i><sub>3</sub>=&minus;2251799813685247.75 (=&minus;{@link #MAX_COORDINATE}/2+0.25), subtracting
  * the point <i>x</i><sub>3</sub> by Java &ldquo;&minus;&rdquo; operator leads to the pattern
- * <i>x</i>'<sub>1</sub>=4503599627370496.00 (={@link #MAX_COORDINATE}) (computer subtraction of <tt>double</tt>
+ * <i>x</i>'<sub>1</sub>=4503599627370496.00 (={@link #MAX_COORDINATE}) (computer subtraction of <code>double</code>
  * values leads to rounding here),
  * <i>x</i>'<sub>2</sub>=&minus;0.25 and
  * <i>x</i>'<sub>3</sub>=0.0, which obviously violates the mathematically precise restriction 2:
  * |<i>x</i>'<sub>1</sub>&minus;<i>x</i>'<sub>2</sub>|&gt;{@link #MAX_COORDINATE}.</p>
  *
- * <p>As a result, there is an obvious <b>conclusion</b>. If <tt>p</tt> is one of the {@link #points() points} of
- * some <i>integer</i> <tt>pattern</tt> (see above), then the method
- * <tt>pattern.{@link #shift(Point) shift}(p.{@link Point#symmetric()
- * symmetric()})</tt> always works successfully and never throw {@link TooLargePatternCoordinatesException}.</p>
+ * <p>As a result, there is an obvious <b>conclusion</b>. If <code>p</code> is one of the {@link #points() points} of
+ * some <i>integer</i> <code>pattern</code> (see above), then the method
+ * <code>pattern.{@link #shift(Point) shift}(p.{@link Point#symmetric()
+ * symmetric()})</code> always works successfully and never throw {@link TooLargePatternCoordinatesException}.</p>
  *
  *
- * <h2>Note about <tt>equals()</tt></h2>
- *
- * The <tt>equals()</tt> method in the classes, implementing this interface, <i>may</i> return <tt>false</tt>
+ * <h2>Note about <code>equals()</code></h2>
+ * <p>
+ * The <code>equals()</code> method in the classes, implementing this interface, <i>may</i> return <code>false</code>
  * for two patterns, consisting of the same point sets,
  * for example, if these patterns belong to different pattern types.
  * For example, a rectangular pattern may be considered to be non-equal
@@ -396,13 +396,14 @@ import net.algart.math.*;
  *
  * <ul>
  * <li>if both patterns are <i>direct point-set</i> (see above),
- * then <tt>equals()</tt> method always returns <tt>true</tt>
+ * then <code>equals()</code> method always returns <code>true</code>
  * for geometrically identical patterns;</li>
  *
- * <li>if both patterns are <i>rectangular</i> (see above), then, also, <tt>equals()</tt>
- * method always returns <tt>true</tt> for geometrically identical patterns;</li>
+ * <li>if both patterns are <i>rectangular</i> (see above), then, also, <code>equals()</code>
+ * method always returns <code>true</code> for geometrically identical patterns;</li>
  *
- * <li>and, of course, there is the reverse guarantee, that if the <tt>equals()</tt> method returns <tt>true</tt>,
+ * <li>and, of course, there is the reverse guarantee, that if the <code>equals()</code> method
+ * returns <code>true</code>,
  * then two patterns consists of the identical point sets.</li>
  * </ul>
  *
@@ -420,25 +421,25 @@ public interface Pattern {
      * See the {@link Pattern comments to this interface}, section
      * "Coordinate restrictions", for more details.
      *
-     * <p>The value of this constant is <tt>1L &lt;&lt; 52 = 2<sup>52</sup> = {@value} ~ Long.MAX_VALUE/2048</tt>.
+     * <p>The value of this constant is <code>1L &lt;&lt; 52 = 2<sup>52</sup> = {@value} ~ Long.MAX_VALUE/2048</code>.
      *
      * <p>There is an important feature of this constant.
-     * Any integer values <i>x</i> (<tt>long</tt> Java type) from the range
-     * <tt>&minus;2*{@link #MAX_COORDINATE}&le;<i>x</i>&le;2*{@link #MAX_COORDINATE}</tt>, and also
+     * Any integer values <i>x</i> (<code>long</code> Java type) from the range
+     * <code>&minus;2*{@link #MAX_COORDINATE}&le;<i>x</i>&le;2*{@link #MAX_COORDINATE}</code>, and also
      * all half-integer values <i>x</i> inside the range
-     * <tt>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</tt>
-     * (i.e. values <i>x</i>=<i>k</i><tt>+0.5</tt>, where <i>k</i> is <tt>long</tt>
-     * integer in range <tt>&minus;{@link #MAX_COORDINATE}&le;<i>k</i>&le;{@link #MAX_COORDINATE}-1</tt>)
-     * are represented by <tt>double</tt> Java type precisely, without loss of precision.
+     * <code>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</code>
+     * (i.e. values <i>x</i>=<i>k</i><code>+0.5</code>, where <i>k</i> is <code>long</code>
+     * integer in range <code>&minus;{@link #MAX_COORDINATE}&le;<i>k</i>&le;{@link #MAX_COORDINATE}-1</code>)
+     * are represented by <code>double</code> Java type precisely, without loss of precision.
      *
-     * <p>As a result, we can be sure that for any integer <tt>k</tt> (<tt>long</tt> Java type), for which
-     * <tt>Math.abs(k)&lt;=2*{@link #MAX_COORDINATE}</tt>, the following equality is true:
-     * <tt>(long)(double)k==k</tt>.
+     * <p>As a result, we can be sure that for any integer <code>k</code> (<code>long</code> Java type), for which
+     * <code>Math.abs(k)&lt;=2*{@link #MAX_COORDINATE}</code>, the following equality is true:
+     * <code>(long)(double)k==k</code>.
      *
      * <p>See also the paper <noindex><a href="http://algart.net/ru/numeric_algorithms/rounding_theorem.html"
      * >http://algart.net/ru/numeric_algorithms/rounding_theorem.html</a></noindex> (in Russian)
-     * about rounding <tt>double</tt> values in range
-     * <tt>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</tt>.
+     * about rounding <code>double</code> values in range
+     * <code>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</code>.
      */
     long MAX_COORDINATE = 1L << 52;
 
@@ -457,27 +458,27 @@ public interface Pattern {
     /**
      * Returns the number of points in this pattern.
      * This value is always positive (&gt;=1).
-     * If the number of points is greater than <tt>Long.MAX_VALUE</tt>, returns <tt>Long.MAX_VALUE</tt>.
+     * If the number of points is greater than <code>Long.MAX_VALUE</code>, returns <code>Long.MAX_VALUE</code>.
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points (result of this method).
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      *
      * <p>There is a guarantee, that if this object implements {@link QuickPointCountPattern} interface,
      * then this method works very quickly (<i>O</i>(1) operations) and without exceptions.
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
-     * then the result of this method is not greater than <tt>Integer.MAX_VALUE</tt>.
+     * then the result of this method is not greater than <code>Integer.MAX_VALUE</code>.
      *
-     * <p>Note: if this method returns some value greater than <tt>Integer.MAX_VALUE</tt>,
+     * <p>Note: if this method returns some value greater than <code>Integer.MAX_VALUE</code>,
      * it means that you cannot use {@link #points()} and {@link #roundedPoints()} methods,
-     * because Java <tt>Set</tt> object cannot contain more than <tt>Integer.MAX_VALUE</tt> elements.
+     * because Java <code>Set</code> object cannot contain more than <code>Integer.MAX_VALUE</code> elements.
      *
      * @return the number of {@link Point points} in this pattern.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     <code>Integer.MAX_VALUE</code> or, in some rare situations, is near this limit
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      * @see #largePointCount()
      * @see #isSurelySinglePoint
      * @see QuickPointCountPattern#isPointCountVeryLarge()
@@ -485,22 +486,23 @@ public interface Pattern {
     long pointCount();
 
     /**
-     * Returns the number of points in this pattern as <tt>double</tt> value.
-     * In particular, if the result of {@link #pointCount()} method is not greater than <tt>Long.MAX_VALUE</tt>,
-     * there is a guarantee that this method returns the same result, cast to <tt>double</tt> type.
+     * Returns the number of points in this pattern as <code>double</code> value.
+     * In particular, if the result of {@link #pointCount()} method is not greater than <code>Long.MAX_VALUE</code>,
+     * there is a guarantee that this method returns the same result, cast to <code>double</code> type.
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points (result of this method).
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      *
      * <p>There is a guarantee, that if this object implements {@link QuickPointCountPattern} interface,
      * then this method works very quickly (<i>O</i>(1) operations) and without exceptions.
      *
-     * @return the number of {@link Point points} in this pattern as <tt>double</tt> value.
+     * @return the number of {@link Point points} in this pattern as <code>double</code> value.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     <code>Integer.MAX_VALUE</code> or, in some rare situations,
+     *                                     is near this limit
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      * @see QuickPointCountPattern#isPointCountVeryLarge()
      */
     double largePointCount();
@@ -508,7 +510,7 @@ public interface Pattern {
     /**
      * Returns a set of all points of this pattern.
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableSet</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableSet</code>).
      * Moreover, the result is always the same for different calls of this method for the same instance &mdash;
      * there are no ways to change it, in particular, via any custom methods of the implementation class
      * (it is a conclusion from the common requirement, that all implementations of this interface must be
@@ -519,17 +521,17 @@ public interface Pattern {
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      * This method surely fails (throws one of these exception), if the total number of points
-     * <tt>{@link #pointCount()}&gt;Integer.MAX_VALUE</tt>, because Java <tt>Set</tt> object
-     * cannot contain more than <tt>Integer.MAX_VALUE</tt> elements.
+     * <code>{@link #pointCount()}&gt;Integer.MAX_VALUE</code>, because Java <code>Set</code> object
+     * cannot contain more than <code>Integer.MAX_VALUE</code> elements.
      *
      * <p>For example, implementations of the {@link RectangularPattern rectangular patterns}
      * allow to successfully define a very large 3D parallelepiped
      * <nobr><i>n</i> x <i>n</i> x <i>n</i></nobr>.
      * Fur such pattern, this method will require a lot of memory
      * for <i>n</i>=1000 and will fail (probably with {@link TooManyPointsInPatternError})
-     * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<tt>Integer.MAX_VALUE</tt>).
+     * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<code>Integer.MAX_VALUE</code>).
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) operations and memory
@@ -539,9 +541,9 @@ public interface Pattern {
      * <p>Note: this method works very quickly (<i>O</i>(1) operations) in {@link SimplePattern} class.
      *
      * @return all points of this pattern.
-     * @throws TooManyPointsInPatternError if the number of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     * @throws TooManyPointsInPatternError if the number of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     Set<Point> points();
 
@@ -558,7 +560,7 @@ public interface Pattern {
      *     result = Collections.unmodifiableSet(result);
      * </pre>
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableSet</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableSet</code>).
      * Moreover, the result is always the same for different calls of this method for the same instance &mdash;
      * there are no ways to change it, in particular, via any custom methods of the implementation class
      * (it is a conclusion from the common requirement, that all implementations of this interface must be
@@ -576,7 +578,7 @@ public interface Pattern {
      * to {@link Patterns#newIntegerPattern(java.util.Collection)}.
      *
      * <p><b>Warning!</b> This method can work slowly or throw {@link TooManyPointsInPatternError}
-     * / <tt>OutOfMemoryError</tt> in the same situations as {@link #points()} method.
+     * / <code>OutOfMemoryError</code> in the same situations as {@link #points()} method.
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) operations and memory
@@ -586,9 +588,9 @@ public interface Pattern {
      * for the case of {@link RectangularPattern}.
      *
      * @return all points of this pattern, rounded to the nearest integer points.
-     * @throws TooManyPointsInPatternError if the number of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     * @throws TooManyPointsInPatternError if the number of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     Set<IPoint> roundedPoints();
 
@@ -596,9 +598,9 @@ public interface Pattern {
      * Returns the minimal and maximal coordinate with the given index
      * ({@link Point#coord(int) Point.coord(coordIndex)})
      * among all points of this pattern.
-     * The minimal coordinate will be <tt>r.{@link Range#min() min()}</tt>,
-     * the maximal coordinate will be <tt>r.{@link Range#max() max()}</tt>,
-     * where <tt>r</tt> is the result of this method.
+     * The minimal coordinate will be <code>r.{@link Range#min() min()}</code>,
+     * the maximal coordinate will be <code>r.{@link Range#max() max()}</code>,
+     * where <code>r</code> is the result of this method.
      *
      * <p>There is a guarantee, that if this object implements {@link RectangularPattern} interface,
      * then this method works very quickly (<i>O</i>(1) operations) and without exceptions.
@@ -610,11 +612,12 @@ public interface Pattern {
      * (outside this package) this method will work slowly, up to <i>O</i>(<i>N</i>) operations,
      * <i>N</i> is the number of points in this pattern.
      * However, even in such implementations this method <i>must not</i> lead to
-     * {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>, like {@link #points()} method.
+     * {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>, like {@link #points()} method.
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.).
      * @return the range from minimal to maximal coordinate with this index.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @see #roundedCoordRange(int)
      * @see #coordMin()
      * @see #coordMax()
@@ -625,16 +628,16 @@ public interface Pattern {
     /**
      * Returns the minimal and maximal coordinates
      * among all points of this pattern for all dimensions.
-     * If <tt>a</tt> is the result of this method,
-     * then <tt>a.{@link RectangularArea#coordCount() coordCount()}=={@link #dimCount() dimCount()}</tt>
-     * and <tt>a.{@link RectangularArea#range(int) range}(k)</tt>
-     * is equal to <tt>{@link #coordRange(int) coordRange}(k)</tt> for all <tt>k</tt>.
+     * If <code>a</code> is the result of this method,
+     * then <code>a.{@link RectangularArea#coordCount() coordCount()}=={@link #dimCount() dimCount()}</code>
+     * and <code>a.{@link RectangularArea#range(int) range}(k)</code>
+     * is equal to <code>{@link #coordRange(int) coordRange}(k)</code> for all <code>k</code>.
      *
      * <p>For example, in 2-dimensional case the result is
      * the circumscribed rectangle (with sides, parallel to the axes).
      *
      * <p>All, said in the comments to {@link #coordRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return the ranges from minimal to maximal coordinate for all space dimensions.
@@ -646,10 +649,10 @@ public interface Pattern {
      * Returns the point, each coordinate of which
      * is equal to the minimal corresponding coordinate
      * among all points of this pattern.
-     * Equivalent to <tt>{@link #coordArea()}.{@link RectangularArea#min() min()}</tt>.
+     * Equivalent to <code>{@link #coordArea()}.{@link RectangularArea#min() min()}</code>.
      *
      * <p>All, said in the comments to {@link #coordRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return minimal coordinates for all space dimensions as a point.
@@ -660,10 +663,10 @@ public interface Pattern {
      * Returns the point, each coordinate of which
      * is equal to the maximal corresponding coordinate
      * among all points of this pattern.
-     * Equivalent to <tt>{@link #coordArea()}.{@link RectangularArea#max() max()}</tt>.
+     * Equivalent to <code>{@link #coordArea()}.{@link RectangularArea#max() max()}</code>.
      *
      * <p>All, said in the comments to {@link #coordRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return maximal coordinates for all space dimensions as a point.
@@ -673,9 +676,9 @@ public interface Pattern {
     /**
      * Returns the same result as {@link #coordRange(int coordIndex)} method,
      * but both minimal and maximal coordinates are rounded to integer values
-     * by <tt>StrictMath.round</tt> operation.
-     * Equivalent to <tt>{@link #coordRange(int) coordRange}(coordIndex).{@link Range#toRoundedRange()
-     * toRoundedRange()}</tt>.
+     * by <code>StrictMath.round</code> operation.
+     * Equivalent to <code>{@link #coordRange(int) coordRange}(coordIndex).{@link Range#toRoundedRange()
+     * toRoundedRange()}</code>.
      *
      * <p>According the basic restriction to pattern coordinates (see
      * the {@link Pattern comments to this interface}, section "Coordinate restrictions"),
@@ -684,12 +687,13 @@ public interface Pattern {
      * to {@link Patterns#newRectangularIntegerPattern(IRange...)}.
      *
      * <p>All, said in the comments to {@link #coordRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.).
-     * @return the range from minimal to maximal coordinate with this index, rounded to the <tt>long</tt> values.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @return the range from minimal to maximal coordinate with this index, rounded to the <code>long</code> values.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @see #roundedCoordArea()
      */
     IRange roundedCoordRange(int coordIndex);
@@ -697,106 +701,106 @@ public interface Pattern {
     /**
      * Returns the same result as {@link #coordArea()} method,
      * but all minimal and maximal coordinates are rounded to integer values
-     * by <tt>StrictMath.round</tt> operation.
+     * by <code>StrictMath.round</code> operation.
      * The method {@link IRectangularArea#range(int coordIndex)} in the returned area
      * returns the same result as {@link #roundedCoordRange(int coordIndex)} method in this object.
      *
      * <p>All, said in the comments to {@link #coordRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return the ranges from minimal to maximal coordinate for all space dimensions,
-     *         rounded to the <tt>long</tt> values.
+     * rounded to the <code>long</code> values.
      */
     IRectangularArea roundedCoordArea();
 
     /**
-     * Returns <tt>true</tt> if this pattern consists of the single point, i&#46;e&#46;
-     * if <tt>{@link #pointCount() pointCount()}==1</tt>.
+     * Returns <code>true</code> if this pattern consists of the single point, i&#46;e&#46;
+     * if <code>{@link #pointCount() pointCount()}==1</code>.
      *
-     * <p>There are no strict guarantees that this method <i>always</i> returns <tt>true</tt> if the pattern
+     * <p>There are no strict guarantees that this method <i>always</i> returns <code>true</code> if the pattern
      * consist of the single point. (In some complex situations, such analysis can
      * be too difficult. In particular, if the pattern is a {@link Patterns#newMinkowskiSum(java.util.Collection)
      * Minkowski sum}, then limited floating-point precision can lead to equality of all points of the result.
      * Simple example: a Minkowski sum of two-point one-dimensional pattern, consisting of points
      * 0.0 and 0.000001, and one-point 2<sup>51</sup>=2251799813685248.0, contains only 1 point 2<sup>51</sup>,
-     * because the computer cannot represent precise value 2251799813685248.000001 in <tt>double</tt> type
+     * because the computer cannot represent precise value 2251799813685248.000001 in <code>double</code> type
      * and rounds it to 2251799813685248.0.
-     * In such situations, this method sometimes <i>may</i> incorrectly return <tt>false</tt>.)
+     * In such situations, this method sometimes <i>may</i> incorrectly return <code>false</code>.)
      *
-     * <p>But there is the reverse guarantee: if this method returns <tt>true</tt>,
+     * <p>But there is the reverse guarantee: if this method returns <code>true</code>,
      * the number of points in this pattern is always&nbsp;1.</p>
      *
      * <p>Unlike {@link #pointCount()} method, there is a guarantee that this method
-     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
      * In situations, when the number of points is very large
      * (and, so, {@link #pointCount()} method is not safe in use),
-     * this method must detect this fact in reasonable time and return <tt>false</tt>.
+     * this method must detect this fact in reasonable time and return <code>false</code>.
      *
      * <p>There is a guarantee, that if this object implements {@link QuickPointCountPattern} interface,
      * then this method works very quickly (<i>O</i>(1) operations) and absolutely correctly
-     * (always returns <tt>true</tt> if and only if <tt>{@link #pointCount() pointCount()}==1</tt>).
+     * (always returns <code>true</code> if and only if <code>{@link #pointCount() pointCount()}==1</code>).
      *
-     * @return <tt>true</tt> if it is one-point pattern.
+     * @return <code>true</code> if it is one-point pattern.
      * @see #isSurelyOriginPoint()
      */
     boolean isSurelySinglePoint();
 
     /**
-     * Returns <tt>true</tt> if this pattern consists of the single point and
+     * Returns <code>true</code> if this pattern consists of the single point and
      * this point is the origin of coordinates.
      *
-     * <p>There are no strict guarantees that this method <i>always</i> returns <tt>true</tt> if the pattern
+     * <p>There are no strict guarantees that this method <i>always</i> returns <code>true</code> if the pattern
      * consist of the single point, equal to the origin of coordinates. (In some complex situations, such analysis can
-     * be too difficult. In such situations, this method <i>may</i> incorrectly return <tt>false</tt>.)
-     * But there is the reverse guarantee: if this method returns <tt>true</tt>,
+     * be too difficult. In such situations, this method <i>may</i> incorrectly return <code>false</code>.)
+     * But there is the reverse guarantee: if this method returns <code>true</code>,
      * the number of points in this pattern is always 1 and its only point is the origin of coordinates,
      * in terms of {@link Point#isOrigin()} method.</p>
      *
      * <p>Unlike {@link #pointCount()} method, there is a guarantee that this method
-     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
      * In situations, when the number of points is very large
      * (and, so, {@link #pointCount()} method is not safe in use),
-     * this method must detect this fact in reasonable time and return <tt>false</tt>.
+     * this method must detect this fact in reasonable time and return <code>false</code>.
      *
      * <p>There is a guarantee, that if this object implements {@link QuickPointCountPattern} interface,
      * then this method works very quickly (<i>O</i>(1) operations) and absolutely correctly.
      *
-     * @return <tt>true</tt> if it is one-point pattern containing the origin of coordinates as the single point.
+     * @return <code>true</code> if it is one-point pattern containing the origin of coordinates as the single point.
      * @see #isSurelySinglePoint
      */
     boolean isSurelyOriginPoint();
 
     /**
-     * Returns <tt>true</tt> if this pattern is <i>integer</i>:
+     * Returns <code>true</code> if this pattern is <i>integer</i>:
      * all coordinates of all points of this pattern are integer numbers.
-     * In other words, it means that for each real (<tt>double</tt>) coordinate <i>x</i> of each point
-     * of this pattern the Java expression <i>x</i><tt>==(long)</tt><i>x</i> is <tt>true</tt>.
+     * In other words, it means that for each real (<code>double</code>) coordinate <i>x</i> of each point
+     * of this pattern the Java expression <i>x</i><code>==(long)</code><i>x</i> is <code>true</code>.
      *
-     * <p>More precisely, if this method returns <tt>true</tt>, then there are the following guarantees:
+     * <p>More precisely, if this method returns <code>true</code>, then there are the following guarantees:
      * <ol>
      * <li>for each point, returned by {@link #points()} method, as well as by
-     * {@link #coordMin()}/{@link #coordMax()}, {@link Point#isInteger()} method returns <tt>true</tt>;</li>
+     * {@link #coordMin()}/{@link #coordMax()}, {@link Point#isInteger()} method returns <code>true</code>;</li>
      * <li>each pattern, returned in the results of {@link #minkowskiDecomposition(int)},
      * {@link #unionDecomposition(int)} and {@link #allUnionDecompositions(int)} methods, is also surely integer,
-     * i.e. this method also returns <tt>true</tt> for it.</li>
+     * i.e. this method also returns <code>true</code> for it.</li>
      * </ol>
      *
-     * <p>However, there are no strict guarantees that this method <i>always</i> returns <tt>true</tt> if the pattern
-     * is really integer. In other words, if this method returns <tt>false</tt>, there is no guarantee, that
+     * <p>However, there are no strict guarantees that this method <i>always</i> returns <code>true</code> if the pattern
+     * is really integer. In other words, if this method returns <code>false</code>, there is no guarantee, that
      * this pattern really contains some non-integer points &mdash; but it is probable.
      *
      * <p>Unlike {@link #points()} method, there is a guarantee that this method
-     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * never works very slowly and cannot lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
      * In situations, when the number of points is very large
-     * and there is a risk to fail with {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
-     * this method must detect this fact in reasonable time and return <tt>false</tt>.
+     * and there is a risk to fail with {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
+     * this method must detect this fact in reasonable time and return <code>false</code>.
      *
      * <p>See the {@link Pattern comments to this interface}, section "Integer patterns", for more details.
      *
-     * @return <tt>true</tt> if this pattern and all patterns of its decomposition
-     *         ({@link #minkowskiDecomposition(int) Minkowski} or {@link #unionDecomposition(int) union})
-     *         assuredly contain only {@link Point#isInteger() integer} points.
+     * @return <code>true</code> if this pattern and all patterns of its decomposition
+     * ({@link #minkowskiDecomposition(int) Minkowski} or {@link #unionDecomposition(int) union})
+     * assuredly contain only {@link Point#isInteger() integer} points.
      */
     boolean isSurelyInteger();
 
@@ -809,7 +813,7 @@ public interface Pattern {
      * <ol>
      * <li>consists of all points,
      * obtained from all points of this pattern by rounding by the call
-     * <tt>point.{@link Point#toRoundedPoint() toRoundedPoint()}.{@link IPoint#toPoint() toPoint()}</tt>;</li>
+     * <code>point.{@link Point#toRoundedPoint() toRoundedPoint()}.{@link IPoint#toPoint() toPoint()}</code>;</li>
      * <li>has zero origin {@link UniformGridPattern#originOfGrid()}=(0,0,...,0)
      * and unit steps {@link UniformGridPattern#stepsOfGrid()}={1,1,..,1}.</li>
      * </ol>
@@ -821,7 +825,7 @@ public interface Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) operations and memory
@@ -839,9 +843,9 @@ public interface Pattern {
      * @return the integer pattern, geometrically nearest to this one.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     UniformGridPattern round();
 
@@ -849,8 +853,8 @@ public interface Pattern {
      * Returns this pattern, shifted by the argument.
      *
      * <p>More precisely, the resulting pattern consists of the points,
-     * obtained from all points of this pattern by the call <tt>point.{@link Point#add(Point) add}(shift)</tt>.
-     *
+     * obtained from all points of this pattern by the call <code>point.{@link Point#add(Point) add}(shift)</code>.
+     * <p>
      * <!--Repeat.SectionStart simple_corrections_features-->
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
@@ -866,7 +870,7 @@ public interface Pattern {
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      * <!--Repeat.SectionEnd simple_corrections_features-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
@@ -875,18 +879,18 @@ public interface Pattern {
      *
      * <p>However, {@link TooLargePatternCoordinatesException} is impossible in many important cases, when
      * this pattern is an <i>integer</i> pattern and each coordinate
-     * <nobr><i>X</i><sub><i>j</i></sub>=<tt>shift.{@link Point#coord(int) coord}(</tt><i>j</i><tt>)</tt></nobr>
+     * <i>X</i><sub><i>j</i></sub>=<code>shift.{@link Point#coord(int) coord}(</code><i>j</i><code>)</code>
      * of the argument is equal to &minus;<i>x</i><sub><i>j</i></sub> for some some point
-     * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * of this pattern.
      * In particular, you can use this method for <i>integer</i> patterns without a risk of
      * {@link TooLargePatternCoordinatesException} in the following situations:
      * <ul>
-     * <li><tt>shift</tt> is <tt>thisIntegerPattern.{@link #coordMin() coordMin()}.{@link Point#symmetric()
-     * symmetric()}</tt>,</li>
-     * <li><tt>shift</tt> is <tt>thisIntegerPattern.{@link #coordMax() coordMax()}.{@link Point#symmetric()
-     * symmetric()}</tt>,</li>
-     * <li><tt>shift</tt> is <tt>p.{@link Point#symmetric() symmetric()}</tt>, where <tt>p</tt> is
+     * <li><code>shift</code> is <code>thisIntegerPattern.{@link #coordMin() coordMin()}.{@link Point#symmetric()
+     * symmetric()}</code>,</li>
+     * <li><code>shift</code> is <code>thisIntegerPattern.{@link #coordMax() coordMax()}.{@link Point#symmetric()
+     * symmetric()}</code>,</li>
+     * <li><code>shift</code> is <code>p.{@link Point#symmetric() symmetric()}</code>, where <code>p</code> is
      * some of the {@link #points() points} if this integer pattern.</li>
      * </ul>
      * <p>See more details in the {@link Pattern comments to this interface},
@@ -894,18 +898,18 @@ public interface Pattern {
      *
      * @param shift the shift.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
-     * @throws TooLargePatternCoordinatesException
-     *                                  if the set of shifted points does not fulfil the restrictions,
-     *                                  described in the {@link Pattern comments to this interface},
-     *                                  section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if <code>point.{@link
+     *                                             Point#coordCount() coordCount()}!={@link #dimCount()}</code>.
+     * @throws TooLargePatternCoordinatesException if the set of shifted points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      */
     Pattern shift(Point shift);
 
     /**
      * Returns the symmetric pattern: equivalent to {@link #multiply(double) multiply(-1.0)}.
-     *
+     * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
@@ -921,7 +925,7 @@ public interface Pattern {
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * @return the symmetric pattern.
@@ -933,11 +937,11 @@ public interface Pattern {
      *
      * <p>More precisely, the resulting pattern consists of the points,
      * obtained from all points of this pattern by the call
-     * <tt>point.{@link Point#multiply(double) multiply}(multipliers)</tt>.
+     * <code>point.{@link Point#multiply(double) multiply}(multipliers)</code>.
      *
      * <p>This method is equivalent to {@link #scale(double... multipliers)}, where all
-     * {@link #dimCount()} arguments of that method are equal to <tt>multiplier</tt>.
-     *
+     * {@link #dimCount()} arguments of that method are equal to <code>multiplier</code>.
+     * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
@@ -953,21 +957,20 @@ public interface Pattern {
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
      * violate restrictions, described in the {@link Pattern comments to this interface},
      * section "Coordinate restrictions" (for example, due to a very large multiplier).
      * However, such failure is obviously impossible, if the multiplier is
-     * in range <tt>-1.0&lt;=multiplier&lt;=1.0</tt>.
+     * in range <code>-1.0&lt;=multiplier&lt;=1.0</code>.
      *
      * @param multiplier the scale along all coordinates.
      * @return the scaled pattern.
-     * @throws TooLargePatternCoordinatesException
-     *                              if the set of scaled points does not fulfil the restrictions,
-     *                              described in the {@link Pattern comments to this interface},
-     *                              section "Coordinate restrictions".
+     * @throws TooLargePatternCoordinatesException if the set of scaled points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      * @see #scale(double...)
      */
     Pattern multiply(double multiplier);
@@ -977,8 +980,8 @@ public interface Pattern {
      *
      * <p>More precisely, the resulting pattern consists of the points,
      * obtained from all points of this pattern by the call
-     * <tt>point.{@link Point#scale(double...) scale}(multipliers)</tt>.
-     *
+     * <code>point.{@link Point#scale(double...) scale}(multipliers)</code>.
+     * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
@@ -994,23 +997,22 @@ public interface Pattern {
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
      * violate restrictions, described in the {@link Pattern comments to this interface},
      * section "Coordinate restrictions" (for example, due to very large multipliers).
      * However, such failure is obviously impossible, if all multipliers are
-     * in range <tt>-1.0&lt;=multipliers[k]&lt;=1.0</tt>.
+     * in range <code>-1.0&lt;=multipliers[k]&lt;=1.0</code>.
      *
      * @param multipliers the scales along coordinates.
      * @return the scaled pattern.
-     * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>multipliers.length!={@link #dimCount() dimCount()}</tt>.
-     * @throws TooLargePatternCoordinatesException
-     *                                  if the set of scaled points does not fulfil the restrictions,
-     *                                  described in the {@link Pattern comments to this interface},
-     *                                  section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if <code>multipliers.length!={@link #dimCount() dimCount()}</code>.
+     * @throws TooLargePatternCoordinatesException if the set of scaled points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      * @see #multiply(double)
      */
     Pattern scale(double... multipliers);
@@ -1021,8 +1023,8 @@ public interface Pattern {
      *
      * <p>More precisely, the resulting pattern consists of the points,
      * obtained from all points of this pattern by the call
-     * <tt>point.{@link Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex)</tt>.
-     *
+     * <code>point.{@link Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex)</code>.
+     * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
@@ -1038,15 +1040,16 @@ public interface Pattern {
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the projection of this pattern (its {@link #dimCount()} is equal to
-     *         <tt>thisInstance.{@link #dimCount()}-1</tt>).
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
-     * @throws IllegalStateException     if this pattern is 1-dimensional (<tt>{@link #dimCount()}==1</tt>).
+     * <code>thisInstance.{@link #dimCount()}-1</code>).
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #dimCount()}</code>.
+     * @throws IllegalStateException     if this pattern is 1-dimensional (<code>{@link #dimCount()}==1</code>).
      */
     Pattern projectionAlongAxis(int coordIndex);
 
@@ -1060,18 +1063,18 @@ public interface Pattern {
     /**
      * Returns the <i>minimal boundary</i> of this pattern along the given axis:
      * a pattern consisting of all points of this pattern, for which there are
-     * no other points with less coordinate <tt>#coordIndex</tt>
+     * no other points with less coordinate <code>#coordIndex</code>
      * and same other coordinates.
      * The number of dimensions in the resulting pattern ({@link #dimCount()}) is the same as in this one.
      *
      * <p>In other words, this method removes some points from this pattern according the following rule:
      * if this pattern contains several points <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ...,
      * <b>p</b><sub><i>m</i>&minus;1</sub> with identical projection to the given axis
-     * (<b>p</b><sub><i>i</i></sub><tt>.{@link Point#projectionAlongAxis(int)
-     * projectionAlongAxis}(coordIndex).equals(</tt><b>p</b><sub><i>j</i></sub><tt>.{@link
-     * Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex))</tt> for all <i>i</i>,&nbsp;<i>j</i>),
+     * (<b>p</b><sub><i>i</i></sub><code>.{@link Point#projectionAlongAxis(int)
+     * projectionAlongAxis}(coordIndex).equals(</code><b>p</b><sub><i>j</i></sub><code>.{@link
+     * Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex))</code> for all <i>i</i>,&nbsp;<i>j</i>),
      * then the resulting pattern contains only one from these points, for which
-     * the given coordinate <tt>{@link Point#coord(int) coord}(coordIndex)</tt> has the minimal value.
+     * the given coordinate <code>{@link Point#coord(int) coord}(coordIndex)</code> has the minimal value.
      *
      * <p>This method is especially useful for {@link UniformGridPattern uniform-grid} patterns.
      * For example, in {@link RectangularPattern rectangular patterns} this method returns
@@ -1094,7 +1097,7 @@ public interface Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) memory
@@ -1107,12 +1110,14 @@ public interface Pattern {
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the minimal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     *                                     <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code>
+     *                                     can be also thrown instead of this exception).
      * @see #maxBound(int)
      */
     Pattern minBound(int coordIndex);
@@ -1121,18 +1126,18 @@ public interface Pattern {
     /**
      * Returns the <i>maximal boundary</i> of this pattern along the given axis:
      * a pattern consisting of all points of this pattern, for which there are
-     * no other points with greater coordinate <tt>#coordIndex</tt>
+     * no other points with greater coordinate <code>#coordIndex</code>
      * and same other coordinates.
      * The number of dimensions in the resulting pattern ({@link #dimCount()}) is the same as in this one.
      *
      * <p>In other words, this method removes some points from this pattern according the following rule:
      * if this pattern contains several points <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ...,
      * <b>p</b><sub><i>m</i>&minus;1</sub> with identical projection to the given axis
-     * (<b>p</b><sub><i>i</i></sub><tt>.{@link Point#projectionAlongAxis(int)
-     * projectionAlongAxis}(coordIndex).equals(</tt><b>p</b><sub><i>j</i></sub><tt>.{@link
-     * Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex))</tt> for all <i>i</i>,&nbsp;<i>j</i>),
+     * (<b>p</b><sub><i>i</i></sub><code>.{@link Point#projectionAlongAxis(int)
+     * projectionAlongAxis}(coordIndex).equals(</code><b>p</b><sub><i>j</i></sub><code>.{@link
+     * Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex))</code> for all <i>i</i>,&nbsp;<i>j</i>),
      * then the resulting pattern contains only one from these points, for which
-     * the given coordinate <tt>{@link Point#coord(int) coord}(coordIndex)</tt> has the maximal value.
+     * the given coordinate <code>{@link Point#coord(int) coord}(coordIndex)</code> has the maximal value.
      *
      * <p>This method is especially useful for {@link UniformGridPattern uniform-grid} patterns.
      * For example, in {@link RectangularPattern rectangular patterns} this method returns
@@ -1155,7 +1160,7 @@ public interface Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) memory
@@ -1168,12 +1173,14 @@ public interface Pattern {
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the maximal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     *                                     <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code>
+     *                                     can be also thrown instead of this exception).
      * @see #minBound(int)
      */
     Pattern maxBound(int coordIndex);
@@ -1202,7 +1209,7 @@ public interface Pattern {
      * <p>Here A&oplus;B means the {@link #minkowskiAdd(Pattern) Minkowski sum} of patterns A and B,
      * <i>k</i>&otimes;P means P&oplus;P&oplus;...&oplus;P (<i>k</i> summands),
      * and <i>k</i>P means the pointwise geometrical multiplication of the pattern P by the multiplier <i>k</i>,
-     * i.e. <tt>P.{@link #multiply(double) multiply}(<i>k</i>)</tt>.
+     * i.e. <code>P.{@link #multiply(double) multiply}(<i>k</i>)</code>.
      *
      * <p>This method tries to find the minimal carcass, consisting of as little as possible number of points,
      * and the maximal value <i>n</i>, for which the formulas above are correct for the found carcass.
@@ -1235,7 +1242,7 @@ public interface Pattern {
      *
      * <p>This method can require some time and memory for execution,
      * but never throws {@link TooManyPointsInPatternError}.
-     *
+     * <p>
      * <!-- below is a bug: sum of 2^ik*C is much greater, than k*C
      * <p><small>
      * Note: the condition II is a logical consequence from the conditions I.<br>
@@ -1267,9 +1274,9 @@ public interface Pattern {
      * the Minkowski multiple <i>k</i>&otimes;P can be optimized by using the <i>carcass</i> of this pattern P.
      * Please see {@link #carcass()} method for more information.
      *
-     * <p>Note: the returned value is always &ge;2. If the correct value is greater than <tt>Integer.MAX_VALUE</tt>
+     * <p>Note: the returned value is always &ge;2. If the correct value is greater than <code>Integer.MAX_VALUE</code>
      * (for example, for {@link RectangularPattern rectangular patterns}),
-     * this method returns <tt>Integer.MAX_VALUE</tt>; in all other cases the returning value is a power of two.
+     * this method returns <code>Integer.MAX_VALUE</code>; in all other cases the returning value is a power of two.
      *
      * <p>This method can require some time and memory for execution,
      * but never throws {@link TooManyPointsInPatternError}.
@@ -1277,15 +1284,15 @@ public interface Pattern {
      * so this method works very quickly after the first call of {@link #carcass()}.
      *
      * @return the maximal multiplier (&ge;2),
-     *         for which the calculation of the Minkowski multiple can be optimized
-     *         by using the {@link #carcass() carcass}.
+     * for which the calculation of the Minkowski multiple can be optimized
+     * by using the {@link #carcass() carcass}.
      */
     int maxCarcassMultiplier();
 
     /**
      * Calculates and returns the Minkowski sum of this and specified patterns.
      * Briefly, the returned pattern consists of all points <i>a</i>+<i>b</i>, where
-     * <i>a</i> is any point of this pattern, <i>b</i> is any point of the argument "<tt>added</tt>"
+     * <i>a</i> is any point of this pattern, <i>b</i> is any point of the argument "<code>added</code>"
      * and "+" means a vector sum of two points
      * (the result of "<i>a</i>.{@link Point#add(Point) add}(<i>b</i>)" call).
      * Please see details in
@@ -1293,7 +1300,7 @@ public interface Pattern {
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
      * violate restrictions, described in the {@link Pattern comments to this interface},
@@ -1303,12 +1310,12 @@ public interface Pattern {
      * if this pattern implements {@link DirectPointSetPattern}.
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
-     * if this pattern and <tt>subtracted</tt> argument implement {@link RectangularPattern}
+     * if this pattern and <code>subtracted</code> argument implement {@link RectangularPattern}
      * and both patterns have identical {@link UniformGridPattern#stepsOfGrid() steps}
-     * (i.e. <tt>thisPattern.{@link UniformGridPattern#stepsOfGridEqual(UniformGridPattern)
-     * stepsOfGridEqual}(subtracted)</tt> returns <tt>true</tt>).
+     * (i.e. <code>thisPattern.{@link UniformGridPattern#stepsOfGridEqual(UniformGridPattern)
+     * stepsOfGridEqual}(subtracted)</code> returns <code>true</code>).
      * In this case, this method works very quickly and without
-     * {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> exceptions.
+     * {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> exceptions.
      *
      * <p>Please draw attention: there is another way to build a Minkowski sum,
      * namely the method {@link Patterns#newMinkowskiSum(java.util.Collection)}.
@@ -1322,15 +1329,14 @@ public interface Pattern {
      *
      * @param added another pattern.
      * @return the Minkowski sum of this and another patterns.
-     * @throws NullPointerException        if the argument is {@code null}.
-     * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
-     * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
-     *                                     <tt>added</tt> or result pattern is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
-     * @throws TooLargePatternCoordinatesException
-     *                                     if the resulting set of points does not fulfil the restrictions,
-     *                                     described in the {@link Pattern comments to this interface},
-     *                                     section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if the numbers of space dimensions of both patterns are different.
+     * @throws TooManyPointsInPatternError         for some forms of large patterns, if the number of points in this,
+     *                                             <code>added</code> or result pattern is greater than
+     *                                             <code>Integer.MAX_VALUE</code> or, maybe, is near this limit
+     * @throws TooLargePatternCoordinatesException if the resulting set of points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      * @see Patterns#newMinkowskiSum(java.util.Collection)
      * @see #minkowskiSubtract(Pattern)
      */
@@ -1340,7 +1346,7 @@ public interface Pattern {
      * Calculates and returns the erosion of this pattern by specified pattern
      * or {@code null} if this erosion is the empty set.
      * Briefly, the returned pattern consists of all such points <i>p</i>,
-     * that for any points <i>b</i> of the "<tt>subtracted</tt>" pattern the vector sum of two points
+     * that for any points <i>b</i> of the "<code>subtracted</code>" pattern the vector sum of two points
      * <i>p</i>+<i>b</i>
      * (the result of "<i>p</i>.{@link Point#add(Point) add}(<i>b</i>)" call)
      * belongs to this pattern.
@@ -1350,37 +1356,36 @@ public interface Pattern {
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
      * violate restrictions, described in the {@link Pattern comments to this interface},
      * section "Coordinate restrictions". But it is obvious, that this exception
-     * is impossible if the passed pattern "<tt>subtracted</tt>" contains the origin of coordinates
+     * is impossible if the passed pattern "<code>subtracted</code>" contains the origin of coordinates
      * (in this case, the result is a subset of this pattern).
      *
      * <p>The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}.
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
-     * if this pattern and <tt>subtracted</tt> argument implement {@link RectangularPattern}
+     * if this pattern and <code>subtracted</code> argument implement {@link RectangularPattern}
      * and both patterns have identical {@link UniformGridPattern#stepsOfGrid() steps}
-     * (i.e. <tt>thisPattern.{@link UniformGridPattern#stepsOfGridEqual(UniformGridPattern)
-     * stepsOfGridEqual}(subtracted)</tt> returns <tt>true</tt>).
+     * (i.e. <code>thisPattern.{@link UniformGridPattern#stepsOfGridEqual(UniformGridPattern)
+     * stepsOfGridEqual}(subtracted)</code> returns <code>true</code>).
      * In this case, this method works very quickly and without
-     * {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> exceptions.
+     * {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> exceptions.
      *
      * @param subtracted another pattern.
      * @return the erosion of this pattern by the specified pattern
-     *         or {@code null} if this erosion is the empty set.
-     * @throws NullPointerException        if the argument is {@code null}.
-     * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
-     * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
-     *                                     <tt>subtracted</tt> or result pattern is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
-     * @throws TooLargePatternCoordinatesException
-     *                                     if the resulting set of points does not fulfil the restrictions,
-     *                                     described in the {@link Pattern comments to this interface},
-     *                                     section "Coordinate restrictions".
+     * or {@code null} if this erosion is the empty set.
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if the numbers of space dimensions of both patterns are different.
+     * @throws TooManyPointsInPatternError         for some forms of large patterns, if the number of points in this,
+     *                                             <code>subtracted</code> or result pattern is greater than
+     *                                             <code>Integer.MAX_VALUE</code> or, maybe, is near this limit
+     * @throws TooLargePatternCoordinatesException if the resulting set of points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      * @see #minkowskiAdd(Pattern)
      */
     Pattern minkowskiSubtract(Pattern subtracted);
@@ -1411,44 +1416,44 @@ public interface Pattern {
      * this instance as the only element.
      *
      * <p>If the number of points in this pattern is less than the argument, i.e.
-     * <tt>{@link #pointCount()}&lt;minimalPointCount</tt>, then this method probably does not
+     * <code>{@link #pointCount()}&lt;minimalPointCount</code>, then this method probably does not
      * decompose this pattern and returns the 1-element list containing this instance as its element.
      * But it is not guaranteed: if the method "knows" some decomposition, but estimation of the number of points
-     * can require a lot of resources, this method may ignore <tt>minimalPointCount</tt> argument.
+     * can require a lot of resources, this method may ignore <code>minimalPointCount</code> argument.
      *
      * <p>However, there is a guarantee that if the number of points is 1 or 2,
-     * i.e. <tt>{@link #pointCount()}&le;2</tt>, then this method always returns
+     * i.e. <code>{@link #pointCount()}&le;2</code>, then this method always returns
      * the 1-element list containing this instance as its element.
      *
      * <p>There is a guarantee that the elements of the resulting list cannot be further decomposed:
-     * this method, called for them with the same or larger <tt>minimalPointCount</tt> argument,
+     * this method, called for them with the same or larger <code>minimalPointCount</code> argument,
      * always returns a list consisting of one element.
      *
      * <p>The number of space dimensions in all returned patterns ({@link #dimCount()} is the same as in this one.
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableList</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableList</code>).
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return the decomposition of this pattern to Minkowski sum; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
     List<Pattern> minkowskiDecomposition(int minimalPointCount);
 
     /**
-     * Returns <tt>true</tt> if and only if the Minkowski decomposition,
+     * Returns <code>true</code> if and only if the Minkowski decomposition,
      * returned by {@link #minkowskiDecomposition(int) minkowskiDecomposition(0)} call,
      * consists of 2 or more patterns:
-     * <tt>{@link #minkowskiDecomposition(int) minkowskiDecomposition(0)}.size()&gt;1</tt>.
+     * <code>{@link #minkowskiDecomposition(int) minkowskiDecomposition(0)}.size()&gt;1</code>.
      *
      * <p>In some situations this method works essentially faster then the actual
      * {@link #minkowskiDecomposition(int) minkowskiDecomposition(0)} call.
      *
-     * <p>Note that if this method returns <tt>true</tt>, then {@link #pointCount()} and
+     * <p>Note that if this method returns <code>true</code>, then {@link #pointCount()} and
      * {@link #largePointCount()} methods can work very slowly and even may fail with
-     * <tt>OutOfMemoryError</tt> or {@link TooManyPointsInPatternError}.
+     * <code>OutOfMemoryError</code> or {@link TooManyPointsInPatternError}.
      *
-     * @return <tt>true</tt> if the Minkowski decomposition contains 2 or more elements.
+     * @return <code>true</code> if the Minkowski decomposition contains 2 or more elements.
      */
     boolean hasMinkowskiDecomposition();
 
@@ -1462,8 +1467,8 @@ public interface Pattern {
      * <p>This method tries to find such decomposition, that all patterns P<sub><i>i</i></sub> have good
      * {@link #minkowskiDecomposition(int) Minkowski decompositions}
      * and the summary number of points in all Minkowski decompositions
-     * <nobr>P<sub><i>i</i></sub><tt>.{@link #minkowskiDecomposition(int)
-     * minkowskiDecomposition(minimalPointCount)}</tt></nobr>
+     * P<sub><i>i</i></sub><code>.{@link #minkowskiDecomposition(int)
+     * minkowskiDecomposition(minimalPointCount)}</code>
      * of all patterns, returned by this method, is as small as possible &mdash;
      * usually much less than the number of points in this instance.
      * If this pattern already has a good Minkowski decompositions,
@@ -1471,21 +1476,21 @@ public interface Pattern {
      * this instance as the only element.
      *
      * <p>If the number of points in this pattern is less than the argument, i.e.
-     * <tt>{@link #pointCount()}&lt;minimalPointCount</tt>, then this method probably does not
+     * <code>{@link #pointCount()}&lt;minimalPointCount</code>, then this method probably does not
      * decompose this pattern and returns the 1-element list containing this instance as its element.
      * Moreover, this method tries to build such decomposition, that every element P<sub><i>i</i></sub>
-     * in the resulting list contains <tt>&ge;minimalPointCount</tt> elements.
+     * in the resulting list contains <code>&ge;minimalPointCount</code> elements.
      *
      * <p>There is a guarantee that the elements of the resulting list cannot be further decomposed:
-     * this method, called for them with the same or larger <tt>minimalPointCount</tt> argument,
+     * this method, called for them with the same or larger <code>minimalPointCount</code> argument,
      * always returns a list consisting of one element.
      *
      * <p>The number of space dimensions in all returned patterns ({@link #dimCount()} is the same as in this one.
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableList</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableList</code>).
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return a decomposition of this pattern into the union of patterns; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
@@ -1506,13 +1511,13 @@ public interface Pattern {
      * <p>The number of space dimensions in all returned patterns ({@link #dimCount()} is the same as in this one.
      *
      * <p>The result of this method and the elements of the result are immutable
-     * (<tt>Collections.unmodifiableList</tt>).
+     * (<code>Collections.unmodifiableList</code>).
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return several good variants of decomposition of this pattern to the union of patterns;
-     *         the result always contains &ge;1 elements,
-     *         and all its elements also contain &ge;1 elements.
+     * the result always contains &ge;1 elements,
+     * and all its elements also contain &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
     List<List<Pattern>> allUnionDecompositions(int minimalPointCount);

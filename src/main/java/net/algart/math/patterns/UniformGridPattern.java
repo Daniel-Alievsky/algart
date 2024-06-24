@@ -145,7 +145,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * <p>The returned array is a clone of the internal array of the steps, stored in this object.
      * The returned array is never empty (its length cannot be zero).
-     * The elements of the returned array are always positive (<tt>&lt;0.0</tt>).
+     * The elements of the returned array are always positive (<code>&lt;0.0</code>).
      *
      * <p>There is a guarantee, that this method always works very quickly
      * (<i>O</i>({@link #dimCount() dimCount()}) operations) and without exceptions.
@@ -156,23 +156,23 @@ public interface UniformGridPattern extends Pattern {
 
     /**
      * Returns the grid <i>step</i> <i>d</i><sub><i>j</i></sub> along the coordinate #<i>j</i> of this pattern
-     * along the coordinate #<i>j</i>=<tt>coordIndex</tt>.
-     * Equivalent to <tt>{@link #stepsOfGrid()}[coordIndex]</tt>, but works faster.
+     * along the coordinate #<i>j</i>=<code>coordIndex</code>.
+     * Equivalent to <code>{@link #stepsOfGrid()}[coordIndex]</code>, but works faster.
      *
      * <p>There is a guarantee, that this method always works very quickly
      * (maximally <i>O</i>({@link #dimCount() dimCount()}) operations) and without exceptions.
      *
      * @return the grid step of this pattern along the specified coordinate axis.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or
-     *                                   <tt>coordIndex&gt;={@link #dimCount() dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #dimCount() dimCount()}</code>.
      */
     double stepOfGrid(int coordIndex);
 
     /**
      * Indicates whether the other uniform-grid pattern has the same grid steps.
-     * In other words, returns <tt>true</tt> if and only if
+     * In other words, returns <code>true</code> if and only if
      * both patterns have the same dimension count ({@link #dimCount() dimCount()})
-     * and the corresponding grid steps {@link #stepOfGrid(int) stepOfGrid((k)} are equal for every <tt>k</tt>.
+     * and the corresponding grid steps {@link #stepOfGrid(int) stepOfGrid((k)} are equal for every <code>k</code>.
      *
      * <p>Note: this method does not compare the origin of grid.
      *
@@ -185,7 +185,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * @param pattern another uniform-grid pattern,
      *                the grid steps of which should be compared with grid steps of this one.
-     * @return <tt>true</tt> if the specified pattern has the same steps of grid.
+     * @return <code>true</code> if the specified pattern has the same steps of grid.
      */
     boolean stepsOfGridEqual(UniformGridPattern pattern);
 
@@ -210,7 +210,7 @@ public interface UniformGridPattern extends Pattern {
      * + <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup><i>d</i><sub><i>n</i>&minus;1</sub>
      * </blockquote>
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableSet</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableSet</code>).
      * Moreover, the result is always the same for different calls of this method for the same instance &mdash;
      * there are no ways to change it, in particular, via any custom methods of the implementation class
      * (it is a conclusion from the common requirement, that all implementations of {@link Pattern} interface must be
@@ -221,17 +221,17 @@ public interface UniformGridPattern extends Pattern {
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>.
+     * or <code>OutOfMemoryError</code>.
      * This method surely fails (throws one of these exception), if the total number of points
-     * <tt>{@link #pointCount()}&gt;Integer.MAX_VALUE</tt>, because Java <tt>Set</tt> object
-     * cannot contain more than <tt>Integer.MAX_VALUE</tt> elements.
+     * <code>{@link #pointCount()}&gt;Integer.MAX_VALUE</code>, because Java <code>Set</code> object
+     * cannot contain more than <code>Integer.MAX_VALUE</code> elements.
      *
      * <p>For example, implementations of the {@link RectangularPattern rectangular patterns}
      * allow to successfully define a very large 3D parallelepiped
      * <nobr><i>n</i> x <i>n</i> x <i>n</i></nobr>.
      * Fur such pattern, this method will require a lot of memory
      * for <i>n</i>=1000 and will fail (probably with {@link TooManyPointsInPatternError})
-     * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<tt>Integer.MAX_VALUE</tt>).
+     * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<code>Integer.MAX_VALUE</code>).
      *
      * <p>There is a guarantee, that if this object implements {@link DirectPointSetPattern} interface,
      * then this method requires not greater than <i>O</i>(<i>N</i>) operations and memory
@@ -241,12 +241,12 @@ public interface UniformGridPattern extends Pattern {
      * <p>Note: if you do not really need to get a Java collection of all grid indexes,
      * you can use {@link #gridIndexPattern()} method, which returns the same result in a form
      * of another (integer) pattern. That method, unlike this one, never spends extreme amount of memory
-     * and time and has no risk to fail with {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * and time and has no risk to fail with {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
      *
      * @return all grid indexes of this pattern.
-     * @throws TooManyPointsInPatternError if the number of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     * @throws TooManyPointsInPatternError if the number of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      * @see #gridIndexPattern()
      */
     Set<IPoint> gridIndexes();
@@ -254,10 +254,10 @@ public interface UniformGridPattern extends Pattern {
     /**
      * Returns the minimal and maximal <i>grid index</i> <i>i</i><sub><i>j</i></sub>
      * among all points of this pattern
-     * for the specified coordinate index <i>j</i>==<tt>coordIndex</tt>.
-     * The minimal grid index will be <tt>r.{@link net.algart.math.IRange#min() min()}</tt>,
-     * the maximal grid index will be <tt>r.{@link net.algart.math.IRange#max() max()}</tt>,
-     * where <tt>r</tt> is the result of this method.
+     * for the specified coordinate index <i>j</i>==<code>coordIndex</code>.
+     * The minimal grid index will be <code>r.{@link net.algart.math.IRange#min() min()}</code>,
+     * the maximal grid index will be <code>r.{@link net.algart.math.IRange#max() max()}</code>,
+     * where <code>r</code> is the result of this method.
      * See the {@link UniformGridPattern comments to this interface} for more details.
      *
      * <p>There is a guarantee, that if this object implements {@link RectangularPattern} interface,
@@ -270,12 +270,12 @@ public interface UniformGridPattern extends Pattern {
      * (outside this package) this method will work slowly, up to <i>O</i>(<i>N</i>) operations,
      * <i>N</i> is the number of points in this pattern.
      * However, even in such implementations this method <i>must not</i> lead to
-     * {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>, like {@link #points()} method.
+     * {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>, like {@link #points()} method.
      *
      * @param coordIndex the index <i>j</i> of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.).
      * @return the range from minimal to maximal grid index <i>i</i><sub><i>j</i></sub>.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or
-     *                                   <tt>coordIndex&gt;={@link #dimCount() dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     *                                   <code>coordIndex&gt;={@link #dimCount() dimCount()}</code>.
      * @see #gridIndexMin()
      * @see #gridIndexMax()
      * @see #gridIndexArea()
@@ -286,13 +286,13 @@ public interface UniformGridPattern extends Pattern {
      * Returns the minimal and maximal <i>grid index</i> <i>i</i><sub><i>j</i></sub>
      * among all points of this pattern
      * for all coordinate axes <i>j</i>
-     * If <tt>a</tt> is the result of this method,
-     * then <tt>a.{@link IRectangularArea#coordCount() coordCount()}=={@link #dimCount() dimCount()}</tt>
-     * and <tt>a.{@link IRectangularArea#range(int) range}(k)</tt>
-     * is equal to <tt>{@link #gridIndexRange(int) gridIndexRange}(k)</tt> for all <tt>k</tt>.
+     * If <code>a</code> is the result of this method,
+     * then <code>a.{@link IRectangularArea#coordCount() coordCount()}=={@link #dimCount() dimCount()}</code>
+     * and <code>a.{@link IRectangularArea#range(int) range}(k)</code>
+     * is equal to <code>{@link #gridIndexRange(int) gridIndexRange}(k)</code> for all <code>k</code>.
      *
      * <p>All, said in the comments to {@link #gridIndexRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return the ranges from minimal to maximal grid index for all space dimensions.
@@ -303,10 +303,10 @@ public interface UniformGridPattern extends Pattern {
      * Returns the point, each coordinate #<i>j</i> of which
      * is equal to the minimal corresponding grid index <i>i</i><sub><i>j</i></sub>
      * among all points of this pattern.
-     * Equivalent to <tt>{@link #gridIndexArea()}.{@link IRectangularArea#min() min()}</tt>.
+     * Equivalent to <code>{@link #gridIndexArea()}.{@link IRectangularArea#min() min()}</code>.
      *
      * <p>All, said in the comments to {@link #gridIndexRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return minimal grid index for all space dimensions as a point.
@@ -317,10 +317,10 @@ public interface UniformGridPattern extends Pattern {
      * Returns the point, each coordinate #<i>j</i> of which
      * is equal to the maximal corresponding grid index <i>i</i><sub><i>j</i></sub>
      * among all points of this pattern.
-     * Equivalent to <tt>{@link #gridIndexArea()}.{@link IRectangularArea#max() max()}</tt>.
+     * Equivalent to <code>{@link #gridIndexArea()}.{@link IRectangularArea#max() max()}</code>.
      *
      * <p>All, said in the comments to {@link #gridIndexRange(int)} method
-     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>,
+     * about the speed and impossibility of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>,
      * is also true for this method.
      *
      * @return maximal grid index for all space dimensions as a point.
@@ -328,7 +328,7 @@ public interface UniformGridPattern extends Pattern {
     IPoint gridIndexMax();
 
     /**
-     * Returns <tt>true</tt> if and only if this uniform-grid pattern is an <i>ordinary integer pattern</i>,
+     * Returns <code>true</code> if and only if this uniform-grid pattern is an <i>ordinary integer pattern</i>,
      * i&#46;e&#46; if the grid origin <b>o</b> is the origin of coordinates (0,0,...,0)
      * and all grid steps <i>d</i><sub><i>j</i></sub> are 1.0.
      * Equivalent to
@@ -347,9 +347,9 @@ public interface UniformGridPattern extends Pattern {
     boolean isOrdinary();
 
     /**
-     * Returns <tt>true</tt> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
+     * Returns <code>true</code> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
      * (For 2D patterns it means a rectangle, for 1D pattern it means an interval.)
-     * In other words, it returns <tt>true</tt> if this pattern is the set of all points
+     * In other words, it returns <code>true</code> if this pattern is the set of all points
      * <nobr>(<i>o</i><sub>0</sub>+<i>i</i><sub>0</sub><i>d</i><sub>0</sub>,
      * <i>o</i><sub>1</sub>+<i>i</i><sub>1</sub><i>d</i><sub>1</sub>, ...,
      * <i>o</i><sub><i>n</i>&minus;1</sub>+<i>i</i><sub><i>n</i>&minus;1</sub><i>d</i><sub><i>n</i>&minus;1</sub>)</nobr>,
@@ -363,13 +363,13 @@ public interface UniformGridPattern extends Pattern {
      *
      * <p>Note that this condition is the same as in the definition of rectangular patterns, represented by
      * {@link RectangularPattern} interface. Really, if the object implements {@link RectangularPattern},
-     * this method always returns <tt>true</tt>. However, this method tries to investigate
+     * this method always returns <code>true</code>. However, this method tries to investigate
      * the actual point set for other types of patterns.
      *
-     * <p>There are no strict guarantees that this method <i>always</i> returns <tt>true</tt> if the pattern is
+     * <p>There are no strict guarantees that this method <i>always</i> returns <code>true</code> if the pattern is
      * <i>n</i>-dimensional rectangular parallelepiped. (In some complex situations, such analysis can
      * be too difficult.) But there is this guarantee for all uniform-grid patterns, created by this package.
-     * And, of course, there is the reverse guarantee: if this method returns <tt>true</tt>, the pattern is
+     * And, of course, there is the reverse guarantee: if this method returns <code>true</code>, the pattern is
      * really a rectangular parallelepiped.</p>
      *
      * <p>You may be also sure that this method always works quickly enough and without exceptions.
@@ -377,12 +377,12 @@ public interface UniformGridPattern extends Pattern {
      * <i>N</i>={@link #pointCount() pointCount()},
      * but usually it works much more quickly.
      * (So, if you implement this method yourself and there is a risk, that calculations
-     * can lead to {@link TooManyPointsInPatternError}, <tt>OutOfMemory</tt> or another exception due to
-     * extremely large number of points, you <i>must</i> return <tt>false</tt> instead of
+     * can lead to {@link TooManyPointsInPatternError}, <code>OutOfMemory</code> or another exception due to
+     * extremely large number of points, you <i>must</i> return <code>false</code> instead of
      * throwing an exception. Please compare this with {@link #pointCount()} and {@link #points()} methods,
      * which do not provide such guarantees and <i>may</i> lead to an exception.)
      *
-     * @return <tt>true</tt> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
+     * @return <code>true</code> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
      */
     boolean isActuallyRectangular();
 
@@ -406,15 +406,15 @@ public interface UniformGridPattern extends Pattern {
      * consists of points
      *
      * <blockquote>
-     * <i>y</i><sub>0</sub><sup>(<i>k</i>)</sup> = <tt>(double)</tt><i>i</i><sub>0</sub><sup>(<i>k</i>)</sup><br>
-     * <i>y</i><sub>1</sub><sup>(<i>k</i>)</sup> = <tt>(double)</tt><i>i</i><sub>1</sub><sup>(<i>k</i>)</sup><br>
+     * <i>y</i><sub>0</sub><sup>(<i>k</i>)</sup> = <code>(double)</code><i>i</i><sub>0</sub><sup>(<i>k</i>)</sup><br>
+     * <i>y</i><sub>1</sub><sup>(<i>k</i>)</sup> = <code>(double)</code><i>i</i><sub>1</sub><sup>(<i>k</i>)</sup><br>
      * . . .<br>
      * <i>y</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup> =
-     * <tt>(double)</tt><i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>
+     * <code>(double)</code><i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>
      * </blockquote>
      *
      * <p>Note: here is a guarantee, that all grid indexes <i>i</i><sub><i>j</i></sub> will be strictly
-     * represented by <tt>double</tt> type.
+     * represented by <code>double</code> type.
      * Moreover, there is a guarantee that the returned pattern is correct, i.e. will be successfully built
      * without a risk of {@link TooLargePatternCoordinatesException}.
      * See the comments to {@link Pattern#MAX_COORDINATE}
@@ -441,7 +441,7 @@ public interface UniformGridPattern extends Pattern {
      * we do not eliminate checking of all coordinates -->
      *
      * @return an ordinary integer pattern, consisting of all grid indexes of this pattern (represented
-     *         by <tt>double</tt> values).
+     * by <code>double</code> values).
      * @see #gridIndexes()
      */
     UniformGridPattern gridIndexPattern();
@@ -453,8 +453,8 @@ public interface UniformGridPattern extends Pattern {
      * <i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
      * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
      * for each point #<i>k</i> of the result is shifted by the argument of this method via the call
-     * <b>i</b><sup>(<i>k</i>)</sup><tt>.{@link IPoint#add(IPoint) add}(shift)</tt>.
-     *
+     * <b>i</b><sup>(<i>k</i>)</sup><code>.{@link IPoint#add(IPoint) add}(shift)</code>.
+     * <p>
      * In other words, if this pattern is a set of points
      *
      * <blockquote>
@@ -498,7 +498,7 @@ public interface UniformGridPattern extends Pattern {
      * For comparison, an attempt to do the same operation via getting all grid indexes via
      * {@link #gridIndexes()} call, correcting them and forming a new pattern via
      * {@link Patterns#newUniformGridPattern(Point, double[], java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
      * violate restrictions, described in the comments to {@link Pattern} interface,
@@ -514,14 +514,13 @@ public interface UniformGridPattern extends Pattern {
      *
      * @param shift the shift of the grid indexes.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
-     * @throws TooLargePatternCoordinatesException
-     *                                  if the set of shifted points does not fulfil the restrictions,
-     *                                  described in the comments to {@link Pattern} interface,
-     *                                  section "Coordinate restrictions", and in the comments
-     *                                  to {@link UniformGridPattern} interface,
-     *                                  section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if <code>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</code>.
+     * @throws TooLargePatternCoordinatesException if the set of shifted points does not fulfil the restrictions,
+     *                                             described in the comments to {@link Pattern} interface,
+     *                                             section "Coordinate restrictions", and in the comments
+     *                                             to {@link UniformGridPattern} interface,
+     *                                             section "Coordinate restrictions".
      */
     UniformGridPattern shiftGridIndexes(IPoint shift);
 
@@ -541,7 +540,7 @@ public interface UniformGridPattern extends Pattern {
      * Returns the <i>lower boundary</i> of this pattern along the given axis:
      * a pattern consisting of all such points <i>A</i> of this pattern,
      * that the neighbour point <i>B</i>,
-     * generated by the backward shift of point <i>A</i> along the coordinate #<i>j</i>=<tt>coordIndex</tt>
+     * generated by the backward shift of point <i>A</i> along the coordinate #<i>j</i>=<code>coordIndex</code>
      * by the corresponding grid step <nobr><i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
      * stepOfGrid(coordIndex)}</nobr>, does not belong to this pattern.
      * The number of dimensions in the resulting pattern ({@link #dimCount() dimCount()}) is the same as in this one.
@@ -568,7 +567,7 @@ public interface UniformGridPattern extends Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      * However, this situation is possible only in custom implementation of this interface &mdash;
      * all implementations, provided by this package, implement either {@link DirectPointSetPattern}
      * or {@link RectangularPattern} interface.
@@ -583,15 +582,15 @@ public interface UniformGridPattern extends Pattern {
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.)
      * @return the "lower boundary" of this pattern: new pattern consisting of all points of this pattern,
-     *         which have no leftward neighbour along the given coordinate.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or
-     *                                     <tt>coordIndex&gt;={@link #dimCount() dimCount()}</tt>.
+     * which have no leftward neighbour along the given coordinate.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     *                                     <code>coordIndex&gt;={@link #dimCount() dimCount()}</code>.
      * @throws TooManyPointsInPatternError (impossible for implementations, provided by this package)
      *                                     if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     UniformGridPattern lowerSurface(int coordIndex);
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -600,7 +599,7 @@ public interface UniformGridPattern extends Pattern {
      * Returns the <i>upper boundary</i> of this pattern along the given axis:
      * a pattern consisting of all such points <i>A</i> of this pattern,
      * that the neighbour point <i>B</i>,
-     * generated by the forward shift of point <i>A</i> along the coordinate #<i>j</i>=<tt>coordIndex</tt>
+     * generated by the forward shift of point <i>A</i> along the coordinate #<i>j</i>=<code>coordIndex</code>
      * by the corresponding grid step <nobr><i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
      * stepOfGrid(coordIndex)}</nobr>, does not belong to this pattern.
      * The number of dimensions in the resulting pattern ({@link #dimCount() dimCount()}) is the same as in this one.
@@ -627,7 +626,7 @@ public interface UniformGridPattern extends Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      * However, this situation is possible only in custom implementation of this interface &mdash;
      * all implementations, provided by this package, implement either {@link DirectPointSetPattern}
      * or {@link RectangularPattern} interface.
@@ -642,15 +641,15 @@ public interface UniformGridPattern extends Pattern {
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.)
      * @return the "upper boundary" of this pattern: new pattern consisting of all points of this pattern,
-     *         which have no rightward neighbour along the given coordinate.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or
-     *                                     <tt>coordIndex&gt;={@link #dimCount() dimCount()}</tt>.
+     * which have no rightward neighbour along the given coordinate.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     *                                     <code>coordIndex&gt;={@link #dimCount() dimCount()}</code>.
      * @throws TooManyPointsInPatternError (impossible for implementations, provided by this package)
      *                                     if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     UniformGridPattern upperSurface(int coordIndex);
     /*Repeat.AutoGeneratedEnd*/
@@ -665,19 +664,20 @@ public interface UniformGridPattern extends Pattern {
      * and is not {@link RectangularPattern}, this method can work slowly for some large patterns:
      * the required time can be <i>O</i>(<i>N</i>), where <i>N</i> is the number of points.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
-     * or <tt>OutOfMemoryError</tt>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
+     * or <code>OutOfMemoryError</code>. The situation is like in {@link #points()} and {@link #roundedPoints()} method.
      * However, this situation is possible only in custom implementation of this interface &mdash;
      * all implementations, provided by this package, implement either {@link DirectPointSetPattern}
      * or {@link RectangularPattern} interface.
      *
      * @return the "boundary" of this pattern: new pattern consisting of all points of this pattern,
-     *         which have no leftward or rightward neighbour along at least one coordinate.
+     * which have no leftward or rightward neighbour along at least one coordinate.
      * @throws TooManyPointsInPatternError (impossible for implementations, provided by this package)
      *                                     if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code>
+     *                                     can be also thrown instead of this exception).
      */
     Pattern surface();
 

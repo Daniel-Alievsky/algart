@@ -30,17 +30,17 @@ import net.algart.math.Range;
 import java.util.*;
 
 /**
- * <p>The simplest implementation of the {@link Pattern} interface, based on a set (<tt>java.util.Set</tt>
+ * <p>The simplest implementation of the {@link Pattern} interface, based on a set (<code>java.util.Set</code>
  * or some equivalent form), containing all pattern points.</p>
  *
  * <p>If a pattern is an instance of this class, then there are all common guarantees for
  * {@link DirectPointSetPattern} (see the documentation for that interface) and, in addition,
  * you can be sure that {@link #points()} method works very quickly and does not spend memory:
- * it just returns <tt>Collections.unmodifiableSet</tt> for the set of points,
+ * it just returns <code>Collections.unmodifiableSet</code> for the set of points,
  * stored in an internal field.</p>
  *
  * <p>This class does not support any decompositions:
- * {@link #hasMinkowskiDecomposition()} method returns <tt>false</tt>,
+ * {@link #hasMinkowskiDecomposition()} method returns <code>false</code>,
  * {@link #minkowskiDecomposition(int)}, {@link #unionDecomposition(int)} and
  * {@link #allUnionDecompositions(int)} methods return trivial decompositions consisting of
  * the only this pattern.</p>
@@ -60,13 +60,13 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
     /**
      * Creates a pattern containing the given collection of points.
      *
-     * <p>This passed collection is cloned by this constructor and converted into <tt>java.util.Set</tt>.
+     * <p>This passed collection is cloned by this constructor and converted into <code>java.util.Set</code>.
      * No references to the passed argument are maintained by the created instance.
      *
      * @param points collection of all points of the pattern.
      * @throws NullPointerException     if the argument is {@code null} or if some element in the specified
      *                                  collection is {@code null}
-     * @throws IllegalArgumentException if <tt>points</tt> argument is an empty collection,
+     * @throws IllegalArgumentException if <code>points</code> argument is an empty collection,
      *                                  or if some points have different number of coordinates.
      * @see Patterns#newPattern(java.util.Collection)
      */
@@ -102,23 +102,23 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
 
     /**
      * This method is implemented here by shifting all points in the point set, stored in this object and
-     * returned by {@link #points()} method, by the call <tt>p.{@link Point#add(Point) add}(shift)</tt>.
+     * returned by {@link #points()} method, by the call <code>p.{@link Point#add(Point) add}(shift)</code>.
      *
      * @param shift the shift.
      * @return the shifted pattern.
-     * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link Point#coordCount() coordCount()}!={@link #dimCount()}</tt>.
-     * @throws TooLargePatternCoordinatesException
-     *                                  if the set of shifted points does not fulfil the restrictions,
-     *                                  described in the {@link Pattern comments to this interface},
-     *                                  section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if <code>point.{@link
+     *                                             Point#coordCount() coordCount()}!={@link #dimCount()}</code>.
+     * @throws TooLargePatternCoordinatesException if the set of shifted points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      */
     @Override
     public SimplePattern shift(Point shift) {
         Objects.requireNonNull(shift, "Null shift argument");
         if (shift.coordCount() != dimCount) {
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
-                + " is not equal to the number of pattern coordinates " + dimCount);
+                    + " is not equal to the number of pattern coordinates " + dimCount);
         }
         Set<Point> resultPoints = new HashSet<Point>(points.size());
         for (Point p : points) {
@@ -139,23 +139,22 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
 
     /**
      * This method is implemented here by scaling all points in the point set, stored in this object and
-     * returned by {@link #points()} method, by the call <tt>p.{@link Point#scale(double...) scale}(multipliers)</tt>.
+     * returned by {@link #points()} method, by the call <code>p.{@link Point#scale(double...) scale}(multipliers)</code>.
      *
      * @param multipliers the multipliers for all coordinates.
      * @return the scaled pattern.
-     * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>multipliers.length!={@link #dimCount() dimCount()}</tt>.
-     * @throws TooLargePatternCoordinatesException
-     *                                  if the set of scaled points does not fulfil the restrictions,
-     *                                  described in the {@link Pattern comments to this interface},
-     *                                  section "Coordinate restrictions".
+     * @throws NullPointerException                if the argument is {@code null}.
+     * @throws IllegalArgumentException            if <code>multipliers.length!={@link #dimCount() dimCount()}</code>.
+     * @throws TooLargePatternCoordinatesException if the set of scaled points does not fulfil the restrictions,
+     *                                             described in the {@link Pattern comments to this interface},
+     *                                             section "Coordinate restrictions".
      */
     @Override
     public SimplePattern scale(double... multipliers) {
         Objects.requireNonNull(multipliers, "Null multipliers argument");
         if (multipliers.length != dimCount) {
             throw new IllegalArgumentException("Illegal number of multipliers: "
-                + multipliers.length + " instead of " + dimCount);
+                    + multipliers.length + " instead of " + dimCount);
         }
         multipliers = multipliers.clone(); // to be on the safe side
         Set<Point> resultPoints = new HashSet<Point>(points.size());
@@ -188,7 +187,8 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the minimal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code>
+     *                                   or <code>coordIndex&gt;={@link #dimCount()}</code>.
      */
     @Override
     public SimplePattern minBound(int coordIndex) {
@@ -203,7 +203,8 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the maximal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code>
+     *                                   or <code>coordIndex&gt;={@link #dimCount()}</code>.
      */
     @Override
     public SimplePattern maxBound(int coordIndex) {
@@ -222,7 +223,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(dimCount + "D multipoint common pattern containing "
-            + points.size() + " points");
+                + points.size() + " points");
         if (pointCount() <= 32) {
             sb.append(" ").append(points());
         }
@@ -245,12 +246,12 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
 
     /**
      * Indicates whether some other pattern is equal to this instance,
-     * that is the set of its points is the same in terms of <tt>java.util.Set.equals</tt> method.
-     * See more precise specification in comments about <tt>equals()</tt>
+     * that is the set of its points is the same in terms of <code>java.util.Set.equals</code> method.
+     * See more precise specification in comments about <code>equals()</code>
      * in {@link Pattern comments to Pattern interface}.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return <tt>true</tt> if the specified object is a pattern equal to this one.
+     * @return <code>true</code> if the specified object is a pattern equal to this one.
      */
     @Override
     public final boolean equals(Object obj) {
@@ -272,7 +273,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
             Objects.requireNonNull(p, "Null point is the collection");
             if (p.coordCount() != result) {
                 throw new IllegalArgumentException("Points dimensions mismatch: the first point has "
-                    + result + " coordinates, but some of points has " + p.coordCount());
+                        + result + " coordinates, but some of points has " + p.coordCount());
             }
             checkPoint(p);
         }
@@ -281,8 +282,8 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
 
     static boolean simplePatternsEqual(Pattern first, Pattern second) {
         return second == first
-            || (second instanceof SimplePattern || second instanceof BasicDirectPointSetUniformGridPattern
-            || second instanceof TwoPointsPattern || second instanceof OnePointPattern)
-            && second.points().equals(first.points());
+                || (second instanceof SimplePattern || second instanceof BasicDirectPointSetUniformGridPattern
+                || second instanceof TwoPointsPattern || second instanceof OnePointPattern)
+                && second.points().equals(first.points());
     }
 }

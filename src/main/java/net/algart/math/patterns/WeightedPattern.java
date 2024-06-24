@@ -50,10 +50,10 @@ public interface WeightedPattern extends Pattern {
     Range weightRange();
 
     /**
-     * Returns <tt>true</tt> if the weights of all points are the same.
-     * Equivalent to <tt>{@link #weightRange()}.{@link Range#size() size()}==0.0</tt>.
+     * Returns <code>true</code> if the weights of all points are the same.
+     * Equivalent to <code>{@link #weightRange()}.{@link Range#size() size()}==0.0</code>.
      *
-     * @return <tt>true</tt> if the weights of all points are the same.
+     * @return <code>true</code> if the weights of all points are the same.
      */
     boolean isConstant();
 
@@ -72,21 +72,21 @@ public interface WeightedPattern extends Pattern {
 
     /**
      * Returns the pattern consisting of points, generated from points of this instance
-     * by multiplying on the <tt>mult</tt> argument via {@link IPoint#multiply(double)} method.
+     * by multiplying on the <code>mult</code> argument via {@link IPoint#multiply(double)} method.
      *
-     * <p>If <tt>mult</tt> is not an integer, the generated real coordinates are rounded to integer values.
+     * <p>If <code>mult</code> is not an integer, the generated real coordinates are rounded to integer values.
      * If several source points are rounded to the same integer point, the {@link #weight(IPoint) weights}
      * of the resulting points may differ from the weights of the source ones,
      * but the sum of all weights will be approximately same.
      * If the all source points are transformed to different points,
      * their weights are preserved.
      *
-     * <p><i>Please note:</i> if <tt>mult</tt> is not an integer,
+     * <p><i>Please note:</i> if <code>mult</code> is not an integer,
      * the algorithm of rounding <i>is not strictly specified</i>!
      * However, you can be sure that the new pattern will be near from the precise result.
      *
      * @param multiplier the multiplier.
-     * @return the product of this pattern and the given scalar <tt>mult</tt>.
+     * @return the product of this pattern and the given scalar <code>mult</code>.
      */
     WeightedPattern multiply(double multiplier);
 
@@ -135,10 +135,10 @@ public interface WeightedPattern extends Pattern {
      *
      * <p>The number of space dimensions in all returned patterns ({@link #dimCount()} is the same as in this one.
      *
-     * <p>The result of this method is immutable (<tt>Collections.unmodifiableList</tt>).
+     * <p>The result of this method is immutable (<code>Collections.unmodifiableList</code>).
      *
      * @param minimalPointCount this method does not try to decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return the decomposition of this pattern to the "product" (convolution) of smaller patterns.
      * @throws IllegalArgumentException if the argument is negative.
      */

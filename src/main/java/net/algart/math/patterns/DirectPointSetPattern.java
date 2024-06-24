@@ -27,7 +27,7 @@ package net.algart.math.patterns;
 /**
  * <p>Interface, used by {@link Pattern} implementations to indicate that
  * they are <i>direct point-set patterns</i>, i&#46;e&#46; are internally represented as actual sets of points
- * like <tt>Set&lt;{@link net.algart.math.Point}&gt;</tt>.
+ * like <code>Set&lt;{@link net.algart.math.Point}&gt;</code>.
  * See also the section "Direct point-set patterns" in the comments to {@link Pattern} interface.</p>
  *
  * <p>If a pattern implements this interface, then there is a guarantee that the following
@@ -58,7 +58,7 @@ package net.algart.math.patterns;
  * (<i>N</i>={@link #pointCount() pointCount()}) for other methods.</p>
  *
  * <p>Also there is a guarantee in such patterns, that
- * {@link #isPointCountVeryLarge()} returns <tt>false</tt> and, so, the number of points can be retrieved
+ * {@link #isPointCountVeryLarge()} returns <code>false</code> and, so, the number of points can be retrieved
  * by {@link #pointCount()} method.</p>
  *
  * <p>If a pattern implements this interface, it never implements {@link RectangularPattern} interface.</p>

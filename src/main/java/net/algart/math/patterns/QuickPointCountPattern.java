@@ -64,14 +64,14 @@ package net.algart.math.patterns;
  */
 public interface QuickPointCountPattern extends Pattern {
     /**
-     * Returns <tt>true</tt> if and only if the number of points in this pattern is greater
-     * than <tt>Long.MAX_VALUE</tt>. In this case, {@link #pointCount()} returns <tt>Long.MAX_VALUE</tt>,
+     * Returns <code>true</code> if and only if the number of points in this pattern is greater
+     * than <code>Long.MAX_VALUE</code>. In this case, {@link #pointCount()} returns <code>Long.MAX_VALUE</code>,
      * but you can get the approximate number of points by {@link #largePointCount()} method.
      *
      * <p>There is a guarantee that this method works very quickly (<i>O</i>(1) operations).
      * This method never throws any exceptions.
      *
-     * @return <tt>true</tt> if the number of points in this pattern is greater than <tt>Long.MAX_VALUE</tt>.
+     * @return <code>true</code> if the number of points in this pattern is greater than <code>Long.MAX_VALUE</code>.
      */
     boolean isPointCountVeryLarge();
 }

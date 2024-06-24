@@ -53,7 +53,7 @@ public abstract class AbstractPattern implements Pattern {
      * Creates a pattern with the given number of space dimensions.
      *
      * @param dimCount the number of space dimensions.
-     * @throws IllegalArgumentException if <tt>dimCount&lt;=0</tt>.
+     * @throws IllegalArgumentException if <code>dimCount&lt;=0</code>.
      */
     protected AbstractPattern(int dimCount) {
         if (dimCount <= 0) {
@@ -77,8 +77,8 @@ public abstract class AbstractPattern implements Pattern {
     public abstract long pointCount();
 
     /**
-     * This implementation returns <tt>(double){@link #pointCount()}</tt>.
-     * Please override this method if the pattern can contain more than <tt>Long.MAX_VALUE</tt> points.
+     * This implementation returns <code>(double){@link #pointCount()}</code>.
+     * Please override this method if the pattern can contain more than <code>Long.MAX_VALUE</code> points.
      *
      * @return the number of {@link IPoint integer points} in this pattern.
      */
@@ -87,10 +87,10 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * This implementation returns <tt>false</tt>.
-     * Please override this method if the pattern can contain more than <tt>Long.MAX_VALUE</tt> points.
+     * This implementation returns <code>false</code>.
+     * Please override this method if the pattern can contain more than <code>Long.MAX_VALUE</code> points.
      *
-     * @return <tt>true</tt> if the number of points in this pattern is greater than <tt>Long.MAX_VALUE</tt>.
+     * @return <code>true</code> if the number of points in this pattern is greater than <code>Long.MAX_VALUE</code>.
      */
     public boolean isPointCountVeryLarge() {
         return false;
@@ -107,7 +107,7 @@ public abstract class AbstractPattern implements Pattern {
      *
      * @return all points of this pattern, rounded to the nearest integer points.
      * @throws TooManyPointsInPatternError if {@link #points()} method throws this exception
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown in this case).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown in this case).
      */
     public Set<IPoint> roundedPoints() {
         Set<IPoint> result = new HashSet<IPoint>();
@@ -121,7 +121,7 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation is based on the loop of calls of {@link #coordRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return the ranges from minimal to maximal grid index for all space dimensions.
      */
@@ -135,7 +135,7 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation is based on the loop of calls of {@link #coordRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return minimal coordinates for all space dimensions as a point.
      */
@@ -149,7 +149,7 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation is based on the loop of calls of {@link #coordRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return maximal coordinates for all space dimensions as a point.
      */
@@ -163,12 +163,13 @@ public abstract class AbstractPattern implements Pattern {
 
 
     /**
-     * This implementation returns <tt>{@link #coordRange(int) coordRange}(coordIndex).{@link Range#toRoundedRange()
-     * toRoundedRange()}</tt>.
+     * This implementation returns <code>{@link #coordRange(int) coordRange}(coordIndex).{@link Range#toRoundedRange()
+     * toRoundedRange()}</code>.
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>, 1 for <i>y</i>, 2 for <i>z</i>, etc.).
-     * @return the range from minimal to maximal coordinate with this index, rounded to the <tt>long</tt> values.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @return the range from minimal to maximal coordinate with this index, rounded to the <code>long</code> values.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     * <code>coordIndex&gt;={@link #dimCount()}</code>.
      */
     public IRange roundedCoordRange(int coordIndex) {
         return coordRange(coordIndex).toRoundedRange();
@@ -176,10 +177,10 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation is based on the loop of calls of {@link #roundedCoordRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return the ranges from minimal to maximal coordinate for all space dimensions,
-     *         rounded to the <tt>long</tt> values.
+     *         rounded to the <code>long</code> values.
      */
     public IRectangularArea roundedCoordArea() {
         IRange[] result = new IRange[dimCount];
@@ -192,12 +193,12 @@ public abstract class AbstractPattern implements Pattern {
     public abstract boolean isSurelySinglePoint();
 
     /**
-     * This implementation checks {@link #isSurelySinglePoint()}, and if it is <tt>true</tt>,
+     * This implementation checks {@link #isSurelySinglePoint()}, and if it is <code>true</code>,
      * checks, whether the only element of {@link #points()} set is the origin.
      *
      * <p>This method caches its results: the following calls will work faster.
      *
-     * @return <tt>true</tt> if it is one-point pattern containing the origin of coordinates as the single point.
+     * @return <code>true</code> if it is one-point pattern containing the origin of coordinates as the single point.
      */
     public boolean isSurelyOriginPoint() {
         if (surelyOrigin == null) {
@@ -210,9 +211,9 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation calls {@link #points()} method and checks, whether all returned points are integer,
-     * i&#46;e&#46; {@link Point#isInteger()} method returns <tt>true</tt> for all elements the returned set.
-     * If all points, returned by {@link #points()} call, are integer, this method returns <tt>true</tt>,
-     * in other case it returns <tt>false</tt>.
+     * i&#46;e&#46; {@link Point#isInteger()} method returns <code>true</code> for all elements the returned set.
+     * If all points, returned by {@link #points()} call, are integer, this method returns <code>true</code>,
+     * in other case it returns <code>false</code>.
      *
      * <p>This method caches its results: the following calls will work faster.
      *
@@ -224,10 +225,10 @@ public abstract class AbstractPattern implements Pattern {
      *
      * <p>Note: according the {@link Pattern#isSurelyInteger() comments to this method in Pattern interface},
      * this method <i>must</i> be overridden if the number of points can be very large and a call of
-     * {@link #points()} method leads to a risk of {@link TooManyPointsInPatternError} / <tt>OutOfMemoryError</tt>.
+     * {@link #points()} method leads to a risk of {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>.
      * In particular, this method should be usually overridden in implementations of {@link RectangularPattern}.
      *
-     * @return <tt>true</tt> if this pattern assuredly contain only {@link Point#isInteger() integer} points.
+     * @return <code>true</code> if this pattern assuredly contain only {@link Point#isInteger() integer} points.
      */
     public boolean isSurelyInteger() {
         if (surelyInteger == null) {
@@ -252,9 +253,9 @@ public abstract class AbstractPattern implements Pattern {
      * @return the integer pattern, geometrically nearest to this one.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     public UniformGridPattern round() {
         return new BasicDirectPointSetUniformGridPattern(dimCount, roundedPoints());
@@ -276,12 +277,13 @@ public abstract class AbstractPattern implements Pattern {
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the minimal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     * <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     public Pattern minBound(int coordIndex) {
         return minBound(coordIndex, false);
@@ -297,12 +299,13 @@ public abstract class AbstractPattern implements Pattern {
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
      *                   2 for <i>z</i>a-xis, etc.).
      * @return the maximal boundary of this pattern for the given axis.
-     * @throws IndexOutOfBoundsException   if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException   if <code>coordIndex&lt;0</code> or
+     * <code>coordIndex&gt;={@link #dimCount()}</code>.
      * @throws TooManyPointsInPatternError if this pattern is not {@link DirectPointSetPattern} and
      *                                     not {@link RectangularPattern} and if, at the same time, the number
-     *                                     of points is greater than <tt>Integer.MAX_VALUE</tt> or,
+     *                                     of points is greater than <code>Integer.MAX_VALUE</code> or,
      *                                     in some rare situations, is near this limit
-     *                                     (<tt>OutOfMemoryError</tt> can be also thrown instead of this exception).
+     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
      */
     public Pattern maxBound(int coordIndex) {
         return maxBound(coordIndex, false);
@@ -350,9 +353,9 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * This implementation creates Java array <tt>double[]</tt> by the call
-     * "<nobr><tt>a = new double[{@link #dimCount}]</tt></nobr>", fills all its elements by
-     * <tt>multiplier</tt> argument and then calls {@link #scale(double...) scale(a)}.
+     * This implementation creates Java array <code>double[]</code> by the call
+     * "<nobr><code>a = new double[{@link #dimCount}]</code></nobr>", fills all its elements by
+     * <code>multiplier</code> argument and then calls {@link #scale(double...) scale(a)}.
      * There are no reasons to override this method usually.
      *
      * @param multiplier the scale along all coordinates.
@@ -376,7 +379,7 @@ public abstract class AbstractPattern implements Pattern {
      * consisting of sums of all point pairs.
      * This algorithm may be very slow for large patterns
      * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
-     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * and does not work at all if the number of resulting points is greater than <code>Integer.MAX_VALUE</code>.
      * Please override this method if there is better implementation.
      *
      * @param added another pattern.
@@ -384,8 +387,8 @@ public abstract class AbstractPattern implements Pattern {
      * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
-     *                                     <tt>added</tt> or result pattern is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
+     *                                     <code>added</code> or result pattern is greater than
+     *                                     <code>Integer.MAX_VALUE</code> or, maybe, is near this limit
      * @throws TooLargePatternCoordinatesException
      *                                     if the resulting set of points does not fulfil the restrictions,
      *                                     described in the comments to {@link Pattern} interface,
@@ -418,7 +421,7 @@ public abstract class AbstractPattern implements Pattern {
      * and always returns a {@link DirectPointSetPattern direct point-set pattern}.
      * This algorithm may be very slow for large patterns
      * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
-     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * and does not work at all if the number of resulting points is greater than <code>Integer.MAX_VALUE</code>.
      * Please override this method if there is better implementation.
      *
      * @param subtracted another pattern.
@@ -427,8 +430,8 @@ public abstract class AbstractPattern implements Pattern {
      * @throws NullPointerException        if the argument is {@code null}.
      * @throws IllegalArgumentException    if the numbers of space dimensions of both patterns are different.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points in this,
-     *                                     <tt>subtracted</tt> or result pattern is greater than
-     *                                     <tt>Integer.MAX_VALUE</tt> or, maybe, is near this limit
+     *                                     <code>subtracted</code> or result pattern is greater than
+     *                                     <code>Integer.MAX_VALUE</code> or, maybe, is near this limit
      * @throws TooLargePatternCoordinatesException
      *                                     if the resulting set of points does not fulfil the restrictions,
      *                                     described in the comments to {@link Pattern} interface,
@@ -475,13 +478,13 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * This implementation just returns <tt>Collections.&lt;Pattern&gt;singletonList(thisInstance)</tt>.
+     * This implementation just returns <code>Collections.&lt;Pattern&gt;singletonList(thisInstance)</code>.
      *
      * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation for
      * patterns, recognized as rectangular by {@link UniformGridPattern#isActuallyRectangular()} method.
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return the decomposition of this pattern to Minkowski sum; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
@@ -493,21 +496,21 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * This implementation just returns <tt>false</tt>.
+     * This implementation just returns <code>false</code>.
      *
-     * @return <tt>true</tt> if the Minkowski decomposition contains 2 or more elements;
-     *         always <tt>false</tt> in this implementation.
+     * @return <code>true</code> if the Minkowski decomposition contains 2 or more elements;
+     *         always <code>false</code> in this implementation.
      */
     public boolean hasMinkowskiDecomposition() {
         return false;
     }
 
     /**
-     * This implementation returns <tt>{@link #allUnionDecompositions(int)
-     * allUnionDecompositions(minimalPointCount)}.get(0)</tt>.
+     * This implementation returns <code>{@link #allUnionDecompositions(int)
+     * allUnionDecompositions(minimalPointCount)}.get(0)</code>.
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return a decomposition of this pattern into the union of patterns; always contains &ge;1 elements.
      * @throws IllegalArgumentException if the argument is negative.
      */
@@ -518,12 +521,12 @@ public abstract class AbstractPattern implements Pattern {
     /**
      * This implementation just returns the list containing 1 list, containing
      * this instance as the only element:
-     * <tt>Collections.singletonList(Collections.&lt;Pattern&gt;singletonList(thisInstance))</tt>.
+     * <code>Collections.singletonList(Collections.&lt;Pattern&gt;singletonList(thisInstance))</code>.
      *
      * <p>Note: {@link AbstractUniformGridPattern} class provides much better implementation.
      *
      * @param minimalPointCount this method usually does not decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return several good variants of decomposition of this pattern to the union of patterns;
      *         the result always contains &ge;1 elements,
      *         and all its elements also contain &ge;1 elements.
@@ -537,7 +540,7 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if all coordinates of the specified point lie
+     * Returns <code>true</code> if and only if all coordinates of the specified point lie
      * in range &minus;{@link #MAX_COORDINATE}&le;<i>x</i><sub><i>j</i></sub>&le;{@link #MAX_COORDINATE}.
      *
      * <p>Actually this method checks the 1st restriction for coordinates of any pattern:
@@ -559,12 +562,12 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if both boundaries of the specified range,
-     * <i>a</i>=<tt>range.{@link Range#min() min()}</tt> and <i>b</i>=<tt>range.{@link Range#max() max()}</tt>,
+     * Returns <code>true</code> if and only if both boundaries of the specified range,
+     * <i>a</i>=<code>range.{@link Range#min() min()}</code> and <i>b</i>=<code>range.{@link Range#max() max()}</code>,
      * lie in range
-     * <nobr>&minus;{@link #MAX_COORDINATE}&le;<i>a</i>&le;<i>b</i>&le;{@link #MAX_COORDINATE}</nobr>
-     * and, at the same time, the call <tt>{@link Patterns#isAllowedDifference(double, double)
-     * Patterns.isAllowedDifference}(<i>a</i>,<i>b</i>)</tt> returns <tt>true</tt>.
+     * &minus;{@link #MAX_COORDINATE}&le;<i>a</i>&le;<i>b</i>&le;{@link #MAX_COORDINATE}
+     * and, at the same time, the call <code>{@link Patterns#isAllowedDifference(double, double)
+     * Patterns.isAllowedDifference}(<i>a</i>,<i>b</i>)</code> returns <code>true</code>.
      *
      * <p>This method helps to check the 2nd restriction for coordinates of any pattern:
      * see comments to {@link Pattern} interface, section "Coordinate restrictions".
@@ -582,12 +585,13 @@ public abstract class AbstractPattern implements Pattern {
     }
 
     /**
-     * Throws <tt>IndexOutOfBoundsException</tt>
-     * if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * Throws <code>IndexOutOfBoundsException</code>
+     * if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;={@link #dimCount()}</code>.
      * Does nothing in other case.
      *
      * @param coordIndex checked index of the coordinate.
-     * @throws IndexOutOfBoundsException if <tt>coordIndex&lt;0</tt> or <tt>coordIndex&gt;={@link #dimCount()}</tt>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
+     * <code>coordIndex&gt;={@link #dimCount()}</code>.
      */
     protected final void checkCoordIndex(int coordIndex) {
         if (coordIndex < 0 || coordIndex >= dimCount) {

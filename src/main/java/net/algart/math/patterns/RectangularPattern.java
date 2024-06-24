@@ -91,7 +91,7 @@ import net.algart.math.Point;
  * <li>{@link #gridIndexArea()},</li>
  * <li>{@link #gridIndexMin()},</li>
  * <li>{@link #gridIndexMax()},</li>
- * <li>{@link #isActuallyRectangular()} (this method just returns <tt>true</tt> immediately),</li>
+ * <li>{@link #isActuallyRectangular()} (this method just returns <code>true</code> immediately),</li>
  * <li>{@link #lowerSurface(int)},</li>
  * <li>{@link #upperSurface(int)},</li>
  * <li>{@link #surface()},</li>
@@ -101,7 +101,7 @@ import net.algart.math.Point;
  * </ul>
  *
  * <p>Also in such patterns there is a guarantee, that all these methods work successfully,
- * i.e. without risk to throw {@link TooManyPointsInPatternError} or <tt>OutOfMemoryError</tt>.</p>
+ * i.e. without risk to throw {@link TooManyPointsInPatternError} or <code>OutOfMemoryError</code>.</p>
  *
  * <p>If a pattern implements this interface, it never implements {@link DirectPointSetPattern} interface.</p>
  *
