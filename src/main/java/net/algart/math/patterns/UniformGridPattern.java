@@ -332,10 +332,10 @@ public interface UniformGridPattern extends Pattern {
      * i&#46;e&#46; if the grid origin <b>o</b> is the origin of coordinates (0,0,...,0)
      * and all grid steps <i>d</i><sub><i>j</i></sub> are 1.0.
      * Equivalent to
-     * <tt>{@link #originOfGrid()}.{@link Point#isOrigin() isOrigin()}
+     * <code>{@link #originOfGrid()}.{@link Point#isOrigin() isOrigin()}
      * &amp;&amp; {@link #gridIndexRange(int) gridIndexRange}(0)==1.0
      * &amp;&amp; {@link #gridIndexRange(int) gridIndexRange}(1)==1.0
-     * &amp;&amp;&nbsp;...</tt>
+     * &amp;&amp;&nbsp;...</code>
      * Ordinary integer patterns are a simplest form of <i>integer</i> pattern:
      * see comments to {@link Pattern} interface, section "Uniform-grid patterns".
      *
@@ -474,16 +474,16 @@ public interface UniformGridPattern extends Pattern {
      *
      * <blockquote>
      * <i>y</i><sub>0</sub><sup>(<i>k</i>)</sup> =
-     * <i>o</i><sub>0</sub> + (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>+<tt>shift.{@link IPoint#coord(int)
-     * coord}(0)</tt>)*<i>d</i><sub>0</sub><br>
+     * <i>o</i><sub>0</sub> + (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>+<code>shift.{@link IPoint#coord(int)
+     * coord}(0)</code>)*<i>d</i><sub>0</sub><br>
      * <i>y</i><sub>1</sub><sup>(<i>k</i>)</sup> =
-     * <i>o</i><sub>1</sub> + (<i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>+<tt>shift.{@link IPoint#coord(int)
-     * coord}(1)</tt>)*<i>d</i><sub>1</sub><br>
+     * <i>o</i><sub>1</sub> + (<i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>+<code>shift.{@link IPoint#coord(int)
+     * coord}(1)</code>)*<i>d</i><sub>1</sub><br>
      * . . .<br>
      * <i>y</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup> =
      * <i>o</i><sub><i>n</i>&minus;1</sub>
-     * + (<i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>+<tt>shift.{@link IPoint#coord(int)
-     * coord}(<i>n</i>&minus;1)</tt>)*<i>d</i><sub><i>n</i>&minus;1</sub>
+     * + (<i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>+<code>shift.{@link IPoint#coord(int)
+     * coord}(<i>n</i>&minus;1)</code>)*<i>d</i><sub><i>n</i>&minus;1</sub>
      * </blockquote>
      *
      * <p>The returned pattern always implements {@link DirectPointSetPattern}

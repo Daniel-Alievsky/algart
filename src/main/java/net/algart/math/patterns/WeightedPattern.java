@@ -37,8 +37,8 @@ public interface WeightedPattern extends Pattern {
      * @param point some {@link IPoint integer point}.
      * @return the weight of this point.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link IPoint#coordCount()
-     *                                  coordCount()}!={@link #dimCount()}.
+     * @throws IllegalArgumentException if <code>point.{@link IPoint#coordCount()
+     *                                  coordCount()}!={@link #dimCount()}</code>.
      */
     double weight(IPoint point);
 
@@ -65,8 +65,8 @@ public interface WeightedPattern extends Pattern {
      * @param shift the shift.
      * @return the shifted pattern.
      * @throws NullPointerException     if the argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>point.{@link IPoint#coordCount()
-     *                                  coordCount()}!={@link #dimCount()}.
+     * @throws IllegalArgumentException if <code>point.{@link IPoint#coordCount()
+     *                                  coordCount()}!={@link #dimCount()}</code>.
      */
     WeightedPattern shift(IPoint shift);
 

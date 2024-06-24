@@ -30,12 +30,12 @@ package net.algart.math.functions;
  * log<sub><i>b</i></sub>(<i>x</i><sub>0</sub>)
  * (<i>b</i> is the base of the logarithm).
  * More precisely, the result of this function is
- * <tt>Math.log(x[0])*(1.0/Math.log(b))</tt> for the instance
+ * <code>Math.log(x[0])*(1.0/Math.log(b))</code> for the instance
  * returned by {@link #getInstance(double) getInstance(b)} method
- * or <tt>StrictMath.log(x[0])*(1.0/Math.log(b))</tt> for the instance
+ * or <code>StrictMath.log(x[0])*(1.0/Math.log(b))</code> for the instance
  * returned by {@link #getStrictInstance(double) getStrictInstance(b)} method.
  * The {@link #get} method of the instance of this class requires at least 1 argument
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -50,14 +50,14 @@ public abstract class LogFunc implements Func {
     }
 
     /**
-     * Returns an instance of this class for the given logarithm base <tt>b</tt>
-     * using <tt>Math.log</tt> method.</p>
+     * Returns an instance of this class for the given logarithm base <code>b</code>
+     * using <code>Math.log</code> method.</p>
      *
-     * <p>This method returns special optimized versions of this class for <tt>base=Math.E</tt>
-     * and <tt>base=10.0</tt>.
+     * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
+     * and <code>base=10.0</code>.
      *
      * @param b the base of the logarithm.
-     * @return  an instance of this class using <tt>Math.log</tt> method.
+     * @return  an instance of this class using <code>Math.log</code> method.
      */
     public static LogFunc getInstance(double b) {
         if (b == Math.E) {
@@ -131,14 +131,14 @@ public abstract class LogFunc implements Func {
     }
 
     /**
-      * Returns an instance of this class for the given logarithm base <tt>b</tt>
-      * using <tt>StrictMath.log</tt> method.</p>
+      * Returns an instance of this class for the given logarithm base <code>b</code>
+      * using <code>StrictMath.log</code> method.</p>
       *
-      * <p>This method returns special optimized versions of this class for <tt>base=Math.E</tt>
-      * and <tt>base=10.0</tt>.
+      * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
+      * and <code>base=10.0</code>.
       *
       * @param b the base of the logarithm.
-      * @return  an instance of this class using <tt>StrictMath.log</tt> method.
+      * @return  an instance of this class using <code>StrictMath.log</code> method.
       */
      public static LogFunc getStrictInstance(double b) {
          if (b == Math.E) {

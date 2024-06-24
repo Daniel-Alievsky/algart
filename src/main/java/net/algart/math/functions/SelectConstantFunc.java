@@ -27,11 +27,11 @@ package net.algart.math.functions;
 /**
  * <p>Selecting constant function:
  * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>)
- * = <tt>values[(int)</tt><i>x</i><sub>0</sub><tt>]</tt>,
- * where <tt>values</tt> is the given array of constants.
+ * = <code>values[(int)</code><i>x</i><sub>0</sub><code>]</code>,
+ * where <code>values</code> is the given array of constants.
  * The {@link #get} method of the instance of this class requires at least <i>n</i> arguments
- * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is less
- * or if the argument, cast to <tt>int</tt> type, is negative or <tt>&gt;=values.length</tt>.</p>
+ * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is less
+ * or if the argument, cast to <code>int</code> type, is negative or <code>&gt;=values.length</code>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -48,7 +48,7 @@ public final class SelectConstantFunc implements Func {
     /**
      * Returns an instance of this class, describing the selecting function with the specified array of constants.
      *
-     * <p>The passed reference <tt>values</tt> is not maintained by the created instance:
+     * <p>The passed reference <code>values</code> is not maintained by the created instance:
      * if necessary, the Java array is cloned.
      *
      * @param values the values, one of which is returned by {@link #get} method..

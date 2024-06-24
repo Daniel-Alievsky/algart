@@ -130,8 +130,8 @@ public class Patterns {
     }
 
     /**
-     * Equivalent to <tt>{@link #newIntegerPattern
-     * newIntegerPattern}(new HashSet<IPoint>(Arrays.asList(points)))</tt>.
+     * Equivalent to <code>{@link #newIntegerPattern
+     * newIntegerPattern}(new HashSet<IPoint>(Arrays.asList(points)))</code>.
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
@@ -153,10 +153,10 @@ public class Patterns {
      * with the given radius <i>r</i> and center.
      *
      * <p>More precisely, let
-     * <i>C</i>=(<i>c</i><sub>0</sub>,<i>c</i><sub>1</sub>,...,<i>c</i><sub><i>n</i>-1</sub>)</tt>
+     * <i>C</i>=(<i>c</i><sub>0</sub>,<i>c</i><sub>1</sub>,...,<i>c</i><sub><i>n</i>-1</sub>)
      * is the passed center point.
      * The result of this method consists of all points
-     * <i>A</i>=(<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>-1</sub>)</tt>
+     * <i>A</i>=(<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>-1</sub>)
      * that |<i>OA</i>|<sup>2</sup> =
      * (<i>x</i><sub>0</sub>-<i>c</i><sub>0</sub>)</sub><sup>2</sup>
      * + (<i>x</i><sub>1</sub>-<i>c</i><sub>1</sub>)<sup>2</sup>
@@ -379,9 +379,9 @@ public class Patterns {
      * Creates new {@link UniformGridPattern#isActuallyRectangular() rectangular} pattern
      * (<i>n</i>-dimensional rectangular parallelepiped), consisting of all such points
      * (<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>-1</sub>) that
-     * <tt>ranges[<i>i</i>].{@link IRange#min()
-     * min()}</tt>&lt;=<i>x</i><sub><i>i</i></sub>&lt;=<tt>ranges[<i>i</i>].{@link IRange#max()
-     * max()}</tt>, <i>i</i>=0,1,...,<i>n</i>-1, <i>n</i>=<code>ranges.length</code>.
+     * <code>ranges[<i>i</i>].{@link IRange#min()
+     * min()}</code>&lt;=<i>x</i><sub><i>i</i></sub>&lt;=<code>ranges[<i>i</i>].{@link IRange#max()
+     * max()}</code>, <i>i</i>=0,1,...,<i>n</i>-1, <i>n</i>=<code>ranges.length</code>.
      * The number of space dimensions of the returned pattern will be equal to the length of <code>ranges</code> array.
      *
      * <p>In the returned pattern,
@@ -417,8 +417,8 @@ public class Patterns {
 
     /**
      * Equivalent to {@link #newRectangularIntegerPattern newRectangularIntegerPattern(ranges)},
-     * where <code>ranges[k]</code> is <tt>{@link IRange#valueOf(long, long)
-     * IRange.valueOf}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</tt>.
+     * where <code>ranges[k]</code> is <code>{@link IRange#valueOf(long, long)
+     * IRange.valueOf}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</code>.
      * The number of dimensions of the created pattern is equal to the number of coordinates
      * of <code>min</code> and <code>max</code> points.
      *
@@ -432,8 +432,8 @@ public class Patterns {
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the numbers of coordinates of <code>min</code> and <code>max</code>
      *                                  points are different,
-     *                                  or if <tt>min.{@link IPoint#coord(int) coord}(k) &gt;
-     *                                  max.{@link IPoint#coord(int) coord}(k)</tt> for some <code>k</code>,
+     *                                  or if <code>min.{@link IPoint#coord(int) coord}(k) &gt;
+     *                                  max.{@link IPoint#coord(int) coord}(k)</code> for some <code>k</code>,
      *                                  or if the difference between these coordinates is
      *                                  <code>&gt;=Long.MAX_VALUE</code>.
      */

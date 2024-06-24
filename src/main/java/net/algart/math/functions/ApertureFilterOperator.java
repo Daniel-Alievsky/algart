@@ -37,7 +37,7 @@ import java.util.Objects;
  * <i>f</i> is the source mathematical function
  * and <i>g</i> is the result of applying the operator to <i>f</i>.</p>
  *
- * <p>The number of space dimensions <i>n</i> is equal to the length of the <tt>apertureDim</tt> array,
+ * <p>The number of space dimensions <i>n</i> is equal to the length of the <code>apertureDim</code> array,
  * passed to all generation methods. However, the new function, returned by this operator
  * (by its {@link #apply(Func)} method, can be called with any number of arguments <i>N</i>.
  * If the number of arguments <i>N</i>&lt;<i>n</i>, than only first <i>N</i> coordinates
@@ -66,9 +66,9 @@ public final class ApertureFilterOperator implements Operator {
     final boolean isNonweightedSum;
     final double a, b;
 
-    private ApertureFilterOperator(Func apertureFunc,
-        long[] apertureDim, double[] apertureFrom, double[] apertureSteps)
-    {
+    private ApertureFilterOperator(
+            Func apertureFunc,
+            long[] apertureDim, double[] apertureFrom, double[] apertureSteps) {
         Objects.requireNonNull(apertureDim, "Null apertureDim argument");
         if (apertureDim.length == 0) {
             throw new IllegalArgumentException("Empty apertureDim array");
@@ -82,14 +82,14 @@ public final class ApertureFilterOperator implements Operator {
             // assert product <= Integer.MAX_VALUE;
             if (d > Integer.MAX_VALUE || (product *= d) > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large number of points in the aperture: "
-                    + "apertureDim[0] * apertureDim[1] * ... > Integer.MAX_VALUE");
+                        + "apertureDim[0] * apertureDim[1] * ... > Integer.MAX_VALUE");
             }
         }
-        this.totalCount = (int)product;
+        this.totalCount = (int) product;
         if (apertureFrom != null) {
             if (apertureFrom.length != apertureDim.length) {
                 throw new IllegalArgumentException("apertureFrom.length (" + apertureFrom.length
-                    + ") does not match apertureDim.length (" + apertureDim.length + ")");
+                        + ") does not match apertureDim.length (" + apertureDim.length + ")");
             }
         } else {
             apertureFrom = new double[apertureDim.length]; // zero-filled
@@ -97,7 +97,7 @@ public final class ApertureFilterOperator implements Operator {
         if (apertureSteps != null) {
             if (apertureSteps.length != apertureDim.length) {
                 throw new IllegalArgumentException("apertureSteps.length (" + apertureSteps.length
-                    + ") does not match apertureDim.length (" + apertureDim.length + ")");
+                        + ") does not match apertureDim.length (" + apertureDim.length + ")");
             }
         } else {
             apertureSteps = new double[apertureDim.length];
@@ -110,7 +110,7 @@ public final class ApertureFilterOperator implements Operator {
             this.b = 0.0;
             this.isNonweightedSum = true;
         } else if (apertureFunc instanceof LinearFunc) {
-            LinearFunc lf = (LinearFunc)apertureFunc;
+            LinearFunc lf = (LinearFunc) apertureFunc;
             this.b = lf.b();
             if (lf.n() > this.totalCount) {
                 throw new IllegalArgumentException("Insufficient number of aperture points for the aperture function");
@@ -134,11 +134,11 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns an instance of this class, describing the aperture filter with the specified aperture and
-     * aperture function <tt>apertureFunc</tt>.
+     * aperture function <code>apertureFunc</code>.
      *
      * <p>The aperture {<b>a</b><sub><i>i</i></sub>}, <i>i</i>=0,1,...,<i>m</i>-1 is defined by
-     * <tt>apertureDim</tt>, <tt>apertureFrom</tt>, <tt>apertureSteps</tt> arguments. Namely,
-     * the number of dimensions of the space for the new operator will be equal to <tt>apertureDim.length</tt>,
+     * <code>apertureDim</code>, <code>apertureFrom</code>, <code>apertureSteps</code> arguments. Namely,
+     * the number of dimensions of the space for the new operator will be equal to <code>apertureDim.length</code>,
      * and the aperture will consist of the following points
      * <nobr><b>a</b><sub><i>i</i></sub> = (<i>a</i><sub><i>i</i>0</sub>, <i>a</i><sub><i>i</i>1</sub>,
      * ..., <i>a</i><sub><i>i</i>,<i>n</i>-1</sub>):
@@ -155,13 +155,14 @@ public final class ApertureFilterOperator implements Operator {
      * </blockquote>
      *
      * <p>In other words, the aperture is a rectangular <i>n</i>-dimensional grid of point,
-     * the coordinates of which are started from <tt>apertureFrom</tt>
-     * and increased by the steps <tt>apertureSteps</tt>.
+     * the coordinates of which are started from <code>apertureFrom</code>
+     * and increased by the steps <code>apertureSteps</code>.
      * The number of points in the aperture is
      *
-     * <blockquote><i>m</i> = <tt>apertureDim[0] * apertureDim[1] * ... * apertureDim[<i>n</i>-1]</tt></blockquote>
+     * <blockquote><i>m</i> =
+     * <code>apertureDim[0] * apertureDim[1] * ... * apertureDim[<i>n</i>-1]</code></blockquote>
      *
-     * <p>This number must not be greater than <tt>Integer.MAX_VALUE</tt>.
+     * <p>This number must not be greater than <code>Integer.MAX_VALUE</code>.
      *
      * <p>The passed Java arrays are cloned by this method: no references to them
      * are maintained by the created instance.
@@ -170,25 +171,27 @@ public final class ApertureFilterOperator implements Operator {
      * @param apertureDim   the dimensions of the aperture.
      * @param apertureFrom  the start coordinates of the points in the aperture.
      * @param apertureSteps the steps of changing coordinates of the points in the aperture.
-     * @return              the aperture filtering operator with the specified aperture and aperture function.
+     * @return the aperture filtering operator with the specified aperture and aperture function.
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
-     * @throws IllegalArgumentException if the lengths of <tt>apertureDim</tt>, <tt>apertureFrom</tt> and
-     *                                  <tt>apertureSteps</tt> arrays are not equal,
+     * @throws IllegalArgumentException if the lengths of <code>apertureDim</code>, <code>apertureFrom</code> and
+     *                                  <code>apertureSteps</code> arrays are not equal,
      *                                  or if they are zero ("0-dimensional" space),
-     *                                  or if some elements of <tt>apertureDim</tt> array are zero or negative,
+     *                                  or if some elements of <code>apertureDim</code> array are zero or negative,
      *                                  or if {@link #tooLargeAperture(long[]) tooLargeAperture(apertureDim)}
-     *                                  returns <tt>true</tt>,
+     *                                  returns <code>true</code>,
      *                                  or, probably, if it's possible to detect that the number of points
      *                                  in the aperture (<i>m</i>) is insufficient
-     *                                  for passing to the <tt>apertureFunc</tt> function.
+     *                                  for passing to the <code>apertureFunc</code> function.
      * @see #getInstance(Func, long[])
      * @see #getAveragingInstance(long[], double[], double[])
      * @see #getAveragingInstance(long[])
      * @see #tooLargeAperture(long[])
      */
-    public static ApertureFilterOperator getInstance(Func apertureFunc, long[] apertureDim,
-        double[] apertureFrom, double[] apertureSteps)
-    {
+    public static ApertureFilterOperator getInstance(
+            Func apertureFunc,
+            long[] apertureDim,
+            double[] apertureFrom,
+            double[] apertureSteps) {
         Objects.requireNonNull(apertureFrom, "Null apertureFrom argument");
         Objects.requireNonNull(apertureSteps, "Null apertureSteps argument");
         Objects.requireNonNull(apertureFunc, "Null apertureFunc argument");
@@ -198,10 +201,10 @@ public final class ApertureFilterOperator implements Operator {
     /**
      * Equivalent to {@link #getInstance(Func, long[], double[], double[])
      * getInstance(apertureFunc, apertureDim, apertureFrom, apertureSteps)}</tt>,
-     * where <tt>averagingFrom</tt> and <tt>apertureSteps</tt> are chosen automatically
-     * to get an aperture <tt>1.0x1.0x...</tt> starting from the origin of coordinates
+     * where <code>averagingFrom</code> and <code>apertureSteps</code> are chosen automatically
+     * to get an aperture <code>1.0x1.0x...</code> starting from the origin of coordinates
      * (0&lt;=<i>a</i><sub><i>ij</i></sub>&lt;1).
-     * More precisely, the following <tt>averagingFrom</tt> and <tt>apertureSteps</tt> are chosen:
+     * More precisely, the following <code>averagingFrom</code> and <code>apertureSteps</code> are chosen:
      *
      * <pre>
      * apertureFrom[k] = 0.0;
@@ -210,15 +213,15 @@ public final class ApertureFilterOperator implements Operator {
      *
      * @param apertureFunc the aperture function.
      * @param apertureDim  the dimensions of the aperture.
-     * @return             the aperture filtering operator with the specified aperture and aperture function.
+     * @return the aperture filtering operator with the specified aperture and aperture function.
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
-     * @throws IllegalArgumentException if the lengths of <tt>apertureDim</tt> is zero ("0-dimensional" space),
-     *                                  or if some elements of <tt>apertureDim</tt> array are zero or negative,
+     * @throws IllegalArgumentException if the lengths of <code>apertureDim</code> is zero ("0-dimensional" space),
+     *                                  or if some elements of <code>apertureDim</code> array are zero or negative,
      *                                  or if {@link #tooLargeAperture(long[]) tooLargeAperture(apertureDim)}
-     *                                  returns <tt>true</tt>,
+     *                                  returns <code>true</code>,
      *                                  or, probably, if it's possible to detect that the number of points
      *                                  in the aperture (<i>m</i>) is insufficient
-     *                                  for passing to the <tt>apertureFunc</tt> function.
+     *                                  for passing to the <code>apertureFunc</code> function.
      */
     public static ApertureFilterOperator getInstance(Func apertureFunc, long... apertureDim) {
         Objects.requireNonNull(apertureFunc, "Null apertureFunc argument");
@@ -228,21 +231,22 @@ public final class ApertureFilterOperator implements Operator {
     /**
      * Equivalent to {@link #getInstance(Func, long[], double[], double[])
      * getInstance(averagingFunc, apertureDim, apertureFrom, apertureSteps)}</tt>,
-     * where <tt>averagingFunc</tt> is the averaging linear function
+     * where <code>averagingFunc</code> is the averaging linear function
      * {@link LinearFunc#getAveragingInstance(int) LinearFunc.getAveragingInstance(<i>m</i>)},
-     * <tt><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</tt>.
+     * <code><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</code>.
      *
      * @param apertureDim   the dimensions of the aperture.
      * @param apertureFrom  the start coordinates of the points in the aperture.
      * @param apertureSteps the steps of changing coordinates of the points in the aperture.
-     * @return              the aperture averaging (smoothing) operator with the specified aperture.
+     * @return the aperture averaging (smoothing) operator with the specified aperture.
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #getInstance(Func, long[], double[], double[])}.
      */
-    public static ApertureFilterOperator getAveragingInstance(long[] apertureDim,
-        double[] apertureFrom, double[] apertureSteps)
-    {
+    public static ApertureFilterOperator getAveragingInstance(
+            long[] apertureDim,
+            double[] apertureFrom,
+            double[] apertureSteps) {
         Objects.requireNonNull(apertureFrom, "Null apertureFrom argument");
         Objects.requireNonNull(apertureSteps, "Null apertureSteps argument");
         return new ApertureFilterOperator(null, apertureDim, apertureFrom, apertureSteps);
@@ -251,32 +255,32 @@ public final class ApertureFilterOperator implements Operator {
     /**
      * Equivalent to {@link #getInstance(Func, long[])
      * getInstance(averagingFunc, apertureDim)}</tt>,
-     * where <tt>averagingFunc</tt> is the averaging linear function
+     * where <code>averagingFunc</code> is the averaging linear function
      * {@link LinearFunc#getAveragingInstance(int) LinearFunc.getAveragingInstance(<i>m</i>)},
-     * <tt><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</tt>.
+     * <code><i>m</i>&nbsp;=&nbsp;apertureDim[0]*apertureDim[1]*...</code>.
      *
      * @param apertureDim the dimensions of the aperture.
-     * @return            the aperture averaging (smoothing) operator with the specified aperture.
+     * @return the aperture averaging (smoothing) operator with the specified aperture.
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException in the same situations as
      *                                  {@link #getInstance(Func, long[])}.
      */
-    public static ApertureFilterOperator getAveragingInstance(long ...apertureDim) {
+    public static ApertureFilterOperator getAveragingInstance(long... apertureDim) {
         return new ApertureFilterOperator(null, apertureDim, null, null);
     }
 
     /**
-     * Returns <tt>true</tt> if the specified sizes of the aperture are too large for processing by this class.
-     * Namely, it returns <tt>true</tt> if and only if the product of all dimensions
-     * <tt>apertureDim[0]*apertureDim[1]*...</tt> is greater than <tt>Integer.MAX_VALUE</tt>.
+     * Returns <code>true</code> if the specified sizes of the aperture are too large for processing by this class.
+     * Namely, it returns <code>true</code> if and only if the product of all dimensions
+     * <code>apertureDim[0]*apertureDim[1]*...</code> is greater than <code>Integer.MAX_VALUE</code>.
      *
      * <p>If you are not sure that your aperture is small enough, please call this method before
      * instantiating this class.
      *
      * @param apertureDim the dimensions of the aperture.
-     * @return            <tt>true</tt> if the specified dimensions of the aperture are too large
-     *                    (<tt>&gt;Integer.MAX_VALUE</tt> points).
-     * @throws IllegalArgumentException if some elements of <tt>apertureDim</tt> array are zero or negative.
+     * @return <code>true</code> if the specified dimensions of the aperture are too large
+     * (<code>&gt;Integer.MAX_VALUE</code> points).
+     * @throws IllegalArgumentException if some elements of <code>apertureDim</code> array are zero or negative.
      */
     public static boolean tooLargeAperture(long... apertureDim) {
         long totalCount = 1;
@@ -299,7 +303,7 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns the number of dimensions of the aperture of this filter.
-     * The result is equal to the length of <tt>apertureDim</tt> array, passed to all generation methods.
+     * The result is equal to the length of <code>apertureDim</code> array, passed to all generation methods.
      *
      * @return the number of dimensions of the aperture of this filter.
      */
@@ -309,7 +313,7 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns the dimensions of the aperture of this filter.
-     * The result is equal to <tt>apertureDim</tt> array, passed to all generation methods.
+     * The result is equal to <code>apertureDim</code> array, passed to all generation methods.
      *
      * <p>The returned array is a clone of the internal dimension array stored in this object.
      * The returned array is never empty (its length cannot be zero).
@@ -322,7 +326,7 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns the start coordinates of the points in the aperture of this filter.
-     * The result is equal to <tt>apertureFrom</tt> array, passed to
+     * The result is equal to <code>apertureFrom</code> array, passed to
      * {@link #getInstance(Func, long[], double[], double[])} or
      * {@link #getAveragingInstance(long[], double[], double[])} generation methods.
      *
@@ -337,7 +341,7 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns the steps of changing coordinates of the points in the aperture of this filter.
-     * The result is equal to <tt>apertureSteps</tt> array, passed to
+     * The result is equal to <code>apertureSteps</code> array, passed to
      * {@link #getInstance(Func, long[], double[], double[])} or
      * {@link #getAveragingInstance(long[], double[], double[])} generation methods.
      *
@@ -351,20 +355,20 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Equivalent to <tt>{@link #apertureDim()}[coordIndex]</tt>.
+     * Equivalent to <code>{@link #apertureDim()}[coordIndex]</code>.
      *
      * @param coordIndex the index of dimension.
-     * @return           the dimension of the aperture of this filter.
+     * @return the dimension of the aperture of this filter.
      */
     public double apertureDim(int coordIndex) {
         return apertureDim[coordIndex];
     }
 
     /**
-     * Equivalent to <tt>{@link #apertureFrom()}[coordIndex]</tt>.
+     * Equivalent to <code>{@link #apertureFrom()}[coordIndex]</code>.
      *
      * @param coordIndex the index of coordinate.
-     * @return           the start coordinate of the points in the aperture of this filter.
+     * @return the start coordinate of the points in the aperture of this filter.
      */
     public double apertureFrom(int coordIndex) {
         return apertureFrom[coordIndex];
@@ -375,17 +379,17 @@ public final class ApertureFilterOperator implements Operator {
      * * {@link #apertureSteps()}[coordIndex]</tt>.
      *
      * @param coordIndex the index of coordinate.
-     * @return           the last coordinate of the points in the aperture of this filter.
+     * @return the last coordinate of the points in the aperture of this filter.
      */
     public double apertureTo(int coordIndex) {
         return apertureFrom[coordIndex] + (apertureDim[coordIndex] - 1) * apertureSteps[coordIndex];
     }
 
     /**
-     * Equivalent to <tt>{@link #apertureSteps()}[coordIndex]</tt>.
+     * Equivalent to <code>{@link #apertureSteps()}[coordIndex]</code>.
      *
      * @param coordIndex the index of coordinate.
-     * @return           the steps of changing this coordinate of the points in the aperture of this filter.
+     * @return the steps of changing this coordinate of the points in the aperture of this filter.
      */
     public double apertureStep(int coordIndex) {
         return apertureSteps[coordIndex];
@@ -393,8 +397,8 @@ public final class ApertureFilterOperator implements Operator {
 
     /**
      * Returns the maximal aperture size for all dimensions: the maximal value of
-     * <tt>{@link #apertureTo(int) apertureTo}(k)-{@link #apertureFrom(int) apertureFrom}(k)</tt>
-     * for all <tt>k=0,1,...,{@link #n() n()}-1</tt>
+     * <code>{@link #apertureTo(int) apertureTo}(k)-{@link #apertureFrom(int) apertureFrom}(k)</code>
+     * for all <code>k=0,1,...,{@link #n() n()}-1</code>
      *
      * @return the maximal aperture size for all dimensions.
      */
@@ -420,15 +424,15 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this filter performs averaging, i&#46;e&#46;
+     * Returns <code>true</code> if and only if this filter performs averaging, i&#46;e&#46;
      * if the {@link #apertureFunc() aperture function} is a {@link LinearFunc linear function},
      * where the <i>b</i> coefficient is zero and all <i>a<sub>i</sub></i> coefficients
-     * are equal to 1/<i>m</i>, <i>m</i>=<tt>apertureDim[0]*apertureDim[1]*...</tt>.
-     * In particular, this method returns <tt>true</tt> if this filter was created by
+     * are equal to 1/<i>m</i>, <i>m</i>=<code>apertureDim[0]*apertureDim[1]*...</code>.
+     * In particular, this method returns <code>true</code> if this filter was created by
      * {@link #getAveragingInstance(long[], double[], double[])} or
      * {@link #getAveragingInstance(long[])} method.
      *
-     * @return <tt>true</tt> if and only if this filter performs averaging (smoothing).
+     * @return <code>true</code> if and only if this filter performs averaging (smoothing).
      */
     public boolean isAveraging() {
         return isNonweightedSum && this.a == 1.0 / this.totalCount && this.b == 0.0;
@@ -441,6 +445,6 @@ public final class ApertureFilterOperator implements Operator {
      */
     public String toString() {
         return "aperture filter " + apertureDim.length + "-dimensional operator"
-            + (isAveraging() ? " (averaging)" : " (based on " + apertureFunc + ")");
+                + (isAveraging() ? " (averaging)" : " (based on " + apertureFunc + ")");
     }
 }

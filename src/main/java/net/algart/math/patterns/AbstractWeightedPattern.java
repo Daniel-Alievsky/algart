@@ -195,21 +195,21 @@ public abstract class AbstractWeightedPattern implements WeightedPattern {
     public abstract Range weightRange();
 
     /**
-     * This implementation returns <tt>{@link #weightRange()}.{@link Range#size() size()}==0.0</tt>.
+     * This implementation returns <code>{@link #weightRange()}.{@link Range#size() size()}==0.0</code>.
      * There are no reasons to override this method usually.
      *
-     * @return <tt>true</tt> if the weights of all points are the same.
+     * @return <code>true</code> if the weights of all points are the same.
      */
     public boolean isConstant() {
         return weightRange().size() == 0.0;
     }
 
     /**
-     * This implementation returns <tt>Collections.singletonList(this)</tt>.
+     * This implementation returns <code>Collections.singletonList(this)</code>.
      * Please override this method if there is better implementation.
      *
      * @param minimalPointCount this method does not try to decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      * @return the decomposition of this pattern to the "product" (convolution) of smaller patterns.
      * @throws IllegalArgumentException if the argument is negative.
      */

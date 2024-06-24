@@ -28,7 +28,8 @@ package net.algart.math.functions;
  * <p>A skeletal implementation of the {@link Func} interface to minimize
  * the effort required to implement this interface.</p>
  *
- * <p>Warning: in most cases, we <b>strongly recommend to override the overloaded versions of <tt>get</tt> method</b>
+ * <p>Warning: in most cases, we <b>strongly recommend to override the overloaded versions
+ * of <code>get</code> method</b>
  * ({@link #get()}, {@link #get(double)}, {@link #get(double, double)}, {@link #get(double, double, double)}),
  * if they are applicable for your function. The default implementations, provided by this class,
  * work relatively slowly, because they allocate a little Java array for passing to the basic
@@ -44,8 +45,8 @@ public abstract class AbstractFunc implements Func {
     public abstract double get(double ...x);
 
     /**
-     * This implementation calls <tt>{@link #get(double[]) get}(EMPTY)</tt>,
-     * where <tt>EMPTY</tt> is a constant array <tt>double[0]</tt>.
+     * This implementation calls <code>{@link #get(double[]) get}(EMPTY)</code>,
+     * where <code>EMPTY</code> is a constant array <code>double[0]</code>.
      *
      * @return   the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 1 argument.
@@ -55,7 +56,7 @@ public abstract class AbstractFunc implements Func {
     }
 
     /**
-     * This implementation calls <tt>{@link #get(double[]) get}(new double[] {x0})</tt>.
+     * This implementation calls <code>{@link #get(double[]) get}(new double[] {x0})</code>.
      * May be overridden to provide better performance.
      *
      * @param x0 the function argument.
@@ -67,7 +68,7 @@ public abstract class AbstractFunc implements Func {
     }
 
     /**
-     * This implementation calls <tt>{@link #get(double[]) get}(new double[] {x0, x1})</tt>.
+     * This implementation calls <code>{@link #get(double[]) get}(new double[] {x0, x1})</code>.
      * May be overridden to provide better performance.
      *
      * @param x0 the first function argument.
@@ -80,7 +81,7 @@ public abstract class AbstractFunc implements Func {
     }
 
     /**
-     * This implementation calls <tt>{@link #get(double[]) get}(new double[] {x0, x1, x2})</tt>.
+     * This implementation calls <code>{@link #get(double[]) get}(new double[] {x0, x1, x2})</code>.
      * May be overridden to provide better performance.
      *
      * @param x0 the first function argument.
@@ -94,7 +95,7 @@ public abstract class AbstractFunc implements Func {
     }
 
     /**
-     * This implementation calls <tt>{@link #get(double[]) get}(new double[] {x0, x1, x2, x3})</tt>.
+     * This implementation calls <code>{@link #get(double[]) get}(new double[] {x0, x1, x2, x3})</code>.
      * May be overridden to provide better performance.
      *
      * @param x0 the first function argument.

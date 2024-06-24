@@ -35,7 +35,7 @@ import java.util.List;
  * or <i>f</i>(<b>x</b>), where <b>x</b> is a point of the <i>n</i>-dimensional space.</p>
  *
  * <p>Implementations of this interface are usually <b>immutable</b> and
- * always <b>thread-safe</b>: <tt>get</tt> methods of this interface may be freely used
+ * always <b>thread-safe</b>: <code>get</code> methods of this interface may be freely used
  * while simultaneous accessing to the same instance from several threads.
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
@@ -48,7 +48,7 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
      * <i>x</i><sub>0</sub>.
      * The {@link #get} method of this object requires at least 1 argument
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -66,10 +66,10 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
      * max(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>).
      * The {@link #get} method of this object may process any number of arguments.
-     * If the number of arguments is 0, it returns <tt>Double.NEGATIVE_INFINITY</tt>.
+     * If the number of arguments is 0, it returns <code>Double.NEGATIVE_INFINITY</code>.
      *
-     * <p>Unlike standard <tt>Math.max</tt> method, this function supposes that
-     * <tt>max(x,y) = x&gt;y ? x : y</tt>
+     * <p>Unlike standard <code>Math.max</code> method, this function supposes that
+     * <code>max(x,y) = x&gt;y ? x : y</code>
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -80,10 +80,10 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
      * min(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>).
      * The {@link #get} method of this object may process any number of arguments.
-     * If the number of arguments is 0, it returns <tt>Double.POSITIVE_INFINITY</tt>.
+     * If the number of arguments is 0, it returns <code>Double.POSITIVE_INFINITY</code>.
      *
-     * <p>Unlike standard <tt>Math.min</tt> method, this function supposes that
-     * <tt>min(x,y) = x&lt;y ? x : y</tt>
+     * <p>Unlike standard <code>Math.min</code> method, this function supposes that
+     * <code>min(x,y) = x&lt;y ? x : y</code>
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -94,9 +94,9 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>) =
      * |<i>x</i><sub>0</sub>|.
      * More precisely, the result of this function is
-     * <tt>StrictMath.abs(x[0])</tt>.
+     * <code>StrictMath.abs(x[0])</code>.
      * The {@link #get} method of this object requires at least 1 argument
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -107,7 +107,7 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) =
      * |<i>x</i><sub>0</sub>-<i>x</i><sub>1</sub>|.
      * The {@link #get} method of this object requires at least 2 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0 or 1.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -118,7 +118,7 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) =
      * max(<i>x</i><sub>0</sub>-<i>x</i><sub>1</sub>,0).
      * The {@link #get} method of this object requires at least 2 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0 or 1.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -191,9 +191,9 @@ public interface Func {
      * Select function:
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
      * <i>x</i><sub><i>i</i>+1</sub>, where <i>i</i> is <i>x</i><sub>0</sub> cast to integer type:
-     * <tt><i>i</i>=(int)x[0]</tt>.
+     * <code><i>i</i>=(int)x[0]</code>.
      * The {@link #get} method of this object requires at least 2 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0 or 1.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -204,17 +204,17 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
      * <i>x</i><sub>0</sub> &gt; <i>x</i><sub>1</sub> ? <i>x</i><sub>2</sub> : <i>x</i><sub>3</sub>.
      * The {@link #get} method of this object requires at least 4 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1, 2 or 3.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0, 1, 2 or 3.
      *
      * <p>Note: call of this function is almost equivalent to calling {@link #SELECT_IF_GREATER_OR_EQUAL} function
      * with another order of the arguments:
      * <nobr><i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>)</nobr>,
      * that is
      * <nobr><i>x</i><sub>1</sub> &gt;= <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub></nobr>.
-     * The only difference is connected with processing <tt>Double.NaN</tt> values of <i>x</i><sub>0</sub> and
+     * The only difference is connected with processing <code>Double.NaN</code> values of <i>x</i><sub>0</sub> and
      * <i>x</i><sub>1</sub>: this function will choose <i>x</i><sub>3</sub>, but the corresponding call of
      * {@link #SELECT_IF_GREATER_OR_EQUAL} will choose <i>x</i><sub>2</sub>, because in Java any comparison with
-     * <tt>Double.NaN</tt> returns <tt>false</tt>.
+     * <code>Double.NaN</code> returns <code>false</code>.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -225,17 +225,17 @@ public interface Func {
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
      * <i>x</i><sub>0</sub> &gt;= <i>x</i><sub>1</sub> ? <i>x</i><sub>2</sub> : <i>x</i><sub>3</sub>.
      * The {@link #get} method of this object requires at least 4 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0, 1, 2 or 3.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0, 1, 2 or 3.
      *
      * <p>Note: call of this function is almost equivalent to calling {@link #SELECT_IF_GREATER} function
      * with another order of the arguments:
      * <nobr><i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>)</nobr>,
      * that is
      * <nobr><i>x</i><sub>1</sub> &gt; <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub></nobr>.
-     * The only difference is connected with processing <tt>Double.NaN</tt> values of <i>x</i><sub>0</sub> and
+     * The only difference is connected with processing <code>Double.NaN</code> values of <i>x</i><sub>0</sub> and
      * <i>x</i><sub>1</sub>: this function will choose <i>x</i><sub>3</sub>, but the corresponding call of
      * {@link #SELECT_IF_GREATER} will choose <i>x</i><sub>2</sub>, because in Java any comparison with
-     * <tt>Double.NaN</tt> returns <tt>false</tt>.
+     * <code>Double.NaN</code> returns <code>false</code>.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -268,7 +268,7 @@ public interface Func {
      * like <a href="http://en.wikipedia.org/wiki/Canny_edge_detector">Canny edge detector</a>.
      *
      * <p>The {@link #get} method of this object requires at least 2 arguments
-     * and throws <tt>IndexOutOfBoundsException</tt> if the number of arguments is 0 or 1.
+     * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0 or 1.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify its settings.
      */
@@ -289,7 +289,8 @@ public interface Func {
      * </ol>
      *
      * <p>So, if the direction returned by {@link #SELECT_FROM_8_DIRECTIONS_2D} is <i>n</i>, then the corresponding
-     * "rounding" direction is described by <tt>{@link #SHIFTS_ALONG_8_DIRECTIONS_2D}.get(</tt><i>n</i><tt>)</tt>.
+     * "rounding" direction is described by
+     * <code>{@link #SHIFTS_ALONG_8_DIRECTIONS_2D}.get(</code><i>n</i><code>)</code>.
      *
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify it.
      */
@@ -310,29 +311,29 @@ public interface Func {
      * corresponding correction of arguments.
      * Usually can be implemented for one-argument functions,
      * where the {@link #set set(x[], newResult)} method assigns
-     * to <tt>x[0]</tt> the result of the inverse function, called for <tt>newResult</tt>.
+     * to <code>x[0]</code> the result of the inverse function, called for <code>newResult</code>.
      * </p>
      *
      * <p>Implementations of this interface are usually <b>immutable</b> and
-     * always <b>thread-safe</b>: <tt>get</tt> and <tt>set</tt> methods of this interface may be freely used
+     * always <b>thread-safe</b>: <code>get</code> and <code>set</code> methods of this interface may be freely used
      * while simultaneous accessing the same instance from several threads.</p>
      */
     interface Updatable extends Func {
         /**
-         * Correct some of <tt>x</tt> arguments so that
-         * {@link #get get(x)} will be, as possible, equal to <tt>newResult</tt>.
+         * Correct some of <code>x</code> arguments so that
+         * {@link #get get(x)} will be, as possible, equal to <code>newResult</code>.
          * For example, if this is one-argument function <i>f</i>(<i>x</i>),
          * and its inverse function is <i>g</i>(<i>y</i>) (<i>g</i>(<i>f</i>(<i>x</i>))=<i>x</i>),
-         * then this method should assign <tt>x[0]=<i>g</i>(newResult)</tt>.
+         * then this method should assign <code>x[0]=<i>g</i>(newResult)</code>.
          *
          * <p>This method does not guarantee the precise equality
-         * <tt>{@link #get get(x)}==newResult</tt>. (Usually, it is impossible due to
+         * <code>{@link #get get(x)}==newResult</code>. (Usually, it is impossible due to
          * limited precision of floating-point calculations.) But this method should try
          * to provide this equality (after its call) with, as possible, maximal possible precision.
          *
          * @param x         the function arguments.
          * @param newResult the desired function result.
-         * @throws IndexOutOfBoundsException may be thrown if the length of <tt>x</tt> array is less
+         * @throws IndexOutOfBoundsException may be thrown if the length of <code>x</code> array is less
          *                                   than the required number of this function arguments.
          */
         void set(double[] x, double newResult);
@@ -340,9 +341,9 @@ public interface Func {
 
     /**
      * Returns the result of this function for the given arguments:
-     * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><tt>x.length</tt>-1</sub>).
+     * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><code>x.length</code>-1</sub>).
      *
-     * <p>This method must not change the values of <tt>x</tt> elements!
+     * <p>This method must not change the values of <code>x</code> elements!
      *
      * @param x the function arguments.
      * @return  the function result.
@@ -352,7 +353,7 @@ public interface Func {
     double get(double ...x);
 
     /**
-     * Equivalent to <tt>{@link #get(double...) get}(new double[0])</tt>.
+     * Equivalent to <code>{@link #get(double...) get}(new double[0])</code>.
      * Provides better performance because it does not require Java array creation.
      *
      * @return   the function result.
@@ -361,7 +362,7 @@ public interface Func {
     double get();
 
     /**
-     * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0})</tt>.
+     * Equivalent to <code>{@link #get(double...) get}(new double[] {x0})</code>.
      * Provides better performance because it does not require Java array creation.
      *
      * @param x0 the function argument.
@@ -371,7 +372,7 @@ public interface Func {
     double get(double x0);
 
     /**
-     * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1})</tt>.
+     * Equivalent to <code>{@link #get(double...) get}(new double[] {x0, x1})</code>.
      * Provides better performance because it does not require Java array creation.
      *
      * @param x0 the first function argument.
@@ -382,7 +383,7 @@ public interface Func {
     double get(double x0, double x1);
 
     /**
-     * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1, x2})</tt>.
+     * Equivalent to <code>{@link #get(double...) get}(new double[] {x0, x1, x2})</code>.
      * Provides better performance because it does not require Java array creation.
      *
      * @param x0 the first function argument.
@@ -394,7 +395,7 @@ public interface Func {
     double get(double x0, double x1, double x2);
 
     /**
-     * Equivalent to <tt>{@link #get(double...) get}(new double[] {x0, x1, x2, x3})</tt>.
+     * Equivalent to <code>{@link #get(double...) get}(new double[] {x0, x1, x2, x3})</code>.
      * Provides better performance because it does not require Java array creation.
      *
      * @param x0 the first function argument.

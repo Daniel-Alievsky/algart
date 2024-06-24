@@ -27,10 +27,10 @@ package net.algart.math.functions;
 /**
  * <p>Maximum from 2 arguments, selected by 1st argument:
  * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) =
- * max(<i>x</i><sub><i>i</i>+1</sub>, <i>x</i><sub><i>j</i>+1</sub>)</nobr>,
- * <nobr><i>i</i>=<tt>(int)x[0]</tt> (<i>x</i><sub>0</sub> cast to integer type),
- * <nobr><i>j</i>=(<i>i</i>&minus;1+<tt>indexShift</tt>)%(<i>n</i>&minus;1)+1</nobr>,
- * where <tt>indexShift</tt> is an integer constant, passed to {@link #getInstance} method.</p>
+ * max(<i>x</i><sub><i>i</i>+1</sub>, <i>x</i><sub><i>j</i>+1</sub>),
+ * <i>i</i>=<code>(int)x[0]</code> (<i>x</i><sub>0</sub> cast to integer type),
+ * <i>j</i>=(<i>i</i>&minus;1+<code>indexShift</code>)%(<i>n</i>&minus;1)+1,
+ * where <code>indexShift</code> is an integer constant, passed to {@link #getInstance} method.</p>
  *
  * <p>More precisely, the {@link #get} method of this object performs the following actions:</p>
  *
@@ -45,8 +45,9 @@ package net.algart.math.functions;
  * &#32;   return x[k1] &gt; x[k2] ? x[k1] : x[k2];
  * </pre>
  *
- * <p>If <tt>k1</tt> or <tt>k2</tt> index, calculated in such a way, is out of range <tt>0..x.length-1</tt>,
- * this method throws <tt>IndexOutOfBoundsException</tt>.</p>
+ * <p>If <code>k1</code> or <code>k2</code> index, calculated in such a way,
+ * is out of range <code>0..x.length-1</code>,
+ * this method throws <code>IndexOutOfBoundsException</code>.</p>
  *
  * <p>This function can be useful for algorithms of non-maximum suppression, usually in combination with
  * {@link Func#SELECT_FROM_8_DIRECTIONS_2D}, for example, in algorithms
@@ -70,15 +71,15 @@ public class MaxFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
      * Returns an instance of this class for the given index shift.</p>
      *
      * @param indexShift the index shift (distance between compared numbers); must be non-negative.
-     * @return           an instance of this class
-     * @throws IllegalArgumentException if <tt>indexShift&lt;0</tt>.
+     * @return an instance of this class
+     * @throws IllegalArgumentException if <code>indexShift&lt;0</code>.
      */
     public static MaxFromTwoSelectedNumbersFunc getInstance(int indexShift) {
         return new MaxFromTwoSelectedNumbersFunc(indexShift);
     }
 
-    public double get(double ...x) {
-        int k1 = (int)x[0] + 1; // it is supposed that k1 < x.length
+    public double get(double... x) {
+        int k1 = (int) x[0] + 1; // it is supposed that k1 < x.length
         int k2 = k1 + indexShift;
         if (k2 >= x.length) {
             k2 -= x.length - 1;

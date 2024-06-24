@@ -51,25 +51,25 @@ public final class LinearOperator extends ProjectiveOperator {
      * Returns an instance of this class, describing the linear operator with the specified matrix <b>A</b>
      * and vector <b>b</b>:
      * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>.
-     * The coordinates of the vector <b>b</b> must be listed in <tt>b</tt> array.
-     * The elements of the matrix <b>A</b> must be listed, row by row, in the <tt>a</tt> array:
+     * The coordinates of the vector <b>b</b> must be listed in <code>b</code> array.
+     * The elements of the matrix <b>A</b> must be listed, row by row, in the <code>a</code> array:
      * <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
-     * <i>a</i><sub><i>ij</i></sub>=<tt>a[<i>i</i>*<i>n</i>+<i>j</i>]</tt>,
+     * <i>a</i><sub><i>ij</i></sub>=<code>a[<i>i</i>*<i>n</i>+<i>j</i>]</code>,
      * <i>i</i> is the index of the row (0..<i>n</i>-1),
      * <i>j</i> is the index of the column (0..<i>n</i>-1),
-     * <i>n</i>=<tt>b.length</tt>.
-     * The length <tt>a.length</tt> of the <tt>a</tt> array must be equal to the square <i>n</i><sup>2</sup>
-     * of the length <i>n</i>=<tt>b.length</tt> of the <tt>b</tt> array.
+     * <i>n</i>=<code>b.length</code>.
+     * The length <code>a.length</code> of the <code>a</code> array must be equal to the square <i>n</i><sup>2</sup>
+     * of the length <i>n</i>=<code>b.length</code> of the <code>b</code> array.
      * Empty arrays (<i>n</i>=0) are not allowed.
      *
-     * <p>The passed <tt>a</tt> and <tt>b</tt> Java arrays are cloned by this method: no references to them
+     * <p>The passed <code>a</code> and <code>b</code> Java arrays are cloned by this method: no references to them
      * are maintained by the created instance.
      *
      * @param a the elements of <b>A</b> matrix.
      * @param b the coordinates of <b>b</b> vector.
-     * @return  the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
+     * @return the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>b.length==0</tt> or <tt>a.length!=b.length<sup>2</sup></tt>.
+     * @throws IllegalArgumentException if <code>b.length==0</code> or <code>a.length!=b.length<sup>2</sup></code>.
      */
     public static LinearOperator getInstance(double[] a, double[] b) {
         Objects.requireNonNull(a, "Null A matrix");
@@ -83,20 +83,20 @@ public final class LinearOperator extends ProjectiveOperator {
      * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>,
      * where <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
      * <i>a</i><sub><i>ij</i></sub>=0.0 if <i>i</i>!=<i>j</i>,
-     * <i>a</i><sub><i>ii</i></sub>=<tt>diagonal[<i>i</i>]</tt>.
-     * The coordinates of the vector <b>b</b> must be listed in <tt>b</tt> array.
-     * Empty arrays (<tt>diagonal.length=b.length=0</tt>) are not allowed.
+     * <i>a</i><sub><i>ii</i></sub>=<code>diagonal[<i>i</i>]</code>.
+     * The coordinates of the vector <b>b</b> must be listed in <code>b</code> array.
+     * Empty arrays (<code>diagonal.length=b.length=0</code>) are not allowed.
      *
      * <p>This linear operator performs resizing and shift along coordinate axes.
      *
-     * <p>The passed <tt>diagonal</tt> and <tt>b</tt> Java arrays are cloned by this method: no references to them
+     * <p>The passed <code>diagonal</code> and <code>b</code> Java arrays are cloned by this method: no references to them
      * are maintained by the created instance.
      *
      * @param diagonal the diagonal elements of <b>A</b> matrix (all other elements are supposed to be zero).
      * @param b        the coordinates of <b>b</b> vector.
-     * @return         the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
+     * @return the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>diagonal.length==0</tt> or <tt>diagonal.length!=b.length</tt>.
+     * @throws IllegalArgumentException if <code>diagonal.length==0</code> or <code>diagonal.length!=b.length</code>.
      */
     public static LinearOperator getDiagonalInstance(double[] diagonal, double[] b) {
         Objects.requireNonNull(diagonal, "Null diagonal array");
@@ -111,11 +111,11 @@ public final class LinearOperator extends ProjectiveOperator {
      * This linear operator performs resizing along coordinate axes.
      *
      * @param diagonal the diagonal elements of <b>A</b> matrix (all other elements are supposed to be zero).
-     * @return         the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>).
+     * @return the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>).
      * @throws NullPointerException     if the argument of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>diagonal.length==0</tt>.
+     * @throws IllegalArgumentException if <code>diagonal.length==0</code>.
      */
-    public static LinearOperator getDiagonalInstance(double ...diagonal) {
+    public static LinearOperator getDiagonalInstance(double... diagonal) {
         Objects.requireNonNull(diagonal, "Null diagonal array");
         return new LinearOperator(null, diagonal.clone(), new double[diagonal.length]);
     }
@@ -123,15 +123,15 @@ public final class LinearOperator extends ProjectiveOperator {
     /**
      * Equivalent to
      * {@link #getDiagonalInstance(double[], double[]) getDiagonalInstance(diagonal, b)},
-     * where <tt>diagonal</tt> is an array consisting of <tt>b.length</tt> unit values (1.0).
+     * where <code>diagonal</code> is an array consisting of <code>b.length</code> unit values (1.0).
      * This linear operator performs shifting along coordinate axes.
      *
      * @param b the coordinates of <b>b</b> vector.
-     * @return  the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>x</b>&nbsp;+&nbsp;<b>b</b>).
+     * @return the linear operator <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>x</b>&nbsp;+&nbsp;<b>b</b>).
      * @throws NullPointerException     if the argument of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>b.length==0</tt>.
+     * @throws IllegalArgumentException if <code>b.length==0</code>.
      */
-    public static LinearOperator getShiftInstance(double ...b) {
+    public static LinearOperator getShiftInstance(double... b) {
         Objects.requireNonNull(b, "Null b array");
         return new LinearOperator(null, null, b);
     }
@@ -139,20 +139,21 @@ public final class LinearOperator extends ProjectiveOperator {
     /**
      * Returns an instance of this class, describing rotation in 2D plane by the specified angle (in radians)
      * around the specified center.
-     * Almost equivalent to <tt>{@link #getInstance(double[], double[]) getInstance}(a,b)</tt>,
+     * Almost equivalent to <code>{@link #getInstance(double[], double[]) getInstance}(a,b)</code>,
      * where:
      * <ul>
-     * <li><nobr><tt>a = {cos,sin,-sin,cos}</tt></nobr> &mdash; matrix <b>A</b> (<tt>cos=StrictMath.cos(angle)</tt>),
-     * <tt>sin=StrictMath.sin(angle)</tt>);</li>
+     * <li><nobr><code>a = {cos,sin,-sin,cos}</code></nobr> &mdash; matrix <b>A</b>
+     * (<code>cos=StrictMath.cos(angle)</code>),
+     * <code>sin=StrictMath.sin(angle)</code>);</li>
      *
      * <li><tt><nobr>b = {centerX-a[0]*centerX-a[1]*centerY,</nobr>
      * <nobr>centerY-a[2]*centerX-a[3]*centerY}</nobr></tt> &mdash; vector
-     * <nobr><b>b</b>=<b>c</b>&minus;<b>Ac</b></nobr> (<nobr><b>c</b>=<tt>{centerX, centerY}</tt></nobr>).</li>
+     * <nobr><b>b</b>=<b>c</b>&minus;<b>Ac</b></nobr> (<nobr><b>c</b>=<code>{centerX, centerY}</code></nobr>).</li>
      * </ul>
      *
      * <p>The only difference from these formulas is special processing some cases, when the angle is <i>k</i>&pi;/2
-     * with integer <i>k</i> (more precisely, <tt>k/2.0*StrictMath.PI</tt>):
-     * <tt>StrictMath.cos</tt> and <tt>StrictMath.sin</tt> methods can return inexact results here,
+     * with integer <i>k</i> (more precisely, <code>k/2.0*StrictMath.PI</code>):
+     * <code>StrictMath.cos</code> and <code>StrictMath.sin</code> methods can return inexact results here,
      * but this method uses precise values &plusmn;1 in these cases.
      *
      * @param centerX the <i>x</i>-coordinate of the rotation center.
@@ -160,7 +161,7 @@ public final class LinearOperator extends ProjectiveOperator {
      * @param angle   the rotation angle (in radians; positive values correspond to <i>clockwise</i> rotation,
      *                if the <i>x</i> axis is directed <i>rightwards</i> and the <i>y</i> axis
      *                is directed <i>downwards</i>, according traditions of computer image processing).
-     * @return        2-dimensional linear operator, describing this rotation.
+     * @return 2-dimensional linear operator, describing this rotation.
      */
     public static LinearOperator getRotation2D(double centerX, double centerY, double angle) {
         double cos = StrictMath.cos(angle);
@@ -175,12 +176,12 @@ public final class LinearOperator extends ProjectiveOperator {
         }
         // y=A(x-c)+c=Ax+c-Ac
         double[] a = {
-            cos, sin,
-            -sin, cos,
+                cos, sin,
+                -sin, cos,
         };
         double[] b = {
-            centerX - a[0] * centerX - a[1] * centerY,
-            centerY - a[2] * centerX - a[3] * centerY,
+                centerX - a[0] * centerX - a[1] * centerY,
+                centerY - a[2] * centerX - a[3] * centerY,
         };
         return new LinearOperator(a, null, b);
     }
@@ -203,46 +204,48 @@ public final class LinearOperator extends ProjectiveOperator {
      * <p>It is possible that there is no such operator
      * or there are many different solutions (degenerated cases).
      * In this case, this method still returns some operator, but some coefficients of <b>A</b> matrix
-     * and <b>b</b> vector in the returned operator will probably be <tt>Double.NaN</tt>,
-     * <tt>Double.POSITIVE_INFINITY</tt> or <tt>Double.NEGATIVE_INFINITY</tt>.
+     * and <b>b</b> vector in the returned operator will probably be <code>Double.NaN</code>,
+     * <code>Double.POSITIVE_INFINITY</code> or <code>Double.NEGATIVE_INFINITY</code>.
      *
      * <p>All passed points must be <i>n</i>-dimensional,
-     * where <i>n</i><tt>+1=p.length=q.length</tt>.
+     * where <i>n</i><code>+1=p.length=q.length</code>.
      *
      * @param q the destination points.
      * @param p the source points.
      * @return the <i>n</i>-dimensional linear operator, which maps <b>p</b><sub><i>i</i></sub> to
-     *         <b>q</b><sub><i>i</i></sub> for all <i>i</i>=0,1,2,...,<i>n</i>.
+     * <b>q</b><sub><i>i</i></sub> for all <i>i</i>=0,1,2,...,<i>n</i>.
      * @throws NullPointerException     if one of arguments of this method or one of elements of
-     *                                  <tt>p</tt> and <tt>q</tt> arrays {@code null}.
-     * @throws IllegalArgumentException if the lengths of the passed <tt>p</tt> and <tt>q</tt> arrays are not equal,
-     *                                  or if for some <tt>k</tt>
-     *                                  <tt>p[k].{@link Point#coordCount() coordCount()}!=p.length-1</tt> or
-     *                                  <tt>q[k].{@link Point#coordCount() coordCount()}!=p.length-1</tt>.
+     *                                  <code>p</code> and <code>q</code> arrays {@code null}.
+     * @throws IllegalArgumentException if the lengths of the passed <code>p</code> and
+     *                                  <code>q</code> arrays are not equal,
+     *                                  or if for some <code>k</code>
+     *                                  <code>p[k].{@link Point#coordCount() coordCount()}!=p.length-1</code> or
+     *                                  <code>q[k].{@link Point#coordCount() coordCount()}!=p.length-1</code>.
      * @throws OutOfMemoryError         if there is not enough Java memory for storing two Java arrays
-     *                                  <tt>double[n*n]</tt> and <tt>double[(n+1)*(n+1)]</tt>,
-     *                                  where <tt>n+1=p.length</tt>, or if <tt>(n+1)*(n+1)&gt;Integer.MAX_VALUE</tt>.
+     *                                  <code>double[n*n]</code> and <code>double[(n+1)*(n+1)]</code>,
+     *                                  where <code>n+1=p.length</code>,
+     *                                  or if <code>(n+1)*(n+1)&gt;Integer.MAX_VALUE</code>.
      */
     public static LinearOperator getInstanceByPoints(Point[] q, Point[] p) {
         Objects.requireNonNull(p, "Null p argument");
         Objects.requireNonNull(q, "Null q argument");
         if (p.length != q.length)
             throw new IllegalArgumentException("p and q point arrays lengths mismatch: p.length="
-                + p.length + ", q.length=" + q.length);
+                    + p.length + ", q.length=" + q.length);
         if (p.length == 0)
             throw new IllegalArgumentException("Empty p and q arrays");
         final int n = p.length - 1;
-        if (((long)n + 1) * ((long)n + 1) > Integer.MAX_VALUE)
+        if (((long) n + 1) * ((long) n + 1) > Integer.MAX_VALUE)
             throw new OutOfMemoryError("Too large necessary matrix (more than Integer.MAX_VALUE elements)");
         for (int k = 0; k < p.length; k++) {
             if (p[k].coordCount() != n)
                 throw new IllegalArgumentException("n+1 n-dimensional points are necessary to "
-                    + "find the linear operator, but we have " + (n + 1) + " points, "
-                    + "and the source point #" + k + " is " + p[k].coordCount() + "-dimensional");
+                        + "find the linear operator, but we have " + (n + 1) + " points, "
+                        + "and the source point #" + k + " is " + p[k].coordCount() + "-dimensional");
             if (q[k].coordCount() != n)
                 throw new IllegalArgumentException("n+1 n-dimensional points are necessary to "
-                    + "find the linear operator, but we have " + (n + 1)  + " points, "
-                    + "and the destination point #" + k + " is " + q[k].coordCount() + "-dimensional");
+                        + "find the linear operator, but we have " + (n + 1) + " points, "
+                        + "and the destination point #" + k + " is " + q[k].coordCount() + "-dimensional");
         }
         // A * (px0,py0,pz0,...) + b = (qx0,qy0,qz0,...)
         // A * (px1,py1,pz1,...) + b = (qx1,qy1,qz1,...)
@@ -295,15 +298,15 @@ public final class LinearOperator extends ProjectiveOperator {
      * <nobr><b>A''</b> = <b>A'A</b></nobr>, <nobr><b>b''</b> = <b>A'b</b> + <b>b'</b></nobr>.
      *
      * @param operator the second operator, that should be applied after this one.
-     * @return         superposition of this and the passed operator.
+     * @return superposition of this and the passed operator.
      * @throws NullPointerException     if the argument of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>operator.{@link #n() n()}!=this.{@link #n() n()}</tt>.
+     * @throws IllegalArgumentException if <code>operator.{@link #n() n()}!=this.{@link #n() n()}</code>.
      */
     public LinearOperator superposition(LinearOperator operator) {
         Objects.requireNonNull(operator, "Null operator argument");
         if (operator.n != n)
             throw new IllegalArgumentException("Passed and this operators dimensions mismatch: operator.n()="
-                + operator.n + ", this.n()=" + n);
+                    + operator.n + ", this.n()=" + n);
         if (operator.isShift()) {
             double[] b = this.b.clone();
             for (int i = 0; i < n; i++) {
@@ -339,31 +342,31 @@ public final class LinearOperator extends ProjectiveOperator {
      * Returns an instance of this class, identical to this one execpting that the new instance has the specified
      * vector <b>b</b>.
      *
-     * <p>The passed <tt>b</tt> Java array is cloned by this method: no references to it
+     * <p>The passed <code>b</code> Java array is cloned by this method: no references to it
      * are maintained by the created instance.
      *
      * @param b the new coordinates of <b>b</b> vector.
-     * @return  the linear operator with changed <b>b</b> vector.
+     * @return the linear operator with changed <b>b</b> vector.
      * @throws NullPointerException     if the argument of the method is {@code null}.
-     * @throws IllegalArgumentException if <tt>b.length!=this.{@link #n() n()}</tt>.
+     * @throws IllegalArgumentException if <code>b.length!=this.{@link #n() n()}</code>.
      */
-    public LinearOperator changeB(double ...b) {
+    public LinearOperator changeB(double... b) {
         Objects.requireNonNull(b, "Null b array");
         if (b.length != n)
             throw new IllegalArgumentException("Passed b and this.b vector lengths mismatch: b.length="
-                + b.length + ", this b.length=" + n);
+                    + b.length + ", this b.length=" + n);
         return new LinearOperator(this.a, this.diagonal, b);
     }
 
     /**
-     * This implementation calculates <tt>destPoint</tt> by multiplication
-     * the <tt>srcPoint</tt> by the matrix <b>A</b> and adding the vector <b>b</b>.
-     * to the coordinates <tt>destPoint</tt> of the destination point.
+     * This implementation calculates <code>destPoint</code> by multiplication
+     * the <code>srcPoint</code> by the matrix <b>A</b> and adding the vector <b>b</b>.
+     * to the coordinates <code>destPoint</code> of the destination point.
      *
      * @param destPoint the coordinates of the destination point <b>y</b>, filled by this method.
      * @param srcPoint  the coordinates of the source point <b>x</b>.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
+     * @throws IllegalArgumentException if <code>destPoint.length</code> or <code>srcPoint.length</code>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
     public void map(double[] destPoint, double[] srcPoint) {
@@ -372,34 +375,35 @@ public final class LinearOperator extends ProjectiveOperator {
 
 
     /**
-     * Transforms the coordinates <tt>destPoint</tt> of the destination point in <i>n</i>-dimensional space
-     * back to the coordinates <tt>srcPoint</tt> of the original point.
+     * Transforms the coordinates <code>destPoint</code> of the destination point in <i>n</i>-dimensional space
+     * back to the coordinates <code>srcPoint</code> of the original point.
      *
-     * <p>To find the <tt>srcPoint</tt>, this method solves the system of linear equations <b>Ax=y&minus;b</b>,
+     * <p>To find the <code>srcPoint</code>, this method solves the system of linear equations <b>Ax=y&minus;b</b>,
      * where the matrix <b>A</b> and the vector <b>b</b> are the parameters of this transformation,
-     * <b>y</b> is <tt>destPoint</tt>, <b>x</b> is <tt>srcPoint</tt>.
+     * <b>y</b> is <code>destPoint</code>, <b>x</b> is <code>srcPoint</code>.
      * This method uses
      * <a href="http://en.wikipedia.org/wiki/Gaussian_elimination">Gauss elimination algorithm
      * with partial (column) pivoting</a>.
      * This algorithm requires <i>O</i>(<i>n</i><sup>3</sup>) operations.
      *
-     * <p>It is possible that there is no required <tt>srcPoint</tt>
+     * <p>It is possible that there is no required <code>srcPoint</code>
      * or there are many different solutions (degenerated cases).
-     * In this case, this method still returns some point, but some found <tt>srcPoint</tt> coordinates
-     * will probably be <tt>Double.NaN</tt>, <tt>Double.POSITIVE_INFINITY</tt> or <tt>Double.NEGATIVE_INFINITY</tt>.
+     * In this case, this method still returns some point, but some found <code>srcPoint</code> coordinates
+     * will probably be <code>Double.NaN</code>, <code>Double.POSITIVE_INFINITY</code>
+     * or <code>Double.NEGATIVE_INFINITY</code>.
      *
      * <p>Note: this method allocates some additional memory if the matrix <b>A</b>
      * is not {@link #isDiagonal() diagonal}.
      * If you don't want to occupy additional memory, you can directly use
      * {@link #solveLinearEquationsSet(double[], double[], double[])} method.
      *
-     * <p>Note: this method works correctly even if <tt>destPoint</tt> and <tt>srcPoint</tt>
+     * <p>Note: this method works correctly even if <code>destPoint</code> and <code>srcPoint</code>
      * is the same Java array.
      *
      * @param srcPoint  the coordinates of the source point <b>x</b>, filled by this method.
      * @param destPoint the coordinates of the destinated point <b>y</b>.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>destPoint.length</tt> or <tt>srcPoint.length</tt>
+     * @throws IllegalArgumentException if <code>destPoint.length</code> or <code>srcPoint.length</code>
      *                                  is not equal to the {@link #n() number of dimensions}.
      */
     public void inverseMap(double[] srcPoint, double[] destPoint) {
@@ -407,10 +411,10 @@ public final class LinearOperator extends ProjectiveOperator {
         Objects.requireNonNull(destPoint, "Null destPoint");
         if (srcPoint.length != n)
             throw new IllegalArgumentException("Illegal length of srcPoint array: "
-                + srcPoint.length + " for " + this);
+                    + srcPoint.length + " for " + this);
         if (destPoint.length != n)
             throw new IllegalArgumentException("Illegal length of destPoint array: "
-                + destPoint.length + " for " + this);
+                    + destPoint.length + " for " + this);
         if (a != null) {
             double[] yMinusB = new double[n];
             for (int i = 0; i < n; i++) {
@@ -435,30 +439,30 @@ public final class LinearOperator extends ProjectiveOperator {
      * <a href="http://en.wikipedia.org/wiki/Gaussian_elimination">Gauss elimination algorithm
      * with partial (column) pivoting</a>.
      *
-     * <p>The coordinates of the vector <b>y</b> must be listed in <tt>y</tt> array.
-     * The elements of the matrix <b>A</b> must be listed, row by row, in the <tt>a</tt> array:
+     * <p>The coordinates of the vector <b>y</b> must be listed in <code>y</code> array.
+     * The elements of the matrix <b>A</b> must be listed, row by row, in the <code>a</code> array:
      * <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
-     * <i>a</i><sub><i>ij</i></sub>=<tt>a[<i>i</i>*<i>n</i>+<i>j</i>]</tt>,
+     * <i>a</i><sub><i>ij</i></sub>=<code>a[<i>i</i>*<i>n</i>+<i>j</i>]</code>,
      * <i>i</i> is the index of the row (0..<i>n</i>-1),
      * <i>j</i> is the index of the column (0..<i>n</i>-1),
-     * <i>n</i>=<tt>b.length</tt>.
-     * The length <tt>a.length</tt> of the <tt>a</tt> array must be equal to the square <i>n</i><sup>2</sup>
-     * of the length <i>n</i>=<tt>b.length</tt> of the <tt>b</tt> array.
+     * <i>n</i>=<code>b.length</code>.
+     * The length <code>a.length</code> of the <code>a</code> array must be equal to the square <i>n</i><sup>2</sup>
+     * of the length <i>n</i>=<code>b.length</code> of the <code>b</code> array.
      * Empty arrays (<i>n</i>=0) are not allowed.
      *
      * <p>It is possible that there is no required <b>x</b> vector
      * or there are many different solutions (degenerated cases).
      * In this case, this method still find some <b>x</b> vector, but some found coordinates
-     * in the <tt>x</tt> array will probably be
-     * <tt>Double.NaN</tt>, <tt>Double.POSITIVE_INFINITY</tt> or <tt>Double.NEGATIVE_INFINITY</tt>.
+     * in the <code>x</code> array will probably be
+     * <code>Double.NaN</code>, <code>Double.POSITIVE_INFINITY</code> or <code>Double.NEGATIVE_INFINITY</code>.
      *
      * <p>This method is called in the {@link #inverseMap(double[], double[])} method,
      * if the matrix <b>A</b> is not {@link #isDiagonal() diagonal}.
      *
-     * <p><i>Warning:</i> this method destroys the content of the passed <tt>a</tt> and <tt>y</tt> arrays!
+     * <p><i>Warning:</i> this method destroys the content of the passed <code>a</code> and <code>y</code> arrays!
      * But this method does not occupy any additional memory, unlike {@link #inverseMap(double[], double[])} method.
      *
-     * <p><i>Warning:</i> this method will not work correctly if <tt>x</tt> and <tt>y</tt>
+     * <p><i>Warning:</i> this method will not work correctly if <code>x</code> and <code>y</code>
      * is the same Java array.
      *
      * @param x the coordinates of <b>x</b> vector, filled by this method.
@@ -466,8 +470,8 @@ public final class LinearOperator extends ProjectiveOperator {
      * @param y the coordinates of <b>y</b> vector.
      * @throws NullPointerException     if one of the arguments of the method is {@code null}.
      * @throws IllegalArgumentException if the length of one of the passed arrays is 0,
-     *                                  or if <tt>x.length!=y.length</tt>,
-     *                                  or if <tt>a.length!=x.length<sup>2</sup></tt>.
+     *                                  or if <code>x.length!=y.length</code>,
+     *                                  or if <code>a.length!=x.length<sup>2</sup></code>.
      */
     public static void solveLinearEquationsSet(double[] x, double[] a, double[] y) {
         Objects.requireNonNull(x, "Null x");
@@ -476,10 +480,10 @@ public final class LinearOperator extends ProjectiveOperator {
         final int n = x.length;
         if (y.length != n)
             throw new IllegalArgumentException("x and y vector lengths mismatch: x.length="
-                + n + ", y.length=" + y.length);
-        if (a.length != (long)n * (long)n)
+                    + n + ", y.length=" + y.length);
+        if (a.length != (long) n * (long) n)
             throw new IllegalArgumentException("Illegal size of A matrix: a.length=" + a.length
-                + " must be equal to x.length^2=" + (long)n * (long)n);
+                    + " must be equal to x.length^2=" + (long) n * (long) n);
 //        System.out.print("Gauss solving " + n  + "x" + n + "... ");
 //        long t1 = System.nanoTime();
 //        printEquationsSet(null, a, y);
@@ -501,7 +505,9 @@ public final class LinearOperator extends ProjectiveOperator {
             for (int i = k + 1, aOfs = aOfsDiagonal + n; i < n; i++, aOfs += n) {
                 double v = a[aOfs], vAbs = StrictMath.abs(v);
                 if (vAbs > pivotAbs) {
-                    pivot = v; pivotAbs = vAbs; pivotIndex = i;
+                    pivot = v;
+                    pivotAbs = vAbs;
+                    pivotIndex = i;
                 }
             }
             if (pivotAbs == 0.0) {
@@ -513,10 +519,14 @@ public final class LinearOperator extends ProjectiveOperator {
             }
             // Exchanging the line #k and line #i: this operation does not change the order of the unknowns
             if (pivotIndex != k) {
-                double temp = y[k]; y[k] = y[pivotIndex]; y[pivotIndex] = temp;
+                double temp = y[k];
+                y[k] = y[pivotIndex];
+                y[pivotIndex] = temp;
                 for (int j = k, aOfsK = aOfsDiagonal, aOfs = pivotIndex * n + k; j < n; j++, aOfsK++, aOfs++) {
                     // Don't exchange first k elements in the lines: they are already zero
-                    temp = a[aOfsK]; a[aOfsK] = a[aOfs]; a[aOfs] = temp;
+                    temp = a[aOfsK];
+                    a[aOfsK] = a[aOfs];
+                    a[aOfs] = temp;
                 }
             }
             assert a[aOfsDiagonal] == pivot : "Pivot element is not placed to the correct place (k = " + k + ")";
@@ -610,7 +620,7 @@ public final class LinearOperator extends ProjectiveOperator {
             sB.append(LinearFunc.goodFormat(b[k]));
         }
         return "linear (affine) " + n + "-dimensional operator "
-            + sA + "x+b, b=(" + sB + ")" + (shift ? " (shift)" : "");
+                + sA + "x+b, b=(" + sB + ")" + (shift ? " (shift)" : "");
     }
 
     static void printEquationsSet(double[] x, double[] a, double[] y) {

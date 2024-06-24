@@ -73,25 +73,25 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     /**
      * Creates a uniform grid pattern with the given origin and steps of the grid.
      *
-     * <p>The <tt>trivialUnionDecomposition</tt> determines behavior of
+     * <p>The <code>trivialUnionDecomposition</code> determines behavior of
      * {@link #unionDecomposition(int)} and {@link #allUnionDecompositions(int)} methods.
-     * If it is <tt>false</tt>, they will perform some common algorithm
+     * If it is <code>false</code>, they will perform some common algorithm
      * suitable for most patterns, that have no good Minkowski decompositions (alike spheres).
-     * If it is <tt>true</tt>, they will return degenerated decomposition
+     * If it is <code>true</code>, they will return degenerated decomposition
      * consisting of this pattern as the only element.
-     * You should use <tt>true</tt> argument in inheritors that have
+     * You should use <code>true</code> argument in inheritors that have
      * a good Minkowski decomposition.
      *
-     * <p>The passed <tt>stepsOfGrid</tt> argument is cloned by this method: no references to it
+     * <p>The passed <code>stepsOfGrid</code> argument is cloned by this method: no references to it
      * are maintained by the created pattern.
      *
      * @param originOfGrid              the {@link #originOfGrid() origin of the grid}.
      * @param stepsOfGrid               the {@link #stepsOfGrid() steps of the grid}.
      * @param trivialUnionDecomposition whether this pattern has the degenerated union decomposition.
-     * @throws NullPointerException     if <tt>originOfGrid</tt> or <tt>stepsOfGrid</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>originOfGrid.{@link Point#coordCount()
-     *                                  coordCount()}!=stepsOfGrid.length</tt>, or if one of the passed steps
-     *                                  is zero (<tt>==0.0</tt>).
+     * @throws NullPointerException     if <code>originOfGrid</code> or <code>stepsOfGrid</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>originOfGrid.{@link Point#coordCount()
+     *                                  coordCount()}!=stepsOfGrid.length</code>, or if one of the passed steps
+     *                                  is zero (<code>==0.0</code>).
      */
     protected AbstractUniformGridPattern(Point originOfGrid, double[] stepsOfGrid, boolean trivialUnionDecomposition) {
         super(originOfGrid.coordCount());
@@ -169,7 +169,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     /**
      * This implementation is based on the loop of calls of {@link #gridIndexRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return the ranges from minimal to maximal coordinate for all space dimensions.
      */
@@ -183,7 +183,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     /**
      * This implementation is based on the loop of calls of {@link #gridIndexRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return minimal grid index for all space dimensions as a point.
      */
@@ -197,7 +197,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     /**
      * This implementation is based on the loop of calls of {@link #gridIndexRange(int)} method
-     * for all coordinate indexes from <tt>0</tt> to <tt>{@link #dimCount()}-1</tt>.
+     * for all coordinate indexes from <code>0</code> to <code>{@link #dimCount()}-1</code>.
      *
      * @return maximal grid index for all space dimensions as a point.
      */
@@ -214,19 +214,19 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     /**
-     * This implementation returns <tt>true</tt> if and only if
-     * <tt>{@link #pointCount()}=</tt><i>r</i><sub>0</sub><i>r</i><sub>1</sub>...<tt>&lt;Long.MAX_VALUE</tt>,
-     * where <i>r<sub>i</sub></i><tt>={@link #gridIndexRange(int) gridIndexRange(<i>i</i>)}.{@link IRange#size()
-     * size()}</tt>.
+     * This implementation returns <code>true</code> if and only if
+     * <code>{@link #pointCount()}=</code><i>r</i><sub>0</sub><i>r</i><sub>1</sub>...<code>&lt;Long.MAX_VALUE</code>,
+     * where <i>r<sub>i</sub></i><code>={@link #gridIndexRange(int) gridIndexRange(<i>i</i>)}.{@link IRange#size()
+     * size()}</code>.
      *
      * <p>This method caches its results: the following calls will work faster.
      *
-     * <p>This method does not provide correct result, if a pattern contains <tt>&ge;Long.MAX_VALUE</tt> points.
+     * <p>This method does not provide correct result, if a pattern contains <code>&ge;Long.MAX_VALUE</code> points.
      *
      * <p>This method should be overridden for rectangular patterns, implementing {@link RectangularPattern}
      * interface, or for patterns that surely are not rectangular.
      *
-     * @return <tt>true</tt> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
+     * @return <code>true</code> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
      */
     public boolean isActuallyRectangular() {
         check:
@@ -667,7 +667,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * consisting of sums of all point pairs.
      * This algorithm may be very slow for large patterns
      * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
-     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * and does not work at all if the number of resulting points is greater than <code>Integer.MAX_VALUE</code>.
      * Please override this method if there is better implementation.
      *
      * @param added another pattern.
@@ -750,7 +750,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      * consisting of sums of all point pairs.
      * This algorithm may be very slow for large patterns
      * (<i>O</i>(<i>NM</i>) operations, <i>N</i>={@link #pointCount()}, <i>M</i>=added.{@link #pointCount()})
-     * and does not work at all if the number of resulting points is greater than <tt>Integer.MAX_VALUE</tt>.
+     * and does not work at all if the number of resulting points is greater than <code>Integer.MAX_VALUE</code>.
      * Please override this method if there is better implementation.
      *
      * @param subtracted another pattern.
@@ -813,17 +813,17 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     /**
-     * This implementation returns <tt>Collections.&lt;Pattern&gt;singletonList(thisInstance)</tt>
+     * This implementation returns <code>Collections.&lt;Pattern&gt;singletonList(thisInstance)</code>
      * for non-rectangular patterns or a good decomposition if {@link #isActuallyRectangular()} method
-     * returns <tt>true</tt>.
+     * returns <code>true</code>.
      * This method caches its results for several little values of the argument:
      * the following calls will work faster.
      * Please override this method if there is better implementation.
      *
      * @param minimalPointCount this method does not try to decompose patterns that contain
-     *                          less than <tt>minimalPointCount</tt> points.
+     *                          less than <code>minimalPointCount</code> points.
      *                          In particular, if the minkowski sum of several patterns containing
-     *                          less than <tt>minimalPointCount</tt> points, this method should return
+     *                          less than <code>minimalPointCount</code> points, this method should return
      *                          this sum in the resulting list instead of its summands.
      * @return the decomposition of this pattern to Minkowski sum.
      * @throws IllegalArgumentException if the argument is negative.
@@ -901,11 +901,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     /**
      * This implementation returns
-     * <tt>{@link #minkowskiDecomposition(int) minkowskiDecomposition(0)}.size()&gt;1</tt>.
+     * <code>{@link #minkowskiDecomposition(int) minkowskiDecomposition(0)}.size()&gt;1</code>.
      * Please override this method if {@link #minkowskiDecomposition(int)} method
      * works slowly and it's possible to know, whether the pattern has Minkowski decomposition, much faster.
      *
-     * @return <tt>true</tt> if the Minkowski decomposition contains 2 or more elements.
+     * @return <code>true</code> if the Minkowski decomposition contains 2 or more elements.
      */
     public boolean hasMinkowskiDecomposition() {
         return minkowskiDecomposition(0).size() > 1;
