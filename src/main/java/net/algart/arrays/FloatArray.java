@@ -156,8 +156,8 @@ public interface FloatArray extends PFloatingArray {
     /*Repeat.SectionEnd all*/
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableFloatArray(float[])
-     * SimpleMemoryModel.asUpdatableFloatArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableFloatArray(float[])
+     * SimpleMemoryModel.asUpdatableFloatArray}(array)</code>.
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.

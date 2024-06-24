@@ -157,12 +157,12 @@ public interface IntArray extends PIntegerArray {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableIntArray(int[])
-     * SimpleMemoryModel.asUpdatableIntArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableIntArray(int[])
+     * SimpleMemoryModel.asUpdatableIntArray}(array)</code>.
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException     if <tt>array</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
      */
     static UpdatableIntArray as(int[] array) {
         return SimpleMemoryModel.asUpdatableIntArray(array);

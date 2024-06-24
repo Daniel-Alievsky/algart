@@ -373,8 +373,8 @@ public interface BitArray extends PFixedArray {
     }
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)
-     * SimpleMemoryModel.asUpdatableBitArray}(packedBitArray, length)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableBitArray(long[], long)
+     * SimpleMemoryModel.asUpdatableBitArray}(packedBitArray, length)</code>.
      *
      * @param packedBitArray the source <code>long[]</code> array.
      * @param length         the length of the returned bit array.

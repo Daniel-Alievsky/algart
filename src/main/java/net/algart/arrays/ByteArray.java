@@ -166,17 +166,17 @@ public interface ByteArray extends PIntegerArray {
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     int getInt(long index);
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableByteArray(byte[])
-     * SimpleMemoryModel.asUpdatableByteArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableByteArray(byte[])
+     * SimpleMemoryModel.asUpdatableByteArray}(array)</code>.
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException if <tt>array</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     static UpdatableByteArray as(byte[] array) {
         return SimpleMemoryModel.asUpdatableByteArray(array);

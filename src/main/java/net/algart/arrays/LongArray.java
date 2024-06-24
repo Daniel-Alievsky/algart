@@ -157,22 +157,22 @@ public interface LongArray extends PIntegerArray {
     /*Repeat.IncludeEnd*/
 
     /**
-     * Returns the element #<tt>index</tt>,
-     * truncated to the range <tt>Integer.MIN_VALUE..Integer.MAX_VALUE</tt>:
-     * <tt>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</tt>.
+     * Returns the element #<code>index</code>,
+     * truncated to the range <code>Integer.MIN_VALUE..Integer.MAX_VALUE</code>:
+     * <code>min(max(value, Integer.MIN_VALUE), Integer.MAX_VALUE)</code>.
      *
      * <p>Note that this method is already declared in {@link PFixedArray}.
      * It is redeclared here only for documentation and code search purposes.</p>
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     int getInt(long index);
 
     /**
-     * Equivalent to <tt>{@link SimpleMemoryModel#asUpdatableLongArray(long[])
-     * SimpleMemoryModel.asUpdatableLongArray}(array)</tt>.
+     * Equivalent to <code>{@link SimpleMemoryModel#asUpdatableLongArray(long[])
+     * SimpleMemoryModel.asUpdatableLongArray}(array)</code>.
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
