@@ -30,12 +30,12 @@ import java.util.Objects;
  * <p>A skeletal implementation of the {@link MemoryModel} interface to minimize
  * the effort required to implement this interface.</p>
  *
- * <p>This class implements all concrete <tt>newEmptyXxxArray</tt>,
- * <tt>newXxxArray</tt> and <tt>newUnresizableXxxArray</tt>
- * methods, and also all <tt>valueOf</tt> methods
- * via trivial calls of corresponding <tt>newEmptyArray</tt> and <tt>newArray</tt> methods.
- * This class implements all concrete <tt>newXxxMatrix</tt>
- * via trivial calls of <tt>newMatrix</tt> method.
+ * <p>This class implements all concrete <code>newEmptyXxxArray</code>,
+ * <code>newXxxArray</code> and <code>newUnresizableXxxArray</code>
+ * methods, and also all <code>valueOf</code> methods
+ * via trivial calls of corresponding <code>newEmptyArray</code> and <code>newArray</code> methods.
+ * This class implements all concrete <code>newXxxMatrix</code>
+ * via trivial calls of <code>newMatrix</code> method.
  * It also offers a simple implementation of some other methods: see comments to them.</p>
  *
  * @author Daniel Alievsky
@@ -272,15 +272,17 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @param elementType    the type of matrix elements.
      * @param dim            the dimensions of the matrix.
      * @return               created matrix.
-     * @throws NullPointerException            if <tt>elementType</tt> or <tt>dim</tt> is {@code null}.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>,
-     *                                         or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
-     *                                         or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                         <tt>dim[n] &lt; 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException            if <code>elementType</code> or <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>,
+     *                                         or if <code>arraySupertype</code> is {@link MutableArray} or its subtype,
+     *                                         or if the specified dimensions are incorrect:
+     *                                         <code>dim.length == 0</code>,
+     *                                         <code>dim[n] &lt; 0</code> for some <code>n</code>,
      *                                         or the product of all specified dimensions
-     *                                         is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws ClassCastException              if <tt>arraySupertype</tt> and <tt>elementType</tt> do not match.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     *                                         is greater than <code>Long.MAX_VALUE</code>.
+     * @throws ClassCastException              if <code>arraySupertype</code> and
+     * <code>elementType</code> do not match.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      * @throws TooLargeArrayException          if the product of all specified dimensions is too large
      *                                         for this memory model.
      */
@@ -315,21 +317,21 @@ public abstract class AbstractMemoryModel implements MemoryModel {
      * @param elementType                  the type of matrix elements.
      * @param dim                          the dimensions of the matrix.
      * @return created matrix.
-     * @throws NullPointerException     if <tt>elementType</tt> or <tt>dim</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>elementType</tt> is <tt>void.class</tt>,
-     *                                  or if <tt>arraySupertype</tt> is {@link MutableArray} or its subtype,
-     *                                  or if the specified dimensions are incorrect: <tt>dim.length == 0</tt>,
-     *                                  <tt>dim[n] &lt; 0</tt> for some <tt>n</tt>,
+     * @throws NullPointerException     if <code>elementType</code> or <code>dim</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>elementType</code> is <code>void.class</code>,
+     *                                  or if <code>arraySupertype</code> is {@link MutableArray} or its subtype,
+     *                                  or if the specified dimensions are incorrect: <code>dim.length == 0</code>,
+     *                                  <code>dim[n] &lt; 0</code> for some <code>n</code>,
      *                                  or the product of all specified dimensions
-     *                                  is greater than <tt>Long.MAX_VALUE</tt>.
-     * @throws ClassCastException       if <tt>arraySupertype</tt> and <tt>elementType</tt> do not match.
+     *                                  is greater than <code>Long.MAX_VALUE</code>.
+     * @throws ClassCastException       if <code>arraySupertype</code> and <code>elementType</code> do not match.
      * @throws UnsupportedElementTypeException
-     *                                  if <tt>elementType</tt> is not supported by this memory model
-     *                                  or, for a matrix smaller than <tt>maxSizeAllocatedInJavaMemory</tt>,
+     *                                  if <code>elementType</code> is not supported by this memory model
+     *                                  or, for a matrix smaller than <code>maxSizeAllocatedInJavaMemory</code>,
      *                                  by {@link SimpleMemoryModel}.
      * @throws TooLargeArrayException   if the product of all specified dimensions is too large
      *                                  for this memory model or,
-     *                                  for a matrix smaller than <tt>maxSizeAllocatedInJavaMemory</tt>,
+     *                                  for a matrix smaller than <code>maxSizeAllocatedInJavaMemory</code>,
      *                                  by {@link SimpleMemoryModel}.
      */
     public <T extends UpdatableArray> Matrix<T> newMatrix(

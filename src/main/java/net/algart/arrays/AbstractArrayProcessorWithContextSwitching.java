@@ -30,9 +30,9 @@ package net.algart.arrays;
  *
  * <p>This class stores the context, passed to the constructor and returned by {@link #context()} method,
  * in an internal field. The {@link #context(ArrayContext newContext)} method, switching the context,
- * creates new instance of this class by standard <tt>clone()</tt> method of this object and then
- * changes the internal field (containing a reference to the current context) to the <tt>newContext</tt> value.
- * Please override {@link #context(ArrayContext newContext)} or the standard <tt>clone()</tt> method
+ * creates new instance of this class by standard <code>clone()</code> method of this object and then
+ * changes the internal field (containing a reference to the current context) to the <code>newContext</code> value.
+ * Please override {@link #context(ArrayContext newContext)} or the standard <code>clone()</code> method
  * if this algorithm is not suitable.</p>
  *
  * @author Daniel Alievsky
@@ -49,7 +49,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <tt>{@link #context}!=null</tt>, in other case equal to
+     * <code>{@link #context}!=null</code>, in other case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     private MemoryModel memoryModel;
@@ -66,10 +66,10 @@ public abstract class AbstractArrayProcessorWithContextSwitching
 
     /**
      * <p>This method is implemented here via cloning this object
-     * (by standard <tt>clone()</tt> call) and replacing the value of the field,
-     * where a reference to the current context is stored, with <tt>newContext</tt> value.
+     * (by standard <code>clone()</code> call) and replacing the value of the field,
+     * where a reference to the current context is stored, with <code>newContext</code> value.
      * This technique is suitable for most implementation. However, if you need, you can
-     * override this method; maybe, it is enough to override <tt>clone()</tt> instead.
+     * override this method; maybe, it is enough to override <code>clone()</code> instead.
      *
      * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return           new instance with another context.
@@ -86,7 +86,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     }
 
     /**
-     * This implementation of the method just returns a reference to <tt>newContext</tt> argument, passed
+     * This implementation of the method just returns a reference to <code>newContext</code> argument, passed
      * to the constructor.
      *
      * <p>This method works very quickly (it just returns a value of some private field).
@@ -100,7 +100,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     /**
      * Returns the memory model used by this instance for all operations.
      * Equal to {@link #context()}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <tt>{@link #context()}!=null</tt>, in other case equal to
+     * <code>{@link #context()}!=null</code>, in other case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      *
      * <p>This method works very quickly (it just returns a value of some private field).
@@ -122,10 +122,10 @@ public abstract class AbstractArrayProcessorWithContextSwitching
      * @param toPart   the estimated ready part, from 0.0 to 1.0,
      *                 of the total algorithm at the finish of the subtask:
      *                 see {@link ArrayContext#updateProgress(net.algart.arrays.ArrayContext.Event)} method;
-     *                 must be not less than <tt>fromPart</tt> range.
+     *                 must be not less than <code>fromPart</code> range.
      * @return         new context, describing the execution of the subtask of the current task.
-     * @throws IllegalArgumentException if <tt>fromPart</tt> or <tt>toPart</tt> is not in
-     *                                  <tt>0.0..1.0</tt> range or if <tt>fromPart&gt;toPart</tt>.
+     * @throws IllegalArgumentException if <code>fromPart</code> or <code>toPart</code> is not in
+     *                                  <code>0.0..1.0</code> range or if <code>fromPart&gt;toPart</code>.
      */
     public final ArrayContext contextPart(double fromPart, double toPart) {
         ArrayContext c = context();

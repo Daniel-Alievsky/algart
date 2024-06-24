@@ -270,8 +270,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * @param value    the value to be stored in the elements of the array.
      * @return a reference to this array.
      * @throws IndexOutOfBoundsException for illegal <code>position</code> and <code>count</code>
-     *                                   (<tt>position &lt; 0 || count &lt; 0
-     *                                   || position + count &gt; length()</tt>).
+     *                                   (<code>position &lt; 0 || count &lt; 0
+     *                                   || position + count &gt; length()</code>).
      */
     public UpdatableFloatArray fill(long position, long count, double value) {
         return fill(position, count, (float) value);
@@ -317,8 +317,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
 
     /**
      * This implementation does the following:
-     * <tt>{@link #subArr(long, long) subArr}(position, count).{@link UpdatablePArray#copy(Array)
-     * copy}({@link Arrays#nFloatCopies(long, float) Arrays.nFloatCopies}(count, value))</tt>.
+     * <code>{@link #subArr(long, long) subArr}(position, count).{@link UpdatablePArray#copy(Array)
+     * copy}({@link Arrays#nFloatCopies(long, float) Arrays.nFloatCopies}(count, value))</code>.
      * Please override this method if it's possible to perform the same task more efficiently.
      *
      * @param position start index (inclusive) to be filled.
@@ -414,8 +414,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     }
 
     /**
-     * This implementation returns <tt>(UpdatableArray)super.{@link AbstractArray#shallowClone()
-     * shallowClone()}</tt>.
+     * This implementation returns <code>(UpdatableArray)super.{@link AbstractArray#shallowClone()
+     * shallowClone()}</code>.
      *
      * @return a shallow copy of this object.
      */
@@ -612,8 +612,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     }
 
     /**
-     * This implementation returns <tt>{@link #updatableClone(MemoryModel)
-     * updatableClone}({@link Arrays#SMM})</tt>.
+     * This implementation returns <code>{@link #updatableClone(MemoryModel)
+     * updatableClone}({@link Arrays#SMM})</code>.
      *
      * @return a copy of this object.
      */

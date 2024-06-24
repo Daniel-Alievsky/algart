@@ -30,7 +30,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>A simple pool of the Java arrays (usually work buffers) with the same size and type of elements,
- * based on a list of <tt>SoftReference</tt>.
+ * based on a list of <code>SoftReference</code>.
  * This class is useful in algorithms that frequently need to allocate little buffers (tens of kilobytes),
  * because it allows to reduce time spent by the allocation of Java memory and the garbage collection.</p>
  *
@@ -60,8 +60,8 @@ public final class JArrayPool {
      * @param elementType the type of elements in the arrays.
      * @param arrayLength the length of the arrays.
      * @return            new pool of Java arrays.
-     * @throws NullPointerException     if <tt>elementType</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>arrayLength</tt> is negative.
+     * @throws NullPointerException     if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>arrayLength</code> is negative.
      */
     public static JArrayPool getInstance(Class<?> elementType, int arrayLength) {
         return new JArrayPool(elementType, arrayLength);

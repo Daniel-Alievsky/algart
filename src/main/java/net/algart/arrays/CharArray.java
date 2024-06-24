@@ -164,7 +164,7 @@ public interface CharArray extends PFixedArray {
      *
      * @param index index of element to get.
      * @return the element at the specified position in this array.
-     * @throws IndexOutOfBoundsException if index out of range <tt>0..length()-1</tt>.
+     * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     int getInt(long index);
 
@@ -174,7 +174,7 @@ public interface CharArray extends PFixedArray {
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException if <tt>array</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     static UpdatableCharArray as(char[] array) {
         return SimpleMemoryModel.asUpdatableCharArray(array);

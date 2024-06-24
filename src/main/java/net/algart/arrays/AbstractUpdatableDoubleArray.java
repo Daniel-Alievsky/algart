@@ -289,8 +289,8 @@ public abstract class AbstractUpdatableDoubleArray extends AbstractDoubleArray i
 
     /**
      * This implementation does the following:
-     * <tt>{@link #subArr(long, long) subArr}(position, count).{@link UpdatablePArray#copy(Array)
-     * copy}({@link Arrays#nDoubleCopies(long, double) Arrays.nDoubleCopies}(count, value))</tt>.
+     * <code>{@link #subArr(long, long) subArr}(position, count).{@link UpdatablePArray#copy(Array)
+     * copy}({@link Arrays#nDoubleCopies(long, double) Arrays.nDoubleCopies}(count, value))</code>.
      * Please override this method if it's possible to perform the same task more efficiently.
      *
      * @param position start index (inclusive) to be filled.
@@ -386,8 +386,8 @@ public abstract class AbstractUpdatableDoubleArray extends AbstractDoubleArray i
     }
 
     /**
-     * This implementation returns <tt>(UpdatableArray)super.{@link AbstractArray#shallowClone()
-     * shallowClone()}</tt>.
+     * This implementation returns <code>(UpdatableArray)super.{@link AbstractArray#shallowClone()
+     * shallowClone()}</code>.
      *
      * @return a shallow copy of this object.
      */
@@ -584,8 +584,8 @@ public abstract class AbstractUpdatableDoubleArray extends AbstractDoubleArray i
     }
 
     /**
-     * This implementation returns <tt>{@link #updatableClone(MemoryModel)
-     * updatableClone}({@link Arrays#SMM})</tt>.
+     * This implementation returns <code>{@link #updatableClone(MemoryModel)
+     * updatableClone}({@link Arrays#SMM})</code>.
      *
      * @return a copy of this object.
      */

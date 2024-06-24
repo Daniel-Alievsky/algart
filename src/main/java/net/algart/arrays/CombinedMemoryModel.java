@@ -35,10 +35,10 @@ import java.util.Objects;
  * A set of these arrays is named "the internal <i>storage</i>" of the combined array.</p>
  *
  * <p>There is an essential problem with storing large arrays of small objects in Java language.
- * For example, let a <tt>point</tt> is described by 2 integer values:
- * <tt>x</tt> and <tt>y</tt>,
+ * For example, let a <code>point</code> is described by 2 integer values:
+ * <code>x</code> and <code>y</code>,
  * and we need to store 10 million points. In C++ or Pascal language, we can create an array
- * of 10&nbsp;000&nbsp;000 structures (<tt>struct</tt> or <tt>record</tt> keyword), and this array
+ * of 10&nbsp;000&nbsp;000 structures (<code>struct</code> or <code>record</code> keyword), and this array
  * occupies ~80 MB memory (4 bytes per every integer).</p>
  *
  * <p>Unfortunately, the only simple way to store 10 million points in Java
@@ -61,7 +61,7 @@ import java.util.Objects;
  * <p>The arrays created by this memory model (<i>"combined" arrays</i>) allow a solution of this problem.
  * This memory model stores an array of any Java objects in one or several "parallel" another AlgART arrays -
  * typically, wrappers for Java-arrays of primitive types
- * (created by {@link SimpleMemoryModel}) or for <tt>ByteBuffer</tt> objects
+ * (created by {@link SimpleMemoryModel}) or for <code>ByteBuffer</code> objects
  * (created by {@link LargeMemoryModel}). This array is created quickly,
  * does not make a difficult problem for future garbage collection
  * and occupies only necessary amount of memory.</p>
@@ -69,7 +69,7 @@ import java.util.Objects;
  * <p>However, <i>in many situations, combined arrays work slower, than
  * simple array of references as listed above</i>. In particular,
  * an access to stored elements of combined arrays are usually slower <i>in several times</i>,
- * than usage direct references array or standard <tt>ArrayList</tt>.
+ * than usage direct references array or standard <code>ArrayList</code>.
  * Usually, you need combined arrays if you should save occupied memory
  * or quickly create large array.</p>
  *
@@ -85,7 +85,7 @@ import java.util.Objects;
  *
  * <p>Below are the main features of arrays created via this memory model.</p><ul>
  *
- * <li>Only element types inherited from <tt>Object</tt> are supported (not primitive):
+ * <li>Only element types inherited from <code>Object</code> are supported (not primitive):
  * so, the created arrays always implement the {@link ObjectArray} /
  * {@link UpdatableObjectArray} / {@link MutableObjectArray} interface.</li>
  *
@@ -106,7 +106,7 @@ import java.util.Objects;
  * <li>Arrays, created by this memory model, never implement {@link DirectAccessible} interface.</li>
  *
  * <li>Arrays, created by this memory model, never have <i>new</i> or <i>new-read-only-view</i>
- * status: {@link Array#isNew()} and {@link Array#isNewReadOnlyView()} method always return <tt>false</tt>,
+ * status: {@link Array#isNew()} and {@link Array#isNewReadOnlyView()} method always return <code>false</code>,
  * because they are views of some other ({@link #getStorage(Array) underlying}) arrays.</li>
  *
  * <li>The {@link Array#loadResources(ArrayContext)},
@@ -130,16 +130,16 @@ import java.util.Objects;
  * is based on calls of the corresponding methods of the storage array (and their
  * {@link Array#subArray(long, long) subarrays});
  * so, result of {@link Array#equals(Object)} (for the same combiner in both arrays)
- * <i>does not depend on implementation of <tt>equals</tt> method</i>
+ * <i>does not depend on implementation of <code>equals</code> method</i>
  * in the class of elements ({@link Array#elementType()})</li>
  *
  * <li>However, {@link Array#hashCode()} method, according to the comments for it,
- * <i>is still based on implementation of <tt>hashCode</tt> method</i>
+ * <i>is still based on implementation of <code>hashCode</code> method</i>
  * in the class of elements.
  * So, you <i>should store in combined arrays only such objects,
- * that have <tt>hashCode</tt> method based on the their content
+ * that have <code>hashCode</code> method based on the their content
  * (stored inside a combined array via {@link CombinedMemoryModel.Combiner})</i>.
- * In other case, standard contract for <tt>hashCode</tt> and <tt>equals</tt>
+ * In other case, standard contract for <code>hashCode</code> and <code>equals</code>
  * methods can be violated, that can lead to problems, for example, while using arrays
  * as keys in hash maps.</li>
  * </ul>
@@ -163,13 +163,13 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * several "parallel" AlgART arrays, named "storage".
      * An element with given index should be stored in the following elements in storage:<pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;storage[k][d[k]*index...d[k]*(index+1)-1], k=0,1,...</pre>
-     * where <tt>d</tt> is an array returned by {@link #numbersOfElementsPerOneCombinedElement(int)}
+     * where <code>d</code> is an array returned by {@link #numbersOfElementsPerOneCombinedElement(int)}
      * method.</p>
      *
      * <p>Important! The classes of objects stored or loaded by this combiner <b>should
-     * have correct <tt>hashCode</tt> method, based on the content of an object</b>:
+     * have correct <code>hashCode</code> method, based on the content of an object</b>:
      * the data stored or loaded by this combiner. See also <a href="CombinedMemoryModel.html#hashCodeEquals">comments
-     * to <tt>CombinedMemoryModel</tt></a>.
+     * to <code>CombinedMemoryModel</code></a>.
      *
      * <p>Typical implementation supposes that a storage is one or several arrays of primitive types
      * (created by {@link SimpleMemoryModel}).</p>
@@ -181,24 +181,24 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      */
     public interface Combiner<E> {
         /**
-         * Returns an element #<tt>index</tt> of the combined array from the given set of AlgART arrays.
+         * Returns an element #<code>index</code> of the combined array from the given set of AlgART arrays.
          * Unlike {@link CombinerInPlace#getInPlace(long, Object, Array[])},
          * this method always creates a new object and should work always.
          * This method is called by {@link ObjectArray#getElement(long)}.
          *
          * @param index   an index in the combined array.
          * @param storage a set of arrays where the retrieved content is stored now.
-         * @return new created object containing an element #<tt>index</tt> of combined array.
+         * @return new created object containing an element #<code>index</code> of combined array.
          */
         E get(long index, Array[] storage);
 
         /**
-         * Stores the element <tt>value</tt> at position #<tt>index</tt> of the combined array
+         * Stores the element <code>value</code> at position #<code>index</code> of the combined array
          * inside the given set of AlgART arrays.
          * This method is called by {@link UpdatableObjectArray#setElement(long, Object)}.
          *
-         * <p>Important: this method must not throw <tt>NullPointerException</tt>
-         * if the <tt>value</tt> argument is {@code null}. Instead, it should
+         * <p>Important: this method must not throw <code>NullPointerException</code>
+         * if the <code>value</code> argument is {@code null}. Instead, it should
          * store some "signal" value in the storage, that cannot be stored for any
          * possible non-null elements, or just some default ("empty") value.
          * In the first case, further {@link #get get(index, storage)} should
@@ -217,28 +217,28 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * Called while creating new combined arrays.
          *
          * <p>The initial lengths of created arrays should be calculated on the base of
-         * passed <tt>length</tt> argument, that means the length of necessary
-         * <i>combined</i> array. Namely, the length of returned array #<tt>k</tt>
+         * passed <code>length</code> argument, that means the length of necessary
+         * <i>combined</i> array. Namely, the length of returned array #<code>k</code>
          * should be equal to <tt>length*{@link #numbersOfElementsPerOneCombinedElement(int)
          * numbersOfElementsPerOneCombinedElement}(k)</tt>. This condition is automatically
          * verified while creating combined arrays.
          *
-         * <p>If <tt>unresizable</tt> argument is <tt>true</tt>, it means that this method
+         * <p>If <code>unresizable</code> argument is <code>true</code>, it means that this method
          * is called for creating {@link Array#isUnresizable() unresizable} combined array.
          * In this case we recommend to use {@link MemoryModel#newUnresizableArray(Class, long)
          * MemoryModel.newUnresizableArray} method for creating storage arrays.
-         * If <tt>unresizable</tt> argument is <tt>false</tt>, every element of returned
+         * If <code>unresizable</code> argument is <code>false</code>, every element of returned
          * Java array <i>must</i> implement {@link MutableArray} interface.
          *
          * @param length      initial length of corresponding <i>combined</i> arrays.
-         * @param unresizable if <tt>true</tt>, the created arrays <i>should</i> be unresizable,
+         * @param unresizable if <code>true</code>, the created arrays <i>should</i> be unresizable,
          *                    in other case they <i>must</i> be mutable and implement {@link MutableArray} interface.
          * @return created storage.
          */
         UpdatableArray[] allocateStorage(long length, boolean unresizable);
 
         /**
-         * Should return the number of sequential elements of the array #<tt>indexOfArrayInStorage</tt>
+         * Should return the number of sequential elements of the array #<code>indexOfArrayInStorage</code>
          * in the storage, used for storing one element of the combined array.
          * Called while creating new combined arrays.
          *
@@ -272,14 +272,14 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         E allocateElement();
 
         /**
-         * Loads an element #<tt>index</tt> of the combined array from the given set of arrays
-         * into <tt>resultValue</tt> object.
+         * Loads an element #<code>index</code> of the combined array from the given set of arrays
+         * into <code>resultValue</code> object.
          * This method is called by {@link ObjectInPlaceArray#getInPlace(long, Object)} method.
          *
          * @param index       an index in the combined array.
          * @param resultValue the object where the retrieved content will be stored.
          * @param storage     a set of arrays where the retrieved content is stored now.
-         * @throws NullPointerException if <tt>resultValue</tt> is {@code null}.
+         * @throws NullPointerException if <code>resultValue</code> is {@code null}.
          */
         void getInPlace(long index, E resultValue, Array[] storage);
     }
@@ -291,27 +291,27 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * <p>If the argument of {@link CombinedMemoryModel#getInstance(Combiner)} method
      * implements this interface, then {@link Array#getData(long, Object, int, int) getData(...)},
      * {@link UpdatableArray#setData(long, Object, int, int) setData(...)} and
-     * {@link Array#buffer buffer-access} methods will use block <tt>get/set</tt>
+     * {@link Array#buffer buffer-access} methods will use block <code>get/set</code>
      * methods declared in this interface. In other case, those methods
-     * will call separate <tt>get/set</tt> method, declared in {@link Combiner},
+     * will call separate <code>get/set</code> method, declared in {@link Combiner},
      * for every loaded/stored element of the combined array.</p>
      *
      * @param <E> the generic type of array elements in object arrays.
      */
     public interface BufferedCombiner<E> extends Combiner<E> {
         /**
-         * Reads <tt>count</tt> elements of the combined array,
-         * starting from te specified index, from the given set of AlgART arrays (<tt>storage</tt>).
-         * Loaded elements are placed into <tt>resultValues</tt>
-         * Java array at the positions <tt>#offset..#offset+count-1</tt>.
+         * Reads <code>count</code> elements of the combined array,
+         * starting from te specified index, from the given set of AlgART arrays (<code>storage</code>).
+         * Loaded elements are placed into <code>resultValues</code>
+         * Java array at the positions <code>#offset..#offset+count-1</code>.
          * This method is called by {@link ObjectArray#getData(long, Object, int, int)}
          * and {@link DataObjectBuffer#map(long)} methods.
          *
-         * <p>Note: if <tt>resultValues[offset+k]!=null</tt> for some index <tt>k (0&lt;=k&lt;count)</tt>,
+         * <p>Note: if <code>resultValues[offset+k]!=null</code> for some index <code>k (0&lt;=k&lt;count)</code>,
          * and the element type allows changing full element state,
          * this method <i>may</i> not to allocate new object for this index,
-         * but load the corresponding combined element <tt>#index+k</tt>
-         * into <tt>resultValues[offset+k]</tt>.
+         * but load the corresponding combined element <code>#index+k</code>
+         * into <code>resultValues[offset+k]</code>.
          * It can essentially optimize loading a large number of elements.</p>
          *
          * @param index        starting index in the combined array.
@@ -323,16 +323,16 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         void get(long index, E[] resultValues, int offset, int count, Array[] storage);
 
         /**
-         * Stores <tt>count</tt> elements of the combined array,
+         * Stores <code>count</code> elements of the combined array,
          * starting from te specified index,
-         * inside the given set of AlgART arrays (<tt>storage</tt>).
-         * The elements are loaded from <tt>values</tt> Java array
-         * from at the positions <tt>#offset..#offset+count-1</tt>.
+         * inside the given set of AlgART arrays (<code>storage</code>).
+         * The elements are loaded from <code>values</code> Java array
+         * from at the positions <code>#offset..#offset+count-1</code>.
          * This method is called by {@link UpdatableObjectArray#setData(long, Object, int, int)}
          * and {@link DataObjectBuffer#force(long, long)} methods.
          *
-         * <p>Important: this method must not throw <tt>NullPointerException</tt>
-         * if some element of <tt>values</tt> Java array is {@code null}. Instead, it should
+         * <p>Important: this method must not throw <code>NullPointerException</code>
+         * if some element of <code>values</code> Java array is {@code null}. Instead, it should
          * store some "signal" value in the storage, that cannot be stored for any
          * possible non-null elements, or just some default ("empty") value.
          * In the first case, further {@link #get get(index, storage)} should
@@ -355,15 +355,15 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * <p>To create a combiner, based in this class, it's enough
      * to override only 2 very simple methods
      * {@link #loadElement()} and {@link #storeElement(Object)}.
-     * These methods operate with a little <tt>ByteBuffer</tt>
+     * These methods operate with a little <code>ByteBuffer</code>
      * {@link #workStorage}, and this class automatically
      * copy the content of this buffer from / to the storage array.</p>
      *
      * <p>This combiner always use a single {@link ByteArray} as a storage.
-     * If you need to store different types of data (for example, <tt>int</tt>
-     * and <tt>double</tt> fields of the stored objects),
+     * If you need to store different types of data (for example, <code>int</code>
+     * and <code>double</code> fields of the stored objects),
      * you may use corresponding views of {@link #workStorage} buffer
-     * (<tt>asIntBuffer()</tt>, <tt>asDoubleBuffer</tt>, etc.).</p>
+     * (<code>asIntBuffer()</code>, <code>asDoubleBuffer</code>, etc.).</p>
      *
      * <p>Unfortunately, for simple structure of element types,
      * this combiner usually work essentially slower
@@ -373,7 +373,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      */
     public abstract static class AbstractByteBufferCombiner<E> implements Combiner<E> {
         /**
-         * A little <tt>ByteBuffer</tt> for storing one element of the combined array.
+         * A little <code>ByteBuffer</code> for storing one element of the combined array.
          * This reference is copied from the corresponding constructor argument.
          */
         protected final ByteBuffer workStorage;
@@ -388,7 +388,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * Creates a new instance of this combiner.
          *
          * @param elementType              the type of elements of the combined array.
-         * @param workStorageForOneElement a little <tt>ByteBuffer</tt> enough to store one element
+         * @param workStorageForOneElement a little <code>ByteBuffer</code> enough to store one element
          *                                 of the combined array. May be direct ByteBuffer, but the heap
          *                                 one usually provides better performance.
          * @param memoryModel              the {@link MemoryModel memory model} which will be used for creating
@@ -479,7 +479,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          * Creates a new instance of this combiner.
          *
          * @param elementType              the type of elements of the combined array.
-         * @param workStorageForOneElement a little <tt>ByteBuffer</tt> enough to store one element
+         * @param workStorageForOneElement a little <code>ByteBuffer</code> enough to store one element
          *                                 of the combined array. May be direct ByteBuffer, but the heap
          *                                 one usually provides better performance.
          * @param memoryModel              the {@link MemoryModel memory model} which will be used for creating
@@ -523,7 +523,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
     /**
      * Creates new memory model with corresponding combiner.
-     * If <tt>combiner</tt> argument implements {@link CombinerInPlace} (not only {@link Combiner}),
+     * If <code>combiner</code> argument implements {@link CombinerInPlace} (not only {@link Combiner}),
      * then the arrays created via this memory model will implement {@link ObjectInPlaceArray} interface
      * (not only {@link ObjectArray}).
      *
@@ -537,20 +537,20 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param <E>      the generic type of array elements.
      * @param combiner will be used for creation of combined arrays by this memory model.
      * @return created memory model.
-     * @throws NullPointerException if <tt>combiner</tt> is {@code null}.
+     * @throws NullPointerException if <code>combiner</code> is {@code null}.
      */
     public static <E> CombinedMemoryModel<E> getInstance(Combiner<E> combiner) {
         return new CombinedMemoryModel<E>(combiner);
     }
 
     /**
-     * This implementation returns <tt>{@link #newEmptyArray(Class, long) newArray}(elementType, 10)</tt>.
+     * This implementation returns <code>{@link #newEmptyArray(Class, long) newArray}(elementType, 10)</code>.
      *
      * @param elementType the type of array elements.
      * @return created array.
-     * @throws NullPointerException            if <tt>elementType</tt> is {@code null}.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is not supported of <tt>void.class</tt>.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is not supported by this memory model.
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is not supported of <code>void.class</code>.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is not supported by this memory model.
      */
     public MutableArray newEmptyArray(Class<?> elementType) {
         return newEmptyArray(elementType, 10);
@@ -558,7 +558,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
 
     /**
      * Constructs an empty array with the specified element type and initial capacity.
-     * The element type can be any non-primitive class (inheritor of <tt>Object</tt> class).
+     * The element type can be any non-primitive class (inheritor of <code>Object</code> class).
      * The created array will always implement the {@link MutableObjectArray} interface
      * (or {@link ObjectInPlaceArray}, if the combiner, passed while creating the memory model, implements
      * {@link CombinedMemoryModel.CombinerInPlace}).
@@ -566,10 +566,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * @param elementType     the type of array elements (non-primitive).
      * @param initialCapacity the initial capacity of the array.
      * @return created array.
-     * @throws NullPointerException            if <tt>elementType</tt> is {@code null}.
-     * @throws IllegalArgumentException        if <tt>elementType</tt> is <tt>void.class</tt>
+     * @throws NullPointerException            if <code>elementType</code> is {@code null}.
+     * @throws IllegalArgumentException        if <code>elementType</code> is <code>void.class</code>
      *                                         or if the specified initial length is negative.
-     * @throws UnsupportedElementTypeException if <tt>elementType</tt> is a primitive type.
+     * @throws UnsupportedElementTypeException if <code>elementType</code> is a primitive type.
      * @throws TooLargeArrayException          if the specified initial length is too large.
      * @see #isElementTypeSupported(Class)
      */
@@ -612,10 +612,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns <tt>true</tt> if this element type is an inheritor of <tt>Object</tt> class.
+     * Returns <code>true</code> if this element type is an inheritor of <code>Object</code> class.
      *
      * @param elementType the type of array elements.
-     * @return <tt>true</tt> if this memory model supports this element type.
+     * @return <code>true</code> if this memory model supports this element type.
      */
     public boolean isElementTypeSupported(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -631,7 +631,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     /**
-     * This implementation always returns <tt>Long.MAX_VALUE</tt> for supported
+     * This implementation always returns <code>Long.MAX_VALUE</code> for supported
      * (non-primitive) element types.
      * Actual maximal possible array length depends on memory model used by the combiner
      * and on the number of sequential elements of storage arrays
@@ -639,7 +639,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param elementType the type of array elements.
      * @return maximal possible length of arrays supported by this memory model.
-     * @throws NullPointerException if <tt>elementType</tt> is {@code null}.
+     * @throws NullPointerException if <code>elementType</code> is {@code null}.
      */
     public long maxSupportedLength(Class<?> elementType) {
         Objects.requireNonNull(elementType, "Null elementType argument");
@@ -651,12 +651,13 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns <tt>true</tt> if the passed instance is a combined array created by some instance of
+     * Returns <code>true</code> if the passed instance is a combined array created by some instance of
      * combined memory model.
-     * Returns <tt>false</tt> if the passed array is {@code null} or an AlgART array created by another memory model.
+     * Returns <code>false</code> if the passed array is {@code null}
+     * or an AlgART array created by another memory model.
      *
      * @param array the checked array.
-     * @return <tt>true</tt> if this array is a combined array created by a combined memory model.
+     * @return <code>true</code> if this array is a combined array created by a combined memory model.
      */
     public static boolean isCombinedArray(Array array) {
         return array instanceof CombinedArray<?>;
@@ -665,9 +666,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     /**
      * Returns an immutable combined array backed by the storage,
      * which consists of immutable views of the passed argument
-     * (<tt>storage[0].{@link Array#asImmutable() asImmutable()}</tt>,
-     * (<tt>storage[1].{@link Array#asImmutable() asImmutable()}</tt>, ...,
-     * (<tt>storage[storage.length-1].{@link Array#asImmutable() asImmutable()}</tt>,
+     * (<code>storage[0].{@link Array#asImmutable() asImmutable()}</code>,
+     * (<code>storage[1].{@link Array#asImmutable() asImmutable()}</code>, ...,
+     * (<code>storage[storage.length-1].{@link Array#asImmutable() asImmutable()}</code>,
      * with the current combiner (specified while creating this memory model).
      *
      * <p>If modifications of the passed arrays lead to reallocation
@@ -708,7 +709,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * will be reflected in the returned combined array, and vice-versa.
      *
      * <p>Using shallow copies means that any further changes of lengths or capacities
-     * of the passed <tt>storage</tt> arrays will not affect to the length or capacity of
+     * of the passed <code>storage</code> arrays will not affect to the length or capacity of
      * the returned combined array. However, changes of elements of the passed arrays
      * will be reflected in the returned combined array, and vice-versa. Also it means that
      * if modifications of the passed arrays characteristics lead to reallocation
@@ -716,7 +717,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
-     * for <tt>storage[]</tt> elements, or any modification of <tt>storage[]</tt> elements
+     * for <code>storage[]</code> elements, or any modification of <code>storage[]</code> elements
      * in a case when they are {@link Array#asCopyOnNextWrite() copy-on-next-write}.
      *
      * @param elementType the type of created array elements
@@ -769,8 +770,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
+     * @throws NullPointerException     if <code>combinedArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>combinedArray</code> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
      */
@@ -792,8 +793,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
+     * @throws NullPointerException     if <code>combinedArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>combinedArray</code> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
      */
@@ -806,8 +807,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      *
      * @param combinedArray the combined array.
      * @return array of shallow copies of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
+     * @throws NullPointerException     if <code>combinedArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>combinedArray</code> is not a combined array
      *                                  (created by this memory model).
      * @see Array#shallowClone()
      */
@@ -816,14 +817,14 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
     }
 
     /**
-     * Returns array of string representations (results of <tt>toString()</tt> method}
+     * Returns array of string representations (results of <code>toString()</code> method}
      * of arrays used as internal storage,
      * where the elements of the combined array are stored.
      *
      * @param combinedArray the combined array.
      * @return array of string representations of arrays used as internal storage.
-     * @throws NullPointerException     if <tt>combinedArray</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>combinedArray</tt> is not a combined array
+     * @throws NullPointerException     if <code>combinedArray</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>combinedArray</code> is not a combined array
      *                                  (created by this memory model).
      */
     public static String[] getStorageToStrings(Array combinedArray) {
