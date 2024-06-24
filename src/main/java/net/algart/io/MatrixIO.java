@@ -41,8 +41,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class MatrixIO {
-    private static final boolean USE_DEPRECATED_READ_WRITE = false;
-
     public enum SerializationMode {
         JAVA_BASED,
         BYTE_BUFFER
@@ -153,10 +151,6 @@ public class MatrixIO {
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
-        if (USE_DEPRECATED_READ_WRITE) {
-            writeBufferedImage(file, (new ColorImageFormatter.Simple()).toBufferedImage(image), customizer);
-            return;
-        }
         final Matrix<PArray> matrix = Matrices.interleave(null, image);
         BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
         writeBufferedImage(file, bufferedImage, customizer);
@@ -164,9 +158,6 @@ public class MatrixIO {
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         BufferedImage bufferedImage = readBufferedImage(file);
-        if (USE_DEPRECATED_READ_WRITE) {
-            return ((ColorImageFormatter) new ColorImageFormatter.Simple()).toImage(bufferedImage);
-        }
         final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
         return Matrices.separate(null, matrix);
     }
