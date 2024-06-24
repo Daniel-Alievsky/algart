@@ -28,14 +28,15 @@ import net.algart.arrays.*;
 import net.algart.io.awt.BufferedImageToMatrix;
 import net.algart.io.awt.MatrixToBufferedImage;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
+import javax.imageio.*;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -111,21 +112,73 @@ public class MatrixIO {
 
     public static void writeBufferedImage(Path file, BufferedImage image, Consumer<ImageWriteParam> customizer)
             throws IOException {
+        writeBufferedImageBySuffix(file, image, extension(file), customizer);
+    }
+
+    public static void writeBufferedImageBySuffix(
+            Path file,
+            BufferedImage image,
+            String fileSuffix,
+            Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
-        String formatName = extension(file);
-        writeBufferedImage(file, image, customizer, formatName);
+        Objects.requireNonNull(fileSuffix, "Null fileSuffix");
+        // Note that the following call would be incorrect!
+        //      ImageIO.write(image, fileSuffix, file.toFile())
+        // ImageIO.write method uses "String formatName" argument, which can differ from
+        // file extension, for example, for JPEG-2000 in com.github.jaiimageio:
+        // the format names are "jpeg 2000", "JPEG 2000", "jpeg2000", "JPEG2000",
+        // but the file suffixes are only "jp2".
+
+        final Iterator<ImageWriter> writers = ImageIO.getImageWritersBySuffix(fileSuffix);
+        final ImageWriter writer = writers.hasNext() ? writers.next() : null;
+        if (writer == null) {
+            throw new UnsupportedImageFormatException("Cannot write " + file +
+                    ": no writers found for file suffix \"" + fileSuffix + "\"");
+        }
+        writeBufferedImage(file, image, customizer, writer);
+    }
+
+    public static void writeBufferedImageByFormatName(
+            Path file,
+            BufferedImage image,
+            String formatName,
+            Consumer<ImageWriteParam> customizer) throws IOException {
+        Objects.requireNonNull(file, "Null file");
+        Objects.requireNonNull(image, "Null image");
+        Objects.requireNonNull(formatName, "Null formatName");
+        ImageTypeSpecifier type = ImageTypeSpecifier.createFromRenderedImage(image);
+        final Iterator<ImageWriter> writers = ImageIO.getImageWriters(type, formatName);
+        final ImageWriter writer = writers.hasNext() ? writers.next() : null;
+        if (writer == null) {
+            throw new UnsupportedImageFormatException("Cannot write " + file +
+                    ": no writers found for format name \"" + formatName +
+                    "\" for writing " + image);
+        }
+        writeBufferedImage(file, image, customizer, writer);
     }
 
     public static void writeBufferedImage(
             Path file,
             BufferedImage image,
             Consumer<ImageWriteParam> customizer,
-            String formatName) throws IOException {
-        Objects.requireNonNull(formatName, "Null formatName");
-        if (!ImageIO.write(image, formatName, file.toFile())) {
-            throw new UnsupportedImageFormatException("Cannot write " + file + ": no \"" + formatName +
-                    "\" format writer for this image type (" + image + ")");
+            ImageWriter writer) throws IOException {
+        Objects.requireNonNull(file, "Null file");
+        Objects.requireNonNull(image, "Null image");
+        Objects.requireNonNull(writer, "Null writer");
+        final File output = file.toFile();
+        //noinspection ResultOfMethodCallIgnored
+        output.delete();
+        // - the same operation is performed in ImageIO class;
+        // without this, an existing file will not be truncated: only its start part will be overwritten
+        try (ImageOutputStream ios = ImageIO.createImageOutputStream(output)) {
+            writer.setOutput(ios);
+            final ImageWriteParam writeParam = writer.getDefaultWriteParam();
+            if (customizer != null) {
+                customizer.accept(writeParam);
+            }
+            final IIOImage iioImage = new IIOImage(image, null, null);
+            writer.write(null, iioImage, writeParam);
         }
     }
 
@@ -379,7 +432,7 @@ public class MatrixIO {
             assert matrixInfo.additionalProperties().containsKey(LargeMemoryModel.CONSTANT_PROPERTY_NAME);
         } else {
             switch (serializationMode) {
-                case JAVA_BASED: {
+                case JAVA_BASED -> {
                     byte[] bytes = null;
                     for (long p = 0, n = array.length(); p < n; ) {
                         int len = (int) Math.min(n - p, SERIALIZATION_BUFFER_SIZE);
@@ -393,14 +446,11 @@ public class MatrixIO {
                         dataOutputStream.write(bytes, 0, numberOfBytes);
                         p += len;
                     }
-                    break;
                 }
-                case BYTE_BUFFER: {
+                case BYTE_BUFFER -> {
                     Arrays.write(dataOutputStream, array, byteOrder);
-                    break;
                 }
-                default:
-                    throw new UnsupportedOperationException("Unsupported " + serializationMode);
+                default -> throw new UnsupportedOperationException("Unsupported " + serializationMode);
             }
         }
         dataOutputStream.flush();

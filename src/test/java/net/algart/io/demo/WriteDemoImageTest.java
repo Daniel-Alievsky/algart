@@ -28,6 +28,8 @@ import net.algart.arrays.*;
 import net.algart.io.MatrixIO;
 import net.algart.io.awt.MatrixToBufferedImage;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,14 +38,26 @@ import java.util.List;
 
 public class WriteDemoImageTest {
     public static void main(String[] args) throws IOException {
-        if (args.length < 5) {
-            System.out.printf("Usage: %s target_image.jpg/png/bmp byte|short|int|long|float|double " +
-                            "channels dimX dimY%n",
+        int startArgIndex = 0;
+        boolean imageIOWrite = false;
+        if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-imageIOWrite")) {
+            imageIOWrite = true;
+            startArgIndex++;
+        }
+        String formatName = null;
+        if (startArgIndex < args.length && args[startArgIndex].toLowerCase().startsWith("-formatname=")) {
+            formatName = args[startArgIndex].substring("-formatname=".length());
+            startArgIndex++;
+        }
+        if (args.length < startArgIndex + 5) {
+            System.out.printf("Usage: [-imageIOWrite] " +
+                            "%s target_image.jpg/png/bmp byte|short|int|long|float|double " +
+                            "channels dimX dimY [quality]%n",
                     WriteDemoImageTest.class);
             return;
         }
-        final Path targetFile = Paths.get(args[0]);
-        final String elementTypeName = args[1];
+        final Path targetFile = Paths.get(args[startArgIndex]);
+        final String elementTypeName = args[startArgIndex + 1];
         final Class<?> elementType  = elementTypeName.equals("boolean") ? boolean.class
                 : elementTypeName.equals("char") ? char.class
                 : elementTypeName.equals("byte") ? byte.class
@@ -55,18 +69,37 @@ public class WriteDemoImageTest {
         if (elementType == null) {
             throw new IllegalArgumentException("Invalid element type name " + elementTypeName);
         }
-        final int channels = Integer.parseInt(args[2]);
-        final int dimX = Integer.parseInt(args[3]);
-        final int dimY = Integer.parseInt(args[4]);
+        final int channels = Integer.parseInt(args[startArgIndex + 2]);
+        final int dimX = Integer.parseInt(args[startArgIndex + 3]);
+        final int dimY = Integer.parseInt(args[startArgIndex + 4]);
+        final Double quality = args.length < startArgIndex + 6 ? null : Double.parseDouble(args[startArgIndex + 5]);
         Object array = makeSamples(elementType, channels, dimX, dimY);
         List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
-        System.out.println("Writing " + targetFile + "...");
         final Matrix<PArray> matrix = Matrices.interleave(null, image);
         final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
-        MatrixIO.writeBufferedImage(targetFile, bi);
+        final String fileSuffix = MatrixIO.extension(targetFile);
+        if (imageIOWrite) {
+            System.out.println("Writing " + targetFile + " via ImageIO.write...");
+            if (!ImageIO.write(bi, fileSuffix, targetFile.toFile())) {
+                throw new IOException("Failed to write image " + targetFile);
+            }
+        } else if (formatName != null) {
+            System.out.println("Writing " + targetFile +  " by format name \"" + formatName + "\"...");
+            MatrixIO.writeBufferedImageByFormatName(targetFile, bi, formatName, param -> setQuality(param, quality));
+        } else {
+            System.out.println("Writing " + targetFile + " by file suffix...");
+            MatrixIO.writeBufferedImage(targetFile, bi, param -> setQuality(param, quality));
+        }
+    }
+
+    private static void setQuality(ImageWriteParam param, Double quality) {
+        if (quality != null) {
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            param.setCompressionQuality(quality.floatValue());
+        }
     }
 
     private static Object makeSamples(Class<?> elementType, int bandCount, int dimX, int dimY) {
