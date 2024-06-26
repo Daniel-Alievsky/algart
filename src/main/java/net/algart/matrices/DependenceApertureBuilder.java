@@ -51,10 +51,10 @@ import java.util.Objects;
  * can depend only on elements of the source matrix (or matrices) with coordinates</p>
  *
  * <blockquote>
- *     <b>x</b>+<b>a</b> =
- *     <i>x</i><sub>0</sub>+<i>a</i><sub>0</sub>,
- *     <i>x</i><sub>1</sub>+<i>a</i><sub>1</sub>, ...,
- *     <i>x</i><sub><i>n</i>&minus;1</sub>+<i>a</i><sub><i>n</i>&minus;1</sub>,
+ * <b>x</b>+<b>a</b> =
+ * <i>x</i><sub>0</sub>+<i>a</i><sub>0</sub>,
+ * <i>x</i><sub>1</sub>+<i>a</i><sub>1</sub>, ...,
+ * <i>x</i><sub><i>n</i>&minus;1</sub>+<i>a</i><sub><i>n</i>&minus;1</sub>,
  * </blockquote>
  *
  * <p>where
@@ -79,7 +79,7 @@ import java.util.Objects;
  * <p>The main method, solving this task, is</p>
  *
  * <blockquote>
- *     {@link #getAperture(int dimCount, Pattern[] patterns, boolean[] inverted, short additionalSpace)}
+ * {@link #getAperture(int dimCount, Pattern[] patterns, boolean[] inverted, short additionalSpace)}
  * </blockquote>
  *
  * <p>The resulting rectangular aperture is built on the base of the rounded coordinate ranges of every
@@ -128,19 +128,19 @@ public enum DependenceApertureBuilder {
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
-     * Java <tt>+</tt> and <tt>-</tt> operators with <tt>long</tt> values and, in a case of overflow,
-     * throws <tt>IndexOutOfBoundsException</tt>.
+     * Java <code>+</code> and <code>-</code> operators with <code>long</code> values and, in a case of overflow,
+     * throws <code>IndexOutOfBoundsException</code>.
      *
      * <p>This mode is suitable for algorithms, which perform several sequential operations over the matrix,
-     * when each elements of the result of each operation <tt>#k</tt> with coordinates
+     * when each elements of the result of each operation <code>#k</code> with coordinates
      * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
      * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
      * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
      * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
-     * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
+     * <code>patterns[k]</code> or, if <code>inverted[k]</code> is <code>true</code>,
+     * of the symmetric pattern <code>patterns[k].{@link Pattern#symmetric() symmetric()}</code>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#dilationErosion(Matrix, Pattern, Pattern,
@@ -179,20 +179,20 @@ public enum DependenceApertureBuilder {
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
-     * Java <tt>+</tt> and <tt>-</tt> operators with <tt>long</tt> values and, in a case of overflow,
-     * throws <tt>IndexOutOfBoundsException</tt>.
+     * Java <code>+</code> and <code>-</code> operators with <code>long</code> values and, in a case of overflow,
+     * throws <code>IndexOutOfBoundsException</code>.
      *
      * <p>This mode is suitable for algorithms, which perform several independent operations over the same
      * original matrix,
-     * when each elements of the result of each operation <tt>#k</tt> with coordinates
+     * when each elements of the result of each operation <code>#k</code> with coordinates
      * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
      * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
      * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
      * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
-     * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
+     * <code>patterns[k]</code> or, if <code>inverted[k]</code> is <code>true</code>,
+     * of the symmetric pattern <code>patterns[k].{@link Pattern#symmetric() symmetric()}</code>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#beucherGradient(Matrix, Pattern)}.
@@ -231,19 +231,19 @@ public enum DependenceApertureBuilder {
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
-     * Java <tt>+</tt> and <tt>-</tt> operators with <tt>long</tt> values and, in a case of overflow,
-     * throws <tt>IndexOutOfBoundsException</tt>.
+     * Java <code>+</code> and <code>-</code> operators with <code>long</code> values and, in a case of overflow,
+     * throws <code>IndexOutOfBoundsException</code>.
      *
      * <p>This mode is suitable for algorithms, which perform several sequential operations over the matrix,
-     * when each elements of the result of each operation <tt>#k</tt> with coordinates
+     * when each elements of the result of each operation <code>#k</code> with coordinates
      * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
      * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
      * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
      * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
-     * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
+     * <code>patterns[k]</code> or, if <code>inverted[k]</code> is <code>true</code>,
+     * of the symmetric pattern <code>patterns[k].{@link Pattern#symmetric() symmetric()}</code>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#maskedDilationErosion(Matrix, Pattern, Pattern)}.
@@ -259,20 +259,20 @@ public enum DependenceApertureBuilder {
     public static final short DEFAULT_ADDITIONAL_SPACE = 2;
 
     /**
-     * Equivalent to <tt>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
+     * Equivalent to <code>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
      * getAperture}(dimCount, new Pattern[]{pattern},
-     * new boolean[]{inverted}, {@link #DEFAULT_ADDITIONAL_SPACE})</tt>.
+     * new boolean[]{inverted}, {@link #DEFAULT_ADDITIONAL_SPACE})</code>.
      *
-     * @param dimCount        the number of dimensions.
-     * @param pattern         the pattern, describing the dependence apertures the algorithm.
-     * @param inverted        if <tt>true</tt>, then <tt>patterns</tt> is supposed to be inverted.
-     * @return                rectangular dependence aperture, describing dependence of the elements of the full
-     *                        processing algorithm.
-     * @throws NullPointerException      if <tt>pattern</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
+     * @param dimCount the number of dimensions.
+     * @param pattern  the pattern, describing the dependence apertures the algorithm.
+     * @param inverted if <code>true</code>, then <code>patterns</code> is supposed to be inverted.
+     * @return rectangular dependence aperture, describing dependence of the elements of the full
+     * processing algorithm.
+     * @throws NullPointerException      if <code>pattern</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>dimCount&lt;=0</code>,
      *                                   or the passed pattern has
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
-     *                                   <tt>dimCount</tt> argument.
+     *                                   <code>dimCount</code> argument.
      * @throws IndexOutOfBoundsException in a case of integer (63-bit) overflow while calculation of the resulting
      *                                   aperture: see {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants.
      */
@@ -281,64 +281,64 @@ public enum DependenceApertureBuilder {
     }
 
     /**
-     * Equivalent to <tt>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
+     * Equivalent to <code>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
      * getAperture}(dimCount, new Pattern[]{pattern1, pattern2},
-     * new boolean[]{inverted1, inverted2}, {@link #DEFAULT_ADDITIONAL_SPACE})</tt>.
+     * new boolean[]{inverted1, inverted2}, {@link #DEFAULT_ADDITIONAL_SPACE})</code>.
      *
-     * @param dimCount        the number of dimensions.
-     * @param pattern1        the pattern, describing the dependence apertures of the 1st part
-     *                        (stage) of the full algorithm.
-     * @param pattern2        the pattern, describing the dependence apertures of the 2nd part
-     *                        (stage) of the full algorithm.
-     * @param inverted1       if <tt>true</tt>, then <tt>pattern1</tt> is supposed to be inverted.
-     * @param inverted2       if <tt>true</tt>, then <tt>pattern2</tt> is supposed to be inverted.
-     * @return                rectangular dependence aperture, describing dependence of the elements of the full
-     *                        processing algorithm, consisting of 2 parts (stages).
-     * @throws NullPointerException      if <tt>patterns1</tt> or <tt>pattern2</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
+     * @param dimCount  the number of dimensions.
+     * @param pattern1  the pattern, describing the dependence apertures of the 1st part
+     *                  (stage) of the full algorithm.
+     * @param pattern2  the pattern, describing the dependence apertures of the 2nd part
+     *                  (stage) of the full algorithm.
+     * @param inverted1 if <code>true</code>, then <code>pattern1</code> is supposed to be inverted.
+     * @param inverted2 if <code>true</code>, then <code>pattern2</code> is supposed to be inverted.
+     * @return rectangular dependence aperture, describing dependence of the elements of the full
+     * processing algorithm, consisting of 2 parts (stages).
+     * @throws NullPointerException      if <code>patterns1</code> or <code>pattern2</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>dimCount&lt;=0</code>,
      *                                   or if some of the passed patterns have
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
-     *                                   <tt>dimCount</tt> argument.
+     *                                   <code>dimCount</code> argument.
      * @throws IndexOutOfBoundsException in a case of integer (63-bit) overflow while calculation of the resulting
      *                                   aperture: see {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants.
-     *
      */
     public IRectangularArea getAperture(int dimCount,
-        Pattern pattern1, boolean inverted1, Pattern pattern2, boolean inverted2) {
+                                        Pattern pattern1, boolean inverted1, Pattern pattern2, boolean inverted2) {
         return getAperture(dimCount, new Pattern[]{pattern1, pattern2}, new boolean[]{inverted1, inverted2});
     }
 
     /**
-     * Equivalent to <tt>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
-     * getAperture}(dimCount, patterns, inverted, {@link #DEFAULT_ADDITIONAL_SPACE})</tt>.
+     * Equivalent to <code>{@link #getAperture(int, net.algart.math.patterns.Pattern[], boolean[], short)
+     * getAperture}(dimCount, patterns, inverted, {@link #DEFAULT_ADDITIONAL_SPACE})</code>.
      *
-     * @param dimCount        the number of dimensions.
-     * @param patterns        the set of patterns, describing the dependence apertures of different parts
-     *                        (stages) of the full algorithms, for example, in terms
-     *                        of {@link StreamingApertureProcessor} class.
-     * @param inverted        if some element <tt>inverted[k]</tt> is <tt>true</tt>, then the corresponding element
-     *                        <tt>patterns[k]</tt> is supposed to be inverted.
-     * @return                rectangular dependence aperture, describing dependence of the elements of the full
-     *                        processing algorithm, consisting of <tt>patterns.length</tt> parts (stages).
-     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is {@code null},
-     *                                   or if some elements of <tt>patterns</tt> array is {@code null}.
-     * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
-     *                                   or if <tt>patterns</tt> and <tt>inverted</tt> arrays have different lengths,
-     *                                   or if their length is zero (<tt>patterns.length==0</tt>),
+     * @param dimCount the number of dimensions.
+     * @param patterns the set of patterns, describing the dependence apertures of different parts
+     *                 (stages) of the full algorithms, for example, in terms
+     *                 of {@link StreamingApertureProcessor} class.
+     * @param inverted if some element <code>inverted[k]</code> is <code>true</code>,
+     *                 then the corresponding element
+     *                 <code>patterns[k]</code> is supposed to be inverted.
+     * @return rectangular dependence aperture, describing dependence of the elements of the full
+     * processing algorithm, consisting of <code>patterns.length</code> parts (stages).
+     * @throws NullPointerException      if <code>patterns</code> or <code>inverted</code> argument is {@code null},
+     *                                   or if some elements of <code>patterns</code> array is {@code null}.
+     * @throws IllegalArgumentException  if <code>dimCount&lt;=0</code>,
+     *                                   or if <code>patterns</code> and <code>inverted</code>
+     *                                   arrays have different lengths,
+     *                                   or if their length is zero (<code>patterns.length==0</code>),
      *                                   or if some of the passed patterns have
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
-     *                                   <tt>dimCount</tt> argument.
+     *                                   <code>dimCount</code> argument.
      * @throws IndexOutOfBoundsException in a case of integer (63-bit) overflow while calculation of the resulting
      *                                   aperture: see {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants.
-     *
      */
     public IRectangularArea getAperture(int dimCount, Pattern[] patterns, boolean[] inverted) {
-        return getAperture(dimCount, patterns,inverted, DEFAULT_ADDITIONAL_SPACE);
+        return getAperture(dimCount, patterns, inverted, DEFAULT_ADDITIONAL_SPACE);
     }
 
     /**
      * Builds the rectangular aperture on the base of specified array of apertures-patterns.
-     * If <tt>inverted[k]</tt> is <tt>true</tt>, then the corresponding pattern is supposed to be inverted
+     * If <code>inverted[k]</code> is <code>true</code>, then the corresponding pattern is supposed to be inverted
      * (i.e. replaced with its {@link Pattern#symmetric() symmetric} version).
      * Please see comments to {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants
      * for detailed specification of the behaviour of this method.
@@ -347,23 +347,24 @@ public enum DependenceApertureBuilder {
      * @param patterns        the set of patterns, describing the dependence apertures of different parts
      *                        (stages) of the full algorithms, for example, in terms
      *                        of {@link StreamingApertureProcessor} class.
-     * @param inverted        if some element <tt>inverted[k]</tt> is <tt>true</tt>, then the corresponding element
-     *                        <tt>patterns[k]</tt> is supposed to be inverted.
+     * @param inverted        if some element <code>inverted[k]</code> is <code>true</code>,
+     *                        then the corresponding element
+     *                        <code>patterns[k]</code> is supposed to be inverted.
      * @param additionalSpace additional gap, added to all coordinate ranges of the resulting aperture.
-     * @return                rectangular dependence aperture, describing dependence of the elements of the full
-     *                        processing algorithm, consisting of <tt>patterns.length</tt> parts (stages).
-     * @throws NullPointerException      if <tt>patterns</tt> or <tt>inverted</tt> argument is {@code null},
-     *                                   or if some elements of <tt>patterns</tt> array is {@code null}.
-     * @throws IllegalArgumentException  if <tt>dimCount&lt;=0</tt>,
-     *                                   or if <tt>patterns</tt> and <tt>inverted</tt> arrays have different lengths,
-     *                                   or if their length is zero (<tt>patterns.length==0</tt>),
-     *                                   or if <tt>additionalSpace&lt;0</tt>,
+     * @return rectangular dependence aperture, describing dependence of the elements of the full
+     * processing algorithm, consisting of <code>patterns.length</code> parts (stages).
+     * @throws NullPointerException      if <code>patterns</code> or <code>inverted</code> argument is {@code null},
+     *                                   or if some elements of <code>patterns</code> array is {@code null}.
+     * @throws IllegalArgumentException  if <code>dimCount&lt;=0</code>,
+     *                                   or if <code>patterns</code> and <code>inverted</code>
+     *                                   arrays have different lengths,
+     *                                   or if their length is zero (<code>patterns.length==0</code>),
+     *                                   or if <code>additionalSpace&lt;0</code>,
      *                                   or if some of the passed patterns have
      *                                   {@link Pattern#dimCount() number of dimensions}, <i>less</i> than
-     *                                   <tt>dimCount</tt> argument.
+     *                                   <code>dimCount</code> argument.
      * @throws IndexOutOfBoundsException in a case of integer (63-bit) overflow while calculation of the resulting
      *                                   aperture: see {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants.
-     *
      */
     public IRectangularArea getAperture(int dimCount, Pattern[] patterns, boolean[] inverted, short additionalSpace) {
         Objects.requireNonNull(patterns, "Null patterns argument");
@@ -389,7 +390,7 @@ public enum DependenceApertureBuilder {
             Objects.requireNonNull(patterns[i], "Null pattern #" + i);
             if (patterns[i].dimCount() < dimCount) {
                 throw new IllegalArgumentException("Pattern #" + i
-                    + " has insufficient dimensions (<" + dimCount + ")");
+                        + " has insufficient dimensions (<" + dimCount + ")");
             }
         }
         long[] allMin = new long[dimCount]; // zero-filled by Java
@@ -422,14 +423,14 @@ public enum DependenceApertureBuilder {
     }
 
     /**
-     * Returns a newly created array <tt>result</tt> with the same length as the first argument, where
-     * <tt>result[k] = matrixDimensions[k])+aperture.{@link IRectangularArea#width(int) width}(k)</tt>.
-     * This method also checks that all dimensions in the <tt>matrixDimensions</tt> array,
-     * as well as the resulting dimensions <tt>result</tt> array, are allowed dimensions for some
+     * Returns a newly created array <code>result</code> with the same length as the first argument, where
+     * <code>result[k] = matrixDimensions[k])+aperture.{@link IRectangularArea#width(int) width}(k)</code>.
+     * This method also checks that all dimensions in the <code>matrixDimensions</code> array,
+     * as well as the resulting dimensions <code>result</code> array, are allowed dimensions for some
      * AlgART matrix, i.e. are non-negative and their product is not greater than
-     * <tt>Long.MAX_VALUE</tt>. If it is not so, <tt>IndexOutOfBoundsException</tt> is thrown.
+     * <code>Long.MAX_VALUE</code>. If it is not so, <code>IndexOutOfBoundsException</code> is thrown.
      *
-     * <p>In the special case, when some of the elements of the <tt>matrixDimensions</tt> array is zero,
+     * <p>In the special case, when some of the elements of the <code>matrixDimensions</code> array is zero,
      * this method returns a precise clone of this array without changes.
      *
      * <p>Note: the matrix, returned by
@@ -439,23 +440,24 @@ public enum DependenceApertureBuilder {
      *
      * @param matrixDimensions {@link Matrix#dimensions() dimensions} of some <i>n</i>-dimensional matrix.
      * @param aperture         the dependence aperture.
-     * @return                 new dimensions, extended by the given aperture.
+     * @return new dimensions, extended by the given aperture.
      * @throws NullPointerException      if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException  if <tt>matrixDimensions.length!=aperture.{@link IRectangularArea#coordCount()
-     *                                   coordCount()}</tt>,
-     *                                   or if <tt>matrixDimensions[k]&lt;0</tt> for some <tt>k</tt>.
-     * @throws IndexOutOfBoundsException if product of all elements of <tt>matrixDimensions</tt> array
-     *                                   is greater than <tt>Long.MAX_VALUE</tt>,
-     *                                   or in a case of integer overflow while calculating <tt>result[k]</tt>,
+     * @throws IllegalArgumentException  if <code>matrixDimensions.length!=aperture.{@link
+     *                                   IRectangularArea#coordCount()
+     *                                   coordCount()}</code>,
+     *                                   or if <code>matrixDimensions[k]&lt;0</code> for some <code>k</code>.
+     * @throws IndexOutOfBoundsException if product of all elements of <code>matrixDimensions</code> array
+     *                                   is greater than <code>Long.MAX_VALUE</code>,
+     *                                   or in a case of integer overflow while calculating <code>result[k]</code>,
      *                                   or if product of all elements of the resulting array
-     *                                   is greater than <tt>Long.MAX_VALUE</tt>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      */
     public static long[] extendDimensions(long[] matrixDimensions, IRectangularArea aperture) {
         Objects.requireNonNull(matrixDimensions, "Null matrixDimensions");
         Objects.requireNonNull(aperture, "Null aperture");
         if (matrixDimensions.length != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrixDimensions.length
-                + " dimensions in array and " + aperture.coordCount() + "-dimensional aperture");
+                    + " dimensions in array and " + aperture.coordCount() + "-dimensional aperture");
         }
         for (int k = 0; k < matrixDimensions.length; k++) {
             if (matrixDimensions[k] < 0) {
@@ -463,7 +465,7 @@ public enum DependenceApertureBuilder {
             }
         }
         long[] result = matrixDimensions.clone();
-         // after this moment, "result" cannot be changed by parallel thread
+        // after this moment, "result" cannot be changed by parallel thread
         long len = Arrays.longMul(result);
         if (len == Long.MIN_VALUE) {
             throw new IndexOutOfBoundsException("Too large matrixDimensions: their product > Long.MAX_VALUE");
@@ -475,43 +477,44 @@ public enum DependenceApertureBuilder {
             result[k] += aperture.width(k);
             if (result[k] < 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation: "
-                    + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
-                    + aperture + ", is greater than Long.MAX_VALUE");
+                        + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
+                        + aperture + ", is greater than Long.MAX_VALUE");
             }
         }
         if (Arrays.longMul(result) == Long.MIN_VALUE) {
             throw new IndexOutOfBoundsException("Too large matrix continuation: product of dimensions "
-                + "of the matrix, extended to the corresponding aperture "
-                + aperture + ", is greater than Long.MAX_VALUE");
+                    + "of the matrix, extended to the corresponding aperture "
+                    + aperture + ", is greater than Long.MAX_VALUE");
         }
         return result;
     }
 
     /**
-     * Returns <tt>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
-     * subMatrix}(from, to, continuationMode)</tt>,
-     * where <tt>from[k] = aperture.{@link IRectangularArea#min(int) min}(k)</tt>
-     * and <tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)+aperture.{@link IRectangularArea#max(int)
-     * max}(k)</tt>.
+     * Returns <code>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
+     * subMatrix}(from, to, continuationMode)</code>,
+     * where <code>from[k] = aperture.{@link IRectangularArea#min(int) min}(k)</code>
+     * and <code>to[k] = matrix.{@link Matrix#dim(int) dim}(k)+aperture.{@link IRectangularArea#max(int)
+     * max}(k)</code>.
      * This method allows to extends the source matrix in such a way, that every element of the resulting matrix
      * of some processing algorithm, having the given dependence aperture, will depend only on the existing
      * elements of the extended matrix (lying inside its bounds).
      *
-     * <p>In the special case <tt>matrix.{@link Matrix#size() size()}==0</tt>,
-     * this method returns the <tt>matrix</tt> argument without changes.
+     * <p>In the special case <code>matrix.{@link Matrix#size() size()}==0</code>,
+     * this method returns the <code>matrix</code> argument without changes.
      *
-     * <p>This method performs additional checks, whether adding <tt>aperture.max().{@link IPoint#coord(int)
-     * coord}(k)</tt> to the matrix dimension leads to integer overflow, and throws
-     * <tt>IndexOutOfBoundsException</tt> in a case of overflow.
+     * <p>This method performs additional checks, whether adding <code>aperture.max().{@link IPoint#coord(int)
+     * coord}(k)</code> to the matrix dimension leads to integer overflow, and throws
+     * <code>IndexOutOfBoundsException</code> in a case of overflow.
      *
      * @param matrix           some <i>n</i>-dimensional matrix.
      * @param aperture         the dependence aperture.
      * @param continuationMode the continuation mode for extending the matrix.
-     * @return                 new matrix, extended by the given aperture.
+     * @return new matrix, extended by the given aperture.
      * @throws NullPointerException      if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException  if <tt>matrix.{@link Matrix#dimCount()
-     *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount() coordCount()}</tt>.
-     * @throws IndexOutOfBoundsException in a case of integer overflow while calculating <tt>to[k]</tt>,
+     * @throws IllegalArgumentException  if <code>matrix.{@link Matrix#dimCount()
+     *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount()
+     *                                   coordCount()}</code>.
+     * @throws IndexOutOfBoundsException in a case of integer overflow while calculating <code>to[k]</code>,
      *                                   or in the same situations as the corresponding
      *                                   {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
      *                                   subMatrix} call.
@@ -521,14 +524,13 @@ public enum DependenceApertureBuilder {
      * @see #extendDimensions(long[], net.algart.math.IRectangularArea)
      */
     public static <T extends PArray> Matrix<T> extend(Matrix<T> matrix, IRectangularArea aperture,
-        Matrix.ContinuationMode continuationMode)
-    {
+                                                      Matrix.ContinuationMode continuationMode) {
         Objects.requireNonNull(matrix, "Null matrix");
         Objects.requireNonNull(aperture, "Null aperture");
         Objects.requireNonNull(continuationMode, "Null continuation mode");
         if (matrix.dimCount() != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
-                + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
+                    + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
         }
         if (matrix.size() == 0) {
             return matrix;
@@ -540,31 +542,32 @@ public enum DependenceApertureBuilder {
             to[k] = matrix.dim(k) + aperture.max(k);
             if (to[k] < 0 && aperture.max(k) >= 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation: "
-                    + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
-                    + aperture + ", is greater than Long.MAX_VALUE");
+                        + "the dimension #" + k + " of the matrix, extended to the corresponding aperture "
+                        + aperture + ", is greater than Long.MAX_VALUE");
             }
         }
         return matrix.subMatrix(from, to, continuationMode);
     }
 
     /**
-     * Returns <tt>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
-     * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC})</tt>,
-     * where <tt>from[k] = -aperture.{@link IRectangularArea#min(int) min}(k)</tt>
-     * and <tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)-aperture.{@link IRectangularArea#max(int)
-     * max}(k)</tt>.
+     * Returns <code>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
+     * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC})</code>,
+     * where <code>from[k] = -aperture.{@link IRectangularArea#min(int) min}(k)</code>
+     * and <code>to[k] = matrix.{@link Matrix#dim(int) dim}(k)-aperture.{@link IRectangularArea#max(int)
+     * max}(k)</code>.
      * It is the reverse method for {@link #extend(Matrix, IRectangularArea, Matrix.ContinuationMode)}.
      *
-     * <p>In the special case <tt>matrix.{@link Matrix#size() size()}==0</tt>,
-     * this method returns the <tt>matrix</tt> argument without changes.
+     * <p>In the special case <code>matrix.{@link Matrix#size() size()}==0</code>,
+     * this method returns the <code>matrix</code> argument without changes.
      *
      * @param matrix   some <i>n</i>-dimensional matrix, extended by
      *                 {@link #extend(Matrix, IRectangularArea, Matrix.ContinuationMode)} method.
      * @param aperture the dependence aperture.
-     * @return         new matrix, reduced to the original sizes.
-     * @throws NullPointerException if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException  if <tt>matrix.{@link Matrix#dimCount()
-     *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount() coordCount()}</tt>.
+     * @return new matrix, reduced to the original sizes.
+     * @throws NullPointerException      if one of the arguments is {@code null}.
+     * @throws IllegalArgumentException  if <code>matrix.{@link Matrix#dimCount()
+     *                                   dimCount()}!=aperture.{@link IRectangularArea#coordCount()
+     *                                   coordCount()}</code>.
      * @throws IndexOutOfBoundsException in the same situations as the corresponding
      *                                   {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
      *                                   subMatrix} call.
@@ -574,7 +577,7 @@ public enum DependenceApertureBuilder {
         Objects.requireNonNull(aperture, "Null aperture");
         if (matrix.dimCount() != aperture.coordCount()) {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
-                + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
+                    + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
         }
         if (matrix.size() == 0) {
             return matrix;
@@ -589,21 +592,21 @@ public enum DependenceApertureBuilder {
     }
 
     /**
-     * Returns sum of the arguments <tt>a+b</tt>, if this sum can be precisely represented by <tt>long</tt>
-     * type, i&#46;e&#46; if it lies in <tt>Long.MIN_VALUE..Long.MAX_VALUE</tt> range,
-     * or throws <tt>IndexOutOfBoundsException</tt> in other case.
-     * (Unlike this method, the simple Java operator <tt>a+b</tt> always returns low 64 bits
-     * of the mathematical sum <tt>a+b</tt> without any checks and exceptions.)
+     * Returns sum of the arguments <code>a+b</code>, if this sum can be precisely represented by <code>long</code>
+     * type, i&#46;e&#46; if it lies in <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range,
+     * or throws <code>IndexOutOfBoundsException</code> in other case.
+     * (Unlike this method, the simple Java operator <code>a+b</code> always returns low 64 bits
+     * of the mathematical sum <code>a+b</code> without any checks and exceptions.)
      *
      * <p>This method is useful for accurate calculating matrix dimensions and integer rectangular areas,
      * for example, for calculating dimensions of a matrix, extended with some rectangular aperture.
      *
      * @param a first summand.
      * @param b second summand.
-     * @return  sum <tt>a+b</tt>.
-     * @throws IndexOutOfBoundsException in a case of integer overflow, i.e. if the mathematical sum <tt>a+b</tt>
-     *                                   of this integers is less than <tt>Long.MIN_VALUE</tt>
-     *                                   or greater than <tt>Long.MAX_VALUE</tt>.
+     * @return sum <code>a+b</code>.
+     * @throws IndexOutOfBoundsException in a case of integer overflow, i.e. if the mathematical sum <code>a+b</code>
+     *                                   of this integers is less than <code>Long.MIN_VALUE</code>
+     *                                   or greater than <code>Long.MAX_VALUE</code>.
      */
     public static long safelyAdd(long a, long b) throws IndexOutOfBoundsException {
         long result = a + b;
@@ -613,7 +616,7 @@ public enum DependenceApertureBuilder {
         if ((a < 0) != (result < 0)) // overflow: the sum has another sign than both summands
         {
             throw new IndexOutOfBoundsException("Integer overflow while summing two long values " + a + " and " + b
-                + " (maybe, dimensions of some matrices or areas)");
+                    + " (maybe, dimensions of some matrices or areas)");
         }
         return result;
     }

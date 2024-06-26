@@ -65,10 +65,10 @@ import java.util.*;
  * (relatively little) matrices, process them and store the results
  * into the corresponding sub-matrices of the destination matrices.
  * For maximal efficiency, the tiler tries to use {@link SimpleMemoryModel} for storing and processing every
- * rectangular block (a tile); you can control this with <tt>maxTempJavaMemory</tt> argument of all
- * instantiation methods <tt>getInstance</tt>. In addition, the matrices, allocated by the tiled processor
+ * rectangular block (a tile); you can control this with <code>maxTempJavaMemory</code> argument of all
+ * instantiation methods <code>getInstance</code>. In addition, the matrices, allocated by the tiled processor
  * (if it creates them), are automatically tiled by {@link Matrix#tile(long...)} method (see more details below in
- * the specification of <tt>process</tt> method in the tiled aperture processors, stage <b>4.d</b>).</p>
+ * the specification of <code>process</code> method in the tiled aperture processors, stage <b>4.d</b>).</p>
  *
  * <p>Second, many algorithms (for example, the basic implementation of
  * {@link net.algart.matrices.morphology.Morphology mathematical morphology} from
@@ -95,7 +95,7 @@ import java.util.*;
  * the <i>tiled processor</i>.</p>
  *
  * <ul>
- *     <li>The generic type <tt>K</tt> of indexes of the source and resulting matrices in the tiled
+ *     <li>The generic type <code>K</code> of indexes of the source and resulting matrices in the tiled
  *     processor is the same as in the one-tile processor. (It is obvious from the declaration
  *     of {@link #tile(ApertureProcessor) tile} method.)
  *     <br>&nbsp;</li>
@@ -107,17 +107,17 @@ import java.util.*;
  *         described in "Throws" section in
  *         {@link ApertureProcessor#process(Map, Map) comments to "process" method},
  *         a corresponding exception is thrown. In particular, this implementation checks,
- *         that all matrices in the <tt>dest</tt> map are either {@code null}
+ *         that all matrices in the <code>dest</code> map are either {@code null}
  *         or updatable, i.e. their {@link Matrix#array() built-in arrays} implement
- *         {@link UpdatableArray} interface &mdash; if at least one non-null matrix in the <tt>dest</tt> map
- *         is not updatable, <tt>IllegalArgumentException</tt> is thrown.<br>
+ *         {@link UpdatableArray} interface &mdash; if at least one non-null matrix in the <code>dest</code> map
+ *         is not updatable, <code>IllegalArgumentException</code> is thrown.<br>
  *         In addition, the given implementation throws
- *         <tt>IllegalArgumentException</tt> if one of the passed matrices has
+ *         <code>IllegalArgumentException</code> if one of the passed matrices has
  *         {@link Matrix#dimCount() number of dimensions}, other than the number of dimensions of this tiler,
  *         returned by its {@link #dimCount()} method.<br>
  *         If no source matrices and no non-null resulting matrices were passed to this method,
- *         i.e. if <tt>src.isEmpty()</tt> and either <tt>dest.isEmpty()</tt>, or all matrices
- *         <tt>dest.get(key)==null</tt>, then {@link ApertureProcessor#process(Map, Map) process}
+ *         i.e. if <code>src.isEmpty()</code> and either <code>dest.isEmpty()</code>, or all matrices
+ *         <code>dest.get(key)==null</code>, then {@link ApertureProcessor#process(Map, Map) process}
  *         method does nothing and immediately returns.
  *         If at least one of dimensions of the passed matrices is 0, then
  *         {@link ApertureProcessor#process(Map, Map) process}
@@ -128,16 +128,16 @@ import java.util.*;
  *         rectangular area (an instance of {@link IRectangularArea}), containing all dependence apertures
  *         <b>A</b><sub><i>i</i></sub> of the one-tile processor (returned by its
  *         {@link ApertureProcessor#dependenceAperture(Object) dependenceAperture(<i>i</i>)} method)
- *         for all indexes <i>i</i>&isin;<i>Q</i>=<tt>src.keySet()</tt>, and also containing the origin
- *         of coordinates. While this calculation, <tt>IndexOutOfBoundsException</tt> will be thrown,
+ *         for all indexes <i>i</i>&isin;<i>Q</i>=<code>src.keySet()</code>, and also containing the origin
+ *         of coordinates. While this calculation, <code>IndexOutOfBoundsException</code> will be thrown,
  *         if the number of dimensions for one of results of {@link ApertureProcessor#dependenceAperture(Object)
  *         dependenceAperture(<i>i</i>)} calls is less than {@link #dimCount()}, but if some
  *         of them has more than {@link #dimCount()} dimensions, the extra dimensions of such aperture
  *         are just ignored (here and in the further algorithm).
  *         <br>&nbsp;</li>
  *
- *         <li>It splits all source matrices <b>M</b><sub><i>i</i></sub> (<tt>src.get(<i>i</i>)</tt>)
- *         and all resulting matrices <b>M'</b><sub><i>j</i></sub> (<tt>dest.get(<i>j</i>)</tt>) into
+ *         <li>It splits all source matrices <b>M</b><sub><i>i</i></sub> (<code>src.get(<i>i</i>)</code>)
+ *         and all resulting matrices <b>M'</b><sub><i>j</i></sub> (<code>dest.get(<i>j</i>)</code>) into
  *         a set of rectangular non-overlapping <i>tiles</i>, i.e. sub-matrices, the dimensions of which are chosen
  *         to be equal to the desired tile dimensions of this tiler ({@link #tileDim()}) or, maybe, less.
  *         (This stage does not suppose any actual calculations: we consider this stage
@@ -173,40 +173,42 @@ import java.util.*;
  *         method of the tiled processor does the following, for every tile (<b>f</b>,&nbsp;<b>t</b>)
  *         and the corresponding extended tile (<b>fe</b>,&nbsp;<b>te</b>):
  *         <ol type="a">
- *             <li>For each index of a source matrices <i>i</i>&isin;<i>Q</i>=<tt>src.keySet()</tt> and
- *             for each index of a resulting non-null matrix <i>j</i>&isin;<i>R</i>=<tt>dest.keySet()</tt>,
+ *             <li>For each index of a source matrices <i>i</i>&isin;<i>Q</i>=<code>src.keySet()</code> and
+ *             for each index of a resulting non-null matrix <i>j</i>&isin;<i>R</i>=<code>dest.keySet()</code>,
  *             passed to this method, it allocates new matrices
  *             <b>m</b><sub><i>i</i></sub> and <b>m'</b><sub><i>j</i></sub>
  *             with the same element type as <b>M</b><sub><i>i</i></sub> and <b>M'</b><sub><i>j</i></sub>
  *             and with dimensions, equal to the sizes of the extended tile
  *             <i>te<sub>k</sub></i>&minus;<i>fe<sub>k</sub></i>.
- *             For each index <i>j</i> of a null resulting matrix <b>M'</b><sub><i>j</i></sub><tt>=null</tt>,
- *             passed to this method, it's assumed <b>m'</b><sub><i>j</i></sub><tt>=null</tt>.
+ *             For each index <i>j</i> of a null resulting matrix <b>M'</b><sub><i>j</i></sub><code>=null</code>,
+ *             passed to this method, it's assumed <b>m'</b><sub><i>j</i></sub><code>=null</code>.
  *             The newly created (relatively small) matrices (or {@code null} references) <b>m</b><sub><i>i</i></sub>
- *             and <b>m'</b><sub><i>j</i></sub> are stored in two <tt>Map&lt;K,&nbsp;Matrix&lt;?&gt;&gt;</tt> objects
- *             <tt>srcTile</tt> (<b>m</b><sub><i>i</i></sub>) and <tt>destTile</tt> (<b>m'</b><sub><i>j</i></sub>),
- *             in the same manner as the original <tt>dest</tt> and <tt>src</tt> arguments.<br>
+ *             and <b>m'</b><sub><i>j</i></sub> are stored in
+ *             two <code>Map&lt;K,&nbsp;Matrix&lt;?&gt;&gt;</code> objects
+ *             <code>srcTile</code> (<b>m</b><sub><i>i</i></sub>)
+ *             and <code>destTile</code> (<b>m'</b><sub><i>j</i></sub>),
+ *             in the same manner as the original <code>dest</code> and <code>src</code> arguments.<br>
  *             Note that the tiled processor tries to use the created matrices <b>m</b><sub><i>i</i></sub>
  *             and <b>m'</b><sub><i>j</i></sub> many times for different tiles, because there is no sense
  *             to create them again for every tile.<br>
  *             This algorithm tries to create all matrices in {@link SimpleMemoryModel}. But, it the total
  *             amount of memory, necessary simultaneously for all these matrices, is greater than
  *             {@link #maxTempJavaMemory()} bytes (this parameter is passed to all instantiation methods
- *             <tt>getInstance</tt> of the tiler), then the memory model from the {@link #context() current context}
+ *             <code>getInstance</code> of the tiler), then the memory model from the {@link #context() current context}
  *             is used instead. Note that the total amount of memory depends not only on the number of arguments and
  *             results and the tile dimensions, but also on the desired
  *             {@link #numberOfTasks() number of parallel tasks}.<br>
  *             Here is a guarantee that all non-null matrices <b>m'</b><sub><i>j</i></sub>
- *             (stored in <tt>destTile</tt>) are updatable, i.e. their {@link Matrix#array() built-in arrays}
+ *             (stored in <code>destTile</code>) are updatable, i.e. their {@link Matrix#array() built-in arrays}
  *             implement {@link UpdatableArray} interface.
  *             </li>
  *
  *             <li>For each source matrix <b>M</b><sub><i>i</i></sub>, its submatrix, corresponding to the
  *             extended tile and extracted with <nobr><b>M</b><sub><i>i</i></sub>.{@link
  *             Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
- *             subMatrix}(<b>fe</b>, <b>te</b>, <tt>continuationMode</tt>)</nobr> call, is copied into
- *             the corresponding small matrix <b>m</b><sub><i>i</i></sub> (<tt>srcTile.get(<i>i</i>)</tt>).
- *             Here the <tt>continuationMode</tt> is equal to the continuation mode of this tiler, returned by
+ *             subMatrix}(<b>fe</b>, <b>te</b>, <code>continuationMode</code>)</nobr> call, is copied into
+ *             the corresponding small matrix <b>m</b><sub><i>i</i></sub> (<code>srcTile.get(<i>i</i>)</code>).
+ *             Here the <code>continuationMode</code> is equal to the continuation mode of this tiler, returned by
  *             {@link #continuationMode()} method.<br>
  *             At this step, the method may really copy less data from some source matrices (with getting
  *             the same results), if the corresponding dependence apertures <b>A</b><sub><i>i</i></sub> are less
@@ -220,29 +222,29 @@ import java.util.*;
  *             <nobr><tt>oneTileProcessor.{@link ApertureProcessor#process(Map, Map)
  *             process}(destTile, srcTile)</tt></nobr>.<br>
  *             Note that, as a result, all null small matrices <b>m'</b><sub><i>j</i></sub>
- *             (<tt>destTile.get(<i>j</i>)</tt>) will become not null &mdash; it is a requirement,
+ *             (<code>destTile.get(<i>j</i>)</code>) will become not null &mdash; it is a requirement,
  *             described in {@link ApertureProcessor#process(Map, Map)
- *             comments to "process" method}. If some matrix <nobr><tt>destTile.get(<i>j</i>)</tt></nobr>
+ *             comments to "process" method}. If some matrix <nobr><code>destTile.get(<i>j</i>)</code></nobr>
  *             is {@code null} after calling the one-tile processor, it means an invalid implementation
- *             of the one-tile processor: <tt>AssertionError</tt> is thrown in this case.
+ *             of the one-tile processor: <code>AssertionError</code> is thrown in this case.
  *             </li>
  *
- *             <li>If it is the first processed tile, this algorithm scans the whole map <tt>destTile</tt>.
+ *             <li>If it is the first processed tile, this algorithm scans the whole map <code>destTile</code>.
  *             If it contains some matrix <b>m'</b><sub><i>j</i></sub>, for which the index <i>j</i> is not
- *             present in the <tt>dest</tt> map (<nobr><tt>!dest.containsKey(<i>j</i>)</tt></nobr>)
- *             or the value <nobr><tt>dest.get(<i>j</i>)==null</tt></nobr>,
+ *             present in the <code>dest</code> map (<nobr><code>!dest.containsKey(<i>j</i>)</code></nobr>)
+ *             or the value <nobr><code>dest.get(<i>j</i>)==null</code></nobr>,
  *             the corresponding resulting matrices <b>M'</b><sub><i>j</i></sub>
  *             is created with the element type, equal to corresponding
  *             <b>m'</b><sub><i>j</i></sub>.{@link Matrix#elementType() elementType()}, and dimensions,
  *             equal to dimensions of other source and resulting matrices <b>M</b><sub><i>i</i></sub>
  *             and <b>M'</b><sub><i>j</i></sub>. Each created matrix <b>M'</b><sub><i>j</i></sub> is saved
- *             back into <tt>dest</tt> argument:
- *             <nobr><tt>dest.put(</tt><i>j</i>,&nbsp;<b>M'</b><sub><i>j</i></sub><tt>)</tt></nobr>.<br>
+ *             back into <code>dest</code> argument:
+ *             <nobr><code>dest.put(</code><i>j</i>,&nbsp;<b>M'</b><sub><i>j</i></sub><code>)</code></nobr>.<br>
  *             The resulting matrices <b>M'</b><sub><i>j</i></sub> are created in the memory model
  *             from the current context of the tiler: {@link #context()}.{@link ArrayContext#getMemoryModel()
  *             getMemoryModel()}. Moreover, every newly created matrix is automatically tiled, i.e. replaced
- *             with <tt>newMatrix.{@link Matrix#tile(long...) tile}(allocationTileDim)</tt>, where
- *             <tt>allocationTileDim</tt> is the corresponding argument of the <tt>getInstance</tt>
+ *             with <code>newMatrix.{@link Matrix#tile(long...) tile}(allocationTileDim)</code>, where
+ *             <code>allocationTileDim</code> is the corresponding argument of the <code>getInstance</code>
  *             instantiation method &mdash; with the only exception, when you explicitly specify {@code null}
  *             for this argument (in this case the new matrices are not tiled). In most cases,
  *             the tiler is used with very large matrices, and automatic tiling the resulting matrices
@@ -259,7 +261,7 @@ import java.util.*;
  *     </ol></li>
  *
  *     <li>{@link ApertureProcessor#dependenceAperture(Object srcMatrixKey)} method of the tiled processor
- *     just calls the same method of the one-tile processor with the same <tt>srcMatrixKey</tt> argument
+ *     just calls the same method of the one-tile processor with the same <code>srcMatrixKey</code> argument
  *     and returns its result.
  *     <br>&nbsp;</li>
  * </ul>
@@ -267,18 +269,18 @@ import java.util.*;
  * <p>Note: there is a guarantee, that each resulting matrix <b>M'</b><sub><i>j</i></sub>,
  * created by {@link ApertureProcessor#process(Map dest, Map src) process} method of the tiled processor
  * at the stage <b>4.d</b> is <i>updatable</i>: its {@link Matrix#array() built-in array} is {@link UpdatableArray}
- * and, thus, the matrix can be cast to <nobr><tt>{@link Matrix}&lt;UpdatableArray&gt;</tt></nobr> with help of
- * <nobr><tt>{@link Matrix#cast(Class) Matrix.cast}(UpdatableArray.class)</tt></nobr> call.</p>
+ * and, thus, the matrix can be cast to <nobr><code>{@link Matrix}&lt;UpdatableArray&gt;</code></nobr> with help of
+ * <nobr><code>{@link Matrix#cast(Class) Matrix.cast}(UpdatableArray.class)</code></nobr> call.</p>
  *
  * <p>Note: {@link ApertureProcessor#process(Map dest, Map src) process}
  * method of the tiled processor can process several tiles simultaneously in parallel threads
  * to optimize calculations on multiprocessor or multicore computers.
- * It depends on the <tt>numberOfTasks</tt> argument of the instantiation methods <tt>getInstance</tt>.
+ * It depends on the <code>numberOfTasks</code> argument of the instantiation methods <code>getInstance</code>.
  * If it is 0 (or absent), the desired number of parallel tasks
  * is detected automatically on the base of the {@link ArrayContext} argument
  * of the instantiation methods.
  * Many algorithms (one-tile processors) provide multithreading optimization themselves,
- * so there is no sense to use this feature: in this case you may specify <tt>numberOfTasks=1</tt>.</p>
+ * so there is no sense to use this feature: in this case you may specify <code>numberOfTasks=1</code>.</p>
  *
  *
  * <h2>Continuation model outside the bounds of the large matrices</h2>
@@ -296,7 +298,7 @@ import java.util.*;
  * But the behaviour of the resulting processor,
  * tiled by {@link #tile(ApertureProcessor)} method, is strictly defined always and corresponds to
  * the {@link net.algart.arrays.Matrix.ContinuationMode continuation mode},
- * passed as <tt>continuationMode</tt> argument to an instantiation method <tt>getInstance</tt>
+ * passed as <code>continuationMode</code> argument to an instantiation method <code>getInstance</code>
  * of the tiler and returned by {@link #continuationMode()} method.
  * You can see it from the specification of the behaviour of
  * {@link ApertureProcessor#process(Map dest, Map src) process} method above,
@@ -304,12 +306,13 @@ import java.util.*;
  *
  * <p>If the one-tile processor works according one of continuation models, provided by
  * {@link net.algart.arrays.Matrix.ContinuationMode} class, you can guarantee the identical behaviour of
- * the tiled processor by passing the same continuation mode into a tiler instantiation method <tt>getInstance</tt>;
+ * the tiled processor by passing the same continuation mode into a tiler instantiation
+ * method <code>getInstance</code>;
  * if no, the tiled processor will be impossible to provide identical results.</p>
  *
  * <p>Note that {@link net.algart.arrays.Matrix.ContinuationMode#NONE} continuation mode cannot be used in the tiler:
- * such value of <tt>continuationMode</tt> argument of instantiation methods <tt>getInstance</tt> leads
- * to <tt>IllegalArgumentException</tt>.</p>
+ * such value of <code>continuationMode</code> argument of instantiation methods <code>getInstance</code> leads
+ * to <code>IllegalArgumentException</code>.</p>
  *
  *
  * <h2>Contexts for the one-tile processor</h2>
@@ -326,7 +329,7 @@ import java.util.*;
  * which should be used for allocating matrices, for showing execution progress
  * and allowing to stop execution after processing every tile (even if the one-tile processor
  * does not support these features) and for multithreading simultaneous processing several tiles,
- * if <tt>{@link #numberOfTasks()}&gt;1</tt>. And it will be initially {@code null}, if the
+ * if <code>{@link #numberOfTasks()}&gt;1</code>. And it will be initially {@code null}, if the
  * {@link #context() current context} of the tiler is {@code null} &mdash; then it will be ignored.</p>
  *
  * <p>Many algorithms, which can be tiled by this class, also works with some {@link ArrayContext}
@@ -356,15 +359,15 @@ import java.util.*;
  * process}(destTile, srcTile)</tt>.</nobr><br>
  * (By the way, it means that you are able not to think about the initial value of the
  * {@link ArrayProcessor#context() current context} in the constructor of your one-tile processor:
- * it will be surely replaced with <tt>tileContext</tt> before usage of your processor.
+ * it will be surely replaced with <code>tileContext</code> before usage of your processor.
  * For example, you may initialize it by {@code null}.)
  * Of course, it is supposed that the switching method
  * <nobr><tt>oneTileProcessor.{@link ArrayProcessorWithContextSwitching#context(ArrayContext)
  * context}(tileContext)</tt></nobr> returns an object that also implements {@link ApertureProcessor} &mdash;
- * if it is not so, it means an invalid implementation of that method, and <tt>AssertionError</tt>
- * or <tt>ClassCastException</tt> can be thrown in this case.</p>
+ * if it is not so, it means an invalid implementation of that method, and <code>AssertionError</code>
+ * or <code>ClassCastException</code> can be thrown in this case.</p>
  *
- * <p>The <tt>tileContext</tt> here <b>is never {@code null}</b>: you can freely use this fact
+ * <p>The <code>tileContext</code> here <b>is never {@code null}</b>: you can freely use this fact
  * in your implementation of the one-tile processor.
  * This context is formed automatically as a {@link ArrayContext#part(double, double) part}
  * of the current context of the <i>tiled</i> processor, returned by <i>its</i> {@link ArrayProcessor#context()
@@ -377,24 +380,24 @@ import java.util.*;
  * inside {@link ApertureProcessor#process(Map, Map) process} method
  * of your one-tile processor.
  * If the current context of the tiled processor is {@code null},
- * <tt>tileContext</tt> is formed from {@link ArrayContext#DEFAULT}.</p>
+ * <code>tileContext</code> is formed from {@link ArrayContext#DEFAULT}.</p>
  *
- * <p>The <tt>tileContext</tt> also provides additional information about the position and sizes
+ * <p>The <code>tileContext</code> also provides additional information about the position and sizes
  * of the currently processed tile. Namely, it is created with help of {@link ArrayContext#customDataVersion(Object)}
  * method in such a way, that its {@link ArrayContext#customData() customData()} method always returns
  * a correctly filled instance of {@link TileInformation} class, describing the currently processed tile.</p>
  *
  * <p>If the current {@link #numberOfTasks() number of tasks}, desired for this tiler,
  * is greater than 1, and the tiled processor uses multithreading for parallel processing several tiles,
- * then the <tt>tileContext</tt> is formed in a more complex way.
+ * then the <code>tileContext</code> is formed in a more complex way.
  * Namely, in this case it is also a {@link ArrayContext#part(double, double) part} of the full context
  * with correctly filled {@link ArrayContext#customData() customData()} (an instance of {@link TileInformation}),
  * and in addition:</p>
  * <ul>
  *     <li>{@link ArrayContext#multithreadingVersion(int k, int n)} method is called &mdash; so,
  *     the one-tile processor can determine, in which of several parallel threads it is called
- *     (the index <tt>k</tt>) and what is the total number of parallel threads
- *     (the value <tt>n&le;{@link #numberOfTasks()}</tt> &mdash; it can be less than {@link #numberOfTasks()},
+ *     (the index <code>k</code>) and what is the total number of parallel threads
+ *     (the value <code>n&le;{@link #numberOfTasks()}</code> &mdash; it can be less than {@link #numberOfTasks()},
  *     for example, when the total number of tiles is less than it).
  *     This is helpful if the implementation of the one-tile processor needs some work memory
  *     or another objects, which should be created before all calculations
@@ -411,11 +414,11 @@ import java.util.*;
  * <h2>Restrictions</h2>
  *
  * <p>Every instance of this class can work only with some fixed number <i>n</i> of matrix dimensions,
- * returned by {@link #dimCount()} method and equal to the length of <tt>tileDim</tt> array,
- * passed as an argument of the instantiation methods <tt>getInstance</tt>. It means that
+ * returned by {@link #dimCount()} method and equal to the length of <code>tileDim</code> array,
+ * passed as an argument of the instantiation methods <code>getInstance</code>. It means that
  * {@link ApertureProcessor#process(Map, Map) process} method of an aperture processor,
  * returned by {@link #tile(ApertureProcessor)} method, can process only <i>n</i>-dimensional matrices
- * with <i>n</i>={@link #dimCount()} and throws <tt>IllegalArgumentException</tt> if some of the passed matrices
+ * with <i>n</i>={@link #dimCount()} and throws <code>IllegalArgumentException</code> if some of the passed matrices
  * has another number of dimensions.</p>
  *
  * <p>The tiler has no restrictions for the types of matrix elements: it can work with any element types,
@@ -427,9 +430,9 @@ import java.util.*;
  * so that the sum of some matrix dimension and the corresponding size of the aperture
  * ({@link IRectangularArea#width(int)}) or the product of all such sums (i.e. the number of elements
  * in a source/resulting matrix, {@link DependenceApertureBuilder#extendDimensions(long[], IRectangularArea)
- * extended} by such aperture) is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ * extended} by such aperture) is greater than <nobr><code>Long.MAX_VALUE</code></nobr>,
  * the {@link ApertureProcessor#process(Map dest, Map src) process} method of the
- * {@link #tile(ApertureProcessor) tiled} processor throws <tt>IndexOutOfBoundsException</tt> and does nothing.
+ * {@link #tile(ApertureProcessor) tiled} processor throws <code>IndexOutOfBoundsException</code> and does nothing.
  * Of course, these are very improbable cases.</p>
  *
  * <h2>Creating instances of this class</h2>
@@ -483,7 +486,7 @@ public final class TiledApertureProcessorFactory {
         /**
          * Returns the position and sizes of the currently processed <i>tile</i> (<b>f</b>,&nbsp;<b>t</b>).
          * See the strict definition of (<b>f</b>,&nbsp;<b>t</b>) area in the specification
-         * of <tt>process</tt> method, stage <b>3</b>, in comments to {@link TiledApertureProcessorFactory}.
+         * of <code>process</code> method, stage <b>3</b>, in comments to {@link TiledApertureProcessorFactory}.
          *
          * <p>The {@link IRectangularArea#min() min()} point of the result contains the minimal coordinates
          * of the matrix elements, belonging to this tile:
@@ -505,7 +508,7 @@ public final class TiledApertureProcessorFactory {
         /**
          * Returns the position and sizes of the currently processed <i>extended tile</i> (<b>fe</b>,&nbsp;<b>te</b>).
          * See the strict definition of (<b>fe</b>,&nbsp;<b>te</b>) area in the specification
-         * of <tt>process</tt> method, stage <b>3</b>, in comments to {@link TiledApertureProcessorFactory}.
+         * of <code>process</code> method, stage <b>3</b>, in comments to {@link TiledApertureProcessorFactory}.
          *
          * <p>The {@link IRectangularArea#min() min()} point of the result contains the minimal coordinates
          * of the matrix elements, belonging to this extended tile:
@@ -598,12 +601,13 @@ public final class TiledApertureProcessorFactory {
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
      * @return new tiler.
-     * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
-     *                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
-     *                                  or if <tt>tileDim.length==0</tt>,
-     *                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.
+     *                                  or if <code>maxTempJavaMemory&lt;0</code>,
+     *                                  or if <code>tileDim.length==0</code>,
+     *                                  or if one of elements of <code>tileDim</code> Java array is zero or negative.
      */
     public static TiledApertureProcessorFactory getInstance(
             ArrayContext context,
@@ -633,15 +637,16 @@ public final class TiledApertureProcessorFactory {
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
      * @return new tiler.
-     * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
-     *                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
-     *                                  or if <tt>tileDim.length==0</tt>,
-     *                                  or if <tt>allocationTileDim!=null</tt> and
-     *                                  <tt>allocationTileDim.length!=tileDim.length</tt>,
-     *                                  or if one of elements of <tt>tileDim</tt> or (non-null)
-     *                                  <tt>allocationTileDim</tt> Java arrays is zero or negative.
+     *                                  or if <code>maxTempJavaMemory&lt;0</code>,
+     *                                  or if <code>tileDim.length==0</code>,
+     *                                  or if <code>allocationTileDim!=null</code> and
+     *                                  <code>allocationTileDim.length!=tileDim.length</code>,
+     *                                  or if one of elements of <code>tileDim</code> or (non-null)
+     *                                  <code>allocationTileDim</code> Java arrays is zero or negative.
      */
     public static TiledApertureProcessorFactory getInstance(
             ArrayContext context,
@@ -674,13 +679,14 @@ public final class TiledApertureProcessorFactory {
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      *                          getInstance} method.
      * @return new tiler.
-     * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
-     *                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
-     *                                  or if <tt>tileDim.length==0</tt>,
-     *                                  or if <tt>numberOfTasks&lt;0</tt>,
-     *                                  or if one of elements of <tt>tileDim</tt> Java array is zero or negative.
+     *                                  or if <code>maxTempJavaMemory&lt;0</code>,
+     *                                  or if <code>tileDim.length==0</code>,
+     *                                  or if <code>numberOfTasks&lt;0</code>,
+     *                                  or if one of elements of <code>tileDim</code> Java array is zero or negative.
      */
     public static TiledApertureProcessorFactory getInstance(
             ArrayContext context,
@@ -693,7 +699,7 @@ public final class TiledApertureProcessorFactory {
     /**
      * Creates new instance of the tiler.
      *
-     * <p>The passed Java arrays <tt>tileDim</tt> and <tt>allocationTileDim</tt> are cloned by this method:
+     * <p>The passed Java arrays <code>tileDim</code> and <code>allocationTileDim</code> are cloned by this method:
      * no references to them are maintained by the created object.
      *
      * @param context           the {@link #context() context} that will be used by this tiler;
@@ -710,8 +716,8 @@ public final class TiledApertureProcessorFactory {
      *                          of the {@link #tile(ApertureProcessor) tiled} processor
      *                          (see ibid., stage <b>4.a</b>). If you are sure that there is enough Java memory
      *                          for allocating all necessary matrices for {@link #numberOfTasks()} tiles
-     *                          of all source and resulting matrices (with the given dimensions <tt>tileDim</tt>),
-     *                          you may specify here <tt>Long.MAX_VALUE</tt>.<br>&nbsp;
+     *                          of all source and resulting matrices (with the given dimensions <code>tileDim</code>),
+     *                          you may specify here <code>Long.MAX_VALUE</code>.<br>&nbsp;
      * @param tileDim           the desired dimensions of tiles, into which the source and resulting matrices
      *                          are split by the {@link #tile(ApertureProcessor) tiled} processor
      *                          (see ibid., stage <b>3</b>). Typical values for most applications are 4096x4096
@@ -719,7 +725,7 @@ public final class TiledApertureProcessorFactory {
      * @param allocationTileDim if not {@code null}, then the resulting matrices <b>M'</b><sub><i>j</i></sub>,
      *                          created by the {@link #tile(ApertureProcessor) tiled} processor
      *                          (see ibid., stage <b>4.d</b>), are automatically tiled by the call
-     *                          <tt>newMatrix.{@link Matrix#tile(long...) tile}(allocationTileDim)</tt>.
+     *                          <code>newMatrix.{@link Matrix#tile(long...) tile}(allocationTileDim)</code>.
      *                          If it is {@code null}, the resulting matrices are not tiled.<br>&nbsp;
      * @param numberOfTasks     the desired number of tiles, which should be processed simultaneously in
      *                          parallel threads to optimize calculations on multiprocessor or multicore computers;
@@ -727,20 +733,21 @@ public final class TiledApertureProcessorFactory {
      *                          <tt>{@link Arrays#getThreadPoolFactory(ArrayContext)
      *                          Arrays.getThreadPoolFactory}(context).{@link
      *                          ThreadPoolFactory#recommendedNumberOfTasks() recommendedNumberOfTasks()}</tt>.
-     *                          You may specify <tt>numberOfTasks=1</tt> for saving memory, if you know that
+     *                          You may specify <code>numberOfTasks=1</code> for saving memory, if you know that
      *                          the one-tile processors, which you are going to tile, provide multithreading
      *                          optimization themselves.
      * @return new tiler.
-     * @throws NullPointerException     if <tt>continuationMode</tt> or <tt>tileDim</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
-     *                                  or if <tt>maxTempJavaMemory&lt;0</tt>,
-     *                                  or if <tt>tileDim.length==0</tt>,
-     *                                  or if <tt>allocationTileDim!=null</tt> and
-     *                                  <tt>allocationTileDim.length!=tileDim.length</tt>,
-     *                                  or if <tt>numberOfTasks&lt;0</tt>,
-     *                                  or if one of elements of <tt>tileDim</tt> or (non-null)
-     *                                  <tt>allocationTileDim</tt> Java arrays is zero or negative.
+     *                                  or if <code>maxTempJavaMemory&lt;0</code>,
+     *                                  or if <code>tileDim.length==0</code>,
+     *                                  or if <code>allocationTileDim!=null</code> and
+     *                                  <code>allocationTileDim.length!=tileDim.length</code>,
+     *                                  or if <code>numberOfTasks&lt;0</code>,
+     *                                  or if one of elements of <code>tileDim</code> or (non-null)
+     *                                  <code>allocationTileDim</code> Java arrays is zero or negative.
      * @see #context()
      * @see #continuationMode()
      * @see #maxTempJavaMemory()
@@ -758,14 +765,14 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Returns the current context, used by this tiler. Equal to the first argument,
-     * passed to an instantiation method <tt>getInstance</tt>.
+     * passed to an instantiation method <code>getInstance</code>.
      *
      * <p>This context (if it is not {@code null}) is used by the {@link #tile(ApertureProcessor) tiled} processor
      * for determining memory model, which should be used for allocating resulting matrices and, maybe,
      * temporary matrices for every tile (if {@link #maxTempJavaMemory()} is too small to allocate them
      * in {@link SimpleMemoryModel}), for showing execution progress and allowing to stop execution after
      * processing every tile (even if the one-tile processor does not support these features)
-     * and for multithreading simultaneous processing several tiles, if <tt>{@link #numberOfTasks()}&gt;1</tt>.
+     * and for multithreading simultaneous processing several tiles, if <code>{@link #numberOfTasks()}&gt;1</code>.
      *
      * <p>See also the {@link TiledApertureProcessorFactory comments to this class}, the section
      * "Contexts for the one-tile processor".
@@ -778,7 +785,7 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      *
      * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return new instance with another context.
@@ -789,8 +796,8 @@ public final class TiledApertureProcessorFactory {
     }
 
     /**
-     * Returns the number of dimensions of this tiler. Equal to the number of elements of <tt>tileDim</tt>
-     * arrays, passed to an instantiation method <tt>getInstance</tt>.
+     * Returns the number of dimensions of this tiler. Equal to the number of elements of <code>tileDim</code>
+     * arrays, passed to an instantiation method <code>getInstance</code>.
      *
      * <p>The tiled processor, created by {@link #tile(ApertureProcessor)} method of this tiler,
      * can process only matrices with this number of dimensions.
@@ -804,7 +811,7 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Returns the continuation mode, used by this tiler. Equal to the corresponding argument,
-     * passed to an instantiation method <tt>getInstance</tt>.
+     * passed to an instantiation method <code>getInstance</code>.
      *
      * <p>See comments to the basic
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int) getInstance}
@@ -820,7 +827,7 @@ public final class TiledApertureProcessorFactory {
     /**
      * Returns the maximal amount of Java memory, in bytes, allowed for allocating temporary matrices
      * for storing a tile. Equal to the corresponding argument,
-     * passed to an instantiation method <tt>getInstance</tt>.
+     * passed to an instantiation method <code>getInstance</code>.
      *
      * <p>See comments to the basic
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int) getInstance}
@@ -834,8 +841,8 @@ public final class TiledApertureProcessorFactory {
     }
 
     /**
-     * Returns the desired dimensions of every tile. Equal to <tt>tileDim</tt>
-     * arrays, passed to an instantiation method <tt>getInstance</tt>.
+     * Returns the desired dimensions of every tile. Equal to <code>tileDim</code>
+     * arrays, passed to an instantiation method <code>getInstance</code>.
      *
      * <p>The returned array is a clone of the internal dimension array stored in this object.
      * The returned array is never empty (its length cannot be zero).
@@ -856,15 +863,15 @@ public final class TiledApertureProcessorFactory {
      * parallel threads to optimize calculations on multiprocessor or multicore computers.
      * It is equal to:
      * <ul>
-     * <li><tt>numberOfTasks</tt> argument if this instance was created by
+     * <li><code>numberOfTasks</code> argument if this instance was created by
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      * getInstance} method, having such argument, and if this argument was non-zero or</li>
      * <li><tt>{@link Arrays#getThreadPoolFactory(ArrayContext)
      * Arrays.getThreadPoolFactory}({@link #context()}).{@link ThreadPoolFactory#recommendedNumberOfTasks()
      * recommendedNumberOfTasks()}</tt> if this instance was created by
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[]) getInstance}
-     * method without <tt>numberOfTasks</tt> argument or if this argument was zero
-     * (<tt>numberOfTasks=0</tt>).</li>
+     * method without <code>numberOfTasks</code> argument or if this argument was zero
+     * (<code>numberOfTasks=0</code>).</li>
      * </ul>
      *
      * @return the number of threads, that this class uses for multithreading optimization; always &ge;1.

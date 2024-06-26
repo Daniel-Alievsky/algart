@@ -46,8 +46,8 @@ import java.util.Set;
  * {@link SimpleMemoryModel}, and processes them by the abstract method
  * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed}, overridden by the user.
  * It is supposed that the type of matrix elements is one of primitive Java types
- * (<tt>boolean</tt>, <tt>char</tt>, <tt>byte</tt>, <tt>short</tt>, <tt>int</tt>,
- * <tt>long</tt>, <tt>float</tt>, <tt>double</tt>) and, so, represents an integer or a real number,
+ * (<code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>, <code>int</code>,
+ * <code>long</code>, <code>float</code>, <code>double</code>) and, so, represents an integer or a real number,
  * according to comments to {@link PFixedArray#getLong(long)} and {@link PArray#getDouble(long)} methods.
  * See below for more details.</p>
  *
@@ -62,12 +62,12 @@ import java.util.Set;
  * The dimensions of all additional arguments always must be the same as the dimensions of the source
  * matrix: <b>M</b><sub><i>k</i></sub>.{@link Matrix#dimEquals(Matrix) dimEquals}(<b>M</b>);
  * the aperture shape must have the same number of dimensions:
- * <b>P</b>.{@link Pattern#dimCount() dimCount()}<tt>==</tt><b>M</b>.{@link Matrix#dimCount() dimCount()}.
+ * <b>P</b>.{@link Pattern#dimCount() dimCount()}<code>==</code><b>M</b>.{@link Matrix#dimCount() dimCount()}.
  * The aperture shape <b>P</b> is supposed to be an {@link Pattern <i>integer</i> pattern};
  * if a pattern, passed to the main {@link #process(Matrix, Matrix, List, Pattern) process}
  * method of this class, is not integer, it is automatically
  * rounded to the nearest integer pattern by the call
- * <tt>pattern=pattern.{@link Pattern#round() round()}</tt>.</p>
+ * <code>pattern=pattern.{@link Pattern#round() round()}</code>.</p>
  *
  * <ol>
  * <li>For any integer point, or <i>position</i>
@@ -81,7 +81,7 @@ import java.util.Set;
  * for all <b>p</b><sub><i>i</i></sub>&isin;<b>P</b> ({@link Pattern#roundedPoints() points}
  * of the pattern&nbsp;<b>P</b>).
  * We always consider that the point <b>x</b> lies inside <b>M</b> matrix
- * (0&le;<i>x</i><sub><i>k</i></sub>&lt;<b>M</b>.<tt>{@link Matrix#dim(int) dim}(<i>k</i>)</tt>
+ * (0&le;<i>x</i><sub><i>k</i></sub>&lt;<b>M</b>.<code>{@link Matrix#dim(int) dim}(<i>k</i>)</code>
  * for all <i>k</i>), but this condition can be not true for points of the aperture
  * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub>.
  * <br>&nbsp;</li>
@@ -89,9 +89,11 @@ import java.util.Set;
  * <li>For every point <b>x</b>' = <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> of the aperture
  * we consider the corresponding <i>value</i> <i>v<sub>i</sub></i> of the source matrix <b>M</b>.
  * More formally, <i>v<sub>i</sub></i> it is the value of the element
- * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements is <tt>boolean</tt>, <tt>char</tt>,
- * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt> or <tt>long</tt>, or real: {@link PArray#getDouble(long)},
- * if the element type is <tt>float</tt> or <tt>double</tt>) of the underlying array
+ * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements
+ * is <code>boolean</code>, <code>char</code>,
+ * <code>byte</code>, <code>short</code>, <code>int</code> or <code>long</code>,
+ * or real: {@link PArray#getDouble(long)},
+ * if the element type is <code>float</code> or <code>double</code>) of the underlying array
  * <b>M</b>.{@link Matrix#array() array()} with an index
  * <b>M</b>.{@link Matrix#pseudoCyclicIndex(long...)
  * pseudoCyclicIndex}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>),
@@ -105,9 +107,11 @@ import java.util.Set;
  * the values of corresponding elements of the additional arguments
  * <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
  * More formally, <i>w<sub>k</sub></i> it is the value of the element
- * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements is <tt>boolean</tt>, <tt>char</tt>,
- * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt> or <tt>long</tt>, or real: {@link PArray#getDouble(long)},
- * if the element type is <tt>float</tt> or <tt>double</tt>) of the underlying array
+ * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements
+ * is <code>boolean</code>, <code>char</code>,
+ * <code>byte</code>, <code>short</code>, <code>int</code> or <code>long</code>,
+ * or real: {@link PArray#getDouble(long)},
+ * if the element type is <code>float</code> or <code>double</code>) of the underlying array
  * <b>M</b><sub><i>k</i></sub>.{@link Matrix#array() array()} with an index
  * <b>M</b><sub><i>k</i></sub>.{@link Matrix#index(long...)
  * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>).
@@ -139,7 +143,7 @@ import java.util.Set;
  * such that any reading data from it calculates and returns the resulting <i>r</i> elements);</li>
  * <li>and {@link #process(Matrix, Matrix, List, Pattern)} non-abstract method,
  * which really performs all calculations, using {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed}
- * method, and stores the resulting matrix <b>R</b> in its first argument <tt>dest</tt>.</li>
+ * method, and stores the resulting matrix <b>R</b> in its first argument <code>dest</code>.</li>
  * </ul>
  *
  * <p>Usually, this class really represents a streaming aperture processor, according the rules listed above.
@@ -194,7 +198,7 @@ import java.util.Set;
  * little {@link Matrix#isDirectAccessible() direct accessible} temporary matrices.
  * Such preloading usually increases performance in times even without any additional efforts;
  * but if you want to provide maximal performance, you should check (in your implementation of
- * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed}), whether the passed <tt>src</tt>
+ * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed}), whether the passed <code>src</code>
  * matrix is {@link Matrix#isDirectAccessible() direct accessible}, and, probably, provide
  * a special optimized branch of the algorithm which works with the
  * {@link DirectAccessible#javaArray() internal Java array}.</p>
@@ -244,10 +248,10 @@ import java.util.Set;
  * in {@link net.algart.matrices.morphology.RankProcessors} class.</p>
  *
  * <p><b>Warning</b>: this class can process only patterns
- * where <tt>{@link Pattern#pointCount() pointCount()}&le;Integer.MAX_VALUE</tt>.
+ * where <code>{@link Pattern#pointCount() pointCount()}&le;Integer.MAX_VALUE</code>.
  * More precisely, any methods of this class, which have {@link Pattern} argument,
  * can throw {@link net.algart.math.patterns.TooManyPointsInPatternError TooManyPointsInPatternError}
- * or <tt>OutOfMemoryError</tt> in the same situations as {@link Pattern#points()} method.</p>
+ * or <code>OutOfMemoryError</code> in the same situations as {@link Pattern#points()} method.</p>
  *
  * <p>The classes, implementing this interface, are usually <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance. It is not guaranteed for any classes,
@@ -275,9 +279,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Returns <tt>true</tt> if there is a guarantee that this object is
+     * Returns <code>true</code> if there is a guarantee that this object is
      * a <i>standard implementations</i> of this class.
-     * For non-standard implementation, this method usually returns <tt>false</tt>.
+     * For non-standard implementation, this method usually returns <code>false</code>.
      * See comments to {@link StreamingApertureProcessor} class for more details.
      *
      * @return whether this implementation is standard.
@@ -297,8 +301,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @return the "lazy" matrix containing the result of this algorithm.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires at least 1 additional matrix.
      */
     public final <T extends PArray> Matrix<T> asProcessed(
@@ -322,8 +326,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 1 additional matrix.
      */
     public final <T extends PArray> Matrix<T> asProcessed(
@@ -350,8 +354,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 2 additional matrices.
      */
     public final <T extends PArray> Matrix<T> asProcessed(
@@ -380,8 +384,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 3 additional matrices.
      */
     public final <T extends PArray> Matrix<T> asProcessed(
@@ -397,9 +401,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Returns an immutable view of the passed source matrix <b>M</b>=<tt>src</tt>
+     * Returns an immutable view of the passed source matrix <b>M</b>=<code>src</code>
      * and the passed additional matrices
-     * <b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt>,
+     * <b>M</b><sub><i>k</i></sub>=<code>additionalMatrices.get(</code><i>k</i><code>)</code>,
      * such that any reading data from it calculates and returns the result <b>R</b> of
      * this streaming aperture processor.
      * See the {@link StreamingApertureProcessor comments to this class} for more details.
@@ -410,18 +414,18 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * {@link ByteArray}, {@link ShortArray},
      * {@link IntArray}, {@link LongArray},
      * {@link FloatArray} or {@link DoubleArray}.
-     * The class of desired interface (one of 8 possible classes) must be passed as <tt>requiredType</tt> argument.
+     * The class of desired interface (one of 8 possible classes) must be passed as <code>requiredType</code> argument.
      * So, it defines the element type of the returned matrix.
      * The rules of casting the floating-point result of the processing function <i>g</i>
      * to the desired element type depend on implementation.
      * In many (but not all) implementations they are the same as in
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>.
+     * method with the argument <code>truncateOverflows=true</code>.
      *
      * <p>The concrete algorithm, implementing by this class, can require some number of additional
      * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the specified list
-     * <tt>additionalMatrices</tt> is less than the required one, this method throws
-     * <tt>IllegalArgumentException</tt>.
+     * <code>additionalMatrices</code> is less than the required one, this method throws
+     * <code>IllegalArgumentException</code>.
      * If the number of passed matrices is greater than the required one, it is not an error:
      * the extra arguments are ignored.
      *
@@ -435,12 +439,12 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @param pattern            the aperture shape <b>P</b>.
      * @return the "lazy" matrix containing the result of this algorithm.
      * @throws NullPointerException     if one of the arguments is {@code null} or
-     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
+     *                                  if one of <code>additionalMatrices</code> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
-     *                                  or if the number of additional matrices <tt>additionalMatrices.size()</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
+     *                                  or if the number of additional matrices <code>additionalMatrices.size()</code>
      *                                  is less than the number of arguments, required by this implementation.
      */
     public abstract <T extends PArray> Matrix<T> asProcessed(
@@ -460,8 +464,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires at least 1 additional matrix.
      */
     public final void process(
@@ -482,8 +486,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 1 additional matrix.
      */
     public final void process(
@@ -507,8 +511,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 2 additional matrices.
      */
     public final void process(
@@ -534,8 +538,8 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
      *                                  or if this implementation requires more than 3 additional matrices.
      */
     public final void process(
@@ -550,41 +554,41 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Processes the passed source matrix <b>M</b>=<tt>src</tt>
+     * Processes the passed source matrix <b>M</b>=<code>src</code>
      * and the passed additional matrices
-     * <b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt>
+     * <b>M</b><sub><i>k</i></sub>=<code>additionalMatrices.get(</code><i>k</i><code>)</code>
      * by this streaming aperture processor and stores the result <b>R</b>
-     * in <tt>dest</tt> argument.
+     * in <code>dest</code> argument.
      * See the {@link StreamingApertureProcessor comments to this class} for more details.
      *
      * <p>This default implementations is based on one or more calls of
      * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method and
-     * copying its result into <tt>dest</tt> matrix.
-     * The <tt>requiredType</tt> argument of {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method
-     * is chosen as <tt>dest.{@link Matrix#type(Class) type}(PArray.class)</tt>.
+     * copying its result into <code>dest</code> matrix.
+     * The <code>requiredType</code> argument of {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method
+     * is chosen as <code>dest.{@link Matrix#type(Class) type}(PArray.class)</code>.
      * If you need to create a non-standard implementation (a class which does not represent
      * a streaming aperture processor, complying with strict definition from the comments to this class),
      * you must override this method. You also may override this method, if it is possible to provide
      * better performance than the default implementation, for example, for some specific variants of
-     * the aperture shape <tt>pattern</tt>.
+     * the aperture shape <code>pattern</code>.
      *
-     * <p>If the element type of <tt>dest</tt> matrix is not floating-point,
+     * <p>If the element type of <code>dest</code> matrix is not floating-point,
      * then this method casts the floating-point result of the processing function <i>g</i>
-     * to the types of <tt>dest</tt> elements. The rules of casting depend on implementation
+     * to the types of <code>dest</code> elements. The rules of casting depend on implementation
      * and usually are the same as in {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method.
      * The default implementation does not need casting, because all necessary casting is already performed
      * by {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method.
      *
      * <p>The concrete algorithm, implementing by this class, can require some number of additional
      * arguments <b>M</b><sub><i>k</i></sub>. If the number of matrices in the specified list
-     * <tt>additionalMatrices</tt> is less than the required one, this method throws
-     * <tt>IllegalArgumentException</tt>.
+     * <code>additionalMatrices</code> is less than the required one, this method throws
+     * <code>IllegalArgumentException</code>.
      * If the number of passed matrices is greater than the required one, it is not an error:
      * the extra arguments are ignored.
      *
-     * <p>The aperture shape <tt>pattern</tt>, passed to this method, is automatically rounded to the nearest
+     * <p>The aperture shape <code>pattern</code>, passed to this method, is automatically rounded to the nearest
      * {@link Pattern integer pattern} by the operators
-     * <tt>pattern = pattern.{@link Pattern#round() round()}</tt>
+     * <code>pattern = pattern.{@link Pattern#round() round()}</code>
      * in the very beginning of this method.
      * In other words, this class is designed for processing integer aperture shapes only.
      * It is the a normal situation for most aperture matrix processing algorithms.
@@ -595,12 +599,13 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      *                           ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
      * @param pattern            the aperture shape <b>P</b>.
      * @throws NullPointerException     if one of the arguments is {@code null} or
-     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
+     *                                  if one of <code>additionalMatrices</code> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>
-     *                                  or if the number of additional matrices <tt>additionalMatrices.size()</tt>
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>
+     *                                  or if the number of additional matrices
+     *                                  <code>additionalMatrices.size()</code>
      *                                  is less than the number of arguments, required by this implementation.
      */
     public void process(
@@ -754,24 +759,24 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * Specifies the maximal amount of usual Java memory,
      * measured in elements of temporary arrays, that {@link #process(Matrix, Matrix, List, Pattern) process} method
      * may freely use for optimization needs.
-     * The <tt>src</tt> arguments is <b>M</b>.{@link Matrix#array() array()},
+     * The <code>src</code> arguments is <b>M</b>.{@link Matrix#array() array()},
      * where <b>M</b> is the source processed matrix, passed to
      * {@link #process(Matrix, Matrix, List, Pattern) process}  method.
      *
-     * <p>By default, this method returns <tt>Math.round(maxTempJavaMemory/elementSize)</tt>,
+     * <p>By default, this method returns <code>Math.round(maxTempJavaMemory/elementSize)</code>,
      * where <tt>maxTempJavaMemory =
      * Math.max({@link net.algart.arrays.Arrays.SystemSettings#MIN_OPTIMIZATION_JAVA_MEMORY},
      * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()})</tt>
-     * and <tt>elementSize</tt> is the number of bytes, required for each element of <tt>src</tt> array
-     * (i.e. <tt>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</tt>).
+     * and <code>elementSize</code> is the number of bytes, required for each element of <code>src</code> array
+     * (i.e. <code>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</code>).
      *
      * <p>You may override this method if you want to change this behaviour.
      * For example, it can be necessary if your implementation of
      * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method allocates some Java memory itself:
      * in this case, you should correct the result of this method in such a way, that the total
-     * amount of allocated temporary Java memory will not exceed <tt>maxTempJavaMemory</tt> limit.
+     * amount of allocated temporary Java memory will not exceed <code>maxTempJavaMemory</code> limit.
      *
-     * @param src the built-in array of <tt>src</tt> argument of
+     * @param src the built-in array of <code>src</code> argument of
      *            {@link #process(Matrix, Matrix, List, Pattern) process} method, from which this method is called.
      * @return maximal amount of Java memory, in array elements, allowed for allocation
      *         by {@link #process(Matrix, Matrix, List, Pattern) process} method for optimization needs.
@@ -787,13 +792,15 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * if it is not so. Does nothing if the arguments are correct.
      *
      * <p>More precisely, this method checks that all arguments are not {@code null},
-     * all elements of <tt>additionalMatrices</tt> (if this list is not empty) are not {@code null},
-     * <tt>dest</tt> and <tt>src</tt> matrices and elements of <tt>additionalMatrices</tt> (if this list is not empty)
+     * all elements of <code>additionalMatrices</code> (if this list is not empty) are not {@code null},
+     * <code>dest</code> and <code>src</code> matrices and elements
+     * of <code>additionalMatrices</code> (if this list is not empty)
      * have the {@link Matrix#dimEquals(Matrix) same dimensions} and
-     * <tt>pattern.{@link Pattern#dimCount() dimCount()}==src.{@link Matrix#dimCount() dimCount()}</tt>.
+     * <code>pattern.{@link Pattern#dimCount() dimCount()}==src.{@link Matrix#dimCount() dimCount()}</code>.
      * This method is called in the beginning of {@link #process(Matrix, Matrix, List, Pattern) process} method.
      * It also can be used in the beginning of {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method,
-     * with passing <tt>src</tt> argument of that method in a role of both <tt>dest</tt> and <tt>src</tt> arguments
+     * with passing <code>src</code> argument of that method in a role of both
+     * <code>dest</code> and <code>src</code> arguments
      * of this one.
      *
      * @param dest               the resulting matrix <b>R</b>.
@@ -802,11 +809,11 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      *                           ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
      * @param pattern            the aperture shape <b>P</b>.
      * @throws NullPointerException     if one of the arguments is {@code null} or
-     *                                  if one of <tt>additionalMatrices</tt> elements is {@code null}.
+     *                                  if one of <code>additionalMatrices</code> elements is {@code null}.
      * @throws SizeMismatchException    if some passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     protected static void checkArguments(
         Matrix<? extends PArray> dest, Matrix<? extends PArray> src,
