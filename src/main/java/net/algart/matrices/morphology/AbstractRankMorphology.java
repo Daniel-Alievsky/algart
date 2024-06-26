@@ -93,7 +93,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     /**
      * This implementation just calls
      * <tt>{@link #asPercentile(Matrix, Matrix, Pattern) asPercentile}(src,m,pattern)</tt>,
-     * where <nobr><tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt></nobr>.
+     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
@@ -113,10 +113,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the percentile by the call
-     * <nobr><tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern)
-     * percentile}(dest,src,percentileIndexes,pattern)</tt></nobr>
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the percentile by the call
+     * <tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern)
+     * percentile}(dest,src,percentileIndexes,pattern)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -147,7 +147,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     /**
      * This implementation just calls
      * <tt>{@link #percentile(Matrix, Matrix, Pattern) percentile}(src,m,pattern)</tt>,
-     * where <nobr><tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt></nobr>.
+     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
@@ -171,7 +171,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     /**
      * This implementation just calls
      * <tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern) percentile}(dest,src,m,pattern)</tt>,
-     * where <nobr><tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt></nobr>.
+     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
      *
      * @param dest            the target matrix.
      * @param src             the source matrix.
@@ -195,11 +195,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Class, long...)
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Class, long...)
      * newMatrix}(UpdatablePArray.class,{@link Arrays#elementType(Class)
-     * Arrays.elementType}(requiredType),baseMatrix.dimensions())</tt></nobr>, calculates the rank by the call
-     * <nobr><tt>{@link #rank(Matrix, Matrix, Matrix, Pattern)
-     * rank}(dest,baseMatrix,rankedMatrix,pattern)</tt></nobr>
+     * Arrays.elementType}(requiredType),baseMatrix.dimensions())</tt>, calculates the rank by the call
+     * <tt>{@link #rank(Matrix, Matrix, Matrix, Pattern)
+     * rank}(dest,baseMatrix,rankedMatrix,pattern)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -253,8 +253,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #asMeanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * asMeanBetweenPercentiles}(src,m1,m2,pattern,filler)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -263,7 +263,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                            the greater percentile of the averaged range for every element of the result.
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
-     *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
+     *                            <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @return                    the "lazy" matrix containing the mean between 2 given percentiles
      *                            of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
@@ -286,10 +286,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean between 2 percentiles by the call
-     * <nobr><tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
-     * meanBetweenPercentiles}(dest,src,fromPercentileIndexes,toPercentileIndexes,pattern,filler)</tt></nobr>
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean between 2 percentiles by the call
+     * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
+     * meanBetweenPercentiles}(dest,src,fromPercentileIndexes,toPercentileIndexes,pattern,filler)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -300,7 +300,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                              the greater percentile of the averaged range for every element of the result.
      * @param pattern               the pattern: the shape of the aperture.
      * @param filler                the reserved value, returned when
-     *                              <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
+     *                              <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @return                      the mean between 2 given percentiles of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
@@ -327,8 +327,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(src,m1,m2,pattern,filler)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -337,7 +337,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                            the greater percentile of the averaged range for every element of the result.
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
-     *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
+     *                            <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @return                    the mean between 2 given percentiles of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -365,8 +365,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(dest,src,m1,m2,pattern,filler)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
      *
      * @param dest                the target matrix.
      * @param src                 the source matrix.
@@ -376,7 +376,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                            the greater percentile of the averaged range for every element of the result.
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
-     *                            <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
+     *                            <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -402,10 +402,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean between 2 values by the call
-     * <nobr><tt>{@link #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
-     * meanBetweenValues}(dest,src,minValues,maxValues,pattern,filler)</tt></nobr>
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean between 2 values by the call
+     * <tt>{@link #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
+     * meanBetweenValues}(dest,src,minValues,maxValues,pattern,filler)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -416,7 +416,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                  of the averaged range of values for every element of the result.
      * @param pattern   the pattern: the shape of the aperture.
      * @param filler    the reserved value, returned when
-     *                  <nobr><i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;)</nobr>,
+     *                  <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
      *                  or one of the special keys {@link #FILL_MIN_VALUE}, {@link #FILL_MAX_VALUE},
      *                  {@link #FILL_NEAREST_VALUE}, which mean using of special calculation modes B, C, D.
      * @return          the mean between 2 given values of the source matrix.
@@ -473,10 +473,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the mean by the call
-     * <nobr><tt>{@link #mean(Matrix, Matrix, Pattern)
-     * mean}(dest,src,pattern)</tt></nobr>
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean by the call
+     * <tt>{@link #mean(Matrix, Matrix, Pattern)
+     * mean}(dest,src,pattern)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -531,10 +531,10 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the function of aperture sum by the call
-     * <nobr><tt>{@link #functionOfSum(Matrix, Matrix, Pattern, Func)
-     * functionOfSum}(dest,src,pattern,processingFunc)</tt></nobr>
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the function of aperture sum by the call
+     * <tt>{@link #functionOfSum(Matrix, Matrix, Pattern, Func)
+     * functionOfSum}(dest,src,pattern,processingFunc)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -572,15 +572,15 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #asFunctionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * asFunctionOfPercentilePair}(src,m1,m2,pattern,processingFunc)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
      *
      * @param src              the source matrix.
      * @param percentileIndex1 the 1st <i>r</i> argument: the index of the 1st percentile <i>v</i><sub>1</sub>.
      * @param percentileIndex2 the 2nd <i>r</i> argument: the index of the 2nd percentile <i>v</i><sub>2</sub>.
      * @param pattern          the pattern: the shape of the aperture.
      * @param processingFunc   the function, which should be applied to every calculated three
-     *                         <nobr>(<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+     *                         (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                 the "lazy" matrix containing the result of the given function.
@@ -604,11 +604,11 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation creates a new updatable matrix <tt>dest</tt> by the call
-     * <nobr><tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
-     * newMatrix}(UpdatablePArray.class,src)</tt></nobr>, calculates the function of the source matrix
+     * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
+     * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the function of the source matrix
      * and 2 percentiles by the call
-     * <nobr><tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
-     * functionOfPercentilePair}(dest,src,percentileIndexes1,percentileIndexes2,pattern,processingFunc)</tt></nobr>
+     * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
+     * functionOfPercentilePair}(dest,src,percentileIndexes1,percentileIndexes2,pattern,processingFunc)</tt>
      * and returns <tt>dest</tt> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
@@ -619,7 +619,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                           <i>v</i><sub>2</sub> for every element of the result.
      * @param pattern            the pattern: the shape of the aperture.
      * @param processingFunc     the function, which should be applied to every calculated three
-     *                           <nobr>(<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+     *                           (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                           where <i>v</i> is the element of the source matrix,
      *                           <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                   the result of the given function.
@@ -650,15 +650,15 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * functionOfPercentilePair}(src,m1,m2,pattern,processingFunc)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
      *
      * @param src              the source matrix.
      * @param percentileIndex1 the 1st <i>r</i> argument: the index of the 1st percentile <i>v</i><sub>1</sub>.
      * @param percentileIndex2 the 2nd <i>r</i> argument: the index of the 2nd percentile <i>v</i><sub>2</sub>.
      * @param pattern          the pattern: the shape of the aperture.
      * @param processingFunc   the function, which should be applied to every calculated three
-     *                         <nobr>(<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+     *                         (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @return                 the result of the given function.
@@ -689,8 +689,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
      * functionOfPercentilePair}(dest,src,m1,m2,pattern,processingFunc)</tt>, where
-     * <nobr><tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt></nobr>
-     * and <nobr><tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt></nobr>.
+     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
+     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
      *
      * @param dest             the target matrix.
      * @param src              the source matrix.
@@ -698,7 +698,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @param percentileIndex2 the 2nd <i>r</i> argument: the index of the 2nd percentile <i>v</i><sub>2</sub>.
      * @param pattern          the pattern: the shape of the aperture.
      * @param processingFunc   the function, which should be applied to every calculated three
-     *                         <nobr>(<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+     *                         (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
      * @throws NullPointerException     if one of the arguments is {@code null}.
@@ -725,14 +725,14 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     /**
      * Returns the matrix with the same dimensions as the given <tt>src</tt> matrix,
      * backed by a constant array with the given value.
-     * More precisely, returns <nobr><tt>src.{@link Matrix#matrix(Array) matrix}(const)</tt></nobr>,
+     * More precisely, returns <tt>src.{@link Matrix#matrix(Array) matrix}(const)</tt>,
      * where
      * <ul>
-     * <li><nobr><tt>const = {@link Arrays#nLongCopies(long, long)
-     * Arrays.nLongCopies}(src.size(), (long)percentileIndex)</tt></nobr>,
-     * if <nobr><tt>percentileIndex==(long)percentileIndex</tt></nobr>,</li>
-     * <li>or <nobr><tt>const = {@link Arrays#nDoubleCopies(long, double)
-     * Arrays.nDoubleCopies}(src.size(), percentileIndex)</tt></nobr>
+     * <li><tt>const = {@link Arrays#nLongCopies(long, long)
+     * Arrays.nLongCopies}(src.size(), (long)percentileIndex)</tt>,
+     * if <tt>percentileIndex==(long)percentileIndex</tt>,</li>
+     * <li>or <tt>const = {@link Arrays#nDoubleCopies(long, double)
+     * Arrays.nDoubleCopies}(src.size(), percentileIndex)</tt>
      * in other case.</li>
      * </ul>
      *

@@ -143,19 +143,19 @@ import java.util.*;
  *         (This stage does not suppose any actual calculations: we consider this stage
  *         for the sake of simplicity.)<br>
  *         For every tile, we shall designate
- *         <nobr><b>f</b> = (<i>f</i><sub>0</sub>, <i>f</i><sub>1</sub>, ...,
- *         <i>f</i><sub><i>n</i>&minus;1</sub>)</nobr> the <i>n</i>-dimensional starting point of the tile (inclusive)
- *         and <nobr><b>t</b> = (<i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ...,
- *         <i>t</i><sub><i>n</i>&minus;1</sub>)</nobr> the <i>n</i>-dimensional ending point of the tile (exclusive).
+ *         <b>f</b> = (<i>f</i><sub>0</sub>, <i>f</i><sub>1</sub>, ...,
+ *         <i>f</i><sub><i>n</i>&minus;1</sub>) the <i>n</i>-dimensional starting point of the tile (inclusive)
+ *         and <b>t</b> = (<i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ...,
+ *         <i>t</i><sub><i>n</i>&minus;1</sub>) the <i>n</i>-dimensional ending point of the tile (exclusive).
  *         (Here "f" is the starting letter of "from" word, "t" is the starting letter of "to" word.)
  *         More precisely, this tile consists of all elements of the source and target matrices with such indexes
- *         <nobr>(<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+ *         (<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>),
  *         that<br>
  *             &nbsp;&nbsp;&nbsp;&nbsp;<i>f<sub>k</sub></i> &le; <i>i<sub>k</sub></i> &lt; <i>t<sub>k</sub></i>,
- *         <nobr><i>k</i>=0,1,...,<i>n</i>&minus;1</nobr>.<br>
+ *         <i>k</i>=0,1,...,<i>n</i>&minus;1.<br>
  *         Besides this tile (<b>f</b>,&nbsp;<b>t</b>), we also consider the <i>extended tile</i>
  *         (<b>fe</b>,&nbsp;<b>te</b>), consisting of all elements of the source and target matrices with such indexes
- *         <nobr>(<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+ *         (<i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>&minus;1</sub>),
  *         that<br>
  *             &nbsp;&nbsp;&nbsp;&nbsp;<i>fe<sub>k</sub></i>
  *             = <i>f<sub>k</sub></i> + <b>A</b><sup>m</sup>.{@link IRectangularArea#min(int) min(<i>k</i>)}
@@ -204,9 +204,9 @@ import java.util.*;
  *             </li>
  *
  *             <li>For each source matrix <b>M</b><sub><i>i</i></sub>, its submatrix, corresponding to the
- *             extended tile and extracted with <nobr><b>M</b><sub><i>i</i></sub>.{@link
+ *             extended tile and extracted with <b>M</b><sub><i>i</i></sub>.{@link
  *             Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
- *             subMatrix}(<b>fe</b>, <b>te</b>, <code>continuationMode</code>)</nobr> call, is copied into
+ *             subMatrix}(<b>fe</b>, <b>te</b>, <code>continuationMode</code>) call, is copied into
  *             the corresponding small matrix <b>m</b><sub><i>i</i></sub> (<code>srcTile.get(<i>i</i>)</code>).
  *             Here the <code>continuationMode</code> is equal to the continuation mode of this tiler, returned by
  *             {@link #continuationMode()} method.<br>
@@ -219,27 +219,27 @@ import java.util.*;
  *             {@link ApertureProcessor#process(Map, Map) process} method of
  *             the one-tile processor is called with the arguments <b>m'</b><sub><i>j</i></sub>
  *             and <b>m</b><sub><i>i</i></sub> &mdash;
- *             <nobr><tt>oneTileProcessor.{@link ApertureProcessor#process(Map, Map)
- *             process}(destTile, srcTile)</tt></nobr>.<br>
+ *             <tt>oneTileProcessor.{@link ApertureProcessor#process(Map, Map)
+ *             process}(destTile, srcTile)</tt>.<br>
  *             Note that, as a result, all null small matrices <b>m'</b><sub><i>j</i></sub>
  *             (<code>destTile.get(<i>j</i>)</code>) will become not null &mdash; it is a requirement,
  *             described in {@link ApertureProcessor#process(Map, Map)
- *             comments to "process" method}. If some matrix <nobr><code>destTile.get(<i>j</i>)</code></nobr>
+ *             comments to "process" method}. If some matrix <code>destTile.get(<i>j</i>)</code>
  *             is {@code null} after calling the one-tile processor, it means an invalid implementation
  *             of the one-tile processor: <code>AssertionError</code> is thrown in this case.
  *             </li>
  *
  *             <li>If it is the first processed tile, this algorithm scans the whole map <code>destTile</code>.
  *             If it contains some matrix <b>m'</b><sub><i>j</i></sub>, for which the index <i>j</i> is not
- *             present in the <code>dest</code> map (<nobr><code>!dest.containsKey(<i>j</i>)</code></nobr>)
- *             or the value <nobr><code>dest.get(<i>j</i>)==null</code></nobr>,
+ *             present in the <code>dest</code> map (<code>!dest.containsKey(<i>j</i>)</code>)
+ *             or the value <code>dest.get(<i>j</i>)==null</code>,
  *             the corresponding resulting matrices <b>M'</b><sub><i>j</i></sub>
  *             is created with the element type, equal to corresponding
  *             <b>m'</b><sub><i>j</i></sub>.{@link Matrix#elementType() elementType()}, and dimensions,
  *             equal to dimensions of other source and resulting matrices <b>M</b><sub><i>i</i></sub>
  *             and <b>M'</b><sub><i>j</i></sub>. Each created matrix <b>M'</b><sub><i>j</i></sub> is saved
  *             back into <code>dest</code> argument:
- *             <nobr><code>dest.put(</code><i>j</i>,&nbsp;<b>M'</b><sub><i>j</i></sub><code>)</code></nobr>.<br>
+ *             <code>dest.put(</code><i>j</i>,&nbsp;<b>M'</b><sub><i>j</i></sub><code>)</code>.<br>
  *             The resulting matrices <b>M'</b><sub><i>j</i></sub> are created in the memory model
  *             from the current context of the tiler: {@link #context()}.{@link ArrayContext#getMemoryModel()
  *             getMemoryModel()}. Moreover, every newly created matrix is automatically tiled, i.e. replaced
@@ -254,8 +254,8 @@ import java.util.*;
  *             <li>The central part (submatrix) of all matrices <b>m'</b><sub><i>j</i></sub>,
  *             corresponding to the original (non-extended) tile (<b>f</b>,&nbsp;<b>t</b>),
  *             is copied into the corresponding tile of the resulting matrices <b>M'</b><sub><i>j</i></sub>,
- *             i.e. into their sub-matrices <nobr><b>M'</b><sub><i>j</i></sub>.{@link
- *             Matrix#subMatrix(long[], long[]) subMatrix}(<b>f</b>, <b>t</b>)</nobr>.
+ *             i.e. into their sub-matrices <b>M'</b><sub><i>j</i></sub>.{@link
+ *             Matrix#subMatrix(long[], long[]) subMatrix}(<b>f</b>, <b>t</b>).
  *             <br>&nbsp;</li>
  *         </ol></li>
  *     </ol></li>
@@ -269,8 +269,8 @@ import java.util.*;
  * <p>Note: there is a guarantee, that each resulting matrix <b>M'</b><sub><i>j</i></sub>,
  * created by {@link ApertureProcessor#process(Map dest, Map src) process} method of the tiled processor
  * at the stage <b>4.d</b> is <i>updatable</i>: its {@link Matrix#array() built-in array} is {@link UpdatableArray}
- * and, thus, the matrix can be cast to <nobr><code>{@link Matrix}&lt;UpdatableArray&gt;</code></nobr> with help of
- * <nobr><code>{@link Matrix#cast(Class) Matrix.cast}(UpdatableArray.class)</code></nobr> call.</p>
+ * and, thus, the matrix can be cast to <code>{@link Matrix}&lt;UpdatableArray&gt;</code> with help of
+ * <code>{@link Matrix#cast(Class) Matrix.cast}(UpdatableArray.class)</code> call.</p>
  *
  * <p>Note: {@link ApertureProcessor#process(Map dest, Map src) process}
  * method of the tiled processor can process several tiles simultaneously in parallel threads
@@ -288,8 +288,8 @@ import java.util.*;
  * <p>The behaviour of the aperture processor, tiled by {@link #tile(ApertureProcessor oneTileProcessor)} method,
  * can little differ from the behaviour of the original one-tile processor near the bounds of the matrices,
  * namely for the resulting elements, for which the dependence aperture
- * <nobr><b>A</b><sub><i>i</i></sub>={@link ApertureProcessor#dependenceAperture(Object)
- * dependenceAperture(<i>i</i>)}</nobr> (at least for one index <i>i</i> of a source matrix)
+ * <b>A</b><sub><i>i</i></sub>={@link ApertureProcessor#dependenceAperture(Object)
+ * dependenceAperture(<i>i</i>)} (at least for one index <i>i</i> of a source matrix)
  * does not fully lie inside the corresponding source matrix <b>M</b><sub><i>i</i></sub>.</p>
  *
  * <p>In such situation the behaviour of the original one-tile processor depends on implementation &mdash;
@@ -349,21 +349,21 @@ import java.util.*;
  * to this context before calling its
  * {@link ApertureProcessor#process(Map dest, Map src) process} method.
  * In other words, at the stage <b>4.c</b> the tiled processor calls not<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<nobr><tt>oneTileProcessor.{@link
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>oneTileProcessor.{@link
  * ApertureProcessor#process(Map, Map)
- * process}(destTile, srcTile)</tt></nobr>,<br>
+ * process}(destTile, srcTile)</tt>,<br>
  * but<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<nobr><tt>((ApertureProcessor&lt;K&gt;)(oneTileProcessor.{@link
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>((ApertureProcessor&lt;K&gt;)(oneTileProcessor.{@link
  * ArrayProcessorWithContextSwitching#context(ArrayContext)
  * context}(tileContext))).{@link ApertureProcessor#process(Map, Map)
- * process}(destTile, srcTile)</tt>.</nobr><br>
+ * process}(destTile, srcTile)</tt>.<br>
  * (By the way, it means that you are able not to think about the initial value of the
  * {@link ArrayProcessor#context() current context} in the constructor of your one-tile processor:
  * it will be surely replaced with <code>tileContext</code> before usage of your processor.
  * For example, you may initialize it by {@code null}.)
  * Of course, it is supposed that the switching method
- * <nobr><tt>oneTileProcessor.{@link ArrayProcessorWithContextSwitching#context(ArrayContext)
- * context}(tileContext)</tt></nobr> returns an object that also implements {@link ApertureProcessor} &mdash;
+ * <tt>oneTileProcessor.{@link ArrayProcessorWithContextSwitching#context(ArrayContext)
+ * context}(tileContext)</tt> returns an object that also implements {@link ApertureProcessor} &mdash;
  * if it is not so, it means an invalid implementation of that method, and <code>AssertionError</code>
  * or <code>ClassCastException</code> can be thrown in this case.</p>
  *
@@ -375,8 +375,8 @@ import java.util.*;
  * (As written above, by default the current context of the tiled processor is equal to the
  * {@link #context() current context} of the tiler.)
  * Thus, the tiler provides correct behaviour of
- * <nobr><tt>oneTileProcessor.{@link ArrayProcessor#context()
- * context()}.{@link ArrayContext#updateProgress(ArrayContext.Event) updateProgress(...)}</tt></nobr>
+ * <tt>oneTileProcessor.{@link ArrayProcessor#context()
+ * context()}.{@link ArrayContext#updateProgress(ArrayContext.Event) updateProgress(...)}</tt>
  * inside {@link ApertureProcessor#process(Map, Map) process} method
  * of your one-tile processor.
  * If the current context of the tiled processor is {@code null},
@@ -430,7 +430,7 @@ import java.util.*;
  * so that the sum of some matrix dimension and the corresponding size of the aperture
  * ({@link IRectangularArea#width(int)}) or the product of all such sums (i.e. the number of elements
  * in a source/resulting matrix, {@link DependenceApertureBuilder#extendDimensions(long[], IRectangularArea)
- * extended} by such aperture) is greater than <nobr><code>Long.MAX_VALUE</code></nobr>,
+ * extended} by such aperture) is greater than <code>Long.MAX_VALUE</code>,
  * the {@link ApertureProcessor#process(Map dest, Map src) process} method of the
  * {@link #tile(ApertureProcessor) tiled} processor throws <code>IndexOutOfBoundsException</code> and does nothing.
  * Of course, these are very improbable cases.</p>
@@ -463,7 +463,7 @@ public final class TiledApertureProcessorFactory {
      *
      * <p>This object is returned by {@link ArrayContext#customData() customData()} method of the current context
      * {@link ArrayProcessor#context()} of the <i>one-tile aperture processor</i> &mdash;
-     * the argument of <nobr>{@link TiledApertureProcessorFactory#tile(ApertureProcessor)}</nobr> method &mdash;
+     * the argument of {@link TiledApertureProcessorFactory#tile(ApertureProcessor)} method &mdash;
      * if this one-tile processor implements {@link ArrayProcessorWithContextSwitching} interface and
      * is called from the <i>tiled processor</i> (the result of
      * {@link TiledApertureProcessorFactory#tile(ApertureProcessor) tile} method)
@@ -490,14 +490,14 @@ public final class TiledApertureProcessorFactory {
          *
          * <p>The {@link IRectangularArea#min() min()} point of the result contains the minimal coordinates
          * of the matrix elements, belonging to this tile:
-         * <nobr>{@link IRectangularArea#min() min()} =
+         * {@link IRectangularArea#min() min()} =
          * <b>f</b> = (<i>f</i><sub>0</sub>, <i>f</i><sub>1</sub>, ...,
-         * <i>f</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+         * <i>f</i><sub><i>n</i>&minus;1</sub>).
          * The {@link IRectangularArea#max() max()} point of the result contains the maximal coordinates
          * of the matrix elements, belonging to this tile:
-         * <nobr>{@link IRectangularArea#max() max()} =
+         * {@link IRectangularArea#max() max()} =
          * <b>t&minus;1</b> = (<i>t</i><sub>0</sub>&minus;1, <i>t</i><sub>1</sub>&minus;1, ...,
-         * <i>t</i><sub><i>n</i>&minus;1</sub>&minus;1)</nobr>.
+         * <i>t</i><sub><i>n</i>&minus;1</sub>&minus;1).
          *
          * @return the currently processed tile (<b>f</b>,&nbsp;<b>t</b>).
          */
@@ -512,14 +512,14 @@ public final class TiledApertureProcessorFactory {
          *
          * <p>The {@link IRectangularArea#min() min()} point of the result contains the minimal coordinates
          * of the matrix elements, belonging to this extended tile:
-         * <nobr>{@link IRectangularArea#min() min()} =
+         * {@link IRectangularArea#min() min()} =
          * <b>fe</b> = (<i>fe</i><sub>0</sub>, <i>fe</i><sub>1</sub>, ...,
-         * <i>fe</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+         * <i>fe</i><sub><i>n</i>&minus;1</sub>).
          * The {@link IRectangularArea#max() max()} point of the result contains the maximal coordinates
          * of the matrix elements, belonging to this extended tile:
-         * <nobr>{@link IRectangularArea#max() max()} =
+         * {@link IRectangularArea#max() max()} =
          * <b>te&minus;1</b> = (<i>te</i><sub>0</sub>&minus;1, <i>te</i><sub>1</sub>&minus;1, ...,
-         * <i>te</i><sub><i>n</i>&minus;1</sub>&minus;1)</nobr>.
+         * <i>te</i><sub><i>n</i>&minus;1</sub>&minus;1).
          *
          * @return the currently processed extended tile (<b>fe</b>,&nbsp;<b>te</b>).
          */

@@ -65,10 +65,10 @@ import java.util.Objects;
  *
  * <p>This class can be used in 1-, 2- and 3-dimensional cases only.
  * One of the reasons of this restriction is that the argument of {@link #pixelTypeOrAttachingBranch(int)}
- * and {@link #pixelTypeOrAttachedNode(int)} (<tt>int</tt> type) can represent the values of, maximally, 32
+ * and {@link #pixelTypeOrAttachedNode(int)} (<code>int</code> type) can represent the values of, maximally, 32
  * neighbours. It is enough for 3-dimensional case, where the number of neighbours is 3<sup>3</sup>&minus;1=26&lt;32,
  * but not enough already for 4-dimensional case, where the number of neighbours is 3<sup>4</sup>&minus;1=80
- * (and even 64-bit <tt>long</tt> type would have been insufficient).</p>
+ * (and even 64-bit <code>long</code> type would have been insufficient).</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -84,30 +84,31 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * with the order of neighbours, specified in the second argument.
      * The number of dimensions must be 1, 2 or 3.
      *
-     * <p>The argument <tt>neighbourOffsets</tt> must contain offsets of all neighbours,
+     * <p>The argument <code>neighbourOffsets</code> must contain offsets of all neighbours,
      * in terms of the {@link net.algart.matrices.scanning.ConnectivityType#STRAIGHT_AND_DIAGONAL
      * straight-and-diagonal connectivity kind}, of any matrix element, in some order.
      * More precisely, this array must contain
-     * <nobr><tt>{@link #numberOfNeighbours() numberOfNeighbours()}=3<sup>dimCount</sup>-1</tt></nobr> elements
-     * (2, 8 or 26 for 1-, 2-, 3-dimensional cases) in <nobr>3/3x3/3x3x3-aperture</nobr>, and each its element
-     * <tt>neighbourOffsets[k]</tt> must be equal to the result of
+     * <code>{@link #numberOfNeighbours() numberOfNeighbours()}=3<sup>dimCount</sup>-1</code> elements
+     * (2, 8 or 26 for 1-, 2-, 3-dimensional cases) in 3/3x3/3x3x3-aperture, and each its element
+     * <code>neighbourOffsets[k]</code> must be equal to the result of
      * {@link #neighbourOffset(int) neighbourOffset(k)} call.
      *
-     * <p>The passed <tt>neighbourOffsets</tt> array is deeply cloned by the constructor: no references to it
+     * <p>The passed <code>neighbourOffsets</code> array is deeply cloned by the constructor: no references to it
      * or its elements are maintained by the created object.
      *
      * @param dimCount         the number of dimensions, which will be returned by
      *                         {@link #dimCount() dimCount()} method.
      * @param neighbourOffsets offsets of all neighbours of any matrix element,
      *                         in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method.
-     * @throws NullPointerException     if <tt>neighbourOffsets</tt> or one of its elements is {@code null}.
-     * @throws IllegalArgumentException if <tt>dimCount</tt> is not in <tt>1..3</tt> range,
-     *                                  or if <tt>neighbourOffsets.length!=3<sup>dimCount</sup>-1</tt>,
-     *                                  or if <tt>neighbourOffsets[k].length!=dimCount</tt> for some <tt>k</tt>,
-     *                                  or if <tt>neighbourOffsets</tt> does not contain, in some order,
-     *                                  the offsets of all <tt>3<sup>dimCount</sup>-1</tt> neighbours
-     *                                  (in particular, if some elements <tt>neighbourOffsets[k][j]</tt> are
-     *                                  not in <tt>-1..+1</tt> range or if offsets of some neighbours are equal).
+     * @throws NullPointerException     if <code>neighbourOffsets</code> or one of its elements is {@code null}.
+     * @throws IllegalArgumentException if <code>dimCount</code> is not in <code>1..3</code> range,
+     *                                  or if <code>neighbourOffsets.length!=3<sup>dimCount</sup>-1</code>,
+     *                                  or if <code>neighbourOffsets[k].length!=dimCount</code>
+     *                                  for some <code>k</code>,
+     *                                  or if <code>neighbourOffsets</code> does not contain, in some order,
+     *                                  the offsets of all <code>3<sup>dimCount</sup>-1</code> neighbours
+     *                                  (in particular, if some elements <code>neighbourOffsets[k][j]</code> are
+     *                                  not in <code>-1..+1</code> range or if offsets of some neighbours are equal).
      */
     protected ApertureBasedSkeletonPixelClassifier(int dimCount, long[][] neighbourOffsets) {
         super(dimCount);
@@ -271,18 +272,18 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
     /**
      * Returns an immutable view of the passed skeleton matrix, where each element is an integer,
      * containing, in its low bits, the bit values of the corresponding element
-     * <tt><b><i>C</i></b></tt> of the source skeleton and of all its neighbours (in terms of the
+     * <code><b><i>C</i></b></code> of the source skeleton and of all its neighbours (in terms of the
      * {@link net.algart.matrices.scanning.ConnectivityType#STRAIGHT_AND_DIAGONAL
      * straight-and-diagonal connectivity kind}).
      *
      * <p>More precisely, each integer element <i>w</i> of the resulting matrix will contain:
      * <ul>
-     * <li>in the bit #0 (in other words, <nobr><i>w</i><tt>&amp;1</tt></nobr>):
+     * <li>in the bit #0 (in other words, <i>w</i><code>&amp;1</code>):
      * the value of the corresponding element
-     * <tt><b><i>C</i></b></tt> of the source skeleton bit matrix;</li>
+     * <code><b><i>C</i></b></code> of the source skeleton bit matrix;</li>
      * <li>in the bit #<i>k</i>+1, 0&le;<i>k</i>&lt;{@link #numberOfNeighbours() numberOfNeighbours()}
-     * (in other words, <nobr>(<i>w</i><tt>&gt;&gt;&gt;(</tt><i>k</i><tt>+1))&amp;1</tt></nobr>):
-     * the value of the neighbour #<i>k</i> of the central element <tt><b><i>C</i></b></tt>,
+     * (in other words, (<i>w</i><code>&gt;&gt;&gt;(</code><i>k</i><code>+1))&amp;1</code>):
+     * the value of the neighbour #<i>k</i> of the central element <code><b><i>C</i></b></code>,
      * in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method;</li>
      * <li>all other bits of the elements if the resulting matrix will be zero.</li>
      * </ul>
@@ -298,9 +299,9 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      *
      * <p>The implementation of {@link #asPixelTypes asPixelTypes} method in this class is based on
      * this method and {@link #pixelTypeOrAttachingBranch(int)} and {@link #pixelTypeOrAttachedNode(int)} methods:
-     * the results <i>w</i>, returned by this method for unit central elements <tt><b><i>C</i></b></tt>
+     * the results <i>w</i>, returned by this method for unit central elements <code><b><i>C</i></b></code>
      * of the source skeleton, are shifted to the right and passed as
-     * <nobr><tt>apertureBits</tt>=<i>w</i><tt>&gt;&gt;&gt;1</tt></nobr> argument to
+     * <code>apertureBits</code>=<i>w</i><code>&gt;&gt;&gt;1</code> argument to
      * {@link #pixelTypeOrAttachingBranch(int)} or {@link #pixelTypeOrAttachedNode(int)} to form the elements
      * of the resulting matrix.
      *
@@ -311,8 +312,8 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * @param skeleton    the skeleton matrix that should be processed.
      * @return            the matrix of integer values with the same sizes, containing the bit maps
      *                    of the neighbourhoods of all skeleton pixels.
-     * @throws NullPointerException     if <tt>skeleton</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.dimCount()!={@link #dimCount()}</tt>.
+     * @throws NullPointerException     if <code>skeleton</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.dimCount()!={@link #dimCount()}</code>.
      */
     public final Matrix<? extends PIntegerArray> asNeighbourhoodBitMaps(
         Matrix<? extends BitArray> skeleton)
@@ -346,21 +347,21 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
     */
 
     /**
-     * Calculates and returns the value of an element <tt><b><i>C'</i></b></tt>
+     * Calculates and returns the value of an element <code><b><i>C'</i></b></code>
      * in the resulting matrix, produced by
      * {@link #asPixelTypes asPixelTypes} method with
      * {@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH
-     * NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH} value of <tt>attachmentInformation</tt> argument,
+     * NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH} value of <code>attachmentInformation</code> argument,
      * on the base of bit values of all neighbours (in terms of the
      * {@link net.algart.matrices.scanning.ConnectivityType#STRAIGHT_AND_DIAGONAL
      * straight-and-diagonal connectivity kind})
-     * of the corresponding unit element <tt><b><i>C</i></b></tt> in the source skeleton bit matrix.
+     * of the corresponding unit element <code><b><i>C</i></b></code> in the source skeleton bit matrix.
      *
-     * <p>More precisely, the bit values of the neighbours of this skeleton element <tt><b><i>C</i></b></tt>
+     * <p>More precisely, the bit values of the neighbours of this skeleton element <code><b><i>C</i></b></code>
      * are passed via the low
-     * <i>m</i>={@link #numberOfNeighbours() numberOfNeighbours()} bits of <tt>apertureBits</tt> argument.
+     * <i>m</i>={@link #numberOfNeighbours() numberOfNeighbours()} bits of <code>apertureBits</code> argument.
      * The bit #<i>k</i> of this argument, 0&le;<i>k</i>&lt;<i>m</i> (its value is
-     * <nobr>(<tt>apertureBits&gt;&gt;&gt;</tt><i>k</i><tt>)&amp;1</tt></nobr>), is equal to the value
+     * (<code>apertureBits&gt;&gt;&gt;</code><i>k</i><code>)&amp;1</code>), is equal to the value
      * of the neighbour #<i>k</i> in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method.
      * In particular, in {@link BasicSkeletonPixelClassifier2D} implementation,
      * the order of neighbours is described by the following diagram:
@@ -368,10 +369,10 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * 0 1 2
      * 7 <b><i>C</i></b> 3
      * 6 5 4</pre>
-     * <p>So, 8 low bits of <tt>apertureBits</tt> contain the values of the corresponding neighbouring elements
+     * <p>So, 8 low bits of <code>apertureBits</code> contain the values of the corresponding neighbouring elements
      * in anticlockwise order (the <i>x</i>-axis is directed rightward, the <i>y</i>-axis is directed downward).
      *
-     * <p>It is supposed that the central element (<tt><b><i>C</i></b></tt>) of the skeleton is unit
+     * <p>It is supposed that the central element (<code><b><i>C</i></b></code>) of the skeleton is unit
      * (for zero elements ot the skeleton matrix, {@link #asPixelTypes asPixelTypes} method of
      * this class returns {@link #TYPE_ZERO} without calling this method).
      *
@@ -387,21 +388,21 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Calculates and returns the value of an element <tt><b><i>C'</i></b></tt>
+     * Calculates and returns the value of an element <code><b><i>C'</i></b></code>
      * in the resulting matrix, produced by
      * {@link #asPixelTypes asPixelTypes} method with
      * {@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHED_NODE
-     * NEIGHBOUR_INDEX_OF_ATTACHED_NODE} value of <tt>attachmentInformation</tt> argument,
+     * NEIGHBOUR_INDEX_OF_ATTACHED_NODE} value of <code>attachmentInformation</code> argument,
      * on the base of bit values of all neighbours (in terms of the
      * {@link net.algart.matrices.scanning.ConnectivityType#STRAIGHT_AND_DIAGONAL
      * straight-and-diagonal connectivity kind})
-     * of the corresponding unit element <tt><b><i>C</i></b></tt> in the source skeleton bit matrix.
+     * of the corresponding unit element <code><b><i>C</i></b></code> in the source skeleton bit matrix.
      *
-     * <p>More precisely, the bit values of the neighbours of this skeleton element <tt><b><i>C</i></b></tt>
+     * <p>More precisely, the bit values of the neighbours of this skeleton element <code><b><i>C</i></b></code>
      * are passed via the low
-     * <i>m</i>={@link #numberOfNeighbours() numberOfNeighbours()} bits of <tt>apertureBits</tt> argument.
+     * <i>m</i>={@link #numberOfNeighbours() numberOfNeighbours()} bits of <code>apertureBits</code> argument.
      * The bit #<i>k</i> of this argument, 0&le;<i>k</i>&lt;<i>m</i> (its value is
-     * <nobr>(<tt>apertureBits&gt;&gt;&gt;</tt><i>k</i><tt>)&amp;1</tt></nobr>), is equal to the value
+     * (<code>apertureBits&gt;&gt;&gt;</code><i>k</i><code>)&amp;1</code>), is equal to the value
      * of the neighbour #<i>k</i> in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method.
      * In particular, in {@link BasicSkeletonPixelClassifier2D} implementation,
      * the order of neighbours is described by the following diagram:
@@ -409,10 +410,10 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * 0 1 2
      * 7 <b><i>C</i></b> 3
      * 6 5 4</pre>
-     * <p>So, 8 low bits of <tt>apertureBits</tt> contain the values of the corresponding neighbouring elements
+     * <p>So, 8 low bits of <code>apertureBits</code> contain the values of the corresponding neighbouring elements
      * in anticlockwise order (the <i>x</i>-axis is directed rightward, the <i>y</i>-axis is directed downward).
      *
-     * <p>It is supposed that the central element (<tt><b><i>C</i></b></tt>) of the skeleton is unit
+     * <p>It is supposed that the central element (<code><b><i>C</i></b></code>) of the skeleton is unit
      * (for zero elements ot the skeleton matrix, {@link #asPixelTypes asPixelTypes} method of
      * this class returns {@link #TYPE_ZERO} without calling this method).
      *

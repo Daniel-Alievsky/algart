@@ -70,7 +70,7 @@ import java.util.Objects;
  * So, the matrix is supposed to be infinitely pseudo-cyclically continued, as well
  * {@link Matrices#asShifted Matrices.asShifted} method supposes it.
  * You can change this behavior by appending the source matrix with zero elements
- * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
  * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
