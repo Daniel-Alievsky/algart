@@ -35,9 +35,9 @@ import java.util.Objects;
  * <b>b</b>[<i>v</i>] and also the total number of elements in the source array <i>N</i> are 63-bit:
  * 0&le;<i>N</i>&lt;2<sup>63</sup> (<code>long</code> Java type).
  * The source array <b>A</b> is always supposed to be <i>sorted in increasing order</i>:
- * <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>, where <i>N</i>
+ * <b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1], where <i>N</i>
  * is the number of elements in <b>A</b> (obviously, <i>N</i> is equal to the sum of all bars
- * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>M</i>&minus;1]</nobr>).</p>
+ * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>M</i>&minus;1]).</p>
  *
  * <p>This class is designed for solving 2 basic tasks:</p>
  *
@@ -73,8 +73,8 @@ import java.util.Objects;
  *
  * <p>This class operates with the function <i>v</i>(<i>r</i>), called the <i>percentile</i>,
  * and its inverse function <i>v</i>(<i>r</i>), called the <i>rank</i>. Both variables <i>r</i> and <i>v</i>
- * are real (floating-point) numbers in the following ranges: <nobr>0.0&le;<i>r</i>&le;<i>N</i></nobr>,
- * <nobr>0.0&le;<i>v</i>&le;<i>M</i></nobr>. The definition of both functions depends on so called
+ * are real (floating-point) numbers in the following ranges: 0.0&le;<i>r</i>&le;<i>N</i>,
+ * 0.0&le;<i>v</i>&le;<i>M</i>. The definition of both functions depends on so called
  * <i>histogram model</i>. This class supports two following models.</p>
  *
  * <dl>
@@ -83,12 +83,12 @@ import java.util.Objects;
  * <dd>
  * <p>In this case, <i>r</i>(<i>v</i>) is a simple polyline generalization of the integer function:
  * while <i>v</i> is increasing from some integer
- * <i>v</i><sub>0</sub> to the next integer <nobr><i>v</i><sub>0</sub>+1</nobr>
+ * <i>v</i><sub>0</sub> to the next integer <i>v</i><sub>0</sub>+1
  * (some bar of the histogram),
- * the rank <nobr><i>r</i>(<i>v</i>)</nobr> is either the constant if <nobr><b>b</b>[<i>v</i><sub>0</sub>]=0</nobr>,
+ * the rank <i>r</i>(<i>v</i>) is either the constant if <b>b</b>[<i>v</i><sub>0</sub>]=0,
  * or uniformly increased from some <i>r</i><sub>0</sub> to
- * <nobr><i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> if
- * <nobr><b>b</b>[<i>v</i><sub>0</sub>]&gt;0</nobr>.
+ * <i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>] if
+ * <b>b</b>[<i>v</i><sub>0</sub>]&gt;0.
  * More precisely:</p>
  * <ol>
  * <li>
@@ -99,16 +99,16 @@ import java.util.Objects;
  * (here and below &lfloor;<i>x</i>&rfloor; means the integer part of <i>x</i> or <code>(long)</code><i>x</i>
  * for our non-negative numbers),
  * and <i>r</i><sub>0</sub> = this&nbsp;sum&minus;<b>b</b>[<i>v</i><sub>0</sub>] =
- * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
+ * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1].
  * In the only special case <i>r</i>=<i>N</i>
  * this formula is not correct, because the sum of histogram bars <b>b</b>[<i>k</i>] cannot be greater than
  * the sum of all bars <i>N</i>, and we consider, by definition, that
- * <nobr><i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
- * &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1</nobr>.<br>
+ * <i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
+ * &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1.<br>
  * Note: according this definition,
- * <nobr><i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
- * and <nobr><i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
- * <b>b</b>[<i>k</i>]&gt;0)+1</nobr>.<br>
+ * <i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
+ * and <i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
+ * <b>b</b>[<i>k</i>]&gt;0)+1.<br>
  * In a case <i>N</i>=0 (empty histogram), <i>v</i>(<i>r</i>) functions is considered to be undefined.
  * <br>&nbsp;</li>
  *
@@ -118,8 +118,8 @@ import java.util.Objects;
  * <i>r</i><sub>0</sub> = <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1].<br>
  * Note: according this definition, <i>r</i>(<i>v</i>)=0 when <i>v</i>&lt;<i>v</i>(0) and
  * <i>r</i>(<i>v</i>)=<i>N</i> when <i>v</i>&gt;<i>v</i>(<i>N</i>).
- * In particular, <nobr><i>r</i>(0)=0</nobr>
- * and <nobr><i>r</i>(<i>M</i>)=<i>N</i></nobr> (remember that <nobr><b>b</b>[<i>M</i>]=0</nobr> by definition).<br>
+ * In particular, <i>r</i>(0)=0
+ * and <i>r</i>(<i>M</i>)=<i>N</i> (remember that <b>b</b>[<i>M</i>]=0 by definition).<br>
  * Unlike <i>v</i>(<i>r</i>), <i>r</i>(<i>v</i>) function is defined also if <i>N</i>=0: in this case it is
  * the zero constant.
  * </li>
@@ -140,8 +140,8 @@ import java.util.Objects;
  * to these function of the simple model in all points where the rank is integer (<i>r</i>&isin;<b>Z</b>).
  * However, if the rank is not integer, we consider, by definition, that
  * <i>v</i>(<i>r</i>) is uniformly increased from <i>v</i>(<i>r</i><sub>0</sub>) to
- * <nobr><i>v</i>(<i>r</i><sub>0</sub>+1)</nobr>, where
- * <nobr><i>r</i><sub>0</sub>=&lfloor;<i>r</i>&rfloor;</nobr>.
+ * <i>v</i>(<i>r</i><sub>0</sub>+1), where
+ * <i>r</i><sub>0</sub>=&lfloor;<i>r</i>&rfloor;.
  * In other words, we interpolate the percentile <i>v</i>(<i>r</i><sub>0</sub>) between integer ranks.
  * More precisely:</p>
  * <ol>
@@ -150,30 +150,30 @@ import java.util.Objects;
  *     <ul type="disc">
  *     <li><i>v</i><sub>0</sub> + (<i>r</i>&minus;<i>r</i><sub>0</sub>)/<i>b</i>,
  *     where <i>v</i><sub>0</sub> is the minimal integer value so that
- *     <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;</nobr>,
- *     <nobr><i>r</i><sub>0</sub> = <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
- *     <nobr><i>b</i> = <b>b</b>[<i>v</i><sub>0</sub>]</nobr>
- *     &mdash; if <i>b</i>&gt;1 and <nobr><i>r</i><sub>0</sub> &le; <i>r</i> &le;
- *     <i>r</i><sub>0</sub>+<i>b</i>&minus;1 = <i>r</i><sub>0</sub>'</nobr>;
+ *     <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;,
+ *     <i>r</i><sub>0</sub> = <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1],
+ *     <i>b</i> = <b>b</b>[<i>v</i><sub>0</sub>]
+ *     &mdash; if <i>b</i>&gt;1 and <i>r</i><sub>0</sub> &le; <i>r</i> &le;
+ *     <i>r</i><sub>0</sub>+<i>b</i>&minus;1 = <i>r</i><sub>0</sub>';
  *     </li>
  *     <li><i>v</i><sub>0</sub>' +
  *     (<i>r</i>&minus;<i>r</i><sub>0</sub>')*(<i>v</i><sub>1</sub>&minus;<i>v</i><sub>0</sub>'),
- *     where <nobr><i>v</i><sub>0</sub>' = <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i>
- *     = <i>v</i>(<i>r</i><sub>0</sub>')</nobr>
- *     and <nobr><i>v</i><sub>1</sub> = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <i>k</i>&gt;<i>v</i><sub>0</sub>
- *     &amp; <b>b</b>[<i>k</i>]&gt;0) = <i>v</i>(<i>r</i><sub>0</sub>'+1)</nobr> is the next non-zero histogram bar
- *     &mdash; if <nobr><i>r</i><sub>0</sub>'&le;<i>r</i>&le;<i>r</i><sub>0</sub>'+1=<i>r</i><sub>1</sub></nobr>.
+ *     where <i>v</i><sub>0</sub>' = <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i>
+ *     = <i>v</i>(<i>r</i><sub>0</sub>')
+ *     and <i>v</i><sub>1</sub> = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <i>k</i>&gt;<i>v</i><sub>0</sub>
+ *     &amp; <b>b</b>[<i>k</i>]&gt;0) = <i>v</i>(<i>r</i><sub>0</sub>'+1) is the next non-zero histogram bar
+ *     &mdash; if <i>r</i><sub>0</sub>'&le;<i>r</i>&le;<i>r</i><sub>0</sub>'+1=<i>r</i><sub>1</sub>.
  *     In a case <i>r</i>&gt;<i>N</i>&minus;1, there is no the next non-zero bar and we consider, by definition,
- *     that <nobr><i>v</i><sub>1</sub> = <i>v</i><sub>0</sub>+1</nobr>.
+ *     that <i>v</i><sub>1</sub> = <i>v</i><sub>0</sub>+1.
  *     </li>
  *     </ul>
  * As in the simple model, in the special case <i>r</i>=<i>N</i> we consider, by definition, that
- * <nobr><i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
- * &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1</nobr>.<br>
+ * <i>v</i>(<i>N</i>) = lim<sub><i>x</i>&rarr;<i>N</i>+1</sub><i>v</i>(<i>x</i>) =
+ * &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1.<br>
  * As in the simple model, here
- * <nobr><i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
- * and <nobr><i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
- * <b>b</b>[<i>k</i>]&gt;0)+1</nobr>.<br>
+ * <i>v</i>(0) = <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
+ * and <i>v</i>(<i>N</i>) = &lfloor;<i>v</i>(<i>N</i>&minus;1)&rfloor;+1 = <i>max</i> (<i>k</i>&isin;<b>Z</b>:
+ * <b>b</b>[<i>k</i>]&gt;0)+1.<br>
  * In a case <i>N</i>=0 (empty histogram), <i>v</i>(<i>r</i>) functions is considered to be undefined.
  * <br>&nbsp;</li>
  *
@@ -187,22 +187,22 @@ import java.util.Objects;
  * </ol>
  * <p>In this model both functions <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>) are increasing and continuous.
  * But calculations are more complicated. The difference appears if there are empty bars
- * (<nobr><b>b</b>[<i>k</i>]=0</nobr>); namely, in each non-empty bar
- * <nobr><b>b</b>[<i>v</i><sub>0</sub>]=<i>b</i></nobr>, followed by empty bars, there is new salient point of
- * the polyline <i>r</i>(<i>v</i>): <nobr><i>v</i> = <i>v</i><sub>0</sub>' =
- * <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i></nobr>,
+ * (<b>b</b>[<i>k</i>]=0); namely, in each non-empty bar
+ * <b>b</b>[<i>v</i><sub>0</sub>]=<i>b</i>, followed by empty bars, there is new salient point of
+ * the polyline <i>r</i>(<i>v</i>): <i>v</i> = <i>v</i><sub>0</sub>' =
+ * <i>v</i><sub>0</sub>+(<i>b</i>&minus;1)/<i>b</i>,
  * and after it the rank <i>r</i>(<i>v</i>) is increasing until the next rank
- * <nobr><i>r</i>(<i>v</i><sub>0</sub>)+<i>b</i></nobr> during all zero bars following after
- * <nobr><b>b</b>[<i>v</i><sub>0</sub>]</nobr>.
+ * <i>r</i>(<i>v</i><sub>0</sub>)+<i>b</i> during all zero bars following after
+ * <b>b</b>[<i>v</i><sub>0</sub>].
  * This feature does not appear at the right end of the histogram, if all bars following after
- * <nobr><b>b</b>[<i>v</i><sub>0</sub>]</nobr> are zero.</p>
+ * <b>b</b>[<i>v</i><sub>0</sub>] are zero.</p>
  *
  * <p>Note: the traditional definition of the <i>median</i> of the source array <b>A</b> with even length
- * <i>N</i>=2<i>n</i> is <nobr>(<b>A</b>[<i>n</i>&minus;1]+<b>A</b>[<i>n</i>])/2</nobr>
- * (if we suppose <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>).
- * This definition is identical to the percentile <nobr><i>v</i>(<i>n</i>&minus;0.5)</nobr>
+ * <i>N</i>=2<i>n</i> is (<b>A</b>[<i>n</i>&minus;1]+<b>A</b>[<i>n</i>])/2
+ * (if we suppose <b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]).
+ * This definition is identical to the percentile <i>v</i>(<i>n</i>&minus;0.5)
  * in the precise histogram model, if all bars contains 0 or 1 elements
- * (all <nobr><b>b</b>[<i>k</i>]&le;1</nobr>).</p>
+ * (all <b>b</b>[<i>k</i>]&le;1).</p>
  * <p>To better understand the sense of this model, please also read the comments
  * to {@link #preciseValue(long[], double)} method.</p>
  * </dd>
@@ -242,43 +242,43 @@ import java.util.Objects;
  * but can change the current simple and precise ranks.</p>
  *
  * <p>This class guarantees that for any <i>v</i> we have
- * <nobr><i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)</nobr> in terms of the simple histogram model and
- * <nobr><i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)</nobr> in terms of the precise histogram model.
+ * <i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>) in terms of the simple histogram model and
+ * <i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>) in terms of the precise histogram model.
  * In particular, in the case <i>N</i>=0 both ranks are always zero:
- * <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>.</p>
+ * <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0.</p>
  *
  * <p>This class guarantees that for any <i>r<sup>S</sup></i>
- * we have <nobr><i>v</i>=<i>v</i>(<i>r<sup>S</sup></i>)</nobr> in terms of the simple histogram
+ * we have <i>v</i>=<i>v</i>(<i>r<sup>S</sup></i>) in terms of the simple histogram
  * model, excepting extreme values
- * <nobr><i>r<sup>S</sup></i>=0</nobr> and <nobr><i>r<sup>S</sup></i>=<i>N</i></nobr>
- * and also <nobr><i>r<sup>S</sup></i></nobr> values where
- * <nobr><i>v</i>(<i>r<sup>S</sup></i>)</nobr> function is discontinuous in this model.
+ * <i>r<sup>S</sup></i>=0 and <i>r<sup>S</sup></i>=<i>N</i>
+ * and also <i>r<sup>S</sup></i> values where
+ * <i>v</i>(<i>r<sup>S</sup></i>) function is discontinuous in this model.
  * If such situation takes place after {@link #moveToValue(double)} call, the current value is equal
  * to the argument of this method.
  * If such situation takes place after {@link #moveToRank(double)} call, the current value is equal
- * to the <nobr><i>v</i>(<i>r<sup>S</sup></i>)</nobr> according the definition of
- * <nobr><i>v</i>(<i>r</i>)</nobr> function in the simple histogram model.
+ * to the <i>v</i>(<i>r<sup>S</sup></i>) according the definition of
+ * <i>v</i>(<i>r</i>) function in the simple histogram model.
  * In particular, after the call
  * {@link #moveToRank(double) moveToRank(0)} the current value <i>v</i>
- * will be equal to <nobr><i>v</i>(0)</nobr> and after the call
+ * will be equal to <i>v</i>(0) and after the call
  * {@link #moveToRank(double) moveToRank(<i>N</i>)} the current value <i>v</i>
- * will be equal to <nobr><i>v</i>(<i>N</i>)</nobr>.
+ * will be equal to <i>v</i>(<i>N</i>).
  * The case <i>N</i>=0 is processed in a special way: see comments to {@link #moveToRank(double)} method.</p>
  *
  * <p>This class guarantees that for any <i>r<sup>P</sup></i>
- * we have <nobr><i>v</i>=<i>v</i>(<i>r<sup>P</sup></i>)</nobr> in terms of the precise histogram
+ * we have <i>v</i>=<i>v</i>(<i>r<sup>P</sup></i>) in terms of the precise histogram
  * model, excepting extreme values
- * <nobr><i>r<sup>P</sup></i>=0</nobr> and <nobr><i>r<sup>P</sup></i>=<i>N</i></nobr>.
- * If <nobr><i>r<sup>P</sup></i>=0</nobr>,
- * the corresponding value <i>v</i> can be any number in range <nobr>0..<i>v</i>(0)</nobr>
+ * <i>r<sup>P</sup></i>=0 and <i>r<sup>P</sup></i>=<i>N</i>.
+ * If <i>r<sup>P</sup></i>=0,
+ * the corresponding value <i>v</i> can be any number in range 0..<i>v</i>(0)
  * if you set it by {@link #moveToValue(double)} method; but after the call
  * {@link #moveToPreciseRank(double) moveToPreciseRank(0)} the current value <i>v</i>
- * will be equal to <nobr><i>v</i>(0)</nobr>.
- * If <nobr><i>r<sup>P</sup></i>=<i>N</i></nobr>,
- * the corresponding value <i>v</i> can be any number in range <nobr><i>v</i>(<i>N</i>)..<i>M</i></nobr>
+ * will be equal to <i>v</i>(0).
+ * If <i>r<sup>P</sup></i>=<i>N</i>,
+ * the corresponding value <i>v</i> can be any number in range <i>v</i>(<i>N</i>)..<i>M</i>
  * if you set it by {@link #moveToValue(double)} method; but after the call
  * {@link #moveToPreciseRank(double) moveToPreciseRank(<i>N</i>)} the current value <i>v</i>
- * will be equal to <nobr><i>v</i>(<i>N</i>)</nobr>.
+ * will be equal to <i>v</i>(<i>N</i>).
  * The case <i>N</i>=0 is processed in a special way: see comments to {@link #moveToPreciseRank(double)} method.</p>
  *
  * <p>There are additional methods for setting integer values and ranks:
@@ -294,9 +294,9 @@ import java.util.Objects;
  * The rules of rounding are complicated enough and described in the comments to this method;
  * depending on the situation, it can work as rounding to the nearest integer (<code>Math.round</code>)
  * or as truncating (<code>Math.floor</code>). In any case, there is a guarantee that
- * <nobr>{@link #currentIValue()}&minus;0.5&le;<i>v</i>&lt;{@link #currentIValue()}+1</nobr>.
+ * {@link #currentIValue()}&minus;0.5&le;<i>v</i>&lt;{@link #currentIValue()}+1.
  * The {@link #currentIRank()} method return the rank, corresponding to <i>w</i>={@link #currentIValue()}:
- * it is equal to <nobr><i>r</i>(&lfloor;<i>w</i>&rfloor;)</nobr> (this rank is integer and does not
+ * it is equal to <i>r</i>(&lfloor;<i>w</i>&rfloor;) (this rank is integer and does not
  * depend on the histogram model).</p>
  *
  * <p>You can create an instance of this class by the following methods:</p>
@@ -311,7 +311,7 @@ import java.util.Objects;
  * <p>After creation, the only way to change the bars <b>b</b>[<i>k</i>] is using
  * {@link #include(int)}, {@link #exclude(int)},  {@link #include(int...)} and {@link #exclude(int...)} methods.
  * After creation, the current value <i>v</i> and both current ranks
- * <nobr><i>r<sup>S</sup></i></nobr> and <nobr><i>r<sup>P</sup></i></nobr>
+ * <i>r<sup>S</sup></i> and <i>r<sup>P</sup></i>
  * are zero.</p>
  *
  * <p>Sometimes you need calculating (and supporting) not one, but several pairs "current value + current rank"
@@ -323,7 +323,7 @@ import java.util.Objects;
  * in all shared instances. But each sharing instance has an independent set of current value, current simple rank
  * and current precise rank. You can get all sharing instances by {@link #nextSharing()} method.</p>
  *
- * <p>This class also provides static methods for calculating <nobr><i>v</i>(<i>r</i>)</nobr> function:
+ * <p>This class also provides static methods for calculating <i>v</i>(<i>r</i>) function:
  * {@link #value(long[] histogram, double rank)}, {@link #value(int[] histogram, double rank)}
  * for the simple histogram model,
  * {@link #preciseValue(long[] histogram, double rank)}, {@link #preciseValue(int[] histogram, double rank)}
@@ -362,8 +362,8 @@ public abstract class Histogram {
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
-     * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
-     * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+     * <b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+     * <b>b</b><sup><i>m</i></sup>[<i>k</i>], where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
@@ -374,8 +374,8 @@ public abstract class Histogram {
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
-     * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+     * where the width of bars is 2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>:
+     * it is a sum of 2<sup><i>s</i></sup> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <code>bitLevelsOfPyramid</code> array must be
      * in 1..31 range and must be listed in increasing order:
@@ -418,8 +418,8 @@ public abstract class Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static Histogram newLongHistogram(int histogramLength, int... bitLevelsOfPyramid) {
@@ -434,13 +434,13 @@ public abstract class Histogram {
     /**
      * Creates new histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
-     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]</nobr> at first.
+     * In other words, the bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>] at first.
      *
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
-     * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
-     * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+     * <b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+     * <b>b</b><sup><i>m</i></sup>[<i>k</i>], where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
@@ -451,8 +451,8 @@ public abstract class Histogram {
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
-     * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+     * where the width of bars is 2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>:
+     * it is a sum of 2<sup><i>s</i></sup> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <code>bitLevelsOfPyramid</code> array must be
      * in 1..31 range and must be listed in increasing order:
@@ -498,8 +498,8 @@ public abstract class Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static Histogram newLongHistogram(long[] histogram, int... bitLevelsOfPyramid) {
@@ -522,8 +522,8 @@ public abstract class Histogram {
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
-     * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
-     * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+     * <b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+     * <b>b</b><sup><i>m</i></sup>[<i>k</i>], where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
@@ -534,8 +534,8 @@ public abstract class Histogram {
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
-     * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+     * where the width of bars is 2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>:
+     * it is a sum of 2<sup><i>s</i></sup> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <code>bitLevelsOfPyramid</code> array must be
      * in 1..31 range and must be listed in increasing order:
@@ -573,8 +573,8 @@ public abstract class Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static Histogram newIntHistogram(int histogramLength, int... bitLevelsOfPyramid) {
@@ -589,7 +589,7 @@ public abstract class Histogram {
     /**
      * Creates new 32-bit histogram, consisting of <i>M</i>=<code>histogram.length</code> bars, equal to elements
      * of the given array.
-     * In other words, the bars <nobr><b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]</nobr> at first.
+     * In other words, the bars <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>] at first.
      * "32-bit" means that the sum of all bars <b>b</b>[<i>k</i>] (the total length of the supposed
      * source array <b>A</b>) cannot exceed and will not be able to exceed <code>Integer.MAX_VALUE</code>.
      * If you need to process greater numbers, please use {@link #newLongHistogram(long[], int...)} method
@@ -598,8 +598,8 @@ public abstract class Histogram {
      * <p>The <code>bitLevelsOfPyramid</code> argument is used for optimization of large histograms, consisting
      * of thousands or millions bars. Namely, this class automatically builds and supports a
      * <i>pyramid of histograms</i>: <i>m</i>=<code>bitLevelsOfPyramid.length</code> additional arrays
-     * <nobr><b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
-     * <b>b</b><sup><i>m</i></sup>[<i>k</i>]</nobr>, where
+     * <b>b</b><sup>1</sup>[<i>k</i>], <b>b</b><sup>2</sup>[<i>k</i>], ...,
+     * <b>b</b><sup><i>m</i></sup>[<i>k</i>], where
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] = <big>&Sigma;</big>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
@@ -610,8 +610,8 @@ public abstract class Histogram {
      * </blockquote>
      *
      * <p>In other words, every "sub-histogram" <b>b</b><sup><i>q</i></sup> consists of "wide" bars,
-     * where the width of bars is <nobr>2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup></nobr>:
-     * it is a sum of <nobr>2<sup><i>s</i></sup></nobr> bars <b>b</b>[<i>j</i>] of the base histogram,
+     * where the width of bars is 2<sup><i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1]</sup>:
+     * it is a sum of 2<sup><i>s</i></sup> bars <b>b</b>[<i>j</i>] of the base histogram,
      * excepting the last "wide" bar which can be a sum of fewer bars <b>b</b>[<i>j</i>].
      * The elements of <code>bitLevelsOfPyramid</code> array must be
      * in 1..31 range and must be listed in increasing order:
@@ -652,8 +652,8 @@ public abstract class Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static Histogram newIntHistogram(int[] histogram, int... bitLevelsOfPyramid) {
@@ -803,11 +803,11 @@ public abstract class Histogram {
     public abstract void exclude(int... values);
 
     /**
-     * Returns the rank <nobr><i>r</i>(<i>w</i>)</nobr> of the value <i>w</i>={@link #currentIValue()}.
+     * Returns the rank <i>r</i>(<i>w</i>) of the value <i>w</i>={@link #currentIValue()}.
      * (This rank is the same in both histogram models.)
      * In other words, it is the sum of all histogram bars <b>b</b>[<i>k</i>] from the left
      * of the bar #<i>w</i>:
-     * <nobr><big>&Sigma;</big><sub><i>k</i>&lt;<i>w</i></sub> <b>b</b>[<i>k</i>]</nobr>.
+     * <big>&Sigma;</big><sub><i>k</i>&lt;<i>w</i></sub> <b>b</b>[<i>k</i>].
      * See {@link Histogram comments to Histogram class} for more details.
      *
      * @return the rank of the integer part of the current value.
@@ -817,7 +817,7 @@ public abstract class Histogram {
     public abstract long currentIRank();
 
     /**
-     * Returns the current simple rank: <nobr><i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+     * Returns the current simple rank: <i>r<sup>S</sup></i>=<i>r</i>(<i>v</i>)
      * in terms of the simple histogram model.
      * See {@link Histogram comments to Histogram class} for more details.
      *
@@ -848,7 +848,7 @@ public abstract class Histogram {
     }
 
     /**
-     * Returns the current precise rank: <nobr><i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)</nobr>
+     * Returns the current precise rank: <i>r<sup>P</sup></i>=<i>r</i>(<i>v</i>)
      * in terms of the precise histogram model.
      * See {@link Histogram comments to Histogram class} for more details.
      *
@@ -955,7 +955,7 @@ public abstract class Histogram {
      * {@link #moveToPreciseRank(double)}.
      *
      * <p>The special case
-     * <nobr><i>N</i>={@link #total()}=0</nobr> is an exception to the last rule:
+     * <i>N</i>={@link #total()}=0 is an exception to the last rule:
      * in this case, all 3 methods {@link #moveToPreciseRank(double) moveToPreciseRank},
      * {@link #moveToRank(double) moveToRank} and {@link #moveToIRank(long) moveToIRank} are equivalent,
      * but the concrete results of {@link #currentValue()} method (i.e. <i>v</i>)
@@ -968,7 +968,7 @@ public abstract class Histogram {
      * <p>Immediately after creating a new histogram this method always returns 0 (like {@link #currentValue()}).
      *
      * <p>This result of this method always lies between <code>(int)</code><i>v</i>=&lfloor;<i>v</i>&rfloor;
-     * and <nobr><code>Math.round</code>(<i>v</i>)</nobr>.
+     * and <code>Math.round</code>(<i>v</i>).
      *
      * @return the current value (percentile), rounded to an integer number.
      * @see #currentValue()
@@ -1001,7 +1001,7 @@ public abstract class Histogram {
      * Returns <code>true</code> if and only if the current bar is zero: <b>b</b>[&lfloor;<i>v</i>&rfloor;]=0
      * (<i>v</i> is the {@link #currentValue() current value})
      * and either all bars from the left, or all bars from the right are also zero.
-     * Equivalent to <nobr><code>{@link #leftFromNonZeroPart()} || {@link #rightFromNonZeroPart()}</code></nobr>.
+     * Equivalent to <code>{@link #leftFromNonZeroPart()} || {@link #rightFromNonZeroPart()}</code>.
      *
      * @return <code>true</code> if the current bar (containing the current value)
      * and all bars rightward or leftward from it are zero.
@@ -1064,7 +1064,7 @@ public abstract class Histogram {
      * (Because the argument is integer, both <i>r<sup>S</sup></i>
      * and <i>r<sup>P</sup></i> ranks are the same.)
      * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
+     * if <code>rank</code>&gt;<i>N</i>={@link #total()},
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentValue() current value} <i>v</i> automatically changes
      * in accordance to the new rank.
@@ -1072,12 +1072,12 @@ public abstract class Histogram {
      *
      * <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
      * both simple and precise ranks are always zero, not depending on calls of this method:
-     * <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
-     * (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
-     * But <nobr><i>v</i>(<i>r</i>)</nobr> function
-     * (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+     * <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0
+     * (because <i>r</i>(<i>v</i>) is a zero constant by definition).
+     * But <i>v</i>(<i>r</i>) function
+     * (unlike <i>r</i>(<i>v</i>)) is not defined in this case, so, if <i>N</i>=0,
      * the current value <i>v</i> after calling this method is not documented &mdash;
-     * there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+     * there is the only guarantee that 0&le;<i>v</i>&le;<i>M</i>.
      *
      * <p>This method works little faster than equivalent calls
      * {@link #moveToRank(double) moveToRank(rank)} and
@@ -1094,7 +1094,7 @@ public abstract class Histogram {
      * Sets the current simple rank <i>r<sup>S</sup></i>
      * to be equal of the <code>rank</code> argument.
      * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
+     * if <code>rank</code>&gt;<i>N</i>={@link #total()},
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
      * and the {@link #currentValue() current value} <i>v</i>
@@ -1103,12 +1103,12 @@ public abstract class Histogram {
      *
      * <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
      * both simple and precise ranks are always zero, not depending on calls of this method:
-     * <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
-     * (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
-     * But <nobr><i>v</i>(<i>r</i>)</nobr> function
-     * (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+     * <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0
+     * (because <i>r</i>(<i>v</i>) is a zero constant by definition).
+     * But <i>v</i>(<i>r</i>) function
+     * (unlike <i>r</i>(<i>v</i>)) is not defined in this case, so, if <i>N</i>=0,
      * the current value <i>v</i> after calling this method is not documented &mdash;
-     * there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+     * there is the only guarantee that 0&le;<i>v</i>&le;<i>M</i>.
      *
      * @param rank new simple rank <i>r<sup>S</sup></i>.
      * @return the reference to this object.
@@ -1122,7 +1122,7 @@ public abstract class Histogram {
      * Sets the current precise rank <i>r<sup>P</sup></i>
      * to be equal of the <code>rank</code> argument.
      * If the <code>rank</code> argument is negative, it is replaced with 0 (minimal possible rank);
-     * if <nobr><code>rank</code>&gt;<i>N</i>={@link #total()}</nobr>,
+     * if <code>rank</code>&gt;<i>N</i>={@link #total()},
      * it is replaced with <i>N</i> (maximal possible rank).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentValue() current value} <i>v</i> automatically change
@@ -1131,12 +1131,12 @@ public abstract class Histogram {
      *
      * <p>In the special case <i>N</i>=0 (all bars of the histograms are zero),
      * both simple and precise ranks are always zero, not depending on calls of this method:
-     * <nobr><i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0</nobr>
-     * (because <nobr><i>r</i>(<i>v</i>)</nobr> is a zero constant by definition).
-     * But <nobr><i>v</i>(<i>r</i>)</nobr> function
-     * (unlike <nobr><i>r</i>(<i>v</i>)</nobr>) is not defined in this case, so, if <i>N</i>=0,
+     * <i>r<sup>S</sup></i>=<i>r<sup>P</sup></i>=0
+     * (because <i>r</i>(<i>v</i>) is a zero constant by definition).
+     * But <i>v</i>(<i>r</i>) function
+     * (unlike <i>r</i>(<i>v</i>)) is not defined in this case, so, if <i>N</i>=0,
      * the current value <i>v</i> after calling this method is not documented &mdash;
-     * there is the only guarantee that <nobr>0&le;<i>v</i>&le;<i>M</i></nobr>.
+     * there is the only guarantee that 0&le;<i>v</i>&le;<i>M</i>.
      *
      * @param rank new precise rank <i>r<sup>P</sup></i>.
      * @return the reference to this object.
@@ -1221,7 +1221,7 @@ public abstract class Histogram {
      * Sets the current value <i>v</i>
      * to be equal of the <code>value</code> argument.
      * If the <code>value</code> argument is negative, it is replaced with 0 (minimal possible value);
-     * if <nobr><code>value</code>&gt;<i>M</i>={@link #length()}</nobr>,
+     * if <code>value</code>&gt;<i>M</i>={@link #length()},
      * it is replaced with <i>M</i> (maximal possible value).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
@@ -1241,7 +1241,7 @@ public abstract class Histogram {
      * Sets the current value <i>v</i>
      * to be equal of the <code>value</code> argument.
      * If the <code>value</code> argument is negative, it is replaced with 0 (minimal possible value);
-     * if <nobr><code>value</code>&gt;<i>M</i>={@link #length()}</nobr>,
+     * if <code>value</code>&gt;<i>M</i>={@link #length()},
      * it is replaced with <i>M</i> (maximal possible value).
      * The {@link #currentRank() current simple rank} <i>r<sup>S</sup></i>
      * and the {@link #currentPreciseRank() current precise rank} <i>r<sup>P</sup></i>
@@ -1285,7 +1285,7 @@ public abstract class Histogram {
      * <p>All instances, created by {@link #share()} method, are connected into a circular list, and this method
      * returns the next element in this list. For example, if the instance <code>h1</code> was created by
      * {@link #newLongHistogram(int, int...)} method and, after this, the instance <code>h2</code> was created as
-     * <nobr><code>h2=h1.{@link #share()}</code></nobr>, then this method in <code>h1</code>
+     * <code>h2=h1.{@link #share()}</code>, then this method in <code>h1</code>
      * object returns <code>h2</code>
      * and in <code>h2</code> object returns <code>h1</code>. If there are no sharing instances, this method returns
      * the reference to this instance.
@@ -1341,15 +1341,15 @@ public abstract class Histogram {
      * of integer numbers <code>0..histogram.length-1</code>, corresponding to this histogram.
      *
      * <p>More precisely, returns minimal integer value <i>v</i> so that
-     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i>]&gt;<code>rank</code></nobr>,
+     * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i>]&gt;<code>rank</code>,
      * <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>].
      * If <code>rank&le;0</code>, this method returns
-     * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+     * <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
      * (the minimal element in the source array).
-     * If <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
-     * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
+     * If <code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>]), it returns
+     * <i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1
      * (the maximal element plus 1).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
+     * If all columns <b>b</b>[<i>k</i>] are zero (no elements), this method returns <code>0</code>.
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in some source array
      *                  that are equal to <code>k</code>.
@@ -1431,30 +1431,30 @@ public abstract class Histogram {
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
      * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
-     * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+     * <i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
      * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>.
-     * Obviously, <nobr><i>v</i><sub>1</sub> =
-     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+     * Obviously, <i>v</i><sub>1</sub> =
+     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>],
      * where <i>v</i><sub>0</sub> is the minimal integer value so that
-     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
-     * <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>.
+     * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub> and
+     * <i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1].
      * Then this method returns
-     * <nobr><i>v</i><sub>1</sub>+(<code>rank</code>&minus;<i>r</i><sub>1</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
+     * <i>v</i><sub>1</sub>+(<code>rank</code>&minus;<i>r</i><sub>1</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]
      * (this value is equal to
-     * <nobr><i>v</i><sub>0</sub>+(<code>rank</code>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>).
+     * <i>v</i><sub>0</sub>+(<code>rank</code>&minus;<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]).
      * Please compare: unlike {@link #preciseValue(long[], double)}, we do not find the next element
      * <i>v</i><sub>2</sub>
      * in the following bars of the histogram, but just interpolate between <i>v</i><sub>1</sub>
      * and <i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>].
      *
      * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
-     * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+     * <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
      * (the minimal element in the source array), and
-     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
-     * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
-     * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
+     * if <code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>]), it returns
+     * <i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1
+     * (for floating-point array, it means the maximal element plus 1/<b>b</b>[<i>k</i>]).
+     * If all columns <b>b</b>[<i>k</i>] are zero (no elements), this method returns <code>0</code>.
      *
      * <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
      * <i>r</i>=<code>rank</code> in terms of the <i>simple histogram model</i>:
@@ -1551,63 +1551,63 @@ public abstract class Histogram {
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
      * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
-     * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+     * <i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
      * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>
      * and the element of the source array <i>v</i><sub>2</sub>
-     * with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
-     * Here <nobr><i>v</i><sub>1</sub> =
-     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+     * with the index #<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1.
+     * Here <i>v</i><sub>1</sub> =
+     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>],
      * where <i>v</i><sub>0</sub> is the minimal integer value so that
-     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
-     * <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
+     * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub> and
+     * <i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1],
      * and there is the analogous formula for <i>v</i><sub>2</sub>.
-     * If <code>rank</code> argument is integer (<nobr><code>rank==(long)rank</code></nobr>),
+     * If <code>rank</code> argument is integer (<code>rank==(long)rank</code>),
      * this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
      * Until this moment, this method works like {@link #preciseValue(long[], double) preciseValue}.
      *
      * <p>After this, the behaviour of this method is more complicated. If <code>rank</code> is not integer,
-     * we calculate <nobr><i>v</i><sub>1</sub>'=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>1</sub>]</nobr>
-     * and <nobr><i>v</i><sub>2</sub>'=<i>v</i><sub>2</sub>+1/<b>b</b>[<i>v</i><sub>2</sub>]</nobr>.
+     * we calculate <i>v</i><sub>1</sub>'=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>1</sub>]
+     * and <i>v</i><sub>2</sub>'=<i>v</i><sub>2</sub>+1/<b>b</b>[<i>v</i><sub>2</sub>].
      * Let's consider that the true real values in the source array
-     * <nobr>#<i>r</i><sub>1</sub> (<i>w</i><sub>1</sub>)</nobr> and
-     * <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1 (<i>w</i><sub>2</sub>)</nobr> are unknown, but lie in ranges
-     * <nobr><i>v</i><sub>1</sub>&le;<i>w</i><sub>1</sub>&lt;<i>v</i><sub>1</sub>'</nobr> and
-     * <nobr><i>v</i><sub>2</sub>&le;<i>w</i><sub>2</sub>&lt;<i>v</i><sub>2</sub>'</nobr>.
+     * #<i>r</i><sub>1</sub> (<i>w</i><sub>1</sub>) and
+     * #<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1 (<i>w</i><sub>2</sub>) are unknown, but lie in ranges
+     * <i>v</i><sub>1</sub>&le;<i>w</i><sub>1</sub>&lt;<i>v</i><sub>1</sub>' and
+     * <i>v</i><sub>2</sub>&le;<i>w</i><sub>2</sub>&lt;<i>v</i><sub>2</sub>'.
      * (We really don't know the precise real values, we only know that some
-     * <nobr><b>b</b>[&lfloor;<i>v</i><sub>1</sub>&rfloor;]</nobr> values
-     * lie in <nobr>&lfloor;<i>v</i><sub>1</sub>&rfloor;..&lfloor;<i>v</i><sub>1</sub>&rfloor;+1</nobr> range and some
-     * <nobr><b>b</b>[&lfloor;<i>v</i><sub>2</sub>&rfloor;]</nobr> values
-     * lie in <nobr>&lfloor;<i>v</i><sub>2</sub>&rfloor;..&lfloor;<i>v</i><sub>2</sub>&rfloor;+1</nobr> range.)
+     * <b>b</b>[&lfloor;<i>v</i><sub>1</sub>&rfloor;] values
+     * lie in &lfloor;<i>v</i><sub>1</sub>&rfloor;..&lfloor;<i>v</i><sub>1</sub>&rfloor;+1 range and some
+     * <b>b</b>[&lfloor;<i>v</i><sub>2</sub>&rfloor;] values
+     * lie in &lfloor;<i>v</i><sub>2</sub>&rfloor;..&lfloor;<i>v</i><sub>2</sub>&rfloor;+1 range.)
      * Then the value with real "index" <code>rank</code>,
      * interpolated between <i>w</i><sub>1</sub> and <i>w</i><sub>2</sub>, lies in range
-     * <nobr><i>a</i>&le;<i>w</i>&lt;<i>b</i></nobr>, where
-     * <nobr><i>a</i>=<i>v</i><sub>1</sub> +
-     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>
+     * <i>a</i>&le;<i>w</i>&lt;<i>b</i>, where
+     * <i>a</i>=<i>v</i><sub>1</sub> +
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)
      * (the result of {@link #preciseValue(long[], double) preciseValue} call with the same arguments)
-     * and <nobr><i>b</i>=<i>v</i><sub>1</sub>' +
-     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>'&minus;<i>v</i><sub>1</sub>')</nobr>.
+     * and <i>b</i>=<i>v</i><sub>1</sub>' +
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>'&minus;<i>v</i><sub>1</sub>').
      *
-     * <p>This method finds the integer range <nobr><i>v</i>..<i>v</i>+1</nobr>, which "covers"
+     * <p>This method finds the integer range <i>v</i>..<i>v</i>+1, which "covers"
      * the range <i>a</i>..<i>b</i> in the best way. Namely, it calculates
-     * <nobr><i>v</i>=&lfloor;(<i>a</i>+<i>b</i>)/2&rfloor;</nobr> and returns <code>v</code>
+     * <i>v</i>=&lfloor;(<i>a</i>+<i>b</i>)/2&rfloor; and returns <code>v</code>
      * as the result.
      *
      * <p>The result of this method always lies between <code>(int)p</code> and <code>Math.round(p)</code>,
      * where <code>p={@link #preciseValue(long[], double) preciseValue}(histogram,rank)</code>.
      *
      * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
-     * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+     * <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
      * (the minimal element in the source array), and
-     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
-     * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
-     * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If <nobr><code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
-     * <nobr><code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
-     * <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
+     * if <code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>]), it returns
+     * <i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1
+     * (for floating-point array, it means the maximal element plus 1/<b>b</b>[<i>k</i>]).
+     * If <code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1, but
+     * <code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>]), then in formulas above there is no element
+     * <i>v</i><sub>2</sub> with the index #<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1;
      * in this case, this method returns
-     * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>.
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
+     * <i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0).
+     * If all columns <b>b</b>[<i>k</i>] are zero (no elements), this method returns <code>0</code>.
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
      *                  that are "almost equal" to <code>k</code>.
@@ -1789,43 +1789,43 @@ public abstract class Histogram {
      * <p>More precisely, we suppose that if <b>b</b>[<i>k</i>]==<i>b</i>
      * (here and below <b>b</b>[<i>k</i>]=<code>histogram</code>[<i>k</i>]),
      * it means that the source floating-point array contains <i>b</i> values
-     * <nobr><i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1</nobr>.
+     * <i>k</i>+<i>j</i>/<i>b</i>, <i>j</i>=0,1,...,<i>b</i>&minus;1.
      * With this suggestion, this method finds the element of the source array <i>v</i><sub>1</sub>
      * with the index #<i>r</i><sub>1</sub>=&lfloor;<code>rank</code>&rfloor;=<code>(long)rank</code>
      * and the element of the source array <i>v</i><sub>2</sub>
-     * with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>.
-     * Obviously, <nobr><i>v</i><sub>1</sub> =
-     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>,
+     * with the index #<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1.
+     * Obviously, <i>v</i><sub>1</sub> =
+     * <i>v</i><sub>0</sub>+(<i>r</i><sub>1</sub>-<i>r</i><sub>0</sub>)/<b>b</b>[<i>v</i><sub>0</sub>],
      * where <i>v</i><sub>0</sub> is the minimal integer value so that
-     * <nobr><b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub></nobr> and
-     * <nobr><i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1]</nobr>,
+     * <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;<i>r</i><sub>1</sub> and
+     * <i>r</i><sub>0</sub>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>&minus;1],
      * and there is the analogous formula for <i>v</i><sub>2</sub>.
-     * Note: <nobr><i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>]</nobr>
-     * if <nobr><i>r</i><sub>2</sub>&lt;<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> or
-     * if <nobr><i>r</i><sub>2</sub>=<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>]</nobr> and
-     * the next bar is non-zero: <nobr><b>b</b>[<i>v</i><sub>0</sub>+1]&gt;0</nobr>;
+     * Note: <i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>0</sub>]
+     * if <i>r</i><sub>2</sub>&lt;<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>] or
+     * if <i>r</i><sub>2</sub>=<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>] and
+     * the next bar is non-zero: <b>b</b>[<i>v</i><sub>0</sub>+1]&gt;0;
      * in other case, <i>v</i><sub>2</sub> is the minimal integer &gt;<i>v</i><sub>0</sub> so that
-     * <nobr><b>b</b>[<i>v</i><sub>2</sub>]&gt;0</nobr>.
+     * <b>b</b>[<i>v</i><sub>2</sub>]&gt;0.
      *
      * <p>After finding <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub>, this method returns the value
-     * interpolated between them:  <nobr><i>v</i><sub>1</sub> +
-     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>)</nobr>.
-     * Note: if <code>rank</code> argument is integer (<nobr><code>rank==(long)rank</code></nobr>),
+     * interpolated between them:  <i>v</i><sub>1</sub> +
+     * (<code>rank</code>&minus;<i>r</i><sub>1</sub>) * (<i>v</i><sub>2</sub>&minus;<i>v</i><sub>1</sub>).
+     * Note: if <code>rank</code> argument is integer (<code>rank==(long)rank</code>),
      * this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
      *
      * <p>As {@link #iValue(long[], long)}, if <code>rank&lt;0</code>, this method returns
-     * <nobr><i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)</nobr>
+     * <i>min</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)
      * (the minimal element in the source array), and
-     * if <nobr><code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, it returns
-     * <nobr><i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1</nobr>
-     * (for floating-point array, it means the maximal element plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>).
-     * If <nobr><code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1</nobr>, but
-     * <nobr><code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>])</nobr>, then in formulas above there is no element
-     * <i>v</i><sub>2</sub> with the index <nobr>#<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1</nobr>;
-     * in this case, it is supposed <nobr><i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1</nobr>
-     * (the maximal element of the floating-point array plus <nobr>1/<b>b</b>[<i>k</i>]</nobr>,
-     * <nobr><i>k</i>=<i>v</i><sub>1</sub></nobr>).
-     * If all columns <nobr><b>b</b>[<i>k</i>]</nobr> are zero (no elements), this method returns <code>0</code>.
+     * if <code>rank&ge;</code>(sum of all <b>b</b>[<i>k</i>]), it returns
+     * <i>max</i> (<i>k</i>&isin;<b>Z</b>: <b>b</b>[<i>k</i>]&gt;0)+1
+     * (for floating-point array, it means the maximal element plus 1/<b>b</b>[<i>k</i>]).
+     * If <code>rank&gt;</code>(sum of all <b>b</b>[<i>k</i>])&minus;1, but
+     * <code>rank&lt;</code>(sum of all <b>b</b>[<i>k</i>]), then in formulas above there is no element
+     * <i>v</i><sub>2</sub> with the index #<i>r</i><sub>2</sub>=<i>r</i><sub>1</sub>+1;
+     * in this case, it is supposed <i>v</i><sub>2</sub>=<i>v</i><sub>1</sub>+1
+     * (the maximal element of the floating-point array plus 1/<b>b</b>[<i>k</i>],
+     * <i>k</i>=<i>v</i><sub>1</sub>).
+     * If all columns <b>b</b>[<i>k</i>] are zero (no elements), this method returns <code>0</code>.
      *
      * <p>Please compare the described behaviour with little more simple behaviour of
      * {@link #value(long[], double)} method.

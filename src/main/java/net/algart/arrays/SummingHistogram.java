@@ -29,8 +29,8 @@ import java.util.Objects;
 /**
  * <p>Summing histogram: an extension of {@link Histogram} class, allowing quick calculation of sums
  * of all elements of the sorted source array <b>A</b>[<i>k</i>] with indexes, lying in some range
- * <nobr><i>r</i><sub>1</sub>&le;<i>k</i>&le;<i>r</i><sub>2</sub></nobr>, or with values, lying in some range
- * <nobr><i>v</i><sub>1</sub>&le;<b>A</b>[<i>k</i>]&le;<i>v</i><sub>2</sub></nobr>.
+ * <i>r</i><sub>1</sub>&le;<i>k</i>&le;<i>r</i><sub>2</sub>, or with values, lying in some range
+ * <i>v</i><sub>1</sub>&le;<b>A</b>[<i>k</i>]&le;<i>v</i><sub>2</sub>.
  *
  * <p>This class is an inheritor of {@link Histogram} class, so any summing histogram is also a usual histogram:
  * an array of non-negative integer numbers <b>b</b>[<i>v</i>], 0&le;<i>v</i>&lt;<i>M</i>,
@@ -40,33 +40,33 @@ import java.util.Objects;
  * 0&le;<i>M</i>&lt;2<sup>31</sup>, the bars of the histogram <b>b</b>[<i>v</i>] and their sum <i>N</i>
  * are 63-bit: 0&le;<i>N</i>&lt;2<sup>63</sup>, and
  * the source array <b>A</b> is always supposed to be <i>sorted in increasing order</i>:
- * <nobr><b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1]</nobr>, where
- * <nobr><i>N</i>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>M</i>&minus;1]</nobr>
+ * <b>A</b>[0]&le;<b>A</b>[1]&le;...&le;<b>A</b>[<i>N</i>&minus;1], where
+ * <i>N</i>=<b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>M</i>&minus;1]
  * is the number of elements in <b>A</b>.</p>
  *
  * <p>The difference from usual histograms is that this class implement several additional methods,
  * which allow efficient solving two additional tasks.
- * Namely, in addition to (1) finding the percentile <nobr><i>v</i>(<i>r</i>)</nobr>
- * and (2) finding the rank <nobr><i>r</i>(<i>v</i>)</nobr> (see the beginning of the comment
+ * Namely, in addition to (1) finding the percentile <i>v</i>(<i>r</i>)
+ * and (2) finding the rank <i>r</i>(<i>v</i>) (see the beginning of the comment
  * to the {@link Histogram} class), this class provide efficient solution of the following tasks:</p>
  *
  * <ol start="3">
- * <li>to find the sum <nobr><i>Z</i>(<i>r</i>) =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>k</i>&lt;<i>r</i></sub><b>A</b>[<i>k</i>]</nobr>
+ * <li>to find the sum <i>Z</i>(<i>r</i>) =
+ * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>k</i>&lt;<i>r</i></sub><b>A</b>[<i>k</i>]
  * of <i>r</i> first elements of the sorted source array <b>A</b>[<i>k</i>],
  * if we know the index <i>r</i> in this array;</li>
- * <li>to find the sum <nobr><i>z</i>(<i>v</i>) =
+ * <li>to find the sum <i>z</i>(<i>v</i>) =
  * <big>&Sigma;</big>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>]</nobr>
+ * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>]
  * of all elements of the source array <b>A</b>, less then the given value <i>v</i>.</li>
  * </ol>
  *
  * <p>Obviously, it allows to find the sum of all elements lying in a range of indexes in the sorted
- * source array <nobr><i>r</i><sub>1</sub>&le;<i>r</i>&le;<i>r</i><sub>2</sub></nobr>:
- * it is <nobr><i>Z</i>(<i>r</i><sub>2</sub>)&minus;<i>Z</i>(<i>r</i><sub>1</sub>)</nobr>,
+ * source array <i>r</i><sub>1</sub>&le;<i>r</i>&le;<i>r</i><sub>2</sub>:
+ * it is <i>Z</i>(<i>r</i><sub>2</sub>)&minus;<i>Z</i>(<i>r</i><sub>1</sub>),
  * or in a range of values of the elements in the source array
- * <nobr><i>v</i><sub>1</sub>&le;<i>v</i>&le;<i>v</i><sub>2</sub></nobr>: it is
- * it is <nobr><i>z</i>(<i>v</i><sub>2</sub>)&minus;<i>z</i>(<i>v</i><sub>1</sub>)</nobr>.</p>
+ * <i>v</i><sub>1</sub>&le;<i>v</i>&le;<i>v</i><sub>2</sub>: it is
+ * it is <i>z</i>(<i>v</i><sub>2</sub>)&minus;<i>z</i>(<i>v</i><sub>1</sub>).</p>
  *
  * <p>Like {@link Histogram}, this class does not store and does not try to sort the source array <b>A</b>,
  * it stores only the histogram <b>b</b> and solves all tasks on the base of it.
@@ -88,17 +88,17 @@ import java.util.Objects;
  * <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
  * the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
  * (the length of the supposed, but not stored source sorted array <b>A</b>).
- * Let <i>v</i>(<i>r</i>), <nobr>0.0&le;<i>r</i>&le;<i>N</i></nobr>, and <i>r</i>(<i>v</i>),
- * <nobr>0.0&le;<i>v</i>&le;<i>M</i></nobr>, are the percentile and the rank real functions,
+ * Let <i>v</i>(<i>r</i>), 0.0&le;<i>r</i>&le;<i>N</i>, and <i>r</i>(<i>v</i>),
+ * 0.0&le;<i>v</i>&le;<i>M</i>, are the percentile and the rank real functions,
  * formally defined in the comments to {@link Histogram} class.</p>
  *
  * <p>This class allow to calculate two additional real functions:
- * <nobr><i>S</i>(<i>r</i>)</nobr>, where <i>r</i> is a real number in range
- * <nobr>0.0&le;<i>r</i>&le;<i>N</i></nobr>, and
- * <nobr><i>s</i>(<i>v</i>)</nobr>, where <i>v</i> is a real number in range
- * <nobr>0.0&le;<i>v</i>&le;<i>M</i></nobr>.
- * Like <nobr><i>v</i>(<i>r</i>)</nobr> and <nobr><i>r</i>(<i>v</i>)</nobr>, the <nobr><i>S</i>(<i>r</i>)</nobr>
- * and <nobr><i>s</i>(<i>v</i>)</nobr> functions are different in different histogram models: simple and precise
+ * <i>S</i>(<i>r</i>), where <i>r</i> is a real number in range
+ * 0.0&le;<i>r</i>&le;<i>N</i>, and
+ * <i>s</i>(<i>v</i>), where <i>v</i> is a real number in range
+ * 0.0&le;<i>v</i>&le;<i>M</i>.
+ * Like <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>), the <i>S</i>(<i>r</i>)
+ * and <i>s</i>(<i>v</i>) functions are different in different histogram models: simple and precise
  * (see comments to {@link Histogram} class).
  * Namely, these functions are defined via the following definite integrals:</p>
  *
@@ -106,10 +106,10 @@ import java.util.Objects;
  * <dt><b>Simple histogram model</b></dt>
  *
  * <dd>
- * <p>Generalization of <i>Z</i>(<i>r</i>), which is an sum of elements <nobr><b>A</b>[<i>r</i>]</nobr>
- * with integer indexes, to the real function <nobr><i>S</i>(<i>r</i>)</nobr> is very simple:
- * we use a definite integral of the function <nobr><i>v</i>(<i>r</i>)</nobr> with a real argument.
- * After this, we just define <i>s</i>(<i>v</i>) as <nobr><i>S</i>(<i>r</i>(<i>v</i>))</nobr>.
+ * <p>Generalization of <i>Z</i>(<i>r</i>), which is an sum of elements <b>A</b>[<i>r</i>]
+ * with integer indexes, to the real function <i>S</i>(<i>r</i>) is very simple:
+ * we use a definite integral of the function <i>v</i>(<i>r</i>) with a real argument.
+ * After this, we just define <i>s</i>(<i>v</i>) as <i>S</i>(<i>r</i>(<i>v</i>)).
  * <ol>
  * <li><i>S</i>(<i>r</i>) =
  * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i></sub>
@@ -120,15 +120,15 @@ import java.util.Objects;
  * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>.<br>
  * Note: according this definition,
- * <nobr><i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>0</i></nobr> when <i>v</i>&lt;<i>v</i>(0)
- * and <nobr><i>s</i>(<i>v</i>)=<i>S</i>(<i>N</i>)</nobr>
+ * <i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>0</i> when <i>v</i>&lt;<i>v</i>(0)
+ * and <i>s</i>(<i>v</i>)=<i>S</i>(<i>N</i>)
  * when <i>v</i>&gt;<i>v</i>(<i>N</i>).
  * </li>
  * </ol>
  *
  * <p>In the simple histogram model, there is a simple relation between
- * <i>s</i>(<i>v</i>)</nobr> function and the more simple concept of
- * <i>z</i>(<i>v</i>)</nobr> sum, defined above in integer terms.
+ * <i>s</i>(<i>v</i>) function and the more simple concept of
+ * <i>z</i>(<i>v</i>) sum, defined above in integer terms.
  * Namely, if <i>v</i><sub>0</sub> is integer, then</p>
  *
  * <blockquote>
@@ -141,10 +141,10 @@ import java.util.Objects;
  * <dt><b>Precise histogram model</b></dt>
  *
  * <dd>
- * <p>In this case, the behaviour of <nobr><i>v</i>(<i>r</i>)</nobr> and <nobr><i>r</i>(<i>v</i>)</nobr>
+ * <p>In this case, the behaviour of <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>)
  * is more complicated and calculating the integral is little more difficult. To allow this class
- * optimization of algorithms, we little change the definition of <nobr><i>S</i>(<i>r</i>)</nobr>
- * and <nobr><i>s</i>(<i>v</i>)</nobr>. Namely, in the precise histogram model, these functions
+ * optimization of algorithms, we little change the definition of <i>S</i>(<i>r</i>)
+ * and <i>s</i>(<i>v</i>). Namely, in the precise histogram model, these functions
  * also depend on some constant <i>C</i>, the value of which is undocumented and can be chosen by
  * this class to provide the maximal performance:</p>
  *
@@ -158,19 +158,19 @@ import java.util.Objects;
  * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>.<br>
  * Note: according this definition,
- * <nobr><i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>C</i></nobr> when <i>v</i>&lt;<i>v</i>(0)
- * and <nobr><i>s</i>(<i>v</i>)=<i>S</i>(<i>N</i>)</nobr>
+ * <i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>C</i> when <i>v</i>&lt;<i>v</i>(0)
+ * and <i>s</i>(<i>v</i>)=<i>S</i>(<i>N</i>)
  * when <i>v</i>&gt;<i>v</i>(<i>N</i>).
  * </li>
  * </ol>
  *
  * <p>Though this definition includes some unknown constant <i>C</i>, is is not important if you
- * need to calculate the difference <nobr><i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)</nobr>
- * or <nobr><i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>)</nobr>:
+ * need to calculate the difference <i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)
+ * or <i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>):
  * such differences do not contain <i>C</i> constant.
  * If you really need to calculate the integral from the right sides of the formulas above,
- * you can calculate it as <nobr><i>S</i>(<i>r</i>)&minus;<i>S</i>(0)</nobr>
- * or <nobr><i>s</i>(<i>v</i>)&minus;<i>s</i>(0)</nobr>.</p>
+ * you can calculate it as <i>S</i>(<i>r</i>)&minus;<i>S</i>(0)
+ * or <i>s</i>(<i>v</i>)&minus;<i>s</i>(0).</p>
  *
  * <p>The value of the constant <i>C</i> depends on the histogram bars <b>b</b>[<i>k</i>]:
  * in this class, for example, it can vary when
@@ -191,12 +191,12 @@ import java.util.Objects;
  *
  * <ul>
  * <li><i>the current simple integral S<sup>S</sup></i> = <i>S</i>(<i>r<sup>S</sup></i>),
- * where <i>r<sup>S</sup></i> is the current simple rank and <nobr><i>S</i>(<i>r</i>)</nobr> function
+ * where <i>r<sup>S</sup></i> is the current simple rank and <i>S</i>(<i>r</i>) function
  * is defined in terms of the simple histogram model;
  * this integral can be got by {@link #currentIntegral()} method;</li>
  *
  * <li><i>the current precise integral S<sup>P</sup></i> = <i>S</i>(<i>r<sup>P</sup></i>),
- * where <i>r<sup>P</sup></i> is the current precise rank and <nobr><i>S</i>(<i>r</i>)</nobr> function
+ * where <i>r<sup>P</sup></i> is the current precise rank and <i>S</i>(<i>r</i>) function
  * is defined in terms of the precise histogram model;
  * this integral can be got by {@link #currentPreciseIntegral()} method.</li>
  * </ul>
@@ -207,9 +207,9 @@ import java.util.Objects;
  *
  * <p>If you want to get the simple sum of elements of the source <b>A</b> array in integer terms,
  * you also can use {@link #currentSum()} method, which just returns
- * <nobr><i>z</i>(<i>v</i><sub>0</sub>) =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><i>j</i>*<b>b</b>[<i>j</i>]</nobr>
- * for integer <nobr><i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}</nobr>.</p>
+ * <i>z</i>(<i>v</i><sub>0</sub>) =
+ * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><i>j</i>*<b>b</b>[<i>j</i>]
+ * for integer <i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}.</p>
  *
  * <p>You can create an instance of this class by the following methods:</p>
  *
@@ -229,8 +229,8 @@ import java.util.Objects;
  * </ul>
  *
  * <p>This class is often used for calculating differences
- * <nobr><i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)</nobr> or
- * <nobr><i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>)</nobr>,
+ * <i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>) or
+ * <i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>),
  * when we need to recalculate the difference
  * after little changes of the histogram and of each from two ranks
  * <i>r</i><sub>1</sub>, <i>r</i><sub>2</sub> or two values <i>v</i><sub>1</sub>, <i>v</i><sub>2</sub>.
@@ -243,8 +243,8 @@ import java.util.Objects;
  * for this task.</p>
  *
  * <p>This class also provides static methods for calculating
- * <nobr><i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)</nobr> or
- * <nobr><i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>)</nobr> differences:
+ * <i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>) or
+ * <i>s</i>(<i>v</i><sub>2</sub>)&minus;<i>s</i>(<i>v</i><sub>1</sub>) differences:
  * correspondingly
  * {@link #integralBetweenRanks(long[], double, double)} /
  * {@link #integralBetweenRanks(int[], double, double)} and
@@ -277,8 +277,8 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * <p>The helper class for static methods of {@link SummingHistogram} class,
-     * calculating the integrals of <nobr><i>v</i>(<i>r</i>)</nobr> function between
-     * two given values: <nobr><code>minValue</code>&le;<i>v</i>&le;<code>maxValue</code></nobr>.</p>
+     * calculating the integrals of <i>v</i>(<i>r</i>) function between
+     * two given values: <code>minValue</code>&le;<i>v</i>&le;<code>maxValue</code>.</p>
      *
      * <p>More precisely, this class is used by the static methods</p>
      *
@@ -290,13 +290,13 @@ public abstract class SummingHistogram extends Histogram {
      * </ul>
      *
      * <p>and allows to return some additional information. All these methods have two arguments
-     * <code>minValue</code>, <code>maxValue</code> and calculate the integral of <nobr><i>v</i>(<i>r</i>)</nobr>,
+     * <code>minValue</code>, <code>maxValue</code> and calculate the integral of <i>v</i>(<i>r</i>),
      * defined in {@link Histogram  comments to Histogram class},
      * in terms of the simple histogram model for first 2 methods or the precise
      * histogram model for the last 2 methods. The integral is calculated between
-     * <nobr><i>r</i><sub>1</sub>=<i>r</i>(<code>maxValue</code>)</nobr>
-     * and <nobr><i>r</i><sub>2</sub>=<i>r</i>(<code>maxValue</code>)</nobr>,
-     * where <nobr><i>r</i>(<i>v</i>)</nobr> is the inverse function to <i>v</i>(<i>r</i>)
+     * <i>r</i><sub>1</sub>=<i>r</i>(<code>maxValue</code>)
+     * and <i>r</i><sub>2</sub>=<i>r</i>(<code>maxValue</code>),
+     * where <i>r</i>(<i>v</i>) is the inverse function to <i>v</i>(<i>r</i>)
      * (see {@link Histogram} class). This integral is returned in the result of the methods.</p>
      *
      * <p>But, while calculating the integral, these methods incidentally calculate the additional information,
@@ -305,23 +305,23 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <ul>
      * <li>{@link #count()}: the difference
-     * <nobr><i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub> =
-     * <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>;</li>
+     * <i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub> =
+     * <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>);</li>
      *
      * <li>{@link #isLeftBound()} flag: it is <code>true</code> if
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0 &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];</li>
      *
      * <li>{@link #isRightBound()} flag: it is <code>true</code> if
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i> &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>].</li>
      * </ul>
      *
      * <p>If <code>minValue&ge;maxValue</code>, these methods always return 0.0 and fill the last argument
-     * (if it is not {@code null}) by the following values: <nobr><code>{@link #count()}=0</code></nobr>,
-     * <nobr><code>{@link #isLeftBound()}=false</code></nobr>, <nobr><code>{@link #isRightBound()}=false</code></nobr>.
+     * (if it is not {@code null}) by the following values: <code>{@link #count()}=0</code>,
+     * <code>{@link #isLeftBound()}=false</code>, <code>{@link #isRightBound()}=false</code>.
      *
      * <p>Note: in the special case <i>N</i>=0 (all bars <b>b</b>[<i>k</i>] are zero)
      * the values of {@link #isLeftBound()} and {@link #isRightBound()} flags are not specified.</p>
@@ -378,14 +378,14 @@ public abstract class SummingHistogram extends Histogram {
 
         /**
          * Returns <code>true</code> if
-         * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
-         * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+         * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0 &mdash;
+         * in other words, if <code>minValue..maxValue</code> range fully lies to the left
          * from the minimal element of the source array <b>A</b>[<i>k</i>].
          * See the {@link CountOfValues comments to this class} for more details.
          *
          * <p>If <code>minValue&gt;=maxValue</code>, this method returns <code>false</code>.
          *
-         * @return whether <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+         * @return whether <code>minValue..maxValue</code> range fully lies to the left
          * from the minimal element of the source array <b>A</b>[<i>k</i>].
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
@@ -396,14 +396,14 @@ public abstract class SummingHistogram extends Histogram {
 
         /**
          * Returns <code>true</code> if
-         * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
-         * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+         * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i> &mdash;
+         * in other words, if <code>minValue..maxValue</code> range fully lies to the right
          * from the maximal element of the source array <b>A</b>[<i>k</i>].
          * See the {@link CountOfValues comments to this class} for more details.
          *
          * <p>If <code>minValue&gt;=maxValue</code>, this method returns <code>false</code>.
          *
-         * @return whether <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+         * @return whether <code>minValue..maxValue</code> range fully lies to the right
          * from the maximal element of the source array <b>A</b>[<i>k</i>].
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
@@ -413,24 +413,24 @@ public abstract class SummingHistogram extends Histogram {
         }
 
         /**
-         * Returns the difference <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>.
+         * Returns the difference <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>).
          * In other words, it is the number of elements of the source <b>A</b> array,
-         * lying in range <nobr><code>minValue..maxValue</code></nobr>, generalized to the real case.
+         * lying in range <code>minValue..maxValue</code>, generalized to the real case.
          * See the {@link CountOfValues comments to this class} for more details.
          *
          * <p>In the precise histogram model, this value can be zero only if
-         * <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left from
+         * <code>minValue..maxValue</code> range fully lies to the left from
          * the minimal element or to the right from the maximal element of the source array,
-         * in other words, if <nobr>{@link #isLeftBound()} || {@link #isRightBound()}</nobr>.
+         * in other words, if {@link #isLeftBound()} || {@link #isRightBound()}.
          * In all other cases, this method returns a positive value, because <i>r</i>(<i>v</i>)
          * function is increasing. Unlike this, in the simple histogram model
-         * this value will be zero also in a case, when all histogram bars <nobr><b>b</b>[<i>k</i>]</nobr>,
-         * <i>k</i> is an integer in range <nobr><code>(int)minValue</code>&le;<i>k</i>&lt;<code>maxValue</code>,
+         * this value will be zero also in a case, when all histogram bars <b>b</b>[<i>k</i>],
+         * <i>k</i> is an integer in range <code>(int)minValue</code>&le;<i>k</i>&lt;<code>maxValue</code>,
          * are zero.
          *
          * <p>If <code>minValue&gt;=maxValue</code>, this method returns 0.0.
          *
-         * @return the difference <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>.
+         * @return the difference <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>).
          * @throws IllegalStateException if this instance is not {@link #isInitialized() initialized} yet.
          */
         public double count() {
@@ -479,8 +479,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code>
      *                                  is not in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingLongHistogram(
@@ -499,14 +499,14 @@ public abstract class SummingHistogram extends Histogram {
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
      * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
-     * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
+     * all methods of this class usually require <i>O</i>(1) operations.
      * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
      * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
-     * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
+     * will work more slowly. Namely, they can require <i>O</i>(<i>M</i>) operations,
      * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newLongHistogram(int, int...)} method).
      *
@@ -522,8 +522,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingLongHistogram(
@@ -561,8 +561,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingLongHistogram(
@@ -582,14 +582,14 @@ public abstract class SummingHistogram extends Histogram {
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
      * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
-     * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
+     * all methods of this class usually require <i>O</i>(1) operations.
      * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
      * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
-     * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
+     * will work more slowly. Namely, they can require <i>O</i>(<i>M</i>) operations,
      * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newLongHistogram(long[], int...)} method).
      *
@@ -608,8 +608,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingLongHistogram(
@@ -644,8 +644,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code>
      *                                  is not in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingIntHistogram(
@@ -664,14 +664,14 @@ public abstract class SummingHistogram extends Histogram {
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
      * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
-     * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
+     * all methods of this class usually require <i>O</i>(1) operations.
      * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
      * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
-     * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
+     * will work more slowly. Namely, they can require <i>O</i>(<i>M</i>) operations,
      * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newIntHistogram(int, int...)} method).
      *
@@ -687,8 +687,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingIntHistogram(
@@ -726,8 +726,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingIntHistogram(
@@ -747,14 +747,14 @@ public abstract class SummingHistogram extends Histogram {
      * integral <i>S<sup>S</sup></i> and do not need to calculate the precise integral <i>S<sup>P</sup></i>
      * (see the {@link SummingHistogram comments to this class}). Namely, if this argument is <code>false</code>,
      * this class provides good performance for calculating both integrals:
-     * all methods of this class usually require <nobr><i>O</i>(1)</nobr> operations.
+     * all methods of this class usually require <i>O</i>(1) operations.
      * If it is <code>true</code>, then {@link #include(int) include}, {@link #exclude(int) exclude}
      * and all <code>moveTo...</code> methods will work rather more quickly, because they will not recalculate
      * some internal invariants necessary for calculating the current precise integral <i>S<sup>P</sup></i>.
      * But, as a result, the methods {@link #currentPreciseIntegral()}
      * and {@link #currentPreciseIntegralBetweenSharing()}, calculating <i>S<sup>P</sup></i>,
      * and also {@link #currentNumberOfDifferentValues()} method
-     * will work more slowly. Namely, they can require <nobr><i>O</i>(<i>M</i>)</nobr> operations,
+     * will work more slowly. Namely, they can require <i>O</i>(<i>M</i>) operations,
      * even in a case of using the histogram pyramid (see comments to <code>bitLevelsOfPyramid</code> argument
      * in {@link #newIntHistogram(int[], int...)} method).
      *
@@ -773,8 +773,8 @@ public abstract class SummingHistogram extends Histogram {
      *                                  or if <code>bitLevelsOfPyramid.length&gt;30</code>,
      *                                  or if some of the elements <code>bitLevelsOfPyramid</code> is not
      *                                  in 1..31 range,
-     *                                  or if <nobr><code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
-     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]</nobr>
+     *                                  or if <code>bitLevelsOfPyramid</code>[<i>k</i>] &gt;=
+     *                                  <code>bitLevelsOfPyramid</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static SummingHistogram newSummingIntHistogram(
@@ -803,7 +803,7 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * Returns the number of non-zero bars <b>b</b>[<i>k</i>] with indexes
-     * <nobr><i>k</i>&lt;{@link #currentIValue() currentIValue()}</nobr>.
+     * <i>k</i>&lt;{@link #currentIValue() currentIValue()}.
      * In other words, it is the count of <i>different</i> elements of the source array <b>A</b>,
      * less than {@link #currentIValue() currentIValue()}.
      *
@@ -817,27 +817,27 @@ public abstract class SummingHistogram extends Histogram {
      * In this case, the internal value, returned by this method, is also used for calculating
      * the current precise integral <i>S<sup>P</sup></i>.
      * If this class was created with the flag <code>optimizeSimpleIntegral=true</code>,
-     * this method just performs a simple loop on all <nobr><b>b</b>[<i>k</i>]</nobr>,
-     * <nobr><i>k</i>=0,1,...,{@link #currentIValue() currentIValue()}&minus;1</nobr>,
+     * this method just performs a simple loop on all <b>b</b>[<i>k</i>],
+     * <i>k</i>=0,1,...,{@link #currentIValue() currentIValue()}&minus;1,
      * and therefore works slowly.
      *
      * @return the number of non-zero bars <b>b</b>[<i>k</i>] with indexes
-     * <nobr><i>k</i>&lt;{@link #currentIValue() currentIValue()}</nobr>.
+     * <i>k</i>&lt;{@link #currentIValue() currentIValue()}.
      * @see #currentPreciseIntegral()
      */
     public abstract int currentNumberOfDifferentValues();
 
     /**
      * Returns the sum of all elements of the source array <b>A</b>, less than
-     * <nobr><i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}</nobr>:
-     * <nobr><i>z</i>(<i>v</i><sub>0</sub>) =
+     * <i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}:
+     * <i>z</i>(<i>v</i><sub>0</sub>) =
      * <big>&Sigma;</big>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
-     * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>]</nobr>.
+     * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>].
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>Note: if the current value is integer, for example, after
-     * <nobr>{@link #moveToIValue(int) moveToIValue}(<i>v</i><sub>0</sub>)</nobr> call,
-     * the {@link #currentIntegral()} <nobr><i>S<sup>S</sup></i></nobr> is equal to
+     * {@link #moveToIValue(int) moveToIValue}(<i>v</i><sub>0</sub>) call,
+     * the {@link #currentIntegral()} <i>S<sup>S</sup></i> is equal to
      * this sum plus 0.5*{@link #currentRank() currentRank()}:
      *
      * <blockquote>
@@ -856,7 +856,7 @@ public abstract class SummingHistogram extends Histogram {
     public abstract double currentSum();
 
     /**
-     * Returns the current simple integral <nobr><i>S<sup>S</sup></i></nobr>.
+     * Returns the current simple integral <i>S<sup>S</sup></i>.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * @return the current simple integral.
@@ -907,7 +907,7 @@ public abstract class SummingHistogram extends Histogram {
     }
 
     /**
-     * Returns the current precise integral <nobr><i>S<sup>P</sup></i></nobr>.
+     * Returns the current precise integral <i>S<sup>P</sup></i>.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * @return the current precise integral.
@@ -1165,8 +1165,8 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * <p>Returns the difference <i>S</i>(<code>toRank</code>)&minus;<i>S</i>(<code>fromRank</code>),
-     * where <nobr><i>S</i>(<i>r</i>)</nobr> is the summing function, defined in terms of
-     * the simple histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
+     * where <i>S</i>(<i>r</i>) is the summing function, defined in terms of
+     * the simple histogram model for the histogram <b>b</b>[<i>k</i>], passed via
      * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the simple histogram model,
@@ -1343,8 +1343,8 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * <p>Returns the difference <i>S</i>(<code>toRank</code>)&minus;<i>S</i>(<code>fromRank</code>),
-     * where <nobr><i>S</i>(<i>r</i>)</nobr> is the summing function, defined in terms of
-     * the precise histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
+     * where <i>S</i>(<i>r</i>) is the summing function, defined in terms of
+     * the precise histogram model for the histogram <b>b</b>[<i>k</i>], passed via
      * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the precise histogram model,
@@ -1731,13 +1731,13 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * <p>Returns the difference <i>s</i>(<code>maxValue</code>)&minus;<i>s</i>(<code>minValue</code>),
-     * where <nobr><i>s</i>(<i>v</i>)</nobr> is the summing function, defined in terms of
-     * the simple histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
+     * where <i>s</i>(<i>v</i>) is the summing function, defined in terms of
+     * the simple histogram model for the histogram <b>b</b>[<i>k</i>], passed via
      * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the simple histogram model,
-     * between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
@@ -1765,17 +1765,17 @@ public abstract class SummingHistogram extends Histogram {
      * <ul>
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
      * count()}</code> will be equal to the difference
-     * <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>,
-     * where <nobr><i>r</i>(<i>v</i>)</nobr> is the rank function, defined in terms of
+     * <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>),
+     * where <i>r</i>(<i>v</i>) is the rank function, defined in terms of
      * of the simple histogram model, or 0.0 if <code>minValue&gt;maxValue</code>
      * (see the {@link Histogram comments to Histogram class});
      * in the code example, listed above, it will be equal to
-     * <nobr><code>toRank-fromRank</code></nobr>;</li>
+     * <code>toRank-fromRank</code>;</li>
      *
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
      * isLeftBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0 &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
      * <code>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</code> method after
@@ -1783,8 +1783,8 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
      * isRightBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i> &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
      * <code>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</code> method after
@@ -1801,8 +1801,8 @@ public abstract class SummingHistogram extends Histogram {
      * <p>This information, for example, allows to calculate the <i>mean</i> of all elements
      * of the source array <b>A</b>[<i>k</i>], lying in range <code>minValue..maxValue</code>,
      * with generalization to the floating-point case: it is
-     * <nobr>result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
-     * count()}</nobr>.
+     * result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
+     * count()}.
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
@@ -1813,8 +1813,8 @@ public abstract class SummingHistogram extends Histogram {
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     * the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * the simple histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
@@ -1906,8 +1906,8 @@ public abstract class SummingHistogram extends Histogram {
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     * the simple histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * the simple histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
@@ -1989,13 +1989,13 @@ public abstract class SummingHistogram extends Histogram {
 
     /**
      * <p>Returns the difference <i>s</i>(<code>maxValue</code>)&minus;<i>s</i>(<code>minValue</code>),
-     * where <nobr><i>s</i>(<i>v</i>)</nobr> is the summing function, defined in terms of
-     * the precise histogram model for the histogram <nobr><b>b</b>[<i>k</i>]</nobr>, passed via
+     * where <i>s</i>(<i>v</i>) is the summing function, defined in terms of
+     * the precise histogram model for the histogram <b>b</b>[<i>k</i>], passed via
      * <code>histogram</code> argument.
      * In other words, this method returns the definite integral of <i>v</i>(<i>r</i>) function,
      * defined in terms of the precise histogram model,
-     * between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
      * in other case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
@@ -2023,17 +2023,17 @@ public abstract class SummingHistogram extends Histogram {
      * <ul>
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
      * count()}</code> will be equal to the difference
-     * <nobr><i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>)</nobr>,
-     * where <nobr><i>r</i>(<i>v</i>)</nobr> is the rank function, defined in terms of
+     * <i>r</i>(<code>maxValue</code>)&minus;<i>r</i>(<code>minValue</code>),
+     * where <i>r</i>(<i>v</i>) is the rank function, defined in terms of
      * of the precise histogram model, or 0.0 if <code>minValue&gt;maxValue</code>
      * (see the {@link Histogram comments to Histogram class});
      * in the code example, listed above, it will be equal to
-     * <nobr><code>toRank-fromRank</code></nobr>;</li>
+     * <code>toRank-fromRank</code>;</li>
      *
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isLeftBound()
      * isLeftBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0</nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the left
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=0 &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the left
      * from the minimal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
      * <code>hist.{@link Histogram#leftFromNonZeroPart() leftFromNonZeroPart()}</code> method after
@@ -2041,8 +2041,8 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <li><code>countOfValue.{@link net.algart.arrays.SummingHistogram.CountOfValues#isRightBound()
      * isRightBound()}</code> will be <code>true</code> if <code>minValue&lt;maxValue</code> and
-     * <nobr><i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i></nobr> &mdash;
-     * in other words, if <nobr><code>minValue..maxValue</code></nobr> range fully lies to the right
+     * <i>r</i>(<code>maxValue</code>)=<i>r</i>(<code>minValue</code>)=<i>N</i> &mdash;
+     * in other words, if <code>minValue..maxValue</code> range fully lies to the right
      * from the maximal element of the source array <b>A</b>[<i>k</i>];
      * the analogous information can be got by
      * <code>hist.{@link Histogram#rightFromNonZeroPart() rightFromNonZeroPart()}</code> method after
@@ -2059,8 +2059,8 @@ public abstract class SummingHistogram extends Histogram {
      * <p>This information, for example, allows to calculate the <i>mean</i> of all elements
      * of the source array <b>A</b>[<i>k</i>], lying in range <code>minValue..maxValue</code>,
      * with generalization to the floating-point case: it is
-     * <nobr>result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
-     * count()}</nobr>.
+     * result_of_this_method/countOfValues.{@link net.algart.arrays.SummingHistogram.CountOfValues#count()
+     * count()}.
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
@@ -2071,8 +2071,8 @@ public abstract class SummingHistogram extends Histogram {
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     * the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * the precise histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */
@@ -2304,8 +2304,8 @@ public abstract class SummingHistogram extends Histogram {
      * @param countOfValues some additional information filled by this method;
      *                      can be {@code null}, then will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
-     * the precise histogram model, between <nobr><i>r</i>=<i>r</i>(<code>minValue</code>)</nobr> and
-     * <nobr><i>r</i>=<i>r</i>(<code>maxValue</code>)</nobr>.
+     * the precise histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
+     * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * @throws NullPointerException     if <code>histogram</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>Double.isNaN(minValue)</code> or <code>Double.isNaN(maxValue)</code>.
      */

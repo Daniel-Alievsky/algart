@@ -970,7 +970,7 @@
  <dd>Defines the number of threads in the global system thread pool that will be used for multithreading optimization.
  If zero or negative, then the thread pools will be created on demand.
  If not exists, the global thread pool with
- <code><nobr>{@link net.algart.arrays.Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></code>
+ <code>{@link net.algart.arrays.Arrays.SystemSettings#availableProcessors()}*MULT+1</code>
  threads (default value) will be used, where MULT is an integer value of
  "<code>net.algart.arrays.globalThreadPoolsPerCPU</code>"
  system property. See {@link net.algart.arrays.DefaultThreadPoolFactory#globalThreadPool()}
