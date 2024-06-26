@@ -344,6 +344,7 @@ public abstract class ExternalAlgorithmCaller {
         return result;
     }
 
+    // NOTE: this method was used for SIMAGIS, but it contains a bug
     public static void writeAlgARTMatrix(ArrayContext context, File dir, Matrix<? extends PArray> matrix)
         throws IOException
     {
@@ -368,6 +369,7 @@ public abstract class ExternalAlgorithmCaller {
         final LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
             new StandardIODataFileModel(matrixFile, false, false));
         final UpdatablePArray dest = (UpdatablePArray) mm.newUnresizableArray(matrix.elementType(), array.length());
+        // - BUG! array may be null when Arrays.isNCopies
         LargeMemoryModel.setTemporary(dest, false);
         mi = mi.cloneWithOtherByteOrder(dest.byteOrder());
         ExternalProcessor.writeUTF8(indexFile, mi.toChars());

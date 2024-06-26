@@ -31,8 +31,9 @@ import net.algart.io.awt.MatrixToBufferedImage;
 import javax.imageio.*;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.ByteOrder;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -42,13 +43,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 public class MatrixIO {
-    public enum SerializationMode {
-        JAVA_BASED,
-        BYTE_BUFFER
-    }
-
-    private static final int SERIALIZATION_BUFFER_SIZE = 65536; // must be divisible by 8
-
     public static String extension(Path file) {
         Objects.requireNonNull(file, "Null file");
         final Path fileName = file.getFileName();
@@ -85,6 +79,28 @@ public class MatrixIO {
         return extension;
     }
 
+    /**
+     * If the given file name contains a dot ".", returns the substring after the last dot.
+     * Otherwise, returns <code>defaultExtension</code>.
+     * If the substring after the last dot is empty, also returns <code>defaultExtension</code>
+     *
+     * <p>The <code>fileName</code> argument must not be {@code null} or an empty string.</p>
+     *
+     * <p>For example:</p>
+     * <ul>
+     *     <li>for "c:\tmp\test.bmp", returns "bmp"</li>
+     *     <li>for "c:\tmp\test.20.06.2023.txt", returns "txt"</li>
+     *     <li>for "some_string", returns <code>defaultExtension</code></li>
+     *     <li>for "some_string.", returns <code>defaultExtension</code></li>
+     *     <li>for "some_string. ", returns " "</li>
+     * </ul>
+     *
+     * @param fileName some file name.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException if <code>fileName</code> is {@code null}
+     *                              (but <code>defaultExtension</code> is allowed to be {@code null)}.
+     * @throws IllegalArgumentException if <code>fileName</code> is an empty string.
+     */
     public static String extension(String fileName, String defaultExtension) {
         Objects.requireNonNull(fileName, "Null fileName");
         if (fileName.isEmpty()) {
@@ -98,6 +114,13 @@ public class MatrixIO {
         return result.isEmpty() ? defaultExtension : result;
     }
 
+    /**
+     * If the given file name contains a dot ".", removes the substring before the last dot.
+     * Otherwise, returns the argument. If the argument is {@code null}, returns {@code null}.
+     *
+     * @param fileName some file name.
+     * @return the same string without ending file extension (suffix) like ".txt", ".jpeg" etc.
+     */
     public static String removeExtension(String fileName) {
         if (fileName == null) {
             return null;
@@ -323,7 +346,9 @@ public class MatrixIO {
             if (!infFile.exists()) {
                 break;
             }
+            //noinspection ResultOfMethodCallIgnored
             infFile.delete();
+            //noinspection ResultOfMethodCallIgnored
             rawFile.delete();
         }
     }
@@ -352,11 +377,11 @@ public class MatrixIO {
         if (!f.isDirectory()) {
             throw new FileNotFoundException("Image subdirectory " + f + " is not a directory");
         }
-        List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> result = new ArrayList<>();
         int index = 0;
         for (; ; index++) {
-            File infFile = new File(f, index + ".inf");
-            File refFile = new File(f, index + ".ref");
+            final File infFile = new File(f, index + ".inf");
+            final File refFile = new File(f, index + ".ref");
             File rawFile = new File(f, String.valueOf(index));
             if (!infFile.exists()) {
                 if (index > 0) {
@@ -378,146 +403,5 @@ public class MatrixIO {
             }
         }
         return result;
-    }
-
-    public static void writeAlgARTMatrix(Path folder, Matrix<? extends PArray> matrix)
-            throws IOException {
-        Objects.requireNonNull(folder, "Null folder");
-        Objects.requireNonNull(matrix, "Null matrix");
-        File f = folder.toFile();
-        if (!f.mkdir()) {
-            if (!f.isDirectory()) {
-                // i.e. if doesn't really exist
-                throw new IOException("Cannot create matrix directory " + f);
-            }
-            // Important note: we must attempt to create the directory BEFORE checking its existence;
-            // in other case, some parallel threads can attempt to create this directory twice,
-            // that will lead to illegal messages about "errors" while creation
-        }
-        final PArray array = LargeMemoryModel.getRawArrayForSavingInFile(matrix);
-        MatrixInfo mi = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
-        Files.writeString(new File(f, "version").toPath(), "1.0");
-        File matrixFile = new File(f, matrix.dimCount() == 1 ? "vector" : "matrix");
-        File indexFile = new File(f, "index");
-        final LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(
-                new StandardIODataFileModel(matrixFile, false, false));
-        final UpdatablePArray dest = (UpdatablePArray) mm.newUnresizableArray(matrix.elementType(), array.length());
-        LargeMemoryModel.setTemporary(dest, false);
-        mi = mi.cloneWithOtherByteOrder(dest.byteOrder());
-        String text = mi.toChars();
-        Files.writeString(indexFile.toPath(), text);
-        Arrays.copy(null, dest, array, 1, false);
-        dest.freeResources();
-        // - actually saves possible cached data to the file
-        array.freeResources();
-        // - necessary to avoid overflowing 2 GB limit in 32-bit JVM
-    }
-
-    public static Matrix<? extends PArray> readAlgARTMatrix(Path folder) throws IOException {
-        Objects.requireNonNull(folder, "Null folder");
-        File f = folder.toFile();
-        File indexFile = new File(f, "index");
-        try {
-            MatrixInfo mi = MatrixInfo.valueOf(Files.readString(indexFile.toPath()));
-            LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
-            File matrixFile = new File(f, mi.dimCount() == 1 ? "vector" : "matrix");
-            return mm.asMatrix(matrixFile, mi);
-        } catch (IllegalInfoSyntaxException e) {
-            throw new IOException(e.getMessage(), e);
-        }
-    }
-
-    public static void serializeAlgARTMatrix(
-            Matrix<? extends PArray> matrix,
-            OutputStream outputStream,
-            SerializationMode serializationMode,
-            ByteOrder byteOrder)
-            throws IOException {
-        Objects.requireNonNull(serializationMode, "Null serialization mode");
-        Objects.requireNonNull(byteOrder, "Null byteOrder");
-        MatrixInfo matrixInfo = LargeMemoryModel.getMatrixInfoForSavingInFile(matrix, 0);
-        // - we shall use CONSTANT_PROPERTY_NAME here
-        matrixInfo = matrixInfo.cloneWithOtherByteOrder(byteOrder);
-        String serializedMatrixInfo = matrixInfo.toChars();
-        PArray array = matrix.array();
-        DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-        dataOutputStream.writeUTF(serializedMatrixInfo);
-        if (Arrays.isNCopies(matrix.array())) {
-            assert matrixInfo.additionalProperties().containsKey(LargeMemoryModel.CONSTANT_PROPERTY_NAME);
-        } else {
-            switch (serializationMode) {
-                case JAVA_BASED -> {
-                    byte[] bytes = null;
-                    for (long p = 0, n = array.length(); p < n; ) {
-                        int len = (int) Math.min(n - p, SERIALIZATION_BUFFER_SIZE);
-                        PArray subArray = (PArray) array.subArr(p, len);
-                        int numberOfBytes = (int) Arrays.sizeOf(subArray);
-                        // Using sizeOf instead of sizeOfBytesForCopying provides compatibility with ByteBuffer mode
-                        if (bytes == null) {
-                            bytes = new byte[numberOfBytes];
-                        }
-                        bytes = Arrays.copyArrayToBytes(bytes, subArray, byteOrder);
-                        dataOutputStream.write(bytes, 0, numberOfBytes);
-                        p += len;
-                    }
-                }
-                case BYTE_BUFFER -> {
-                    Arrays.write(dataOutputStream, array, byteOrder);
-                }
-                default -> throw new UnsupportedOperationException("Unsupported " + serializationMode);
-            }
-        }
-        dataOutputStream.flush();
-    }
-
-    public static Matrix<? extends PArray> deserializeAlgARTMatrix(
-            InputStream inputStream,
-            SerializationMode serializationMode,
-            MemoryModel memoryModel)
-            throws IOException {
-        Objects.requireNonNull(serializationMode, "Null serialization mode");
-        MemoryModel mm = memoryModel == null ? Arrays.SMM : memoryModel;
-        DataInputStream dataInputStream = new DataInputStream(inputStream);
-        String serializedMatrixInfo = dataInputStream.readUTF();
-        final MatrixInfo matrixInfo;
-        try {
-            matrixInfo = MatrixInfo.valueOf(serializedMatrixInfo);
-            final Matrix<? extends PArray> constant = LargeMemoryModel.asConstantMatrix(matrixInfo);
-            if (constant != null) {
-                return constant;
-            }
-        } catch (IllegalInfoSyntaxException e) {
-            final IOException exception = new IOException(e.getMessage());
-            exception.initCause(e);
-            throw exception;
-        }
-        Matrix<? extends UpdatablePArray> matrix = mm.newMatrix(
-                UpdatablePArray.class, matrixInfo.elementType(), matrixInfo.dimensions());
-        UpdatablePArray array = matrix.array();
-        switch (serializationMode) {
-            case JAVA_BASED: {
-                final long n = array.length();
-                byte[] bytes = null;
-                for (long p = 0; p < n; ) {
-                    int len = (int) Math.min(n - p, SERIALIZATION_BUFFER_SIZE);
-                    UpdatablePArray subArray = array.subArr(p, len);
-                    int numberOfBytes = Arrays.sizeOfBytesForCopying(subArray);
-                    if (bytes == null) {
-                        bytes = new byte[numberOfBytes];
-                    }
-                    dataInputStream.readFully(bytes, 0, numberOfBytes);
-                    Arrays.copyBytesToArray(subArray, bytes, matrixInfo.byteOrder());
-                    p += len;
-                }
-                break;
-            }
-            case BYTE_BUFFER: {
-                Arrays.read(dataInputStream, array, matrixInfo.byteOrder());
-                break;
-            }
-            default:
-                throw new UnsupportedOperationException("Unsupported " + serializationMode);
-        }
-        return matrix;
     }
 }

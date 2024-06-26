@@ -50,7 +50,7 @@ public class WriteDemoImageTest {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 5) {
-            System.out.printf("Usage: [-imageIOWrite] " +
+            System.out.printf("Usage: [-imageIOWrite] [-formatName=XXX] " +
                             "%s target_image.jpg/png/bmp byte|short|int|long|float|double " +
                             "channels dimX dimY [quality]%n",
                     WriteDemoImageTest.class);
@@ -98,7 +98,11 @@ public class WriteDemoImageTest {
     private static void setQuality(ImageWriteParam param, Double quality) {
         if (quality != null) {
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            param.setCompressionQuality(quality.floatValue());
+            if (param.getCompressionType() != null) {
+                param.setCompressionQuality(quality.floatValue());
+            } else {
+                System.out.println("No default compression");
+            }
         }
     }
 
