@@ -286,12 +286,12 @@ public class Matrices {
      * <ol>
      * <li>{@link Matrices.Hyperparallelepiped}: the simplest possible region (a segment in 1-dimensional
      * case, a rectangle in 2-dimensional case, a parallelepiped in 3-dimensional case);</li>
-     * <li>{@link Matrices.ConvexHyperpolyhedron}: an intersection of several <i>n</i>-dimensional</nobr>
+     * <li>{@link Matrices.ConvexHyperpolyhedron}: an intersection of several <i>n</i>-dimensional
      * half-spaces (in other words, a convex hyperpolyhedron);</li>
-     * <li>{@link Matrices.Simplex}: the simplest kind of <nobr><i>n</i>-dimensional</nobr> hyperpolyhedron &mdash;
-     * a hyperpolyhedron with <nobr><i>n</i>+1</nobr> vertices (a segment in <nobr>1-dimensional</nobr> case,
-     * a triangle in <nobr>2-dimensional</nobr> case, a tetrahedron in <nobr>3-dimensional</nobr> case);</li>
-     * <li>{@link Matrices.Polygon2D}: a random <nobr>2-dimensional</nobr> polygon, maybe non-convex and even
+     * <li>{@link Matrices.Simplex}: the simplest kind of <i>n</i>-dimensional hyperpolyhedron &mdash;
+     * a hyperpolyhedron with <i>n</i>+1 vertices (a segment in 1-dimensional case,
+     * a triangle in 2-dimensional case, a tetrahedron in 3-dimensional case);</li>
+     * <li>{@link Matrices.Polygon2D}: a random 2-dimensional polygon, maybe non-convex and even
      * self-intersecting.</li>
      * </ol>
      *
@@ -342,7 +342,7 @@ public class Matrices {
 
         /**
          * Creates 1-dimensional segment, described by the given range. Equivalent to
-         * <nobr>{@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange)}</nobr>.
+         * {@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange)}.
          *
          * @param xRange the range of the only coordinate of all points of the segment.
          * @return the segment containing all points from the specified range
@@ -356,7 +356,7 @@ public class Matrices {
         /**
          * Creates 2-dimensional rectangle with sides, parallel to coordinate axes,
          * described by the given ranges of coordinates. Equivalent to
-         * <nobr>{@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange, yRange)}</nobr>.
+         * {@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange, yRange)}.
          *
          * <p>Note: an equivalent region can be constructed by {@link #getPolygon2D(double[][] vertices)} method.
          * But the region, constructed by this method, is processed little faster.
@@ -373,7 +373,7 @@ public class Matrices {
         /**
          * Creates 3-dimensional parallelepiped with edges, parallel to coordinate axes,
          * described by the given ranges of coordinates. Equivalent to
-         * <nobr>{@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange, yRange, zRange)}</nobr>.
+         * {@link #getHyperparallelepiped(IRange...) getHyperparallelepiped(xRange, yRange, zRange)}.
          *
          * @param xRange the <i>x</i>-projection of the rectangle.
          * @param yRange the <i>y</i>-projection of the rectangle.
@@ -389,7 +389,7 @@ public class Matrices {
          * Creates <i>n</i>-dimensional {@link Hyperparallelepiped hyperparallelepiped} with edges,
          * parallel to coordinate axes, described by the given ranges of coordinates.
          * More precisely, the returned region contains all such points
-         * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that
+         * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that
          *
          * <blockquote>
          * <code>coordRanges[0].{@link IRange#min() min()}</code> &le; <i>x</i><sub>0</sub> &le;
@@ -478,10 +478,10 @@ public class Matrices {
         /**
          * Creates <i>n</i>-dimensional {@link Simplex simplex} with the specified coordinates of vertices.
          * More precisely, this method creates a simplex &mdash; the simplest <i>n</i>-dimensional hyperpolyhedron
-         * with <nobr><i>n</i>+1</nobr> vertices, where the vertex #<i>k</i> (<i>k</i>=0,1,...,<i>n</i>)
-         * has the coordinates <nobr><code>vertices[<i>k</i>][0]</code></nobr>,
-         * <nobr><code>vertices[<i>k</i>][1]</code></nobr>, ...,
-         * <nobr><code>vertices[<i>k</i>][<i>n</i>-1]</code></nobr>.
+         * with <i>n</i>+1 vertices, where the vertex #<i>k</i> (<i>k</i>=0,1,...,<i>n</i>)
+         * has the coordinates <code>vertices[<i>k</i>][0]</code>,
+         * <code>vertices[<i>k</i>][1]</code>, ...,
+         * <code>vertices[<i>k</i>][<i>n</i>-1]</code>.
          *
          * <p>The number <i>n</i> of dimensions of the created region is equal to
          * <code>vertices[<i>k</i>].length</code>; this length must be same for all <i>k</i>.
@@ -520,23 +520,23 @@ public class Matrices {
 
         /**
          * Creates <i>n</i>-dimensional {@link Matrices.ConvexHyperpolyhedron convex hyperpolyhedron},
-         * which is an intersection of <i>m</i> <nobr><i>n</i>-dimensional</nobr> half-spaces,
+         * which is an intersection of <i>m</i> <i>n</i>-dimensional half-spaces,
          * specified by inequalities
-         * <nobr><b>a</b><sub><i>i</i></sub><b>x</b> &le; <i>b</i><sub><i>i</i></sub></nobr>
+         * <b>a</b><sub><i>i</i></sub><b>x</b> &le; <i>b</i><sub><i>i</i></sub>
          * (<i>i</i>=0,1,...,<i>m</i>&minus;1),
          * and the hyperparallelepiped, built by {@link #getHyperparallelepiped(IRange... coordRanges)} method with
          * the same <code>coordRanges</code> argument. Here <b>a</b><sub><i>i</i></sub><b>x</b> means
          * the scalar product of the line #<i>i</i> of the matrix <b>A</b>, passed by the first argument,
          * and the vector of coordinates
-         * <nobr><b>x</b>=(<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+         * <b>x</b>=(<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>&minus;1</sub>).
          * The elements of the matrix <b>A</b> must be listed, row by row, in the <code>a</code> array:
-         * <nobr><b>A</b>={<i>a</i><sub><i>ij</i></sub>}</nobr>,
+         * <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
          * <i>a</i><sub><i>ij</i></sub>=<code>a[<i>i</i>*<i>n</i>+<i>j</i>]</code>,
          * <i>i</i> is the index of the row (0..<i>m</i>-1),
          * <i>j</i> is the index of the column (0..<i>n</i>-1),
          * <i>m</i>=<code>b.length</code>.
          * The elements of the vector
-         * <nobr><b>b</b>=(<i>b</i><sub>0</sub>,<i>b</i><sub>1</sub>,...,<i>b</i><sub><i>m</i>&minus;1</sub>)</nobr>
+         * <b>b</b>=(<i>b</i><sub>0</sub>,<i>b</i><sub>1</sub>,...,<i>b</i><sub><i>m</i>&minus;1</sub>)
          * must be listed in <code>b</code> argument.
          * The length <code>a.length</code> of the <code>a</code> array must be equal to the product <i>nm</i>,
          * where <i>n</i>=<code>coordRanges.length</code>, <i>m</i>=<code>b.length</code>.
@@ -572,8 +572,8 @@ public class Matrices {
          * More precisely, this method creates a polygon
          * with <i>m</i>=<code>vertices.length</code> vertices, where the vertex #<i>k</i>
          * (<i>k</i>=0,1,...,<i>m</i>&minus;1)
-         * has the coordinates <nobr><i>x</i><sub><i>k</i></sub>=<code>vertices[<i>k</i>][0]</code></nobr>,
-         * <nobr><i>y</i><sub><i>k</i></sub>=<code>vertices[<i>k</i>][1]</code></nobr>.
+         * has the coordinates <i>x</i><sub><i>k</i></sub>=<code>vertices[<i>k</i>][0]</code>,
+         * <i>y</i><sub><i>k</i></sub>=<code>vertices[<i>k</i>][1]</code>.
          * All arrays <code>vertices[<i>k</i>]</code> must consist of 2 elements.
          *
          * <p>The created polygon can be non-convex and even self-intersecting.
@@ -676,7 +676,7 @@ public class Matrices {
          * {@link #isContainsSupported()} method before calling this one.
          *
          * <p>However, this method <i>must</i> be correctly implemented, if this region is a
-         * <nobr>1-dimensional</nobr> (<code>{@link #n()}==1</code>) and {@link #isRectangular()}
+         * 1-dimensional (<code>{@link #n()}==1</code>) and {@link #isRectangular()}
          * method returns <code>false</code>.
          *
          * <p>Note: even if the inheritor does not provide correct implementation of this method,
@@ -701,7 +701,7 @@ public class Matrices {
          * So, if you prefer not to implement {@link #contains(long...)} method,
          * you must override this method and return <code>false</code>.
          * This method <i>must</i> return <code>true</code> if
-         * <nobr><code>{@link #n()}==1 &amp;&amp; !{@link #isRectangular()}</code></nobr>.
+         * <code>{@link #n()}==1 &amp;&amp; !{@link #isRectangular()}</code>.
          *
          * @return <code>true</code> if {@link #contains(long...)} method works correctly;
          * otherwise {@link #contains(long...)} method throws <code>UnsupportedOperationException</code>.
@@ -713,15 +713,15 @@ public class Matrices {
         /**
          * Finds the intersection of this region with the hyperplane, described by the equation
          * <i>x</i><sub><i>{@link #n() n}</i>&minus;1</sub>=<code>sectionCoordinateValue</code>,
-         * and returns this intersection as an array of <nobr>(<i>n</i>&minus;1)-dimensional</nobr>
+         * and returns this intersection as an array of (<i>n</i>&minus;1)-dimensional
          * regions.
          * (Here <i>x</i><sub><i>{@link #n() n}</i>&minus;1</sub> is the last coordinate of the points:
-         * <nobr><i>y</i>-coordinate</nobr> in <nobr>2-dimensional</nobr> case,
-         * <nobr><i>z</i>-coordinate</nobr> in <nobr>3-dimensional</nobr> case, etc.)
+         * <i>y</i>-coordinate in 2-dimensional case,
+         * <i>z</i>-coordinate in 3-dimensional case, etc.)
          * If the intersection is empty, this method returns an empty array (<code>"new&nbsp;Region[0]"</code>).
          * This method never returns {@code null}.
          *
-         * <p>This method must not be used if this region is <nobr>1-dimensional</nobr>
+         * <p>This method must not be used if this region is 1-dimensional
          * (<code>{@link #n()}==1</code>). In this case, it throws <code>IllegalStateException</code>.
          *
          * <p>This default implementation is based on {@link #contains(long...)} method, which is supposed
@@ -738,15 +738,15 @@ public class Matrices {
          * <p>You <i>must</i> override this method if you prefer not to implement {@link #contains(long...)} method
          * ({@link #isContainsSupported()} returns <code>false</code>). In this case, your implementation
          * must not call {@link #contains(long...)} method or
-         * <nobr><code>super.{@link #sectionAtLastCoordinate(long)}</code></nobr>.
+         * <code>super.{@link #sectionAtLastCoordinate(long)}</code>.
          *
          * @param sectionCoordinateValue the value of the last coordinate.
          * @return the intersection of this region and the
-         * <nobr>(<i>n</i>&minus;1)-dimensional</nobr> hyperplane,
+         * (<i>n</i>&minus;1)-dimensional hyperplane,
          * corresponding to the specified value of the last coordinate
          * (0, 1 or more regions, every region is
-         * <nobr>(<i>n</i>&minus;1)-dimensional</nobr>).
-         * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<code>{@link #n()}==1</code>).
+         * (<i>n</i>&minus;1)-dimensional).
+         * @throws IllegalStateException if this region is 1-dimensional (<code>{@link #n()}==1</code>).
          */
         public Region[] sectionAtLastCoordinate(final long sectionCoordinateValue) {
             if (!checkSectionAtLastCoordinate(sectionCoordinateValue)) {
@@ -785,7 +785,7 @@ public class Matrices {
          * @param sectionCoordinateValue the value of the last coordinate.
          * @return <code>true</code> if and only the specified coordinate value lies inside
          * the corresponding {@link #coordRange(int) coordinate range}.
-         * @throws IllegalStateException if this region is <nobr>1-dimensional</nobr> (<code>{@link #n()}==1</code>).
+         * @throws IllegalStateException if this region is 1-dimensional (<code>{@link #n()}==1</code>).
          */
         protected final boolean checkSectionAtLastCoordinate(long sectionCoordinateValue) {
             if (n == 1) {
@@ -809,13 +809,13 @@ public class Matrices {
 
     /**
      * <p>Hyperparallelepiped: the simplest <i>n</i>-dimensional region.
-     * In <nobr>1-dimensional</nobr> case it is a segment,
-     * in <nobr>2-dimensional</nobr> case it is a rectangle,
-     * in <nobr>3-dimensional</nobr> case it is a parallelepiped.
+     * In 1-dimensional case it is a segment,
+     * in 2-dimensional case it is a rectangle,
+     * in 3-dimensional case it is a parallelepiped.
      * All edges of the hyperparallelepiped are supposed to be parallel to coordinate axes.</p>
      *
      * <p>More precisely, the region, specified by this class, consists of all such points
-     * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that:</p>
+     * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
      *
      * <blockquote>
      * <code>coordRanges[0].{@link IRange#min() min()}</code> &le; <i>x</i><sub>0</sub> &le;
@@ -928,7 +928,7 @@ public class Matrices {
          * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</code>,
          * </blockquote>
          *
-         * <p>where <nobr><code>sh<sub><i>k</i></sub> = k &lt; backShifts.length ? backShifts[k] : 0</code></nobr>
+         * <p>where <code>sh<sub><i>k</i></sub> = k &lt; backShifts.length ? backShifts[k] : 0</code>
          *
          * @param matrix     the matrix.
          * @param backShifts the shifts, which are subtracted from all coordinates of this region before the check.
@@ -978,14 +978,14 @@ public class Matrices {
     }
 
     /**
-     * <p>Convex hyperpolyhedron: an intersection of several <nobr><i>n</i>-dimensional</nobr>
+     * <p>Convex hyperpolyhedron: an intersection of several <i>n</i>-dimensional
      * half-spaces and some {@link Matrices.Hyperparallelepiped hyperparallelepiped}.
      * While creating regions of this class, it is always necessary to specify some containing
      * hyperparallelepiped. The coordinate ranges, returned by {@link #coordRanges()} method of this class,
      * are the corresponding ranges of the specified containing hyperparallelepiped.</p>
      *
      * <p>More precisely, the region, specified by this class, consists of all such points
-     * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that:</p>
+     * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
      *
      * <blockquote>
      * <i>a</i><sub>00</sub><i>x</i><sub>0</sub> + <i>a</i><sub>01</sub><i>x</i><sub>1</sub> + ...
@@ -1188,10 +1188,10 @@ public class Matrices {
     }
 
     /**
-     * <p>Simplex: the simplest <i>n</i>-dimensional hyperpolyhedron with <nobr><i>n</i>+1</nobr> vertices.
-     * In <nobr>1-dimensional</nobr> case it is a segment,
-     * in <nobr>2-dimensional</nobr> case it is a triangle,
-     * in <nobr>3-dimensional</nobr> case it is a tetrahedron.</p>
+     * <p>Simplex: the simplest <i>n</i>-dimensional hyperpolyhedron with <i>n</i>+1 vertices.
+     * In 1-dimensional case it is a segment,
+     * in 2-dimensional case it is a triangle,
+     * in 3-dimensional case it is a tetrahedron.</p>
      *
      * <p>Simplex is a particular case of the {@link Matrices.ConvexHyperpolyhedron convex hyperpolyhedron}.</p>
      *
@@ -1207,9 +1207,9 @@ public class Matrices {
      * </ul>
      *
      * <p>Note: degenerated simplexes, when all vertices lie in the same <i>(n&minus;1)</i>-dimensional hyperplane,
-     * are not allowed. (In <nobr>1-dimensional</nobr> it means that 2 vertices are identical,
-     * in <nobr>2-dimensional</nobr> &mdash; that 3 vertices lie in the same straight line,
-     * in <nobr>2-dimensional</nobr> &mdash; that 4 vertices lie in the same plane.)
+     * are not allowed. (In 1-dimensional it means that 2 vertices are identical,
+     * in 2-dimensional &mdash; that 3 vertices lie in the same straight line,
+     * in 2-dimensional &mdash; that 4 vertices lie in the same plane.)
      * Such simplexes cannot be constructed by the methods above:
      * {@link DegeneratedSimplexException} is thrown in these cases.
      *
@@ -1238,7 +1238,7 @@ public class Matrices {
          * Returns <code>true</code> if and only if the specified vertices lies in the same
          * <i>(n&minus;1)</i>-dimensional hyperplane, as far as it can be detected by analysing the coordinates
          * via calculations with standard Java <code>double</code> numbers.
-         * Here <nobr><i>n</i>=<code>vertices[<i>k</i>].length</code></nobr>; this length must be
+         * Here <i>n</i>=<code>vertices[<i>k</i>].length</code>; this length must be
          * same for all <i>k</i>, and <code>vertices.length</code> must be equal to <i>n</i>+1.
          *
          * <p>{@link #getSimplex(double[][] vertices)} method throws {@link DegeneratedSimplexException} if
@@ -1304,7 +1304,7 @@ public class Matrices {
     }
 
     /**
-     * <p><nobr>2-dimensional</nobr> polygon. It can be non-convex and even self-intersecting.
+     * <p>2-dimensional polygon. It can be non-convex and even self-intersecting.
      *
      * <p>The points, lying precisely in the sides of the polygon (in particular, the vertices),
      * belong to this region.
@@ -1645,7 +1645,7 @@ public class Matrices {
      * <p>This method is useful if you are planning to create a new matrix with the given element type,
      * for example, by {@link MemoryModel#newMatrix(Class, Class, long...) MemoryModel.newMatrix} method,
      * and you want to be sure that you will be able to {@link Matrix#cast(Class) cast it} to
-     * the specified generic type <nobr>Matrix&lt;T&gt;</nobr>.
+     * the specified generic type Matrix&lt;T&gt;.
      *
      * <p>Note: unlike {@link MemoryModel#newMatrix(Class, Class, long...) MemoryModel.newMatrix} method,
      * this method allows specifying non-updatable <code>arraySupertype</code> (for example,
@@ -2348,8 +2348,8 @@ public class Matrices {
      * <p>For the case {@link InterpolationMethod#POLYLINEAR_FUNCTION POLYLINEAR_FUNCTION}, please note,
      * that if the real coordinates <i>x</i><sub><i>k</i></sub> is near the high boundary,
      * namely if
-     * <nobr><code>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1 &lt;= <i>x</i><sub><i>k</i></sub>
-     * &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)</code>,</nobr>
+     * <code>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1 &lt;= <i>x</i><sub><i>k</i></sub>
+     * &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)</code>,
      * then interpolation will not be used, because necessary next matrix element is outside the matrix.
      * Such real coordinate is processed as if it would be equal to
      * <code>matrix.{@link Matrix#dim(int) dim}(<i>k</i>)&minus;1</code>.
@@ -3704,10 +3704,10 @@ public class Matrices {
     }
 
     /**
-     * Equivalent to creating a "lazy" matrix by <nobr><code>lazy = {@link #asPrecision(Matrix, Class)
-     * asPrecision(matrix, result.elementType()}</code></nobr> call
+     * Equivalent to creating a "lazy" matrix by <code>lazy = {@link #asPrecision(Matrix, Class)
+     * asPrecision(matrix, result.elementType()}</code> call
      * and copying it into the <code>result</code> argument by
-     * <nobr><code>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</code></nobr> call.
+     * <code>{@link #copy(ArrayContext, Matrix, Matrix) copy(context, result, lazy)}</code> call.
      *
      * <p>In addition, this method checks, whether all passed matrices have the
      * {@link Matrix#dimEquals(Matrix) same dimensions},

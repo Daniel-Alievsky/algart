@@ -357,7 +357,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * elements of the source matrix <code>m</code> according the following rules.
          *
          * <p>For non-primitive element types, the <code>continuationConstant</code> argument
-         * must be some instance of the class <nobr><code>m.{@link #elementType()}</code></nobr>,
+         * must be some instance of the class <code>m.{@link #elementType()}</code>,
          * or its superclass, or {@code null}.
          * So, the type cast is trivial here.
          *
@@ -367,7 +367,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code>Integer</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>. In this case,
          * the following casting rules are used while reading elements (I remind that attempts to write
          * outside the original matrix are ignored),
-         * depending on the primitive type <nobr><code>m.{@link #elementType()}</code></nobr>:
+         * depending on the primitive type <code>m.{@link #elementType()}</code>:
          *
          * <ul>
          * <li>{@code null} is converted to <code>false</code> for bit elements or to zero (<code>0</code>,
@@ -926,8 +926,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Returns the coordinates in the matrix, corresponding to the given linear index in the built-in AlgART array.
      * This method is reverse to {@link #index(long...)}: for any index,
-     * <nobr><code>{@link #index(long...) index}({@link #coordinates(long, long[])
-     * coordinates}(index, null)) == index</code></nobr>.
+     * <code>{@link #index(long...) index}({@link #coordinates(long, long[])
+     * coordinates}(index, null)) == index</code>.
      *
      * <p>The <code>result</code> argument can be {@code null} or some array,
      * containing at least {@link #dimCount()}
@@ -986,7 +986,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>More precisely, let <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
      * are the arguments of the method. Let
-     * <nobr><code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)</code></nobr> and
+     * <code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)</code> and
      * <blockquote>
      * <i>i'<sub>k</sub></i> = <i>d<sub>k</sub></i> == 0 ? 0 :
      * <i>i<sub>k</sub></i> % <i>d<sub>k</sub></i> &gt;= 0 ?
@@ -1079,7 +1079,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>More precisely, let <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
      * are the arguments of the method. Let
-     * <nobr><code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)</code></nobr>,
+     * <code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)</code>,
      * <blockquote>
      * <i>i'<sub>k</sub></i> = <i>d<sub>k</sub></i> == 0 ? 0 :
      * <i>i<sub>k</sub></i> % <i>d<sub>k</sub></i> &gt;= 0 ?
@@ -1220,8 +1220,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * of this matrix.
      *
      * <p>This method is equivalent to the call
-     * <nobr><code>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(from,to,{@link Matrix.ContinuationMode#NONE})</code></nobr>.
+     * <code>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(from,to,{@link Matrix.ContinuationMode#NONE})</code>.
      *
      * <p>The built-in AlgART array of the returned matrix is backed by the built-in array of this matrix,
      * so &mdash; if this matrix is not {@link #isImmutable() immutable}
@@ -1270,8 +1270,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(IRectangularArea area);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[])
-     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY})</nobr></code>.
+     * Equivalent to <code>{@link #subMatrix(long[], long[])
+     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY})</code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
@@ -1285,8 +1285,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[])
-     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ})</nobr></code>.
+     * Equivalent to <code>{@link #subMatrix(long[], long[])
+     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ})</code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
@@ -1310,7 +1310,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * and <code>to</code> coordinate boundaries is <code>from[k]&lt;=to[k]</code>,
      * but <code>from[k]</code> may be negative and <code>to[k]</code> may be greater than {@link #dim(int) dim(k)}.
      * (And there is also a trivial obvious requirement
-     * <nobr><code>to[k]-from[k]&le;Long.MAX_VALUE</code></nobr>, i.e. that the dimensions of the result must
+     * <code>to[k]-from[k]&le;Long.MAX_VALUE</code>, i.e. that the dimensions of the result must
      * be representable by <code>long</code> type.)
      *
      * <p>The elements of the returned matrix, that do not correspond to any elements of this one,
@@ -1353,12 +1353,12 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   see {@link Matrix#subMatrix(long[], long[])} method;
      *                                   for other cases &mdash; if, for some <code>k</code>,
      *                                   <code>from[k]&gt;to[k]</code> or
-     *                                   <nobr><code>to[k]-from[k]&gt;Long.MAX_VALUE</code></nobr>,
+     *                                   <code>to[k]-from[k]&gt;Long.MAX_VALUE</code>,
      *                                   or if (for some <code>k</code>) <code>{@link #dim(int) dim(k)}==0</code> and
-     *                                   <nobr><code>from[k]!=0 || to[k]!=0</code></nobr>,
+     *                                   <code>from[k]!=0 || to[k]!=0</code>,
      *                                   or if the product of all differences <code>to[k]-from[k]</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1403,8 +1403,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(IRectangularArea area, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY}, continuationMode)</nobr></code>.
+     * Equivalent to <code>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY}, continuationMode)</code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
@@ -1421,7 +1421,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   or if <code>fromY&gt;toY</code> or <code>toY-fromY&gt;Long.MAX_VALUE</code>,
      *                                   or if the product <code>(toX-fromX)*(toY-fromY)</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1434,8 +1434,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatrix(long[], long[], ContinuationMode)
-     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ}, continuationMode)</nobr></code>.
+     * Equivalent to <code>{@link #subMatrix(long[], long[], ContinuationMode)
+     * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ}, continuationMode)</code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
@@ -1454,7 +1454,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   or if <code>fromZ&gt;toZ</code> or <code>toZ-fromZ&gt;Long.MAX_VALUE</code>,
      *                                   or if the product <code>(toX-fromX)*(toY-fromY)*(toZ-fromZ)</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1487,8 +1487,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long[] position, long[] dimensions);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatr(long[], long[])
-     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY})</nobr></code>.
+     * Equivalent to <code>{@link #subMatr(long[], long[])
+     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY})</code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
@@ -1502,8 +1502,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long x, long y, long dimX, long dimY);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatr(long[], long[])
-     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ})</nobr></code>.
+     * Equivalent to <code>{@link #subMatr(long[], long[])
+     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ})</code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
@@ -1537,7 +1537,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   or <code>position[k]+dimensions[k]&gt;Long.MAX_VALUE</code>,
      *                                   or if the product of all <code>dimensions[k]</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1551,8 +1551,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long[] position, long[] dimensions, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatr(long[], long[], ContinuationMode)
-     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY}, continuationMode)</nobr></code>.
+     * Equivalent to <code>{@link #subMatr(long[], long[], ContinuationMode)
+     * subMatr}(new long[]{x,y}, new long[]{dimX,dimY}, continuationMode)</code>.
      * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
@@ -1570,7 +1570,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   or <code>y+dimY&gt;Long.MAX_VALUE</code>,
      *                                   or if the product <code>dimX*dimY</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1583,8 +1583,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     Matrix<T> subMatr(long x, long y, long dimX, long dimY, ContinuationMode continuationMode);
 
     /**
-     * Equivalent to <code><nobr>{@link #subMatr(long[], long[], ContinuationMode)
-     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ}, continuationMode)</nobr></code>.
+     * Equivalent to <code>{@link #subMatr(long[], long[], ContinuationMode)
+     * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ}, continuationMode)</code>.
      * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
@@ -1604,7 +1604,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   or <code>z+dimZ&gt;Long.MAX_VALUE</code>,
      *                                   or if the product <code>dimX*dimY*dimZ</code>
      *                                   (i.e. desired total size of the new matrix)
-     *                                   is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                   is greater than <code>Long.MAX_VALUE</code>.
      * @throws ClassCastException        if <code>continuationMode</code> is {@link
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
@@ -1823,13 +1823,13 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <i>i'</i><sub>0</sub> + <i>i'</i><sub>1</sub><i>t</i><sub>0</sub> + ...
      * + <i>i'</i><sub><i>n</i>&minus;1</sub><i>t</i><sub><i>n</i>&minus;2</sub>...<i>t</i><sub>0</sub>:
      * it is the index of the element with coordinates
-     * <nobr><i>i'<sub>0</sub></i>,<i>i'<sub>1</sub></i>,...,<i>i'<sub>n&minus;1</sub></i></nobr>
+     * <i>i'<sub>0</sub></i>,<i>i'<sub>1</sub></i>,...,<i>i'<sub>n&minus;1</sub></i>
      * in the built-in array of a little matrix, dimensions of which are equal to the tile dimensions.
      * </li>
      *
      * <li>The required index of the given element in the original array
      * <b>M</b><code>.{@link #array() array()}</code>
-     * is <nobr><i>j</i> = <code>previousVolume</code> + <code>indexInTile</code></nobr>.</li>
+     * is <i>j</i> = <code>previousVolume</code> + <code>indexInTile</code>.</li>
      * </ol>
      *
      * <p>Tiled matrices are necessary to provide good performance of many algorithms, if this matrix is very large
@@ -1861,7 +1861,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws IllegalArgumentException if <code>tileDim.length</code> is not equal to {@link #dimCount()},
      *                                  or if some <code>tileDim[k]&lt;=0</code>,
      *                                  or if the product of all tile dimensions <code>tileDim[k]</code>
-     *                                  is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                  is greater than <code>Long.MAX_VALUE</code>.
      * @see #tile()
      * @see #isTiled()
      * @see #tileDimensions()
@@ -1895,7 +1895,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return a tiled view of this matrix with default tile dimensions.
      * @throws IllegalArgumentException if the product of all tile dimensions <code>tileDim[k]</code>
-     *                                  is greater than <nobr><code>Long.MAX_VALUE</code></nobr>.
+     *                                  is greater than <code>Long.MAX_VALUE</code>.
      * @see #tile(long...)
      * @see #isTiled()
      * @see #tileDimensions()
