@@ -42,23 +42,23 @@ import java.util.Objects;
  *
  * <p>Among methods of {@link RankMorphology} interface, this class implements the 2nd method
  * from each triplet: 1) <i>asOperation</i>, 2) <i>operation</i>, creating new matrix and
- * 3) <i>operation</i>, storing result in the 1st <tt>dest</tt> argument.
+ * 3) <i>operation</i>, storing result in the 1st <code>dest</code> argument.
  * Every 2nd method from such a triplet is implemented via the 3rd one:
- * it creates the necessary resulting updatable matrix and pass it as <tt>dest</tt>
+ * it creates the necessary resulting updatable matrix and pass it as <code>dest</code>
  * argument to the 3rd method. See more details in comments to the methods of this class.</p>
  *
  * <p>In addition, this class fully implements all 3 methods
  * {@link #asMean(Matrix, Pattern) asMean}, {@link #mean(Matrix, Pattern) mean} (creating new matrix) and
- * {@link #mean(Matrix, Matrix, Pattern) mean} (storing result in <tt>dest</tt> argument) via
+ * {@link #mean(Matrix, Matrix, Pattern) mean} (storing result in <code>dest</code> argument) via
  * the corresponding {@link #asFunctionOfSum(Matrix, Pattern, Func) asFunctionOfSum}
  * and {@link #functionOfSum(Matrix, Matrix, Pattern, Func) functionOfSum} methods.
- * Also this class fully implements the methods which get the percentile indexes in a form of <tt>double</tt>
+ * Also this class fully implements the methods which get the percentile indexes in a form of <code>double</code>
  * parameters: these methods are implemented via the analogous methods getting the percentile indexes in
  * {@link Matrix} parameters.</p>
  *
  * <p>Besides implementing methods of {@link RankMorphology}, this class declares
  * {@link #constantPercentileMatrix(Matrix, double)} method, convenient for implementing
- * methods which get the percentile indexes in a form of <tt>double</tt> parameters.</p>
+ * methods which get the percentile indexes in a form of <code>double</code> parameters.</p>
  *
  * @author Daniel Alievsky
  */
@@ -92,8 +92,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation just calls
-     * <tt>{@link #asPercentile(Matrix, Matrix, Pattern) asPercentile}(src,m,pattern)</tt>,
-     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
+     * <code>{@link #asPercentile(Matrix, Matrix, Pattern) asPercentile}(src,m,pattern)</code>,
+     * where <code>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</code>.
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
@@ -101,8 +101,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                the "lazy" matrix containing the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends PArray> asPercentile(Matrix<? extends PArray> src,
         double percentileIndex, Pattern pattern)
@@ -112,12 +112,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     }
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the percentile by the call
      * <tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern)
      * percentile}(dest,src,percentileIndexes,pattern)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src               the source matrix.
@@ -128,8 +128,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> percentile(
         Matrix<? extends PArray> src, Matrix<? extends PArray> percentileIndexes, Pattern pattern)
@@ -146,8 +146,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation just calls
-     * <tt>{@link #percentile(Matrix, Matrix, Pattern) percentile}(src,m,pattern)</tt>,
-     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
+     * <code>{@link #percentile(Matrix, Matrix, Pattern) percentile}(src,m,pattern)</code>,
+     * where <code>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</code>.
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
@@ -155,8 +155,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> percentile(
         Matrix<? extends PArray> src, double percentileIndex, Pattern pattern)
@@ -170,8 +170,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
 
     /**
      * This implementation just calls
-     * <tt>{@link #percentile(Matrix, Matrix, Matrix, Pattern) percentile}(dest,src,m,pattern)</tt>,
-     * where <tt>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</tt>.
+     * <code>{@link #percentile(Matrix, Matrix, Matrix, Pattern) percentile}(dest,src,m,pattern)</code>,
+     * where <code>m={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex)</code>.
      *
      * @param dest            the target matrix.
      * @param src             the source matrix.
@@ -180,8 +180,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public void percentile(Matrix<? extends UpdatablePArray> dest,
         Matrix<? extends PArray> src, double percentileIndex, Pattern pattern)
@@ -194,13 +194,13 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern);
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Class, long...)
      * newMatrix}(UpdatablePArray.class,{@link Arrays#elementType(Class)
      * Arrays.elementType}(requiredType),baseMatrix.dimensions())</tt>, calculates the rank by the call
      * <tt>{@link #rank(Matrix, Matrix, Matrix, Pattern)
      * rank}(dest,baseMatrix,rankedMatrix,pattern)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param requiredType the desired type of the built-in array in the returned matrix.
@@ -212,18 +212,25 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>baseMatrix.{@link Matrix#dimCount() dimCount()}</tt>,
-     *                                  or if <tt>requiredType</tt> is not one of classes
-     *                                  <tt>{@link UpdatableBitArray}.class</tt> / <tt>{@link BitArray}.class</tt>,
-     *                                  <tt>{@link UpdatableCharArray}.class</tt> / <tt>{@link CharArray}.class</tt>,
-     *                                  <tt>{@link UpdatableByteArray}.class</tt> / <tt>{@link ByteArray}.class</tt>,
-     *                                  <tt>{@link UpdatableShortArray}.class</tt> / <tt>{@link ShortArray}.class</tt>,
-     *                                  <tt>{@link UpdatableIntArray}.class</tt> / <tt>{@link IntArray}.class</tt>,
-     *                                  <tt>{@link UpdatableLongArray}.class</tt> / <tt>{@link LongArray}.class</tt>,
-     *                                  <tt>{@link UpdatableFloatArray}.class</tt> / <tt>{@link FloatArray}.class</tt>
-     *                                  or <tt>{@link UpdatableDoubleArray}.class</tt> /
-     *                                  <tt>{@link DoubleArray}.class</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>baseMatrix.{@link Matrix#dimCount() dimCount()}</code>,
+     *                                  or if <code>requiredType</code> is not one of classes
+     *                                  <code>{@link UpdatableBitArray}.class</code>
+     *                                  / <code>{@link BitArray}.class</code>,
+     *                                  <code>{@link UpdatableCharArray}.class</code>
+     *                                  / <code>{@link CharArray}.class</code>,
+     *                                  <code>{@link UpdatableByteArray}.class</code>
+     *                                  / <code>{@link ByteArray}.class</code>,
+     *                                  <code>{@link UpdatableShortArray}.class</code>
+     *                                  / <code>{@link ShortArray}.class</code>,
+     *                                  <code>{@link UpdatableIntArray}.class</code>
+     *                                  / <code>{@link IntArray}.class</code>,
+     *                                  <code>{@link UpdatableLongArray}.class</code>
+     *                                  / <code>{@link LongArray}.class</code>,
+     *                                  <code>{@link UpdatableFloatArray}.class</code>
+     *                                  / <code>{@link FloatArray}.class</code>
+     *                                  or <code>{@link UpdatableDoubleArray}.class</code>
+     *                                  / <code>{@link DoubleArray}.class</code>.
      */
     public <T extends PArray> Matrix<? extends T> rank(Class<? extends T> requiredType,
         Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern)
@@ -253,8 +260,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #asMeanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * asMeanBetweenPercentiles}(src,m1,m2,pattern,filler)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</code>.
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -268,8 +275,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *                            of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends PArray> asMeanBetweenPercentiles(
         Matrix<? extends PArray> src,
@@ -285,12 +292,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     }
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean between 2 percentiles by the call
      * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(dest,src,fromPercentileIndexes,toPercentileIndexes,pattern,filler)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src                   the source matrix.
@@ -305,8 +312,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> meanBetweenPercentiles(Matrix<? extends PArray> src,
         Matrix<? extends PArray> fromPercentileIndexes,
@@ -327,8 +334,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(src,m1,m2,pattern,filler)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</code>.
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -341,8 +348,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                    the mean between 2 given percentiles of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> meanBetweenPercentiles(Matrix<? extends PArray> src,
         double fromPercentileIndex,
@@ -365,8 +372,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenPercentiles}(dest,src,m1,m2,pattern,filler)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,fromPercentileIndex)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,toPercentileIndex)</code>.
      *
      * @param dest                the target matrix.
      * @param src                 the source matrix.
@@ -380,8 +387,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public void meanBetweenPercentiles(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
         double fromPercentileIndex,
@@ -401,12 +408,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Pattern pattern, double filler);
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean between 2 values by the call
      * <tt>{@link #meanBetweenValues(Matrix, Matrix, Matrix, Matrix, Pattern, double)
      * meanBetweenValues}(dest,src,minValues,maxValues,pattern,filler)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src       the source matrix.
@@ -423,8 +430,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> meanBetweenValues(Matrix<? extends PArray> src,
         Matrix<? extends PArray> minValues,
@@ -456,8 +463,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                    the "lazy" matrix containing the mean of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends PArray> asMean(Matrix<? extends PArray> src, Pattern pattern) {
         Objects.requireNonNull(src, "Null src argument");
@@ -472,12 +479,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     }
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the mean by the call
      * <tt>{@link #mean(Matrix, Matrix, Pattern)
      * mean}(dest,src,pattern)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src                 the source matrix.
@@ -485,8 +492,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                    the mean of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> mean(Matrix<? extends PArray> src, Pattern pattern) {
         Objects.requireNonNull(pattern, "Null pattern argument");
@@ -510,8 +517,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public void mean(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern) {
         Objects.requireNonNull(src, "Null src argument");
@@ -530,12 +537,12 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
         Pattern pattern, Func processingFunc);
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the function of aperture sum by the call
      * <tt>{@link #functionOfSum(Matrix, Matrix, Pattern, Func)
      * functionOfSum}(dest,src,pattern,processingFunc)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src                   the source matrix.
@@ -544,8 +551,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                      the result of the given function for the aperture sum of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> functionOfSum(Matrix<? extends PArray> src,
         Pattern pattern, Func processingFunc)
@@ -572,8 +579,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #asFunctionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * asFunctionOfPercentilePair}(src,m1,m2,pattern,processingFunc)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</code>.
      *
      * @param src              the source matrix.
      * @param percentileIndex1 the 1st <i>r</i> argument: the index of the 1st percentile <i>v</i><sub>1</sub>.
@@ -586,8 +593,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                 the "lazy" matrix containing the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends PArray> asFunctionOfPercentilePair(
         Matrix<? extends PArray> src,
@@ -603,13 +610,13 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     }
 
     /**
-     * This implementation creates a new updatable matrix <tt>dest</tt> by the call
+     * This implementation creates a new updatable matrix <code>dest</code> by the call
      * <tt>dest={@link #memoryModel() memoryModel}.{@link MemoryModel#newMatrix(Class, Matrix)
      * newMatrix}(UpdatablePArray.class,src)</tt>, calculates the function of the source matrix
      * and 2 percentiles by the call
      * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
      * functionOfPercentilePair}(dest,src,percentileIndexes1,percentileIndexes2,pattern,processingFunc)</tt>
-     * and returns <tt>dest</tt> as the result.
+     * and returns <code>dest</code> as the result.
      * All necessary checks of correctness of the arguments are performed before allocating new matrix.
      *
      * @param src                the source matrix.
@@ -626,8 +633,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> functionOfPercentilePair(Matrix<? extends PArray> src,
         Matrix<? extends PArray> percentileIndexes1,
@@ -650,8 +657,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)
      * functionOfPercentilePair}(src,m1,m2,pattern,processingFunc)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</code>.
      *
      * @param src              the source matrix.
      * @param percentileIndex1 the 1st <i>r</i> argument: the index of the 1st percentile <i>v</i><sub>1</sub>.
@@ -664,8 +671,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @return                 the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public Matrix<? extends UpdatablePArray> functionOfPercentilePair(Matrix<? extends PArray> src,
         double percentileIndex1,
@@ -689,8 +696,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * This implementation just calls
      * <tt>{@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, Pattern, Func)
      * functionOfPercentilePair}(dest,src,m1,m2,pattern,processingFunc)</tt>, where
-     * <tt>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</tt>
-     * and <tt>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</tt>.
+     * <code>m1={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex1)</code>
+     * and <code>m2={@link #constantPercentileMatrix constantPercentileMatrix}(src,percentileIndex2)</code>.
      *
      * @param dest             the target matrix.
      * @param src              the source matrix.
@@ -704,8 +711,8 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     public void functionOfPercentilePair(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
         double percentileIndex1,
@@ -723,14 +730,14 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
     }
 
     /**
-     * Returns the matrix with the same dimensions as the given <tt>src</tt> matrix,
+     * Returns the matrix with the same dimensions as the given <code>src</code> matrix,
      * backed by a constant array with the given value.
-     * More precisely, returns <tt>src.{@link Matrix#matrix(Array) matrix}(const)</tt>,
+     * More precisely, returns <code>src.{@link Matrix#matrix(Array) matrix}(const)</code>,
      * where
      * <ul>
      * <li><tt>const = {@link Arrays#nLongCopies(long, long)
      * Arrays.nLongCopies}(src.size(), (long)percentileIndex)</tt>,
-     * if <tt>percentileIndex==(long)percentileIndex</tt>,</li>
+     * if <code>percentileIndex==(long)percentileIndex</code>,</li>
      * <li>or <tt>const = {@link Arrays#nDoubleCopies(long, double)
      * Arrays.nDoubleCopies}(src.size(), percentileIndex)</tt>
      * in other case.</li>
@@ -738,7 +745,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      *
      * @param src             some matrix.
      * @param percentileIndex some filler.
-     * @return                the constant matrix with the same dimensions, filled by <tt>percentileIndex</tt>.
+     * @return                the constant matrix with the same dimensions, filled by <code>percentileIndex</code>.
      */
     public static Matrix<? extends PArray> constantPercentileMatrix(Matrix<? extends PArray> src,
         double percentileIndex)

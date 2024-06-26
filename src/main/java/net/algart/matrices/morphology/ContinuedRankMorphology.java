@@ -50,7 +50,7 @@ import net.algart.math.patterns.*;
  * to the dimensions of the source matrix.</p>
  *
  * <p>The processing is little different for methods, placing the result into the first argument
- * <tt>Matrix&lt;? extends UpdatablePArray&gt; dest</tt>, like
+ * <code>Matrix&lt;? extends UpdatablePArray&gt; dest</code>, like
  * {@link #percentile(Matrix, Matrix, Matrix, Pattern)}.
  * In these cases, the destination (updatable) matrix is (virtually) extended like the source matrix
  * before calculations with help of
@@ -62,15 +62,15 @@ import net.algart.math.patterns.*;
  * according the selected {@link #continuationMode() continuation mode}.</p>
  *
  * <p>Note: {@link net.algart.arrays.Matrix.ContinuationMode#NONE} continuation mode cannot be used in this class:
- * such value of <tt>continuationMode</tt> argument of the instantiation method
+ * such value of <code>continuationMode</code> argument of the instantiation method
  * {@link #getInstance(Morphology, Matrix.ContinuationMode)} leads
- * to <tt>IllegalArgumentException</tt>.</p>
+ * to <code>IllegalArgumentException</code>.</p>
  *
  * <p>Note: in improbable cases, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <tt>Long.MAX_VALUE</tt>,
- * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
+ * greater than <code>Long.MAX_VALUE</code>,
+ * the methods of this class throw <code>IndexOutOfBoundsException</code> and do nothing.
  * Of course, these are very improbable cases.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
@@ -95,7 +95,7 @@ public class ContinuedRankMorphology extends ContinuedMorphology implements Rank
      * @param parent           the instance of {@link RankMorphology} interface that will perform all operations.
      * @param continuationMode the mode of continuation outside the source matrix.
      * @return                 new instance of this class.
-     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>parent</code> or <code>continuationMode</code> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>.
      * @see #parent()
@@ -120,7 +120,7 @@ public class ContinuedRankMorphology extends ContinuedMorphology implements Rank
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
