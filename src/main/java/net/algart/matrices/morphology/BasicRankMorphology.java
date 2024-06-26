@@ -80,15 +80,15 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
     /**
      * Returns new instance of some inheritor of this class, implementing dilation and erosion operations
      * via the percentiles. Namely, in the created object
-     * <nobr><tt>{@link #dilation(Matrix, Pattern) dilation}(m,pattern)</tt></nobr> method is equivalent to
-     * <nobr><tt>{@link #percentile(Matrix, double, Pattern)
-     * percentile}(m,dilationLevel*<i>N</i>,pattern)</tt></nobr> and
-     * <nobr><tt>{@link #erosion(Matrix, Pattern) erosion}(m,pattern)</tt></nobr> method is equivalent to
-     * <nobr><tt>{@link #percentile(Matrix, double, Pattern)
-     * percentile}(m,dilationLevel*<i>N</i>,pattern.{@link Pattern#symmetric() symmetric()})</tt></nobr>,
-     * where <nobr><tt><i>N</i>=pattern.{@link Pattern#pointCount() pointCount()}-1</tt></nobr>
+     * <tt>{@link #dilation(Matrix, Pattern) dilation}(m,pattern)</tt> method is equivalent to
+     * <tt>{@link #percentile(Matrix, double, Pattern)
+     * percentile}(m,dilationLevel*<i>N</i>,pattern)</tt> and
+     * <tt>{@link #erosion(Matrix, Pattern) erosion}(m,pattern)</tt> method is equivalent to
+     * <tt>{@link #percentile(Matrix, double, Pattern)
+     * percentile}(m,dilationLevel*<i>N</i>,pattern.{@link Pattern#symmetric() symmetric()})</tt>,
+     * where <tt><i>N</i>=pattern.{@link Pattern#pointCount() pointCount()}-1</tt>
      * and <tt>dilationLevel</tt> is the argument of this method. This argument must be in range
-     * <nobr><tt>0.0 &le; dilationLevel &le; 1.0</tt></nobr>.
+     * <tt>0.0 &le; dilationLevel &le; 1.0</tt>.
      *
      * <p>More precisely, in the created object the methods
      * <ol>
@@ -100,9 +100,9 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * <p>work in the following way.
      *
      * <p>Let the double value <i>r</i> be
-     * <nobr><i>r</i>=<tt>dilationLevel*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt></nobr>
+     * <i>r</i>=<tt>dilationLevel*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt>
      * in a case of dilation (<tt>isDilation</tt> argument is <tt>true</tt>) or
-     * <nobr><i>r</i>=<tt>(1.0-dilationLevel)*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt></nobr>
+     * <i>r</i>=<tt>(1.0-dilationLevel)*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt>
      * in a case of erosion (<tt>isDilation</tt> argument is <tt>false</tt>).
      * Then, let <tt>index</tt> be:
      * <ul>
@@ -117,16 +117,16 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *
      * <p>At last, let <b>P</b> be <tt>pattern</tt>
      * in a case of dilation (<tt>isDilation</tt> argument is <tt>true</tt>)
-     * or <nobr><tt>pattern.{@link Pattern#symmetric() symmetric()}</tt></nobr>
+     * or <tt>pattern.{@link Pattern#symmetric() symmetric()}</tt>
      * in a case of erosion (<tt>isDilation</tt> argument is <tt>false</tt>).
      *
      * <p>Then, in the returned object the 1st method
      * {@link #asDilationOrErosion(Matrix, Pattern, boolean) asDilationOrErosion}
      * is equivalent to
-     * <nobr><tt>{@link #asPercentile(Matrix, double, Pattern) asPercentile}(src,index,<b>P</b>)</tt></nobr>
+     * <tt>{@link #asPercentile(Matrix, double, Pattern) asPercentile}(src,index,<b>P</b>)</tt>
      * and the 2nd method {@link #dilationOrErosion(Matrix, Matrix, Pattern, boolean, boolean) dilationOrErosion}
      * is equivalent to
-     * <nobr><tt>{@link #percentile(Matrix, Matrix, double, Pattern) percentile}(dest,src,index,<b>P</b>)</tt></nobr>.
+     * <tt>{@link #percentile(Matrix, Matrix, double, Pattern) percentile}(dest,src,index,<b>P</b>)</tt>.
      * (The <tt>disableMemoryAllocation</tt> argument of
      * {@link #dilationOrErosion(Matrix, Matrix, Pattern, boolean, boolean) dilationOrErosion} method
      * is ignored by this implementation.)
@@ -158,7 +158,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *                                  bitLevels()}</tt> are incorrect:
      *                                  <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some&nbsp;<i>k</i>.
      */
     public static RankMorphology getInstance(ArrayContext context, double dilationLevel,

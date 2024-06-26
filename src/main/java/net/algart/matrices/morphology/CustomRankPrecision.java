@@ -54,18 +54,18 @@ public interface CustomRankPrecision {
      * <p>The last element of this array <tt>bitLevels[bitLevels.length-1]</tt> is named
      * <i>the number of analysed bits</i> and specifies the logarithm of the length
      * of the histogram, used while calculating rank characteristics. More precisely, the length
-     * of the histogram is <nobr><i>M</i>=2<sup>&mu;</sup></nobr>,
-     * where <nobr>&mu; = <tt>bitLevels[bitLevels.length-1]</tt></nobr>
+     * of the histogram is <i>M</i>=2<sup>&mu;</sup>,
+     * where &mu; = <tt>bitLevels[bitLevels.length-1]</tt>
      * for floating-point matrix elements or
-     * <nobr>&mu; = min(<tt>bitLevels[bitLevels.length-1]</tt>, &beta;)</nobr>
+     * &mu; = min(<tt>bitLevels[bitLevels.length-1]</tt>, &beta;)
      * for fixed-point matrix elements,
-     * <nobr>&beta; = <b>M</b>.{@link net.algart.arrays.Matrix#array()
-     * array()}.{@link net.algart.arrays.PArray#bitsPerElement() bitsPerElement()}</nobr>.
+     * &beta; = <b>M</b>.{@link net.algart.arrays.Matrix#array()
+     * array()}.{@link net.algart.arrays.PArray#bitsPerElement() bitsPerElement()}.
      * See more details in comments to {@link RankMorphology} interface, section 3.
      *
      * <p>First <tt>bitLevels.length-1</tt> elements of this array, i.e.
-     * <nobr><tt>{@link net.algart.arrays.JArrays#copyOfRange(int[], int, int)
-     * JArrays.copyOfRange}(bitLevels,0,bitLevels.length-1)</tt></nobr>,
+     * <tt>{@link net.algart.arrays.JArrays#copyOfRange(int[], int, int)
+     * JArrays.copyOfRange}(bitLevels,0,bitLevels.length-1)</tt>,
      * are passed as <tt>bitLevelsOfPyramid</tt> argument of
      * {@link net.algart.arrays.Histogram#newIntHistogram(int, int...) Histogram.newIntHistogram}
      * or {@link net.algart.arrays.SummingHistogram#newSummingIntHistogram(int, int...)
@@ -77,7 +77,7 @@ public interface CustomRankPrecision {
      *
      * <p>This array must not be empty and must not contain more than 31 elements,
      * and all its elements must be sorted in strictly increasing order:
-     * <nobr><tt>bitLevels</tt>[<i>k</i>]&lt;<tt>bitLevels</tt>[<i>k</i>+1]</nobr> for all <i>k</i>.
+     * <tt>bitLevels</tt>[<i>k</i>]&lt;<tt>bitLevels</tt>[<i>k</i>+1] for all <i>k</i>.
      * The elements of this array must not exceed {@link #MAX_NUMBER_OF_ANALYZED_BITS} limit.
      *
      * <p>Below are possible examples of the array, returned by this method:
@@ -88,18 +88,18 @@ public interface CustomRankPrecision {
      * or floating-point matrices;</li>
 
      * <li>{6, 12} &mdash; the rank operations will be performed with a two-level pyramid of histograms,
-     * consisting of 4096 bars (or <nobr>min(4096,2<sup>&beta;</sup>)=256</nobr> for <tt>byte</tt> matrices),
+     * consisting of 4096 bars (or min(4096,2<sup>&beta;</sup>)=256 for <tt>byte</tt> matrices),
      * which will be grouped by 64 bars into "wide" bars of the 2nd level;
      * such a precision is enough for many application;</li>
 
      * <li>{8, 16, 24} &mdash; the rank operations will be performed with a three-level pyramid of histograms,
-     * consisting of 2<sup>24</sup>=16777216 bars (or <nobr>min(2<sup>24</sup>,2<sup>&beta;</sup>)=256 or 65636</nobr>
+     * consisting of 2<sup>24</sup>=16777216 bars (or min(2<sup>24</sup>,2<sup>&beta;</sup>)=256 or 65636
      * for <tt>byte</tt> or <tt>short</tt>/<tt>char</tt> matrices),
      * which will be grouped by 256 bars into "wide" bars of the 2nd level and by 65536 bars into "wide" bars
      * of the 3rd levels; this precision is good for most applications;</li>
      *
      * <li>{12, 24} &mdash; the rank operations will be performed with a two-level pyramid of histograms,
-     * consisting of 2<sup>24</sup>=16777216 bars (or <nobr>min(2<sup>24</sup>,2<sup>&beta;</sup>)=256 or 65636</nobr>
+     * consisting of 2<sup>24</sup>=16777216 bars (or min(2<sup>24</sup>,2<sup>&beta;</sup>)=256 or 65636
      * for <tt>byte</tt> or <tt>short</tt>/<tt>char</tt> matrices),
      * which will be grouped by 4096 bars into "wide" bars of the 2nd level;
      * this precision is equivalent to the previous example, but usually provides better performance.</li>
@@ -111,7 +111,7 @@ public interface CustomRankPrecision {
      *
      * @return bit levels of {@link net.algart.arrays.Histogram#newIntHistogram(int, int...)
      *         the pyramid of histograms} (all elements excepting the last one) and
-     *         the maximal possible total number of analyzed bits <nobr>&mu;=log<sub>2</sub>(histogram length)</nobr>
+     *         the maximal possible total number of analyzed bits &mu;=log<sub>2</sub>(histogram length)
      *         (the last element of this array).
      * @see #numberOfAnalyzedBits()
      */
@@ -120,7 +120,7 @@ public interface CustomRankPrecision {
     /**
      * Returns the last element of the {@link #bitLevels()} array.
      *
-     * @return the maximal possible total number of analyzed bits <nobr>&mu;=log<sub>2</sub>(histogram length)</nobr>.
+     * @return the maximal possible total number of analyzed bits &mu;=log<sub>2</sub>(histogram length).
      */
     int numberOfAnalyzedBits();
 
