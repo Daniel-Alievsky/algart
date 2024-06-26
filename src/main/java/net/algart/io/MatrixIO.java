@@ -254,7 +254,7 @@ public class MatrixIO {
 
     /**
      * Should be called if you are going to call {@link #writeAlgARTImage(Path, List, boolean)}
-     * with <tt>allowReferencesToStandardLargeFiles=true</tt> from an external algorithm before its finishing
+     * with <code>allowReferencesToStandardLargeFiles=true</code> from an external algorithm before its finishing
      * (to return its results).
      *
      * @param image matrices, for built-in arrays of which you want to clear the temporary status
@@ -276,20 +276,20 @@ public class MatrixIO {
     }
 
     /**
-     * Saves the multichannel <tt>image</tt> (list of matrices) in the specified folder.
+     * Saves the multichannel <code>image</code> (list of matrices) in the specified folder.
      * Matrices are saved in several files in very simple format without any compression.
      * If this folder already contain an image, saved by previous call of this method,
      * it is automatically deleted (replaced with the new one).
      *
      * @param folder                              folder to save the image.
      * @param image                               some multichannel image
-     * @param allowReferencesToStandardLargeFiles if <tt>true</tt>, and if one of passed matrices is
+     * @param allowReferencesToStandardLargeFiles if <code>true</code>, and if one of passed matrices is
      *                                            mapped to some file F by {@link LargeMemoryModel},
      *                                            this method does not write the matrix content and
      *                                            saves a little text "reference" file with information about
      *                                            the path to this file F.
      * @throws IOException          in a case of I/O error.
-     * @throws NullPointerException if one of the arguments or elements of <tt>image</tt> list is {@code null}.
+     * @throws NullPointerException if one of the arguments or elements of <code>image</code> list is {@code null}.
      */
     public static void writeAlgARTImage(
             Path folder,

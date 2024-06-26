@@ -41,13 +41,13 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Specifies how to convert 32-bit <tt>int</tt> values to bytes: by simple unsigned shift ">>>24"
-     * (<tt>true</tt> value) or via usual AlgART scaling: 0 to 0, <tt>Integer.MAX_VALUE</tt>
-     * to 255 (<tt>false</tt> value).
+     * Specifies how to convert 32-bit <code>int</code> values to bytes: by simple unsigned shift ">>>24"
+     * (<code>true</code> value) or via usual AlgART scaling: 0 to 0, <code>Integer.MAX_VALUE</code>
+     * to 255 (<code>false</code> value).
      * This flag is used in {@link #toDataBuffer(Matrix)} method.
      *
-     * @param unsignedInt32 whether <tt>int</tt> values are considered to be unsigned 32-bit;
-     *                      default is <tt>false</tt>.
+     * @param unsignedInt32 whether <code>int</code> values are considered to be unsigned 32-bit;
+     *                      default is <code>false</code>.
      * @return a reference to this object.
      */
     public MatrixToBufferedImage setUnsignedInt32(boolean unsignedInt32) {
@@ -60,23 +60,23 @@ public abstract class MatrixToBufferedImage {
      * toBufferedImage}(interleavedMatrix, null)</tt>.
      *
      * @param interleavedMatrix the interleaved matrix.
-     * @return the <tt>BufferedImage</tt> with the same data.
+     * @return the <code>BufferedImage</code> with the same data.
      */
     public final BufferedImage toBufferedImage(Matrix<? extends PArray> interleavedMatrix) {
         return toBufferedImage(interleavedMatrix, null);
     }
 
     /**
-     * Converts the given interleaved matrix (2- or 3-dimensional) into <tt>BufferedImage</tt>.
-     * Note: <tt>dataBuffer!=null</tt>, then the elements of the given matrix ignored, but the data
+     * Converts the given interleaved matrix (2- or 3-dimensional) into <code>BufferedImage</code>.
+     * Note: <code>dataBuffer!=null</code>, then the elements of the given matrix ignored, but the data
      * of the given buffer are used instead. (It is supposed, that this buffer was created
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
      * @param interleavedMatrix the interleaved matrix.
-     * @param dataBuffer        the data for <tt>BufferedImage</tt>; can be {@code null}, then it is automatically
+     * @param dataBuffer        the data for <code>BufferedImage</code>; can be {@code null}, then it is automatically
      *                          created as {@link #toDataBuffer(net.algart.arrays.Matrix)
      *                          toDataBuffer(interleavedMatrix)}.
-     * @return the <tt>BufferedImage</tt> with the same data.
+     * @return the <code>BufferedImage</code> with the same data.
      */
     public final BufferedImage toBufferedImage(
             Matrix<? extends PArray> interleavedMatrix,
@@ -127,7 +127,7 @@ public abstract class MatrixToBufferedImage {
 
     /**
      * Returns the x-dimension of the image, corresponding to the given interleaved matrix.
-     * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
+     * Note that it is <code>int</code>, not <code>long</code> (AWT images have 31-bit dimensions).
      *
      * @param interleavedMatrix the interleaved matrix.
      * @return the width of the corresponding image.
@@ -139,7 +139,7 @@ public abstract class MatrixToBufferedImage {
 
     /**
      * Returns the y-dimension of the image, corresponding to the given interleaved matrix.
-     * Note that it is <tt>int</tt>, not <tt>long</tt> (AWT images have 31-bit dimensions).
+     * Note that it is <code>int</code>, not <code>long</code> (AWT images have 31-bit dimensions).
      *
      * @param interleavedMatrix the interleaved matrix.
      * @return the height of the corresponding image.
@@ -162,15 +162,15 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Converts the given interleaved matrix (2- or 3-dimensional) into <tt>java.awt.image.DataBuffer</tt>.
+     * Converts the given interleaved matrix (2- or 3-dimensional) into <code>java.awt.image.DataBuffer</code>.
      * This method is useful in addition to {@link #toBufferedImage(Matrix, java.awt.image.DataBuffer)},
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
      * <p>This method automatically converts the source data to byte (8-bit) array,
-     * if {@link #bytesRequired()} returns <tt>true</tt>.
+     * if {@link #bytesRequired()} returns <code>true</code>.
      *
      * @param interleavedMatrix the interleaved data.
-     * @return the newly allocated <tt>DataBuffer</tt> with the same data.
+     * @return the newly allocated <code>DataBuffer</code> with the same data.
      */
     public final java.awt.image.DataBuffer toDataBuffer(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
@@ -203,7 +203,7 @@ public abstract class MatrixToBufferedImage {
      * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.
      *
      * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
-     * <tt>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</tt>,
+     * <code>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</code>,
      * this method returns
      * <pre>
      * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
@@ -213,7 +213,7 @@ public abstract class MatrixToBufferedImage {
      *
      * @param interleavedMatrix the interleaved data.
      * @param color             some color.
-     * @param bankIndex         index of the bank in terms of <tt>java.awt.image.DataBuffer</tt>.
+     * @param bankIndex         index of the bank in terms of <code>java.awt.image.DataBuffer</code>.
      * @return the corresponded component of this color or interleaved RGB-Alpha value,
      * depending on the structure of the data buffer.
      */
@@ -233,20 +233,20 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Returns <tt>true</tt> if the AlgART array or matrix, passed to the methods of this class,
-     * must contain <tt>byte</tt> elements. In this case, this class converts
-     * all other element types into <tt>byte</tt> (but the client may do this itself).
+     * Returns <code>true</code> if the AlgART array or matrix, passed to the methods of this class,
+     * must contain <code>byte</code> elements. In this case, this class converts
+     * all other element types into <code>byte</code> (but the client may do this itself).
      *
-     * <p>The default implementation returns <tt>true</tt>.
+     * <p>The default implementation returns <code>true</code>.
      * Please override this method if your implementation forms specific versions of
-     * <tt>java.awt.image.DataBuffer</tt> for non-byte element types.
+     * <code>java.awt.image.DataBuffer</code> for non-byte element types.
      */
     public boolean bytesRequired() {
         return true;
     }
 
     /**
-     * Returns the palette (<tt></tt>byte[4][256]</tt>) if the indexed image is supposed.
+     * Returns the palette (<code></code>byte[4][256]</tt>) if the indexed image is supposed.
      *
      * <p>The default implementation returns {@code null}, that means non-indexed image.
      *
@@ -265,19 +265,19 @@ public abstract class MatrixToBufferedImage {
      * @param bandCount        the number of bands: if called from {@link #toDataBuffer(Matrix)},
      *                         it is 1 for 2-dimensional matrix and {@link Matrix#dim(int) dim(0)}
      *                         for 3-dimensional matrix.
-     * @return the newly allocated <tt>DataBuffer</tt> with the same data.
+     * @return the newly allocated <code>DataBuffer</code> with the same data.
      */
     protected abstract java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount);
 
     /**
-     * Returns the band masks, which will be passed to <tt>Raster.createPackedRaster</tt> method,
-     * if you want to convert data into a packed <tt>BufferedImage</tt>.
+     * Returns the band masks, which will be passed to <code>Raster.createPackedRaster</code> method,
+     * if you want to convert data into a packed <code>BufferedImage</code>.
      * The resulting array can be {@code null}, that means an unpacked form of the raster
-     * (<tt>Raster.createBandedRaster</tt>), or an array containing <tt>bandCount</tt> elements:
+     * (<code>Raster.createBandedRaster</code>), or an array containing <code>bandCount</code> elements:
      * red, green, blue and (if necessary) alpha masks.
      *
      * @param bandCount the number of masks (3 or 4, in other cases {@code null} is returned).
-     * @return the bit masks for storing bands in the packed <tt>int</tt> values.
+     * @return the bit masks for storing bands in the packed <code>int</code> values.
      */
 
     protected int[] rgbAlphaMasks(int bandCount) {
@@ -285,7 +285,7 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Equivalent to <tt>dataBuffer.getData(bankIndex)</tt> for the corresponding specific element type.
+     * Equivalent to <code>dataBuffer.getData(bankIndex)</code> for the corresponding specific element type.
      * It can be used, for example, together with {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
      *
      * @param dataBuffer the data buffer.

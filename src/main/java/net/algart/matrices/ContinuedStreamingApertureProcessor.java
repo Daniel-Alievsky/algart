@@ -78,7 +78,7 @@ import java.util.Objects;
  * is the same, as if the source matrix would be virtually appended until the infinity along all directions,
  * according the selected {@link #continuationMode() continuation mode}.</p>
  *
- * <p>Note:  we append the additional matrices <b>M</b><sub><i>k</i></sub> with <tt>0.0</tt> constant
+ * <p>Note:  we append the additional matrices <b>M</b><sub><i>k</i></sub> with <code>0.0</code> constant
  * instead of using the selected continuation mode. It is possible (as well as appending with any other values)
  * because the element of the resulting matrix <b>R</b>
  * at every position <b>x</b>, according the basic specification of {@link StreamingApertureProcessor} class,
@@ -87,15 +87,15 @@ import java.util.Objects;
  * of the additional matrices <b>M</b><sub><i>k</i></sub>, placed at the same position <b>x</b>.</p>
  *
  * <p>Note: {@link net.algart.arrays.Matrix.ContinuationMode#NONE} continuation mode cannot be used in this class:
- * such value of <tt>continuationMode</tt> argument of the instantiation method
+ * such value of <code>continuationMode</code> argument of the instantiation method
  * {@link #getInstance(StreamingApertureProcessor, Matrix.ContinuationMode)} leads
- * to <tt>IllegalArgumentException</tt>.</p>
+ * to <code>IllegalArgumentException</code>.</p>
  *
  * <p>Note: in an improbable case, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <tt>Long.MAX_VALUE</tt>,
- * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
+ * greater than <code>Long.MAX_VALUE</code>,
+ * the methods of this class throw <code>IndexOutOfBoundsException</code> and do nothing.
  * Of course, if is very improbable case.</p>
  *
  * <p>This class is an example of <i>non-standard implementation</i> of streaming aperture processor,
@@ -113,14 +113,14 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
     private final StreamingApertureProcessor parent;
     private final Matrix.ContinuationMode continuationMode;
 
-    private ContinuedStreamingApertureProcessor(StreamingApertureProcessor parent,
-        Matrix.ContinuationMode continuationMode)
-    {
+    private ContinuedStreamingApertureProcessor(
+            StreamingApertureProcessor parent,
+            Matrix.ContinuationMode continuationMode) {
         super(parent.context()); // be careful: context can be null!
         Objects.requireNonNull(continuationMode, "Null continuationMode derivator");
         if (continuationMode == Matrix.ContinuationMode.NONE) {
             throw new IllegalArgumentException(getClass().getName() + " cannot be used with continuation mode \""
-                + continuationMode + "\"");
+                    + continuationMode + "\"");
         }
         this.parent = parent;
         this.continuationMode = continuationMode;
@@ -135,16 +135,17 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
      * @param parent           the instance of {@link StreamingApertureProcessor} class
      *                         that will perform all operations.
      * @param continuationMode the mode of continuation outside the source matrix.
-     * @return                 new instance of this class.
-     * @throws NullPointerException     if <tt>parent</tt> or <tt>continuationMode</tt> argument is {@code null}.
+     * @return new instance of this class.
+     * @throws NullPointerException     if <code>parent</code> or <code>continuationMode</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>continuationMode=={@link
      *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>.
      * @see #parent()
      * @see #continuationMode()
      */
-    public static ContinuedStreamingApertureProcessor getInstance(StreamingApertureProcessor parent,
-        Matrix.ContinuationMode continuationMode)
-    {
+    public static ContinuedStreamingApertureProcessor getInstance(
+            StreamingApertureProcessor parent,
+            Matrix.ContinuationMode continuationMode) {
         return new ContinuedStreamingApertureProcessor(parent, continuationMode);
     }
 
@@ -171,12 +172,12 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
      * @param newContext another context, used by the returned instance; can be {@code null}.
-     * @return           new instance with another context.
+     * @return new instance with another context.
      */
     @Override
     public StreamingApertureProcessor context(ArrayContext newContext) {
@@ -189,11 +190,11 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
     }
 
     @Override
-    public <T extends PArray> Matrix<T> asProcessed(Class<? extends T> requiredType,
-        Matrix<? extends PArray> src,
-        List<? extends Matrix<? extends PArray>> additionalMatrices,
-        Pattern pattern)
-    {
+    public <T extends PArray> Matrix<T> asProcessed(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> src,
+            List<? extends Matrix<? extends PArray>> additionalMatrices,
+            Pattern pattern) {
         Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
@@ -207,10 +208,10 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
     }
 
     @Override
-    public void process(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        List<? extends Matrix<? extends PArray>> additionalMatrices,
-        Pattern pattern)
-    {
+    public void process(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            List<? extends Matrix<? extends PArray>> additionalMatrices,
+            Pattern pattern) {
         Objects.requireNonNull(additionalMatrices, "Null additionalMatrices argument");
         additionalMatrices = new ArrayList<Matrix<? extends PArray>>(additionalMatrices);
         // - to avoid changing by parallel threads
@@ -220,14 +221,13 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
         Matrix<? extends PArray> continued = DependenceApertureBuilder.extend(src, a, continuationMode);
         additionalMatrices = extendAdditionalMatrices(additionalMatrices, a);
         Matrix<? extends UpdatablePArray> continuedDest = DependenceApertureBuilder.extend(dest, a,
-            Matrix.ContinuationMode.ZERO_CONSTANT);
+                Matrix.ContinuationMode.ZERO_CONSTANT);
         parent.process(continuedDest, continued, additionalMatrices, pattern);
     }
 
     private static List<? extends Matrix<? extends PArray>> extendAdditionalMatrices(
-        List<? extends Matrix<? extends PArray>> matrices,
-        IRectangularArea aperture)
-    {
+            List<? extends Matrix<? extends PArray>> matrices,
+            IRectangularArea aperture) {
         if (matrices.isEmpty()) {
             return matrices;
         }

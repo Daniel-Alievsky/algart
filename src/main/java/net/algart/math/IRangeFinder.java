@@ -201,8 +201,8 @@ public class IRangeFinder {
 
     /**
      * Allows to remove some ranges from finding, for example, if they were processed by some way
-     * and already not necessary. For such indexes, <tt>indexActual.test(index)</tt> should return false.
-     * By default, all indexes are actual (built-in <tt>indexActual</tt> always returns <tt>true</tt>).
+     * and already not necessary. For such indexes, <code>indexActual.test(index)</code> should return false.
+     * By default, all indexes are actual (built-in <code>indexActual</code> always returns <code>true</code>).
      *
      * <p>Note that this method should be very quick/ If it requires essential time, it is better
      * to check actuality in the high-level processing.
