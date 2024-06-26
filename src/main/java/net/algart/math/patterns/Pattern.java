@@ -47,7 +47,7 @@ import net.algart.math.*;
  * <p>The very important subclass among all patterns is <b><i>integer patterns</i></b>,
  * consisting of points with integer coordinates. More precisely, a pattern is called <i>integer</i>,
  * if for all pattern's points
- * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
  * we have <i>x</i><sub><i>j</i></sub><code>==(double)(long)</code><i>x</i><sub><i>j</i></sub> for any index <i>j</i>.
  * There is the standard method {@link #round()},
  * rounding any pattern to the nearest integer pattern &mdash; the result of this method is always integer.</p>
@@ -289,15 +289,15 @@ import net.algart.math.*;
  * <p>Below are two important theorems, following from these two restrictions.</p>
  *
  * <p><b>Theorem I.</b> If you round the coordinates of all points of a pattern, i.e. replace each pattern's point
- * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr> with a new point
- * <nobr>(round(<i>x</i><sub>0</sub>), round(<i>x</i><sub>1</sub>), ...,
- * round(<i>x</i><sub><i>n</i>&minus;1</sub>))</nobr>,
+ * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) with a new point
+ * (round(<i>x</i><sub>0</sub>), round(<i>x</i><sub>1</sub>), ...,
+ * round(<i>x</i><sub><i>n</i>&minus;1</sub>)),
  * where "round(a)" means the result of <code>(double)StrictMath.round(a)</code> call,
  * then the resulting point set will also be allowed. The same statement is true for the point set,
  * consisting of precise integer points, without type cast to <code>double</code>,
- * i.e. for points <nobr>(<code>StrictMath.round</code>(<i>x</i><sub>0</sub>),
+ * i.e. for points (<code>StrictMath.round</code>(<i>x</i><sub>0</sub>),
  * <code>StrictMath.round</code>(<i>x</i><sub>1</sub>), ...,
- * <code>StrictMath.round</code>(<i>x</i><sub><i>n</i>&minus;1</sub>))</nobr> &mdash;
+ * <code>StrictMath.round</code>(<i>x</i><sub><i>n</i>&minus;1</sub>)) &mdash;
  * such mathematical point set also fulfils both restrictions 1 and 2.</p>
  *
  * <p>The proof of this is complex enough. The paper
@@ -312,18 +312,18 @@ import net.algart.math.*;
  *
  * <p><b>Theorem II.</b> If all points of a pattern are integer, i.e.
  * for all pattern's points
- * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
  * we have <i>x</i><sub><i>j</i></sub><code>==(double)(long)</code><i>x</i><sub><i>j</i></sub> for any index <i>j</i>,
  * and (<i>X</i><sub>0</sub>,<i>X</i><sub>1</sub>,...,<i>X</i><sub><i>n</i>&minus;1</sub>)
  * is some point of this pattern, then you can subtract (using Java &ldquo;&minus;&rdquo; operator)
  * the coordinate <i>X</i><sub><i>j</i></sub> (<i>j</i> is any index)
  * from the corresponding coordinate of all points of this pattern, i.e. replace each pattern's point
- * <nobr>(<i>x</i><sub>0</sub>, ..., <i>x</i><sub><i>j</i>&minus;1</sub>,
+ * (<i>x</i><sub>0</sub>, ..., <i>x</i><sub><i>j</i>&minus;1</sub>,
  * <i>x</i><sub><i>j</i></sub>,
- * <i>x</i><sub><i>j</i>+1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr> with
- * <nobr>(<i>x</i><sub>0</sub>, ..., <i>x</i><sub><i>j</i>&minus;1</sub>,
+ * <i>x</i><sub><i>j</i>+1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) with
+ * (<i>x</i><sub>0</sub>, ..., <i>x</i><sub><i>j</i>&minus;1</sub>,
  * <i>x</i><sub><i>j</i></sub>&#x2296;<i>X</i><sub><i>j</i></sub>,
- * <i>x</i><sub><i>j</i>+1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+ * <i>x</i><sub><i>j</i>+1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>),
  * and the resulting point set will also be allowed.
  * Here and below <i>a</i>&#x2296;<i>b</i> (<i>a</i> and <i>b</i> are real values of <code>double</code>
  * Java type) means the computer difference (not strict mathematical),
@@ -338,8 +338,8 @@ import net.algart.math.*;
  * any difference <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub>
  * can be represented precisely by <code>double</code> type (see the comments to {@link #MAX_COORDINATE} constant).
  * So, we have
- * <nobr><i>x</i><sub><i>j</i></sub>&#x2296;<i>X</i><sub><i>j</i></sub>
- * = <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub></nobr>:
+ * <i>x</i><sub><i>j</i></sub>&#x2296;<i>X</i><sub><i>j</i></sub>
+ * = <i>x</i><sub><i>j</i></sub>&minus;<i>X</i><sub><i>j</i></sub>:
  * the computer difference is just a mathematical difference.</p>
  *
  * <p>Now the proof is simple.
@@ -528,7 +528,7 @@ public interface Pattern {
      *
      * <p>For example, implementations of the {@link RectangularPattern rectangular patterns}
      * allow to successfully define a very large 3D parallelepiped
-     * <nobr><i>n</i> x <i>n</i> x <i>n</i></nobr>.
+     * <i>n</i> x <i>n</i> x <i>n</i>.
      * Fur such pattern, this method will require a lot of memory
      * for <i>n</i>=1000 and will fail (probably with {@link TooManyPointsInPatternError})
      * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<code>Integer.MAX_VALUE</code>).
@@ -1226,8 +1226,8 @@ public interface Pattern {
      * by {@link Patterns#newMinkowskiMultiplePattern(Pattern, int)} method:
      * the result of that method is not always an actual Minkowski sum of <i>N</i> equal patterns,
      * but can be (in the best case) an equal Minkowski sum of ~log<sub>2</sub><i>N</i> patterns
-     * <nobr>P &oplus; C &oplus; 2C &oplus; ... &oplus; 2<i><sup>m</sup></i>C
-     * &oplus; (<i>N</i>&minus;2<sup><i>m</i></sup>C)</nobr>,
+     * P &oplus; C &oplus; 2C &oplus; ... &oplus; 2<i><sup>m</sup></i>C
+     * &oplus; (<i>N</i>&minus;2<sup><i>m</i></sup>C),
      * 2<sup><i>m</i></sup>&lt;<i>N</i>&le;2<sup><i>m</i>+1</sup>,
      * or (in not the best case, when <i>N</i> is greater than the maximal carcass multiplier 2<sup><i>n</i></sup>)
      * can be another, not so little Minkowski sum.
@@ -1250,10 +1250,10 @@ public interface Pattern {
      * Let <i>k</i> = 2<sup><i>i</i><sub>1</sub></sup>+2<sup><i>i</i><sub>2</sub></sup>+...
      * is the binary representation of the number <i>k</i>.
      * According to the conditions I,
-     * <nobr>(2<sup><i>i<sub>k</sub></i></sup>&otimes;P) &oplus; 2<sup><i>i<sub>k</sub></i></sup>C
-     * = 2<sup><i>i<sub>k</sub></i>+1</sup>&otimes;P</nobr>.
+     * (2<sup><i>i<sub>k</sub></i></sup>&otimes;P) &oplus; 2<sup><i>i<sub>k</sub></i></sup>C
+     * = 2<sup><i>i<sub>k</sub></i>+1</sup>&otimes;P.
      * Summing these equations for all <i>i<sub>k</sub></i>, we have
-     * <nobr>(<i>k</i>&otimes;P) &oplus; <i>k</i>C = 2<i>k</i>&otimes;P</nobr>.
+     * (<i>k</i>&otimes;P) &oplus; <i>k</i>C = 2<i>k</i>&otimes;P.
      * So,<br>
      * &nbsp;&nbsp;&nbsp;&nbsp;(2<sup><i>m</i>&minus;1</sup>+<i>k</i>)&otimes;P
      * = ((2<sup><i>m</i>&minus;1</sup>&minus;<i>k</i>)&otimes;P) &oplus;
@@ -1395,7 +1395,7 @@ public interface Pattern {
      * a non-empty list of patterns P<sub>0</sub>, P<sub>1</sub>,&nbsp;..., P<sub><i>n</i>&minus;1</sub>,
      * such that this pattern P (the point set represented by it)
      * is a Minkowski sum of them (of the point sets represented by them):
-     * <nobr>P = P<sub>0</sub> &oplus; P<sub>1</sub> &oplus;...&oplus; P<sub><i>n</i>&minus;1</sub></nobr>.
+     * P = P<sub>0</sub> &oplus; P<sub>1</sub> &oplus;...&oplus; P<sub><i>n</i>&minus;1</sub>.
      * In other words, each point <b>p</b>&isin;P of this pattern is equal to a vector sum
      * of some <i>n</i> points
      * <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>,&nbsp;..., <b>p</b><sub><i>n</i>&minus;1</sub>,
@@ -1462,7 +1462,7 @@ public interface Pattern {
      * a non-empty list of patterns P<sub>0</sub>, P<sub>1</sub>,&nbsp;..., P<sub><i>n</i>&minus;1</sub>,
      * such that this pattern P (the point set represented by it)
      * is the set-theoretical union of them (of the point sets represented by them):
-     * <nobr>P = P<sub>0</sub> &cup; P<sub>1</sub> &cup;...&cup; P<sub><i>n</i>&minus;1</sub></nobr>.
+     * P = P<sub>0</sub> &cup; P<sub>1</sub> &cup;...&cup; P<sub><i>n</i>&minus;1</sub>.
      *
      * <p>This method tries to find such decomposition, that all patterns P<sub><i>i</i></sub> have good
      * {@link #minkowskiDecomposition(int) Minkowski decompositions}

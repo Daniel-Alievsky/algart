@@ -134,7 +134,7 @@ public class Point implements Comparable<Point> {
     /**
      * Returns a new point in <i>n</i>-dimensional space, where <i>n</i><code>=coordCount</code>
      * and all coordinates of the point are equal to the given value <code>filler</code>.
-     * For example, <nobr><code>valueOfEqualCoordinates(3, 1)</code></nobr> returns the 3D point <nobr>(1,1,1)</nobr>.
+     * For example, <code>valueOfEqualCoordinates(3, 1)</code> returns the 3D point (1,1,1).
      * If <code>filler==0</code>, this method is equivalent to {@link #origin(int) origin(coordCount)}.
      *
      * @param coordCount the number of dimensions.
@@ -637,8 +637,8 @@ public class Point implements Comparable<Point> {
      * which stores the coordinates of the result in the specified Java array instead of creating new instance
      * of this class.
      * Equivalent to the following call:
-     * <nobr><code>{@link #scaleAndShift(double[], Point) scaleAndShift}(multipliers,shift).{@link #coordinates(double[])
-     * coordinates}(resultCoordinates)</code></nobr>, but works little faster.
+     * <code>{@link #scaleAndShift(double[], Point) scaleAndShift}(multipliers,shift).{@link #coordinates(double[])
+     * coordinates}(resultCoordinates)</code>, but works little faster.
      *
      * @param resultCoordinates Java array for storing results.
      * @param multipliers       the multipliers for all coordinates.
@@ -737,8 +737,8 @@ public class Point implements Comparable<Point> {
      * Returns the projection of this point along the given axis with the number of coordinates,
      * decreased by 1. Namely, the resulting point <i>P</i> has
      * {@link #coordCount()}&minus;1 coordinates, equal to
-     * <nobr><i>P</i><code>.{@link #coord(int) coord}(</code><i>i</i><code>)=thisInstance.{@link #coord(int)
-     * coord}(</code><i>i'</i><code>)</code></nobr>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
+     * <i>P</i><code>.{@link #coord(int) coord}(</code><i>i</i><code>)=thisInstance.{@link #coord(int)
+     * coord}(</code><i>i'</i><code>)</code>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
      * <i>i'</i>=<i>i</i>+1 for <i>i</i>&ge;<code>coordIndex</code>.
      *
      * @param coordIndex the number of coordinate, along which the projecting is performed.

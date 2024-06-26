@@ -39,9 +39,9 @@ import java.util.Set;
  * See also the section "Uniform-grid patterns" in the comments to {@link Pattern} interface.</p>
  *
  * <p>More precisely, a pattern, implementing this interface, is some set of <i>N</i> points (<i>N</i>&gt;0)
- * <nobr><b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+ * <b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
  * <i>x</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
- * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
+ * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
  * (<i>k</i>=0,1,...,<i>N</i>&minus;1, <i>n</i>={@link #dimCount() dimCount()}),
  * produced by the following formulas:
  *
@@ -72,9 +72,9 @@ import java.util.Set;
  * <p>The numbers <i>i</i><sub><i>j</i></sub><sup>(<i>k</i>)</sup> are called <i>grid indexes</i>
  * of the points of the pattern (or, briefly, <i>grid indexes</i> of the pattern).
  * The integer points
- * <nobr><b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+ * <b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
  * <i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
- * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
+ * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
  * (<i>k</i>=0,1,...,<i>N</i>&minus;1)
  * form an integer pattern (see the section "Integer patterns" in the comments to {@link Pattern} interface),
  * which is called <i>grid index pattern</i> and can be got at any time by
@@ -192,12 +192,12 @@ public interface UniformGridPattern extends Pattern {
     /**
      * Returns a set of all <i>grid indexes</i> <i>i</i><sub><i>j</i></sub> of this pattern.
      * Namely, the elements of the returned set contain grid indexes
-     * <nobr><b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+     * <b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
      * <i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
-     * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
-     * of all points <nobr><b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+     * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
+     * of all points <b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
      * <i>x</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
-     * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
+     * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
      * of this pattern:
      * <blockquote>
      * <i>x</i><sub>0</sub><sup>(<i>k</i>)</sup> =
@@ -228,7 +228,7 @@ public interface UniformGridPattern extends Pattern {
      *
      * <p>For example, implementations of the {@link RectangularPattern rectangular patterns}
      * allow to successfully define a very large 3D parallelepiped
-     * <nobr><i>n</i> x <i>n</i> x <i>n</i></nobr>.
+     * <i>n</i> x <i>n</i> x <i>n</i>.
      * Fur such pattern, this method will require a lot of memory
      * for <i>n</i>=1000 and will fail (probably with {@link TooManyPointsInPatternError})
      * for <i>n</i>=2000 (2000<sup>3</sup>&gt;<code>Integer.MAX_VALUE</code>).
@@ -350,16 +350,16 @@ public interface UniformGridPattern extends Pattern {
      * Returns <code>true</code> if this pattern is <i>n</i>-dimensional rectangular parallelepiped.
      * (For 2D patterns it means a rectangle, for 1D pattern it means an interval.)
      * In other words, it returns <code>true</code> if this pattern is the set of all points
-     * <nobr>(<i>o</i><sub>0</sub>+<i>i</i><sub>0</sub><i>d</i><sub>0</sub>,
+     * (<i>o</i><sub>0</sub>+<i>i</i><sub>0</sub><i>d</i><sub>0</sub>,
      * <i>o</i><sub>1</sub>+<i>i</i><sub>1</sub><i>d</i><sub>1</sub>, ...,
-     * <i>o</i><sub><i>n</i>&minus;1</sub>+<i>i</i><sub><i>n</i>&minus;1</sub><i>d</i><sub><i>n</i>&minus;1</sub>)</nobr>,
+     * <i>o</i><sub><i>n</i>&minus;1</sub>+<i>i</i><sub><i>n</i>&minus;1</sub><i>d</i><sub><i>n</i>&minus;1</sub>),
      * where <i>o<sub>j</sub></i> are coordinates of the {@link #originOfGrid() origin of the grid},
      * <i>d<sub>j</sub></i> are {@link #stepsOfGrid() steps of the grid}
      * and <i>i<sub>j</sub></i> are all integers in the ranges
-     * <nobr>{@link #gridIndexRange(int) gridIndexRange(<i>j</i>)}.{@link net.algart.math.IRange#min()
+     * {@link #gridIndexRange(int) gridIndexRange(<i>j</i>)}.{@link net.algart.math.IRange#min()
      * min()}&lt;=<i>i</i><sub><i>j</i></sub>&lt;={@link #gridIndexRange(int)
      * gridIndexRange(<i>j</i>)}.{@link net.algart.math.IRange#max()
-     * max()}</nobr>, <nobr><i>j</i>=0,1,...,{@link #dimCount() dimCount()}&minus;1</nobr>.</p>
+     * max()}, <i>j</i>=0,1,...,{@link #dimCount() dimCount()}&minus;1.</p>
      *
      * <p>Note that this condition is the same as in the definition of rectangular patterns, represented by
      * {@link RectangularPattern} interface. Really, if the object implements {@link RectangularPattern},
@@ -449,9 +449,9 @@ public interface UniformGridPattern extends Pattern {
     /**
      * Returns another uniform-grid pattern, identical to this one with the only difference, that
      * the grid index
-     * <nobr><b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+     * <b>i</b><sup>(<i>k</i>)</sup> = (<i>i</i><sub>0</sub><sup>(<i>k</i>)</sup>,
      * <i>i</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
-     * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
+     * <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
      * for each point #<i>k</i> of the result is shifted by the argument of this method via the call
      * <b>i</b><sup>(<i>k</i>)</sup><code>.{@link IPoint#add(IPoint) add}(shift)</code>.
      * <p>
@@ -541,16 +541,16 @@ public interface UniformGridPattern extends Pattern {
      * a pattern consisting of all such points <i>A</i> of this pattern,
      * that the neighbour point <i>B</i>,
      * generated by the backward shift of point <i>A</i> along the coordinate #<i>j</i>=<code>coordIndex</code>
-     * by the corresponding grid step <nobr><i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
-     * stepOfGrid(coordIndex)}</nobr>, does not belong to this pattern.
+     * by the corresponding grid step <i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
+     * stepOfGrid(coordIndex)}, does not belong to this pattern.
      * The number of dimensions in the resulting pattern ({@link #dimCount() dimCount()}) is the same as in this one.
      *
      * <p>In other words, the point
-     * <nobr><i>A</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
-     * <i>x</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <i>A</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
+     * <i>x</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * belongs to the returned pattern if and only if it belongs to this pattern and the point
-     * <nobr><i>B</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
-     * <i>x</i><sub><i>j</i></sub>&minus;<i>d</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <i>B</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
+     * <i>x</i><sub><i>j</i></sub>&minus;<i>d</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * (corresponding to decreasing the <i>grid index</i> <i>i</i><sub><i>j</i></sub> by 1)
      * does not belong to this pattern.
      *
@@ -600,16 +600,16 @@ public interface UniformGridPattern extends Pattern {
      * a pattern consisting of all such points <i>A</i> of this pattern,
      * that the neighbour point <i>B</i>,
      * generated by the forward shift of point <i>A</i> along the coordinate #<i>j</i>=<code>coordIndex</code>
-     * by the corresponding grid step <nobr><i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
-     * stepOfGrid(coordIndex)}</nobr>, does not belong to this pattern.
+     * by the corresponding grid step <i>d</i><sub><i>j</i></sub>={@link #stepOfGrid(int)
+     * stepOfGrid(coordIndex)}, does not belong to this pattern.
      * The number of dimensions in the resulting pattern ({@link #dimCount() dimCount()}) is the same as in this one.
      *
      * <p>In other words, the point
-     * <nobr><i>A</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
-     * <i>x</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <i>A</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
+     * <i>x</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * belongs to the returned pattern if and only if it belongs to this pattern and the point
-     * <nobr><i>B</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
-     * <i>x</i><sub><i>j</i></sub>+<i>d</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <i>B</i> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ...,
+     * <i>x</i><sub><i>j</i></sub>+<i>d</i><sub><i>j</i></sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * (corresponding to increasing the <i>grid index</i> <i>i</i><sub><i>j</i></sub> by 1)
      * does not belong to this pattern.
      *

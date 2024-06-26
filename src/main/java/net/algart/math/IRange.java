@@ -35,22 +35,22 @@ import java.util.Objects;
  *
  * <p>The minimum number ({@link #min()}) is never greater than the maximum number ({@link #max()}),
  * both minimal and maximum numbers {@link #min()} and ({@link #max()}) are always in range
- * <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>,
+ * <code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code>,
  * and their difference is always <i>less</i> than <code>Long.MAX_VALUE</code>.
- * In other words, <nobr>"<code>{@link #max()}-{@link #min()}+1</code>"</nobr> expression,
+ * In other words, "<code>{@link #max()}-{@link #min()}+1</code>" expression,
  * returned by {@link #size()} method, and also
- * <nobr>"<code>{@link #min()}-1</code>"</nobr>, <nobr>"<code>{@link #min()}-2</code>"</nobr> and
- * <nobr>"<code>{@link #max()}+1</code>"</nobr> expressions
+ * "<code>{@link #min()}-1</code>", "<code>{@link #min()}-2</code>" and
+ * "<code>{@link #max()}+1</code>" expressions
  * are always calculated without overflow.
  *
  * <p>Please draw attention to the important effect of the requirement above.
  * <b>If <i>a</i>..<i>b</i> is an allowed range</b> (<i>a</i>={@link #min()}, <i>b</i>={@link #max()}),
  * <b>then 0..<i>b</i>&minus;<i>a</i> and <i>a</i>&minus;<i>b</i>..0 are also allowed ranges</b>.
  * Really, they have the same difference
- * <nobr><code>{@link #max()}-{@link #min()}</code>=<i>b</i>&minus;<i>a</i>=<i>diff</i></nobr>,
+ * <code>{@link #max()}-{@link #min()}</code>=<i>b</i>&minus;<i>a</i>=<i>diff</i>,
  * and so far as this difference <i>diff</i>&lt;<code>Long.MAX_VALUE</code>, both new bounds
  * <i>b</i>&minus;<i>a</i>=<i>diff</i> and <i>a</i>&minus;<i>b</i>=&minus;<i>diff</i> are also
- * inside the required range <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>.</p>
+ * inside the required range <code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -72,7 +72,7 @@ public final class IRange {
      * Returns an instance of this class describing the range
      * <code>min&lt;=<i>x</i>&lt;=max</code>.
      * The <code>min</code> value must not be greater than <code>max</code>,
-     * both values must be in range <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>,
+     * both values must be in range <code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code>,
      * and the difference <code>max-min</code> must be <i>less</i> than <code>Long.MAX_VALUE</code>.
      *
      * @param min the minimum number in the range, inclusive.
@@ -81,8 +81,8 @@ public final class IRange {
      * @throws IllegalArgumentException if <code>min &gt; max</code>, or if <code>max-min &gt;= Long.MAX_VALUE</code>
      *                                  (more precisely, if the Java expression <code>max-min+1</code> is nonpositive
      *                                  due to integer overflow),
-     *                                  or if <nobr><code>min&lt;=-Long.MAX_VALUE</code></nobr>,
-     *                                  or if <nobr><code>max==Long.MAX_VALUE</code></nobr>.
+     *                                  or if <code>min&lt;=-Long.MAX_VALUE</code>,
+     *                                  or if <code>max==Long.MAX_VALUE</code>.
      */
     public static IRange valueOf(long min, long max) {
         return valueOf(min, max, false);
@@ -216,16 +216,16 @@ public final class IRange {
 
     /**
      * Returns an instance of this class describing the range
-     * <nobr><tt>Math.min(this.{@link #min() min()},value) &lt;= x
-     * &lt;= Math.max(this.{@link #max() max()},value)</tt></nobr>.
+     * <tt>Math.min(this.{@link #min() min()},value) &lt;= x
+     * &lt;= Math.max(this.{@link #max() max()},value)</tt>.
      * In other words, expands the current range to include the given value.
      *
      * @param value some value that should belong to the new range.
      * @return      the expanded range.
-     * @throws IllegalArgumentException if <nobr><code>value==Long.MAX_VALUE</code></nobr>,
-     *                                  <nobr><code>value&lt;=-Long.MAX_VALUE</code></nobr> or
+     * @throws IllegalArgumentException if <code>value==Long.MAX_VALUE</code>,
+     *                                  <code>value&lt;=-Long.MAX_VALUE</code> or
      *                                  if in the resulting range
-     *                                  <nobr><code>max-min &gt;= Long.MAX_VALUE</code></nobr>.
+     *                                  <code>max-min &gt;= Long.MAX_VALUE</code>.
      */
     public IRange expand(long value) {
         if (value == Long.MAX_VALUE)

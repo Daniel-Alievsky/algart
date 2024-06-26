@@ -354,7 +354,7 @@ public abstract class AbstractPattern implements Pattern {
 
     /**
      * This implementation creates Java array <code>double[]</code> by the call
-     * "<nobr><code>a = new double[{@link #dimCount}]</code></nobr>", fills all its elements by
+     * "<code>a = new double[{@link #dimCount}]</code>", fills all its elements by
      * <code>multiplier</code> argument and then calls {@link #scale(double...) scale(a)}.
      * There are no reasons to override this method usually.
      *

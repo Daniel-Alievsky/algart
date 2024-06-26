@@ -37,9 +37,9 @@ import net.algart.math.Point;
  * See also the section "Rectangular patterns" in the comments to {@link Pattern} interface.</p>
  *
  * <p>More precisely, a pattern, implementing this interface, is a non-empty set of all points
- * <nobr><b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
+ * <b>x</b><sup>(<i>k</i>)</sup> = (<i>x</i><sub>0</sub><sup>(<i>k</i>)</sup>,
  * <i>x</i><sub>1</sub><sup>(<i>k</i>)</sup>, ...,
- * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)</nobr>
+ * <i>x</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup>)
  * (<i>n</i>={@link #dimCount()}), such that:
  *
  * <blockquote>
@@ -53,7 +53,7 @@ import net.algart.math.Point;
  * + <i>i</i><sub><i>n</i>&minus;1</sub><sup>(<i>k</i>)</sup><i>d</i><sub><i>n</i>&minus;1</sub>,<br>
  * <i>min</i><sub><i>j</i></sub> &le; <i>i</i><sub><i>j</i></sub><sup>(<i>k</i>)</sup> &le;
  * <i>max</i><sub><i>j</i></sub>
- * for all <nobr><i>j</i>=0,1,...,<i>n</i>&minus;1</nobr>,
+ * for all <i>j</i>=0,1,...,<i>n</i>&minus;1,
  * </blockquote>
  *
  * where <i>o<sub>j</sub></i> are coordinates of the {@link #originOfGrid() origin of the grid},
