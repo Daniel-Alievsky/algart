@@ -33,8 +33,8 @@ import net.algart.math.IPoint;  // for Javadoc only
  * <p>Mathematical morphology over {@link Matrix <i>n</i>-dimensional matrices} with a random
  * <i>n</i>-dimensional structuring element (shape), represented by {@link Pattern} class.
  * It is supposed that the type of matrix elements is one of primitive Java types
- * (<tt>boolean</tt>, <tt>char</tt>, <tt>byte</tt>, <tt>short</tt>, <tt>int</tt>,
- * <tt>long</tt>, <tt>float</tt>, <tt>double</tt>) and, so, represents an integer or a real number,
+ * (<code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>, <code>int</code>,
+ * <code>long</code>, <code>float</code>, <code>double</code>) and, so, represents an integer or a real number,
  * according to comments to {@link PFixedArray#getLong(long)} and {@link PArray#getDouble(long)} methods.
  * In 2-dimensional case, these operations can be used for processing grayscale digital images.
  * Please see <noindex><a href="http://en.wikipedia.org/wiki/Mathematical_morphology">Wikipedia</a></noindex>
@@ -78,22 +78,22 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * <p>vary their behaviour depending on the last argument of this type.
      * The usual behaviour, corresponding to names of the methods, obtains when this argument is {@link #NONE}.
      * However, if this argument is {@link #SUBTRACT_RESULT_FROM_SRC} or {@link #SUBTRACT_SRC_FROM_RESULT},
-     * every method, after calculating the result <tt>R</tt> by usual rules,
+     * every method, after calculating the result <code>R</code> by usual rules,
      * automatically performs elementwise subtraction
-     * either the result <tt>R</tt> from the source matrix <tt>A</tt> (the 1st argument),
-     * or the source matrix <tt>A</tt> from the result <tt>R</tt>.
+     * either the result <code>R</code> from the source matrix <code>A</code> (the 1st argument),
+     * or the source matrix <code>A</code> from the result <code>R</code>.
      * Namely:</p>
      *
      * <ul>
      *     <li>if the last argument is {@link #SUBTRACT_RESULT_FROM_SRC}, every of the listed methods returns
-     *     the elementwise positive difference <tt>max(0,A-R)</tt>;</li>
+     *     the elementwise positive difference <code>max(0,A-R)</code>;</li>
      *     <li>if the last argument is {@link #SUBTRACT_SRC_FROM_RESULT}, every of the listed methods returns
-     *     the elementwise positive difference <tt>max(0,R-A)</tt>;</li>
+     *     the elementwise positive difference <code>max(0,R-A)</code>;</li>
      *     <li>if the last argument is {@link #NONE}, no additional subtractions are performed: the method
-     *     just returns <tt>R</tt>.</li>
+     *     just returns <code>R</code>.</li>
      * </ul>
      *
-     * <p>Note that the <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned integers
+     * <p>Note that the <code>byte</code> and <code>short</code> elements are considered to be unsigned integers
      * while subtraction.</p>
      */
     enum SubtractionMode {
@@ -137,7 +137,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
     Morphology context(ArrayContext newContext);
 
     /**
-     * Returns <tt>true</tt>, if this class works in the default
+     * Returns <code>true</code>, if this class works in the default
      * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC
      * pseudo-cyclic continuation mode}.
      *
@@ -148,8 +148,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * the comments to the basic {@link #dilation(Matrix, Pattern)} and {@link #erosion(Matrix, Pattern)}
      * methods as the default definition of dilation and erosion.
      *
-     * <p>This method returns <tt>true</tt> in {@link BasicMorphology} and {@link BasicRankMorphology} implementation.
-     * However, it usually returns <tt>false</tt> in {@link ContinuedMorphology} and
+     * <p>This method returns <code>true</code> in {@link BasicMorphology} and {@link BasicRankMorphology} implementation.
+     * However, it usually returns <code>false</code> in {@link ContinuedMorphology} and
      * {@link ContinuedRankMorphology} classes &mdash; excepting the only degenerated case when the used
      * {@link ContinuedMorphology#continuationMode() continuation mode} is
      * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC PSEUDO_CYCLIC}.
@@ -185,8 +185,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the "lazy" matrix containing the dilation of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends PArray> asDilation(Matrix<? extends PArray> src, Pattern pattern);
 
@@ -218,8 +218,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the "lazy" matrix containing the erosion of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends PArray> asErosion(Matrix<? extends PArray> src, Pattern pattern);
 
@@ -230,15 +230,15 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * <p>Usually <i>dilation</i> means the elementwise maximum from the set of matrices,
      * obtained by pseudo-cyclic shifting the source matrix by the vectors,
      * equal to all pattern points.
-     * More precisely, let <i>m</i><sub><i>i</i></sub><tt>={@link
+     * More precisely, let <i>m</i><sub><i>i</i></sub><code>={@link
      * Matrices#asShifted(Matrix, long...)
-     * Matrices.asShifted}(src,ip.{@link IPoint#coordinates() coordinates()})</tt>,
-     * where <tt>ip</tt> is the point <tt>#<i>i</i></tt> from all points contained in the pattern.
+     * Matrices.asShifted}(src,ip.{@link IPoint#coordinates() coordinates()})</code>,
+     * where <code>ip</code> is the point <code>#<i>i</i></code> from all points contained in the pattern.
      * Then the every element of the returned matrix is the maximum from all corresponding elements
      * of all <i>m</i><sub><i>i</i></sub> matrices. The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
-     * The <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned.
-     * In a case of <tt>bit</tt> elements, the maximum is equivalent to logical OR.
+     * The <code>byte</code> and <code>short</code> elements are considered to be unsigned.
+     * In a case of <code>bit</code> elements, the maximum is equivalent to logical OR.
      *
      * <p>The basic morphology implementation {@link BasicMorphology} strictly complies with this definition.
      * However, other implementations of this interface may use alternate definitions of the <i>dilation</i> term.
@@ -259,8 +259,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the result of dilation of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      * @see #asDilation(Matrix, Pattern)
      * @see #dilation(Matrix, Matrix, Pattern, boolean)
      * @see #dilation(Matrix, Pattern, Morphology.SubtractionMode)
@@ -274,16 +274,16 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * <p>Usually <i>erosion</i> means the elementwise minimum from the set of matrices,
      * obtained by pseudo-cyclic shifting the source matrix by the vectors,
      * symmetric to all pattern points relatively the origin of coordinates.
-     * More precisely, let <i>m</i><sub><i>i</i></sub><tt>={@link
+     * More precisely, let <i>m</i><sub><i>i</i></sub><code>={@link
      * Matrices#asShifted(Matrix, long...)
      * Matrices.asShifted}(src,ip.{@link IPoint#symmetric()
-     * symmetric()}.{@link IPoint#coordinates() coordinates()})</tt>,
-     * where <tt>ip</tt> is the point <tt>#<i>i</i></tt> from all points contained in the pattern.
+     * symmetric()}.{@link IPoint#coordinates() coordinates()})</code>,
+     * where <code>ip</code> is the point <code>#<i>i</i></code> from all points contained in the pattern.
      * Then the every element of the returned matrix is the minimum from all corresponding elements
      * of all <i>m</i><sub><i>i</i></sub> matrices. The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
-     * The <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned.
-     * In a case of <tt>bit</tt> elements, the minimum is equivalent to logical AND.
+     * The <code>byte</code> and <code>short</code> elements are considered to be unsigned.
+     * In a case of <code>bit</code> elements, the minimum is equivalent to logical AND.
      *
      * <p>The basic morphology implementation {@link BasicMorphology} strictly complies with this definition.
      * However, other implementations of this interface may use alternate definitions of the <i>erosion</i> term.
@@ -304,8 +304,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the result of erosion of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      * @see #asDilation(Matrix, Pattern)
      * @see #erosion(Matrix, Matrix, Pattern, boolean)
      * @see #erosion(Matrix, Pattern, Morphology.SubtractionMode)
@@ -313,15 +313,16 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
     Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
-     * Extended version of {@link #dilation(Matrix, Pattern)} method: if <tt>subtractionMode</tt> argument
+     * Extended version of {@link #dilation(Matrix, Pattern)} method: if <code>subtractionMode</code> argument
      * is not {@link SubtractionMode#NONE},
-     * returns the difference between the dilation and the <tt>src</tt> matrix,
+     * returns the difference between the dilation and the <code>src</code> matrix,
      * according the specified mode.
      *
-     * <p>If <tt>subtractionMode=={@link SubtractionMode#NONE}</tt>, this method is strictly equivalent
+     * <p>If <code>subtractionMode=={@link SubtractionMode#NONE}</code>, this method is strictly equivalent
      * to {@link #dilation(Matrix, Pattern)}.
      *
-     * <p>The result of this operation with <tt>subtractionMode=={@link SubtractionMode#SUBTRACT_SRC_FROM_RESULT}</tt>
+     * <p>The result of this operation with
+     * <code>subtractionMode=={@link SubtractionMode#SUBTRACT_SRC_FROM_RESULT}</code>
      * is also called the <i>external gradient</i> of the source matrix.
      *
      * @param src             the source matrix.
@@ -331,23 +332,24 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                        or the difference of the dilation and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> dilation(
             Matrix<? extends PArray> src, Pattern pattern,
             SubtractionMode subtractionMode);
 
     /**
-     * Extended version of {@link #erosion(Matrix, Pattern)} method: if <tt>subtractionMode</tt> argument
+     * Extended version of {@link #erosion(Matrix, Pattern)} method: if <code>subtractionMode</code> argument
      * is not {@link SubtractionMode#NONE},
-     * returns the difference between the erosion and the <tt>src</tt> matrix,
+     * returns the difference between the erosion and the <code>src</code> matrix,
      * according the specified mode.
      *
-     * <p>If <tt>subtractionMode=={@link SubtractionMode#NONE}</tt>, this method is strictly equivalent
+     * <p>If <code>subtractionMode=={@link SubtractionMode#NONE}</code>, this method is strictly equivalent
      * to {@link #erosion(Matrix, Pattern)}.
      *
-     * <p>The result of this operation with <tt>subtractionMode=={@link SubtractionMode#SUBTRACT_RESULT_FROM_SRC}</tt>
+     * <p>The result of this operation with
+     * <code>subtractionMode=={@link SubtractionMode#SUBTRACT_RESULT_FROM_SRC}</code>
      * is also called the <i>internal gradient</i> of the source matrix.
      *
      * @param src             the source matrix.
@@ -357,8 +359,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                        or the difference of the erosion and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> erosion(
             Matrix<? extends PArray> src, Pattern pattern,
@@ -366,23 +368,23 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
 
     /**
      * Equivalent to {@link #dilation(Matrix, Pattern)} method, but the result matrix
-     * will be placed in the <tt>dest</tt> argument.
+     * will be placed in the <code>dest</code> argument.
      * It allows to avoid extra memory allocation if you need to perform dilation many times
      * from one matrix to another.
      *
-     * <p>Moreover, if <tt>disableMemoryAllocation</tt> argument is <tt>true</tt>, this method
+     * <p>Moreover, if <code>disableMemoryAllocation</code> argument is <code>true</code>, this method
      * guarantees that no any additional memory will be allocated, even if it can optimize the algorithm speed.
      * In this case, this method is always executed in one pass:
      * it is equivalent to creating new lazy matrix by {@link #asDilation(Matrix src, Pattern pattern)} method
-     * and further copying it into <tt>dest</tt> by {@link Matrices#copy(ArrayContext, Matrix, Matrix)} method.
+     * and further copying it into <code>dest</code> by {@link Matrices#copy(ArrayContext, Matrix, Matrix)} method.
      * It can be useful if you are sure that the pattern is small enough (usually 2-10 points),
      * and allocation additional work matrices can slow down the algorithm to greater extent
      * than using the simple one-pass algorithm.
      *
-     * <p>If the element type of the <tt>dest</tt> matrix is not the same as the source element type
-     * (<tt>dest.{@link Matrix#elementType() elementType()}!=src.{@link Matrix#elementType() elementType()}</tt>),
+     * <p>If the element type of the <code>dest</code> matrix is not the same as the source element type
+     * (<code>dest.{@link Matrix#elementType() elementType()}!=src.{@link Matrix#elementType() elementType()}</code>),
      * the elements are automatically cast to the necessary type. More precisely, in this case
-     * the <tt>dest</tt> matrix, before all further calculations, is replaced with
+     * the <code>dest</code> matrix, before all further calculations, is replaced with
      *
      * <pre>
      * {@link
@@ -396,14 +398,14 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param dest                    the target matrix.
      * @param src                     the source matrix.
      * @param pattern                 the pattern.
-     * @param disableMemoryAllocation if <tt>false</tt>, this method may allocate additional temporary matrices
+     * @param disableMemoryAllocation if <code>false</code>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
-     *                                if <tt>true</tt>, no any work memory will be allocated.
+     *                                if <code>true</code>, no any work memory will be allocated.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     void dilation(
             Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
@@ -411,23 +413,23 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
 
     /**
      * Equivalent to {@link #erosion(Matrix, Pattern)} method, but the result matrix
-     * will be placed in the <tt>dest</tt> argument.
+     * will be placed in the <code>dest</code> argument.
      * It allows to avoid extra memory allocation if you need to perform erosion many times
      * from one matrix to another.
      *
-     * <p>Moreover, if <tt>disableMemoryAllocation</tt> argument is <tt>true</tt>, this method
+     * <p>Moreover, if <code>disableMemoryAllocation</code> argument is <code>true</code>, this method
      * guarantees that no any additional memory will be allocated, even if it can optimize the algorithm speed.
      * In this case, this method is always executed in one pass:
      * it is equivalent to creating new lazy matrix by {@link #asDilation(Matrix src, Pattern pattern)} method
-     * and further copying it into <tt>dest</tt> by {@link Matrices#copy(ArrayContext, Matrix, Matrix)} method.
+     * and further copying it into <code>dest</code> by {@link Matrices#copy(ArrayContext, Matrix, Matrix)} method.
      * It can be useful if you are sure that the pattern is small enough (usually 2-10 points),
      * and allocation additional work matrices can slow down the algorithm to greater extent
      * than using the simple one-pass algorithm.
      *
-     * <p>If the element type of the <tt>dest</tt> matrix is not the same as the source element type
-     * (<tt>dest.{@link Matrix#elementType() elementType()}!=src.{@link Matrix#elementType() elementType()}</tt>),
+     * <p>If the element type of the <code>dest</code> matrix is not the same as the source element type
+     * (<code>dest.{@link Matrix#elementType() elementType()}!=src.{@link Matrix#elementType() elementType()}</code>),
      * the elements are automatically cast to the necessary type. More precisely, in this case
-     * the <tt>dest</tt> matrix, before all further calculations, is replaced with
+     * the <code>dest</code> matrix, before all further calculations, is replaced with
      *
      * <pre>
      * {@link
@@ -441,14 +443,14 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @param dest                    the target matrix.
      * @param src                     the source matrix.
      * @param pattern                 the pattern.
-     * @param disableMemoryAllocation if <tt>false</tt>, this method may allocate additional temporary matrices
+     * @param disableMemoryAllocation if <code>false</code>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
-     *                                if <tt>true</tt>, no any work memory will be allocated.
+     *                                if <code>true</code>, no any work memory will be allocated.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     void erosion(
             Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
@@ -464,8 +466,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
 
@@ -478,8 +480,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern);
 
@@ -489,9 +491,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * {@link #erosion(Matrix, Pattern) erosion(src, erosionPattern)}
      * of the source matrix by the specified patterns.
      *
-     * <p>If <tt>subtractionMode</tt> is not {@link SubtractionMode#NONE},
+     * <p>If <code>subtractionMode</code> is not {@link SubtractionMode#NONE},
      * the behaviour is little other: this method returns the difference between
-     * the result of these two operation and the <tt>src</tt> matrix, according the specified mode.
+     * the result of these two operation and the <code>src</code> matrix, according the specified mode.
      *
      * <p>When both patterns are equal, the result is the {@link #closing(Matrix, Pattern, Morphology.SubtractionMode)
      * closing} of the matrix.
@@ -503,9 +505,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return                the result of sequential dilation and erosion of the source matrix by the given patterns
      *                        or the difference of such result and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
-     *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     * @throws IllegalArgumentException if <code>dilationPattern.{@link Pattern#dimCount() dimCount()}</code> or
+     *                                  <code>erosionPattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> dilationErosion(
             Matrix<? extends PArray> src,
@@ -517,9 +519,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * {@link #dilation(Matrix, Pattern) dilation(src, dilationPattern)}
      * of the source matrix by the specified patterns.
      *
-     * <p>If <tt>subtractionMode</tt> is not {@link SubtractionMode#NONE},
+     * <p>If <code>subtractionMode</code> is not {@link SubtractionMode#NONE},
      * the behaviour is little other: this method returns the difference between
-     * the result of these two operation and the <tt>src</tt> matrix, according the specified mode.
+     * the result of these two operation and the <code>src</code> matrix, according the specified mode.
      *
      * <p>When both patterns are equal, the result is the {@link #opening(Matrix, Pattern, Morphology.SubtractionMode)
      * opening} of the matrix.
@@ -531,9 +533,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return                the result of sequential erosion and dilation of the source matrix by the given patterns
      *                        or the difference of such result and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
-     *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     * @throws IllegalArgumentException if <code>dilationPattern.{@link Pattern#dimCount() dimCount()}</code> or
+     *                                  <code>erosionPattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> erosionDilation(
             Matrix<? extends PArray> src,
@@ -547,12 +549,12 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * {@link #dilation(Matrix, Pattern) dilation} and {@link #erosion(Matrix, Pattern) erosion} of the source matrix
      * with the same pattern.
      *
-     * <p>If <tt>subtractionMode</tt> is not {@link SubtractionMode#NONE},
+     * <p>If <code>subtractionMode</code> is not {@link SubtractionMode#NONE},
      * the behaviour is little other: this method returns the difference between
-     * the closing and the <tt>src</tt> matrix, according the specified mode.
+     * the closing and the <code>src</code> matrix, according the specified mode.
      * For example, {@link SubtractionMode#SUBTRACT_SRC_FROM_RESULT} argument
      * with this method allows to remove "light" background from a gray-scale image,
-     * represented by <tt>src</tt> matrix.
+     * represented by <code>src</code> matrix.
      *
      * <p>This method is equivalent to {@link #dilationErosion(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
      * dilationErosion(src, pattern, pattern, subtractionMode)}.
@@ -568,8 +570,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                        or the difference of the closing and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> closing(
             Matrix<? extends PArray> src, Pattern pattern,
@@ -583,12 +585,12 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * {@link #erosion(Matrix, Pattern) erosion} and {@link #dilation(Matrix, Pattern) dilation} of the source matrix
      * with the same pattern.
      *
-     * <p>If <tt>subtractionMode</tt> is not {@link SubtractionMode#NONE},
+     * <p>If <code>subtractionMode</code> is not {@link SubtractionMode#NONE},
      * the behaviour is little other: this method returns the difference between
-     * the opening and the <tt>src</tt> matrix, according the specified mode.
+     * the opening and the <code>src</code> matrix, according the specified mode.
      * For example, {@link SubtractionMode#SUBTRACT_RESULT_FROM_SRC} argument
      * with this method allows to remove "dark" background from a gray-scale image,
-     * represented by <tt>src</tt> matrix.
+     * represented by <code>src</code> matrix.
      *
      * <p>This method is equivalent to {@link #erosionDilation(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
      * erosionDilation(src, pattern, pattern, subtractionMode)}.
@@ -604,8 +606,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *                        or the difference of the opening and the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> opening(
             Matrix<? extends PArray> src, Pattern pattern,
@@ -615,14 +617,14 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * Returns a new updatable matrix, containing the <i>weak dilation</i>
      * of the source matrix by the specified pattern.
      *
-     * <p><i>Weak dilation</i> of the matrix <tt>A</tt> is defined as an elementwise difference
-     * <tt>B={@link #dilation(Matrix, Pattern)
-     * dilation}(A)-({@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)-A)</tt>.
-     * It is obvious that, for any elements, <tt>A&lt;=B&lt;={@link #dilation(Matrix, Pattern) dilation}(A)</tt>
+     * <p><i>Weak dilation</i> of the matrix <code>A</code> is defined as an elementwise difference
+     * <code>B={@link #dilation(Matrix, Pattern)
+     * dilation}(A)-({@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)-A)</code>.
+     * It is obvious that, for any elements, <code>A&lt;=B&lt;={@link #dilation(Matrix, Pattern) dilation}(A)</code>
      * (because both differences
-     * <tt>{@link #dilation(Matrix, Pattern)
-     * dilation}(A)-{@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)</tt>
-     * and <tt>{@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)-A</tt> are non-negative).
+     * <code>{@link #dilation(Matrix, Pattern)
+     * dilation}(A)-{@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)</code>
+     * and <code>{@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing}(A)-A</code> are non-negative).
      *
      * <p>(In this method, the {@link #closing(Matrix, Pattern, Morphology.SubtractionMode) closing} is supposed
      * to be performed with the last argument {@link SubtractionMode#NONE}.)
@@ -632,8 +634,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the result of weak dilation of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> weakDilation(Matrix<? extends PArray> src, Pattern pattern);
 
@@ -641,14 +643,14 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * Returns a new updatable matrix, containing the <i>weak erosion</i>
      * of the source matrix by the specified pattern.
      *
-     * <p><i>Weak erosion</i> of the matrix <tt>A</tt> is defined as an elementwise sum
-     * <tt>B={@link #erosion(Matrix, Pattern)
-     * erosion}(A)+(A-{@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A))</tt>.
-     * It is obvious that, for any elements, <tt>A&gt;=B&gt;={@link #erosion(Matrix, Pattern) erosion}(A)</tt>
+     * <p><i>Weak erosion</i> of the matrix <code>A</code> is defined as an elementwise sum
+     * <code>B={@link #erosion(Matrix, Pattern)
+     * erosion}(A)+(A-{@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A))</code>.
+     * It is obvious that, for any elements, <code>A&gt;=B&gt;={@link #erosion(Matrix, Pattern) erosion}(A)</code>
      * (because both differences
-     * <tt>{@link #opening(Matrix, Pattern, Morphology.SubtractionMode)
-     * opening}(A)-{@link #erosion(Matrix, Pattern) erosion}(A)</tt>
-     * and <tt>A-{@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A)</tt> are non-negative).
+     * <code>{@link #opening(Matrix, Pattern, Morphology.SubtractionMode)
+     * opening}(A)-{@link #erosion(Matrix, Pattern) erosion}(A)</code>
+     * and <code>A-{@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A)</code> are non-negative).
      *
      * <p>(In this method, the {@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening} is supposed
      * to be performed with the last argument {@link SubtractionMode#NONE}.)
@@ -658,68 +660,68 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return        the result of weak dilation of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> weakErosion(Matrix<? extends PArray> src, Pattern pattern);
 
     /**
      * Returns the elementwise minimum between the source matrix and the result of
-     * <tt>{@link #dilationErosion(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
-     * dilationErosion}(src, dilationPattern, erosionPattern, {@link SubtractionMode#NONE})</tt> call.
+     * <code>{@link #dilationErosion(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
+     * dilationErosion}(src, dilationPattern, erosionPattern, {@link SubtractionMode#NONE})</code> call.
      *
-     * <p>Let <tt>B</tt> is the result of this method, <tt>A</tt> is the source matrix,
-     * <tt>Q</tt> is <tt>dilationPattern</tt>, <tt>P</tt> is <tt>erosionPattern</tt>:<br>
-     * <tt>B=min(A,{@link #erosion(Matrix, Pattern)
-     * erosion}({@link #dilation(Matrix, Pattern) dilation}(A,Q),P))</tt><br> for any elements.
-     * It is obvious that (for any elements) <tt>A&gt;=B&gt;={@link #erosion(Matrix, Pattern) erosion}(A,P)</tt>.
-     * But if <tt>Q</tt> is a some "boundary" or "carcass" of the erosion pattern <tt>P</tt>,
+     * <p>Let <code>B</code> is the result of this method, <code>A</code> is the source matrix,
+     * <code>Q</code> is <code>dilationPattern</code>, <code>P</code> is <code>erosionPattern</code>:<br>
+     * <code>B=min(A,{@link #erosion(Matrix, Pattern)
+     * erosion}({@link #dilation(Matrix, Pattern) dilation}(A,Q),P))</code><br> for any elements.
+     * It is obvious that (for any elements) <code>A&gt;=B&gt;={@link #erosion(Matrix, Pattern) erosion}(A,P)</code>.
+     * But if <code>Q</code> is a some "boundary" or "carcass" of the erosion pattern <code>P</code>,
      * then a stronger condition is true:
-     * <tt>A&gt;=B&gt;={@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A,P)</tt>.
+     * <code>A&gt;=B&gt;={@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A,P)</code>.
      *
      * <p>More precisely, there is the following theorem.
      *
-     * <p><b>If <tt>Q</tt> is a subset of <tt>P</tt> and the Minkowski sum <tt>P&oplus;Q</tt> is equal to
-     * <tt>P&oplus;P</tt> (see {@link Pattern#carcass} method),
-     * then <tt>B&gt;={@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A,P)</tt>.</b>
+     * <p><b>If <code>Q</code> is a subset of <code>P</code> and the Minkowski sum <code>P&oplus;Q</code> is equal to
+     * <code>P&oplus;P</code> (see {@link Pattern#carcass} method),
+     * then <code>B&gt;={@link #opening(Matrix, Pattern, Morphology.SubtractionMode) opening}(A,P)</code>.</b>
      *
      * <p>Below is the proof for the binary case.
      * (For other element types, it's enough to consider the system of binary matrices
-     * <tt>A&gt;=threshold</tt> for all possible real values <tt>threshold</tt>.)
+     * <code>A&gt;=threshold</code> for all possible real values <code>threshold</code>.)
      *
      * <blockquote>
-     * <p>Let some point <i>x</i><tt>&isin;{@link #opening(Matrix, Pattern, Morphology.SubtractionMode)
-     * opening}(A,P)</tt>.
-     * It means: there is such <i>p</i><sub>1</sub><tt>&isin;P</tt>,
-     * that for all <i>p</i><tt>&isin;P</tt> we have <i>x</i>+<i>p</i><sub>1</sub>-<i>p</i><tt>&isin;A</tt>
+     * <p>Let some point <i>x</i><code>&isin;{@link #opening(Matrix, Pattern, Morphology.SubtractionMode)
+     * opening}(A,P)</code>.
+     * It means: there is such <i>p</i><sub>1</sub><code>&isin;P</code>,
+     * that for all <i>p</i><code>&isin;P</code> we have <i>x</i>+<i>p</i><sub>1</sub>-<i>p</i><code>&isin;A</code>
      * (the <b>statement <i>A</i></b>).
-     * We already know, that <i>x</i><tt>&isin;A</tt> (the case <i>p</i>=<i>p</i><sub>1</sub>),
-     * and we also need to prove, that <i>x</i><tt>&isin;{@link #erosion(Matrix, Pattern)
-     * erosion}({@link #dilation(Matrix, Pattern) dilation}(A,Q),P)</tt>.
+     * We already know, that <i>x</i><code>&isin;A</code> (the case <i>p</i>=<i>p</i><sub>1</sub>),
+     * and we also need to prove, that <i>x</i><code>&isin;{@link #erosion(Matrix, Pattern)
+     * erosion}({@link #dilation(Matrix, Pattern) dilation}(A,Q),P)</code>.
      *
-     * <p>Let's suppose that it is not true. It means: there is such <i>p</i><sub>2</sub><tt>&isin;P</tt>,
-     * that for all <i>q</i><tt>&isin;Q</tt> we have <i>x</i>+<i>p</i><sub>2</sub>-<i>q</i><tt>&notin;A</tt>
+     * <p>Let's suppose that it is not true. It means: there is such <i>p</i><sub>2</sub><code>&isin;P</code>,
+     * that for all <i>q</i><code>&isin;Q</code> we have <i>x</i>+<i>p</i><sub>2</sub>-<i>q</i><code>&notin;A</code>
      * (the <b>statement <i>B</i></b>)
      *
      * <p>Let <i>x</i> will be the origin of coordinates: <i>x</i>=<b>0</b>. Then, let
-     * <tt>P</tt><sub>1</sub>=-<tt>P</tt>+<i>p</i><sub>1</sub>={<i>p</i><sub>1</sub>-<i>p</i>,
-     * <i>p</i><tt>&isin;P</tt>}. Note: the origin <b>0</b><tt>&isin;P</tt><sub>1</sub>
-     * (the case <i>p</i>=<i>p</i><sub>1</sub>). We have <tt>P</tt><sub>1</sub><tt>&sub;A</tt>
+     * <code>P</code><sub>1</sub>=-<code>P</code>+<i>p</i><sub>1</sub>={<i>p</i><sub>1</sub>-<i>p</i>,
+     * <i>p</i><code>&isin;P</code>}. Note: the origin <b>0</b><code>&isin;P</code><sub>1</sub>
+     * (the case <i>p</i>=<i>p</i><sub>1</sub>). We have <code>P</code><sub>1</sub><code>&sub;A</code>
      * (statement <i>A</i>), so,
-     * for all <i>q</i><tt>&isin;Q</tt> we have <i>p</i><sub>2</sub>-<i>q</i><tt>&notin;P</tt><sub>1</sub>
-     * (because <i>p</i><sub>2</sub>-<i>q</i><tt>&notin;A</tt>, statement <i>B</i>).
-     * In other words, <i>p</i><sub>2</sub><tt>&notin;P<sub>1</sub>&oplus;Q</tt> (dilation of P by Q,
+     * for all <i>q</i><code>&isin;Q</code> we have <i>p</i><sub>2</sub>-<i>q</i><code>&notin;P</code><sub>1</sub>
+     * (because <i>p</i><sub>2</sub>-<i>q</i><code>&notin;A</code>, statement <i>B</i>).
+     * In other words, <i>p</i><sub>2</sub><code>&notin;P<sub>1</sub>&oplus;Q</code> (dilation of P by Q,
      * or Minkowski sum of P and Q).
-     * On the other hand, it's obvious that <i>p</i><sub>2</sub><tt>&isin;P<sub>1</sub>&oplus;P</tt>,
-     * because <b>0</b><tt>&isin;P</tt><sub>1</sub> and, so,
-     * <tt>P&sub;P&oplus;P<sub>1</sub>=P<sub>1</sub>&oplus;P</tt>.
+     * On the other hand, it's obvious that <i>p</i><sub>2</sub><code>&isin;P<sub>1</sub>&oplus;P</code>,
+     * because <b>0</b><code>&isin;P</code><sub>1</sub> and, so,
+     * <code>P&sub;P&oplus;P<sub>1</sub>=P<sub>1</sub>&oplus;P</code>.
      *
      * <p>There is a contradiction: according to the condition, there must be
-     * <tt>P<sub>1</sub>&oplus;P=P<sub>1</sub>&oplus;Q</tt>. The theorem is proved.
+     * <code>P<sub>1</sub>&oplus;P=P<sub>1</sub>&oplus;Q</code>. The theorem is proved.
      * </blockquote>
      *
-     * <p>This fact allows to interpret this method, if <tt>dilationPattern</tt>
-     * is a "boundary" of <tt>erosionPattern</tt> (usually {@link UniformGridPattern#surface()}
+     * <p>This fact allows to interpret this method, if <code>dilationPattern</code>
+     * is a "boundary" of <code>erosionPattern</code> (usually {@link UniformGridPattern#surface()}
      * or a similar point set), as a "weak" analog of opening.
      * For binary images, it helps to remove small isolated objects, but (unlike usual opening)
      * to preserve thin structures.
@@ -730,9 +732,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return                the elementwise minimum between the source matrix and
      *                        its sequential dilation and erosion by the given patterns.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
-     *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     * @throws IllegalArgumentException if <code>dilationPattern.{@link Pattern#dimCount() dimCount()}</code> or
+     *                                  <code>erosionPattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> maskedDilationErosion(
             Matrix<? extends PArray> src,
@@ -740,8 +742,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
 
     /**
      * Returns the elementwise maximum between the source matrix and the result of
-     * <tt>{@link #erosionDilation(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
-     * erosionDilation}(src, erosionPattern, dilationPattern, {@link SubtractionMode#NONE})</tt> call.
+     * <code>{@link #erosionDilation(Matrix, Pattern, Pattern, Morphology.SubtractionMode)
+     * erosionDilation}(src, erosionPattern, dilationPattern, {@link SubtractionMode#NONE})</code> call.
      *
      * <p>This is an inverse method for {@link #maskedDilationErosion(Matrix, Pattern, Pattern)}.
      *
@@ -751,9 +753,9 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * @return                the elementwise maximum between the source matrix and
      *                        its sequential erosion and dilation by the given patterns.
      * @throws NullPointerException     if one of the arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>dilationPattern.{@link Pattern#dimCount() dimCount()}</tt> or
-     *                                  <tt>erosionPattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     * @throws IllegalArgumentException if <code>dilationPattern.{@link Pattern#dimCount() dimCount()}</code> or
+     *                                  <code>erosionPattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> maskedErosionDilation(
             Matrix<? extends PArray> src,
@@ -766,21 +768,22 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * the elementwise difference between {@link #dilation(Matrix, Pattern) dilation}
      * and {@link #erosion(Matrix, Pattern) erosion} of the source matrix with the same pattern.
      *
-     * <p>More precisely, the <i>Beucher gradient</i> of the matrix <tt>A</tt> is defined
+     * <p>More precisely, the <i>Beucher gradient</i> of the matrix <code>A</code> is defined
      * as an elementwise positive difference
-     * <tt>B=max(0,{@link #dilation(Matrix, Pattern) dilation}(A)-{@link #erosion(Matrix, Pattern) erosion}(A))</tt>.
+     * <code>B=max(0,{@link #dilation(Matrix, Pattern) dilation}(A)-{@link
+     * #erosion(Matrix, Pattern) erosion}(A))</code>.
      *
      * <p>The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
-     * The <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned.
+     * The <code>byte</code> and <code>short</code> elements are considered to be unsigned.
      *
      * @param src     the source matrix.
      * @param pattern the pattern.
      * @return        the Beucher gradient of the source matrix by the given pattern.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     Matrix<? extends UpdatablePArray> beucherGradient(Matrix<? extends PArray> src, Pattern pattern);
 }

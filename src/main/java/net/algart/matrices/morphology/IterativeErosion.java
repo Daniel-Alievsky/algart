@@ -38,12 +38,12 @@ import java.util.Random;
  *
  * <p>This class is an implementation of {@link IterativeArrayProcessor} interface,
  * performing {@link Morphology#erosion(Matrix, Pattern) erosion}
- * of some source matrix (<tt>{@link Matrix}({@link UpdatablePArray})</tt>)
+ * of some source matrix (<code>{@link Matrix}({@link UpdatablePArray})</code>)
  * by sequential {@link Patterns#newMinkowskiMultiplePattern(Pattern, int) Minkowski multiples}
  * of some pattern: <i>k</i>&otimes;<i>P</i>, <i>k</i>=1,2,....
- * Every erosion is added to some accumulator matrix, named <tt>result</tt> and returned by
+ * Every erosion is added to some accumulator matrix, named <code>result</code> and returned by
  * {@link #result()} method.
- * If the source matrix is binary, then each element of the <tt>result</tt> matrix will be an integer,
+ * If the source matrix is binary, then each element of the <code>result</code> matrix will be an integer,
  * which is non-zero only for non-zero elements of the source one and which shows the distance from this point
  * to the nearest zero element, "measured" in the "sizes" of the pattern.</p>
  *
@@ -57,34 +57,35 @@ import java.util.Random;
  * &nbsp;&nbsp;&nbsp;&nbsp;<tt>{@link Morphology#erosion(Matrix, Pattern) erosion}(source_matrix,
  * {@link Patterns#newMinkowskiSum(Pattern[])
  * Patterns.newMinkowskiSum}(ptn<sub>0</sub>,ptn<sub>1</sub>,...,ptn<sub>k</sub>))</tt>
- * (<tt>k+1</tt> summands),<br>
- * where <tt>k</tt> is the index of the current iteration (0, 1, 2, ...)
- * and <tt>ptn<sub>i</sub>=patterns[i%patterns.length]</tt>, <tt>patterns</tt> is the argument of
+ * (<code>k+1</code> summands),<br>
+ * where <code>k</code> is the index of the current iteration (0, 1, 2, ...)
+ * and <code>ptn<sub>i</sub>=patterns[i%patterns.length]</code>, <code>patterns</code> is the argument of
  * {@link #getInstance getInstance} method.
  * If only one pattern <i>P</i> was passed to {@link #getInstance getInstance} method,
  * it means the erosion by {@link Patterns#newMinkowskiMultiplePattern(Pattern, int) Minkowski multiple pattern}
- * <tt>(k+1)</tt>&otimes;<i>P</i>.
- * This erosion is arithmetically added, with truncation of overflows, to the <tt>result</tt> matrix,
+ * <code>(k+1)</code>&otimes;<i>P</i>.
+ * This erosion is arithmetically added, with truncation of overflows, to the <code>result</code> matrix,
  * by {@link Matrices#applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)} with
  * {@link Func#X_PLUS_Y} function.
  * (Really, this method does not actually perform these operation, but performs equivalent
  * calculations with some optimization.)
  * </li>
  *
- * <li>{@link #done()} method returns <tt>true</tt> if the last erosion was the same as the previous erosion:
+ * <li>{@link #done()} method returns <code>true</code> if the last erosion was the same as the previous erosion:
  * for bit matrices, it usually means that both erosions are zero-filled (all "objects" were removed).</li>
  *
- * <li>{@link #result()} method always returns the reference to the accumulator matrix <tt>result</tt>.</li>
+ * <li>{@link #result()} method always returns the reference to the accumulator matrix <code>result</code>.</li>
  * </ul>
  *
- * <p>The <tt>result</tt> matrix is created and zero-filled by {@link #getInstance getInstance} method,
+ * <p>The <code>result</code> matrix is created and zero-filled by {@link #getInstance getInstance} method,
  * and before the first iteration the source matrix is added to it (that means just copying).</p>
  *
- * <p>Please note: there is no guarantees that <tt>result</tt> matrix, returned by {@link #result()} method,
- * is updated after each iteration. This class contains some optimization, that can lead to updating <tt>result</tt>
+ * <p>Please note: there is no guarantees that <code>result</code> matrix, returned by {@link #result()} method,
+ * is updated after each iteration. This class contains some optimization,
+ * that can lead to updating <code>result</code>
  * only after some iteration, for example, after iteration #8, #16, etc.
  * There is only the guarantee that {@link #result()} returns valid matrix
- * when {@link #done()} returns <tt>true</tt>.</p>
+ * when {@link #done()} returns <code>true</code>.</p>
  *
  * <p>This class may be applied to a matrix with any number of dimensions.</p>
  *
@@ -150,14 +151,14 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
      *                          Should be enough for storing elementwise sums of hundreds of eroded matrices;
      *                          in other case, overflows will lead to trunctation of the sums.
      * @param matrix            the source matrix, that will be eroded by Minkowski sums of the passed patterns
-     *                          (or just by Minkowski muptiples <i>k</i>&otimes;<i>P</i>, if <tt>patterns</tt>
+     *                          (or just by Minkowski muptiples <i>k</i>&otimes;<i>P</i>, if <code>patterns</code>
      *                          argument contains only 1 pattern).
      * @param patterns          one or several patterns for performing erosion. For little pattern sizes, you may
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
      * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
-     * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
+     * @throws IllegalArgumentException if <code>patterns.length==0</code> (no patterns passed).
      */
     public static IterativeErosion getInstance(
         Morphology morphology,

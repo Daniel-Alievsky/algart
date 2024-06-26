@@ -218,12 +218,12 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     /**
      * This method must be equivalent to
      * {@link #asDilation(Matrix src, Pattern pattern)}
-     * if <tt>isDilation</tt> argument is <tt>true</tt> or to
+     * if <code>isDilation</code> argument is <code>true</code> or to
      * {@link #asErosion(Matrix src, Pattern pattern)}
-     * if <tt>isDilation</tt> argument is <tt>false</tt>.
+     * if <code>isDilation</code> argument is <code>false</code>.
      *
      * <p>The implementations of those methods, provided by this class,
-     * just call this method with corresponding <tt>isDilation</tt> argument.
+     * just call this method with corresponding <code>isDilation</code> argument.
      *
      * @param src        the source matrix.
      * @param pattern    the pattern.
@@ -231,8 +231,8 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * @return           the "lazy" matrix containing the dilation or erosion of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     protected abstract Matrix<? extends PArray> asDilationOrErosion(Matrix<? extends PArray> src, Pattern pattern,
         boolean isDilation);
@@ -240,14 +240,14 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
     /**
      * This method must be equivalent to
      * {@link #dilation(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)}
-     * if <tt>isDilation</tt> argument is <tt>true</tt> or to
+     * if <code>isDilation</code> argument is <code>true</code> or to
      * {@link #erosion(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)}
-     * if <tt>isDilation</tt> argument is <tt>false</tt>.
-     * There is the only little difference: if <tt>dest</tt> argument is {@code null},
-     * this methods does not throw <tt>NullPointerException</tt>, but
-     * allocates new matrix with the same dimensions and element type as <tt>src</tt>
+     * if <code>isDilation</code> argument is <code>false</code>.
+     * There is the only little difference: if <code>dest</code> argument is {@code null},
+     * this methods does not throw <code>NullPointerException</code>, but
+     * allocates new matrix with the same dimensions and element type as <code>src</code>
      * and use it for storing the result.
-     * The result (newly created matrix or non-null <tt>dest</tt> argument) is returned
+     * The result (newly created matrix or non-null <code>dest</code> argument) is returned
      * as the result of this method.
      *
      * <p>The implementations of
@@ -256,17 +256,18 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * {@link #dilation(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)},
      * {@link #erosion(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)} methods,
      * provided by this class, just call this method
-     * with corresponding <tt>isDilation</tt> argument and with <tt>dest==null</tt> in a case of first two methods.
+     * with corresponding <code>isDilation</code> argument and with <code>dest==null</code> in a case of first two methods.
      *
      * <p>The implementation of this method, provided by {@link AbstractMorphology} class, just copies the result
-     * of {@link #asDilationOrErosion(Matrix, Pattern, boolean)}  asDilationOrErosion} method to <tt>dest</tt> matrix:
+     * of {@link #asDilationOrErosion(Matrix, Pattern, boolean)}  asDilationOrErosion} method to
+     * <code>dest</code> matrix:
      * <pre>
      * {@link Matrices#copy(ArrayContext, Matrix, Matrix)
      * Matrices.copy}(context, castDest, {@link #asDilationOrErosion(Matrix, Pattern, boolean)}
      * asDilationOrErosion}(src, pattern, isDilation));</pre>
      *
-     * <p>where <tt>castDest</tt> is <tt>dest</tt> if <tt>dest.elementType()==src.elementType()</tt>,
-     * the newly created matrix if <tt>dest==null</tt> or the <tt>dest</tt> matrix, cast to the necessary
+     * <p>where <code>castDest</code> is <code>dest</code> if <code>dest.elementType()==src.elementType()</code>,
+     * the newly created matrix if <code>dest==null</code> or the <code>dest</code> matrix, cast to the necessary
      * element type, if the source and destination element types are different:
      *
      * <pre>
@@ -277,22 +278,22 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * </pre>
      *
      * <p>The implementations of this method in the inheritors usually provide better algorithms,
-     * especially if <tt>disableMemoryAllocation</tt> argument is <tt>false</tt>.
+     * especially if <code>disableMemoryAllocation</code> argument is <code>false</code>.
      *
      * @param dest                    the target matrix (or {@code null} for creating a new matrix).
      * @param src                     the source matrix.
      * @param pattern                 the pattern.
      * @param isDilation              what should perform this method: dilation or erosion.
-     * @param disableMemoryAllocation if <tt>false</tt>, this method may allocate additional temporary matrices
+     * @param disableMemoryAllocation if <code>false</code>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
-     *                                if <tt>true</tt>, no any work memory will be allocated.
-     * @return                        the reference to <tt>dest</tt> argument if it is not {@code null},
+     *                                if <code>true</code>, no any work memory will be allocated.
+     * @return                        the reference to <code>dest</code> argument if it is not {@code null},
      *                                newly allocated resulting matrix in other case.
-     * @throws NullPointerException     if <tt>src</tt> or <tt>pattern</tt> argument is {@code null}.
-     * @throws SizeMismatchException    if <tt>dest!=null</tt> and the passed matrices have different dimensions.
+     * @throws NullPointerException     if <code>src</code> or <code>pattern</code> argument is {@code null}.
+     * @throws SizeMismatchException    if <code>dest!=null</code> and the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
-     *                                  <tt>pattern.{@link Pattern#dimCount() dimCount()}</tt> is not equal
-     *                                  to <tt>src.{@link Matrix#dimCount() dimCount()}</tt>.
+     *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
+     *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
     protected Matrix<? extends UpdatablePArray> dilationOrErosion(Matrix<? extends UpdatablePArray> dest,
         Matrix<? extends PArray> src,

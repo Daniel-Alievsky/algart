@@ -41,11 +41,11 @@ public abstract class AbstractDerivator extends AbstractArrayProcessorWithContex
      * Creates an instance of this class with the given context.
      *
      * @param context              the context used by this instance for all operations.
-     * @param decrementForUnsigned if <tt>true</tt>, when the type of the arguments of some methods is
+     * @param decrementForUnsigned if <code>true</code>, when the type of the arguments of some methods is
      *                             an unsigned number in terms of AlgART libraries &mdash;
-     *                             <tt>byte</tt>, <tt>short</tt>, <tt>char</tt> &mdash;
-     *                             it is automatically decremented by 128 (<tt>byte</tt>) or 32768
-     *                             (<tt>short</tt> and <tt>char</tt>).
+     *                             <code>byte</code>, <code>short</code>, <code>char</code> &mdash;
+     *                             it is automatically decremented by 128 (<code>byte</code>) or 32768
+     *                             (<code>short</code> and <code>char</code>).
      */
     protected AbstractDerivator(ArrayContext context, boolean decrementForUnsigned) {
         super(context);

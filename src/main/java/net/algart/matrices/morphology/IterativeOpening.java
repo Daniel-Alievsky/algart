@@ -37,7 +37,7 @@ import java.util.Objects;
  *
  * <p>This class is an implementation of {@link IterativeArrayProcessor} interface,
  * performing {@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode) opening}
- * of some source matrix (<tt>{@link Matrix}({@link UpdatablePArray})</tt>)
+ * of some source matrix (<code>{@link Matrix}({@link UpdatablePArray})</code>)
  * by sequential {@link Patterns#newMinkowskiMultiplePattern(Pattern, int) Minkowski multiples}
  * of some pattern: <i>k</i>&otimes;<i>P</i>, <i>k</i>=1,2,....
  * <p>(In this class, the {@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)
@@ -45,7 +45,7 @@ import java.util.Objects;
  * to be performed with the last argument {@link Morphology.SubtractionMode#NONE}.)
  *
  * <p>If the object was created by {@link #getInstance getInstance} method,
- * then every opening is added to some accumulator matrix, named <tt>result</tt> and returned by
+ * then every opening is added to some accumulator matrix, named <code>result</code> and returned by
  * {@link #result()} method.
  * If the object was created by {@link #getGranulometryInstance getGranulometryInstance} method,
  * then the {@link Arrays#sumOf arithmethic sum} of all elements of every opening
@@ -63,15 +63,15 @@ import java.util.Objects;
  * opening}(source_matrix,
  * {@link Patterns#newMinkowskiSum(Pattern[])
  * Patterns.newMinkowskiSum}(ptn<sub>0</sub>,ptn<sub>1</sub>,...,ptn<sub>k</sub>))</tt>
- * (<tt>k+1</tt> summands),<br>
- * where <tt>k</tt> is the index of the current iteration (0, 1, 2, ...)
- * and <tt>ptn<sub>i</sub>=patterns[i%patterns.length]</tt>, <tt>patterns</tt> is the argument of
+ * (<code>k+1</code> summands),<br>
+ * where <code>k</code> is the index of the current iteration (0, 1, 2, ...)
+ * and <code>ptn<sub>i</sub>=patterns[i%patterns.length]</code>, <code>patterns</code> is the argument of
  * {@link #getInstance getInstance} method.
  * If only one pattern <i>P</i> was passed to {@link #getInstance getInstance} method,
  * it means the opening by {@link Patterns#newMinkowskiMultiplePattern(Pattern, int) Minkowski multiple pattern}
- * <tt>(k+1)</tt>&otimes;<i>P</i>.
+ * <code>(k+1)</code>&otimes;<i>P</i>.
  * If the object was created by {@link #getInstance getInstance} method,
- * this opening is arithmetically added, with truncation of overflows, to the <tt>result</tt> matrix,
+ * this opening is arithmetically added, with truncation of overflows, to the <code>result</code> matrix,
  * by {@link Matrices#applyFunc(ArrayContext, Func, Matrix, Matrix, Matrix)} with
  * {@link Func#X_PLUS_Y} function.
  * If the object was created by {@link #getGranulometryInstance getGranulometryInstance} method,
@@ -84,11 +84,11 @@ import java.util.Objects;
  *
  * <li>Besides opening, this class always calculates the
  * {@link Morphology#erosion(Matrix, Pattern) erosion} by the same pattern.
- * The {@link #done()} method returns <tt>true</tt> if the last erosion was the same as the previous erosion.
+ * The {@link #done()} method returns <code>true</code> if the last erosion was the same as the previous erosion.
  * In this case, all further possible iteration will always generate the same opening.
  * For bit matrices, it usually means that the opening is zero-filled (all "objects" were removed).</li>
  *
- * <li>{@link #result()} method always returns the reference to the accumulator matrix <tt>result</tt>,
+ * <li>{@link #result()} method always returns the reference to the accumulator matrix <code>result</code>,
  * if the object was created by {@link #getInstance getInstance} method,
  * or {@code null},
  * if the object was created by {@link #getGranulometryInstance getGranulometryInstance} method.</li>
@@ -103,18 +103,18 @@ import java.util.Objects;
  * We recommend not to use continuation by positive infinity or other high constants (greater
  * than minimum of the source matrix).</p>
  *
- * <p>The <tt>result</tt> matrix is created and zero-filled by {@link #getInstance getInstance} method,
+ * <p>The <code>result</code> matrix is created and zero-filled by {@link #getInstance getInstance} method,
  * and before the first iteration the source matrix is added to it (that means just copying).
  * The AlgART array, returned by {@link #sumsOfOpenings()} method, is created
  * as empty {@link MutablePNumberArray} by {@link #getGranulometryInstance getGranulometryInstance} method,
  * and before the first iteration the sum of elements of the source matrix is stored there as the first element.</p>
  *
- * <p>Also note: there is no guarantees that <tt>result</tt> matrix, returned by {@link #result()} method,
+ * <p>Also note: there is no guarantees that <code>result</code> matrix, returned by {@link #result()} method,
  * and the array returned by {@link #sumsOfOpenings()} method,
  * are updated after each iteration. This class contains some optimization, that can lead to updating results
  * only after some iteration, for example, after iteration #8, #16, etc.
  * There is only the guarantee that {@link #result()} and {@link #sumsOfOpenings()} return valid results
- * when {@link #done()} returns <tt>true</tt>.</p>
+ * when {@link #done()} returns <code>true</code>.</p>
  *
  * <p>This class may be applied to a matrix with any number of dimensions.</p>
  *
@@ -197,14 +197,14 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      *                          Should be enough for storing elementwise sums of hundreds of opened matrices;
      *                          in other case, overflows will lead to truncation of the sums.
      * @param matrix            the source matrix, that will be opened by Minkowski sums of the passed patterns
-     *                          (or just by Minkowski multiples <i>k</i>&otimes;<i>P</i>, if <tt>patterns</tt>
+     *                          (or just by Minkowski multiples <i>k</i>&otimes;<i>P</i>, if <code>patterns</code>
      *                          argument contains only 1 pattern).
      * @param patterns          one or several patterns for performing erosion. For little pattern sizes, you may
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
      * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
-     * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
+     * @throws IllegalArgumentException if <code>patterns.length==0</code> (no patterns passed).
      */
     public static IterativeOpening getInstance(
         Morphology morphology,
@@ -221,14 +221,14 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      *
      * @param morphology        the {@link Morphology} object that will be used for performing openings.
      * @param matrix            the source matrix, that will be opened by Minkowski sums of the passed patterns
-     *                          (or just by Minkowski multiples <i>k</i>&otimes;<i>P</i>, if <tt>patterns</tt>
+     *                          (or just by Minkowski multiples <i>k</i>&otimes;<i>P</i>, if <code>patterns</code>
      *                          argument contains only 1 pattern).
      * @param patterns          one or several patterns for performing erosion. For little pattern sizes, you may
      *                          specify several patterns with near form to increase the precision
      *                          of the resulting matrix.
      * @return                  new instance of this class.
      * @throws NullPointerException     if one of arguments or one of passed patterns is {@code null}.
-     * @throws IllegalArgumentException if <tt>patterns.length==0</tt> (no patterns passed).
+     * @throws IllegalArgumentException if <code>patterns.length==0</code> (no patterns passed).
      */
     public static IterativeOpening getGranulometryInstance(
         Morphology morphology,
@@ -240,9 +240,10 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
     /**
      * Returns an {@link Array#asImmutable() immutable view} of internal AlgART array, where the sums
      * of all elements of the source matrix and every its openings are stored.
-     * The difference between elements <tt>#k</tt> and <tt>#k+1</tt> estimates the summary area
+     * The difference between elements <code>#k</code> and <code>#k+1</code> estimates the summary area
      * (volume, in 3D or <i>n</i>-dimensional cases) of all objects, which "sizes" are not "less"
-     * than the Minkowski sum of <tt>k</tt> patterns, but "less" than the Minkowski sum of <tt>k+1</tt> patterns.
+     * than the Minkowski sum of <code>k</code> patterns, but "less" than
+     * the Minkowski sum of <code>k+1</code> patterns.
      *
      * @return an immutable view of the built-in AlgART array storing the sums of all elements of all openings.
      */

@@ -48,7 +48,7 @@ import java.util.*;
  *
  * <p>Some methods of the returned object can throw {@link TooLargeArrayException}
  * in a very improbable situation when the source matrix length (number of elements)
- * is greater than <tt>Long.MAX_VALUE/2=2<sup>62</sup>-1</tt>.</p>
+ * is greater than <code>Long.MAX_VALUE/2=2<sup>62</sup>-1</code>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -98,7 +98,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
     /**
      * Returns new instance of this class.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the maximal amount of usual Java memory,
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the maximal amount of usual Java memory,
      * in bytes, that methods of this class may freely use for internal needs and for creating results.
      * It means: if the size of the resulting matrix, or some temporary matrix or array
      * (or, maybe, the summary size of several temporary matrices)
@@ -112,7 +112,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * @param maxTempJavaMemory maximal amount of Java memory, in bytes, allowed for allocating
      *                          by methods of this class.
      * @return new instance of this class.
-     * @throws IllegalArgumentException if the <tt>maxTempJavaMemory</tt> argument is negative.
+     * @throws IllegalArgumentException if the <code>maxTempJavaMemory</code> argument is negative.
      */
     public static BasicMorphology getInstance(ArrayContext context, long maxTempJavaMemory) {
         return new BasicMorphology(context, maxTempJavaMemory);
@@ -1225,17 +1225,17 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
      * with correct progress visualization via
      * {@link ArrayContext#updateProgress(net.algart.arrays.ArrayContext.Event) ArrayContext.updateProgress} method.
      *
-     * @param fromPart      the estimated ready part, from 0.0 to <tt>totalTaskSize</tt>, of the total algorithm
+     * @param fromPart      the estimated ready part, from 0.0 to <code>totalTaskSize</code>, of the total algorithm
      *                      of the total algorithm at the start of the subtask.
-     * @param subTaskSize   the estimated length of the subtask, from 0.0 to <tt>totalTaskSize-fromPart</tt>.
+     * @param subTaskSize   the estimated length of the subtask, from 0.0 to <code>totalTaskSize-fromPart</code>.
      * @param totalTaskSize the total length of full task in some conventional units.
      * @return new instance of this class corresponding to the subtask of the full algorithm,
-     *         from <tt>fromPart/totalTaskSize*100%</tt>
-     *         to <tt>(fromPart+subtaskSize/totalTaskSize*100%</tt>.
-     * @throws IllegalArgumentException if <tt>fromPart</tt> is not in <tt>0.0..totalTaskSize</tt> range,
-     *                                  or if <tt>subtaskSize&gt;totalTaskSize-fromPart</tt>,
-     *                                  or if <tt>subtaskSize&lt;0.0</tt>,
-     *                                  or if <tt>totalTaskSize&lt;0.0</tt>.
+     *         from <code>fromPart/totalTaskSize*100%</code>
+     *         to <code>(fromPart+subtaskSize/totalTaskSize*100%</code>.
+     * @throws IllegalArgumentException if <code>fromPart</code> is not in <code>0.0..totalTaskSize</code> range,
+     *                                  or if <code>subtaskSize&gt;totalTaskSize-fromPart</code>,
+     *                                  or if <code>subtaskSize&lt;0.0</code>,
+     *                                  or if <code>totalTaskSize&lt;0.0</code>.
      */
     private BasicMorphology subTask(double fromPart, double subTaskSize, double totalTaskSize) {
         if (totalTaskSize < 0.0) {
