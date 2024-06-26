@@ -102,24 +102,24 @@ import java.util.Objects;
  * <p>First, the matrix indexes in all methods ({@link #index(long...) index},
  * {@link #dim(int) dim(n)}, <code>dim</code> argument in {@link MemoryModel#newMatrix(Class, Class, long...)
  * MemoryModel.newMatrix}, etc.) are ordered from the <i>lowest</i> index to the <i>highest</i>.
- * Please compare: for numeric matrix <code>m</code>, <nobr><code>m.array().getDouble(m.index(15,10))</code></nobr>
+ * Please compare: for numeric matrix <code>m</code>, <code>m.array().getDouble(m.index(15,10))</code>
  * returns the element <code>#15</code> of the row <code>#10</code>. However,
- * for usual <nobr>2-dimensional</nobr> Java array,
- * declared as "<nobr><code>double[][] a</code></nobr>", the same element is accessed as
- * <nobr><code>a[10][15]</code></nobr>!</p>
+ * for usual 2-dimensional Java array,
+ * declared as "<code>double[][] a</code>", the same element is accessed as
+ * <code>a[10][15]</code>!</p>
  *
  * <p>Second, the number of indexes in the {@link #index(long...) index} method
  * may <i>differ</i> from the number of dimensions ({@link #dimCount()}).
  * In any case, the returned position in calculated by the formula listed above
- * (<nobr><i>i<sub>n-1</sub>d<sub>n-2</sub>...d<sub>1</sub>d<sub>0</sub></i> + ... +
+ * (<i>i<sub>n-1</sub>d<sub>n-2</sub>...d<sub>1</sub>d<sub>0</sub></i> + ... +
  * <i>i<sub>2</sub>d<sub>1</sub>d<sub>0</sub></i> +
- * <i>i<sub>1</sub>d<sub>0</sub></i> + <i>i<sub>0</sub></i></nobr>),
+ * <i>i<sub>1</sub>d<sub>0</sub></i> + <i>i<sub>0</sub></i>),
  * where <i>i<sub>0</sub></i>, <i>i<sub>2</sub></i>, ..., <i>i<sub>n-1</sub></i>
  * are the coordinates passed to the method, and <i>d<sub>k</sub></i> is the dimension <code>#<i>k</i></code>
  * or 1 if <code><i>k</i>&gt;={@link #dimCount()}</code>.</p>
  * In other words, it is supposed that all dimensions "after" the actual number of dimensions
  * are always equal to 1. For example, the one-dimensional matrix with <code>L</code> elements
- * can be interpreted as <nobr>2-dimensional</nobr> <code>Lx1</code> matrix,
+ * can be interpreted as 2-dimensional <code>Lx1</code> matrix,
  * or 3-dimensional <code>Lx1x1</code> one, etc.</p>
  *
  * <p>The matrix object is <b>immutable</b>, that means that there are no ways to change
@@ -191,8 +191,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * always corresponds to the element of the source matrix <code>m</code>
          * with the coordinates
-         * <nobr><code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code></nobr>,
+         * <code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -220,9 +220,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><code>m.{@link Matrix#cyclicIndex(long...)
+         * with the index <code>m.{@link Matrix#cyclicIndex(long...)
          * cyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -245,9 +245,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><code>m.{@link Matrix#pseudoCyclicIndex(long...)
+         * with the index <code>m.{@link Matrix#pseudoCyclicIndex(long...)
          * pseudoCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -272,9 +272,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the built-in array
          * <code>m.{@link Matrix#array() array()}</code> of the source matrix <code>m</code>
-         * with the index <nobr><code>m.{@link Matrix#mirrorCyclicIndex(long...)
+         * with the index <code>m.{@link Matrix#mirrorCyclicIndex(long...)
          * mirrorCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code></nobr>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
@@ -307,22 +307,22 @@ public interface Matrix<T extends Array> extends Cloneable {
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by <code>0.0d</code>
          * numeric constant. Strictly equivalent to
-         * <nobr>{@link #getConstantMode(Object) getConstantMode(new Double(0.0d))}</nobr>
+         * {@link #getConstantMode(Object) getConstantMode(new Double(0.0d))}
          * (such a call always returns the reference to this constant).
          *
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
-         * some primitive type, i.e. with <nobr><code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code></nobr>.
+         * some primitive type, i.e. with <code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code>.
          */
         public static final ContinuationMode ZERO_CONSTANT = new ConstantImpl(0.0d);
 
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by
          * <code>Double.NaN</code> numeric constant. Strictly equivalent to
-         * <nobr>{@link #getConstantMode(Object) getConstantMode(new Double(Double.NaN))}</nobr>
+         * {@link #getConstantMode(Object) getConstantMode(new Double(Double.NaN))}
          * (such a call always returns the reference to this constant).
          *
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
-         * some primitive type, i.e. with <nobr><code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code></nobr>.
+         * some primitive type, i.e. with <code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code>.
          */
         public static final ContinuationMode NAN_CONSTANT = new ConstantImpl(Double.NaN);
 
@@ -333,9 +333,9 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i></code>
          * corresponds to the element of the source matrix <code>m</code>
          * with the coordinates
-         * <nobr><code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
-         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code></nobr>
-         * (where <nobr><code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code></nobr>
+         * <code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
+         * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code>
+         * (where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
          * are the low endpoints of all coordinates of the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method) &mdash;

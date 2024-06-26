@@ -387,7 +387,7 @@ public interface ArrayContext {
      * the maximal possible value of {@link #currentThreadIndex()}.
      *
      * <p>To create a context, in which this method returns a value different from <code>1</code>, please use
-     * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
+     * {@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)} method.
      *
      * <p>The result of this method is always positive (<code>&ge;1</code>).
      *
@@ -404,7 +404,7 @@ public interface ArrayContext {
      * not provided by other methods of this class.
      *
      * <p>To create a context, in which this method returns a value different from {@code null}, please use
-     * <nobr>{@link #customDataVersion(Object)}</nobr> method.
+     * {@link #customDataVersion(Object)} method.
      *
      * <p>The result of this method may belong to any type. So, it is a good idea to check its type
      * with <code>instanceof</code> operator before attempt to use this result.

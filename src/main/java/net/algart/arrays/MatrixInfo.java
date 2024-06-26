@@ -166,8 +166,8 @@ public abstract class MatrixInfo {
      * The maximal allowed length of byte array or <code>String</code>, returned by
      * {@link #toBytes()} / {@link #toChars()} methods: {@value}.
      * This length is enough to store
-     * <nobr>{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS} =
-     * {@value net.algart.arrays.Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</nobr>
+     * {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS} =
+     * {@value net.algart.arrays.Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}
      * matrix dimensions, start signature, element type, byte order and more than 7 KB of additional information.
      *
      * <p>Note that this limit guarantees that the string {@link #toChars()} can be written and restored via

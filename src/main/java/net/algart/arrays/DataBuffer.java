@@ -277,7 +277,7 @@ package net.algart.arrays;
  *
  * <ul>
  * <li>the <i>mapped position</i> is always inside the range
- * <nobr><code>0 &lt;= <i>position</i> &lt;= <i>length</i></code></nobr>,
+ * <code>0 &lt;= <i>position</i> &lt;= <i>length</i></code>,
  * where <i>length</i> is the total number of elements in the data storage
  * ({@link Array#length()} in a case of AlgART arrays);
  * <br>&nbsp;</li>

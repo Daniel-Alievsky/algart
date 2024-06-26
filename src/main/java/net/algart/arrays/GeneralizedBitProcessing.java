@@ -67,7 +67,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *   <tr>
  *     <td colspan="2">
  *     <p>In both modes, we consider <i>n</i>+1 (<i>n</i>&ge;0) numeric <i>thresholds</i>
- *     <nobr><i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ..., <i>t</i><sub><i>n</i></sub> in
+ *     <i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ..., <i>t</i><sub><i>n</i></sub> in
  *     <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range:</p>
  *     <blockquote>
  *     <i>t</i><sub>0</sub> = <i>a<sub>min</sub></i>,<br>
@@ -185,15 +185,15 @@ import java.util.concurrent.locks.ReentrantLock;
  * in the round-down mode or &fnof;(<b>b</b><sub><i>n</i></sub>) in the round-up mode:
  * the result does not depend on it. Also note that the case <i>n</i>=0 is degenerated:
  * in this case always
- * <nobr><i>g</i>(<b>a</b>)[k] = <i>a<sub>min</sub></i></nobr> (round-down mode)
+ * <i>g</i>(<b>a</b>)[k] = <i>a<sub>min</sub></i> (round-down mode)
  * or <i>a<sub>max</sub></i> (round-up mode).</p>
  *
  * <p>Additional useful note: for some kinds of bitwise algorithms, you can improve the precision of the results
  * by replacing (after calling {@link #process(UpdatablePArray, PArray, Range, long) process} method)
  * the resulting array <b>c</b>=<i>g</i>(<b>a</b>)
  * with elementwise maximum, in case of round-down mode, or elementwise minimum, in case of round-up mode,
- * of <b>c</b> and the source array <b>a</b>: <nobr><b>c</b>=max(<b>c</b>,<b>a</b>)</nobr> or
- * <nobr><b>c</b>=min(<b>c</b>,<b>a</b>)</nobr> correspondingly.
+ * of <b>c</b> and the source array <b>a</b>: <b>c</b>=max(<b>c</b>,<b>a</b>) or
+ * <b>c</b>=min(<b>c</b>,<b>a</b>) correspondingly.
  * You can do it easily by
  * {@link Arrays#applyFunc(ArrayContext, net.algart.math.functions.Func, UpdatablePArray, PArray...)} method
  * with {@link net.algart.math.functions.Func#MAX Func.MAX} or {@link net.algart.math.functions.Func#MIN Func.MIN}
@@ -324,8 +324,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * @param threadIndex     the index of the current thread (different for different threads in a case of
          *                        multithreading optimization).
          * @param numberOfThreads the maximal possible value of <code>threadIndex+1</code>: equal to
-         *                        <nobr><code>min(numberOfSlices&minus;1,{@link
-         *                        GeneralizedBitProcessing#numberOfTasks()})</code></nobr>,
+         *                        <code>min(numberOfSlices&minus;1,{@link
+         *                        GeneralizedBitProcessing#numberOfTasks()})</code>,
          *                        where <code>numberOfSlices</code>=<i>n</i>+1 is the argument of
          *                        {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)
          *                        process} method.
@@ -477,9 +477,9 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * </ul>
      *
      * <p>(As in {@link Arrays#copy(ArrayContext, UpdatableArray, Array)}, if the <code>context</code> argument of
-     * <nobr>{@link
+     * {@link
      * #getInstance(ArrayContext, GeneralizedBitProcessing.SliceOperation, GeneralizedBitProcessing.RoundingMode)
-     * getInstance}</nobr> method
+     * getInstance} method
      * is {@code null}, then {@link DefaultThreadPoolFactory} is used.)
      *
      * <p>Note that the real number of parallel threads will be a minimum from this value and
@@ -522,7 +522,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * If the element type is a fixed-point type (<code>src</code> and <code>dest</code>
      * are {@link PFixedArray} instance),
      * this argument is automatically truncated to
-     * <nobr><code>min(numberOfSlices, (long)(range.{@link Range#size() size()}+1.0))</code></nobr>,
+     * <code>min(numberOfSlices, (long)(range.{@link Range#size() size()}+1.0))</code>,
      * because larger values cannot increase the precision.
      *
      * <p>Please remember that <code>numberOfSlices=1</code> (<i>n</i>=0) is a degenerated case: in this case,

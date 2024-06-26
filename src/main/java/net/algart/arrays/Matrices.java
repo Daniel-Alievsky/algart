@@ -241,7 +241,7 @@ public class Matrices {
      * <p>methods, where non-integer coordinates are needless.</p>
      *
      * <p>This class is abstract and describes the region (set of points) by the only one simple abstract method
-     * <nobr>{@link #contains(long... coordinates)}</nobr>,
+     * {@link #contains(long... coordinates)},
      * which returns <code>true</code> if and only if the point with the specified coordinates belongs to the region.
      * It is enough to implement this method to define a new region.
      * In addition, this class always requires to specify {@link #coordRanges() coordinate ranges}:
@@ -250,32 +250,32 @@ public class Matrices {
      * <p>However, the region, constructed by this way, provides low performance of
      * {@link Matrices#copyRegion Matrices.copyRegion} / {@link Matrices#fillRegion Matrices.fillRegion} methods,
      * because the only way to process it is checking all points separately by
-     * <nobr>{@link #contains(long...)}</nobr> method.
+     * {@link #contains(long...)} method.
      * Therefore, this class provides the additional method
-     * <nobr>{@link #sectionAtLastCoordinate(long sectionCoordinateValue)}</nobr>,
+     * {@link #sectionAtLastCoordinate(long sectionCoordinateValue)},
      * which builds an intersection of this region with some hyperplane and returns this intersection
      * as one or several regions with less number of dimensions. This method is not abstract
-     * (it is implemented via <nobr>{@link #contains(long...)}</nobr> method by default), but an inheritor
+     * (it is implemented via {@link #contains(long...)} method by default), but an inheritor
      * can offer much faster implementation for most cases &mdash; and all inheritors from this package
      * really do it.</p>
      *
-     * <p>An idea of this method is the following. It allows to represent the <nobr><i>n</i>-dimensional</nobr> region
-     * (a set of integer points) as a union of its <nobr>(<i>n</i>&minus;1)-dimensional</nobr> <i>sections</i>:
+     * <p>An idea of this method is the following. It allows to represent the <i>n</i>-dimensional region
+     * (a set of integer points) as a union of its (<i>n</i>&minus;1)-dimensional <i>sections</i>:
      * results of calls of {@link #sectionAtLastCoordinate(long) sectionAtLastCoordinate}
      * for all possible values of its argument <code>sectionCoordinateValue</code>.
-     * Then every <nobr>(<i>n</i>&minus;1)-dimensional</nobr> section can be similarly represented
-     * as a union of its <nobr>(<i>n</i>&minus;2)-dimensional</nobr> sections, etc.
-     * But for <nobr>2-dimensional</nobr> case most region types (in particular, all inheritors of this class
+     * Then every (<i>n</i>&minus;1)-dimensional section can be similarly represented
+     * as a union of its (<i>n</i>&minus;2)-dimensional sections, etc.
+     * But for 2-dimensional case most region types (in particular, all inheritors of this class
      * from this package) can return the required intersection (with a horizontal line)
-     * as one or several <i>continuous segments</i>: regions of special type (<nobr>1-dimensional</nobr>
+     * as one or several <i>continuous segments</i>: regions of special type (1-dimensional
      * {@link Matrices.Hyperparallelepiped Hyperparallelepiped}), which can be processes very quickly.</p>
      *
      * <p>If an inheritor correctly implements {@link #sectionAtLastCoordinate(long) sectionAtLastCoordinate}
-     * and if this method does not use <nobr>{@link #contains(long...)}</nobr> method and the parent (default)
+     * and if this method does not use {@link #contains(long...)} method and the parent (default)
      * implementation {@link #sectionAtLastCoordinate(long) Region.sectionAtLastCoordinate}, then the inheritor
-     * <i>is allowed not to implement</i> <nobr>{@link #contains(long...)}</nobr> method.
+     * <i>is allowed not to implement</i> {@link #contains(long...)} method.
      * Instead, it is enough to override {@link #isContainsSupported()} method and return <code>false</code> by it.
-     * In this case, <nobr>{@link #contains(long...)}</nobr> method should throw
+     * In this case, {@link #contains(long...)} method should throw
      * <code>UnsupportedOperationException</code>.
      *
      * <p>This class can represent an empty region (containing no points).
@@ -284,9 +284,9 @@ public class Matrices {
      * <p>This package offers the following implementations of the regions:</p>
      *
      * <ol>
-     * <li>{@link Matrices.Hyperparallelepiped}: the simplest possible region (a segment in <nobr>1-dimensional</nobr>
-     * case, a rectangle in <nobr>2-dimensional</nobr> case, a parallelepiped in <nobr>3-dimensional</nobr> case);</li>
-     * <li>{@link Matrices.ConvexHyperpolyhedron}: an intersection of several <nobr><i>n</i>-dimensional</nobr>
+     * <li>{@link Matrices.Hyperparallelepiped}: the simplest possible region (a segment in 1-dimensional
+     * case, a rectangle in 2-dimensional case, a parallelepiped in 3-dimensional case);</li>
+     * <li>{@link Matrices.ConvexHyperpolyhedron}: an intersection of several <i>n</i>-dimensional</nobr>
      * half-spaces (in other words, a convex hyperpolyhedron);</li>
      * <li>{@link Matrices.Simplex}: the simplest kind of <nobr><i>n</i>-dimensional</nobr> hyperpolyhedron &mdash;
      * a hyperpolyhedron with <nobr><i>n</i>+1</nobr> vertices (a segment in <nobr>1-dimensional</nobr> case,

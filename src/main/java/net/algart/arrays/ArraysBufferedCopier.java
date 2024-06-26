@@ -979,7 +979,7 @@ class ArraysBufferedCopier {
 
         /**
          * Returns the maximal side <code>dim</code> of the square (cubic, ...) submatrix of the source matrix,
-         * so that any such submatrix (<code><nobr>dim x dim x ...</nobr></code>) depends on, as a maximum,
+         * so that any such submatrix (<code>dim x dim x ...</code>) depends on, as a maximum,
          * <code>dimParent x dimParent x ...</code> submatrix in the parent matrix.
          * Returns <code>0</code> if there is no such submatrix.
          * Must be called only in a case of an affine transformation.
@@ -990,7 +990,7 @@ class ArraysBufferedCopier {
          * (for example, rotated) by this copier.
          * This method finds the maximal (or, at least, as large as possible) hypercube <b>C</b>
          * in the destination and source matrices, so that its transformation <i>O</i>(<b>C</b>)
-         * is a subset of a hypercube <nobr><b>D</b> = <code>dimParent x dimParent x ...</code></nobr>
+         * is a subset of a hypercube <b>D</b> = <code>dimParent x dimParent x ...</code>
          *
          * <p>The obvious, "direct" way to do this is finding the inverse affine transformation
          * <i>O</i><sup>-1</sup>, getting the figure <i>O</i><sup>-1</sup>(<b>D</b>) and calculating
@@ -998,14 +998,14 @@ class ArraysBufferedCopier {
          * algorithm, including finding the inverse matrix and finding maximal inscribed hypercube.
          * But there is much simpler algorithm.
          *
-         * <p>Let <b>c</b> is a hypercube <code><nobr>1 x 1 x ...</nobr></code>. We find <b>d</b>: the hypercube
-         * <code><nobr>d x d x ...</nobr></code>, circumscribed around <i>O</i>(<b>c</b>).
+         * <p>Let <b>c</b> is a hypercube <code>1 x 1 x ...</code>. We find <b>d</b>: the hypercube
+         * <code>d x d x ...</code>, circumscribed around <i>O</i>(<b>c</b>).
          * The required <code>dim</code> is just <code>dimParent/d</code>!
          * It is true because resizing the argument of an affine transformation leads to the same resizing
          * of the result. If we shall resize <b>c</b> in <code>dim</code> times and get
-         * <nobr><b>C</b> = <code>dim x dim x ...</code></nobr> hypercube, then <i>O</i>(<b>c</b>)
+         * <b>C</b> = <code>dim x dim x ...</code> hypercube, then <i>O</i>(<b>c</b>)
          * will be also resized in <code>dim</code> times and will be subset of
-         * <nobr><b>D</b> = <code>dimParent x dimParent x ...</code></nobr>:
+         * <b>D</b> = <code>dimParent x dimParent x ...</code>:
          * <code>dimParent</code>=<code>dim</code>*<code>d</code>.
          *
          * @param dimParent dimensions in the parent matrix.

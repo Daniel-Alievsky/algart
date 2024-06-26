@@ -189,7 +189,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * <code>{@link #persistentThreadPool()}!=null</code> (a typical situation),
      * then the result of this method, calculated by the rules above,
      * is also truncated by the limit
-     * <code>Math.max(1, <nobr>((ThreadPoolExecutor){@link #persistentThreadPool()}).getCorePoolSize())</nobr></code>
+     * <code>Math.max(1, ((ThreadPoolExecutor){@link #persistentThreadPool()}).getCorePoolSize())</code>
      * &mdash; if the previously calculated result is greater then this limit, then this limit is returned instead.
      * So, there is a guarantee, that this method never returns a value greater than
      * the core number of threads in a thread pool, returned by
@@ -216,7 +216,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *
      * <p>However, if this instance was created by the {@link #DefaultThreadPoolFactory constructor}
      * with non-zero <code>numberOfTasks</code> argument
-     * (or via <nobr>{@link #getDefaultThreadPoolFactory(int numberOfTask)}</nobr> method
+     * (or via {@link #getDefaultThreadPoolFactory(int numberOfTask)} method
      * with <code>numberOfTasks&gt;0</code> method),
      * then this method is strictly equivalent to {@link #recommendedNumberOfTasks()}.
      *

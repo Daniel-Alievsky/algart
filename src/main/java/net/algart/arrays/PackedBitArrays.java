@@ -1482,7 +1482,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] > threshold}</nobr>.
+     * {@code src[k] > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -1617,7 +1617,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] < threshold}</nobr>.
+     * {@code src[k] < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -1752,7 +1752,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] >= threshold}</nobr>.
+     * {@code src[k] >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -1887,7 +1887,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] <= threshold}</nobr>.
+     * {@code src[k] <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2023,7 +2023,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFF) > threshold}</nobr>.
+     * {@code (src[k] & 0xFF) > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2157,7 +2157,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFF) < threshold}</nobr>.
+     * {@code (src[k] & 0xFF) < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2291,7 +2291,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFF) >= threshold}</nobr>.
+     * {@code (src[k] & 0xFF) >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2425,7 +2425,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFF) <= threshold}</nobr>.
+     * {@code (src[k] & 0xFF) <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2560,7 +2560,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFFFF) > threshold}</nobr>.
+     * {@code (src[k] & 0xFFFF) > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2694,7 +2694,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFFFF) < threshold}</nobr>.
+     * {@code (src[k] & 0xFFFF) < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2828,7 +2828,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFFFF) >= threshold}</nobr>.
+     * {@code (src[k] & 0xFFFF) >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -2962,7 +2962,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code (src[k] & 0xFFFF) <= threshold}</nobr>.
+     * {@code (src[k] & 0xFFFF) <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3097,7 +3097,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] > threshold}</nobr>.
+     * {@code src[k] > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3231,7 +3231,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] < threshold}</nobr>.
+     * {@code src[k] < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3365,7 +3365,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] >= threshold}</nobr>.
+     * {@code src[k] >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3499,7 +3499,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] <= threshold}</nobr>.
+     * {@code src[k] <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3634,7 +3634,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] > threshold}</nobr>.
+     * {@code src[k] > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3768,7 +3768,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] < threshold}</nobr>.
+     * {@code src[k] < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -3902,7 +3902,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] >= threshold}</nobr>.
+     * {@code src[k] >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4036,7 +4036,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] <= threshold}</nobr>.
+     * {@code src[k] <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4171,7 +4171,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] > threshold}</nobr>.
+     * {@code src[k] > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4305,7 +4305,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] < threshold}</nobr>.
+     * {@code src[k] < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4439,7 +4439,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] >= threshold}</nobr>.
+     * {@code src[k] >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4573,7 +4573,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] <= threshold}</nobr>.
+     * {@code src[k] <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4708,7 +4708,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] > threshold}</nobr>.
+     * {@code src[k] > threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4842,7 +4842,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] < threshold}</nobr>.
+     * {@code src[k] < threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -4976,7 +4976,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] >= threshold}</nobr>.
+     * {@code src[k] >= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
@@ -5110,7 +5110,7 @@ public class PackedBitArrays {
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * so that every element <code>src[k]</code> is transformed to boolean (bit) value
-     * <nobr>{@code src[k] <= threshold}</nobr>.
+     * {@code src[k] <= threshold}.
      *
      * @param dest      the destination array (bits are packed in <code>long</code> values).
      * @param destPos   position of the first bit written in the destination array.
