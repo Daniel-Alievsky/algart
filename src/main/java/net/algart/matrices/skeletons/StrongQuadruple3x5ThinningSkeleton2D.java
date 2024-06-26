@@ -102,9 +102,9 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * So, the matrix is supposed to be infinitely pseudo-cyclically continued, as well
  * {@link Matrices#asShifted Matrices.asShifted} method supposes it.
  * You can change this behavior by appending the source matrix with zero elements
- * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <p>This class may be applied to a matrix with any number of dimensions,
  * but it is designed for 2-dimensional case: all other dimensions will be ignored.</p>
@@ -154,7 +154,7 @@ public class StrongQuadruple3x5ThinningSkeleton2D extends AbstractThinningSkelet
      *                can be {@code null}, then it will be ignored.
      * @param matrix  the bit matrix that should be processed and returned by {@link #result()} method.
      * @return        new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
      */
     public static StrongQuadruple3x5ThinningSkeleton2D getInstance(ArrayContext context,
         Matrix<? extends UpdatableBitArray> matrix)
@@ -175,19 +175,19 @@ public class StrongQuadruple3x5ThinningSkeleton2D extends AbstractThinningSkelet
      *
      * <p>All said about {@link Quadruple3x5ThinningSkeleton2D#asThinning(int)} method is correct also in this case,
      * but this method perform little "stronger" thinning.
-     * <tt>directionIndex</tt> specifies the "eroded side" of objects,
+     * <code>directionIndex</code> specifies the "eroded side" of objects,
      * or the direction of thinning:<ul>
-     * <li>0 means removing elements from the left, i.e. from the side <nobr>(<i>x</i>&minus;1,<i>y</i>)</nobr>,</li>
-     * <li>2 means removing elements from the side <nobr>(<i>x</i>,<i>y</i>&minus;1)</nobr>,</li>
-     * <li>4 means removing elements from the right, i.e. from the side <nobr>(<i>x</i>+1,<i>y</i>)</nobr>,</li>
-     * <li>6 means removing elements from the side <nobr>(<i>x</i>,<i>y</i>+1)</nobr>.</li>
+     * <li>0 means removing elements from the left, i.e. from the side (<i>x</i>&minus;1,<i>y</i>),</li>
+     * <li>2 means removing elements from the side (<i>x</i>,<i>y</i>&minus;1),</li>
+     * <li>4 means removing elements from the right, i.e. from the side (<i>x</i>+1,<i>y</i>),</li>
+     * <li>6 means removing elements from the side (<i>x</i>,<i>y</i>+1).</li>
      * </ul>
      * Odd values (1, 3, 5, 7) are ignored by this method: for these values, the reference to the current
      * {@link IterativeArrayProcessor#result() result()} matrix is returned.
      *
      * @param directionIndex the direction of thinning, from 0 to 7.
      * @return               the thinned view if the current {@link #result()} matrix.
-     * @throws IllegalArgumentException if <tt>directionIndex</tt> is not in 0..7 range.
+     * @throws IllegalArgumentException if <code>directionIndex</code> is not in 0..7 range.
      */
     @Override
     public Matrix<BitArray> asThinning(int directionIndex) {

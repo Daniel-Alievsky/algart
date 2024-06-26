@@ -139,7 +139,7 @@ public interface SampleArray {
      * vectors with length 1000000, and all vectors are stored inside a single Java array <tt>float[]</tt>,
      * then <tt>length=10000</tt> will lead to an exception, even if there is necessary amount of Java memory
      * (~40&nbsp;GB) &mdash; because Java cannot allocate an array longer than
-     * <tt><nobr>Integer.MAX_VALUE</nobr></tt>. But there is the following guarantee:
+     * <tt>Integer.MAX_VALUE</tt>. But there is the following guarantee:
      * this method always works correctly, if there is enough memory and
      *
      * <pre>
@@ -311,8 +311,8 @@ public interface SampleArray {
     /**
      * Multiplies the sample #<tt>destIndex</tt> of this array by the real scalar <tt>a</tt>
      * and stores the result into the same position #<tt>destIndex</tt> of this array.
-     * Equivalent to <nobr><tt>{@link #multiplyByScalar
-     * multiplyByScalar}(destIndex,thisInstance,destIndex,a,0.0)</tt></nobr>.
+     * Equivalent to <tt>{@link #multiplyByScalar
+     * multiplyByScalar}(destIndex,thisInstance,destIndex,a,0.0)</tt>.
      *
      * @param index index of sample in this array.
      * @param a     the real scalar.

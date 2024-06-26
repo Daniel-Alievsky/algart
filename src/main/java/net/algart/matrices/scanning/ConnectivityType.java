@@ -40,8 +40,8 @@ public enum ConnectivityType {
     /**
      * <i>Straight</i> connectivity.
      * Two unit elements with coordinates
-     * <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr> and
-     * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+     * <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub> and
+     * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
      * are <i>neighbours</i> and, so, connected with each other
      * if one from the coordinates differs by 1, but all other coordinates are equal:</p>
      *
@@ -60,8 +60,8 @@ public enum ConnectivityType {
     /**
      * <i>Straight-and-diagonal</i> connectivity.
      * Two unit elements with coordinates
-     * <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr> and
-     * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+     * <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub> and
+     * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
      * are <i>neighbours</i> and, so, connected with each other
      * if several (at least one) from their coordinates differ by 1 and all other coordinates are equal:</p>
      *

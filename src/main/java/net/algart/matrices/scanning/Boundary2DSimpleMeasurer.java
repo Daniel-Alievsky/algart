@@ -102,7 +102,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
 
         /**
          * Instructs {@link Boundary2DSimpleMeasurer} to measure
-         * the maximums and minimums of <i>x</i>, <i>y</i>, <i>x+y</i>, <nobr><i>x&minus;y</i></nobr> values
+         * the maximums and minimums of <i>x</i>, <i>y</i>, <i>x+y</i>, <i>x&minus;y</i> values
          * while scanning the boundary, where <i>x</i> and <i>y</i> are coordinates of all
          * points at the contour, following along the scanned boundary.
          * See definition of the "boundary" term in comments to {@link Boundary2DScanner} class
