@@ -33,7 +33,7 @@ import java.util.Objects;
  * "drawn" on some n-dimensional updatable bit matrix.</p>
  *
  * <p>More precisely, let's consider an AlgART bit matrix
- * (<tt>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableBitArray}&gt;</tt>).
+ * (<code>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableBitArray}&gt;</code>).
  * The <i>connected object</i> is a connected component of the graph, built on the matrix,
  * where unit matrix elements are vertices, and <i>neighbour</i> unit elements are connected by edges.
  * In 2D case, we can consider that the matrix contains images of some objects:
@@ -43,8 +43,8 @@ import java.util.Objects;
  * <p>We define two kinds of connectivity: <i>{@link ConnectivityType#STRAIGHT_ONLY straight}</i>
  * and <i>{@link ConnectivityType#STRAIGHT_AND_DIAGONAL straight-and-diagonal}</i>. In the first case
  * (<i>straight</i> connectivity), two unit elements with coordinates
- * <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr> and
- * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+ * <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub> and
+ * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
  * are <i>neighbours</i> if one from the coordinates differs by 1, but all other coordinates are equal:</p>
  *
  * <blockquote><big>&sum;&nbsp;</big>|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1</blockquote>
@@ -60,7 +60,7 @@ import java.util.Objects;
  * The connectivity kind is described by {@link ConnectivityType} class.</p>
  *
  * <p>The instance of this class works with some concrete bit matrix
- * (<tt>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableBitArray}&gt;</tt>),
+ * (<code>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link UpdatableBitArray}&gt;</code>),
  * named <i>the scanned matrix</i>, and with some concrete <i>connectivity type</i> ({@link ConnectivityType}).
  * Both the scanned matrix and the connectivity type are specified while creating the instance.</p>
  *
@@ -74,8 +74,8 @@ import java.util.Objects;
  * (if getting coordinates does not slow down the scanning algorithm).</p>
  *
  * <p>Besides, the {@link #clear clear} method clears (sets to 0) all visited elements in the bit matrix.
- * But note: actual clearing may be not performed if <tt>forceClearing</tt> argument of this method
- * is <tt>false</tt>.</p>
+ * But note: actual clearing may be not performed if <code>forceClearing</code> argument of this method
+ * is <code>false</code>.</p>
  *
  * <p>There are following methods allowing to create the instance of this class:</p>
  *
@@ -134,12 +134,12 @@ public abstract class ConnectedObjectScanner implements Cloneable {
          * {@link ConnectedObjectScanner#clear(ArrayContext, ConnectedObjectScanner.ElementVisitor, long[], boolean)}
          * for every visited unit element of the scanned matrix.
          *
-         * <p>Important: <tt>coordinatesInMatrix</tt> argument <b>can be {@code null}</b> here!
+         * <p>Important: <code>coordinatesInMatrix</code> argument <b>can be {@code null}</b> here!
          * So, if you need to know the coordinates, you must check this argument and use
          * {@link Matrix#coordinates(long, long[])} method (or equivalent code) when it is {@code null}.
          *
-         * <p>If <tt>coordinatesInMatrix</tt> is not {@code null},
-         * this method may modify elements of the passed <tt>coordinatesInMatrix</tt>:
+         * <p>If <code>coordinatesInMatrix</code> is not {@code null},
+         * this method may modify elements of the passed <code>coordinatesInMatrix</code>:
          * it will not affect to the behavior of the scanning algorithms.
          *
          * @param coordinatesInMatrix the coordinates of the element in the bit matrix or, maybe, {@code null}.
@@ -156,10 +156,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * It should have the same dimensions, as the matrix, scanned by the connected objects scanner:
      * {@link ConnectedObjectScanner#matrix()}.
      * (If this condition is not fulfilled, {@link #visit visit} method can throw unexpected
-     * <tt>IndexOutOfBoundException</tt>.)</p>
+     * <code>IndexOutOfBoundException</code>.)</p>
      *
      * <p>The only thing, performed by {@link #visit visit} method of this class, is increasing
-     * some internal <tt>long</tt> counter by 1. You can read this counter by {@link #counter()} method.
+     * some internal <code>long</code> counter by 1. You can read this counter by {@link #counter()} method.
      * This counter is zero after instantiating this object and can be cleared by {@link #reset()} method.</p>
      *
      * <p>So, this class allows to count the number of unit elements of the mask,
@@ -325,9 +325,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      * @see #getUncheckedBreadthFirstScanner(Matrix, ConnectivityType)
      */
     public static ConnectedObjectScanner getBreadthFirstScanner(
@@ -347,7 +348,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * this algorithm often requires large stack. If the matrix contains large areas ("objects"),
      * filled by 1, the length of stack is comparable with the number of unit elements in such areas,
      * if the worst case (1-filled matrix) &mdash; the total number of matrix elements.
-     * Every stack element require several <tt>long</tt> values, so, the total occupied work memory
+     * Every stack element require several <code>long</code> values, so, the total occupied work memory
      * can be in 100 and more times larger, than the memory occupied by the source bit matrix.
      *
      * <p>The main advantage of this method is the well-specified order of visiting elements,
@@ -357,9 +358,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      * @see #getUncheckedDepthFirstScanner(Matrix, ConnectivityType)
      */
     public static ConnectedObjectScanner getDepthFirstScanner(
@@ -373,25 +375,25 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *
      * <p>In this case, the first call of {@link #clear clear} method allocates a temporary work matrix
      * with the same dimensions as the passed one. Then this matrix is used for saving information,
-     * necessary to perform correct depth-first search. The element type of the work matrix are <tt>byte</tt>,
-     * if <tt>connectivityType.{@link ConnectivityType#numberOfNeighbours(int)
-     * numberOfNeighbours}(matrix.{@link Matrix#dimCount() dimCount()})&lt;128</tt>,
-     * or <tt>short</tt> in other cases (very exotic situation).
+     * necessary to perform correct depth-first search. The element type of the work matrix are <code>byte</code>,
+     * if <code>connectivityType.{@link ConnectivityType#numberOfNeighbours(int)
+     * numberOfNeighbours}(matrix.{@link Matrix#dimCount() dimCount()})&lt;128</code>,
+     * or <code>short</code> in other cases (very exotic situation).
      * If the total number of matrix elements
-     * (<nobr><tt>matrix.{@link Matrix#array() array()}.{@link Array#length() length()}</tt></nobr>)
+     * (<code>matrix.{@link Matrix#array() array()}.{@link Array#length() length()}</code>)
      * is not greater than {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()},
      * then the work matrix is allocated by {@link SimpleMemoryModel}.
      * In other case, it is allocated by
-     * <nobr><tt>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</tt></nobr>
-     * (<tt>context</tt> is the argument of {@link #clear clear} method).
+     * <code>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</code>
+     * (<code>context</code> is the argument of {@link #clear clear} method).
      *
      * <p>This is the only algorithm, that always uses the constant amount of memory: in 8 times larger
      * than the source bit matrix occupies (in 16 times for high number of dimensions).
      * If the work matrix is allocated by {@link SimpleMemoryModel},
      * it is the quickest algorithm and the best choice in most situations.
      * But if the matrix is large enough
-     * (<nobr>{@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()}</nobr>
-     * or more elements) and the <tt>context</tt> argument of {@link #clear clear} method
+     * ({@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()}
+     * or more elements) and the <code>context</code> argument of {@link #clear clear} method
      * offers non-simple memory model, the {@link #getBreadthFirstScanner breadth-first scanning algorithm}
      * is usually better choice.
      *
@@ -402,9 +404,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      * @see #getUncheckedStacklessDepthFirstScanner(Matrix, ConnectivityType)
      */
     public static ConnectedObjectScanner getStacklessDepthFirstScanner(
@@ -426,19 +429,19 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * <ol>
      * <li>each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero;</li>
      * <li>or each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero, and also each matrix bit with last coordinate
      * <i>i<sub>n&minus;1</sub></i>=0 or <i>i<sub>n&minus;1</sub></i>=1 is zero
      * (first two lines in the 2-dimensional case).
      * </li>
      * </ol>
-     * <p>Here <i>n</i>=<tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is the number of matrix dimensions.
+     * <p>Here <i>n</i>=<code>matrix.{@link Matrix#dimCount() dimCount()}</code> is the number of matrix dimensions.
      * If both conditions are not complied, the {@link #clear clear} method of the returned instance
-     * can visit (and clear) some extra elements or can throw unexpected <tt>IndexOutOfBoundsException</tt>
+     * can visit (and clear) some extra elements or can throw unexpected <code>IndexOutOfBoundsException</code>
      * while scanning. (And it is the only undesirable effect; no other data will be damaged,
      * no invariants will be violated.)
      *
@@ -453,7 +456,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT});
      * </pre>
      * <p>
-     * where all <tt>from[k]==-1</tt> and <tt>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</tt>.
+     * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
      * to some newly created bit matrix,
@@ -462,9 +465,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      */
     public static ConnectedObjectScanner getUncheckedBreadthFirstScanner(
             Matrix<? extends UpdatableBitArray> matrix, ConnectivityType connectivityType) {
@@ -480,19 +484,19 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * <ol>
      * <li>each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero;</li>
      * <li>or each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero, and also each matrix bit with last coordinate
      * <i>i<sub>n&minus;1</sub></i>=0 or <i>i<sub>n&minus;1</sub></i>=1 is zero
      * (first two lines in the 2-dimensional case).
      * </li>
      * </ol>
-     * <p>Here <i>n</i>=<tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is the number of matrix dimensions.
+     * <p>Here <i>n</i>=<code>matrix.{@link Matrix#dimCount() dimCount()}</code> is the number of matrix dimensions.
      * If both conditions are not complied, the {@link #clear clear} method of the returned instance
-     * can visit (and clear) some extra elements or can throw unexpected <tt>IndexOutOfBoundsException</tt>
+     * can visit (and clear) some extra elements or can throw unexpected <code>IndexOutOfBoundsException</code>
      * while scanning. (And it is the only undesirable effect; no other data will be damaged,
      * no invariants will be violated.)
      *
@@ -507,7 +511,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT});
      * </pre>
      * <p>
-     * where all <tt>from[k]==-1</tt> and <tt>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</tt>.
+     * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
      * to some newly created bit matrix,
@@ -516,9 +520,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      */
     public static ConnectedObjectScanner getUncheckedDepthFirstScanner(
             Matrix<? extends UpdatableBitArray> matrix, ConnectivityType connectivityType) {
@@ -534,19 +539,19 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * <ol>
      * <li>each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=0 or <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero;</li>
      * <li>or each matrix bit with coordinates
      * <i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>, where at least one
-     * <i>i<sub>j</sub></i>=<tt>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</tt>,
+     * <i>i<sub>j</sub></i>=<code>matrix.{@link Matrix#dim(int) dim}(<i>j</i>)-1</code>,
      * is zero, and also each matrix bit with last coordinate
      * <i>i<sub>n&minus;1</sub></i>=0 or <i>i<sub>n&minus;1</sub></i>=1 is zero
      * (first two lines in the 2-dimensional case).
      * </li>
      * </ol>
-     * <p>Here <i>n</i>=<tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is the number of matrix dimensions.
+     * <p>Here <i>n</i>=<code>matrix.{@link Matrix#dimCount() dimCount()}</code> is the number of matrix dimensions.
      * If both conditions are not complied, the {@link #clear clear} method of the returned instance
-     * can visit (and clear) some extra elements or can throw unexpected <tt>IndexOutOfBoundsException</tt>
+     * can visit (and clear) some extra elements or can throw unexpected <code>IndexOutOfBoundsException</code>
      * while scanning. (And it is the only undesirable effect; no other data will be damaged,
      * no invariants will be violated.)
      *
@@ -561,7 +566,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT});
      * </pre>
      * <p>
-     * where all <tt>from[k]==-1</tt> and <tt>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</tt>.
+     * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
      * to some newly created bit matrix,
@@ -570,9 +575,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>connectivityType</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}
-     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</tt>.
+     * @throws NullPointerException     if <code>matrix</code> or <code>connectivityType</code>
+     *                                  argument is {@code null}.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}
+     *                                  &gt; {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      */
     public static ConnectedObjectScanner getUncheckedStacklessDepthFirstScanner(
             Matrix<? extends UpdatableBitArray> matrix, ConnectivityType connectivityType) {
@@ -591,7 +597,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
 
     /**
      * Resets all internal buffers before scanning new matrix. Equivalent to the call
-     * <tt>{@link #matrix(Matrix) matrix}({@link #matrix() matrix}()).</tt>
+     * <code>{@link #matrix(Matrix) matrix}({@link #matrix() matrix}()).</code>
      */
     public final void reset() {
         matrix(this.matrix);
@@ -606,7 +612,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * where the algorithm stores necessary information for correct depth-first search.
      * Without this, a scanner can use the invalid information and work incorrectly.
      *
-     * <p>If the actual reference <tt>matrix</tt>, passed to this method, did not change, you can use
+     * <p>If the actual reference <code>matrix</code>, passed to this method, did not change, you can use
      * instead {@link #reset()} method.
      *
      * @param matrix new matrix that will be scanned and cleared by this instance.
@@ -647,14 +653,14 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     }
 
     /**
-     * Finds the next unit matrix element, starting from <tt>coordinates</tt>, saves the result
-     * in the same <tt>coordinates</tt> array and returns <tt>true</tt> if such element was found.
-     * If the element with specified coordinates is already unit, returns <tt>true</tt>
-     * and does not change <tt>coordinates</tt> array.
-     * If the unit element was not found, returns <tt>false</tt>
-     * and does not change <tt>coordinates</tt> array.
+     * Finds the next unit matrix element, starting from <code>coordinates</code>, saves the result
+     * in the same <code>coordinates</code> array and returns <code>true</code> if such element was found.
+     * If the element with specified coordinates is already unit, returns <code>true</code>
+     * and does not change <code>coordinates</code> array.
+     * If the unit element was not found, returns <code>false</code>
+     * and does not change <code>coordinates</code> array.
      *
-     * <p>If {@link #clear} method was never called with <tt>forceClearing=false</tt>,
+     * <p>If {@link #clear} method was never called with <code>forceClearing=false</code>,
      * this method is equivalent to the following operators:
      *
      * <pre>
@@ -671,9 +677,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *
      * @param coordinates coordinates of some matrix element;
      *                    the coordinates of the next unit element will be saved here.
-     * @return <tt>true</tt> if the next unit element was found.
-     * @throws NullPointerException      if <tt>coordinate</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if <tt>coordinate.length</tt> is not equal to
+     * @return <code>true</code> if the next unit element was found.
+     * @throws NullPointerException      if <code>coordinate</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if <code>coordinate.length</code> is not equal to
      *                                   {@link #matrix()}.{@link Matrix#dimCount() dimCount()}.
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
      */
@@ -695,7 +701,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     /**
      * Visits all unit (1) elements of the matrix, belonging to the connected object containing
      * the element with the specified coordinates, calls
-     * <tt>elementVisitor.{@link ConnectedObjectScanner.ElementVisitor#visit visit}</tt> method for each element
+     * <code>elementVisitor.{@link ConnectedObjectScanner.ElementVisitor#visit visit}</code> method for each element
      * and clears this element ({@link UpdatableBitArray#clearBitNoSync(long)}).
      * Returns the number of visited elements.
      * If the element with the specified coordinates is zero, does nothing and returns 0.
@@ -706,26 +712,26 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * you must synchronize <b>all</b> accesses to this matrix, even if a parallel threads work with other
      * areas of this matrix that do not intersect with the currently scanned object.</p>
      *
-     * <p>If <tt>forceClearing</tt> argument is <tt>false</tt>, this method
+     * <p>If <code>forceClearing</code> argument is <code>false</code>, this method
      * may skip actual clearing the visited elements in the scanned matrix,
      * but clear bits in some internal buffer instead.
      * In this case, the {@link #nextUnitBit} method will work as if the bits was actually cleared.
      * This mode is useful if you don't really need to clear bits in the source matrix,
      * but only need to visit all unit elements: this mode can improve performance.
-     * If <tt>forceClearing</tt> argument is <tt>true</tt>, the behavior is strict:
+     * If <code>forceClearing</code> argument is <code>true</code>, the behavior is strict:
      * all visited elements will be immediately cleared in the scanned matrix.
      *
-     * <p>The <tt>elementVisitor.{@link ConnectedObjectScanner.ElementVisitor#visit visit}</tt>
+     * <p>The <code>elementVisitor.{@link ConnectedObjectScanner.ElementVisitor#visit visit}</code>
      * method is called <i>before</i> clearing the element.</p>
      *
-     * <p>The <tt>elementVisitor</tt> argument can be {@code null}: then this method only clears
+     * <p>The <code>elementVisitor</code> argument can be {@code null}: then this method only clears
      * the elements of the connected object. It may be enough if your only intention is to count the elements
      * of the connected object.</p>
      *
      * <p>The order of visiting elements is not specified and depends
      * on concrete implementation of this class.</p>
      *
-     * <p>This method never modifies the passed <tt>coordinates</tt> array:
+     * <p>This method never modifies the passed <code>coordinates</code> array:
      * it is cloned in the beginning of the method and is not used after this.
      * It can be important in a case of multithreading access.</p>
      *
@@ -740,12 +746,12 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *                       can be {@code null}, then will be ignored.
      * @param coordinates    the coordinates of some matrix element, belonging to the connected object
      *                       that should be scanned.
-     * @param forceClearing  <tt>false</tt> value allows the method not to perform actual clearing
-     *                       bits in the scanned matrix; <tt>true</tt> value requires actual clearing.
+     * @param forceClearing  <code>false</code> value allows the method not to perform actual clearing
+     *                       bits in the scanned matrix; <code>true</code> value requires actual clearing.
      * @return the number of matrix elements in the connected object
      * or 0 if the bit with specified coordinates is zero.
-     * @throws NullPointerException      if <tt>coordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if the number of passed coordinates (<tt>coordinates.length</tt>)
+     * @throws NullPointerException      if <code>coordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the number of passed coordinates (<code>coordinates.length</code>)
      *                                   is not equal to the number of dimensions of the
      *                                   {@link #matrix() scanned matrix}.
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
@@ -788,8 +794,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *                       that should be scanned.
      * @return the number of matrix elements in the connected object
      * or 0 if the bit with specified coordinates is zero.
-     * @throws NullPointerException      if <tt>coordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if the number of passed coordinates (<tt>coordinates.length</tt>)
+     * @throws NullPointerException      if <code>coordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the number of passed coordinates (<code>coordinates.length</code>)
      *                                   is not equal to the number of dimensions of the
      *                                   {@link #matrix() scanned matrix}.
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
@@ -811,12 +817,12 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *                      work memory via {@link ArrayContext#getMemoryModel()}.
      * @param coordinates   the coordinates of some matrix element, belonging to the connected object
      *                      that should be scanned.
-     * @param forceClearing <tt>false</tt> value allows the method not to perform actual clearing
-     *                      bits in the scanned matrix; <tt>true</tt> value requires actual clearing.
+     * @param forceClearing <code>false</code> value allows the method not to perform actual clearing
+     *                      bits in the scanned matrix; <code>true</code> value requires actual clearing.
      * @return the number of matrix elements in the connected object
      * or 0 if the bit with specified coordinates is zero.
-     * @throws NullPointerException      if <tt>coordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if the number of passed coordinates (<tt>coordinates.length</tt>)
+     * @throws NullPointerException      if <code>coordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the number of passed coordinates (<code>coordinates.length</code>)
      *                                   is not equal to the number of dimensions of the
      *                                   {@link #matrix() scanned matrix}.
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
@@ -838,8 +844,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *                    that should be scanned.
      * @return the number of matrix elements in the connected object
      * or 0 if the bit with specified coordinates is zero.
-     * @throws NullPointerException      if <tt>coordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if the number of passed coordinates (<tt>coordinates.length</tt>)
+     * @throws NullPointerException      if <code>coordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the number of passed coordinates (<code>coordinates.length</code>)
      *                                   is not equal to the number of dimensions of the
      *                                   {@link #matrix() scanned matrix}.
      * @throws IndexOutOfBoundsException if some coordinates are out of the {@link #matrix() scanned matrix}.
@@ -852,18 +858,18 @@ public abstract class ConnectedObjectScanner implements Cloneable {
 
     /**
      * Clears all elements of all connected objects in the matrix, the volume of which
-     * is less than <tt>minNonClearedSize</tt> or greater than <tt>maxNonClearedSize</tt>.
+     * is less than <code>minNonClearedSize</code> or greater than <code>maxNonClearedSize</code>.
      * The <i>volume</i> here is:
      * <ul>
      * <li>just the number of elements in a connected object (result of
      * {@link #clear(ArrayContext, ConnectedObjectScanner.ElementVisitor, long[], boolean) clear} method)
-     * &mdash; if the <tt>mask</tt> argument is {@code null};</li>
+     * &mdash; if the <code>mask</code> argument is {@code null};</li>
      * <li>the number of such elements in a connected object, for which the corresponding
-     * element in the <tt>mask</tt> bit matrix (with the same coordinates) is 1
-     * &mdash; if the <tt>mask</tt> argument is not {@code null}.</li>
+     * element in the <code>mask</code> bit matrix (with the same coordinates) is 1
+     * &mdash; if the <code>mask</code> argument is not {@code null}.</li>
      * </ul>
      *
-     * <p>If <tt>mask</tt> matrix is not {@code null}, it must have the same dimensions as the
+     * <p>If <code>mask</code> matrix is not {@code null}, it must have the same dimensions as the
      * {@link #matrix() scanned matrix}.</p>
      *
      * <p>This method creates a temporary copy of the {@link #matrix() scanned matrix}
@@ -882,7 +888,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param minNonClearedSize minimal volume of connected objects that will not be cleared.
      * @param maxNonClearedSize maximal volume of connected objects that will not be cleared.
      * @return the total number of cleared elements.
-     * @throws SizeMismatchException if <tt>mask!=null</tt>, and <tt>mask</tt> and the scanned matrix
+     * @throws SizeMismatchException if <code>mask!=null</code>, and <code>mask</code> and the scanned matrix
      *                               have different dimensions.
      */
     public long clearAllBySizes(
@@ -936,7 +942,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * one unit (1) element of the first matrix. In other words, this method just calls
      * {@link #clear(ArrayContext, long...) clear} method for coordinates, corresponding to all unit
      * elements of the first matrix, in a {@link #clone() clone} of this scanner,
-     * where the processed matrix is {@link #matrix(Matrix) replaced} with <tt>objects</tt>.
+     * where the processed matrix is {@link #matrix(Matrix) replaced} with <code>objects</code>.
      *
      * <p>This method creates a clone of this scanner. It leads to additional memory usage
      * in a case of stack-less scanners, created
@@ -949,9 +955,9 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * @param context the context of scanning; can be {@code null}, then will be ignored.
      * @param objects the second matrix, where this method clears all objects connected with some objects
      *                in the matrix, corresponding to this object.
-     * @return the total number of cleared elements in <tt>objects</tt>.
-     * @throws NullPointerException  if <tt>objects</tt> argument is {@code null}.
-     * @throws SizeMismatchException if <tt>objects</tt> and the scanned matrix have different dimensions.
+     * @return the total number of cleared elements in <code>objects</code>.
+     * @throws NullPointerException  if <code>objects</code> argument is {@code null}.
+     * @throws SizeMismatchException if <code>objects</code> and the scanned matrix have different dimensions.
      */
     public long clearAllConnected(final ArrayContext context, Matrix<? extends UpdatableBitArray> objects) {
         Objects.requireNonNull(objects, "Null secondary matrix");
@@ -974,10 +980,10 @@ public abstract class ConnectedObjectScanner implements Cloneable {
     }
 
     /**
-     * Calls <tt>context.updateProgress</tt> with an event, created by the following operator:
-     * <nobr><tt>new ArrayContext.Event(boolean.class, {@link #matrix() matrix()}.{@link Matrix#size()
-     * size()}, {@link #matrix() matrix()}.{@link Matrix#index(long...) index}(coordinates))</tt></nobr>.
-     * Does nothing if <tt>context==null</tt>.
+     * Calls <code>context.updateProgress</code> with an event, created by the following operator:
+     * <code>new ArrayContext.Event(boolean.class, {@link #matrix() matrix()}.{@link Matrix#size()
+     * size()}, {@link #matrix() matrix()}.{@link Matrix#index(long...) index}(coordinates))</code>.
+     * Does nothing if <code>context==null</code>.
      *
      * <p>The method can be useful while sequentially scanning the matrix via a loop of
      * {@link #clear clear} and {@link #nextUnitBit nextUnitBit} calls.

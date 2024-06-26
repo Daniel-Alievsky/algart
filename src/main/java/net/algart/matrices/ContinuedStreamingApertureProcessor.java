@@ -56,7 +56,7 @@ import java.util.Objects;
  * with help of {@link Matrix#subMatrix(long[], long[], net.algart.arrays.Matrix.ContinuationMode)} method,
  * using the {@link #continuationMode() continuation mode of this filter},
  * and all additional matrices
- * <nobr><b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub></nobr>
+ * <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>
  * are analogously appended until the same sizes with zeros
  * ({@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}).
  * So, all dimensions of the appended matrices are little greater than the corresponding dimensions
@@ -83,7 +83,7 @@ import java.util.Objects;
  * because the element of the resulting matrix <b>R</b>
  * at every position <b>x</b>, according the basic specification of {@link StreamingApertureProcessor} class,
  * should depend only on the elements
- * <nobr><i>w</i><sub>0</sub>, <i>w</i><sub>1</sub>, ..., <i>w</i><sub><i>K</i>&minus;1</sub></nobr>
+ * <i>w</i><sub>0</sub>, <i>w</i><sub>1</sub>, ..., <i>w</i><sub><i>K</i>&minus;1</sub>
  * of the additional matrices <b>M</b><sub><i>k</i></sub>, placed at the same position <b>x</b>.</p>
  *
  * <p>Note: {@link net.algart.arrays.Matrix.ContinuationMode#NONE} continuation mode cannot be used in this class:
@@ -94,7 +94,7 @@ import java.util.Objects;
  * <p>Note: in an improbable case, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ * greater than <tt>Long.MAX_VALUE</tt>,
  * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
  * Of course, if is very improbable case.</p>
  *

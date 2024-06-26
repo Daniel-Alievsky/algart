@@ -52,7 +52,7 @@ import java.util.Map;
  * the generic argument of this interface (for example, <tt>Integer</tt> or <tt>String</tt>).
  * The indexes of arguments and results are also called their <i>keys</i>.
  * The group of the source arguments and the group of results are represented by <tt>java.util.Map</tt>,
- * more precisely, by a generic type <nobr><tt>java.util.Map&lt;K, {@link Matrix}&lt;?&gt;&gt;</tt></nobr>:</p>
+ * more precisely, by a generic type <tt>java.util.Map&lt;K, {@link Matrix}&lt;?&gt;&gt;</tt>:</p>
  *
  * <pre>
  *     {@link #process(Map, Map)
@@ -92,7 +92,7 @@ import java.util.Map;
  * <p>For each source argument <b>M</b><sub><i>i</i></sub> this aperture processor defines
  * the corresponding <i>dependence aperture</i> <b>A</b><sub><i>i</i></sub>: a rectangular set of
  * integer points, represented by {@link IRectangularArea} class and returned by
- * <nobr>{@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)}</nobr> method.
+ * {@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)} method.
  * This aperture can depend only on the argument index <i>i</i> and <i>cannot vary for different calls</i>
  * of {@link #dependenceAperture(Object) dependenceAperture} method for the same processor.</p>
  *
@@ -102,7 +102,7 @@ import java.util.Map;
  * of the elements of the source matrices <b>M</b><sub><i>i</i></sub>.
  * There should be a guarantee, that every element of any resulting <i>n</i>-dimensional matrix
  * <b>M'</b><sub><i>j</i></sub> with coordinates
- * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
  * can depend only on elements of each source matrix <b>M</b><sub><i>i</i></sub> with coordinates</p>
  *
  * <blockquote>
@@ -113,9 +113,9 @@ import java.util.Map;
  * </blockquote>
  *
  * <p>where
- * <nobr><b>a</b> = (<i>a</i><sub>0</sub>, <i>a</i><sub>1</sub>, ..., <i>a</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * <b>a</b> = (<i>a</i><sub>0</sub>, <i>a</i><sub>1</sub>, ..., <i>a</i><sub><i>n</i>&minus;1</sub>)
  * is one of points belonging to the corresponding dependence aperture
- * <nobr><b>A</b><sub><i>i</i></sub>={@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)}</nobr>.
+ * <b>A</b><sub><i>i</i></sub>={@link #dependenceAperture(Object) dependenceAperture(<i>i</i>)}.
  * Please draw attention that we use plus sing + in this definition, instead of more traditional minus sign &minus;
  * (used, for example, in specifications of {@link StreamingApertureProcessor}
  * or {@link net.algart.matrices.morphology.RankMorphology}).

@@ -29,14 +29,14 @@ import net.algart.arrays.*;
 import java.util.Objects;
 
 /**
- * <p>Array of samples, where each sample is a complex number, represented by a pair of <tt>double</tt> values,
+ * <p>Array of samples, where each sample is a complex number, represented by a pair of <code>double</code> values,
  * stored in two AlgART arrays {@link UpdatablePNumberArray}.</p>
  *
  * <p>Please use {@link #asSampleArray(UpdatablePNumberArray, UpdatablePNumberArray)} method for
  * creating instances of this class.</p>
  *
  * <p>All operations over samples (adding, subtracting, multiplying) are performed via corresponding operations
- * over elements of the AlgART arrays. Elements of these arrays are interpreted as <tt>double</tt> values,
+ * over elements of the AlgART arrays. Elements of these arrays are interpreted as <code>double</code> values,
  * as if they are read/written by {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)}
  * methods.</p>
  *
@@ -49,21 +49,21 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
 
     /**
      * Returns a view of the specified pair of AlgART arrays as an array of scalar complex samples.
-     * More precisely, the real part of the sample <tt>#k</tt> in the returned sample array is stored
-     * in the element <tt>#k</tt> of <tt>samplesRe</tt> array, and the imaginary part of
-     * the sample <tt>#k</tt> in the returned sample array is stored in the element <tt>#k</tt>
-     * of <tt>samplesIm</tt> array.
+     * More precisely, the real part of the sample <code>#k</code> in the returned sample array is stored
+     * in the element <code>#k</code> of <code>samplesRe</code> array, and the imaginary part of
+     * the sample <code>#k</code> in the returned sample array is stored in the element <code>#k</code>
+     * of <code>samplesIm</code> array.
      *
      * <p>The returned sample array is backed by these two arrays, so any changes of the samples
      * in the returned array are reflected in these arrays, and vice-versa.
      * More precisely, the returned sample array is backed by
-     * <tt>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</tt> and
-     * <tt>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</tt>:
+     * <code>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</code> and
+     * <code>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of their lengths
      * will not affect behaviour of the returned sample array.
      *
-     * <p>The {@link #length() length} of the returned sample array is equal to lengths of <tt>samplesRe</tt>
-     * and <tt>samplesIm</tt> arrays. (Their lengths must be equal to each other.)
+     * <p>The {@link #length() length} of the returned sample array is equal to lengths of <code>samplesRe</code>
+     * and <code>samplesIm</code> arrays. (Their lengths must be equal to each other.)
      *
      * <p>This method detects, if the passed arrays are {@link DirectAccessible}
      * (i.e. the data are stored in usual Java arrays), and provides optimized implementations for this case.
@@ -71,8 +71,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
      * @param samplesRe the real parts of all samples.
      * @param samplesIm the imaginary parts of all samples.
      * @return          the array of scalar complex samples, represented by these two arrays.
-     * @throws NullPointerException  if <tt>samplesRe</tt> or <tt>samplesIm</tt> is {@code null}.
-     * @throws SizeMismatchException if <tt>samplesRe.length() != samplesIm.length()</tt>.
+     * @throws NullPointerException  if <code>samplesRe</code> or <code>samplesIm</code> is {@code null}.
+     * @throws SizeMismatchException if <code>samplesRe.length() != samplesIm.length()</code>.
      */
     public static ComplexScalarSampleArray asSampleArray(
         UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm)

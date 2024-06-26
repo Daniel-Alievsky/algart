@@ -32,7 +32,7 @@ import java.util.Objects;
 
 /**
  * <p>Array of samples, where each sample is a vector of complex numbers with some fixed length,
- * represented by an array of pairs of <tt>double</tt> values,
+ * represented by an array of pairs of <code>double</code> values,
  * stored in two AlgART arrays {@link UpdatablePNumberArray}.
  * These vectors correspond to ranges in these arrays, given with some fixed step.</p>
  *
@@ -41,11 +41,13 @@ import java.util.Objects;
  * samples in two AlgART arrays.</p>
  *
  * <p>All operations over samples (adding, subtracting, multiplying) are performed via corresponding operations
- * over elements of the AlgART arrays. Elements of these arrays are interpreted as <tt>double</tt> values,
+ * over elements of the AlgART arrays. Elements of these arrays are interpreted as <code>double</code> values,
  * as if they are read/written by {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)}
  * methods. There is the only exception: if the element type of the underlying AlgART arrays
- * is not <tt>float</tt> or <tt>double</tt>, and an operation leads to overflow (for example, we try to multiply
- * a sample by the real scalar <tt>1e10</tt>), then the results can differ from the results of the simplest code based
+ * is not <code>float</code> or <code>double</code>,
+ * and an operation leads to overflow (for example, we try to multiply
+ * a sample by the real scalar <code>1e10</code>),
+ * then the results can differ from the results of the simplest code based
  * on {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)} calls.</p>
  *
  * <p>The instances of this class are not thread-safe, but <b>are thread-compatible</b>
@@ -104,25 +106,26 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
     /**
      * Returns a view of the specified pair of AlgART arrays as an array of complex vector samples.
-     * Complex vectors are stored in the specified arrays, real parts in <tt>samplesRe</tt>,
-     * imaginary parts in <tt>samplesIm</tt>, with step <tt>vectorStep</tt> elements.
-     * More precisely, the sample <tt>#k</tt> in the returned sample array is a vector of <tt>vectorLength</tt>
-     * complex numbers, where the real part of the number <tt>#j</tt> is stored in the element
-     * <tt>#(k*vectorStep)+j</tt> of <tt>samplesRe</tt> array, and its imaginary part is stored in the element
-     * <tt>#(k*vectorStep)+j</tt> of <tt>samplesIm</tt> array.
+     * Complex vectors are stored in the specified arrays, real parts in <code>samplesRe</code>,
+     * imaginary parts in <code>samplesIm</code>, with step <code>vectorStep</code> elements.
+     * More precisely, the sample <code>#k</code>
+     * in the returned sample array is a vector of <code>vectorLength</code>
+     * complex numbers, where the real part of the number <code>#j</code> is stored in the element
+     * <code>#(k*vectorStep)+j</code> of <code>samplesRe</code> array, and its imaginary part is stored in the element
+     * <code>#(k*vectorStep)+j</code> of <code>samplesIm</code> array.
      *
      * <p>The returned sample array is backed by these two arrays, so any changes of the samples
      * in the returned array are reflected in these arrays, and vice-versa.
      * More precisely, the returned sample array is backed by
-     * <tt>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</tt> and
-     * <tt>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</tt>:
+     * <code>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</code> and
+     * <code>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of their lengths
      * will not affect behaviour of the returned sample array.
      *
-     * <p>The length of each vector sample, <tt>vectorLength</tt>, must be in range
-     * <tt>0&lt;=vectorLength&lt;=vectorStep</tt>. Moreover, <tt>samplesRe</tt> and <tt>samplesIm</tt>
-     * arrays must be long enough for storing <tt>length</tt> vectors with specified <tt>vectorStep</tt>:
-     * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= min(samplesRe.length(),samplesIm.length())</tt></nobr>.
+     * <p>The length of each vector sample, <code>vectorLength</code>, must be in range
+     * <code>0&lt;=vectorLength&lt;=vectorStep</code>. Moreover, <code>samplesRe</code> and <code>samplesIm</code>
+     * arrays must be long enough for storing <code>length</code> vectors with specified <code>vectorStep</code>:
+     * <code>(length-1)*vectorStep+vectorLength &lt;= min(samplesRe.length(),samplesIm.length())</code>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
      *                     {@link #newCompatibleSamplesArray(long)} method; can be {@code null},
@@ -130,25 +133,25 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * @param samplesRe    the real parts of all samples.
      * @param samplesIm    the imaginary parts of all samples.
      * @param vectorLength the length of each complex vector.
-     * @param vectorStep   the step of storing vectors in <tt>samplesRe</tt> and <tt>samplesIm</tt> arrays.
+     * @param vectorStep   the step of storing vectors in <code>samplesRe</code> and <code>samplesIm</code> arrays.
      * @param length       the length of the returned sample array.
      * @return             the array of vector complex samples, represented by corresponding ranges (subarrays)
      *                     of these two arrays.
-     * @throws NullPointerException     if <tt>samplesRe</tt> or <tt>samplesIm</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>vectorLength&lt;0</tt>, <tt>vectorStep&lt;vectorLength</tt>,
-     *                                  <tt>length&lt;0</tt> or
-     *                                  <nobr><tt>(length-1)*vectorStep+vectorLength &lt;=
-     *                                  min(samplesRe.length(),samplesIm.length())</tt></nobr>
+     * @throws NullPointerException     if <code>samplesRe</code> or <code>samplesIm</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>vectorLength&lt;0</code>, <code>vectorStep&lt;vectorLength</code>,
+     *                                  <code>length&lt;0</code> or
+     *                                  <tt>(length-1)*vectorStep+vectorLength &lt;=
+     *                                  min(samplesRe.length(),samplesIm.length())</tt>
      *                                  (the last condition is checked mathematically accurately even if these
-     *                                  values <tt>&gt;Long.MAX_VALUE</tt>).
+     *                                  values <code>&gt;Long.MAX_VALUE</code>).
      * @throws TooLargeArrayException   (little probability)
      *                                  if the {@link MemoryModel#maxSupportedLength(Class) maximal length},
      *                                  supported by the specified memory model
-     *                                  (or {@link SimpleMemoryModel} if <tt>memoryModel==null</tt>)
+     *                                  (or {@link SimpleMemoryModel} if <code>memoryModel==null</code>)
      *                                  is not enough for allocating
-     *                                  <tt>{@link #GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH}*vectorLength</tt>
-     *                                  elements with the type <tt>samplesRe.elementType()</tt> or
-     *                                  <tt>samplesIm.elementType()</tt>.
+     *                                  <code>{@link #GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH}*vectorLength</code>
+     *                                  elements with the type <code>samplesRe.elementType()</code> or
+     *                                  <code>samplesIm.elementType()</code>.
      */
     public static ComplexVectorSampleArray asSampleArray(
         MemoryModel memoryModel,

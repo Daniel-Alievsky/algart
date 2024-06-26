@@ -33,13 +33,13 @@ import java.util.Objects;
  * "drawn" at some 2-dimensional bit matrix.</p>
  *
  * <p>More precisely, let's consider some 2-dimensional AlgART bit matrix
- * <tt>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link BitArray}&gt;</tt>.
+ * <code>{@link Matrix}&lt;?&nbsp;extends&nbsp;{@link BitArray}&gt;</code>.
  * Below we shall designate this matrix as <b>M</b>.</p>
  *
  * <p>Let's define a <i>pixel</i> with integer coordinates (<i>x</i>,&nbsp;<i>y</i>)
  * as a set of points of the plane with such coordinates (<i>x'</i>,&nbsp;<i>y'</i>) that
- * <nobr><i>x</i>&minus;0.5&le;<i>x'</i>&le;<i>x</i>+0.5,</nobr>
- * <nobr><i>y</i>&minus;0.5&le;<i>y'</i>&le;<i>y</i>+0.5.</nobr>
+ * <i>x</i>&minus;0.5&le;<i>x'</i>&le;<i>x</i>+0.5,
+ * <i>y</i>&minus;0.5&le;<i>y'</i>&le;<i>y</i>+0.5.
  * In other words, pixel is the square with the center (<i>x</i>,&nbsp;<i>y</i>) and the side 1.0.</p>
  *
  * <p>Every unit element of the matrix <b>M</b> with {@link Matrix#index(long...) coordinates}
@@ -49,8 +49,8 @@ import java.util.Objects;
  * We can consider <b>IM</b> as an image (figure), "drawn" at the matrix <b>M</b>.
  * Every unit element in <b>M</b> represents a little square 1x1 (a pixel) in the image (figure) <b>IM</b>,
  * and the center of the pixel has integer coordinates in ranges
- * <nobr>0..<b>M</b>.{@link Matrix#dimX() dimX()}&minus;1,</nobr>
- * <nobr>0..<b>M</b>.{@link Matrix#dimY() dimY()}&minus;1.</nobr></p>
+ * 0..<b>M</b>.{@link Matrix#dimX() dimX()}&minus;1,
+ * 0..<b>M</b>.{@link Matrix#dimY() dimY()}&minus;1.</p>
  *
  * <p>Then, let's consider a <i>connected object</i> at the matrix <b>M</b>, defined in the same terms
  * as in {@link ConnectedObjectScanner} class, and corresponding <i>connected figure</i>
@@ -127,8 +127,8 @@ import java.util.Objects;
  * <li>if <i>y</i><sub>1</sub>&lt;<i>y</i><sub>2</sub>,</li>
  * <li>or if <i>y</i><sub>1</sub>=<i>y</i><sub>2</sub> and  <i>x</i><sub>1</sub>&lt;<i>x</i><sub>2</sub>,</li>
  * <li>or if <i>y</i><sub>1</sub>=<i>y</i><sub>2</sub>,  <i>x</i><sub>1</sub>=<i>x</i><sub>2</sub>
- * and <nobr><i>side</i><sub>1</sub>.{@link Boundary2DScanner.Side#ordinal()
- * ordinal()}&lt;<i>side</i><sub>2</sub>.{@link Boundary2DScanner.Side#ordinal() ordinal()}</nobr>
+ * and <i>side</i><sub>1</sub>.{@link Boundary2DScanner.Side#ordinal()
+ * ordinal()}&lt;<i>side</i><sub>2</sub>.{@link Boundary2DScanner.Side#ordinal() ordinal()}
  * (i.e., for the same coordinates,
  * {@link Side#X_MINUS X_MINUS}&lt;{@link Side#Y_MINUS Y_MINUS}&lt;{@link Side#X_PLUS
  * X_PLUS}&lt;{@link Side#Y_PLUS Y_PLUS}).</li>
@@ -184,14 +184,14 @@ import java.util.Objects;
  * <p>Note: this class works <b>much faster</b> (in several times)
  * if the scanned matrix is created by {@link SimpleMemoryModel},
  * especially if its horizontal dimension {@link Matrix#dimX() dimX()} is divisible by 64
- * (<tt>{@link Matrix#dimX() dimX()}%64==0</tt>).
+ * (<code>{@link Matrix#dimX() dimX()}%64==0</code>).
  * So, if the matrix is not created by {@link SimpleMemoryModel} and is not too large,
  * we recommend to create its clone by {@link SimpleMemoryModel},
  * expanded by <i>x</i> to the nearest integer divisible by 64, and use this class for the clone.</p>
  *
  * <p>Note: this class can process only 2-dimensional matrices.
  * An attempt to create an instance of this class for a matrix with other number of dimensions
- * leads to <tt>IllegalArgumentException</tt>.</p>
+ * leads to <code>IllegalArgumentException</code>.</p>
  *
  * <p>This class does not use multithreading optimization, unlike
  * {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} and similar methods.
@@ -319,8 +319,8 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> for {@link #Y_MINUS} and {@link #Y_PLUS},
-         * <tt>false</tt> for {@link #X_MINUS} and {@link #X_PLUS};
+         * Returns <code>true</code> for {@link #Y_MINUS} and {@link #Y_PLUS},
+         * <code>false</code> for {@link #X_MINUS} and {@link #X_PLUS};
          *
          * @return whether it is a horizontal side of the square pixel.
          */
@@ -329,8 +329,8 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> for {@link #X_MINUS} and {@link #X_PLUS},
-         * <tt>false</tt> for {@link #Y_MINUS} and {@link #Y_PLUS};
+         * Returns <code>true</code> for {@link #X_MINUS} and {@link #X_PLUS},
+         * <code>false</code> for {@link #Y_MINUS} and {@link #Y_PLUS};
          *
          * @return whether it is a vertical side of the square pixel.
          */
@@ -346,8 +346,8 @@ public abstract class Boundary2DScanner {
          * the <i>y</i> axis is directed downwards, &mdash; according to the general rules of
          * tracing boundary segments, specified in comments to {@link Boundary2DScanner} class.
          *
-         * <p>This method returns <tt>+1</tt> for {@link #Y_MINUS}, <tt>-1</tt> for {@link #Y_PLUS},
-         * <tt>0</tt> for {@link #X_MINUS} and {@link #X_PLUS}.
+         * <p>This method returns <code>+1</code> for {@link #Y_MINUS}, <code>-1</code> for {@link #Y_PLUS},
+         * <code>0</code> for {@link #X_MINUS} and {@link #X_PLUS}.
          *
          * @return <i>x</i>-projection of this side of the pixel.
          */
@@ -363,8 +363,8 @@ public abstract class Boundary2DScanner {
          * the <i>y</i> axis is directed downwards, &mdash; according to the general rules of
          * tracing boundary segments, specified in comments to {@link Boundary2DScanner} class.
          *
-         * <p>This method returns <tt>-1</tt> for {@link #X_MINUS}, <tt>+1</tt> for {@link #X_PLUS},
-         * <tt>0</tt> for {@link #Y_MINUS} and {@link #Y_PLUS}.
+         * <p>This method returns <code>-1</code> for {@link #X_MINUS}, <code>+1</code> for {@link #X_PLUS},
+         * <code>0</code> for {@link #Y_MINUS} and {@link #Y_PLUS}.
          *
          * @return <i>y</i>-projection of this side of the pixel.
          */
@@ -376,8 +376,8 @@ public abstract class Boundary2DScanner {
          * Returns <i>x</i>-coordinate of the center (middle) of this side of the pixel.
          * (It is supposed that the center of this pixel is at the origin of coordinates.)
          *
-         * <p>This method returns <tt>-0.5</tt> for {@link #X_MINUS}, <tt>+0.5</tt> for {@link #X_PLUS},
-         * <tt>0.0</tt> for {@link #Y_MINUS} and {@link #Y_PLUS}.
+         * <p>This method returns <code>-0.5</code> for {@link #X_MINUS}, <code>+0.5</code> for {@link #X_PLUS},
+         * <code>0.0</code> for {@link #Y_MINUS} and {@link #Y_PLUS}.
          *
          * @return <i>x</i>-coordinate of the center of this pixel side.
          */
@@ -389,8 +389,8 @@ public abstract class Boundary2DScanner {
          * Returns <i>y</i>-coordinate of the center (middle) of this side of the pixel.
          * (It is supposed that the center of this pixel is at the origin of coordinates.)
          *
-         * <p>This method returns <tt>-0.5</tt> for {@link #Y_MINUS}, <tt>+0.5</tt> for {@link #Y_PLUS},
-         * <tt>0.0</tt> for {@link #X_MINUS} and {@link #X_PLUS}.
+         * <p>This method returns <code>-0.5</code> for {@link #Y_MINUS}, <code>+0.5</code> for {@link #Y_PLUS},
+         * <code>0.0</code> for {@link #X_MINUS} and {@link #X_PLUS}.
          *
          * @return <i>x</i>-coordinate of the center of this pixel side.
          */
@@ -413,12 +413,14 @@ public abstract class Boundary2DScanner {
      * (all they are created while initialization). Namely:
      *
      * <ul>
-     * <li>4 <i>straight</i> movements: one of {@link #pixelCenterDX()}, {@link #pixelCenterDY()} is <tt>&plusmn;1</tt>, another is <tt>0</tt>,
-     * <tt>{@link #newSide()}=={@link #oldSide()}</tt>;</li>
-     * <li>4 <i>diagonal</i> movements: <tt>{@link #pixelCenterDX()}==&plusmn;1</tt>, <tt>{@link #pixelCenterDY()}==&plusmn;1</tt>,
+     * <li>4 <i>straight</i> movements: one of {@link #pixelCenterDX()}, {@link #pixelCenterDY()}
+     * is <code>&plusmn;1</code>, another is <code>0</code>,
+     * <code>{@link #newSide()}=={@link #oldSide()}</code>;</li>
+     * <li>4 <i>diagonal</i> movements: <code>{@link #pixelCenterDX()}==&plusmn;1</code>,
+     * <code>{@link #pixelCenterDY()}==&plusmn;1</code>,
      * {@link #oldSide()} and {@link #newSide()} is a pair of adjacent pixel sides;</li>
      * <li>4 kinds of movement around the same pixel (<i>rotations</i>), from one pixel side to next pixel side:
-     * here <tt>{@link #pixelCenterDX()}==0</tt>, <tt>{@link #pixelCenterDY()}==0</tt>,
+     * here <code>{@link #pixelCenterDX()}==0</code>, <code>{@link #pixelCenterDY()}==0</code>,
      * {@link #oldSide()} and {@link #newSide()} is a pair of adjacent pixel sides.</li>
      * </ul>
      *
@@ -943,13 +945,13 @@ public abstract class Boundary2DScanner {
         final Side oldSide, newSide;
 
         /**
-         * Equal to <tt>StrictMath.sqrt(2.0)</tt>: the distance between pixel centers for diagonal steps.
+         * Equal to <code>StrictMath.sqrt(2.0)</code>: the distance between pixel centers for diagonal steps.
          * See {@link #distanceBetweenPixelCenters()}.
          */
         public static final double DIAGONAL_LENGTH = StrictMath.sqrt(2.0);
 
         /**
-         * Equal to <tt>0.5 * StrictMath.sqrt(2.0)</tt>: the distance between segment centers for diagonal steps
+         * Equal to <code>0.5 * StrictMath.sqrt(2.0)</code>: the distance between segment centers for diagonal steps
          * and movements around the same pixel.
          */
         public static final double HALF_DIAGONAL_LENGTH = 0.5 * StrictMath.sqrt(2.0);
@@ -1030,7 +1032,7 @@ public abstract class Boundary2DScanner {
          * </ul>
          *
          * <p>You can use this value for maximally efficient switching, depending on the step kind,
-         * using Java <tt>switch</tt> operator.
+         * using Java <code>switch</code> operator.
          *
          * @return integer unique code of this step (0..11).
          */
@@ -1115,7 +1117,7 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>{@link #pixelVertexX()}+0.5</tt>. It is always an integer value 0 or 1.
+         * Returns <code>{@link #pixelVertexX()}+0.5</code>. It is always an integer value 0 or 1.
          * Works very quickly (this method just returns an internal field).
          *
          * <p>In other words, returns <i>x</i>-coordinate of the vertex of the new (current) pixel,
@@ -1130,7 +1132,7 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>{@link #pixelVertexY()}+0.5</tt>. It is always an integer value 0 or 1.
+         * Returns <code>{@link #pixelVertexY()}+0.5</code>. It is always an integer value 0 or 1.
          * Works very quickly (this method just returns an internal field).
          *
          * <p>In other words, returns <i>y</i>-coordinate of the vertex of the new (current) pixel,
@@ -1145,54 +1147,62 @@ public abstract class Boundary2DScanner {
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>
+         * Returns <code>true</code>
+         * if <code>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</code>
          * (<i>rotation</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>.
+         * @return <code>true</code>
+         * if <code>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}==0</code>.
          */
         public boolean isRotation() {
             return samePixel;
         }
 
         /**
-         * Returns <tt>true</tt> if {@link #pixelCenterDX()} is &plusmn;1 and {@link #pixelCenterDY()} is 0.
+         * Returns <code>true</code>
+         * if {@link #pixelCenterDX()} is &plusmn;1 and {@link #pixelCenterDY()} is 0.
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}==0</tt>.
+         * @return <code>true</code>
+         * if <code>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}==0</code>.
          */
         public boolean isHorizontal() {
             return horizontal;
         }
 
         /**
-         * Returns <tt>true</tt> if {@link #pixelCenterDY()} is &plusmn;1 and {@link #pixelCenterDX()} is 0.
+         * Returns <code>true</code>
+         * f {@link #pixelCenterDY()} is &plusmn;1 and {@link #pixelCenterDX()} is 0.
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>.
+         * @return <code>true</code>
+         * if <code>{@link #pixelCenterDX()}==0 &amp;&amp; {@link #pixelCenterDY()}!=0</code>.
          */
         public boolean isVertical() {
             return vertical;
         }
 
         /**
-         * Returns <tt>true</tt> if one of {@link #pixelCenterDX()} and {@link #pixelCenterDY()} values
+         * Returns <code>true</code> if one of {@link #pixelCenterDX()} and {@link #pixelCenterDY()} values
          * is &plusmn;1, but another is 0
          * (<i>straight</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #isHorizontal()} || {@link #isVertical()}</tt>.
+         * @return <code>true</code> if <code>{@link #isHorizontal()} || {@link #isVertical()}</code>.
          */
         public boolean isStraight() {
             return straight;
         }
 
         /**
-         * Returns <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>
+         * Returns <code>true</code>
+         * if <code>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</code>
          * (<i>diagonal</i> kind of movement).
          * Works very quickly (this method just returns an internal field).
          *
-         * @return <tt>true</tt> if <tt>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</tt>.
+         * @return <code>true</code>
+         * if <code>{@link #pixelCenterDX()}!=0 &amp;&amp; {@link #pixelCenterDY()}!=0</code>.
          */
         public boolean isDiagonal() {
             return diagonal;
@@ -1200,7 +1210,7 @@ public abstract class Boundary2DScanner {
 
         /**
          * Returns the distance between the centers of the previous and current pixel;
-         * equal to <tt>StrictMath.hypot({@link #pixelCenterDX()}, {@link #pixelCenterDY()})</tt>.
+         * equal to <code>StrictMath.hypot({@link #pixelCenterDX()}, {@link #pixelCenterDY()})</code>.
          * In other words, returns 0 if {@link #isRotation()}, 1 for straight steps and
          * {@link #DIAGONAL_LENGTH}=&radic;2 for diagonal steps.
          * Works very quickly (this method just returns an internal field).
@@ -1342,7 +1352,7 @@ public abstract class Boundary2DScanner {
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
      * @throws NullPointerException     if one of arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}</code> is not 2.
      */
     public static Boundary2DScanner getSingleBoundaryScanner(
             Matrix<? extends BitArray> matrix,
@@ -1370,15 +1380,15 @@ public abstract class Boundary2DScanner {
      * Creates an instance of this class, allowing to sequentially trace all segments of <i>all</i> boundaries
      * at the matrix (internal and external).
      *
-     * <p>The scanner, created by this method, works with two additional matrices <tt>buffer1</tt>
-     * and <tt>buffer2</tt>, that are used for marking already visited boundary segments.
-     * These matrices can have any fixed-point element type (but usually it is <tt>boolean</tt>)
+     * <p>The scanner, created by this method, works with two additional matrices <code>buffer1</code>
+     * and <code>buffer2</code>, that are used for marking already visited boundary segments.
+     * These matrices can have any fixed-point element type (but usually it is <code>boolean</code>)
      * and must have the same dimensions as the main matrix.
      * These matrices should be zero-initialized before using the created instance (in other case,
      * some boundaries are possible to be skipped).
      * One of these matrices is always <i>current</i>.
-     * In the <i>state&nbsp;1</i>, the current buffer matrix is <tt>buffer1</tt>;
-     * in the <i>state&nbsp;2</i>, the current buffer matrix is <tt>buffer2</tt>.
+     * In the <i>state&nbsp;1</i>, the current buffer matrix is <code>buffer1</code>;
+     * in the <i>state&nbsp;2</i>, the current buffer matrix is <code>buffer2</code>.
      * The <i>state&nbsp;1</i> is default: it is chosen after creating the scanner.
      *
      * <p>While scanning boundaries, inside the {@link #next()} method, this scanner writes "brackets" in the current
@@ -1391,7 +1401,7 @@ public abstract class Boundary2DScanner {
      * <li>when the {@link #side() current pixel side} is
      * {@link Side#X_PLUS X_PLUS}, the element with coordinates {@link #x()}+1,{@link #y()}
      * in the current buffer matrix is set to 1 ("closing bracket"), or nothing occurs if
-     * <tt>{@link #x()}+1&gt;=matrix.{@link Matrix#dimX() dimX()}</tt>,</li>
+     * <code>{@link #x()}+1&gt;=matrix.{@link Matrix#dimX() dimX()}</code>,</li>
      * <li>nothing occurs if the {@link #side() current pixel side} is
      * {@link Side#Y_MINUS Y_MINUS} or {@link Side#Y_PLUS Y_PLUS}.</li>
      * </ul>
@@ -1403,8 +1413,8 @@ public abstract class Boundary2DScanner {
      * the nearest vertical segment, belonging to some object boundary,
      * which was not visited yet by {@link #next()} method,
      * and sets the current position to the found one.
-     * "Not visited" means that no "brackets" are set for that position neither in <tt>buffer1</tt>
-     * nor in <tt>buffer2</tt> matrix.
+     * "Not visited" means that no "brackets" are set for that position neither in <code>buffer1</code>
+     * nor in <code>buffer2</code> matrix.
      * <small>(There is the only exception from this simple rule:
      * this method never stops at the right side of a last pixel in the horizontal line.
      * If the last element in the horizontal line is 1, the corresponding boundary &mdash;
@@ -1428,7 +1438,7 @@ public abstract class Boundary2DScanner {
      * <p>While searching the next non-visited boundary, {@link #nextBoundary()} method counts "brackets"
      * in 1st and 2nd buffer matrices and corrects the current {@link #nestingLevel() nesting level}.
      *
-     * <p>It is possible to specify the same matrix as both <tt>buffer1</tt> and <tt>buffer2</tt> arguments.
+     * <p>It is possible to specify the same matrix as both <code>buffer1</code> and <code>buffer2</code> arguments.
      * In this case, all will work normally excepting the {@link #nestingLevel() nesting level},
      * which will be calculated incorrectly.
      *
@@ -1447,13 +1457,13 @@ public abstract class Boundary2DScanner {
      * @param matrix           the matrix that will be scanned by the created instance.
      * @param buffer1          the 1st buffer matrix for writing "brackets" (usually indicates external boundaries).
      * @param buffer2          the 2nd buffer matrix for writing "brackets" (usually indicates internal boundaries).
-     *                         To save memory, you may pass here the same matrix as <tt>buffer1</tt>
-     *                         and <tt>buffer2</tt> arguments, but in this case the {@link #nestingLevel()} method
+     *                         To save memory, you may pass here the same matrix as <code>buffer1</code>
+     *                         and <code>buffer2</code> arguments, but in this case the {@link #nestingLevel()} method
      *                         will work incorrectly.
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
      * @throws NullPointerException     if one of arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}</code> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
     public static Boundary2DScanner getAllBoundariesScanner(
@@ -1483,10 +1493,10 @@ public abstract class Boundary2DScanner {
      * Creates an instance of this class, allowing to trace all segments of <i>main</i> boundaries
      * at the matrix and to build <a href="Boundary2DScanner.html#completion">completions</a> of all objects.
      *
-     * <p>The scanner, created by this method, works with the additional matrix <tt>buffer</tt>,
+     * <p>The scanner, created by this method, works with the additional matrix <code>buffer</code>,
      * where <a href="Boundary2DScanner.html#completion">completions</a>
      * of all objects are stored as a result of the scanning.
-     * This matrix can have any fixed-point element type (but usually it is <tt>boolean</tt>)
+     * This matrix can have any fixed-point element type (but usually it is <code>boolean</code>)
      * and must have the same dimensions as the main matrix.
      * This matrix should be zero-initialized before using the created instance (in other case,
      * some boundaries are possible to be skipped).
@@ -1501,7 +1511,7 @@ public abstract class Boundary2DScanner {
      * <li>when the {@link #side() current pixel side} is
      * {@link Side#X_PLUS X_PLUS}, the element with coordinates {@link #x()}+1,{@link #y()}
      * in the buffer matrix is set to 1 ("closing bracket"), or nothing occurs if
-     * <tt>{@link #x()}+1&gt;=matrix.{@link Matrix#dimX() dimX()}</tt>,</li>
+     * <code>{@link #x()}+1&gt;=matrix.{@link Matrix#dimX() dimX()}</code>,</li>
      * <li>nothing occurs if the {@link #side() current pixel side} is
      * {@link Side#Y_MINUS Y_MINUS} or {@link Side#Y_PLUS Y_PLUS}.</li>
      * </ul>
@@ -1519,18 +1529,18 @@ public abstract class Boundary2DScanner {
      * and {@link #nextBoundary()} method does the following:
      *
      * <ol>
-     * <li>finds the <i>next</i> unit element <tt>#p</tt> in the <i>buffer</i> matrix in the same horizontal line
+     * <li>finds the <i>next</i> unit element <code>#p</code> in the <i>buffer</i> matrix in the same horizontal line
      * ("close bracket", written while previous scanning the boundary of the current object);</li>
      * <li>fills all elements in the buffer matrix from the current position (inclusive) until
-     * the found <tt>#p</tt> position at this line (exclusive) by 1;</li>
-     * <li>clears the element <tt>#p</tt> in the buffer matrix to 0;</li>
+     * the found <code>#p</code> position at this line (exclusive) by 1;</li>
+     * <li>clears the element <code>#p</code> in the buffer matrix to 0;</li>
      * <li>and finds the nearest vertical segment in the main matrix, belonging to some object boundary,
      * after all elements filled at step&nbsp;2.
      * </ol>
      *
      * <p>If the next unit element was not found in the current line at step&nbsp;1,
      * all buffer elements until the end of the horizontal line are filled by 1 &mdash;
-     * the <tt>p</tt> index is supposed to be {@link #matrix()}.{@link Matrix#dimX() dimX()}
+     * the <code>p</code> index is supposed to be {@link #matrix()}.{@link Matrix#dimX() dimX()}
      * &mdash; and the step 3 is skipped.
      *
      * <p>In fact, {@link #nextBoundary()} method skips all interior of previously scanned boundaries and fills
@@ -1559,7 +1569,7 @@ public abstract class Boundary2DScanner {
      * @param connectivityType the connectivity kind used by the created instance.
      * @return new instance of this class.
      * @throws NullPointerException     if one of arguments is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}</code> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
     public static Boundary2DScanner getMainBoundariesScanner(
@@ -1597,7 +1607,7 @@ public abstract class Boundary2DScanner {
      * @param source           the source bit matrix.
      * @param connectivityType the connectivity kind used while building completion.
      * @throws NullPointerException     if one of argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}</code> is not 2.
      */
     public static Matrix<UpdatableBitArray> fillHoles(
             MemoryModel memoryModel,
@@ -1634,7 +1644,7 @@ public abstract class Boundary2DScanner {
      * @param source           the source bit matrix.
      * @param connectivityType the connectivity kind used while building completion.
      * @throws NullPointerException     if one of argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>matrix.{@link Matrix#dimCount() dimCount()}</tt> is not 2.
+     * @throws IllegalArgumentException if <code>matrix.{@link Matrix#dimCount() dimCount()}</code> is not 2.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      */
     public static void fillHoles(
@@ -1655,12 +1665,12 @@ public abstract class Boundary2DScanner {
                a single boundary ==> an all boundaries,,a main boundaries */
 
     /**
-     * Returns <tt>true</tt> if and only if this scanner is a single boundary scanner. More precisely,
-     * it is <tt>true</tt> if and only if:
+     * Returns <code>true</code> if and only if this scanner is a single boundary scanner. More precisely,
+     * it is <code>true</code> if and only if:
      * <ul>
      *     <li>this instance was created by {@link #getSingleBoundaryScanner} method</li>
      *     <li>or it is {@link Boundary2DWrapper} and this method of its {@link Boundary2DWrapper#parent()
-     *     parent scanner} returns <tt>true</tt>.</li>
+     *     parent scanner} returns <code>true</code>.</li>
      * </ul>
      *
      * @return whether this scanner is a a single boundary scanner.
@@ -1669,12 +1679,12 @@ public abstract class Boundary2DScanner {
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Returns <tt>true</tt> if and only if this scanner is an all boundaries scanner. More precisely,
-     * it is <tt>true</tt> if and only if:
+     * Returns <code>true</code> if and only if this scanner is an all boundaries scanner. More precisely,
+     * it is <code>true</code> if and only if:
      * <ul>
      *     <li>this instance was created by {@link #getAllBoundariesScanner} method</li>
      *     <li>or it is {@link Boundary2DWrapper} and this method of its {@link Boundary2DWrapper#parent()
-     *     parent scanner} returns <tt>true</tt>.</li>
+     *     parent scanner} returns <code>true</code>.</li>
      * </ul>
      *
      * @return whether this scanner is a an all boundaries scanner.
@@ -1683,12 +1693,12 @@ public abstract class Boundary2DScanner {
 
 
     /**
-     * Returns <tt>true</tt> if and only if this scanner is a main boundaries scanner. More precisely,
-     * it is <tt>true</tt> if and only if:
+     * Returns <code>true</code> if and only if this scanner is a main boundaries scanner. More precisely,
+     * it is <code>true</code> if and only if:
      * <ul>
      *     <li>this instance was created by {@link #getMainBoundariesScanner} method</li>
      *     <li>or it is {@link Boundary2DWrapper} and this method of its {@link Boundary2DWrapper#parent()
-     *     parent scanner} returns <tt>true</tt>.</li>
+     *     parent scanner} returns <code>true</code>.</li>
      * </ul>
      *
      * @return whether this scanner is a a main boundaries scanner.
@@ -1713,7 +1723,7 @@ public abstract class Boundary2DScanner {
     }
 
     /**
-     * Returns <tt>{@link #matrix() matrix()}.{@link Matrix#dimX() dimX()}</tt>.
+     * Returns <code>{@link #matrix() matrix()}.{@link Matrix#dimX() dimX()}</code>.
      *
      * @return x-dimension of the currently scanner matrix.
      */
@@ -1722,7 +1732,7 @@ public abstract class Boundary2DScanner {
     }
 
     /**
-     * Returns <tt>{@link #matrix() matrix()}.{@link Matrix#dimY() dimY()}</tt>.
+     * Returns <code>{@link #matrix() matrix()}.{@link Matrix#dimY() dimY()}</code>.
      *
      * @return y-dimension of the currently scanner matrix.
      */
@@ -1739,36 +1749,36 @@ public abstract class Boundary2DScanner {
     public abstract ConnectivityType connectivityType();
 
     /**
-     * Returns <tt>true</tt> if and only if this instance was positioned to some coordinates in the matrix.
-     * More precisely, returns <tt>false</tt> if this instance was newly created and none from
+     * Returns <code>true</code> if and only if this instance was positioned to some coordinates in the matrix.
+     * More precisely, returns <code>false</code> if this instance was newly created and none from
      * {@link #nextBoundary()}, {@link #goTo goTo}, {@link #goToSamePosition goToSamePosition}
-     * methods were called yet, or <tt>true</tt> in all other cases.
+     * methods were called yet, or <code>true</code> in all other cases.
      * If this instance is {@link Boundary2DWrapper}, the result of this method for the parent scanner is returned.
      * If this object is not positioned, most of methods, processing pixels in the current position,
-     * throw <tt>IllegalStateException</tt>.
+     * throw <code>IllegalStateException</code>.
      *
-     * @return <tt>true</tt> if and only if this instance was already positioned by
+     * @return <code>true</code> if and only if this instance was already positioned by
      * {@link #nextBoundary() nextBoundary} or
      * {@link #goTo goTo} method.
      */
     public abstract boolean isInitialized();
 
     /**
-     * Returns <tt>true</tt> if and only if this scanner is already positioned
-     * ({@link #isInitialized()} returns <tt>true</tt>) and, in addition, {@link #next()} or
+     * Returns <code>true</code> if and only if this scanner is already positioned
+     * ({@link #isInitialized()} returns <code>true</code>) and, in addition, {@link #next()} or
      * {@link #scanBoundary(ArrayContext)} methods were called at least once.
      *
      * <p>This information can be useful before calling {@link #lastStep()} method
-     * (for example, for debugging goals): that method throws <tt>IllegalStateException</tt>
-     * if and only if this method returns <tt>false</tt>.
+     * (for example, for debugging goals): that method throws <code>IllegalStateException</code>
+     * if and only if this method returns <code>false</code>.
      *
-     * @return <tt>true</tt> if and only {@link #next()} or {@link #scanBoundary(ArrayContext)} methods
+     * @return <code>true</code> if and only {@link #next()} or {@link #scanBoundary(ArrayContext)} methods
      * were successfully called after creating this instance.
      */
     public abstract boolean isMovedAlongBoundary();
 
     /**
-     * Returns the current <i>x</i>-coordinate (or throws <tt>IllegalStateException</tt> if the scanner
+     * Returns the current <i>x</i>-coordinate (or throws <code>IllegalStateException</code> if the scanner
      * was not {@link #isInitialized() positioned yet}).
      *
      * @return the current <i>x</i>-coordinate.
@@ -1777,7 +1787,7 @@ public abstract class Boundary2DScanner {
     public abstract long x();
 
     /**
-     * Returns the current <i>y</i>-coordinate (or throws <tt>IllegalStateException</tt> if this scanner
+     * Returns the current <i>y</i>-coordinate (or throws <code>IllegalStateException</code> if this scanner
      * was not {@link #isInitialized() positioned yet}).
      *
      * @return the current <i>y</i>-coordinate.
@@ -1786,7 +1796,7 @@ public abstract class Boundary2DScanner {
     public abstract long y();
 
     /**
-     * Returns the current pixel side (or throws <tt>IllegalStateException</tt> if this scanner
+     * Returns the current pixel side (or throws <code>IllegalStateException</code> if this scanner
      * was not {@link #isInitialized() positioned yet}).
      *
      * @return the current pixel side.
@@ -1795,21 +1805,21 @@ public abstract class Boundary2DScanner {
     public abstract Side side();
 
     /**
-     * Returns <tt>true</tt> if and only if the {@link #side() current pixel side} lies at the boundary
+     * Returns <code>true</code> if and only if the {@link #side() current pixel side} lies at the boundary
      * of the {@link #matrix() scanned matrix}.
-     * In other words, returns <tt>true</tt> if:
+     * In other words, returns <code>true</code> if:
      * <ul>
-     *     <li><tt>{@link #side() side()}=={@link Side#X_MINUS Side.X_MINUS}</tt> and
-     *     <tt>{@link #x() x()}==0</tt>,</li>
-     *     <li>or <tt>{@link #side() side()}=={@link Side#Y_MINUS Side.Y_MINUS}</tt> and
-     *     <tt>{@link #y() y()}==0</tt>,</li>
-     *     <li>or <tt>{@link #side() side()}=={@link Side#X_PLUS Side.X_PLUS}</tt> and
-     *     <tt>{@link #x() x()}=={@link #dimX() dimX()}-1</tt>,</li>
-     *     <li>or <tt>{@link #side() side()}=={@link Side#Y_PLUS Side.Y_PLUS}</tt> and
-     *     <tt>{@link #y() y()}=={@link #dimY() dimY()}-1</tt>.</li>
+     *     <li><code>{@link #side() side()}=={@link Side#X_MINUS Side.X_MINUS}</code> and
+     *     <code>{@link #x() x()}==0</code>,</li>
+     *     <li>or <code>{@link #side() side()}=={@link Side#Y_MINUS Side.Y_MINUS}</code> and
+     *     <code>{@link #y() y()}==0</code>,</li>
+     *     <li>or <code>{@link #side() side()}=={@link Side#X_PLUS Side.X_PLUS}</code> and
+     *     <code>{@link #x() x()}=={@link #dimX() dimX()}-1</code>,</li>
+     *     <li>or <code>{@link #side() side()}=={@link Side#Y_PLUS Side.Y_PLUS}</code> and
+     *     <code>{@link #y() y()}=={@link #dimY() dimY()}-1</code>.</li>
      * </ul>
      * <p>Note: if this scanner was not {@link #isInitialized() positioned yet}, this method
-     * does not throw an exception and simply returns <tt>false</tt>.
+     * does not throw an exception and simply returns <code>false</code>.
      *
      * @return whether the current segment of the boundary is a part of the boundary of the whole scanned matrix.
      */
@@ -1837,7 +1847,7 @@ public abstract class Boundary2DScanner {
      * <ol>
      * <li>if this scanner was created via
      * {@link #getAllBoundariesScanner(Matrix, Matrix, Matrix, ConnectivityType)} method;</li>
-     * <li>if the <tt>buffer1</tt> and <tt>buffer2</tt> argument of that method are different,
+     * <li>if the <code>buffer1</code> and <code>buffer2</code> argument of that method are different,
      * independently allocated matrices;</li>
      * <li>and if {@link #goTo} method was never called;</li>
      * <li>note: if this instance is {@link Boundary2DWrapper}, the result of this method for the parent scanner
@@ -1857,7 +1867,7 @@ public abstract class Boundary2DScanner {
     /**
      * Returns the index of the current pixel in the {@link Matrix#array() underlying array} of the currently
      * scanned matrix. This method is almost equivalent to
-     * <nobr><tt>{@link #y()} * {@link #matrix()}.{@link Matrix#dimX() dimX()} + {@link #x()}</tt></nobr>,
+     * <code>{@link #y()} * {@link #matrix()}.{@link Matrix#dimX() dimX()} + {@link #x()}</code>,
      * with the only difference that it works even if this scanner was not {@link #isInitialized() positioned yet}:
      * in the last case it returns 0.
      *
@@ -1879,21 +1889,22 @@ public abstract class Boundary2DScanner {
      * @param x    new current <i>x</i>-coordinate.
      * @param y    new current <i>y</i>-coordinate.
      * @param side new current pixel side.
-     * @throws NullPointerException      if <tt>side</tt> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <tt>x&lt;0</tt>, <tt>y&lt;0</tt>,
-     *                                   <tt>x&gt;={@link #matrix()}.{@link Matrix#dimX() dimX()}</tt>
-     *                                   or <tt>y&gt;={@link #matrix()}.{@link Matrix#dimY() dimY()}</tt>.
+     * @throws NullPointerException      if <code>side</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>x&lt;0</code>, <code>y&lt;0</code>,
+     *                                   <code>x&gt;={@link #matrix()}.{@link Matrix#dimX() dimX()}</code>
+     *                                   or <code>y&gt;={@link #matrix()}.{@link Matrix#dimY() dimY()}</code>.
      */
     public abstract void goTo(long x, long y, Side side);
 
     /**
      * Sets the current position in the matrix to the same as in the specified scanner.
      * Equivalent to the following call:
-     * <tt>{@link #goTo goTo}(scanner.{@link #x() x()}, scanner.{@link #y() y()}, scanner.{@link #side() side()})</tt>.
+     * <code>{@link #goTo goTo}(scanner.{@link #x() x()},
+     * scanner.{@link #y() y()}, scanner.{@link #side() side()})</code>.
      *
      * @param scanner some other scanner.
-     * @throws NullPointerException      if <tt>scanner</tt> argument is {@code null}.
-     * @throws IllegalStateException     if the specified <tt>scanner</tt> was not {@link #isInitialized() positioned yet}.
+     * @throws NullPointerException      if <code>scanner</code> argument is {@code null}.
+     * @throws IllegalStateException     if the specified <code>scanner</code> was not {@link #isInitialized() positioned yet}.
      * @throws IndexOutOfBoundsException in the same situations as {@link #goTo goTo} method
      *                                   (impossible if the currently scanned matrices of this and passed scanners
      *                                   have identical dimensions).
@@ -1913,13 +1924,13 @@ public abstract class Boundary2DScanner {
     /**
      * Returns the value of the current element of the currently scanned matrix.
      * This method is equivalent to
-     * <nobr><tt>{@link #matrix()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
-     * getBit}({@link #currentIndexInArray()})</tt></nobr>,
+     * <code>{@link #matrix()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
+     * getBit}({@link #currentIndexInArray()})</code>,
      * but works little faster.
      * This method works even if this scanner was not {@link #isInitialized() positioned yet};
      * in this case, it returns the value of (0,0) matrix element
-     * (i.e. <nobr><tt>{@link #matrix()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
-     * getBit(0)}</tt></nobr>).
+     * (i.e. <code>{@link #matrix()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
+     * getBit(0)}</code>).
      *
      * @return the value of the current element of the currently scanned matrix.
      */
@@ -1954,14 +1965,14 @@ public abstract class Boundary2DScanner {
      * {@link #getAllBoundariesScanner(Matrix, Matrix, Matrix, ConnectivityType) getAllBoundariesScanner},
      * {@link #getMainBoundariesScanner(Matrix, Matrix, ConnectivityType) getMainBoundariesScanner}.
      *
-     * <p>This method returns <tt>true</tt> if it can find the necessary "next" position, or <tt>false</tt>
+     * <p>This method returns <code>true</code> if it can find the necessary "next" position, or <code>false</code>
      * if there is no required position, i.e. if the matrix scanning is finished. In the second case,
      * the current position is not changed.
      *
      * <p>Note that if this scanner was not {@link #isInitialized() positioned yet}, it becomes positioned
-     * if this method returns <tt>true</tt>, but stays not positioned if it returns <tt>false</tt>.
+     * if this method returns <code>true</code>, but stays not positioned if it returns <code>false</code>.
      *
-     * @return <tt>true</tt> if this method has successfully found new boundary.
+     * @return <code>true</code> if this method has successfully found new boundary.
      */
     public abstract boolean nextBoundary();
 
@@ -1989,7 +2000,7 @@ public abstract class Boundary2DScanner {
      * {@link #next()} method.
      *
      * <p>If that method was never called (in particular, as a part of {@link #scanBoundary(ArrayContext)}),
-     * this method throws <tt>IllegalStateException</tt>. You can check this situation with help of
+     * this method throws <code>IllegalStateException</code>. You can check this situation with help of
      * {@link #isMovedAlongBoundary()} method.
      *
      * @return the step of scanning boundary, performed by the call of {@link #next()} method.
@@ -2000,12 +2011,12 @@ public abstract class Boundary2DScanner {
     public abstract Step lastStep();
 
     /**
-     * Returns <tt>true</tt> if the last call of {@link #next()} method has changed {@link #x()} or {@link #y()}
-     * coordinate. Returns <tt>false</tt> if the last call of {@link #next()} method has changed only the
+     * Returns <code>true</code> if the last call of {@link #next()} method has changed {@link #x()} or {@link #y()}
+     * coordinate. Returns <code>false</code> if the last call of {@link #next()} method has changed only the
      * {@link #side() current pixel side}.
      *
      * <p>Equivalent to
-     * <tt>!{@link #lastStep()}.{@link Step#isRotation() isSamePixel()}</tt>,
+     * <code>!{@link #lastStep()}.{@link Step#isRotation() isSamePixel()}</code>,
      * but works little faster.
      *
      * @return whether the last call of {@link #next()} method has changed current pixel coordinates.
@@ -2015,12 +2026,12 @@ public abstract class Boundary2DScanner {
     public abstract boolean coordinatesChanged();
 
     /**
-     * Returns <tt>true</tt> if and only if the current position ({@link #x()}, {@link #y()}, {@link #side()})
+     * Returns <code>true</code> if and only if the current position ({@link #x()}, {@link #y()}, {@link #side()})
      * is identical to the position, set by last call of {@link #nextBoundary()} or
      * {@link #goTo} method.
      * Usually it means that the current boundary has been successfully scanned.
      *
-     * @return <tt>true</tt> if the current boundary scanning is finished.
+     * @return <code>true</code> if the current boundary scanning is finished.
      */
     public abstract boolean boundaryFinished();
 
@@ -2117,9 +2128,9 @@ public abstract class Boundary2DScanner {
      * if the scanned boundary is an <i>external</i> one, or the same value with minus sign
      * if it is an <i>internal</i> one.
      *
-     * <p>In particular, if <tt>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
+     * <p>In particular, if <code>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</code>,
      * this method just returns the result of {@link #orientedArea()}.
-     * In the case <tt>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>,
+     * In the case <code>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>,
      * the measured area can be 0.0 &mdash; for example, for 1-pixel objects (isolated pixels) or for
      * "thin" 1-pixel "lines".
      *
@@ -2148,17 +2159,17 @@ public abstract class Boundary2DScanner {
      * perimeter of the measured object, "drawn" at the bit matrix, estimated according
      * the specified contour line type.
      *
-     * <p>If <tt>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</tt>,
+     * <p>If <code>contourLineType=={@link ContourLineType#STRICT_BOUNDARY}</code>,
      * this method just returns the result of {@link #stepCount()}.
      *
-     * <p>In the case <tt>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>,
+     * <p>In the case <code>contourLineType=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>,
      * this method returns
      * <pre>
      * {@link #straightStepCount()} + {@link Step#DIAGONAL_LENGTH
      *     Step.DIAGONAL_LENGTH} * {@link #diagonalStepCount()}.
      * </pre>
      *
-     * <p>In the case <tt>contourLineType=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}</tt>,
+     * <p>In the case <code>contourLineType=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}</code>,
      * this method returns
      * <pre>
      * {@link #straightStepCount()} + {@link Step#HALF_DIAGONAL_LENGTH
@@ -2188,12 +2199,12 @@ public abstract class Boundary2DScanner {
 
 
     /**
-     * Returns <tt>true</tt> if and only if
-     * <nobr><tt>{@link #side() side()} == {@link Side#X_PLUS Side.X_PLUS}</tt></nobr>.
+     * Returns <code>true</code> if and only if
+     * <code>{@link #side() side()} == {@link Side#X_PLUS Side.X_PLUS}</code>.
      * Usually it means that the current position corresponds to an internal boundary:
      * see comments to {@link #getAllBoundariesScanner(Matrix, Matrix, Matrix, ConnectivityType)} method.
      *
-     * @return <nobr><tt>{@link #side() side()} == {@link Side#X_PLUS Side.X_PLUS}</tt></nobr>.
+     * @return <code>{@link #side() side()} == {@link Side#X_PLUS Side.X_PLUS}</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public final boolean isInternalBoundary() {
@@ -2220,14 +2231,14 @@ public abstract class Boundary2DScanner {
      * } while (!boundaryFinished());
      * </pre>
      *
-     * <p>and returns <tt>{@link #stepCount()}</tt> (the number of performed iterations,
+     * <p>and returns <code>{@link #stepCount()}</code> (the number of performed iterations,
      * i.e. the length of the scanned boundary).
-     * In addition, this method calls <tt>context.{@link ArrayContext#checkInterruption() checkInterruption()}</tt>
-     * method from time to time (if <tt>context!=null</tt>) to allow interruption of scanning very long boundaries.
-     * No other methods of the <tt>context</tt> are called.
+     * In addition, this method calls <code>context.{@link ArrayContext#checkInterruption() checkInterruption()}</code>
+     * method from time to time (if <code>context!=null</code>) to allow interruption of scanning very long boundaries.
+     * No other methods of the <code>context</code> are called.
      *
      * <p>Note: the number of boundary segments, returned of this method, can theoretically be
-     * incorrect if the length of the boundary is greater than <tt>Long.MAX_VALUE</tt>.
+     * incorrect if the length of the boundary is greater than <code>Long.MAX_VALUE</code>.
      * It is a very exotic case, that can be practically realized only on a virtual matrix, containing
      * almost 2<sup>63</sup> bits, with special structure. In this case, this method will work during
      * more than 10<sup>10</sup> seconds (&gt; 300 years) on a very quick computer that can perform one
@@ -2250,11 +2261,11 @@ public abstract class Boundary2DScanner {
     }
 
     /**
-     * Calls <tt>context.{@link ArrayContext#updateProgress updateProgress(event)}</tt>
+     * Calls <code>context.{@link ArrayContext#updateProgress updateProgress(event)}</code>
      * with an event, created by the following operator:
-     * <nobr><tt>new ArrayContext.Event(boolean.class, {@link #currentIndexInArray()
-     * currentIndexInArray()}, {@link #matrix() matrix()}.{@link Matrix#size() size()})</tt></nobr>,
-     * or does nothing if <tt>context==null</tt>.
+     * <code>new ArrayContext.Event(boolean.class, {@link #currentIndexInArray()
+     * currentIndexInArray()}, {@link #matrix() matrix()}.{@link Matrix#size() size()})</code>,
+     * or does nothing if <code>context==null</code>.
      *
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.
@@ -2267,8 +2278,8 @@ public abstract class Boundary2DScanner {
     }
 
     /**
-     * Calls <tt>context.{@link ArrayContext#checkInterruption() checkInterruption()}</tt> or
-     * does nothing if <tt>context==null</tt>.
+     * Calls <code>context.{@link ArrayContext#checkInterruption() checkInterruption()}</code> or
+     * does nothing if <code>context==null</code>.
      *
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.

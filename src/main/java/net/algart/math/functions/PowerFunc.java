@@ -165,7 +165,7 @@ public abstract class PowerFunc implements Func {
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
-     * for <nobr><code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code></nobr>.
+     * for <code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code>.
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
@@ -523,7 +523,7 @@ public abstract class PowerFunc implements Func {
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
-     * for <nobr><code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code></nobr>.
+     * for <code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code>.
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
@@ -880,7 +880,7 @@ public abstract class PowerFunc implements Func {
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
-     * for <nobr><code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code></nobr>.
+     * for <code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code>.
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
@@ -1277,7 +1277,7 @@ public abstract class PowerFunc implements Func {
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
-     * for <nobr><code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code></nobr>.
+     * for <code>c = 1.0, 2.0, 3.0, 0.5, 1.0/3.0</code>.
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.

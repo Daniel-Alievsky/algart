@@ -55,7 +55,7 @@ public abstract class Boundary2DWrapper extends Boundary2DScanner {
      * Creates new instance of this class.
      *
      * @param parent the parent scanner, that will be stored in {@link #parent} field.
-     * @throws NullPointerException if <tt>parent</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>parent</code> argument is {@code null}.
      */
     protected Boundary2DWrapper(Boundary2DScanner parent) {
         super(parent.matrix());

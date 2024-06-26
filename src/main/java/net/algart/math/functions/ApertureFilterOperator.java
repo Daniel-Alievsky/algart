@@ -28,9 +28,9 @@ import java.util.Objects;
 
 /**
  * <p>Aperture filtering operator in <i>n</i>-dimensional Euclidean space:
- * <nobr><i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>f</i>(<b>x</b>) =
+ * <i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>f</i>(<b>x</b>) =
  * <b>apertureFunc</b>(<i>f</i>(<b>x</b>+<b>a</b><sub>0</sub>), <i>f</i>(<b>x</b>+<b>a</b><sub>1</sub>), ...,
- * <i>f</i>(<b>x</b>+<b>a</b><sub><i>m</i>-1</sub>))</nobr>,
+ * <i>f</i>(<b>x</b>+<b>a</b><sub><i>m</i>-1</sub>)),
  * where <b>x</b> is a point of the <i>n</i>-dimensional space,
  * <b>apertureFunc</b> is some function with <i>m</i> arguments (the <i>aperture function</i>),
  * {<b>a</b><sub><i>i</i></sub>} is a set of points with (usually) little coordinates (the <i>aperture</i>),
@@ -140,7 +140,7 @@ public final class ApertureFilterOperator implements Operator {
      * <code>apertureDim</code>, <code>apertureFrom</code>, <code>apertureSteps</code> arguments. Namely,
      * the number of dimensions of the space for the new operator will be equal to <code>apertureDim.length</code>,
      * and the aperture will consist of the following points
-     * <nobr><b>a</b><sub><i>i</i></sub> = (<i>a</i><sub><i>i</i>0</sub>, <i>a</i><sub><i>i</i>1</sub>,
+     * <b>a</b><sub><i>i</i></sub> = (<i>a</i><sub><i>i</i>0</sub>, <i>a</i><sub><i>i</i>1</sub>,
      * ..., <i>a</i><sub><i>i</i>,<i>n</i>-1</sub>):
      *
      * <blockquote>

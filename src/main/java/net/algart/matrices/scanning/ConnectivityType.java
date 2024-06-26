@@ -78,12 +78,12 @@ public enum ConnectivityType {
 
     /**
      * Returns the number of neighbours of any matrix element:
-     * <tt>2*dimCount</tt> for {@link #STRAIGHT_ONLY straight connectivity},
-     * <tt>3<sup>dimCount</sup>-1</tt> for {@link #STRAIGHT_AND_DIAGONAL straight-and-diagonal connectivity}.
+     * <code>2*dimCount</code> for {@link #STRAIGHT_ONLY straight connectivity},
+     * <code>3<sup>dimCount</sup>-1</code> for {@link #STRAIGHT_AND_DIAGONAL straight-and-diagonal connectivity}.
      *
      * @param dimCount the number of dimensions of the matrix.
      * @return         the number of neighbours of any matrix element.
-     * @throws IllegalArgumentException if <tt>dimCount&lt;=0</tt> or
+     * @throws IllegalArgumentException if <code>dimCount&lt;=0</code> or
      *                                  <tt>dimCount&gt;{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}
      */
     public int numberOfNeighbours(int dimCount) {

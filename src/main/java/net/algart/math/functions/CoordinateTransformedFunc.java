@@ -33,8 +33,8 @@ import java.util.Objects;
  * It is built on the base of some <i>parent</i> function <i>f</i> and
  * some {@link CoordinateTransformationOperator coordinate transformation operator} <i>O</i>.
  * This function <i>g</i> is the following:
- * <nobr><i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>g</i>(<b>x</b>) = <i>f</i>(<b>map</b>(<b>x</b>)),</nobr>
- * <nobr><b>x</b> = <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub></nobr>,
+ * <i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>g</i>(<b>x</b>) = <i>f</i>(<b>map</b>(<b>x</b>)),
+ * <b>x</b> = <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>,
  * <b>map</b>(<b>x</b>) is the result of applying {@link CoordinateTransformationOperator#map} method
  * to <b>x</b> array.
  * In other words, the basic {@link #get(double[] x)} method of this instance is equivalent to
