@@ -58,8 +58,8 @@ import java.util.Map;
  * The dependence aperture <tt>p.{@link ApertureProcessor#dependenceAperture(Object) dependenceAperture(...)}</tt>
  * is calculated automatically on the base of the patterns and the performed operation.
  * Then, the method of this object executes the required operation with help of
- * <nobr><tt>{@link #tiler() tiler()}.{@link TiledApertureProcessorFactory#tile(ApertureProcessor)
- * tile}(p).{@link ApertureProcessor#process(Map, Map) process(dest,src)}</tt></nobr> call
+ * <tt>{@link #tiler() tiler()}.{@link TiledApertureProcessorFactory#tile(ApertureProcessor)
+ * tile}(p).{@link ApertureProcessor#process(Map, Map) process(dest,src)}</tt> call
  * &mdash; the source matrix or matrices are passed via <tt>src</tt>, the result is retrieved from <tt>dest</tt>.
  * As a result, the same operation is performed tile-by-tile.</p>
  *
@@ -73,7 +73,7 @@ import java.util.Map;
  * <p>Note: in improbable cases, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ * greater than <tt>Long.MAX_VALUE</tt>,
  * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
  * See comments to {@link TiledApertureProcessorFactory} class, "Restriction" section for precise details.
  * Of course, these are very improbable cases.</p>
@@ -101,8 +101,8 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
      * <tt>parent.{@link Morphology#context() context()}</tt>, and
      * the {@link TiledApertureProcessorFactory#context() context} of the passed tiler
      * is automatically replaced with the same one &mdash; the current {@link #tiler() tiler}
-     * of the created object is <nobr><tt>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
-     * context}(newInstance.{@link #context() context()})</tt></nobr>.
+     * of the created object is <tt>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
+     * context}(newInstance.{@link #context() context()})</tt>.
      * It means that the {@link TiledApertureProcessorFactory#context() context} of the passed tiler is not important
      * and can be {@code null}.</p>
      *

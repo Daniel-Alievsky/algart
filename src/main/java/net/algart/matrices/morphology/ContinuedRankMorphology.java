@@ -50,7 +50,7 @@ import net.algart.math.patterns.*;
  * to the dimensions of the source matrix.</p>
  *
  * <p>The processing is little different for methods, placing the result into the first argument
- * <nobr><tt>Matrix&lt;? extends UpdatablePArray&gt; dest</tt></nobr>, like
+ * <tt>Matrix&lt;? extends UpdatablePArray&gt; dest</tt>, like
  * {@link #percentile(Matrix, Matrix, Matrix, Pattern)}.
  * In these cases, the destination (updatable) matrix is (virtually) extended like the source matrix
  * before calculations with help of
@@ -69,7 +69,7 @@ import net.algart.math.patterns.*;
  * <p>Note: in improbable cases, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ * greater than <tt>Long.MAX_VALUE</tt>,
  * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
  * Of course, these are very improbable cases.</p>
  *

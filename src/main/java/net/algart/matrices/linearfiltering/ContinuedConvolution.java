@@ -73,7 +73,7 @@ import java.util.Objects;
  * <p>Note: in improbable cases, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+ * greater than <tt>Long.MAX_VALUE</tt>,
  * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
  * Of course, these are very improbable cases.</p>
  *

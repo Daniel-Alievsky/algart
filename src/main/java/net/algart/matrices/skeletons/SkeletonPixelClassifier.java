@@ -154,7 +154,7 @@ import net.algart.arrays.*;
  * 0-pixel branch. (It is the only situation, when the results of {@link #asPixelTypes asPixelTypes} are
  * not enough to recognize, whether two nodes of skeleton nonoriented graph should be connected with an edge.)
  * This class also provides {@link #neighbourOffset(int)} method, which specifies
- * some order of the <nobr>3<sup><i>n</i></sup>&minus;1</nobr> neighbours, <i>n</i>={@link #dimCount()},
+ * some order of the 3<sup><i>n</i></sup>&minus;1 neighbours, <i>n</i>={@link #dimCount()},
  * of each matrix element and is necessary for interpretation of non-negative values, returned by
  * {@link #asPixelTypes asPixelTypes} method.</p>
  *
@@ -172,9 +172,9 @@ import net.algart.arrays.*;
  *
  * <blockquote>max&nbsp;(|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|)=1</blockquote>
  *
- * <p>where <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr>
+ * <p>where <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub>
  * are coordinates of the first pixel and
- * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+ * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
  * are coordinates of the second pixel (a neighbour of the first one). In 2-dimensional case,
  * such connectivity kind is also called <i>8-connectivity</i>.</p>
  *
@@ -219,7 +219,7 @@ import net.algart.arrays.*;
  * <p>This class supposes that the processed matrix is infinitely pseudo-cyclically continued, as well
  * {@link net.algart.arrays.Matrices#asShifted Matrices.asShifted} method supposes it.
  * You can change this behavior by appending the source matrix with zero elements
- * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
  * and the <code>continuationMode</code> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
