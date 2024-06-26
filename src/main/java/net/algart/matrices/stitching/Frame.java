@@ -96,7 +96,7 @@ public interface Frame<P extends FramePosition> {
      * in this frame.
      *
      * <p>Note: this method should return <tt>true</tt> even the class of the passed frame
-     * is different than this class. This method checks only the built-in matrices and positions.
+     * is different from this class. This method checks only the built-in matrices and positions.
      *
      * @param obj the object to be compared for equality with this frame.
      * @return    <tt>true</tt> if the specified object is a frame containing the equal matrix and position.

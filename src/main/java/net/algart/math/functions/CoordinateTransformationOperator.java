@@ -90,7 +90,7 @@ public interface CoordinateTransformationOperator extends Operator {
      * <p>There is high probability, but no guarantee that this method returns <code>true</code> if the passed operator
      * specifies a transformation, identical to this one.
      * There is a guarantee that this method returns <code>false</code>
-     * if the passed operator specifies a transformation, different than this one.
+     * if the passed operator specifies a transformation, different from this one.
      *
      * @param obj the object to be compared for equality with this operator.
      * @return <code>true</code> if the specified object is a coordinate transformation operator equal to this one.

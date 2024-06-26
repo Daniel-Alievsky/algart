@@ -49,7 +49,7 @@ public interface FramePosition {
      * <p>There is high probability, but no guarantee that this method returns <tt>true</tt> if the passed object
      * specifies a frame position, identical to this one.
      * There is a guarantee that this method returns <tt>false</tt>
-     * if the passed object specifies a frame position, different than this one.
+     * if the passed object specifies a frame position, different from this one.
      *
      * @param obj the object to be compared for equality with this frame position.
      * @return    <tt>true</tt> if the specified object is a frame position equal to this one.

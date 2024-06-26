@@ -262,7 +262,7 @@ public interface ArrayContext {
      *                           <code>#currentThreadIndex</code> in a group of
      *                           <code>numberOfThreads</code> parallel threads.
      * @throws IllegalArgumentException if <code>numberOfThreads&le;0</code> or if <code>currentThreadIndex</code>
-     *                                  does not lie in <nobr><code>0..numberOfThreads-1</code></nobr> range.
+     *                                  does not lie in <code>0..numberOfThreads-1</code> range.
      */
     ArrayContext multithreadingVersion(int currentThreadIndex, int numberOfThreads);
 
@@ -343,9 +343,9 @@ public interface ArrayContext {
     void updateProgress(Event event);
 
     /**
-     * Equivalent to 2 sequential calls: <nobr><code>{@link #checkInterruption()}</code></nobr> and
-     * <nobr><code>{@link #updateProgress
-     * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</code></nobr>.
+     * Equivalent to 2 sequential calls: <code>{@link #checkInterruption()}</code> and
+     * <code>{@link #updateProgress
+     * updateProgress}(new ArrayContext.Event(elementType, readyCount, length))</code>.
      *
      * @param elementType           the result of {@link ArrayContext.Event#elementType()} method in the event;
      *                              can be {@code null}.
@@ -362,8 +362,8 @@ public interface ArrayContext {
      * {@link ThreadPoolFactory} class), which are executed parallel in several threads
      * (usually, to optimize calculations on multiprocessor or multicore computers).
      *
-     * <p>To create a context, in which this method returns a value different than <code>0</code>, please use
-     * <nobr>{@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)}</nobr> method.
+     * <p>To create a context, in which this method returns a value, different from <code>0</code>, please use
+     * {@link #multithreadingVersion(int currentThreadIndex, int numberOfThreads)} method.
      *
      * <p>The result of this method always lies in
      * <code>0..{@link #numberOfThreads() numberOfThreads()}-1</code> range.

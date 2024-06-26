@@ -79,8 +79,8 @@ public abstract class AbstractIterativeArrayProcessor<T>
     }
 
     /**
-     * <p>This method returns <code><nobr>context == null ? null :
-     * context.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</nobr></code>.
+     * <p>This method returns <code>context == null ? null :
+     * context.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</code>.
      * This operation is needful very often while implementing {@link #performIteration(ArrayContext)} method.
      *
      * @param context  some array context.

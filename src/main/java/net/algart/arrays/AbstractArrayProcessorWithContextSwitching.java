@@ -112,8 +112,8 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     }
 
     /**
-     * <p>This method returns <code><nobr>{@link #context()} == null ? null :
-     * {@link #context()}.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</nobr></code>.
+     * <p>This method returns <code>{@link #context()} == null ? null :
+     * {@link #context()}.{@link ArrayContext#part(double, double) part}(fromPart, toPart))</code>.
      * This operation is needful very often while implementing most array processors.
      *
      * @param fromPart the estimated ready part, from 0.0 to 1.0,

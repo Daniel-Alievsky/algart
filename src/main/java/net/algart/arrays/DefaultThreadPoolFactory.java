@@ -71,16 +71,16 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * If there is no such property, or if it contains not a number,
      * or if some exception occurred while calling <code>Integer.getInteger</code>,
      * this method returns the default value, which is equal (in the current implementation) to
-     * <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></code>,
+     * <code>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</code>,
      * where MULT is an integer value, stored in "<code>net.algart.arrays.globalThreadPoolsPerCPU</code>"
      * system property, or default multiplier 2 if there is no such property or it contains not a number.
      * Default value MULT=2 provides a suitable choice for most multiprocessor configurations.
      * The value of these system properties are loaded and checked only once
      * while initializing {@link DefaultThreadPoolFactory} class.
      *
-     * <p>Note: the default value <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</nobr></code>
+     * <p>Note: the default value <code>{@link Arrays.SystemSettings#availableProcessors()}*MULT+1</code>
      * can be changed in future implementations. It is only guaranteed that this value is chosen
-     * not less than <code><nobr>{@link Arrays.SystemSettings#availableProcessors()}</nobr></code>.
+     * not less than <code>{@link Arrays.SystemSettings#availableProcessors()}</code>.
      *
      * <p>Note: the threads, created in the global thread pool (if it exists), are <i>daemons</i>.
      * So, the application can be terminated by the usual way, even
@@ -180,13 +180,13 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      *
      * <p>If this instance was created by the {@link #DefaultThreadPoolFactory constructor}
      * with non-zero <code>numberOfTasks</code> argument
-     * (or via <nobr>{@link #getDefaultThreadPoolFactory(int numberOfTask)}</nobr> method
+     * (or via {@link #getDefaultThreadPoolFactory(int numberOfTask)} method
      * with <code>numberOfTasks&gt;0</code> method),
      * the given <code>numberOfTasks</code> argument is returned always
      * regardless of any system properties.
      *
      * <p>If this instance uses persistent thread pool, that is if
-     * <nobr><code>{@link #persistentThreadPool()}!=null</code></nobr> (a typical situation),
+     * <code>{@link #persistentThreadPool()}!=null</code> (a typical situation),
      * then the result of this method, calculated by the rules above,
      * is also truncated by the limit
      * <code>Math.max(1, <nobr>((ThreadPoolExecutor){@link #persistentThreadPool()}).getCorePoolSize())</nobr></code>

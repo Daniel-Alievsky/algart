@@ -701,8 +701,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      * elementType()})</code>.
      *
      * <p>Note: for primitive array types ({@link PArray} and its inheritors), this method throws an exception
-     * if and only if <nobr><code>thisArray.{@link #elementType() elementType()}!=src.{@link #elementType()
-     * elementType()}</code></nobr>.
+     * if and only if <code>thisArray.{@link #elementType() elementType()}!=src.{@link #elementType()
+     * elementType()}</code>.
      *
      * @param thisArray this array.
      * @param src       the source array.
