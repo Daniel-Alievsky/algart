@@ -35,8 +35,8 @@ import java.util.Objects;
  * <i>b</i> + <i>a</i><sub>0</sub><i>x</i><sub>0</sub> + <i>a</i><sub>1</sub><i>x</i><sub>1</sub>
  * +...+ <i>a</i><sub><i>n</i>-1</sub><i>x</i><sub><i>n</i>-1</sub>.
  * Note: if <i>b</i>==+0.0 or <i>b</i>==&minus;0.0, this sum is calculated as
- * <nobr>+0.0 + <i>a</i><sub>0</sub><i>x</i><sub>0</sub> + <i>a</i><sub>1</sub><i>x</i><sub>1</sub>
- * +...+ <i>a</i><sub><i>n</i>-1</sub><i>x</i><sub><i>n</i>-1</sub></nobr>;
+ * +0.0 + <i>a</i><sub>0</sub><i>x</i><sub>0</sub> + <i>a</i><sub>1</sub><i>x</i><sub>1</sub>
+ * +...+ <i>a</i><sub><i>n</i>-1</sub><i>x</i><sub><i>n</i>-1</sub>;
  * according Java specification, it means that this function never returns &minus;0.0 double value.</p>
  *
  * <p>The {@link #get} method of the instance of this class requires at least <i>n</i> arguments

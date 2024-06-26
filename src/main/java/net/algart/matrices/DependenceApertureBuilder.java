@@ -47,7 +47,7 @@ import java.util.Objects;
  * <p>More precisely, the <i>dependence aperture</i> is such rectangular area in <i>n</i>-dimensional space,
  * represented by {@link IRectangularArea} object <b>A</b>,
  * that every element of the resulting <i>n</i>-dimensional matrix with coordinates
- * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
  * can depend only on elements of the source matrix (or matrices) with coordinates</p>
  *
  * <blockquote>
@@ -58,7 +58,7 @@ import java.util.Objects;
  * </blockquote>
  *
  * <p>where
- * <nobr><b>a</b> = (<i>a</i><sub>0</sub>, <i>a</i><sub>1</sub>, ..., <i>a</i><sub><i>n</i>&minus;1</sub>)</nobr>
+ * <b>a</b> = (<i>a</i><sub>0</sub>, <i>a</i><sub>1</sub>, ..., <i>a</i><sub><i>n</i>&minus;1</sub>)
  * is one of points belonging to the rectangular area <b>A</b>.
  * Please draw attention that we use plus sing + in this definition, instead of more traditional minus sign &minus;
  * (used, for example, in specifications of {@link StreamingApertureProcessor}
@@ -71,10 +71,10 @@ import java.util.Objects;
  * minus sign &minus;, as in specifications of {@link StreamingApertureProcessor}
  * or {@link net.algart.matrices.morphology.RankMorphology}
  * (a set of points
- * <nobr><b>x</b>&minus;<b>p</b></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub>0</sub>,
+ * <b>x</b>&minus;<b>p</b></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub>0</sub>,
  * <i>x</i><sub>1</sub>&minus;<i>p</i><sub>1</sub>, ...,
- * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>n</i>&minus;1</sub>)</nobr>
- * for all <nobr><b>p</b>&isin;<b>P</b></nobr>, <b>P</b> is a pattern).</p>
+ * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>n</i>&minus;1</sub>)
+ * for all <b>p</b>&isin;<b>P</b>, <b>P</b> is a pattern).</p>
  *
  * <p>The main method, solving this task, is</p>
  *
@@ -133,14 +133,14 @@ public enum DependenceApertureBuilder {
      *
      * <p>This mode is suitable for algorithms, which perform several sequential operations over the matrix,
      * when each elements of the result of each operation <tt>#k</tt> with coordinates
-     * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
-     * <nobr><b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
+     * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
-     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>)</nobr>.
-     * Here <nobr><b>p</b><sub><i>i</i></sub></nobr> are all points of the corresponding pattern
+     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
+     * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
      * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <nobr><tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt></nobr>.
+     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#dilationErosion(Matrix, Pattern, Pattern,
@@ -185,14 +185,14 @@ public enum DependenceApertureBuilder {
      * <p>This mode is suitable for algorithms, which perform several independent operations over the same
      * original matrix,
      * when each elements of the result of each operation <tt>#k</tt> with coordinates
-     * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
-     * <nobr><b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
+     * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
-     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>)</nobr>.
-     * Here <nobr><b>p</b><sub><i>i</i></sub></nobr> are all points of the corresponding pattern
+     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
+     * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
      * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <nobr><tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt></nobr>.
+     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#beucherGradient(Matrix, Pattern)}.
@@ -236,14 +236,14 @@ public enum DependenceApertureBuilder {
      *
      * <p>This mode is suitable for algorithms, which perform several sequential operations over the matrix,
      * when each elements of the result of each operation <tt>#k</tt> with coordinates
-     * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>
+     * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * depends on the elements of the previous matrix with coordinates
-     * <nobr><b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
+     * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
      * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
-     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>)</nobr>.
-     * Here <nobr><b>p</b><sub><i>i</i></sub></nobr> are all points of the corresponding pattern
+     * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>).
+     * Here <b>p</b><sub><i>i</i></sub> are all points of the corresponding pattern
      * <tt>patterns[k]</tt> or, if <tt>inverted[k]</tt> is <tt>true</tt>,
-     * of the symmetric pattern <nobr><tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt></nobr>.
+     * of the symmetric pattern <tt>patterns[k].{@link Pattern#symmetric() symmetric()}</tt>.
      *
      * <p>An example of algorithm, where this aperture builder can be useful, is
      * {@link net.algart.matrices.morphology.Morphology#maskedDilationErosion(Matrix, Pattern, Pattern)}.
@@ -423,11 +423,11 @@ public enum DependenceApertureBuilder {
 
     /**
      * Returns a newly created array <tt>result</tt> with the same length as the first argument, where
-     * <nobr><tt>result[k] = matrixDimensions[k])+aperture.{@link IRectangularArea#width(int) width}(k)</tt></nobr>.
+     * <tt>result[k] = matrixDimensions[k])+aperture.{@link IRectangularArea#width(int) width}(k)</tt>.
      * This method also checks that all dimensions in the <tt>matrixDimensions</tt> array,
      * as well as the resulting dimensions <tt>result</tt> array, are allowed dimensions for some
      * AlgART matrix, i.e. are non-negative and their product is not greater than
-     * <nobr><tt>Long.MAX_VALUE</tt></nobr>. If it is not so, <tt>IndexOutOfBoundsException</tt> is thrown.
+     * <tt>Long.MAX_VALUE</tt>. If it is not so, <tt>IndexOutOfBoundsException</tt> is thrown.
      *
      * <p>In the special case, when some of the elements of the <tt>matrixDimensions</tt> array is zero,
      * this method returns a precise clone of this array without changes.
@@ -445,10 +445,10 @@ public enum DependenceApertureBuilder {
      *                                   coordCount()}</tt>,
      *                                   or if <tt>matrixDimensions[k]&lt;0</tt> for some <tt>k</tt>.
      * @throws IndexOutOfBoundsException if product of all elements of <tt>matrixDimensions</tt> array
-     *                                   is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>,
+     *                                   is greater than <tt>Long.MAX_VALUE</tt>,
      *                                   or in a case of integer overflow while calculating <tt>result[k]</tt>,
      *                                   or if product of all elements of the resulting array
-     *                                   is greater than <nobr><tt>Long.MAX_VALUE</tt></nobr>.
+     *                                   is greater than <tt>Long.MAX_VALUE</tt>.
      */
     public static long[] extendDimensions(long[] matrixDimensions, IRectangularArea aperture) {
         Objects.requireNonNull(matrixDimensions, "Null matrixDimensions");
@@ -490,9 +490,9 @@ public enum DependenceApertureBuilder {
     /**
      * Returns <tt>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
      * subMatrix}(from, to, continuationMode)</tt>,
-     * where <nobr><tt>from[k] = aperture.{@link IRectangularArea#min(int) min}(k)</tt></nobr>
-     * and <nobr><tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)+aperture.{@link IRectangularArea#max(int)
-     * max}(k)</tt></nobr>.
+     * where <tt>from[k] = aperture.{@link IRectangularArea#min(int) min}(k)</tt>
+     * and <tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)+aperture.{@link IRectangularArea#max(int)
+     * max}(k)</tt>.
      * This method allows to extends the source matrix in such a way, that every element of the resulting matrix
      * of some processing algorithm, having the given dependence aperture, will depend only on the existing
      * elements of the extended matrix (lying inside its bounds).
@@ -550,9 +550,9 @@ public enum DependenceApertureBuilder {
     /**
      * Returns <tt>matrix.{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)
      * subMatrix}(from, to, {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC})</tt>,
-     * where <nobr><tt>from[k] = -aperture.{@link IRectangularArea#min(int) min}(k)</tt></nobr>
-     * and <nobr><tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)-aperture.{@link IRectangularArea#max(int)
-     * max}(k)</tt></nobr>.
+     * where <tt>from[k] = -aperture.{@link IRectangularArea#min(int) min}(k)</tt>
+     * and <tt>to[k] = matrix.{@link Matrix#dim(int) dim}(k)-aperture.{@link IRectangularArea#max(int)
+     * max}(k)</tt>.
      * It is the reverse method for {@link #extend(Matrix, IRectangularArea, Matrix.ContinuationMode)}.
      *
      * <p>In the special case <tt>matrix.{@link Matrix#size() size()}==0</tt>,

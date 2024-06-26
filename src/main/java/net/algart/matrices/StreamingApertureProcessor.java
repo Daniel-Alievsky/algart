@@ -56,75 +56,75 @@ import java.util.Set;
  *
  * <p>This class works with some {@link Matrix AlgART matrix} <b>M</b>, called the <i>source</i> matrix,
  * some list of additional matrices
- * <nobr><b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub></nobr>,
+ * <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>,
  * called the <i>additional arguments</i> (<i>K</i> can be 0: an empty list),
  * and some {@link Pattern pattern} <b>P</b>, called the <i>aperture shape</i>.
  * The dimensions of all additional arguments always must be the same as the dimensions of the source
- * matrix: <nobr><b>M</b><sub><i>k</i></sub>.{@link Matrix#dimEquals(Matrix) dimEquals}(<b>M</b>)</nobr>;
+ * matrix: <b>M</b><sub><i>k</i></sub>.{@link Matrix#dimEquals(Matrix) dimEquals}(<b>M</b>);
  * the aperture shape must have the same number of dimensions:
- * <nobr><b>P</b>.{@link Pattern#dimCount() dimCount()}<tt>==</tt><b>M</b>.{@link Matrix#dimCount() dimCount()}</nobr>.
+ * <b>P</b>.{@link Pattern#dimCount() dimCount()}<tt>==</tt><b>M</b>.{@link Matrix#dimCount() dimCount()}.
  * The aperture shape <b>P</b> is supposed to be an {@link Pattern <i>integer</i> pattern};
  * if a pattern, passed to the main {@link #process(Matrix, Matrix, List, Pattern) process}
  * method of this class, is not integer, it is automatically
  * rounded to the nearest integer pattern by the call
- * <nobr><tt>pattern=pattern.{@link Pattern#round() round()}</tt></nobr>.</p>
+ * <tt>pattern=pattern.{@link Pattern#round() round()}</tt>.</p>
  *
  * <ol>
  * <li>For any integer point, or <i>position</i>
- * <nobr><b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>,
- * <nobr><i>n</i>=<b>M</b>.{@link Matrix#dimCount() dimCount()}</nobr>, the <i>aperture</i> of this point,
+ * <b>x</b> = (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>),
+ * <i>n</i>=<b>M</b>.{@link Matrix#dimCount() dimCount()}, the <i>aperture</i> of this point,
  * or the <i>aperture at the position</i> <b>x</b>,
  * is a set of points
- * <nobr><b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
+ * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub><i>i</i>0</sub>,
  * <i>x</i><sub>1</sub>&minus;<i>p</i><sub><i>i</i>1</sub>, ...,
- * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>)</nobr>
- * for all <nobr><b>p</b><sub><i>i</i></sub>&isin;<b>P</b></nobr> ({@link Pattern#roundedPoints() points}
+ * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>i</i>,<i>n</i>&minus;1</sub>)
+ * for all <b>p</b><sub><i>i</i></sub>&isin;<b>P</b> ({@link Pattern#roundedPoints() points}
  * of the pattern&nbsp;<b>P</b>).
  * We always consider that the point <b>x</b> lies inside <b>M</b> matrix
- * (<nobr>0&le;<i>x</i><sub><i>k</i></sub>&lt;<b>M</b>.<tt>{@link Matrix#dim(int) dim}(<i>k</i>)</tt></nobr>
+ * (0&le;<i>x</i><sub><i>k</i></sub>&lt;<b>M</b>.<tt>{@link Matrix#dim(int) dim}(<i>k</i>)</tt>
  * for all <i>k</i>), but this condition can be not true for points of the aperture
- * <nobr><b>x</b>&minus;<b>p</b><sub><i>i</i></sub></nobr>.
+ * <b>x</b>&minus;<b>p</b><sub><i>i</i></sub>.
  * <br>&nbsp;</li>
  *
- * <li>For every point <nobr><b>x</b>' = <b>x</b>&minus;<b>p</b><sub><i>i</i></sub></nobr> of the aperture
+ * <li>For every point <b>x</b>' = <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> of the aperture
  * we consider the corresponding <i>value</i> <i>v<sub>i</sub></i> of the source matrix <b>M</b>.
  * More formally, <i>v<sub>i</sub></i> it is the value of the element
  * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements is <tt>boolean</tt>, <tt>char</tt>,
  * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt> or <tt>long</tt>, or real: {@link PArray#getDouble(long)},
  * if the element type is <tt>float</tt> or <tt>double</tt>) of the underlying array
- * <nobr><b>M</b>.{@link Matrix#array() array()}</nobr> with an index
- * <nobr><b>M</b>.{@link Matrix#pseudoCyclicIndex(long...)
- * pseudoCyclicIndex}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>)</nobr>,
- * where <nobr><i>x</i>'<sub><i>k</i></sub> = <i>x</i><sub><i>k</i></sub>&minus;<i>p</i><sub><i>i,k</i></sub></nobr>.
+ * <b>M</b>.{@link Matrix#array() array()} with an index
+ * <b>M</b>.{@link Matrix#pseudoCyclicIndex(long...)
+ * pseudoCyclicIndex}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>),
+ * where <i>x</i>'<sub><i>k</i></sub> = <i>x</i><sub><i>k</i></sub>&minus;<i>p</i><sub><i>i,k</i></sub>.
  * These values <i>v<sub>i</sub></i> form the <i>unordered</i> set of
- * <nobr><i>N</i>=<b>P</b>.{@link Pattern#pointCount() pointCount()}</nobr> "neighbour" values.
+ * <i>N</i>=<b>P</b>.{@link Pattern#pointCount() pointCount()} "neighbour" values.
  * <br>&nbsp;</li>
  *
  * <li>Also for the position <b>x</b> we consider an <i>ordered</i> list of <i>K</i> <i>additional values</i>
- * <nobr><i>w</i><sub>0</sub>, <i>w</i><sub>1</sub>, ..., <i>w</i><sub><i>K</i>&minus;1</sub></nobr> &mdash;
+ * <i>w</i><sub>0</sub>, <i>w</i><sub>1</sub>, ..., <i>w</i><sub><i>K</i>&minus;1</sub> &mdash;
  * the values of corresponding elements of the additional arguments
- * <nobr><b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub></nobr>.
+ * <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>.
  * More formally, <i>w<sub>k</sub></i> it is the value of the element
  * (integer: {@link PFixedArray#getLong(long)}, if the type of the matrix elements is <tt>boolean</tt>, <tt>char</tt>,
  * <tt>byte</tt>, <tt>short</tt>, <tt>int</tt> or <tt>long</tt>, or real: {@link PArray#getDouble(long)},
  * if the element type is <tt>float</tt> or <tt>double</tt>) of the underlying array
- * <nobr><b>M</b><sub><i>k</i></sub>.{@link Matrix#array() array()}</nobr> with an index
- * <nobr><b>M</b><sub><i>k</i></sub>.{@link Matrix#index(long...)
- * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+ * <b>M</b><sub><i>k</i></sub>.{@link Matrix#array() array()} with an index
+ * <b>M</b><sub><i>k</i></sub>.{@link Matrix#index(long...)
+ * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>).
  * <br>&nbsp;</li>
  *
  * <li>The <i>streaming aperture processor</i> is an algorithm, which transforms the source matrix <b>M</b>
  * and the additional matrices
- * <nobr><b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub></nobr>
+ * <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>
  * to the resulting matrix <b>R</b>, every element <i>r</i> of which at the position <b>x</b> is the result
- * of some <i>processing function g</i> with <nobr><i>N</i>+<i>K</i></nobr> arguments:
+ * of some <i>processing function g</i> with <i>N</i>+<i>K</i> arguments:
  * <blockquote>
  * <i>r</i> = <i>g</i> (<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>, ..., <i>v</i><sub><i>N</i>&minus;1</sub>,
  * <i>w</i><sub>0</sub>, <i>w</i><sub>1</sub>, ..., <i>w</i><sub><i>K</i>&minus;1</sub>).
  * </blockquote>
  * The processing function <i>g</i> is a parameter of this object and is specified by the concrete implementation
  * of {@link #asProcessed(Class, Matrix, List, Pattern)} abstract method.
- * As <nobr><i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>, ..., <i>v</i><sub><i>N</i>&minus;1</sub></nobr>
+ * As <i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>, ..., <i>v</i><sub><i>N</i>&minus;1</sub>
  * is unordered set with unspecified order of elements, this function <i>must not depend on the order of
  * its first N arguments</i> <i>v<sub>i</sub></i>. (But it usually depends on the order of the additional
  * arguments <i>w<sub>k</sub></i>.)
@@ -147,7 +147,7 @@ import java.util.Set;
  * In standard implementations, it is enough to implement only the abstract method
  * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed}.
  * But it is also allowed this class to represent any other algorithm, that converts <b>M</b> matrix and
- * a set of <nobr><b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub></nobr>
+ * a set of <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, ..., <b>M</b><sub><i>K</i>&minus;1</sub>
  * additional matrices, according to the given aperture shape <b>P</b>, to the resulting matrix <b>R</b>.
  * Such implementations of this class are called <i>non-standard implementations</i>.
  * In non-standard implementations, you must override both methods
@@ -235,7 +235,7 @@ import java.util.Set;
  * {@link Array#getData(long, Object, int, int)} method in the "lazy" built-in array of the resulting matrix.
  * To do this, you need to load the corresponding subarrays of the additional arguments into your own Java arrays
  * by the corresponding {@link Array#getData(long, Object, int, int)} calls for all arrays
- * <nobr><b>M</b><sub><i>k</i></sub>.{@link Matrix#array() array()}</nobr>
+ * <b>M</b><sub><i>k</i></sub>.{@link Matrix#array() array()}
  * and then to process these Java arrays. The {@link JArrayPool} class can help you to minimize necessary
  * memory allocations.</p>
  *
@@ -244,7 +244,7 @@ import java.util.Set;
  * in {@link net.algart.matrices.morphology.RankProcessors} class.</p>
  *
  * <p><b>Warning</b>: this class can process only patterns
- * where <nobr><tt>{@link Pattern#pointCount() pointCount()}&le;Integer.MAX_VALUE</tt></nobr>.
+ * where <tt>{@link Pattern#pointCount() pointCount()}&le;Integer.MAX_VALUE</tt>.
  * More precisely, any methods of this class, which have {@link Pattern} argument,
  * can throw {@link net.algart.math.patterns.TooManyPointsInPatternError TooManyPointsInPatternError}
  * or <tt>OutOfMemoryError</tt> in the same situations as {@link Pattern#points()} method.</p>
@@ -397,9 +397,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Returns an immutable view of the passed source matrix <nobr><b>M</b>=<tt>src</tt></nobr>
+     * Returns an immutable view of the passed source matrix <b>M</b>=<tt>src</tt>
      * and the passed additional matrices
-     * <nobr><b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt></nobr>,
+     * <b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt>,
      * such that any reading data from it calculates and returns the result <b>R</b> of
      * this streaming aperture processor.
      * See the {@link StreamingApertureProcessor comments to this class} for more details.
@@ -550,9 +550,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Processes the passed source matrix <nobr><b>M</b>=<tt>src</tt></nobr>
+     * Processes the passed source matrix <b>M</b>=<tt>src</tt>
      * and the passed additional matrices
-     * <nobr><b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt></nobr>
+     * <b>M</b><sub><i>k</i></sub>=<tt>additionalMatrices.get(</tt><i>k</i><tt>)</tt>
      * by this streaming aperture processor and stores the result <b>R</b>
      * in <tt>dest</tt> argument.
      * See the {@link StreamingApertureProcessor comments to this class} for more details.
@@ -584,7 +584,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      *
      * <p>The aperture shape <tt>pattern</tt>, passed to this method, is automatically rounded to the nearest
      * {@link Pattern integer pattern} by the operators
-     * <nobr><tt>pattern = pattern.{@link Pattern#round() round()}</tt></nobr>
+     * <tt>pattern = pattern.{@link Pattern#round() round()}</tt>
      * in the very beginning of this method.
      * In other words, this class is designed for processing integer aperture shapes only.
      * It is the a normal situation for most aperture matrix processing algorithms.
@@ -754,7 +754,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * Specifies the maximal amount of usual Java memory,
      * measured in elements of temporary arrays, that {@link #process(Matrix, Matrix, List, Pattern) process} method
      * may freely use for optimization needs.
-     * The <tt>src</tt> arguments is <nobr><b>M</b>.{@link Matrix#array() array()}</nobr>,
+     * The <tt>src</tt> arguments is <b>M</b>.{@link Matrix#array() array()},
      * where <b>M</b> is the source processed matrix, passed to
      * {@link #process(Matrix, Matrix, List, Pattern) process}  method.
      *
@@ -763,7 +763,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * Math.max({@link net.algart.arrays.Arrays.SystemSettings#MIN_OPTIMIZATION_JAVA_MEMORY},
      * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()})</tt>
      * and <tt>elementSize</tt> is the number of bytes, required for each element of <tt>src</tt> array
-     * (i.e. <nobr><tt>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</tt></nobr>).
+     * (i.e. <tt>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</tt>).
      *
      * <p>You may override this method if you want to change this behaviour.
      * For example, it can be necessary if your implementation of

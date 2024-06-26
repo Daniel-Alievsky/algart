@@ -33,9 +33,9 @@ import java.util.Arrays;
 
 /**
  * <p>Projective operator (projective transformation):
- * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>y</b>)</nobr>,
- * <nobr><i>y</i><sub><i>i</i></sub> =
- * (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)</nobr>
+ * <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>y</b>),
+ * <i>y</i><sub><i>i</i></sub> =
+ * (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)
  * (<b>a</b><sub><i>i</i></sub> means the line <i>i</i> of the matrix <b>A</b>),
  * where the numeric <i>n</i>&nbsp;x&nbsp;<i>n</i> matrix <b>A</b>,
  * the <i>n</i>-dimensional vectors <b>b</b> and <b>c</b> and the number <i>d</i>
@@ -46,20 +46,20 @@ import java.util.Arrays;
  * <table>
  * <caption></caption>
  * <tr>
- * <td><nobr><b>y</b> = </nobr></td>
- * <td><nobr><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></nobr></td>
- * <td><nobr> = </nobr></td>
+ * <td><b>y</b> = </td>
+ * <td><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></td>
+ * <td> = </td>
  * <td>
- *   <nobr>
+ *
  *   (<b>A</b><sub>0</sub><b>x</b> + <i>b</i><sub>0</sub>) / (<b>cx</b> + <i>d</i>)<br>
  *   (<b>A</b><sub>1</sub><b>x</b> + <i>b</i><sub>1</sub>) / (<b>cx</b> + <i>d</i>)<br>
  *   ...<br>
  *   (<b>A</b><sub><i>n</i>&minus;1</sub><b>x</b> + <i>b</i><sub><i>n</i>&minus;1</sub>) / (<b>cx</b> + <i>d</i>)
- *   </nobr>
+ *
  * </td>
- * <td><nobr> = </nobr></td>
+ * <td> = </td>
  * <td>
- *   <nobr>
+ *
  *   (<i>a</i><sub>00</sub><i>x</i><sub>0</sub> + <i>a</i><sub>01</sub><i>x</i><sub>1</sub> + ...
  *     + <i>a</i><sub>0,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>b</i><sub>0</sub>) /
  *     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
@@ -75,7 +75,7 @@ import java.util.Arrays;
  *     + <i>b</i><sub><i>n</i>&minus;1</sub>) /
  *     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
  *     + <i>c</i><sub><i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>d</i>)
- *   </nobr>
+ *
  * </td>
  * </tr>
  * </table>
@@ -265,11 +265,11 @@ public class ProjectiveOperator
      * <table>
      * <caption></caption>
      * <tr>
-     * <td><nobr><i>d</i> = 1.0;</nobr></td>
+     * <td><i>d</i> = 1.0;</td>
      * </tr>
      * <tr>
      * <td>
-     *   <nobr>
+     *
      *   (<b>A</b><sub>0</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>0</sub>) /
      *   (<b>cp</b><sub><i>k</i></sub> + 1)<br>
      *   (<b>A</b><sub>1</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>1</sub>) /
@@ -277,12 +277,12 @@ public class ProjectiveOperator
      *   ...<br>
      *   (<b>A</b><sub><i>n</i>&minus;1</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub><i>n</i>&minus;1</sub>) /
      *   (<b>cp</b><sub><i>k</i></sub> + 1)
-     *   </nobr>
+     *
      * </td>
-     * <td><nobr> = </nobr></td>
-     * <td><nobr><i>q</i><sub><i>k</i>0</sub><br><i>q</i><sub><i>k</i>1</sub><br>...<br>
-     *   <i>q</i><sub><i>k</i>,<i>n</i>&minus;1</sub></nobr></td>
-     * <td><nobr> = <b>q</b><sub><i>k</i></sub> for <i>k</i> = 0, 1, ..., <i>n</i>+1</td>
+     * <td> = </td>
+     * <td><i>q</i><sub><i>k</i>0</sub><br><i>q</i><sub><i>k</i>1</sub><br>...<br>
+     *   <i>q</i><sub><i>k</i>,<i>n</i>&minus;1</sub></td>
+     * <td> = <b>q</b><sub><i>k</i></sub> for <i>k</i> = 0, 1, ..., <i>n</i>+1</td>
      * </tr>
      * </table>
      * </blockquote>
@@ -533,8 +533,8 @@ public class ProjectiveOperator
 
     /**
      * This implementation calculates <code>destPoint</code> by the formula
-     * <nobr><i>y</i><sub><i>i</i></sub> =
-     * (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>)</nobr>,
+     * <i>y</i><sub><i>i</i></sub> =
+     * (<b>a</b><sub><i>i</i></sub><b>x</b> + <i>b</i><sub><i>i</i></sub>) / (<b>cx</b> + <i>d</i>),
      * where <b>x</b>=<code>srcPoint</code> and <b>y</b>=<code>destPoint</code>.
      * See more details in the comments to {@link ProjectiveOperator this class}.
      *

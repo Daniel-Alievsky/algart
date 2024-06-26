@@ -37,7 +37,7 @@ import java.util.*;
  * with real coordinates ({@link Point}),
  * named the <i>minimal vertex</i> <b>min</b> and <i>maximal vertex</i> <b>max</b>,
  * and consists of all such points
- * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that:</p>
+ * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
  *
  * <blockquote>
  * <b>min</b>.{@link Point#coord(int) coord(0)} &le; <i>x</i><sub>0</sub> &le;
@@ -725,11 +725,11 @@ public class RectangularArea {
      * Calculates the set-theoretical difference <b>A</b>&nbsp;\&nbsp;<b>B</b> of this (<b>A</b>) and
      * the passed rectangular area (<b>B</b>)
      * in a form of <i>N</i> rectangular areas
-     * <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>,
+     * <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>,
      * the set-theoretical union of which is equal to this difference
-     * (<nobr><b>R</b><sub>1</sub>&cup;<b>R</b><sub>2</sub>&cup;...&cup;<b>R</b><sub><i>N</i></sub> =
-     * <b>A</b>&nbsp;\&nbsp;<b>B</b>)</nobr>.
-     * The resulting areas <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>
+     * (<b>R</b><sub>1</sub>&cup;<b>R</b><sub>2</sub>&cup;...&cup;<b>R</b><sub><i>N</i></sub> =
+     * <b>A</b>&nbsp;\&nbsp;<b>B</b>).
+     * The resulting areas <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>
      * are added into the collection <code>results</code> by <code>Collection.add(...)</code> method.
      * So, the collection <code>results</code> must be not-null and support adding elements
      * (usually it is <code>List</code> or <code>Queue</code>).
@@ -744,7 +744,7 @@ public class RectangularArea {
      *
      * <p>In other cases, there is more than 1 way to represent the resulting difference
      * in a form of union of several rectangular areas
-     * <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>.
+     * <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>.
      * The precise way, how this method forms this set of rectangular areas <b>R</b><sub><i>i</i></sub>,
      * is not documented, but this method tries to minimize the number <i>N</i> of such areas.
      * In any case, there is a guarantee that <i>N</i>&le;2*{@link #coordCount()}.
@@ -1005,7 +1005,7 @@ public class RectangularArea {
      * </ol>
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
-     * <nobr><i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub></nobr>,
+     * <i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub>,
      * <i>l<sub>i</i></sub> = {@link #min(int) min}(<i>i</i>),
      * <i>r<sub>i</i></sub> = {@link #max(int) max}(<i>i</i>),
      * <i>d<sub>i</i></sub> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
@@ -1015,7 +1015,7 @@ public class RectangularArea {
      * is inside <i>l<sub>i</sub></i>..<i>r<sub>i</sub></i> range.
      * The <i>parallel distance</i> from the point <b>p</b> to this rectangular area
      * is defined as maximal value from all <i>d<sub>i</sub></i>:
-     * <nobr>max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+     * max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>).
      *
      * @param point some point.
      * @return the parallel distance from this point to this rectangular area.

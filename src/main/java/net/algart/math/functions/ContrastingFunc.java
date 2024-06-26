@@ -29,16 +29,16 @@ package net.algart.math.functions;
  * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
  * <i>M</i> * (<i>x</i><sub>0</sub>/<i>x</i><sub>1</sub>) * (<i>x</i>&minus;<i>x</i><sub>2</sub>) /
  * max(<i>x</i><sub>3</sub>&minus;<i>x</i><sub>2</sub>,<i>threshold</i>),
- * where <nobr><i>x</i> = (<i>x</i><sub>1</sub>&lt;<i>x</i><sub>2</sub> ?
- * <i>x</i><sub>2</sub> : <i>x</i><sub>1</sub>&gt;x<sub>3</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>1</sub>)</nobr>
+ * where <i>x</i> = (<i>x</i><sub>1</sub>&lt;<i>x</i><sub>2</sub> ?
+ * <i>x</i><sub>2</sub> : <i>x</i><sub>1</sub>&gt;x<sub>3</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>1</sub>)
  * is <i>x</i><sub>1</sub>, truncated to <i>x</i><sub>2</sub>..<i>x</i><sub>3</sub> range,
  * <i>M</i> and <i>threshold</i> are constants.
  * In addition, in a case of 3 arguments this function always returns
- * <nobr><i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>) =
- * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>)</nobr>.
- * Note that <nobr><i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
+ * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>) =
+ * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>).
+ * Note that <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
  * (<i>x</i><sub>0</sub>/<i>x</i><sub>1</sub>) *
- * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>)</nobr>.</p>
+ * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>).</p>
  *
  * <p>If <i>x</i><sub>0</sub>=<i>x</i><sub>1</sub>=<i>b</i> is a brightness of some image pixel,
  * <i>x</i><sub>2</sub>..<i>x</i><sub>3</sub> represents some brightness range,
@@ -58,8 +58,8 @@ package net.algart.math.functions;
  * and the maximal (or almost maximal) brightnesses of the image or of some image area.</p>
  *
  * <p>If <i>x</i><sub>0</sub>&ne;<i>x</i><sub>1</sub>, this functions performs contrasting of <i>x</i><sub>1</sub>
- * to the contrasted value <nobr><i>y</i> =
- * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>)</nobr>,
+ * to the contrasted value <i>y</i> =
+ * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>),
  * as described above, and returns proportionally changed <i>x</i><sub>0</sub>,
  * i.e. <i>y</i>*(<i>x</i><sub>0</sub>/<i>x</i><sub>1</sub>). It can be useful for contrasting color images:
  * we can pass the average intensity (brightness) as <i>x</i><sub>1</sub> argument and a concrete color component
@@ -71,9 +71,9 @@ package net.algart.math.functions;
  * logic of threshold processing. It is supposed that any implementation of this class
  * in a case of 3 arguments performs some "contrasting" of the brightness, specified by the 1st argument,
  * accordingly the brightness range, specified by 2nd and 3rd argument, and that in a case of 4 arguments
- * <nobr><i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
+ * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>) =
  * (<i>x</i><sub>0</sub>/<i>x</i><sub>1</sub>) *
- * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>)</nobr>.
+ * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, <i>x</i><sub>3</sub>).
  *
  * <p>The {@link #get} method of the instances of this class requires at least 3 arguments
  * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0, 1 or 2.</p>

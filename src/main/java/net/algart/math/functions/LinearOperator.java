@@ -30,7 +30,7 @@ import java.util.Objects;
 
 /**
  * <p>Linear operator (affine transformation):
- * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>,
+ * <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>),
  * where the numeric <i>n</i>&nbsp;x&nbsp;<i>n</i> matrix <b>A</b>
  * and the <i>n</i>-dimensional vector <b>b</b> are parameters of the transformation.
  * (It is a particular case of the {@link ProjectiveOperator projective transformation},
@@ -50,7 +50,7 @@ public final class LinearOperator extends ProjectiveOperator {
     /**
      * Returns an instance of this class, describing the linear operator with the specified matrix <b>A</b>
      * and vector <b>b</b>:
-     * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>.
+     * <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>).
      * The coordinates of the vector <b>b</b> must be listed in <code>b</code> array.
      * The elements of the matrix <b>A</b> must be listed, row by row, in the <code>a</code> array:
      * <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
@@ -80,7 +80,7 @@ public final class LinearOperator extends ProjectiveOperator {
     /**
      * Returns an instance of this class, describing the linear operator with the diagonal matrix <b>A</b>
      * and vector <b>b</b>:
-     * <nobr><i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>)</nobr>,
+     * <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>Ax</b>&nbsp;+&nbsp;<b>b</b>),
      * where <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
      * <i>a</i><sub><i>ij</i></sub>=0.0 if <i>i</i>!=<i>j</i>,
      * <i>a</i><sub><i>ii</i></sub>=<code>diagonal[<i>i</i>]</code>.
@@ -147,8 +147,8 @@ public final class LinearOperator extends ProjectiveOperator {
      * <code>sin=StrictMath.sin(angle)</code>);</li>
      *
      * <li><code>b = {centerX-a[0]*centerX-a[1]*centerY,
-     * <nobr>centerY-a[2]*centerX-a[3]*centerY}</nobr></code> &mdash; vector
-     * <nobr><b>b</b>=<b>c</b>&minus;<b>Ac</b></nobr> (<nobr><b>c</b>=<code>{centerX, centerY}</code></nobr>).</li>
+     * centerY-a[2]*centerX-a[3]*centerY}</code> &mdash; vector
+     * <b>b</b>=<b>c</b>&minus;<b>Ac</b> (<b>c</b>=<code>{centerX, centerY}</code>).</li>
      * </ul>
      *
      * <p>The only difference from these formulas is special processing some cases, when the angle is <i>k</i>&pi;/2
@@ -293,9 +293,9 @@ public final class LinearOperator extends ProjectiveOperator {
      * More precisely, if this operator corresponds to the affine transformation <b>Ax</b>&nbsp;+&nbsp;<b>b</b>,
      * and the passed one corresponds to the affine transformation <b>A'x</b>&nbsp;+&nbsp;<b>b'</b>,
      * then the returned operator corresponds to the affine transformation
-     * <nobr><b>A''x</b> + <b>b''</b> = <b>A'</b>(<b>Ax</b> + <b>b</b>) + <b>b'</b></nobr>,
+     * <b>A''x</b> + <b>b''</b> = <b>A'</b>(<b>Ax</b> + <b>b</b>) + <b>b'</b>,
      * i.e. in the returned operator
-     * <nobr><b>A''</b> = <b>A'A</b></nobr>, <nobr><b>b''</b> = <b>A'b</b> + <b>b'</b></nobr>.
+     * <b>A''</b> = <b>A'A</b>, <b>b''</b> = <b>A'b</b> + <b>b'</b>.
      *
      * @param operator the second operator, that should be applied after this one.
      * @return superposition of this and the passed operator.

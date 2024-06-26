@@ -34,7 +34,7 @@ package net.algart.math.functions;
  * if they are applicable for your function. The default implementations, provided by this class,
  * work relatively slowly, because they allocate a little Java array for passing to the basic
  * {@link #get(double...)} method. For example, if you create a function with two arguments
- * <nobr><i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) = <i>x</i><sub>0</sub>/<i>x</i><sub>1</sub></nobr>,
+ * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) = <i>x</i><sub>0</sub>/<i>x</i><sub>1</sub>,
  * you should override the version with two arguments: {@link #get(double, double)}.</p>
  *
  * @author Daniel Alievsky

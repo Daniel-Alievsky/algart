@@ -37,7 +37,7 @@ import java.util.*;
  * with integer coordinates ({@link IPoint}),
  * named the <i>minimal vertex</i> <b>min</b> and <i>maximal vertex</i> <b>max</b>,
  * and consists of all such points
- * <nobr>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)</nobr>, that:</p>
+ * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
  *
  * <blockquote>
  * <b>min</b>.{@link IPoint#coord(int) coord(0)} &le; <i>x</i><sub>0</sub> &le;
@@ -57,17 +57,17 @@ import java.util.*;
  * are never greater than the corresponding coordinates of the maximal vertex
  * <b>max</b>.{@link IPoint#coord(int) coord(<i>i</i>)},
  * the coordinates of the minimal and maximal vertices are always in range
- * <nobr><code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code></nobr>,
+ * <code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code>,
  * and their difference is always <i>less</i> than <code>Long.MAX_VALUE</code>.
  * In other words,
- * <nobr>"<tt><b>max</b>.{@link IPoint#coord(int)
- * coord(<i>i</i>)}-<b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</tt>"</nobr> expression,
+ * "<tt><b>max</b>.{@link IPoint#coord(int)
+ * coord(<i>i</i>)}-<b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</tt>" expression,
  * returned by {@link #size(int)} method, and also
- * <nobr>"<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-1</code>"</nobr>,
- * <nobr>"<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-2</code>"</nobr> and
- * <nobr>"<code><b>max</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</code>"</nobr> expressions
+ * "<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-1</code>",
+ * "<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-2</code>" and
+ * "<code><b>max</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</code>" expressions
  * are always calculated without overflow,
- * and the <nobr>{@link #range(int)}</nobr> method is always possible to return an allowed range.
+ * and the {@link #range(int)} method is always possible to return an allowed range.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
@@ -98,16 +98,16 @@ public class IRectangularArea {
      *                                  or if, for some <i>i</i>,
      *                                  <tt>min.{@link IPoint#coord(int) coord}(<i>i</i>)
      *                                  &gt; max.{@link IPoint#coord(int) coord}(<i>i</i>)</tt>,
-     *                                  or if <tt><nobr>max.{@link IPoint#coord(int)
+     *                                  or if <tt>max.{@link IPoint#coord(int)
      *                                  coord}(<i>i</i>)-min.{@link IPoint#coord(int)
-     *                                  coord}(<i>i</i>)+1</nobr>
+     *                                  coord}(<i>i</i>)+1
      *                                  &gt; Long.MAX_VALUE</tt>
      *                                  (more precisely, if this Java expression is nonpositive
      *                                  due to integer overflow),
-     *                                  or if <tt><nobr>min.{@link IPoint#coord(int)
-     *                                  coord}(<i>i</i>) &lt;= -Long.MAX_VALUE</nobr></tt>,
-     *                                  or if <tt><nobr>max.{@link IPoint#coord(int)
-     *                                  coord}(<i>i</i>) == Long.MAX_VALUE</nobr></tt>.
+     *                                  or if <tt>min.{@link IPoint#coord(int)
+     *                                  coord}(<i>i</i>) &lt;= -Long.MAX_VALUE</tt>,
+     *                                  or if <tt>max.{@link IPoint#coord(int)
+     *                                  coord}(<i>i</i>) == Long.MAX_VALUE</tt>.
      */
     public static IRectangularArea valueOf(IPoint min, IPoint max) {
         return valueOf(min, max, false);
@@ -785,11 +785,11 @@ public class IRectangularArea {
      * Calculates the set-theoretical difference <b>A</b>&nbsp;\&nbsp;<b>B</b> of this (<b>A</b>) and
      * the passed rectangular area (<b>B</b>)
      * in a form of <i>N</i> rectangular areas
-     * <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>,
+     * <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>,
      * the set-theoretical union of which is equal to this difference
-     * (<nobr><b>R</b><sub>1</sub>&cup;<b>R</b><sub>2</sub>&cup;...&cup;<b>R</b><sub><i>N</i></sub> =
-     * <b>A</b>&nbsp;\&nbsp;<b>B</b>)</nobr>.
-     * The resulting areas <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>
+     * (<b>R</b><sub>1</sub>&cup;<b>R</b><sub>2</sub>&cup;...&cup;<b>R</b><sub><i>N</i></sub> =
+     * <b>A</b>&nbsp;\&nbsp;<b>B</b>).
+     * The resulting areas <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>
      * are added into the collection <code>results</code> by <code>Collection.add(...)</code> method.
      * So, the collection <code>results</code> must be not-null and support adding elements
      * (usually it is <code>List</code> or <code>Queue</code>).
@@ -804,7 +804,7 @@ public class IRectangularArea {
      *
      * <p>In other cases, there is more than 1 way to represent the resulting difference
      * in a form of union of several rectangular areas
-     * <nobr><b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub></nobr>.
+     * <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>.
      * The precise way, how this method forms this set of rectangular areas <b>R</b><sub><i>i</i></sub>,
      * is not documented, but this method tries to minimize the number <i>N</i> of such areas.
      * In any case, there is a guarantee that <i>N</i>&le;2*{@link #coordCount()}.
@@ -1065,7 +1065,7 @@ public class IRectangularArea {
      * </ol>
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
-     * <nobr><i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub></nobr>,
+     * <i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub>,
      * <i>l<sub>i</i></sub> = {@link #min(int) min}(<i>i</i>),
      * <i>r<sub>i</i></sub> = {@link #max(int) max}(<i>i</i>),
      * <i>d<sub>i</i></sub> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
@@ -1075,7 +1075,7 @@ public class IRectangularArea {
      * is inside <i>l<sub>i</sub></i>..<i>r<sub>i</sub></i> range.
      * The <i>parallel distance</i> from the point <b>p</b> to this rectangular area
      * is defined as maximal value from all <i>d<sub>i</sub></i>:
-     * <nobr>max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>)</nobr>.
+     * max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>).
      *
      * @param point some point.
      * @return the parallel distance from this point to this rectangular area.

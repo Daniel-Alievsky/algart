@@ -26,7 +26,7 @@ package net.algart.math.functions;
 
 /**
  * <p>Coordinate transformation operator in <i>n</i>-dimensional Euclidean space:
- * <nobr><i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>map</b>(<b>x</b>))</nobr>,
+ * <i>g</i>(<b>x</b>) = <i>O</i>&nbsp;<i>f</i>(<b>x</b>) = <i>f</i>(<b>map</b>(<b>x</b>)),
  * where <b>x</b> is a point of the <i>n</i>-dimensional space,
  * <b>map</b> is some mapping of this space, <i>f</i> is the source mathematical function
  * and <i>g</i> is the result of applying the operator to <i>f</i>.
