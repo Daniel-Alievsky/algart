@@ -60,22 +60,22 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><b>R</b>=<tt>rm.{@link RankMorphology#asPercentile(Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asPercentile}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>, if the <tt>requiredType</tt> argument of
+     * <b>R</b>=<tt>rm.{@link RankMorphology#asPercentile(Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * asPercentile}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>), if the <tt>requiredType</tt> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
      * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it is equivalent to
-     * <nobr><tt>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)
-     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </tt><b>R</b><tt>)</tt></nobr>;</li>
+     * <tt>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)
+     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </tt><b>R</b><tt>)</tt>;</li>
      *
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link RankMorphology#percentile(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * percentile}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>.</li>
+     * <tt>rm.{@link RankMorphology#percentile(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * percentile}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -93,7 +93,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getPercentiler(ArrayContext context,
@@ -123,8 +123,8 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><tt>rm.{@link RankMorphology#asRank(Class, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asRank}</tt>(<tt>requiredType</tt>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>,
+     * <tt>rm.{@link RankMorphology#asRank(Class, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * asRank}</tt>(<tt>requiredType</tt>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>),
      * where <tt>requiredType</tt> is the first argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -133,8 +133,8 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link RankMorphology#rank(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * rank}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>)</nobr>.</li>
+     * <tt>rm.{@link RankMorphology#rank(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * rank}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -152,7 +152,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getRanker(ArrayContext context,
@@ -185,10 +185,10 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asMeanBetweenPercentiles(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * asMeanBetweenPercentiles}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method),
+     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method),
      * if the <tt>requiredType</tt> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -205,10 +205,10 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link
+     * <tt>rm.{@link
      * RankMorphology#meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * meanBetweenPercentiles}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method).</li>
+     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -223,7 +223,7 @@ public class RankProcessors {
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
      *                     can be {@code null}, then it will be ignored.
      * @param filler       the reserved value, returned when
-     *                     <nobr><i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub></nobr>.
+     *                     <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
      *                     the precise histogram model, <tt>false</tt> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
@@ -232,7 +232,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getAveragerBetweenPercentiles(ArrayContext context,
@@ -265,10 +265,10 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asMeanBetweenValues(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * asMeanBetweenValues}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method),
+     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method),
      * if the <tt>requiredType</tt> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -285,10 +285,10 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link
+     * <tt>rm.{@link
      * RankMorphology#meanBetweenValues(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * meanBetweenValues}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>)</nobr> (where <tt>filler</tt> is the argument of this method).</li>
+     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -315,7 +315,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getAveragerBetweenValues(ArrayContext context,
@@ -326,7 +326,7 @@ public class RankProcessors {
 
     /**
      * Creates a new streaming aperture processor, which finds the result of some given function
-     * <nobr><i>f</i>(<i>S</i>)</nobr> of the <i>aperture sum S</i>
+     * <i>f</i>(<i>S</i>) of the <i>aperture sum S</i>
      * of the source matrix&nbsp;<b>M</b>.
      * See {@link RankMorphology comments to RankMorphology}, section 4 about the
      * "<i>aperture sum</i>" term.
@@ -346,9 +346,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asFunctionOfSum(Matrix, net.algart.math.patterns.Pattern, Func)
-     * asFunctionOfSum}</tt>(<b>M</b>, <b>P</b>, <tt>processingFunc</tt>)</nobr>
+     * asFunctionOfSum}</tt>(<b>M</b>, <b>P</b>, <tt>processingFunc</tt>)
      * (where <tt>processingFunc</tt> is the argument of this method),
      * if the <tt>requiredType</tt> argument of
      * {@link
@@ -357,7 +357,7 @@ public class RankProcessors {
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
      * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
-     * the function <nobr><i>f</i>(<i>S</i>)</nobr> of the aperture sum <i>S</i>
+     * the function <i>f</i>(<i>S</i>) of the aperture sum <i>S</i>
      * with maximal (<tt>double</tt>) precision and then
      * casts the floating-point results to the desired element type by the same rules
      * as {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
@@ -367,9 +367,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link
+     * <tt>rm.{@link
      * RankMorphology#functionOfSum(Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
-     * functionOfSum}</tt>(<b>R</b>, <b>M</b>, <b>P</b>, <tt>processingFunc</tt>)</nobr>
+     * functionOfSum}</tt>(<b>R</b>, <b>M</b>, <b>P</b>, <tt>processingFunc</tt>)
      * (where <tt>processingFunc</tt> is the argument of this method).</li>
      * </ul>
      *
@@ -387,7 +387,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getSummator(ArrayContext context, Func processingFunc) {
@@ -396,7 +396,7 @@ public class RankProcessors {
 
     /**
      * Creates a new streaming aperture processor, which finds the result of some given function
-     * <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>
+     * <i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)
      * of some matrix <b>M</b><sub>0</sub>
      * and two <i>percentiles</i> <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
      * of the source matrix&nbsp;<b>M</b>.
@@ -419,10 +419,10 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <nobr><b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asFunctionOfPercentilePair(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * asFunctionOfPercentilePair}</tt>(<b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
-     * <tt>processingFunc</tt>)</nobr> (where <tt>processingFunc</tt> is the argument of this method),
+     * <tt>processingFunc</tt>) (where <tt>processingFunc</tt> is the argument of this method),
      * if <b>M</b><sub>0</sub>==<b>M</b> and the <tt>requiredType</tt> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -431,7 +431,7 @@ public class RankProcessors {
      *
      * <li>if <tt>requiredType</tt> is not equal to
      * <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
-     * the function <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>
+     * the function <i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)
      * of the matrix <b>M</b><sub>0</sub>
      * and two percentiles <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
      * of the source matrix&nbsp;<b>M</b>
@@ -443,10 +443,10 @@ public class RankProcessors {
      * <li>if <b>M</b><sub>0</sub>==<b>M</b>, {@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <nobr><tt>rm.{@link
+     * <tt>rm.{@link
      * RankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * functionOfPercentilePair}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
-     * <tt>processingFunc</tt>)</nobr> (where <tt>processingFunc</tt> is the argument of this method),
+     * <tt>processingFunc</tt>) (where <tt>processingFunc</tt> is the argument of this method),
      * in other case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
      * matrix instead of <b>M</b>.</li>
      * </ul>
@@ -457,7 +457,7 @@ public class RankProcessors {
      * RankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * RankMorphology.functionOfPercentilePair}
      * methods, allows to use any matrix <b>M</b><sub>0</sub> as the source of first arguments of the function
-     * <nobr><i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>.
+     * <i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>).
      * (Those methods always get the first function argument from the source <b>M</b> matrix.)
      *
      * <p>This processor is really created and called in the implementation of
@@ -473,7 +473,7 @@ public class RankProcessors {
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
      *                       can be {@code null}, then it will be ignored.
      * @param processingFunc the function, which should be applied to every three
-     *                       <nobr>(<i>v</i><sub>0</sub>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)</nobr>,
+     *                       (<i>v</i><sub>0</sub>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                       where <i>v</i><sub>0</sub> is the element of <b>M</b><sub>0</sub> matrix,
      *                       <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles
      *                       of the source <b>M</b> matrix.
@@ -486,7 +486,7 @@ public class RankProcessors {
      * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
      *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <nobr><tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]</nobr>
+     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getPercentilePairProcessor(ArrayContext context,

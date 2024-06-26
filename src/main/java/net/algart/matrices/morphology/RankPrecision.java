@@ -29,8 +29,8 @@ package net.algart.matrices.morphology;
  * interface.</p>
  *
  * <p>Note: for every {@link #bitLevels() bit levels} array, represented by this enum,
- * there are both instances of this class with <nobr><tt>{@link #interpolated()}==false</tt></nobr>
- * and with <nobr><tt>{@link #interpolated()}==true</tt></nobr>.</p>
+ * there are both instances of this class with <tt>{@link #interpolated()}==false</tt>
+ * and with <tt>{@link #interpolated()}==true</tt>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
