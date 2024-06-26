@@ -108,7 +108,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * <p>The length of each vector sample, <tt>vectorLength</tt>, must be in range
      * <tt>0&lt;=vectorLength&lt;=vectorStep</tt>. Moreover, <tt>samples</tt>
      * array must be long enough for storing <tt>length</tt> vectors with specified <tt>vectorStep</tt>:
-     * <nobr><tt>(length-1)*vectorStep+vectorLength &lt;= samples.length()</tt></nobr>.
+     * <tt>(length-1)*vectorStep+vectorLength &lt;= samples.length()</tt>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
      *                     {@link #newCompatibleSamplesArray(long)} method; can be {@code null},
@@ -122,8 +122,8 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * @throws NullPointerException     if <tt>samples</tt> is {@code null}.
      * @throws IllegalArgumentException if <tt>vectorLength&lt;0</tt>, <tt>vectorStep&lt;vectorLength</tt>,
      *                                  <tt>length&lt;0</tt> or
-     *                                  <nobr><tt>(length-1)*vectorStep+vectorLength &lt;=
-     *                                  samples.length()</tt></nobr>
+     *                                  <tt>(length-1)*vectorStep+vectorLength &lt;=
+     *                                  samples.length()</tt>
      *                                  (the last condition is checked mathematically accurately even if these
      *                                  values <tt>&gt;Long.MAX_VALUE</tt>).
      * @throws TooLargeArrayException   (little probability)

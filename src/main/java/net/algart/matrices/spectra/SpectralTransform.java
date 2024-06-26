@@ -79,7 +79,7 @@ import net.algart.arrays.*;
  * double precision is used, if the passed sample arrays are represented by <tt>double</tt> element type.
  * It is theoretically possible to process sample arrays, represented by fixed-point numbers,
  * alike Java <tt>int</tt>, <tt>long</tt>, <tt>short</tt> and other types (for example,
- * if the passed AlgART matrix is <nobr>{@link Matrix Matrix &lt;? extends UpdatableIntArray&gt;}</nobr>
+ * if the passed AlgART matrix is {@link Matrix Matrix &lt;? extends UpdatableIntArray&gt;}
  * or if the passed {@link SampleArray} is {@link RealScalarSampleArray}, built on the base of
  * {@link UpdatableByteArray UpdatableByteArray}). In this situation,
  * calculations can be performed with some form of rounding, possible overflows lead to unspecified results
@@ -96,8 +96,8 @@ import net.algart.arrays.*;
  * SeparableFastHartleyTransform.separableHartleyToFourier} method &mdash;
  * then all passed arrays usually have the same numeric precision (<tt>float</tt>, <tt>double</tt>
  * or some fixed-point type). But it is not a requirement: for example, you may store the real part
- * of the complex matrix in <nobr>{@link Matrix Matrix &lt;? extends UpdatableDoubleArray&gt;}</nobr>
- * and the imaginary part in <nobr>{@link Matrix Matrix &lt;? extends UpdatableFloatArray&gt;}</nobr>.
+ * of the complex matrix in {@link Matrix Matrix &lt;? extends UpdatableDoubleArray&gt;}
+ * and the imaginary part in {@link Matrix Matrix &lt;? extends UpdatableFloatArray&gt;}.
  * In any case, if such a method allocates some temporary numeric arrays,
  * it uses for them the precision of one of the passed arguments or better.</p>
  *

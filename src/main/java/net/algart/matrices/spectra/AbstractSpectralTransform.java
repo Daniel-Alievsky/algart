@@ -167,7 +167,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
 
     /**
      * This implementation checks <tt>samples</tt> array and calls
-     * <nobr>{@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,false)}</nobr>.
+     * {@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,false)}.
      *
      * <p>Checking <tt>samples</tt> array means the following.
      * First, if {@link #areComplexSamplesRequired()} returns <tt>true</tt>, this method checks the result
@@ -196,7 +196,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
 
     /**
      * This implementation checks <tt>samples</tt> array and calls
-     * <nobr>{@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,true)}</nobr>.
+     * {@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,true)}.
      *
      * <p>Checking <tt>samples</tt> array means the following.
      * First, if {@link #areComplexSamplesRequired()} returns <tt>true</tt>, this method checks the result
@@ -225,8 +225,8 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
 
     /**
      * This implementation checks the passed matrices and calls
-     * <nobr>{@link #transformMatrix(ArrayContext, Matrix, Matrix, boolean)
-     * transformMatrix(context,matrixRe,matrixIm,false)}</nobr>.
+     * {@link #transformMatrix(ArrayContext, Matrix, Matrix, boolean)
+     * transformMatrix(context,matrixRe,matrixIm,false)}.
      *
      * <p>Checking matrices means the following.
      * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.
@@ -264,8 +264,8 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
 
     /**
      * This implementation checks the matrices and calls
-     * <nobr>{@link #transformMatrix(ArrayContext, Matrix, Matrix, boolean)
-     * transformMatrix(context,matrixRe,matrixIm,true)}</nobr>.
+     * {@link #transformMatrix(ArrayContext, Matrix, Matrix, boolean)
+     * transformMatrix(context,matrixRe,matrixIm,true)}.
      *
      * <p>Checking matrices means the following.
      * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.

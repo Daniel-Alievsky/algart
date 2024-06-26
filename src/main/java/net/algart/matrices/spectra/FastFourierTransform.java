@@ -38,8 +38,8 @@ import java.util.Objects;
  *
  * <p>More precisely, this class implements the classic fast "butterfly" algorithm (FFT) for calculating
  * <i>discrete Fourier transform</i> (DFT), described at
- * <nobr><a href="http://en.wikipedia.org/wiki/Discrete_Fourier_transform"
- * >http://en.wikipedia.org/wiki/Discrete_Fourier_transform</a></nobr>.</p>
+ * <a href="http://en.wikipedia.org/wiki/Discrete_Fourier_transform"
+ * >http://en.wikipedia.org/wiki/Discrete_Fourier_transform</a>.</p>
  *
  * <p>Namely, let <i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>N</i>&minus;1</sub> are some complex
  * samples (represented by abstract {@link SampleArray}), and
@@ -94,7 +94,7 @@ import java.util.Objects;
  * </blockquote>
  *
  * <p>(here (<i>k</i>&minus;<i>n</i>)&nbsp;mod&nbsp;<i>N</i> means
- * <nobr>(<i>k</i>&minus;<i>n</i>&lt;0 ? <i>k</i>&minus;<i>n</i>+<i>N</i> : <i>k</i>&minus;<i>n</i>)</nobr>).
+ * (<i>k</i>&minus;<i>n</i>&lt;0 ? <i>k</i>&minus;<i>n</i>+<i>N</i> : <i>k</i>&minus;<i>n</i>)).
  * Also, let <i>P</i><sub>0</sub>,<i>P</i><sub>1</sub>,...,<i>P</i><sub><i>N</i>&minus;1</sub>,
  * <i>Q</i><sub>0</sub>,<i>Q</i><sub>1</sub>,...,<i>Q</i><sub><i>N</i>&minus;1</sub> and
  * <i>C</i><sub>0</sub>,<i>C</i><sub>1</sub>,...,<i>C</i><sub><i>N</i>&minus;1</sub> are
@@ -121,7 +121,7 @@ import java.util.Objects;
  * <p>Please note: in the one-dimensional case, the spectral transofmation algorithms, implemented by
  * {@link #directTransformMatrix directTransformMatrix} / {@link #inverseTransformMatrix inverseTransformMatrix}
  * methods of this class, work with normal (i.e. high) performance only if
- * the passed <nobr>one-dimensional</nobr> AlgART matrices are stored in {@link SimpleMemoryModel}
+ * the passed one-dimensional AlgART matrices are stored in {@link SimpleMemoryModel}
  * (more precisely, if they are {@link DirectAccessible directly accessible}).
  * In other case, each access to every sample leads to calling accessing methods
  * {@link PArray#getDouble(long) getDouble} and {@link UpdatablePArray#setDouble(long, double) setDouble},
@@ -254,8 +254,8 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * or as <i>P</i> and <i>C</i>, or as <i>Q</i> and <i>C</i>, or even as all three matrices.
      * So, you can calculate and return the result in one of the source matrices.
      *
-     * <p>If you need to calculate the Fourier spectrum of convolution for a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to calculate the Fourier spectrum of convolution for a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *

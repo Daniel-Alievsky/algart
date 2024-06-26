@@ -208,9 +208,9 @@ public interface Func {
      *
      * <p>Note: call of this function is almost equivalent to calling {@link #SELECT_IF_GREATER_OR_EQUAL} function
      * with another order of the arguments:
-     * <nobr><i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>)</nobr>,
+     * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>),
      * that is
-     * <nobr><i>x</i><sub>1</sub> &gt;= <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub></nobr>.
+     * <i>x</i><sub>1</sub> &gt;= <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub>.
      * The only difference is connected with processing <code>Double.NaN</code> values of <i>x</i><sub>0</sub> and
      * <i>x</i><sub>1</sub>: this function will choose <i>x</i><sub>3</sub>, but the corresponding call of
      * {@link #SELECT_IF_GREATER_OR_EQUAL} will choose <i>x</i><sub>2</sub>, because in Java any comparison with
@@ -229,9 +229,9 @@ public interface Func {
      *
      * <p>Note: call of this function is almost equivalent to calling {@link #SELECT_IF_GREATER} function
      * with another order of the arguments:
-     * <nobr><i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>)</nobr>,
+     * <i>f</i>(<i>x</i><sub>1</sub>, <i>x</i><sub>0</sub>, <i>x</i><sub>3</sub>, <i>x</i><sub>2</sub>),
      * that is
-     * <nobr><i>x</i><sub>1</sub> &gt; <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub></nobr>.
+     * <i>x</i><sub>1</sub> &gt; <i>x</i><sub>0</sub> ? <i>x</i><sub>3</sub> : <i>x</i><sub>2</sub>.
      * The only difference is connected with processing <code>Double.NaN</code> values of <i>x</i><sub>0</sub> and
      * <i>x</i><sub>1</sub>: this function will choose <i>x</i><sub>3</sub>, but the corresponding call of
      * {@link #SELECT_IF_GREATER} will choose <i>x</i><sub>2</sub>, because in Java any comparison with
@@ -243,7 +243,7 @@ public interface Func {
 
     /**
      * Selecting from 8 "integer" directions on 2D plane:
-     * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) = <nobr>integer code from 1 to 8</nobr>.
+     * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>) = integer code from 1 to 8.
      * The result of this function is the index of one of 8 sectors, where the 2-dimensional vector
      * (<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>) lies.
      * Namely, let &phi;=Math.atan2(<i>x</i><sub>1</sub>,<i>x</i><sub>0</sub>), more precisely,

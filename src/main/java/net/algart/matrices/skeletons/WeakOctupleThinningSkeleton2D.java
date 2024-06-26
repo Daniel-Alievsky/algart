@@ -71,9 +71,10 @@ import static net.algart.matrices.skeletons.ThinningTools.*;
  * So, the matrix is supposed to be infinitely pseudo-cyclically continued, as well
  * {@link Matrices#asShifted Matrices.asShifted} method supposes it.
  * You can change this behavior by appending the source matrix with zero elements
- * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument
+ * is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <p>This class may be applied to a matrix with any number of dimensions,
  * but it is designed for 2-dimensional case: all other dimensions will be ignored.</p>
@@ -107,13 +108,14 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
     /**
      * Creates new instance of this class.
      *
-     * <p>If the <tt>straightThinning</tt> or <tt>diagonalThinning</tt> argument is <tt>false</tt>,
+     * <p>If the <code>straightThinning</code> or <code>diagonalThinning</code> argument is <code>false</code>,
      * the algorithm will skip thinning, correspondingly, along the axes or along diagonal directions.
      * Note that the results will usually be <i>incorrect</i>: large object will stay not skeletonized.
-     * (Compare with <tt>diagonalThinning</tt> argument in
+     * (Compare with <code>diagonalThinning</code> argument in
      * {@link OctupleThinningSkeleton2D#getInstance(ArrayContext, Matrix, boolean, boolean)}.)
      *
-     * <p>If the <tt>topological</tt> is <tt>true</tt>, the algorithm doesn't stop when all objects in the matrix
+     * <p>If the <code>topological</code> is <code>true</code>,
+     * the algorithm doesn't stop when all objects in the matrix
      * become "thin" (1-pixel thickness), but continues shortening all "free ends" of all skeleton lines,
      * while there is at least one "free end". As a result, objects that have no "holes" will be removed at all,
      * objects that have 1 hole will be transformed into 1-pixel closed line ("ring"), etc.
@@ -122,11 +124,12 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
      * @param context          the {@link #context() context} that will be used by this object;
      *                         can be {@code null}, then it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
-     * @param straightThinning whether the algorithm will perform thinning along x- and y-axes; usually <tt>true</tt>.
-     * @param diagonalThinning whether the algorithm will perform diagonal thinning; usually <tt>true</tt>.
+     * @param straightThinning whether the algorithm will perform thinning along x- and y-axes;
+     *                         usually <code>true</code>.
+     * @param diagonalThinning whether the algorithm will perform diagonal thinning; usually <code>true</code>.
      * @param topological      whether the algorithm will shorten isolated thin lines with "free ends".
      * @return                 new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
      */
     public static WeakOctupleThinningSkeleton2D getInstance(ArrayContext context,
         Matrix<? extends UpdatableBitArray> matrix,
@@ -144,7 +147,7 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
      *                         can be {@code null}, then it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
      * @return                 new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
      */
     public static WeakOctupleThinningSkeleton2D getInstance(ArrayContext context,
         Matrix<? extends UpdatableBitArray> matrix)
@@ -166,45 +169,45 @@ public class WeakOctupleThinningSkeleton2D extends AbstractThinningSkeleton2D im
      * <p>The precise algorithm of thinning is not documented.
      * Generally speaking, the "thinning" means removing elements
      * from the boundary of any "object" (area of the matrix filled by 1).
-     * <tt>directionIndex</tt> specifies the "eroded side" of objects,
+     * <code>directionIndex</code> specifies the "eroded side" of objects,
      * or the direction of thinning:<ul>
-     * <li>0 means removing elements from the left, i.e. from the side <nobr>(<i>x</i>&minus;1,<i>y</i>)</nobr>,</li>
-     * <li>1 means "diagonal" removal from the side <nobr>(<i>x</i>&minus;1,<i>y</i>&minus;1)</nobr>,</li>
-     * <li>2 means removal from the side <nobr>(<i>x</i>,<i>y</i>&minus;1)</nobr>,</li>
-     * <li>3 means "diagonal" removal from the side <nobr>(<i>x</i>+1,<i>y</i>&minus;1)</nobr>,</li>
-     * <li>4 means removal from the right, i.e. from the side <nobr>(<i>x</i>+1,<i>y</i>)</nobr>,</li>
-     * <li>5 means "diagonal" removal from the side <nobr>(<i>x</i>+1,<i>y</i>+1)</nobr>,</li>
-     * <li>6 means removal from the side <nobr>(<i>x</i>,<i>y</i>+1)</nobr>,</li>
-     * <li>7 means "diagonal" removal from the side <nobr>(<i>x</i>&minus;1,<i>y</i>+1)</nobr>.</li>
+     * <li>0 means removing elements from the left, i.e. from the side (<i>x</i>&minus;1,<i>y</i>),</li>
+     * <li>1 means "diagonal" removal from the side (<i>x</i>&minus;1,<i>y</i>&minus;1),</li>
+     * <li>2 means removal from the side (<i>x</i>,<i>y</i>&minus;1),</li>
+     * <li>3 means "diagonal" removal from the side (<i>x</i>+1,<i>y</i>&minus;1),</li>
+     * <li>4 means removal from the right, i.e. from the side (<i>x</i>+1,<i>y</i>),</li>
+     * <li>5 means "diagonal" removal from the side (<i>x</i>+1,<i>y</i>+1),</li>
+     * <li>6 means removal from the side (<i>x</i>,<i>y</i>+1),</li>
+     * <li>7 means "diagonal" removal from the side (<i>x</i>&minus;1,<i>y</i>+1).</li>
      * </ul>
      *
      * <p>Though the algorithm is not documented, there are the following guarantees:
      * <ul>
      * <li>this algorithm never sets zero elements to unit: if the element of the current matrix
-     * with some coordinates <nobr>(<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)</nobr> is 0,
+     * with some coordinates (<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>) is 0,
      * then the element with the same coordinates in the returned matrix is also 0;</li>
      *
      * <li>each element of the returned matrix with coordinates
-     * <nobr>(<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)</nobr>
+     * (<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)
      * depends only on the elements in 3x3 aperture
-     * <nobr><i>x</i><sub>0</sub>&minus;1&le;<i>x</i>&le;<i>x</i><sub>0</sub>+1,
-     * <i>y</i><sub>0</sub>&minus;1&le;<i>y</i>&le;<i>y</i><sub>0</sub>+1</nobr>
+     * <i>x</i><sub>0</sub>&minus;1&le;<i>x</i>&le;<i>x</i><sub>0</sub>+1,
+     * <i>y</i><sub>0</sub>&minus;1&le;<i>y</i>&le;<i>y</i><sub>0</sub>+1
      * of the current matrix;</li>
      *
      * <li>if all elements of the current matrix in 3x3 aperture
-     * <nobr><i>x</i><sub>0</sub>&minus;1&le;<i>x</i>&le;<i>x</i><sub>0</sub>+1,
-     * <i>y</i><sub>0</sub>&minus;1&le;<i>y</i>&le;<i>y</i><sub>0</sub>+1</nobr>
-     * are inside the matrix (i.e. <nobr>1&le;<i>x</i><sub>0</sub>&le;<tt>dimX</tt>&minus;2</nobr>,
-     * <nobr>1&le;<i>y</i><sub>0</sub>&le;<tt>dimY</tt>&minus;2</nobr>,
-     * <tt>dimX</tt> and <tt>dimY</tt> are dimensions of the matrix)
-     * and all they are equal to 1, then the element <nobr>(<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)</nobr>
+     * <i>x</i><sub>0</sub>&minus;1&le;<i>x</i>&le;<i>x</i><sub>0</sub>+1,
+     * <i>y</i><sub>0</sub>&minus;1&le;<i>y</i>&le;<i>y</i><sub>0</sub>+1
+     * are inside the matrix (i.e. 1&le;<i>x</i><sub>0</sub>&le;<code>dimX</code>&minus;2,
+     * 1&le;<i>y</i><sub>0</sub>&le;<code>dimY</code>&minus;2,
+     * <code>dimX</code> and <code>dimY</code> are dimensions of the matrix)
+     * and all they are equal to 1, then the element (<i>x</i><sub>0</sub>, <i>y</i><sub>0</sub>)
      * in the returned matrix will be equal to 1.</li>
      * </ul>
      *
      *
      * @param directionIndex the direction of thinning, from 0 to 7.
      * @return               the thinned view if the current {@link #result()} matrix.
-     * @throws IllegalArgumentException if <tt>directionIndex</tt> is not in 0..7 range.
+     * @throws IllegalArgumentException if <code>directionIndex</code> is not in 0..7 range.
      */
     @Override
     public Matrix<BitArray> asThinning(int directionIndex) {

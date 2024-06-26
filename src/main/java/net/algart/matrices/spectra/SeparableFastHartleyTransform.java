@@ -45,13 +45,13 @@ import java.util.Objects;
  *
  * <p>More precisely, this class implements the classic fast "butterfly" algorithm (FHT) for calculating
  * <i>discrete Hartley transform</i> (DHT), described at
- * <nobr><a href="http://en.wikipedia.org/wiki/Discrete_Hartley_transform"
- * >http://en.wikipedia.org/wiki/Discrete_Hartley_transform</a></nobr>.</p>
+ * <a href="http://en.wikipedia.org/wiki/Discrete_Hartley_transform"
+ * >http://en.wikipedia.org/wiki/Discrete_Hartley_transform</a>.</p>
  *
  * <p>Namely, let <i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>N</i>&minus;1</sub> are some
  * real or complex samples (represented by abstract {@link SampleArray}), and
  * <i>H</i><sub>0</sub>,<i>H</i><sub>1</sub>,...,<i>H</i><sub><i>N</i>&minus;1</sub> are their Hartley spectrum:
- * the result of DHT. Let's designate <nobr>cas &theta; = cos &theta; + sin &theta;</nobr>.
+ * the result of DHT. Let's designate cas &theta; = cos &theta; + sin &theta;.
  * This class implements two possible definitions of DHT:</p>
  *
  * <ol>
@@ -213,14 +213,14 @@ import java.util.Objects;
  *
  * <ol type="A" start="3">
  * <li><i>C<sub>i,&nbsp;j</sub></i> =
- * (<nobr>(<i>P<sub>i,&nbsp;j</sub></i>+<i>P<sub>&minus;i,&minus;j</sub></i>)
- * (<i>Q<sub>i,&nbsp;j</sub></i>+<i>Q<sub>&minus;i,&minus;j</sub></i>)</nobr> &minus;
- * <nobr>(<i>P<sub>i,&minus;j</sub></i>&minus;<i>P<sub>&minus;i,&nbsp;j</sub></i>)
- * (<i>Q<sub>i,&minus;j</sub></i>&minus;<i>Q<sub>&minus;i,&nbsp;j</sub></i>)</nobr> +
- * <nobr>(<i>P<sub>i,&nbsp;j</sub></i>&minus;<i>P<sub>&minus;i,&minus;j</sub></i>)
- * (<i>Q<sub>i,&minus;j</sub></i>+<i>Q<sub>&minus;i,&nbsp;j</sub></i>)</nobr> +
- * <nobr>(<i>P<sub>i,&minus;j</sub></i>+<i>P<sub>&minus;i,&nbsp;j</sub></i>)
- * (<i>Q<sub>i,&nbsp;j</sub></i>&minus;<i>Q<sub>&minus;i,&minus;j</sub></i>))/4</nobr>,
+ * ((<i>P<sub>i,&nbsp;j</sub></i>+<i>P<sub>&minus;i,&minus;j</sub></i>)
+ * (<i>Q<sub>i,&nbsp;j</sub></i>+<i>Q<sub>&minus;i,&minus;j</sub></i>) &minus;
+ * (<i>P<sub>i,&minus;j</sub></i>&minus;<i>P<sub>&minus;i,&nbsp;j</sub></i>)
+ * (<i>Q<sub>i,&minus;j</sub></i>&minus;<i>Q<sub>&minus;i,&nbsp;j</sub></i>) +
+ * (<i>P<sub>i,&nbsp;j</sub></i>&minus;<i>P<sub>&minus;i,&minus;j</sub></i>)
+ * (<i>Q<sub>i,&minus;j</sub></i>+<i>Q<sub>&minus;i,&nbsp;j</sub></i>) +
+ * (<i>P<sub>i,&minus;j</sub></i>+<i>P<sub>&minus;i,&nbsp;j</sub></i>)
+ * (<i>Q<sub>i,&nbsp;j</sub></i>&minus;<i>Q<sub>&minus;i,&minus;j</sub></i>))/4,
  * if the spectra were calculated according formula 1 above (default method);</li>
  *
  * <li><i>C<sub>i,&nbsp;j</sub></i> = the same expression multiplied by <i>MN</i>
@@ -250,7 +250,7 @@ import java.util.Objects;
  * <p>Please note: in the one-dimensional case, the spectral transofmation algorithms, implemented by
  * {@link #directTransformMatrix directTransformMatrix} / {@link #inverseTransformMatrix inverseTransformMatrix}
  * methods of this class, work with normal (i.e. high) performance only if
- * the passed <nobr>one-dimensional</nobr> AlgART matrices are stored in {@link SimpleMemoryModel}
+ * the passed one-dimensional AlgART matrices are stored in {@link SimpleMemoryModel}
  * (more precisely, if they are {@link DirectAccessible directly accessible}).
  * In other case, each access to every sample leads to calling accessing methods
  * {@link PArray#getDouble(long) getDouble} and {@link UpdatablePArray#setDouble(long, double) setDouble},
@@ -382,8 +382,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      *
      * <p>This method works correctly, if you pass the same matrix as <tt>fRe</tt> / <tt>fIm</tt> and <tt>h</tt>.
      *
-     * <p>If you need to convert spectrum in a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to convert spectrum in a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
@@ -435,8 +435,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>This method works correctly, if you pass the same complex matrix as <i>F</i> and <i>H</i>.
      * So, you can calculate and return the result in the source matrices.
      *
-     * <p>If you need to convert spectrum in a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to convert spectrum in a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
@@ -497,8 +497,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      *
      * <p>This method works correctly, if you pass the same matrix as <tt>fRe</tt> / <tt>fIm</tt> and <tt>h</tt>.
      *
-     * <p>If you need to convert spectrum in a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to convert spectrum in a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
@@ -550,8 +550,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>This method works correctly, if you pass the same complex matrix as <i>F</i> and <i>H</i>.
      * So, you can calculate and return the result in the source matrices.
      *
-     * <p>If you need to convert spectrum in a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to convert spectrum in a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
@@ -606,8 +606,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * or as <i>P</i> and <i>C</i>, or as <i>Q</i> and <i>C</i>, or even as all three matrices.
      * So, you can calculate and return the result in one of the source matrices.
      *
-     * <p>If you need to calculate the Hartley spectrum of convolution for a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to calculate the Hartley spectrum of convolution for a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *
@@ -660,8 +660,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * or as <i>P</i> and <i>C</i>, or as <i>Q</i> and <i>C</i>, or even as all three matrices.
      * So, you can calculate and return the result in one of the source matrices.
      *
-     * <p>If you need to calculate the Hartley spectrum of convolution for a case of <nobr>one-dimensional</nobr>
-     * numeric AlgART arrays, you just need to convert them into <nobr>one-dimensional</nobr> AlgART matrices by
+     * <p>If you need to calculate the Hartley spectrum of convolution for a case of one-dimensional
+     * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
      * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
      *

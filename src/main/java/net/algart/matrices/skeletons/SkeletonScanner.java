@@ -48,9 +48,9 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <p>Let's define a <i>pixel</i> with integer coordinates (<i>x</i>,&nbsp;<i>y</i>,&nbsp;<i>z</i>,...)
  * as a set of points of the <i>n</i>-dimensional space with such coordinates
  * (<i>x'</i>,&nbsp;<i>y'</i>,&nbsp;<i>z'</i>,...) that
- * <nobr><i>x</i>&minus;0.5&le;<i>x'</i>&le;<i>x</i>+0.5,</nobr>
- * <nobr><i>y</i>&minus;0.5&le;<i>y'</i>&le;<i>y</i>+0.5,</nobr>
- * <nobr><i>z</i>&minus;0.5&le;<i>z'</i>&le;<i>z</i>+0.5,</nobr> ...
+ * <i>x</i>&minus;0.5&le;<i>x'</i>&le;<i>x</i>+0.5,
+ * <i>y</i>&minus;0.5&le;<i>y'</i>&le;<i>y</i>+0.5,
+ * <i>z</i>&minus;0.5&le;<i>z'</i>&le;<i>z</i>+0.5, ...
  * In other words, pixel is a hypercube with the center (<i>x</i>,&nbsp;<i>y</i>,&nbsp;<i>z</i>,...)
  * and the edge 1.0 (in 2-dimensional case, it is a square 1x1).
  * Every unit element of the skeleton  matrix with {@link Matrix#index(long...) coordinates}
@@ -92,7 +92,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <br>&nbsp;
  * <br>
  * The sequence of skeleton pixels, corresponding to points
- * <nobr><i>E</i><sub>1</sub>, <i>E</i><sub>2</sub>, .., .<i>E</i><sub><i>m</i>&minus;1</sub></nobr>,
+ * <i>E</i><sub>1</sub>, <i>E</i><sub>2</sub>, .., .<i>E</i><sub><i>m</i>&minus;1</sub>,
  * is also called a <b><i>skeleton branch</i></b>. In a case <i>m</i>=1, we also say that
  * the nodes of the graph <i>E</i><sub>0</sub> and <i>E</i><sub><i>m</i></sub> are connected
  * with a <b><i>degenerated 0-pixel skeleton branch</i></b> (or, briefly, a <i>degenerated branch</i>).
@@ -170,7 +170,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  *     <li>any pairs of neighbouring graph nodes, where both nodes are the centers of pixels, classified as
  *     {@link SkeletonPixelClassifier#TYPE_USUAL_NODE nodes},
  *     when the connecting them with a degenerated branch is not prohibited by
- *     <nobr>{@link SkeletonPixelClassifier#markNeighbouringNodesNotConnectedViaDegeneratedBranches}</nobr>
+ *     {@link SkeletonPixelClassifier#markNeighbouringNodesNotConnectedViaDegeneratedBranches}
  *     method (and, so, when each from these 2 nodes appears in the list of neighbour indexes,
  *     returned by {@link #adjacentBranches()} method for the second node).
  *     <br>&nbsp;</li>
@@ -230,7 +230,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * retrieved by {@link #currentCoordinates()}.
  * After creation or calling {@link #reset()} method, this object is considered to be <i>not
  * {@link #isInitialized() positioned}</i>, that is the current position is considered to be not set yet and
- * most methods throw <tt>IllegalStateException</tt>.</p>
+ * most methods throw <code>IllegalStateException</code>.</p>
  *
  * <h2>Remembering and lightweight skeleton scanners</h2>
  *
@@ -265,16 +265,16 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * in remembering scanners, these methods mark the corresponding pixels as "visited" and {@link #reset()} method
  * clears this information (makes all pixels "unvisited");</li>
  * <li>in lightweight scanners, {@link #pixelVisitRemembered()} and {@link #neighbourVisitRemembered(int)}
- * always return <tt>false</tt>;<br>
- * in remembering scanners, these methods return <tt>true</tt> if
+ * always return <code>false</code>;<br>
+ * in remembering scanners, these methods return <code>true</code> if
  * the corresponding pixels are marked as "visited" by previous calls of
  * {@link #visit()} or {@link #visitPreviousBranchPixel()};</li>
- * <li>in lightweight scanners, <tt>onlyToUnvisited</tt> argument of
+ * <li>in lightweight scanners, <code>onlyToUnvisited</code> argument of
  * {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)},
  * {@link #scanBranch(int, boolean, boolean)}, {@link #scanBranchFromBranch(boolean, boolean)} methods,
- * as well as <tt>withVisiting</tt> argument of
+ * as well as <code>withVisiting</code> argument of
  * {@link #scanBranch(int, boolean, boolean)}, {@link #scanBranchFromBranch(boolean, boolean)} methods
- * do not matter (as if they would be <tt>false</tt>);<br>
+ * do not matter (as if they would be <code>false</code>);<br>
  * in remembering scanners, these arguments affect the behaviour (see comments to those methods).</li>
  * </ul>
  *
@@ -283,8 +283,8 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * You should call these methods manually: this class does not try to mark pixels as "visited" indirectly,
  * inside other methods, scanning the skeleton.
  * The only exception from this is {@link #scanBranch scanBranch} / {@link #scanBranchFromBranch scanBranchFromBranch}
- * methods, which calls {@link #visitPreviousBranchPixel()} when their <tt>withVisiting</tt> argument
- * is <tt>true</tt>.</p>
+ * methods, which calls {@link #visitPreviousBranchPixel()} when their <code>withVisiting</code> argument
+ * is <code>true</code>.</p>
  *
  * <h2><a name="connectivity"></a>Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
  *
@@ -300,15 +300,15 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  *
  * <blockquote>max&nbsp;(|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|)=1</blockquote>
  *
- * <p>where <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr>
+ * <p>where <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub>
  * are coordinates of the first pixel and
- * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+ * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
  * are coordinates of the second pixel (a neighbour of the first one). In 2-dimensional case,
  * such connectivity kind is also called <i>8-connectivity</i>.</p>
  *
  * <h2><a name="example"></a>Example of usage</h2>
  *
- * <p>Below is a complete example of code, using a remembering skeleton scanner <tt>ss</tt> for breadth-first
+ * <p>Below is a complete example of code, using a remembering skeleton scanner <code>ss</code> for breadth-first
  * traversal of the nonoriented graph, formed by the skeleton.</p>
  *
  * <pre>
@@ -405,7 +405,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * In this case, you can just remove all operations with the queue.</p>
  *
  * <p>Also note: you can process degenerated 0-pixel branches in a common way, just by assigning
- * <tt>degeneratedBranch=false</tt> instead of calling {@link #isNeighbourNodeOrFreeBranchEnd
+ * <code>degeneratedBranch=false</code> instead of calling {@link #isNeighbourNodeOrFreeBranchEnd
  * isNeighbourNodeOrFreeBranchEnd} method in the example above.
  * In this case, breadth-first traversal algorithm will form slightly incorrect graph, namely, some degenerated
  * branches will not be processed, and it can lead to appearing graph nodes with 2 incident edges
@@ -440,9 +440,9 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <p>This class supposes that the processed matrix is infinitely pseudo-cyclically continued, as well
  * {@link net.algart.arrays.Matrices#asShifted Matrices.asShifted} method supposes it.
  * You can change this behavior by appending the source matrix with zero elements
- * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
+ * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <h2>Multithreading compatibility</h2>
  *
@@ -462,18 +462,18 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <tt>{@link #context}!=null</tt>, in other case equal to
+     * <code>{@link #context}!=null</code>, in other case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     final MemoryModel memoryModel;
 
     /**
-     * Reference to the <tt>skeleton</tt> matrix passed to the constructor.
+     * Reference to the <code>skeleton</code> matrix passed to the constructor.
      */
     final Matrix<? extends BitArray> skeleton;
 
     /**
-     * Reference to the <tt>pixelClassifier</tt> passed to the constructor.
+     * Reference to the <code>pixelClassifier</code> passed to the constructor.
      */
     final SkeletonPixelClassifier pixelClassifier;
 
@@ -542,7 +542,7 @@ public final class SkeletonScanner implements ArrayProcessor {
                (pixelClassifier\,\s+)true(\)\;) ==> $1false$2
     */
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix
      * on the base of the given pixel classifier.
      * See the {@link SkeletonScanner comments to this class} about remembering and lightweight skeleton scanners.
      *
@@ -559,7 +559,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
      * @return                new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>matrix</code> or <code>pixelClassifier</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount()
      *                                  dimCount()}!=pixelClassifier.{@link SkeletonPixelClassifier#dimCount()
      *                                  dimCount()}</tt>.
@@ -572,7 +573,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link OctupleThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getRememberingInstance getRememberingInstance}(context, skeleton,
@@ -582,8 +583,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getRememberingOctupleThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -593,7 +594,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link Quadruple3x5ThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getRememberingInstance getRememberingInstance}(context, skeleton,
@@ -603,8 +604,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getRememberingQuadruple3x5ThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -614,7 +615,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link StrongQuadruple3x5ThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getRememberingInstance getRememberingInstance}(context, skeleton,
@@ -624,8 +625,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getRememberingStrongQuadruple3x5ThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -635,7 +636,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix
      * on the base of the given pixel classifier.
      * See the {@link SkeletonScanner comments to this class} about remembering and lightweight skeleton scanners.
      *
@@ -652,7 +653,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
      * @return                new instance of this class.
-     * @throws NullPointerException     if <tt>matrix</tt> or <tt>pixelClassifier</tt> argument is {@code null}.
+     * @throws NullPointerException     if <code>matrix</code> or <code>pixelClassifier</code> argument is {@code null}.
      * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount()
      *                                  dimCount()}!=pixelClassifier.{@link SkeletonPixelClassifier#dimCount()
      *                                  dimCount()}</tt>.
@@ -665,7 +666,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link OctupleThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getLightweightInstance getLightweightInstance}(context, skeleton,
@@ -675,8 +676,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getLightweightOctupleThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -686,7 +687,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link Quadruple3x5ThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getLightweightInstance getLightweightInstance}(context, skeleton,
@@ -696,8 +697,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getLightweightQuadruple3x5ThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -707,7 +708,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new remembering skeleton scanner, which will process the given <tt>skeleton</tt> matrix,
+     * Creates new remembering skeleton scanner, which will process the given <code>skeleton</code> matrix,
      * supposed to be the final result of skeletonization by {@link StrongQuadruple3x5ThinningSkeleton2D} algorithm.
      * Equivalent to<br>
      * <tt>{@link #getLightweightInstance getLightweightInstance}(context, skeleton,
@@ -717,8 +718,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      *                  can be {@code null}, then it will be ignored.
      * @param skeleton  the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return          new instance of this class.
-     * @throws NullPointerException if <tt>matrix</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.{@link Matrix#dimCount() dimCount()}!=2</tt>.
+     * @throws NullPointerException if <code>matrix</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.{@link Matrix#dimCount() dimCount()}!=2</code>.
      */
     public static SkeletonScanner getLightweightStrongQuadruple3x5ThinningInstance2D(ArrayContext context,
         Matrix<? extends BitArray> skeleton)
@@ -790,8 +791,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Equivalent to <tt>{@link #skeleton()}.{@link Matrix#dimCount() dimCount()}</tt>.
-     * Always equal to <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#dimCount() dimCount()}</tt>.
+     * Equivalent to <code>{@link #skeleton()}.{@link Matrix#dimCount() dimCount()}</code>.
+     * Always equal to <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#dimCount() dimCount()}</code>.
      *
      * @return the number of dimensions of the matrices, which can be processed by this object.
      */
@@ -814,9 +815,9 @@ public final class SkeletonScanner implements ArrayProcessor {
      * neighbourOffset(int)} method of the {@link #pixelClassifier() pixel classifier},
      * designed for indexing elements of the {@link Matrix#array() built-in AlgART array} of the skeleton matrix.
      * This method is equivalent to
-     * <nobr><tt>{@link #skeleton() skeleton()}.{@link Matrix#pseudoCyclicIndex(long...)
+     * <tt>{@link #skeleton() skeleton()}.{@link Matrix#pseudoCyclicIndex(long...)
      * pseudoCyclicIndex}({@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     * neighbourOffset}(neighbourIndex))</tt></nobr>,
+     * neighbourOffset}(neighbourIndex))</tt>,
      * but usually works much faster (in particular, does not allocate any arrays).
      *
      * @param neighbourIndex an index if the neighbour of some central element of the matrix.
@@ -837,7 +838,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param attachmentInformation what should this method return for attachable pixels.
      * @return                      the matrix of integer codes with the same sizes as the {@link #skeleton()
      *                              scanned skeleton matrix}, describing the types of all skeleton pixels.
-     * @throws NullPointerException if <tt>attachmentInformation</tt> is {@code null}.
+     * @throws NullPointerException if <code>attachmentInformation</code> is {@code null}.
      */
     public Matrix<? extends PIntegerArray> asPixelTypes(
         SkeletonPixelClassifier.AttachmentInformation attachmentInformation)
@@ -854,15 +855,15 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if and only if this instance was positioned to some coordinates in the skeleton matrix.
-     * More precisely, returns <tt>false</tt> if this instance was newly created and none from
+     * Returns <code>true</code> if and only if this instance was positioned to some coordinates in the skeleton matrix.
+     * More precisely, returns <code>false</code> if this instance was newly created and none from
      * {@link #nextNodeOrBranch()}, {@link #nextNodeOrBranchPixelType()},
      * {@link #goTo}, {@link #goToIndexInArray} methods were called yet,
-     * or <tt>true</tt> in all other cases.
+     * or <code>true</code> in all other cases.
      * If this object is not positioned, most of methods, processing pixels in the current position,
-     * throw <tt>IllegalStateException</tt>.
+     * throw <code>IllegalStateException</code>.
      *
-     * @return <tt>true</tt> if and only if this instance was already positioned by
+     * @return <code>true</code> if and only if this instance was already positioned by
      *                       {@link #nextNodeOrBranch()} / {@link #nextNodeOrBranchPixelType()}
      *                       or {@link #goTo} / {@link #goToIndexInArray} methods.
      */
@@ -871,7 +872,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns the current coordinates (or throws <tt>IllegalStateException</tt> if the scanner
+     * Returns the current coordinates (or throws <code>IllegalStateException</code> if the scanner
      * was not {@link #isInitialized() positioned yet}).
      *
      * <p>The returned array is always a newly allocated Java array.
@@ -879,7 +880,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * The returned coordinates are always in ranges
      * <pre>
      * 0 &le; result[<i>k</i>] &lt; {@link #skeleton() skeleton()}.{@link Matrix#dim(int) dim}(<i>k</i>),
-     * </pre>where <tt>result[<i>k</i>]</tt> is the element <tt>#<i>k</i></tt> in the returned array.
+     * </pre>where <code>result[<i>k</i>]</code> is the element <code>#<i>k</i></code> in the returned array.
      *
      * @return the current coordinates in the skeleton matrix.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
@@ -895,15 +896,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Reduced and more efficient version of {@link #currentCoordinates()}, designed for indexing
      * elements of the {@link Matrix#array() built-in AlgART array} of the skeleton matrix.
      * This method is equivalent to
-     * <nobr><tt>{@link #skeleton() skeleton()}.{@link Matrix#index(long...)
-     * index}({@link #currentCoordinates() currentCoordinates()})</tt></nobr>,
+     * <tt>{@link #skeleton() skeleton()}.{@link Matrix#index(long...)
+     * index}({@link #currentCoordinates() currentCoordinates()})</tt>,
      * but usually works much faster (in particular, does not allocate any arrays).
      * It is very possible that the implementation really stores the current index, returned by this method,
      * and does not store an array of current coordinates: so, this method just returns an internal field,
      * but {@link #currentCoordinates()} calculates results on the base on this value.
      *
      * <p>The result of this method is always in range
-     * <tt>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</tt>.
+     * <code>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</code>.
      *
      * @return the current index in the built-in AlgART array of the skeleton matrix.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
@@ -917,9 +918,9 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Returns the value of the element of the skeleton matrix at
      * the {@link #currentCoordinates() current coordinates}.
-     * Equivalent to <nobr><tt>{@link #skeleton
+     * Equivalent to <tt>{@link #skeleton
      * skeleton()()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
-     * getBit}({@link #currentIndexInArray() currentIndexInArray()})</tt></nobr>.
+     * getBit}({@link #currentIndexInArray() currentIndexInArray()})</tt>.
      *
      * @return the value of the current element of the skeleton matrix.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
@@ -932,8 +933,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Returns the type of the current pixel of the skeleton matrix or, if it is an attachable branch end,
      * returns the index of its neighbour, which lies at the branch, to which this pixel should be attached.
-     * Equivalent to <nobr><tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
-     * getInt}({@link #currentIndexInArray() currentIndexInArray()})</tt></nobr>, where
+     * Equivalent to <tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
+     * getInt}({@link #currentIndexInArray() currentIndexInArray()})</tt>, where
      * <pre>
      * m = {@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
      * asPixelTypes}({@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH})
@@ -956,8 +957,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Returns the type of the current pixel of the skeleton matrix or, if it is an attachable branch end,
      * returns the index of its neighbour, which is a node, which is one of the ends of the branch.
-     * Equivalent to <nobr><tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
-     * getInt}({@link #currentIndexInArray() currentIndexInArray()})</tt></nobr>, where
+     * Equivalent to <tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
+     * getInt}({@link #currentIndexInArray() currentIndexInArray()})</tt>, where
      * <pre>
      * m = {@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
      * asPixelTypes}({@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHED_NODE})
@@ -980,8 +981,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Returns the coordinates of the element of the skeleton matrix, which is a neighbour with the given index
      * of the {@link #currentCoordinates() current element}.
-     * Equivalent to <nobr><tt>{@link #skeleton()}.{@link Matrix#coordinates(long, long[])
-     * coordinates}(index, null)</tt></nobr>, where
+     * Equivalent to <tt>{@link #skeleton()}.{@link Matrix#coordinates(long, long[])
+     * coordinates}(index, null)</tt>, where
      * <pre>
      * index = ({@link #currentIndexInArray() currentIndexInArray()} + {@link #neighbourOffsetInArray(int)
      * neighbourOffsetInArray}(neighbourIndex)) % {@link #skeleton() skeleton()}.{@link Matrix#size() size()}
@@ -995,14 +996,14 @@ public final class SkeletonScanner implements ArrayProcessor {
      * The returned coordinates are always in ranges
      * <pre>
      * 0 &le; result[<i>k</i>] &lt; {@link #skeleton() skeleton()}.{@link Matrix#dim(int) dim}(<i>k</i>),
-     * </pre>where <tt>result[<i>k</i>]</tt> is the element <tt>#<i>k</i></tt> in the returned array.
+     * </pre>where <code>result[<i>k</i>]</code> is the element <code>#<i>k</i></code> in the returned array.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
      * @return               the coordinates of the given neighbour of the current element of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      * @see #goTo(long...)
      * @see #neighbourIndexInArray(int)
@@ -1024,15 +1025,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * <p>The result of this method is always in range
-     * <tt>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</tt>.
+     * <code>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</code>.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
      * @return               the index in the built-in AlgART array of the given neighbour of the current element
      *                       of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      * @see #goToIndexInArray(long)
      */
@@ -1051,8 +1052,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Returns the value of the element of the skeleton matrix, which is a neighbour with the given index
      * of the {@link #currentCoordinates() current element}.
-     * Equivalent to <nobr><tt>{@link #skeleton()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
-     * getBit}(index)</tt></nobr>, where
+     * Equivalent to <tt>{@link #skeleton()}.{@link Matrix#array() array()}.{@link BitArray#getBit(long)
+     * getBit}(index)</tt>, where
      * <pre>
      * index = ({@link #currentIndexInArray() currentIndexInArray()} + {@link #neighbourOffsetInArray(int)
      * neighbourOffsetInArray}(neighbourIndex)) % {@link #skeleton() skeleton()}.{@link Matrix#size() size()}
@@ -1062,11 +1063,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
      * @return               the value of the given neighbour of the current element of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public boolean neighbourValue(int neighbourIndex) {
@@ -1078,8 +1079,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * of the {@link #currentCoordinates() current element}, or, if it is an attachable branch end,
      * returns the index of a neighbour of this neighbour, which lies at the branch,
      * to which this neighbour should be attached.
-     * Equivalent to <nobr><tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
-     * getInt}(index)</tt></nobr>, where
+     * Equivalent to <tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
+     * getInt}(index)</tt>, where
      * <pre>
      * m = {@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
      * asPixelTypes}({@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH})
@@ -1091,11 +1092,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
      * @return               the value of the given neighbour of the current element of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet}.
      * @see #currentPixelTypeOrAttachingBranch()
      * @see #currentPixelTypeOrAttachedNode()
@@ -1109,8 +1110,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Returns the type of the pixel of the skeleton matrix, which is a neighbour with the given index
      * of the {@link #currentCoordinates() current element}, or, if it is an attachable branch end,
      * returns the index of a neighbour of this neighbour, which is a node, which is one of the ends of the branch.
-     * Equivalent to <nobr><tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
-     * getInt}(index)</tt></nobr>, where
+     * Equivalent to <tt>m.{@link Matrix#array() array()}.{@link PIntegerArray#getInt(long)
+     * getInt}(index)</tt>, where
      * <pre>
      * m = {@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
      * asPixelTypes}({@link SkeletonPixelClassifier.AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHED_NODE})
@@ -1122,11 +1123,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
      * @return               the value of the given neighbour of the current element of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet}.
      * @see #currentPixelTypeOrAttachingBranch()
      * @see #currentPixelTypeOrAttachedNode()
@@ -1137,7 +1138,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node}, i&#46;e&#46; a unit element
      * where 3 or more thin connected 1-pixel branches meet or, as a degenerated case,
      * an {@link SkeletonPixelClassifier#TYPE_ISOLATED isolated pixel}:
@@ -1148,7 +1149,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * and to <tt>{@link SkeletonPixelClassifier#isNodePixelType(int)
      * SkeletonPixelClassifier.isNodePixelType}({@link #currentPixelTypeOrAttachedNode() currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is a node,
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is a node,
      *         including the degenerated case of an isolated pixel.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1158,7 +1159,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is a {@link SkeletonPixelClassifier#TYPE_USUAL_BRANCH usual branch pixel},
      * i&#46;e&#46; a unit pixel having exactly 2 unit neighbours.
      * Equivalent both to <tt>{@link SkeletonPixelClassifier#isUsualBranchPixelType(int)
@@ -1168,7 +1169,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isUsualBranchPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         a usual (non-ending) branch pixel.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1178,7 +1179,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is a {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end},
      * i&#46;e&#46; a unit pixel having exactly 1 unit neighbour.
      * Equivalent both to <tt>{@link SkeletonPixelClassifier#isFreeBranchEndPixelType(int)
@@ -1188,7 +1189,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isFreeBranchEndPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         a free branch end.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1198,7 +1199,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is an {@link SkeletonPixelClassifier#isAttachableBranchEndPixelType(int) attachable branch end},
      * i&#46;e&#46; a unit pixel having 3 or more unit neighbours,
      * which this class considers to be not a node, but an ending pixel of some branch.
@@ -1209,7 +1210,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isAttachableBranchEndPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         an attachable branch end.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1219,11 +1220,11 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is a node
-     * (<tt>{@link #isNode() isNode()}</tt> returns <tt>true</tt>)
+     * (<code>{@link #isNode() isNode()}</code> returns <code>true</code>)
      * or a free branch end
-     * (<tt>{@link #isFreeBranchEnd() isFreeBranchEnd()}</tt> returns <tt>true</tt>).
+     * (<code>{@link #isFreeBranchEnd() isFreeBranchEnd()}</code> returns <code>true</code>).
      * Equivalent both to <tt>{@link SkeletonPixelClassifier#isNodeOrFreeBranchEndPixelType(int)
      * SkeletonPixelClassifier.isNodeOrFreeBranchEndPixelType}({@link #currentPixelTypeOrAttachingBranch()
      * currentPixelTypeOrAttachingBranch()})</tt>
@@ -1231,7 +1232,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isNodeOrFreeBranchEndPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         a node or a free branch end.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1241,14 +1242,14 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is a branch element: usual
-     * (where <tt>{@link #isUsualBranch() isUsualBranch()}</tt>
-     * returns <tt>true</tt>), free branch end
-     * (where <tt>{@link #isFreeBranchEnd() isFreeBranchEnd()}</tt> returns <tt>true</tt>)
+     * (where <code>{@link #isUsualBranch() isUsualBranch()}</code>
+     * returns <code>true</code>), free branch end
+     * (where <code>{@link #isFreeBranchEnd() isFreeBranchEnd()}</code> returns <code>true</code>)
      * or attachable branch end
-     * (where <tt>{@link #isAttachableBranchEnd() isAttachableBranchEnd()}</tt>
-     * returns <tt>true</tt>).
+     * (where <code>{@link #isAttachableBranchEnd() isAttachableBranchEnd()}</code>
+     * returns <code>true</code>).
      * Equivalent both to <tt>{@link SkeletonPixelClassifier#isBranchPixelType(int)
      * SkeletonPixelClassifier.isBranchPixelType}({@link #currentPixelTypeOrAttachingBranch()
      * currentPixelTypeOrAttachingBranch()})</tt>
@@ -1256,7 +1257,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isBranchPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         some element of a branch.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1266,7 +1267,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton
+     * Returns <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton
      * is "{@link SkeletonPixelClassifier#TYPE_ILLEGAL illtegal}", i&#46;e&#46; a center of
      * an impossible configuration for a correct result of the given skeletonization algorithm.
      * Equivalent both to <tt>{@link SkeletonPixelClassifier#isIllegalPixelType(int)
@@ -1276,7 +1277,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isIllegalPixelType}({@link #currentPixelTypeOrAttachedNode()
      * currentPixelTypeOrAttachedNode()})</tt>.
      *
-     * @return <tt>true</tt> if the {@link #currentCoordinates() current element} of the skeleton is
+     * @return <code>true</code> if the {@link #currentCoordinates() current element} of the skeleton is
      *         a part of pixel configuration which is incorrect for the given type of skeleton.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
@@ -1286,7 +1287,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if the neighbour with the given index of
+     * Returns <code>true</code> if the neighbour with the given index of
      * the {@link #currentCoordinates() current element} of the skeleton
      * is a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node}
      * or a {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end}.
@@ -1297,7 +1298,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * SkeletonPixelClassifier.isNodeOrFreeBranchEndPixelType}({@link #neighbourTypeOrAttachedNode(int)
      * neighbourTypeOrAttachedNode(neighbourIndex)})</tt>.
      *
-     * <p>This method is helpful when {@link #isNodeOrFreeBranchEnd()} method returns <tt>true</tt>,
+     * <p>This method is helpful when {@link #isNodeOrFreeBranchEnd()} method returns <code>true</code>,
      * i.e. the current position is a node or a free branch end (and corresponds to a node in the nonoriented graph,
      * formed by the skeleton), and we need to check, is it connected via a degenerated 0-pixel branch with
      * a possible neighbouring node or free branch end (also corresponding to a node in the nonoriented graph).
@@ -1305,12 +1306,12 @@ public final class SkeletonScanner implements ArrayProcessor {
      * like an algorithm, given in the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
-     * @return               <tt>true</tt> if the given neighbour of the current element of the skeleton matrix is
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
+     * @return               <code>true</code> if the given neighbour of the current element of the skeleton matrix is
      *                       a node or a free branch end.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public boolean isNeighbourNodeOrFreeBranchEnd(int neighbourIndex) {
@@ -1326,10 +1327,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * @param newCurrentCoordinates new current coordinates: the {@link #currentCoordinates()} method will return
      *                              an identical array after this call.
-     * @throws NullPointerException      if <tt>newCurrentCoordinates</tt> argument is {@code null}.
-     * @throws IllegalArgumentException  if the length of <tt>newCurrentCoordinates</tt> array is not equal to
+     * @throws NullPointerException      if <code>newCurrentCoordinates</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the length of <code>newCurrentCoordinates</code> array is not equal to
      *                                   {@link #dimCount() dimCount()}.
-     * @throws IndexOutOfBoundsException if one of new coordinates <tt>newCurrentCoordinates[<i>k</i>]</tt>
+     * @throws IndexOutOfBoundsException if one of new coordinates <code>newCurrentCoordinates[<i>k</i>]</code>
      *                                   is out of range <tt>0..{@link #skeleton() skeleton()}.{@link Matrix#dim(int)
      *                                   dim}(<i>k</i>)-1</tt>.
      * @see #currentCoordinates()
@@ -1346,13 +1347,13 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Reduced and more efficient version of {@link #goTo(long...)}, designed for indexing
      * elements of the {@link Matrix#array() built-in AlgART array} of the skeleton matrix.
      * This method is equivalent to
-     * <nobr><tt>{@link #goTo(long...) goto}({@link #skeleton() skeleton()}.{@link Matrix#coordinates(long, long[])
-     * coordinates}(newIndexInArray, null))</tt></nobr>,
+     * <tt>{@link #goTo(long...) goto}({@link #skeleton() skeleton()}.{@link Matrix#coordinates(long, long[])
+     * coordinates}(newIndexInArray, null))</tt>,
      * but usually works much faster (in particular, does not allocate any arrays).
      *
      * @param newIndexInArray new current index in the built-in AlgART array of the skeleton matrix.
-     * @throws IndexOutOfBoundsException if <tt>newIndexInArray</tt> is out of range
-     *                                   <tt>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>newIndexInArray</code> is out of range
+     *                                   <code>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</code>.
      * @see #currentIndexInArray()
      */
     public void goToIndexInArray(long newIndexInArray) {
@@ -1367,9 +1368,9 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * Moves the current position in the skeleton matrix to the given neighbour of the current element.
      * The neighbour index is specified in terms of
-     * <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     * neighbourOffset(int)}</tt></nobr> method.
-     * This method is equivalent to <nobr>{@link #goToIndexInArray(long) goToIndexInArray(index)}</nobr>,
+     * <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     * neighbourOffset(int)}</tt> method.
+     * This method is equivalent to {@link #goToIndexInArray(long) goToIndexInArray(index)},
      * where
      * <pre>
      * index = ({@link #currentIndexInArray() currentIndexInArray()} + {@link #neighbourOffsetInArray(int)
@@ -1380,10 +1381,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     *                       <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</tt> method.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public void goToNeighbour(int neighbourIndex) {
@@ -1403,27 +1404,28 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node}, {@link SkeletonPixelClassifier#TYPE_ISOLATED isolated}
      * or {@link #isBranch() some branch pixel}, and moves the current position to this element.
      * If this scanner was not {@link #isInitialized() positioned yet}, finds the first such element.
-     * Returns <tt>true</tt> if this method has successfully found the required element, or <tt>false</tt>
+     * Returns <code>true</code> if this method has successfully found the required element, or <code>false</code>
      * if there is no required position, i.e. if the matrix scanning is finished. In the second case,
      * the current position is not changed.
      *
      * <p>More precisely, this method finds the minimal <i>k</i>, so that<ul>
-     * <li><nobr><i>k</i> &ge; <tt>({@link #isInitialized()} ? 0 : {@link #currentIndexInArray()}+1)</tt></nobr>
+     * <li><i>k</i> &ge; <code>({@link #isInitialized()} ? 0 : {@link #currentIndexInArray()}+1)</code>
      * and</li>
-     * <li><nobr><tt>{@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
+     * <li><tt>{@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation)
      * asPixelTypes(...)}.{@link Matrix#array() array()}.{@link PIntegerArray#getInt
-     * getInt}(</tt><i>k</i><tt>)</tt></nobr> is not equal to
+     * getInt}(</tt><i>k</i><code>)</code> is not equal to
      * {@link SkeletonPixelClassifier#TYPE_ZERO TYPE_ZERO} or
      * {@link SkeletonPixelClassifier#TYPE_ILLEGAL TYPE_ILLEGAL} (the argument of
      * {@link #asPixelTypes(SkeletonPixelClassifier.AttachmentInformation) asPixelTypes} is not important here).</li>
      * </ul>
      *
      * <p>If this index <i>k</i> exists, this method performs
-     * <nobr><tt>{@link #goToIndexInArray(long) goToIndexInArray}(<i>k</i>)</tt></nobr> and returns <tt>true</tt>,
-     * in other case doesn't change the state of this object and returns <tt>false</tt>.
+     * <code>{@link #goToIndexInArray(long) goToIndexInArray}(<i>k</i>)</code>
+     * and returns <code>true</code>,
+     * in other case doesn't change the state of this object and returns <code>false</code>.
      *
      * <p>Note, that if this scanner was not {@link #isInitialized() positioned yet}, it becomes positioned
-     * if this method returns <tt>true</tt>, but stays not positioned if it returns <tt>false</tt>.
+     * if this method returns <code>true</code>, but stays not positioned if it returns <code>false</code>.
      *
      * <p>After successful call of this method, you can be sure that the current position corresponds:
      * <ol>
@@ -1437,15 +1439,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * by {@link #adjacentBranches()} method, which returns indexes of all corresponding neighbours.
      * Then you can scan all these branches in a loop, starting the scanning of each branch by<br>
      * &nbsp;&nbsp;&nbsp;&nbsp;{@link #firstStep(int neighbourIndex, boolean onlyToUnvisited)}<br>
-     * method, where <tt>neighbourIndex</tt> is an element of the array &mdash; result of {@link #adjacentBranches()}.
+     * method, where <code>neighbourIndex</code> is an element of the array &mdash; result of {@link #adjacentBranches()}.
      * If necessary, you can scan each branch until its end by a loop of {@link #nextStep()} calls,
-     * like in <nobr>{@link #scanBranch(int, boolean, boolean)}</nobr> method, and, if the end will be
+     * like in {@link #scanBranch(int, boolean, boolean)} method, and, if the end will be
      * a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node} again, for example,
      * recursively process this node in the same manner (that means deapth-first graph traversal).
      *
      * <p>Note, that the recursion should be used only
      * if you remember all visited nodes (to avoid infinite recursion), for example, by using
-     * a {@link #isRemembering() remembering} scanner with the argument <tt>onlyToUnvisited=true</tt>.
+     * a {@link #isRemembering() remembering} scanner with the argument <code>onlyToUnvisited=true</code>.
      * Also note, that even remembering scanner does not allow to remember a fact of visiting
      * degenerated 0-pixel branches: you should keep this in mind and process degenerated branches,
      * if necessary, by some other mechanism.
@@ -1460,7 +1462,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * In the second situation, you can try to move to some {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node}
      * / {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end} (one of 2 ends of this branch),
      * for example, by {@link #scanBranchFromBranch(boolean, boolean) scanBranchFromBranch} method with
-     * <tt>withVisiting=false</tt> argument, but you should remember, that it can be also a <i>cyclic branch</i>
+     * <code>withVisiting=false</code> argument, but you should remember, that it can be also a <i>cyclic branch</i>
      * (the case 7 in the {@link SkeletonScanner comments to this class}). This case can be identified
      * via the current pixel type after {@link #scanBranchFromBranch(boolean, boolean) scanBranchFromBranch} call:
      * it will be {@link #isUsualBranch() usual branch pixel} only in a case of a cyclic branch.
@@ -1473,7 +1475,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * with correct processing degenerated 0-pixel branches and cyclic branches,
      * is given in the {@link SkeletonScanner comments to this class}.
      *
-     * @return <tt>true</tt> if this method has successfully found new node or branch pixel.
+     * @return <code>true</code> if this method has successfully found new node or branch pixel.
      * @see #nextNodeOrBranchPixelType()
      */
     public boolean nextNodeOrBranch() {
@@ -1513,17 +1515,18 @@ public final class SkeletonScanner implements ArrayProcessor {
      * In particular, if some of neighbours of this node are also nodes, this method detects and returns
      * in the result the indexes of such from them, which are connected with this node by degenerated
      * branches (consisting of 0 pixels).
-     * If the current pixel is not a node (or isolated pixel), this method throws <tt>IllegalStateException</tt>.
+     * If the current pixel is not a node (or isolated pixel), this method throws <code>IllegalStateException</code>.
      *
      * <p>More precisely, the neighbour index <i>k</i> is an element of the returned array, if and only if:
      * <ol>
-     * <li>the <tt>{@link #firstStep(int, boolean) firstStep}(<i>k</i>,false)</tt> call, performed at this position,
-     * would be successful (would return <tt>true</tt> and successfully move the position to that neighbour);</li>
+     * <li>the <code>{@link #firstStep(int, boolean) firstStep}(<i>k</i>,false)</code> call,
+     * performed at this position,
+     * would be successful (would return <code>true</code> and successfully move the position to that neighbour);</li>
      * <li>and, in a case when this neighbour is a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node},
-     * this neighbour is not marked (set to <tt>Integer.MIN_VALUE</tt>) by
-     * <nobr><tt>{@link #pixelClassifier()
+     * this neighbour is not marked (set to <code>Integer.MIN_VALUE</code>) by
+     * <tt>{@link #pixelClassifier()
      * pixelClassifier()}.{@link SkeletonPixelClassifier#markNeighbouringNodesNotConnectedViaDegeneratedBranches
-     * markNeighbouringNodesNotConnectedViaDegeneratedBranches}</tt></nobr> method, called
+     * markNeighbouringNodesNotConnectedViaDegeneratedBranches}</tt> method, called
      * for an array of types of all neighbours of the current node.</li>
      * </ol>
      *
@@ -1531,15 +1534,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Its length is always not greater than {@link #numberOfNeighbours()};
      * it can be also empty, if the current element is an {@link SkeletonPixelClassifier#TYPE_ISOLATED isolated pixel}.
      * The returned indexes specify neighbours in terms of
-     * <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     * neighbourOffset(int)}</tt></nobr> method.
+     * <tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     * neighbourOffset(int)}</tt> method.
      * If you need maximal performance, you can eliminate memory allocation in a scanning loop
      * by using {@link #adjacentBranches(int[])} method.
      *
      * @return the list of indexes of neighbours of the current pixel (node), towards which this class supposes
      *         existence of a branch, originating from this node.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
-     *                               if <tt>!{@link #isNode() isNode()}</tt>.
+     *                               if <code>!{@link #isNode() isNode()}</code>.
      */
     public int[] adjacentBranches() throws IllegalStateException {
         int[] neighbourIndexes = new int[numberOfNeighbours];
@@ -1551,7 +1554,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * More efficient version of {@link #adjacentBranches()} method, which stores the results
      * in the specified Java array instead of creating new Java array.
      * This method is equivalent to calling that method and copying its result into
-     * the beginning of <tt>result</tt> Java array, but does not allocate any arrays.
+     * the beginning of <code>result</code> Java array, but does not allocate any arrays.
      * It is a better solution if we need to calculate adjacent branches in a long loop,
      * because allows to avoid allocating a lot of short arrays.
      *
@@ -1560,11 +1563,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param result Java array for storing the results.
      * @return       the number of found neighbours (which are the starting pixels of branches,
      *               incident with this node): after calling this method,
-     *               you should use this number of first elements of the <tt>result</tt> array.
-     * @throws NullPointerException  if <tt>result</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>result.length&lt;{@link #numberOfNeighbours()}</tt>.
+     *               you should use this number of first elements of the <code>result</code> array.
+     * @throws NullPointerException  if <code>result</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>result.length&lt;{@link #numberOfNeighbours()}</code>.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
-     *                               if <tt>!{@link #isNode() isNode()}</tt>.
+     *                               if <code>!{@link #isNode() isNode()}</code>.
      */
     public int adjacentBranches(int[] result) throws IllegalStateException {
         Objects.requireNonNull(result, "Null result argument");
@@ -1600,12 +1603,12 @@ public final class SkeletonScanner implements ArrayProcessor {
      * On the assumption that the {@link #currentCoordinates() current pixel} is a
      * {@link #isNode() node or isolated pixel},
      * checks whether we have a skeleton branch, originating at this node and going towards its neighbour
-     * with the index <tt>neighbourIndex</tt>, and, if so, moves the current position to this neighbour and
-     * returns <tt>true</tt>, if not, does nothing and returns <tt>false</tt>.
+     * with the index <code>neighbourIndex</code>, and, if so, moves the current position to this neighbour and
+     * returns <code>true</code>, if not, does nothing and returns <code>false</code>.
      * The neighbour index is specified in terms of
-     * <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     * neighbourOffset(int)}</tt></nobr> method.
-     * If the current pixel is not a node (or isolated pixel), this method throws <tt>IllegalStateException</tt>.
+     * <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     * neighbourOffset(int)}</code> method.
+     * If the current pixel is not a node (or isolated pixel), this method throws <code>IllegalStateException</code>.
      * The movement along the branch, started by this method, can be continued by a loop of {@link #nextStep()} calls:
      * see an example in comments to {@link #scanBranch scanBranch} method.
      *
@@ -1618,35 +1621,36 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link #neighbourTypeOrAttachingBranch(int) neighbourTypeOrAttachingBranch(neighbourIndex)}.
      * <ol>
      * <li>If it is a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node},
-     * this method always moves the current position to that node and returns <tt>true</tt>
+     * this method always moves the current position to that node and returns <code>true</code>
      * (it can lead to extra degenerated branches, but you can use {@link #adjacentBranches()} method
      * to avoid this);</li>
      *
      * <li>If the type of the given neighbour is a
      * {@link SkeletonPixelClassifier#TYPE_USUAL_BRANCH usual branch element}
      * or a {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end},
-     * this method moves the current position to this neighbour and returns <tt>true</tt>.</li>
+     * this method moves the current position to this neighbour and returns <code>true</code>.</li>
      *
      * <li>If the given neighbour is {@link SkeletonPixelClassifier#isAttachableBranchEndPixelType(int)
      * attachable branch end}, this method checks its <i>attached node A</i> (returned by
-     * <nobr>{@link #neighbourTypeOrAttachedNode(int) neighbourTypeOrAttachedNode(neighbourIndex)})</nobr>
+     * {@link #neighbourTypeOrAttachedNode(int) neighbourTypeOrAttachedNode(neighbourIndex)})
      * and the element of <i>attaching branch B</i> (returned by
-     * <nobr>{@link #neighbourTypeOrAttachingBranch(int) neighbourTypeOrAttachingBranch(neighbourIndex)})</nobr>
+     * {@link #neighbourTypeOrAttachingBranch(int) neighbourTypeOrAttachingBranch(neighbourIndex)})
      * &mdash; see the description of group 5 of pixel types in the
      * {@link SkeletonPixelClassifier comments to SkeletonPixelClassifier}.
      * If one of pixels <i>A</i> or <i>B</i> is the current node, this method moves the current position to
-     * this neighbour and returns <tt>true</tt>, in other case if does nothing and returns <tt>false</tt>.</li>
+     * this neighbour and returns <code>true</code>, in other case if does nothing and returns <code>false</code>.</li>
      *
      * <li>In all other situations (the given neighbour is zero or
      * "{@link SkeletonPixelClassifier#TYPE_ILLEGAL illegal}" unit element),
-     * this method does nothing and returns <tt>false</tt>.</li>
+     * this method does nothing and returns <code>false</code>.</li>
      * </ol>
      *
-     * <p>The rules, listed above, are used as described if the argument <tt>onlyToUnvisited</tt> is <tt>false</tt>.
-     * If it is <tt>true</tt> and if this scanner is {@link #isRemembering() remembering}, this method also checks,
+     * <p>The rules, listed above, are used as described if the argument <code>onlyToUnvisited</code>
+     * is <code>false</code>.
+     * If it is <code>true</code> and if this scanner is {@link #isRemembering() remembering}, this method also checks,
      * whether the given neighbour was already visited, i.e. checks the result of
-     * <nobr>{@link #neighbourVisitRemembered(int) neighbourVisitRemembered(neighbourIndex)}</nobr> call.
-     * If that call returns <tt>true</tt>, this method does nothing and returns <tt>false</tt>,
+     * {@link #neighbourVisitRemembered(int) neighbourVisitRemembered(neighbourIndex)} call.
+     * If that call returns <code>true</code>, this method does nothing and returns <code>false</code>,
      * in other case it works as described above.
      *
      * <p>Note, that even if this scanner is {@link #isRemembering() remembering}, this method does not store
@@ -1658,15 +1662,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex  the index of the neighbour, in terms of
-     *                        <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                        neighbourOffset(int)}</tt></nobr> method.
+     *                        <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                        neighbourOffset(int)}</code> method.
      * @param onlyToUnvisited whether this method should go only to neighbours, which were never be visited before
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
-     * @return                <tt>true</tt> if the current position has been successfully moved to the neighbour.
+     * @return                <code>true</code> if the current position has been successfully moved to the neighbour.
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet} or
-     *                                   if <tt>!{@link #isNode() isNode()}</tt>.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     *                                   if <code>!{@link #isNode() isNode()}</code>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @see #scanBranch(int, boolean, boolean)
      */
     public boolean firstStep(int neighbourIndex, boolean onlyToUnvisited) throws IllegalStateException {
@@ -1699,9 +1703,9 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * On the assumption that the {@link #currentCoordinates() current pixel} is
      * {@link #isBranch() some branch pixel},
-     * moves the current position to a neighbour along this skeleton branch and returns <tt>true</tt>.
-     * If the current pixel is not a branch pixel, this method throws <tt>IllegalStateException</tt>.
-     * In a case of success (this method successfully changes the position and returns <tt>true</tt>),
+     * moves the current position to a neighbour along this skeleton branch and returns <code>true</code>.
+     * If the current pixel is not a branch pixel, this method throws <code>IllegalStateException</code>.
+     * In a case of success (this method successfully changes the position and returns <code>true</code>),
      * the previous current position is internally stored: it will be used in {@link #nextStep()} method
      * to finish scanning a cyclic branch.
      * The movement along the branch, started by this method, can be continued by a loop of {@link #nextStep()} calls:
@@ -1723,22 +1727,23 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link #currentPixelTypeOrAttachedNode()} methods.</li>
      * </ol>
      *
-     * <p>The rules, listed above, are used as described if the argument <tt>onlyToUnvisited</tt> is <tt>false</tt>.
-     * If it is <tt>true</tt> and if this scanner is {@link #isRemembering() remembering}, this method also checks,
+     * <p>The rules, listed above, are used as described if the argument <code>onlyToUnvisited</code>
+     * is <code>false</code>.
+     * If it is <code>true</code> and if this scanner is {@link #isRemembering() remembering}, this method also checks,
      * whether the neighbours were already visited, i.e. checks the result of
-     * <nobr>{@link #neighbourVisitRemembered(int) neighbourVisitRemembered(...)}</nobr> call
+     * {@link #neighbourVisitRemembered(int) neighbourVisitRemembered(...)} call
      * for the one (case 1) or for both (cases 2 and 3) neighbours.
-     * If that call returns <tt>false</tt> for the only neighbour <i>Q</i> (case 1) or for some of two neighbours
+     * If that call returns <code>false</code> for the only neighbour <i>Q</i> (case 1) or for some of two neighbours
      * <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub> (cases 2 and 3),
-     * this method moves to that neighbour and returns <tt>true</tt>.
-     * In other case it does nothing and returns <tt>false</tt>.
+     * this method moves to that neighbour and returns <code>true</code>.
+     * In other case it does nothing and returns <code>false</code>.
      *
      * <p>Note, that even if this scanner is {@link #isRemembering() remembering}, this method does not store
      * information about visiting pixels. If you want, you should do this manually by
      * {@link #visitPreviousBranchPixel()} method.
      *
      * <p>Note, that it is undocumented, which of two neighbours <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub>
-     * is selected in cases 2 and 3 (if one of them is not disabled because <tt>onlyToUnvisited=true</tt>
+     * is selected in cases 2 and 3 (if one of them is not disabled because <code>onlyToUnvisited=true</code>
      * and it was already visited).
      *
      * <p>Note, that we allow a situation when the neighbouring elements are out of ranges of the matrix coordinates.
@@ -1762,9 +1767,9 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * @param onlyToUnvisited whether this method should go only to neighbours, which were never be visited before
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
-     * @return                <tt>true</tt> if the current position has been successfully moved to the neighbour.
+     * @return                <code>true</code> if the current position has been successfully moved to the neighbour.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
-     *                               if <tt>!{@link #isBranch() isBranch()}</tt>.
+     *                               if <code>!{@link #isBranch() isBranch()}</code>.
      * @see #scanBranchFromBranch(boolean, boolean)
      */
     public boolean firstStepFromBranch(boolean onlyToUnvisited) throws IllegalStateException {
@@ -1779,9 +1784,9 @@ public final class SkeletonScanner implements ArrayProcessor {
 
     /**
      * Returns the index of the neighbour, to which {@link #firstStepFromBranch(boolean onlyToUnvisited)} moves
-     * when called with the same <tt>onlyToUnvisited</tt> argument.
-     * If that method returns <tt>false</tt> and does not move anywhere, this method returns <tt>-1</tt>.
-     * If that method throws <tt>IllegalStateException</tt>, this method also throws this exception.
+     * when called with the same <code>onlyToUnvisited</code> argument.
+     * If that method returns <code>false</code> and does not move anywhere, this method returns <code>-1</code>.
+     * If that method throws <code>IllegalStateException</code>, this method also throws this exception.
      * Unlike {@link #firstStepFromBranch}, this method does not change anything in the internal state
      * of the object.
      *
@@ -1789,10 +1794,10 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * @param onlyToUnvisited whether this method should check only neighbours, which were never be visited before
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
-     * @return                the index of the neighbour <tt>true</tt>, to which {@link #firstStepFromBranch}
+     * @return                the index of the neighbour <code>true</code>, to which {@link #firstStepFromBranch}
      *                        will move if it will be called.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
-     *                               if <tt>!{@link #isBranch() isBranch()}</tt>.
+     *                               if <code>!{@link #isBranch() isBranch()}</code>.
      */
     public int firstStepFromBranchNeighbourIndex(boolean onlyToUnvisited) throws IllegalStateException {
         int pixelType = currentPixelTypeOrAttachedNode();
@@ -1832,24 +1837,24 @@ public final class SkeletonScanner implements ArrayProcessor {
 
     /**
      * Continues movement along the skeleton branch, started by {@link #firstStep(int, boolean)} or
-     * {@link #firstStepFromBranch(boolean)} method, and returns <tt>true</tt>,
-     * if the end of the current branch is not reached yet, or does nothing and returns <tt>false</tt>
+     * {@link #firstStepFromBranch(boolean)} method, and returns <code>true</code>,
+     * if the end of the current branch is not reached yet, or does nothing and returns <code>false</code>
      * if we have reached the end of the branch (usually a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node} or
      * {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end}).
      *
      * <p>This method may be called only if the previous change of the current position was performed
      * by {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or this method.
      * In other case (for example, if the last change of the current position was performed by {@link #goTo(long...)}
-     * or {@link #nextNodeOrBranch()}), this method throws <tt>IllegalStateException</tt>.
+     * or {@link #nextNodeOrBranch()}), this method throws <code>IllegalStateException</code>.
      *
      * <p>More precisely:
      * <ol>
      * <li>if the current position is equal to the position, stored in the beginning of the last
-     * {@link #firstStepFromBranch(boolean)} call, this method does nothing and returns <tt>false</tt>
+     * {@link #firstStepFromBranch(boolean)} call, this method does nothing and returns <code>false</code>
      * (it means that we've finished scanning of this cyclic branch and returned to the original position);</li>
      *
      * <li>if the current pixel is a {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end},
-     * this method does nothing and returns <tt>false</tt>
+     * this method does nothing and returns <code>false</code>
      * (it means that we've reached the free end of this branch);</li>
 
      * <li>if the current pixel is a {@link SkeletonPixelClassifier#TYPE_USUAL_BRANCH usual branch element},
@@ -1857,7 +1862,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub>,
      * which was not current before the previous change of the current position via
      * {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or this method,
-     * and returns <tt>true</tt>;</li>
+     * and returns <code>true</code>;</li>
      *
      * <li>if the current pixel is an {@link #isAttachableBranchEnd() attachable branch end},
      * this method finds 2 its neighbours <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub>, indexes of which
@@ -1866,15 +1871,15 @@ public final class SkeletonScanner implements ArrayProcessor {
      * and moves the current position to that from <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub>,
      * which was not current before the previous change of the current position via
      * {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or this method,
-     * and returns <tt>true</tt>;</li>
+     * and returns <code>true</code>;</li>
      *
      * <li>if the current pixel is a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node} or an
      * "{@link SkeletonPixelClassifier#TYPE_ILLEGAL illegal}" pixel, this method does nothing
-     * and returns <tt>false</tt> (it means that we've reached the node at the end of this branch
+     * and returns <code>false</code> (it means that we've reached the node at the end of this branch
      * or we cannot continue scanning because this pixel cannot belong to a correct skeleton);</li>
      *
      * <li>if the current element is {@link SkeletonPixelClassifier#TYPE_ZERO zero},
-     * this method throws <tt>IllegalStateException</tt>.</li>
+     * this method throws <code>IllegalStateException</code>.</li>
      * </ol>
      *
      * <p>Note, that this method does not use information about possible previous visits of the pixels, probably
@@ -1884,7 +1889,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * This situation is processed according to the model of infinite pseudo-cyclical continuation &mdash;
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
-     * @return <tt>true</tt> if the current position has been successfully moved to the neighbour.
+     * @return <code>true</code> if the current position has been successfully moved to the neighbour.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet},
      *                               or if the previous change of the current position was performed not by
      *                               this method and not by {@link #firstStep(int, boolean)} or
@@ -1944,11 +1949,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * On the assumption that the {@link #currentCoordinates() current pixel} is a
      * {@link #isNode() node or isolated pixel},
      * completely scans the branch, originating at this node and going towards its neighbour with the given index.
-     * If <tt>onlyToUnvisited</tt> argument is <tt>true</tt>, this method does not try to scan a branch,
+     * If <code>onlyToUnvisited</code> argument is <code>true</code>, this method does not try to scan a branch,
      * the first pixel of which was already visited.
-     * If <tt>withVisiting</tt> argument is <tt>true</tt>, this method marks all visited and left pixels
+     * If <code>withVisiting</code> argument is <code>true</code>, this method marks all visited and left pixels
      * (including the starting node, but excluding the finish pixel) by {@link #visitPreviousBranchPixel()} method.
-     * Both arguments <tt>onlyToUnvisited</tt> and <tt>withVisiting</tt> have no effect if this
+     * Both arguments <code>onlyToUnvisited</code> and <code>withVisiting</code> have no effect if this
      * scanner is not {@link #isRemembering() remembering}.
      *
      * <p>More precisely, this method is equivalent to the following code:
@@ -1962,22 +1967,22 @@ public final class SkeletonScanner implements ArrayProcessor {
      * }
      * </pre>
      * with the only addition that this method also calls
-     * <tt>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</tt>
-     * method from time to time (if <nobr><tt>{@link #context()}!=null</tt></nobr>)
+     * <code>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</code>
+     * method from time to time (if <code>{@link #context()}!=null</code>)
      * to allow interruption of scanning very long branches.
      * No other methods of the context are called.
      *
      * @param neighbourIndex  the index of the neighbour, in terms of
-     *                        <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                        neighbourOffset(int)}</tt></nobr> method.
+     *                        <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                        neighbourOffset(int)}</code> method.
      * @param onlyToUnvisited whether this method should go only to neighbours, which were never be visited before
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
      * @param withVisiting    whether this method should call {@link #visitPreviousBranchPixel()} after each step
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet} or
-     *                                   if <tt>!{@link #isNode() isNode()}</tt>.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     *                                   if <code>!{@link #isNode() isNode()}</code>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      */
     public void scanBranch(int neighbourIndex, boolean onlyToUnvisited, boolean withVisiting)
         throws IllegalStateException
@@ -2003,11 +2008,11 @@ public final class SkeletonScanner implements ArrayProcessor {
      * If the current pixel is a {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end}
      * or if this branch is cyclic (consists of {@link SkeletonPixelClassifier#TYPE_USUAL_BRANCH usual branch pixels}
      * only), this method completely scans whole this branch.
-     * If <tt>onlyToUnvisited</tt> argument is <tt>true</tt>, this method does not try to scan a branch,
+     * If <code>onlyToUnvisited</code> argument is <code>true</code>, this method does not try to scan a branch,
      * if the first scanned pixel was already visited.
-     * If <tt>withVisiting</tt> argument is <tt>true</tt>, this method marks all visited and left pixels
+     * If <code>withVisiting</code> argument is <code>true</code>, this method marks all visited and left pixels
      * (including the starting pixel, but excluding the finish one) by {@link #visitPreviousBranchPixel()} method.
-     * Both arguments <tt>onlyToUnvisited</tt> and <tt>withVisiting</tt> have no effect if this
+     * Both arguments <code>onlyToUnvisited</code> and <code>withVisiting</code> have no effect if this
      * scanner is not {@link #isRemembering() remembering}.
      *
      * <p>More precisely, this method is equivalent to the following code:
@@ -2021,8 +2026,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * }
      * </pre>
      * with the only addition that this method also calls
-     * <tt>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</tt>
-     * method from time to time (if <nobr><tt>{@link #context()}!=null</tt></nobr>)
+     * <code>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</code>
+     * method from time to time (if <code>{@link #context()}!=null</code>)
      * to allow interruption of scanning very long branches.
      * No other methods of the context are called.
      *
@@ -2031,7 +2036,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * @param withVisiting    whether this method should call {@link #visitPreviousBranchPixel()} after each step
      *                        (this argument affects only if this scanner is {@link #isRemembering() remembering}).
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet} or
-     *                                   if <tt>!{@link #isBranch() isBranch()}</tt>.
+     *                                   if <code>!{@link #isBranch() isBranch()}</code>.
      */
     public void scanBranchFromBranch(boolean onlyToUnvisited, boolean withVisiting) throws IllegalStateException {
         if (firstStepFromBranch(onlyToUnvisited)) {
@@ -2052,19 +2057,19 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Returns an index of the neighbour, towards which the current position was moved
      * by the previous change of the current position via
      * {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or {@link #nextStep()} method,
-     * or <tt>-1</tt> if the previous change of the current position was performed by some other method
+     * or <code>-1</code> if the previous change of the current position was performed by some other method
      * like {@link #goTo(long...)} or {@link #nextNodeOrBranch()}.
      * This neighbour index is specified in terms of
-     * <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     * neighbourOffset(int)}</tt></nobr>
-     * method. So, if <tt>direction</tt> is the result of this method and it is not <tt>-1</tt>,
-     * then <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#reverseNeighbourIndex(int)
-     * reverseNeighbourIndex(direction)}</tt></nobr> is an index
+     * <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     * neighbourOffset(int)}</code>
+     * method. So, if <code>direction</code> is the result of this method and it is not <code>-1</code>,
+     * then <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#reverseNeighbourIndex(int)
+     * reverseNeighbourIndex(direction)}</code> is an index
      * of the neighbour of the current element, which was current before the last movement.
      *
      * @return the direction of the last movement of the current position along a branch,
      *         performed by {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)}
-     *         or {@link #nextStep()} method, or <tt>-1</tt> if the last movement was performed by another method.
+     *         or {@link #nextStep()} method, or <code>-1</code> if the last movement was performed by another method.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public int previousBranchStepDirection() {
@@ -2076,7 +2081,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Returns the coordinates of the neighbour of the current element, which was current before the last change
      * of the current position, if this change was performed via
      * {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or {@link #nextStep()} method,
-     * or throws <tt>IllegalStateException</tt> if the previous change of the current position was performed
+     * or throws <code>IllegalStateException</code> if the previous change of the current position was performed
      * by some other method like {@link #goTo(long...)} or {@link #nextNodeOrBranch()}.
      *
      * <p>The returned array is always a newly allocated Java array.
@@ -2084,7 +2089,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * The returned coordinates are always in ranges
      * <pre>
      * 0 &le; result[<i>k</i>] &lt; {@link #skeleton() skeleton()}.{@link Matrix#dim(int) dim}(<i>k</i>),
-     * </pre>where <tt>result[<i>k</i>]</tt> is the element <tt>#<i>k</i></tt> in the returned array.
+     * </pre>where <code>result[<i>k</i>]</code> is the element <code>#<i>k</i></code> in the returned array.
      *
      * @return the coordinates of the previous current pixel.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet},
@@ -2106,12 +2111,12 @@ public final class SkeletonScanner implements ArrayProcessor {
      * Reduced and more efficient version of {@link #previousCoordinates()}, designed for indexing
      * elements of the {@link Matrix#array() built-in AlgART array} of the skeleton matrix.
      * This method is equivalent to
-     * <nobr><tt>{@link #skeleton() skeleton()}.{@link Matrix#index(long...)
-     * index}({@link #previousCoordinates() previousCoordinates()})</tt></nobr>,
+     * <code>{@link #skeleton() skeleton()}.{@link Matrix#index(long...)
+     * index}({@link #previousCoordinates() previousCoordinates()})</code>,
      * but usually works much faster (in particular, does not allocate any arrays).
      *
      * <p>The result of this method is always in range
-     * <tt>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</tt>.
+     * <code>0..{@link #skeleton() skeleton()}.{@link Matrix#size() size()}-1</code>.
      *
      * @return the previous current index in the built-in AlgART array of the skeleton matrix.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet},
@@ -2133,7 +2138,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if this scanner is remembering or <tt>false</tt> if it is lightweight.
+     * Returns <code>true</code> if this scanner is remembering or <code>false</code> if it is lightweight.
      * See the {@link SkeletonScanner comments to this class} about remembering and lightweight skeleton scanners.
      *
      * @return whether this class is remembering.
@@ -2143,11 +2148,11 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if this scanner is {@link #isRemembering() remembering} and
+     * Returns <code>true</code> if this scanner is {@link #isRemembering() remembering} and
      * the {@link #currentCoordinates() current element} was already visited by
      * {@link #visit()} or {@link #visitPreviousBranchPixel()} method.
      *
-     * <p>If this scanner is lightweight, this method always returns <tt>false</tt>.
+     * <p>If this scanner is lightweight, this method always returns <code>false</code>.
      *
      * @return whether the current pixel is marked as "visited".
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet}.
@@ -2158,25 +2163,25 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Returns <tt>true</tt> if this scanner is {@link #isRemembering() remembering} and
+     * Returns <code>true</code> if this scanner is {@link #isRemembering() remembering} and
      * the neighbour of the {@link #currentCoordinates() current element} with the given index
      * was already visited by {@link #visit()} or {@link #visitPreviousBranchPixel()} method.
      * The result will be the same as if we would call
-     * <tt>{@link #goToNeighbour(int) goToNeighbour}(neighbourIndex)</tt> and then call
+     * <code>{@link #goToNeighbour(int) goToNeighbour}(neighbourIndex)</code> and then call
      * {@link #pixelVisitRemembered()}, but this method does not change the current position.
      *
-     * <p>If this scanner is lightweight, this method always returns <tt>false</tt>.
+     * <p>If this scanner is lightweight, this method always returns <code>false</code>.
      *
      * <p>Note, that we allow a situation when the neighbouring element is out of ranges of the matrix coordinates.
      * This situation is processed according to the model of infinite pseudo-cyclical continuation &mdash;
      * see the end of the {@link SkeletonScanner comments to this class}.
      *
      * @param neighbourIndex the index of the neighbour, in terms of
-     *                       <nobr><tt>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
-     *                       neighbourOffset(int)}</tt></nobr> method.
+     *                       <code>{@link #pixelClassifier()}.{@link SkeletonPixelClassifier#neighbourOffset(int)
+     *                       neighbourOffset(int)}</code> method.
      * @return               whether the given neighbour of the current pixel is marked as "visited".
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @throws IllegalStateException     if this scanner was not {@link #isInitialized() positioned yet}.
      */
     public boolean neighbourVisitRemembered(int neighbourIndex) {
@@ -2256,11 +2261,11 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Calls <tt>{@link #context()}.{@link ArrayContext#updateProgress updateProgress(event)}</tt>
+     * Calls <code>{@link #context()}.{@link ArrayContext#updateProgress updateProgress(event)}</code>
      * with an event, created by the following operator:
-     * <nobr><tt>new ArrayContext.Event(boolean.class, {@link #currentIndexInArray()
-     * currentIndexInArray()}, {@link #skeleton() skeleton()}.{@link Matrix#size() size()})</tt></nobr>,
-     * or does nothing if <tt>{@link #context()}==null</tt>.
+     * <code>new ArrayContext.Event(boolean.class, {@link #currentIndexInArray()
+     * currentIndexInArray()}, {@link #skeleton() skeleton()}.{@link Matrix#size() size()})</code>,
+     * or does nothing if <code>{@link #context()}==null</code>.
      *
      * <p>The method can be useful while sequentially scanning the skeleton via a usual loop of
      * {@link #nextNodeOrBranch()} calls.
@@ -2272,8 +2277,8 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Calls <tt>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</tt>
-     * or does nothing if <tt>{@link #context()}==null</tt>.
+     * Calls <code>{@link #context()}.{@link ArrayContext#checkInterruption() checkInterruption()}</code>
+     * or does nothing if <code>{@link #context()}==null</code>.
      *
      * <p>The method can be useful while sequentially scanning the skeleton via a usual loop of
      * {@link #nextNodeOrBranch()} calls.

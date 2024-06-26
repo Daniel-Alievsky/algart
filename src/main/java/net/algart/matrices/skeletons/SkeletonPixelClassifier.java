@@ -181,8 +181,8 @@ import net.algart.arrays.*;
  * <h2>Example of results</h2>
  *
  * <p>Below is a simple example of 2-dimensional skeleton, the pixels of which are classified by this class
- * into nodes (<tt>N</tt>), usual branch pixels (<tt>b</tt>), free branch ends (<tt>E</tt>),
- * attachable branch ends (<tt>a</tt>) and isolated pixels (<tt>I</tt>):</p>
+ * into nodes (<code>N</code>), usual branch pixels (<code>b</code>), free branch ends (<code>E</code>),
+ * attachable branch ends (<code>a</code>) and isolated pixels (<code>I</code>):</p>
  *
  * <pre>
  * . . . . . . . . . . . . . . . . .
@@ -200,7 +200,7 @@ import net.algart.arrays.*;
  * . . . . . . . . . . . . . . . . .</pre>
  *
  * <p>In the left bottom part you can see an example of a cyclic branch, consisting only of usual branch pixels
- * (<tt>b</tt>).</p>
+ * (<code>b</code>).</p>
  *
  * <h2>Creating instances of this class</h2>
  *
@@ -221,7 +221,7 @@ import net.algart.arrays.*;
  * You can change this behavior by appending the source matrix with zero elements
  * by calling <nobr>{@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)}</nobr> method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <h2>Multithreading compatibility</h2>
  *
@@ -429,14 +429,14 @@ public abstract class SkeletonPixelClassifier {
     /**
      * Creates new instance of this class, allowing to process skeletons with the given number of dimensions.
      * The number of dimensions must not be greater than
-     * <nobr><tt>(int)</tt>log<sub>3</sub>(2<sup>31</sup>&minus;1)=19</nobr>:
+     * <code>(int)</code>log<sub>3</sub>(2<sup>31</sup>&minus;1)=19:
      * this condition provides a guarantee that the number of neighbours, returned by
-     * {@link #numberOfNeighbours()} method, can be represented by <tt>int</tt> Java type.
+     * {@link #numberOfNeighbours()} method, can be represented by <code>int</code> Java type.
      *
      * @param dimCount the number of dimensions, which will be returned by {@link #dimCount()} method.
-     * @throws IllegalArgumentException if <tt>dimCount &le; 0</tt> or
-     *                                  if 3<sup><tt>dimCount</tt></sup> &gt;
-     *                                  <tt>Integer.MAX_VALUE</tt>=2<sup>31</sup>&minus;1.
+     * @throws IllegalArgumentException if <code>dimCount &le; 0</code> or
+     *                                  if 3<sup><code>dimCount</code></sup> &gt;
+     *                                  <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
      */
     protected SkeletonPixelClassifier(int dimCount) {
         if (dimCount <= 0)
@@ -454,20 +454,20 @@ public abstract class SkeletonPixelClassifier {
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type is indicates a node, i&#46;e&#46; a unit element
+     * Returns <code>true</code> if this pixel type is indicates a node, i&#46;e&#46; a unit element
      * where 3 or more thin connected 1-pixel branches meet or, as a degenerated case, an isolated pixel:
      * a unit element having no unit neighbours.
      * Equivalent to
-     * <nobr><tt>pixelType == {@link #TYPE_USUAL_NODE} || pixelType == {@link #TYPE_ISOLATED}</tt></nobr>.
+     * <code>pixelType == {@link #TYPE_USUAL_NODE} || pixelType == {@link #TYPE_ISOLATED}</code>.
      *
      * <p>Note that all unit pixels in the skeleton, excepting {@link #isIllegalPixelType(int) "illegal"},
      * are separated into 2 groups:
      * nodes (including isolated pixels as a degenerated case),
-     * for which this method returns <tt>true</tt>,
-     * and branch pixels, for which {@link #isBranchPixelType(int)} returns <tt>true</tt>.
+     * for which this method returns <code>true</code>,
+     * and branch pixels, for which {@link #isBranchPixelType(int)} returns <code>true</code>.
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates a node,
+     * @return          <code>true</code> if this type indicates a node,
      *                  including the degenerated case of an isolated pixel.
      */
     public static boolean isNodePixelType(int pixelType) {
@@ -475,38 +475,38 @@ public abstract class SkeletonPixelClassifier {
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type indicates a usual branch pixel,
+     * Returns <code>true</code> if this pixel type indicates a usual branch pixel,
      * i&#46;e&#46; a unit pixel having exactly 2 unit neighbours.
      * Equivalent to
-     * <nobr><tt>pixelType == {@link #TYPE_USUAL_BRANCH}</tt></nobr>.
+     * <code>pixelType == {@link #TYPE_USUAL_BRANCH}</code>.
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates a usual (non-ending) branch pixel.
+     * @return          <code>true</code> if this type indicates a usual (non-ending) branch pixel.
      */
     public static boolean isUsualBranchPixelType(int pixelType) {
         return pixelType == TYPE_USUAL_BRANCH;
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type indicates a free branch end,
+     * Returns <code>true</code> if this pixel type indicates a free branch end,
      * i&#46;e&#46; a unit pixel having exactly 1 unit neighbour.
      * Equivalent to
-     * <nobr><tt>pixelType == {@link #TYPE_FREE_BRANCH_END}</tt></nobr>.
+     * <code>pixelType == {@link #TYPE_FREE_BRANCH_END}</code>.
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates a free branch end.
+     * @return          <code>true</code> if this type indicates a free branch end.
      */
     public static boolean isFreeBranchEndPixelType(int pixelType) {
         return pixelType == TYPE_FREE_BRANCH_END;
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type indicates an <i>attachable branch end</i>,
+     * Returns <code>true</code> if this pixel type indicates an <i>attachable branch end</i>,
      * i&#46;e&#46; a unit pixel having 3 or more unit neighbours,
      * which this class considers to be not a node, but an ending pixel of some branch.
      * Equivalent to
-     * <nobr><tt>pixelType >= 0</tt></nobr>.
-     * (The value of <tt>pixelType</tt> argument can appear in the result of
+     * <code>pixelType >= 0</code>.
+     * (The value of <code>pixelType</code> argument can appear in the result of
      * {@link #asPixelTypes asPixelTypes} method.)
      *
      * <p>Such matrix element is always unit and also has &ge;3 unit neighbours, as {@link #TYPE_USUAL_NODE nodes},
@@ -547,7 +547,7 @@ public abstract class SkeletonPixelClassifier {
      * unlike the true node to the right from the center (marked out by italic font).
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates an attachable branch end,
+     * @return          <code>true</code> if this type indicates an attachable branch end,
      *                  i.e. if it is non-negative.
      */
     public static boolean isAttachableBranchEndPixelType(int pixelType) {
@@ -555,58 +555,59 @@ public abstract class SkeletonPixelClassifier {
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type is indicates a node
-     * (<tt>{@link #isNodePixelType(int) isNodePixelType}(pixelType)</tt> returns <tt>true</tt>)
+     * Returns <code>true</code> if this pixel type is indicates a node
+     * (<code>{@link #isNodePixelType(int) isNodePixelType}(pixelType)</code> returns <code>true</code>)
      * or a free branch end
-     * (<tt>{@link #isFreeBranchEndPixelType(int) isFreeBranchEndPixelType}(pixelType)</tt> returns <tt>true</tt>).
+     * (<code>{@link #isFreeBranchEndPixelType(int) isFreeBranchEndPixelType}(pixelType)</code>
+     * returns <code>true</code>).
      * Equivalent to<br>
-     * <nobr><tt>pixelType &gt;= {@link #TYPE_NODE_OR_BRANCH_END_MIN} &amp;&amp;
-     * pixelType &lt;= {@link #TYPE_NODE_OR_BRANCH_END_MAX}</tt></nobr>.
+     * <tt>pixelType &gt;= {@link #TYPE_NODE_OR_BRANCH_END_MIN} &amp;&amp;
+     * pixelType &lt;= {@link #TYPE_NODE_OR_BRANCH_END_MAX}</tt>.
      *
      * <p>Note that all such pixels (nodes and free branch ends) corresponds to
      * nodes of a graph, describing the geometric structure of the skeleton
      * (branches correspond to edges in that graph).
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates a node or a free branch end.
+     * @return          <code>true</code> if this type indicates a node or a free branch end.
      */
     public static boolean isNodeOrFreeBranchEndPixelType(int pixelType) {
         return pixelType >= TYPE_NODE_OR_BRANCH_END_MIN && pixelType <= TYPE_NODE_OR_BRANCH_END_MAX;
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type is indicates a branch element: usual
-     * (where <tt>{@link #isUsualBranchPixelType(int) isUsualBranchPixelType}(pixelType)</tt>
-     * returns <tt>true</tt>), free branch end
-     * (where <tt>{@link #isFreeBranchEndPixelType(int) isFreeBranchEndPixelType}(pixelType)</tt>
-     * returns <tt>true</tt>) or attachable branch end
-     * (where <tt>{@link #isAttachableBranchEndPixelType(int) isAttachablePixelType}(pixelType)</tt>
-     * returns <tt>true</tt>).
+     * Returns <code>true</code> if this pixel type is indicates a branch element: usual
+     * (where <code>{@link #isUsualBranchPixelType(int) isUsualBranchPixelType}(pixelType)</code>
+     * returns <code>true</code>), free branch end
+     * (where <code>{@link #isFreeBranchEndPixelType(int) isFreeBranchEndPixelType}(pixelType)</code>
+     * returns <code>true</code>) or attachable branch end
+     * (where <code>{@link #isAttachableBranchEndPixelType(int) isAttachablePixelType}(pixelType)</code>
+     * returns <code>true</code>).
      * Equivalent to<br>
-     * <nobr><tt>pixelType &gt;= 0 ||
-     * (pixelType &gt;= {@link #TYPE_BRANCH_MIN} &amp;&amp; pixelType &lt;= {@link #TYPE_BRANCH_MAX})</tt></nobr>.
+     * <tt>pixelType &gt;= 0 ||
+     * (pixelType &gt;= {@link #TYPE_BRANCH_MIN} &amp;&amp; pixelType &lt;= {@link #TYPE_BRANCH_MAX})</tt>.
      *
      * <p>Note that all unit pixels in the skeleton, excepting {@link #isIllegalPixelType(int) "illegal"},
      * are separated into 2 groups:
      * nodes (including isolated pixels as a degenerated case),
-     * for which {@link #isNodePixelType(int)} returns <tt>true</tt>,
-     * and branch pixels, for which this method returns <tt>true</tt>.
+     * for which {@link #isNodePixelType(int)} returns <code>true</code>,
+     * and branch pixels, for which this method returns <code>true</code>.
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates some element of a branch.
+     * @return          <code>true</code> if this type indicates some element of a branch.
      */
     public static boolean isBranchPixelType(int pixelType) {
         return pixelType >= 0 || (pixelType >= TYPE_BRANCH_MIN && pixelType <= TYPE_BRANCH_MAX);
     }
 
     /**
-     * Returns <tt>true</tt> if this pixel type indicates that the pixel is a center of an impossible configuration
+     * Returns <code>true</code> if this pixel type indicates that the pixel is a center of an impossible configuration
      * for a correct result of the given skeletonization algorithm.
      * Equivalent to
-     * <nobr><tt>pixelType == {@link #TYPE_ILLEGAL}</tt></nobr>.
+     * <code>pixelType == {@link #TYPE_ILLEGAL}</code>.
      *
      * @param pixelType pixel type: possible element of the result of {@link #asPixelTypes asPixelTypes} method.
-     * @return          <tt>true</tt> if this type indicates an incorrect configuration of the pixel's neighbours.
+     * @return          <code>true</code> if this type indicates an incorrect configuration of the pixel's neighbours.
      */
     public static boolean isIllegalPixelType(int pixelType) {
         return pixelType == TYPE_ILLEGAL;
@@ -614,7 +615,7 @@ public abstract class SkeletonPixelClassifier {
     /**
      * Returns the number of dimensions of the matrices, which can be processed by this object.
      * In {@link SkeletonScanner}, equivalent to
-     * <nobr><tt>{@link SkeletonScanner#skeleton() skeleton()}.{@link Matrix#dimCount() dimCount()}</tt></nobr>.
+     * <code>{@link SkeletonScanner#skeleton() skeleton()}.{@link Matrix#dimCount() dimCount()}</code>.
      *
      * @return the number of dimensions of the matrices, which can be processed by this object.
      */
@@ -639,23 +640,23 @@ public abstract class SkeletonPixelClassifier {
     /**
      * Returns the differences of all coordinates of the neighbour of some (central) element with the given index
      * and the coordinates of this central element.
-     * In other words, if <nobr><i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub></nobr>
+     * In other words, if <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub>
      * are coordinates of the some element of a skeleton matrix (<i>n</i>={@link #dimCount()}),
      * and we need to find the coordinates
-     * <nobr><i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub></nobr>
+     * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
      * of its neighbour #<i>k</i>, 0&le;<i>k</i>&lt;{@link #numberOfNeighbours() numberOfNeighbours()},
      * we should use the following formula:
      * <blockquote>
-     * <i>j<sub>i</sub></i> = <i>i<sub>i</sub></i> + <tt>offset[</tt><i>i</i><tt>]</tt>,
+     * <i>j<sub>i</sub></i> = <i>i<sub>i</sub></i> + <code>offset[</code><i>i</i><code>]</code>,
      * </blockquote>
-     * <p>where <tt>offset</tt> is the result of calling this method with <tt>neighbourIndex</tt>=<i>k</i>.
+     * <p>where <code>offset</code> is the result of calling this method with <code>neighbourIndex</code>=<i>k</i>.
      *
      * <p>The returned array is always a newly allocated Java array.
      * Its length is always equal to {@link #dimCount()}.
      * Its elements will be always same while different calls of this method for the same object
-     * (implementing this class) with the same <tt>neighbourIndex</tt> argument.
-     * The elements of the returned array are always equal to <tt>-1</tt>, <tt>0</tt> or <tt>+1</tt>,
-     * and all they cannot be <tt>0</tt> simultaneously.
+     * (implementing this class) with the same <code>neighbourIndex</code> argument.
+     * The elements of the returned array are always equal to <code>-1</code>, <code>0</code> or <code>+1</code>,
+     * and all they cannot be <code>0</code> simultaneously.
      *
      * <p>This method defines some <i>order</i> of enumerating neighbours.
      * This order can be different in different implementations.
@@ -667,14 +668,14 @@ public abstract class SkeletonPixelClassifier {
      * 6 5 4</pre>
      * <p>(the <i>x</i>-axis is directed rightward, the <i>y</i>-axis is directed downward).
      * It means that the results of this method in {@link BasicSkeletonPixelClassifier2D} are the following:
-     * for <tt>neighbourIndex=0</tt> it returns two-element array <tt><nobr>{-1,-1}</nobr></tt>,
-     * for <tt>neighbourIndex=1</tt> it returns two-element array <tt><nobr>{0,-1}</nobr></tt>,
-     * for <tt>neighbourIndex=2</tt> it returns two-element array <tt><nobr>{1,-1}</nobr></tt>,
-     * for <tt>neighbourIndex=3</tt> it returns two-element array <tt><nobr>{1,0}</nobr></tt>,
-     * for <tt>neighbourIndex=4</tt> it returns two-element array <tt><nobr>{1,1}</nobr></tt>,
-     * for <tt>neighbourIndex=5</tt> it returns two-element array <tt><nobr>{0,1}</nobr></tt>,
-     * for <tt>neighbourIndex=6</tt> it returns two-element array <tt><nobr>{-1,1}</nobr></tt>,
-     * for <tt>neighbourIndex=7</tt> it returns two-element array <tt><nobr>{-1,0}</nobr></tt>.
+     * for <code>neighbourIndex=0</code> it returns two-element array <code>{-1,-1}</code>,
+     * for <code>neighbourIndex=1</code> it returns two-element array <code>{0,-1}</code>,
+     * for <code>neighbourIndex=2</code> it returns two-element array <code>{1,-1}</code>,
+     * for <code>neighbourIndex=3</code> it returns two-element array <code>{1,0}</code>,
+     * for <code>neighbourIndex=4</code> it returns two-element array <code>{1,1}</code>,
+     * for <code>neighbourIndex=5</code> it returns two-element array <code>{0,1}</code>,
+     * for <code>neighbourIndex=6</code> it returns two-element array <code>{-1,1}</code>,
+     * for <code>neighbourIndex=7</code> it returns two-element array <code>{-1,0}</code>.
      * In other words, {@link BasicSkeletonPixelClassifier2D} class enumerates
      * the neighbours along the perimeter of 3x3 square.
      *
@@ -682,8 +683,8 @@ public abstract class SkeletonPixelClassifier {
      *
      * @param neighbourIndex an index if the neighbour of some central element of a matrix.
      * @return               shifts along all coordinates from the central element to this neighbour.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @see SkeletonScanner#neighbourOffsetInArray(int)
      */
     public final long[] neighbourOffset(int neighbourIndex) {
@@ -696,7 +697,7 @@ public abstract class SkeletonPixelClassifier {
      * More efficient version of {@link #neighbourOffset(int) neighbourOffset(int)} method,
      * which stores the results in the specified Java array instead of creating new Java array.
      * This method is equivalent to calling that method and copying its result into
-     * <tt>coordinateIncrements</tt> argument, but does not allocate any arrays.
+     * <code>coordinateIncrements</code> argument, but does not allocate any arrays.
      * It is a better solution if we need to calculate neighbour offsets in a long loop,
      * because allows to avoid allocating a lot of short arrays.
      *
@@ -704,37 +705,38 @@ public abstract class SkeletonPixelClassifier {
      * of processed matrices.
      *
      * @param coordinateIncrements Java array for storing the differences of all coordinates of
-     *                             the neighbour #<tt>neighbourIndex</tt> of some (central) element
+     *                             the neighbour #<code>neighbourIndex</code> of some (central) element
      *                             and the coordinates of this central element.
      * @param neighbourIndex       an index if the neighbour of some central element of the matrix.
-     * @throws NullPointerException     if <tt>coordinateIncrements</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>coordinateIncrements.length!={@link #dimCount()}</tt>.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws NullPointerException     if <code>coordinateIncrements</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>coordinateIncrements.length!={@link #dimCount()}</code>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      * @see SkeletonScanner#neighbourOffsetInArray(int)
      */
     public abstract void neighbourOffset(long[] coordinateIncrements, int neighbourIndex);
 
     /**
      * Returns an index of such neighbour <i>B</i> of some element <i>A</i> of a skeleton matrix,
-     * so that the element <i>A</i> is the neighbour with the specified index <tt>neighbourIndex</tt>
+     * so that the element <i>A</i> is the neighbour with the specified index <code>neighbourIndex</code>
      * of its neighbour <i>B</i>.
      * Both neighbour indexes are considered in terms of {@link #neighbourOffset(int) neighbourOffset(int)} method.
-     * It means, that if <tt>k1</tt> is the argument of this method and <tt>k2</tt> is the result of this method,
-     * <nobr><tt>offset1={@link #neighbourOffset(int) neighbourOffset}(k1)</tt></nobr> and
-     * <nobr><tt>offset2={@link #neighbourOffset(int) neighbourOffset}(k2)</tt></nobr>,
+     * It means, that if <code>k1</code> is the argument of this method and <code>k2</code>
+     * is the result of this method,
+     * <code>offset1={@link #neighbourOffset(int) neighbourOffset}(k1)</code> and
+     * <code>offset2={@link #neighbourOffset(int) neighbourOffset}(k2)</code>,
      * then
      * <blockquote>
-     * <tt>offset2[<i>i</i>] = -offset1[<i>i</i>]</tt> for all <i>i</i>.
+     * <code>offset2[<i>i</i>] = -offset1[<i>i</i>]</code> for all <i>i</i>.
      * </blockquote>
      *
      * <p>For example, in {@link BasicSkeletonPixelClassifier2D} class (which enumerates 8 neighbours along
-     * the perimeter of 3x3 square) this method returns <tt>(neighbourIndex+4)%8</tt>.
+     * the perimeter of 3x3 square) this method returns <code>(neighbourIndex+4)%8</code>.
      *
      * @param neighbourIndex an index of some neighbour <i>B</i> of some central element <i>A</i>.
      * @return               an index of the central element <i>A</i> as a neighbour of the element <i>B</i>.
-     * @throws IndexOutOfBoundsException if <tt>neighbourIndex</tt> is out of range
-     *                                   <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt>.
+     * @throws IndexOutOfBoundsException if <code>neighbourIndex</code> is out of range
+     *                                   <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code>.
      */
     public abstract int reverseNeighbourIndex(int neighbourIndex);
 
@@ -743,7 +745,7 @@ public abstract class SkeletonPixelClassifier {
      * specifying the type of the corresponding pixel of the skeleton. The number of dimensions of
      * the passed matrix must be equal to {@link #dimCount() dimCount()}.
      *
-     * <p>More precisely, let's consider that <tt>skeleton</tt> matrix is the result of some skeletonization
+     * <p>More precisely, let's consider that <code>skeleton</code> matrix is the result of some skeletonization
      * algorithm (chosen while creating an instance of this class). The resulting matrix will
      * contain the following values:
      *
@@ -759,18 +761,18 @@ public abstract class SkeletonPixelClassifier {
      * having 1 unit neighbour elements;</li>
      * <li>{@link #TYPE_USUAL_BRANCH}, if the corresponding element of the skeleton has 2
      * unit neighbour elements;</li>
-     * <li>some non-negative value in <tt>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</tt> range,
+     * <li>some non-negative value in <code>0..{@link #numberOfNeighbours() numberOfNeighbours()}-1</code> range,
      * if the corresponding element of the skeleton has &ge;3 unit neighbour elements, but this class recommends
      * to consider this pixel not a node, but an additional {@link #isAttachableBranchEndPixelType(int)
      * "attached" element} of some branch. In this case, this value means the following:
      *     <ol type=A>
-     *     <li>if <tt>attachmentInformation</tt> argument is
+     *     <li>if <code>attachmentInformation</code> argument is
      *     {@link AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHED_NODE},
      *     this value specifies the direction (neighbour index) towards the neighbouring node,
      *     which is one of the ends of this branch;
      *     there is a guarantee that this neighbour is either really {@link #TYPE_USUAL_NODE node} or, maybe,
      *     {@link #TYPE_ILLEGAL};</li>
-     *     <li>if <tt>attachmentInformation</tt> argument is
+     *     <li>if <code>attachmentInformation</code> argument is
      *     {@link AttachmentInformation#NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH},
      *     this value specifies the direction (neighbour index) towards the branch,
      *     to which this pixel should be attached as its ending element;
@@ -787,18 +789,18 @@ public abstract class SkeletonPixelClassifier {
      * 7 <b><i>C</i></b> 3
      * 6 5 4</pre>
      * <p>(the <i>x</i>-axis is directed rightward, the <i>y</i>-axis is directed downward).
-     * Namely, if the current element has coordinates <nobr>(<i>x</i>,<i>y</i>)</nobr>,
+     * Namely, if the current element has coordinates (<i>x</i>,<i>y</i>),
      * then "0" value means attaching of the node with coordinates
-     * <nobr>(<i>x</i>&minus;1,<i>y</i>&minus;1)</nobr> (the case A)
+     * (<i>x</i>&minus;1,<i>y</i>&minus;1) (the case A)
      * or attaching of the node to the branch containing the pixel
-     * <nobr>(<i>x</i>&minus;1,<i>y</i>&minus;1)</nobr> (the case B),
-     * "1" value means attaching of the node / to the branch <nobr>(<i>x</i>,<i>y</i>&minus;1)</nobr>,
-     * "2" value means attaching of the node / to the branch <nobr>(<i>x</i>+1,<i>y</i>&minus;1)</nobr>,
-     * "3" value means attaching of the node / to the branch  <nobr>(<i>x</i>+1,<i>y</i>)</nobr>,
-     * "4" value means attaching of the node / to the branch  <nobr>(<i>x</i>+1,<i>y</i>+1)</nobr>,
-     * "5" value means attaching of the node / to the branch  <nobr>(<i>x</i>,<i>y</i>+1)</nobr>,
-     * "6" value means attaching of the node / to the branch  <nobr>(<i>x</i>&minus;1,<i>y</i>+1)</nobr>,
-     * "7" value means attaching of the node / to the branch  <nobr>(<i>x</i>&minus;1,<i>y</i>)</nobr>.
+     * (<i>x</i>&minus;1,<i>y</i>&minus;1) (the case B),
+     * "1" value means attaching of the node / to the branch (<i>x</i>,<i>y</i>&minus;1),
+     * "2" value means attaching of the node / to the branch (<i>x</i>+1,<i>y</i>&minus;1),
+     * "3" value means attaching of the node / to the branch  (<i>x</i>+1,<i>y</i>),
+     * "4" value means attaching of the node / to the branch  (<i>x</i>+1,<i>y</i>+1),
+     * "5" value means attaching of the node / to the branch  (<i>x</i>,<i>y</i>+1),
+     * "6" value means attaching of the node / to the branch  (<i>x</i>&minus;1,<i>y</i>+1),
+     * "7" value means attaching of the node / to the branch  (<i>x</i>&minus;1,<i>y</i>).
      * </li>
      * </ol>
      *
@@ -822,27 +824,27 @@ public abstract class SkeletonPixelClassifier {
      * @param attachmentInformation what should this method return for attachable pixels.
      * @return                      the matrix of integer codes with the same sizes, describing the types
      *                              of all skeleton pixels.
-     * @throws NullPointerException     if <tt>skeleton</tt> or <tt>attachmentInformation</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>skeleton.dimCount()!={@link #dimCount()}</tt>.
+     * @throws NullPointerException     if <code>skeleton</code> or <code>attachmentInformation</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>skeleton.dimCount()!={@link #dimCount()}</code>.
      */
     public abstract Matrix<? extends PIntegerArray> asPixelTypes(
         Matrix<? extends BitArray> skeleton,
         AttachmentInformation attachmentInformation);
 
     /**
-     * Finds and marks, by assigning <tt>Integer.MIN_VALUE</tt> to corresponding elements of the passed Java array,
+     * Finds and marks, by assigning <code>Integer.MIN_VALUE</code> to corresponding elements of the passed Java array,
      * all neighbours of some {@link #TYPE_USUAL_NODE node}, which are also {@link #TYPE_USUAL_NODE nodes}
      * and are considered to be <i>not</i> connected with this node via a degenerated 0-pixel branch.
      * Neighbouring nodes, which are considered to be connected with the central node
      * via 0-pixel branch, stay unchanged.
      *
-     * <p>More precisely, this method analyses the Java array <tt>pixelTypesOfAllNeighbours</tt>,
+     * <p>More precisely, this method analyses the Java array <code>pixelTypesOfAllNeighbours</code>,
      * which contains the pixel types of all neighbours of some "central" pixel, which is supposed to be
      * a {@link #TYPE_USUAL_NODE node}, in the order, defined by
      * {@link #neighbourOffset(int) neighbourOffset(int)} method.
      * This method finds among them all values, equal to {@link #TYPE_USUAL_NODE}, and, if this class considers
      * that they should not be connected with the central node via degenerated branches, such values are
-     * replaced with <tt>Integer.MIN_VALUE</tt> (which means "removing" these neighbours from candidates to
+     * replaced with <code>Integer.MIN_VALUE</code> (which means "removing" these neighbours from candidates to
      * connection with the central node). So, if some elements of the passed array are
      * {@link #TYPE_USUAL_NODE} after calling this method as before,
      * it means that such neighbouring nodes should be considered as connected
@@ -858,7 +860,7 @@ public abstract class SkeletonPixelClassifier {
      * <p>In {@link ApertureBasedSkeletonPixelClassifier} for 2-dimensional case and,
      * in particular, in {@link BasicSkeletonPixelClassifier2D},
      * the neighbouring node <i>Q</i> of the central node <i>P</i>
-     * is not marked for removing (not replaced with <tt>Integer.MIN_VALUE</tt>),
+     * is not marked for removing (not replaced with <code>Integer.MIN_VALUE</code>),
      * if the segment <i>PQ</i> is not diagonal (4-connected neighbour) or if it is diagonal,
      * but the two adjacent pixels, which are 4-connected neighbours
      * of both <i>P</i> and <i>Q</i>, are not {@link SkeletonPixelClassifier#TYPE_USUAL_NODE nodes}:
@@ -878,7 +880,7 @@ public abstract class SkeletonPixelClassifier {
      * @param pixelTypesOfAllNeighbours an array of the pixel types of all neighbours of some given element,
      *                                  supposed to be a {@link #TYPE_USUAL_NODE node}; this method will replace
      *                                  some {@link #TYPE_USUAL_NODE} values in this array with
-     *                                  <tt>Integer.MIN_VALUE</tt>.
+     *                                  <code>Integer.MIN_VALUE</code>.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the length of the passed array is less than {@link #numberOfNeighbours()}.
      */
