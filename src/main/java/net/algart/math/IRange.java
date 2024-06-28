@@ -216,8 +216,8 @@ public final class IRange {
 
     /**
      * Returns an instance of this class describing the range
-     * <tt>Math.min(this.{@link #min() min()},value) &lt;= x
-     * &lt;= Math.max(this.{@link #max() max()},value)</tt>.
+     * <code>Math.min(this.{@link #min() min()},value) &lt;= x
+     * &lt;= Math.max(this.{@link #max() max()},value)</code>.
      * In other words, expands the current range to include the given value.
      *
      * @param value some value that should belong to the new range.

@@ -60,8 +60,8 @@ import java.util.*;
  * <code>-Long.MAX_VALUE+1..Long.MAX_VALUE-1</code>,
  * and their difference is always <i>less</i> than <code>Long.MAX_VALUE</code>.
  * In other words,
- * "<tt><b>max</b>.{@link IPoint#coord(int)
- * coord(<i>i</i>)}-<b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</tt>" expression,
+ * "<code><b>max</b>.{@link IPoint#coord(int)
+ * coord(<i>i</i>)}-<b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}+1</code>" expression,
  * returned by {@link #size(int)} method, and also
  * "<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-1</code>",
  * "<code><b>min</b>.{@link IPoint#coord(int) coord(<i>i</i>)}-2</code>" and
@@ -96,18 +96,18 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if the {@link #coordCount() numbers of dimensions} in <code>min</code>
      *                                  and <code>max</code> points are different,
      *                                  or if, for some <i>i</i>,
-     *                                  <tt>min.{@link IPoint#coord(int) coord}(<i>i</i>)
-     *                                  &gt; max.{@link IPoint#coord(int) coord}(<i>i</i>)</tt>,
-     *                                  or if <tt>max.{@link IPoint#coord(int)
+     *                                  <code>min.{@link IPoint#coord(int) coord}(<i>i</i>)
+     *                                  &gt; max.{@link IPoint#coord(int) coord}(<i>i</i>)</code>,
+     *                                  or if <code>max.{@link IPoint#coord(int)
      *                                  coord}(<i>i</i>)-min.{@link IPoint#coord(int)
      *                                  coord}(<i>i</i>)+1
-     *                                  &gt; Long.MAX_VALUE</tt>
+     *                                  &gt; Long.MAX_VALUE</code>
      *                                  (more precisely, if this Java expression is nonpositive
      *                                  due to integer overflow),
-     *                                  or if <tt>min.{@link IPoint#coord(int)
-     *                                  coord}(<i>i</i>) &lt;= -Long.MAX_VALUE</tt>,
-     *                                  or if <tt>max.{@link IPoint#coord(int)
-     *                                  coord}(<i>i</i>) == Long.MAX_VALUE</tt>.
+     *                                  or if <code>min.{@link IPoint#coord(int)
+     *                                  coord}(<i>i</i>) &lt;= -Long.MAX_VALUE</code>,
+     *                                  or if <code>max.{@link IPoint#coord(int)
+     *                                  coord}(<i>i</i>) == Long.MAX_VALUE</code>.
      */
     public static IRectangularArea valueOf(IPoint min, IPoint max) {
         return valueOf(min, max, false);
@@ -221,17 +221,17 @@ public class IRectangularArea {
      * All <code>double</code> coordinates of the passed area are converted
      * to <code>long</code> coordinates of the returned area by standard
      * Java typecast <code>(long)doubleValue</code>.
-     * Equivalent to <tt>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#valueOf(Point)
+     * Equivalent to <code>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#valueOf(Point)
      * IPoint.valueOf}(area.{@link #min() min()}),&nbsp;{@link IPoint#valueOf(Point)
-     * IPoint.valueOf}(area.{@link #max() max()}))</tt>.
+     * IPoint.valueOf}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
      * @return the integer rectangular area with same (cast) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
-     * @throws IllegalArgumentException if the points <tt>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #min() min()})</tt>
-     *                                  and <tt>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #max() max()})</tt>
+     * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
+     *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
+     *                                  and <code>{@link IPoint#valueOf(Point)
+     *                                  IPoint.valueOf}(area.{@link #max() max()})</code>
      *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
      */
     public static IRectangularArea valueOf(RectangularArea area) {
@@ -244,17 +244,17 @@ public class IRectangularArea {
      * All <code>double</code> coordinates of the passed area are converted
      * to <code>long</code> coordinates of the returned area by <code>StrictMath.round</code> method.
      * Java typecast <code>(long)doubleValue</code>.
-     * Equivalent to <tt>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#roundOf(Point)
+     * Equivalent to <code>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#roundOf(Point)
      * IPoint.roundOf}(area.{@link #min() min()}),&nbsp;{@link IPoint#roundOf(Point)
-     * IPoint.roundOf}(area.{@link #max() max()}))</tt>.
+     * IPoint.roundOf}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
      * @return the integer rectangular area with same (rounded) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
-     * @throws IllegalArgumentException if the points <tt>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #min() min()})</tt>
-     *                                  and <tt>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #max() max()})</tt>
+     * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
+     *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
+     *                                  and <code>{@link IPoint#valueOf(Point)
+     *                                  IPoint.valueOf}(area.{@link #max() max()})</code>
      *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
      */
     public static IRectangularArea roundOf(RectangularArea area) {

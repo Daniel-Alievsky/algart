@@ -56,8 +56,8 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Equivalent to <tt>{@link #toBufferedImage(net.algart.arrays.Matrix, java.awt.image.DataBuffer)
-     * toBufferedImage}(interleavedMatrix, null)</tt>.
+     * Equivalent to <code>{@link #toBufferedImage(net.algart.arrays.Matrix, java.awt.image.DataBuffer)
+     * toBufferedImage}(interleavedMatrix, null)</code>.
      *
      * @param interleavedMatrix the interleaved matrix.
      * @return the <code>BufferedImage</code> with the same data.
@@ -246,7 +246,7 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Returns the palette (<code></code>byte[4][256]</tt>) if the indexed image is supposed.
+     * Returns the palette (<code></code>byte[4][256]</code>) if the indexed image is supposed.
      *
      * <p>The default implementation returns {@code null}, that means non-indexed image.
      *

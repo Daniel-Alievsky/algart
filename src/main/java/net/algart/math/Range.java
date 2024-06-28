@@ -162,8 +162,8 @@ public final class Range {
 
     /**
      * Returns an instance of this class describing the range
-     * <tt>StrictMath.min(this.{@link #min() min()},value) &lt;= x
-     * &lt;= StrictMath.max(this.{@link #max() max()},value)</tt>,
+     * <code>StrictMath.min(this.{@link #min() min()},value) &lt;= x
+     * &lt;= StrictMath.max(this.{@link #max() max()},value)</code>,
      * excepting the case when the passed value is <code>NaN</code> &mdash;
      * in the last situation, returns this instance without changes.
      * In other words, expands the current range to include the given value.

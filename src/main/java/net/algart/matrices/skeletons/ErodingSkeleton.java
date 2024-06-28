@@ -45,8 +45,8 @@ import java.util.Objects;
  * calculates <code>{@link Morphology#erosion(Matrix, Pattern) erosion}(result,P)</code>
  * of the current <code>result</code> matrix
  * by some small pattern <code>P</code> (usually little circle or square, in 2-dimensional case) and
- * <tt>{@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)
- * opening}(result,Q,{@link net.algart.matrices.morphology.Morphology.SubtractionMode#NONE})</tt> of this matrix
+ * <code>{@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)
+ * opening}(result,Q,{@link net.algart.matrices.morphology.Morphology.SubtractionMode#NONE})</code> of this matrix
  * by some other pattern <code>Q</code>, usually equal to <code>P</code> or little greater than <code>P</code>.
  * The opening is subtracted (in the set-theoretical sense) from the source <code>result</code> matrix
  * and the difference (i.e. "thin" areas in the bit image) is united with the erosion

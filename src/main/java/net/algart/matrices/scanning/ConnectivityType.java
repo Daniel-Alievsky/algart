@@ -84,7 +84,7 @@ public enum ConnectivityType {
      * @param dimCount the number of dimensions of the matrix.
      * @return         the number of neighbours of any matrix element.
      * @throws IllegalArgumentException if <code>dimCount&lt;=0</code> or
-     *                                  <tt>dimCount&gt;{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}
+     *                                  <code>dimCount&gt;{@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}</code>.
      */
     public int numberOfNeighbours(int dimCount) {
         if (dimCount <= 0 || dimCount > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS)

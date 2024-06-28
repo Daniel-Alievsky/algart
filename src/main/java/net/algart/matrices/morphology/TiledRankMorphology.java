@@ -130,7 +130,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
 
     /**
      * Switches the context: returns an instance, identical to this one excepting
-     * that it uses the specified <tt>newContext</tt> for all operations.
+     * that it uses the specified <code>newContext</code> for all operations.
      * Usually, the returned instance is used only for performing a
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *

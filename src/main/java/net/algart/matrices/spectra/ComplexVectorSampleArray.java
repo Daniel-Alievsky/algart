@@ -140,8 +140,8 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * @throws NullPointerException     if <code>samplesRe</code> or <code>samplesIm</code> is {@code null}.
      * @throws IllegalArgumentException if <code>vectorLength&lt;0</code>, <code>vectorStep&lt;vectorLength</code>,
      *                                  <code>length&lt;0</code> or
-     *                                  <tt>(length-1)*vectorStep+vectorLength &lt;=
-     *                                  min(samplesRe.length(),samplesIm.length())</tt>
+     *                                  <code>(length-1)*vectorStep+vectorLength &lt;=
+     *                                  min(samplesRe.length(),samplesIm.length())</code>
      *                                  (the last condition is checked mathematically accurately even if these
      *                                  values <code>&gt;Long.MAX_VALUE</code>).
      * @throws TooLargeArrayException   (little probability)

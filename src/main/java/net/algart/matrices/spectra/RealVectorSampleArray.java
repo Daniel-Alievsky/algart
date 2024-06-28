@@ -124,8 +124,8 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * @throws NullPointerException     if <code>samples</code> is {@code null}.
      * @throws IllegalArgumentException if <code>vectorLength&lt;0</code>, <code>vectorStep&lt;vectorLength</code>,
      *                                  <code>length&lt;0</code> or
-     *                                  <tt>(length-1)*vectorStep+vectorLength &lt;=
-     *                                  samples.length()</tt>
+     *                                  <code>(length-1)*vectorStep+vectorLength &lt;=
+     *                                  samples.length()</code>
      *                                  (the last condition is checked mathematically accurately even if these
      *                                  values <code>&gt;Long.MAX_VALUE</code>).
      * @throws TooLargeArrayException   (little probability)
