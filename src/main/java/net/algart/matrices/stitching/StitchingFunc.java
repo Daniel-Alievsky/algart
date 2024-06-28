@@ -40,7 +40,7 @@ package net.algart.matrices.stitching;
  * </ul>
  *
  * <p>Implementations of this interface are usually <b>immutable</b> and
- * always <b>thread-safe</b>: <tt>get</tt> methods of this interface may be freely used
+ * always <b>thread-safe</b>: <code>get</code> methods of this interface may be freely used
  * while simultaneous accessing the same instance from several threads.
  * All implementations of this interface from this package are <b>immutable</b>.</p>
  *
@@ -52,19 +52,19 @@ public interface StitchingFunc {
      * Returns the result of this function for the given coordinates and for the values (at these coordinates)
      * of the matrices being stitched.
      *
-     * <p>The <tt>coordinates</tt> argument contains the
+     * <p>The <code>coordinates</code> argument contains the
      * {@link net.algart.arrays.Matrix#coordinates(long, long[]) coordinates}
      * of some element in the target (having been stitched) matrix. Usually all coordinates are integer,
      * though this method can be called in more general case of real coordinates of the point.
      *
-     * <p>The <tt>values</tt> argument contains the values of elements of all beging stitched matrices,
+     * <p>The <code>values</code> argument contains the values of elements of all beging stitched matrices,
      * which will correspond to these coordinates after stitching. If coordinates are not integer,
      * these values will be interpolated by some method.
      *
-     * <p>Some elements of <tt>values</tt> array can contain the special value <tt>Double.NaN</tt>:
+     * <p>Some elements of <code>values</code> array can contain the special value <code>Double.NaN</code>:
      * it means that the corresponding frame does not contain the point with the specified coordinates.
-     * It particular, it is possible that all passed <tt>values</tt> are <tt>Double.NaN</tt>;
-     * in this situation, as well as in a case <tt>values.length==0</tt>, this method should return
+     * It particular, it is possible that all passed <code>values</code> are <code>Double.NaN</code>;
+     * in this situation, as well as in a case <code>values.length==0</code>, this method should return
      * some special value ("filler" outside all frames).
      *
      * <p>This method must not change the elements of the passed Java arrays!
@@ -76,7 +76,7 @@ public interface StitchingFunc {
     double get(double[] coordinates, double[] values);
 
     /**
-     * Equivalent to <tt>{@link #get(double[], double[]) get}(new double[] {x0}, values)</tt>.
+     * Equivalent to <code>{@link #get(double[], double[]) get}(new double[] {x0}, values)</code>.
      * Provides better performance because it does not require the first Java array creation.
      *
      * @param x0     the coordinate of some point in <i>1</i>-dimensional space.
@@ -86,7 +86,7 @@ public interface StitchingFunc {
     double get1D(double x0, double[] values);
 
     /**
-     * Equivalent to <tt>{@link #get(double[], double[]) get}(new double[] {x0,x1}, values)</tt>.
+     * Equivalent to <code>{@link #get(double[], double[]) get}(new double[] {x0,x1}, values)</code>.
      * Provides better performance because it does not require the first Java array creation.
      *
      * @param x0     the 1st coordinate of some point in <i>2</i>-dimensional space.
@@ -97,7 +97,7 @@ public interface StitchingFunc {
     double get2D(double x0, double x1, double[] values);
 
     /**
-     * Equivalent to <tt>{@link #get(double[], double[]) get}(new double[] {x0,x1,x2}, values)</tt>.
+     * Equivalent to <code>{@link #get(double[], double[]) get}(new double[] {x0,x1,x2}, values)</code>.
      * Provides better performance because it does not require the first Java array creation.
      *
      * @param x0     the 1st coordinate of some point in <i>3</i>-dimensional space.

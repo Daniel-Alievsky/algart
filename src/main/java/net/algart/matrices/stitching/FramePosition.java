@@ -46,13 +46,13 @@ public interface FramePosition {
      * Indicates whether some other object is also {@link FramePosition},
      * specifying the same position as this one.
      *
-     * <p>There is high probability, but no guarantee that this method returns <tt>true</tt> if the passed object
+     * <p>There is high probability, but no guarantee that this method returns <code>true</code> if the passed object
      * specifies a frame position, identical to this one.
-     * There is a guarantee that this method returns <tt>false</tt>
+     * There is a guarantee that this method returns <code>false</code>
      * if the passed object specifies a frame position, different from this one.
      *
      * @param obj the object to be compared for equality with this frame position.
-     * @return    <tt>true</tt> if the specified object is a frame position equal to this one.
+     * @return    <code>true</code> if the specified object is a frame position equal to this one.
      */
     boolean equals(Object obj);
 }

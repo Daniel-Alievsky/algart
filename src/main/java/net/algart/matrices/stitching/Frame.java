@@ -59,7 +59,8 @@ public interface Frame<P extends FramePosition> {
     /**
      * The matrix, contained in this frame.
      * There is a guarantee that
-     * <tt>thisInstance.{@link #matrix()}.{@link Matrix#dimCount() dimCount()}==thisInstance.{@link #dimCount()}</tt>.
+     * <code>thisInstance.{@link #matrix()}.{@link Matrix#dimCount()
+     * dimCount()}==thisInstance.{@link #dimCount()}</code>.
      *
      * @return matrix contained in this frame.
      */
@@ -95,11 +96,11 @@ public interface Frame<P extends FramePosition> {
      * containg the {@link #matrix() matrix} and {@link #position() position}, equal to the matrix and position
      * in this frame.
      *
-     * <p>Note: this method should return <tt>true</tt> even the class of the passed frame
+     * <p>Note: this method should return <code>true</code> even the class of the passed frame
      * is different from this class. This method checks only the built-in matrices and positions.
      *
      * @param obj the object to be compared for equality with this frame.
-     * @return    <tt>true</tt> if the specified object is a frame containing the equal matrix and position.
+     * @return    <code>true</code> if the specified object is a frame containing the equal matrix and position.
      */
     boolean equals(Object obj);
 }
