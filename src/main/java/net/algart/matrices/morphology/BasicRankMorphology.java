@@ -157,9 +157,9 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *                                  is out of <code>0.0..1.0</code> range
      *                                  of if <tt>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
      *                                  bitLevels()}</tt> are incorrect:
-     *                                  <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     *                                  <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some&nbsp;<i>k</i>.
      */
     public static RankMorphology getInstance(

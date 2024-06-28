@@ -37,7 +37,8 @@ import net.algart.matrices.StreamingApertureProcessor;
  * @author Daniel Alievsky
  */
 public class RankProcessors {
-    private RankProcessors() {}
+    private RankProcessors() {
+    }
 
     /**
      * Creates a new streaming aperture processor, which finds the <i>percentile</i> of the source matrix&nbsp;<b>M</b>.
@@ -89,16 +90,17 @@ public class RankProcessors {
      *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
-     * @return             the new streaming aperture processor, finding the percentile.
+     * @return the new streaming aperture processor, finding the percentile.
      * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
      *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
      *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
-    public static StreamingApertureProcessor getPercentiler(ArrayContext context,
-        boolean interpolated, int... bitLevels)
-    {
+    public static StreamingApertureProcessor getPercentiler(
+            ArrayContext context,
+            boolean interpolated,
+            int... bitLevels) {
         return new Percentiler(context, interpolated, bitLevels);
     }
 
@@ -108,14 +110,15 @@ public class RankProcessors {
      * The real value <i>v</i> for every element of the result is equal
      * to the corresponding element of the additional matrix <b>M</b><sub>0</sub>.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt>, <tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> and
-     * <tt>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</tt> are the same as the arguments
+     * <p>so that <code>context</code>,
+     * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
+     * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
      * of this method. Then in the streaming aperture processor, created by this method:
      *
      * <ul>
@@ -124,8 +127,8 @@ public class RankProcessors {
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
      * <tt>rm.{@link RankMorphology#asRank(Class, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asRank}</tt>(<tt>requiredType</tt>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>),
-     * where <tt>requiredType</tt> is the first argument of
+     * asRank}</tt>(<code>requiredType</code>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>),
+     * where <code>requiredType</code> is the first argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method;</li>
@@ -144,20 +147,21 @@ public class RankProcessors {
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
      *                     can be {@code null}, then it will be ignored.
-     * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
-     *                     the precise histogram model, <tt>false</tt> means the simple histogram model
+     * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
+     *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
-     * @return             the new streaming aperture processor, finding the rank.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @return the new streaming aperture processor, finding the rank.
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
-    public static StreamingApertureProcessor getRanker(ArrayContext context,
-        boolean interpolated, int... bitLevels)
-    {
+    public static StreamingApertureProcessor getRanker(
+            ArrayContext context,
+            boolean interpolated,
+            int... bitLevels) {
         return new Ranker(context, interpolated, bitLevels);
     }
 
@@ -170,14 +174,15 @@ public class RankProcessors {
      * for every element of the result are equal
      * to the corresponding elements of the additional matrices <b>M</b><sub>0</sub> and <b>M</b><sub>1</sub>.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt>, <tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> and
-     * <tt>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</tt> are the same as the arguments
+     * <p>so that <code>context</code>,
+     * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
+     * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
      * of this method. Then in the streaming aperture processor, created by this method:
      *
      * <ul>
@@ -188,18 +193,19 @@ public class RankProcessors {
      * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asMeanBetweenPercentiles(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * asMeanBetweenPercentiles}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method),
-     * if the <tt>requiredType</tt> argument of
+     * <code>filler</code>) (where <code>filler</code> is the argument of this method),
+     * if the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
-     * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
-     * the mean between percentile with maximal (<tt>double</tt>) precision and then
+     * <li>if <code>requiredType</code> is not equal to <b>M</b>.{@link Matrix#type() type()},
+     * it analogously calculates
+     * the mean between percentile with maximal (<code>double</code>) precision and then
      * casts the floating-point results to the desired element type by the same rules
      * as {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>;
+     * method with the argument <code>truncateOverflows=true</code>;
      * note that such result cannot be obtained by {@link RankMorphology} methods;</li>
      *
      * <li>{@link
@@ -208,7 +214,7 @@ public class RankProcessors {
      * <tt>rm.{@link
      * RankMorphology#meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * meanBetweenPercentiles}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method).</li>
+     * <code>filler</code>) (where <code>filler</code> is the argument of this method).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -224,20 +230,22 @@ public class RankProcessors {
      *                     can be {@code null}, then it will be ignored.
      * @param filler       the reserved value, returned when
      *                     <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
-     * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
-     *                     the precise histogram model, <tt>false</tt> means the simple histogram model
+     * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
+     *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
-     * @return             the new streaming aperture processor, finding the mean between 2 percentiles.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @return the new streaming aperture processor, finding the mean between 2 percentiles.
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
-    public static StreamingApertureProcessor getAveragerBetweenPercentiles(ArrayContext context,
-        double filler, boolean interpolated, int... bitLevels)
-    {
+    public static StreamingApertureProcessor getAveragerBetweenPercentiles(
+            ArrayContext context,
+            double filler,
+            boolean interpolated,
+            int... bitLevels) {
         return new AveragerBetweenPercentiles(context, filler, interpolated, bitLevels);
     }
 
@@ -250,14 +258,15 @@ public class RankProcessors {
      * for every element of the result are equal
      * to the corresponding elements of the additional matrices <b>M</b><sub>0</sub> and <b>M</b><sub>1</sub>.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt>, <tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> and
-     * <tt>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</tt> are the same as the arguments
+     * <p>so that <code>context</code>,
+     * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
+     * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
      * of this method. Then in the streaming aperture processor, created by this method:
      *
      * <ul>
@@ -268,18 +277,19 @@ public class RankProcessors {
      * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asMeanBetweenValues(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * asMeanBetweenValues}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method),
-     * if the <tt>requiredType</tt> argument of
+     * <code>filler</code>) (where <code>filler</code> is the argument of this method),
+     * if the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
-     * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
-     * the mean between values with maximal (<tt>double</tt>) precision and then
+     * <li>if <code>requiredType</code>
+     * is not equal to <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
+     * the mean between values with maximal (<code>double</code>) precision and then
      * casts the floating-point results to the desired element type by the same rules
      * as {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>;
+     * method with the argument <code>truncateOverflows=true</code>;
      * note that such result cannot be obtained by {@link RankMorphology} methods;</li>
      *
      * <li>{@link
@@ -288,7 +298,7 @@ public class RankProcessors {
      * <tt>rm.{@link
      * RankMorphology#meanBetweenValues(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
      * meanBetweenValues}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
-     * <tt>filler</tt>) (where <tt>filler</tt> is the argument of this method).</li>
+     * <code>filler</code>) (where <code>filler</code> is the argument of this method).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -307,20 +317,22 @@ public class RankProcessors {
      *                     or one of the special keys {@link RankMorphology#FILL_MIN_VALUE},
      *                     {@link RankMorphology#FILL_MAX_VALUE}, {@link RankMorphology#FILL_NEAREST_VALUE},
      *                     which mean using of special calculation modes B, C, D.
-     * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
-     *                     the precise histogram model, <tt>false</tt> means the simple histogram model
+     * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
+     *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
-     * @return             the new streaming aperture processor, finding the mean between 2 values.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @return the new streaming aperture processor, finding the mean between 2 values.
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
-    public static StreamingApertureProcessor getAveragerBetweenValues(ArrayContext context,
-        double filler, boolean interpolated, int... bitLevels)
-    {
+    public static StreamingApertureProcessor getAveragerBetweenValues(
+            ArrayContext context,
+            double filler,
+            boolean interpolated,
+            int... bitLevels) {
         return new AveragerBetweenValues(context, filler, interpolated, bitLevels);
     }
 
@@ -331,13 +343,13 @@ public class RankProcessors {
      * See {@link RankMorphology comments to RankMorphology}, section 4 about the
      * "<i>aperture sum</i>" term.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt> is the same as the argument
+     * <p>so that <code>context</code> is the same as the argument
      * of this method and other argument are any (they do not affect calculating the aperture sum).
      * Then in the streaming aperture processor, created by this method:
      *
@@ -348,20 +360,21 @@ public class RankProcessors {
      * asProcessed} method is equivalent to
      * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asFunctionOfSum(Matrix, net.algart.math.patterns.Pattern, Func)
-     * asFunctionOfSum}</tt>(<b>M</b>, <b>P</b>, <tt>processingFunc</tt>)
-     * (where <tt>processingFunc</tt> is the argument of this method),
-     * if the <tt>requiredType</tt> argument of
+     * asFunctionOfSum}</tt>(<b>M</b>, <b>P</b>, <code>processingFunc</code>)
+     * (where <code>processingFunc</code> is the argument of this method),
+     * if the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
-     * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
+     * <li>if <code>requiredType</code> is not equal to <b>M</b>.{@link Matrix#type() type()},
+     * it analogously calculates
      * the function <i>f</i>(<i>S</i>) of the aperture sum <i>S</i>
-     * with maximal (<tt>double</tt>) precision and then
+     * with maximal (<code>double</code>) precision and then
      * casts the floating-point results to the desired element type by the same rules
      * as {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>;
+     * method with the argument <code>truncateOverflows=true</code>;
      * note that such result cannot be obtained by {@link RankMorphology} methods;</li>
      *
      * <li>{@link
@@ -369,8 +382,8 @@ public class RankProcessors {
      * process} method is equivalent to
      * <tt>rm.{@link
      * RankMorphology#functionOfSum(Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
-     * functionOfSum}</tt>(<b>R</b>, <b>M</b>, <b>P</b>, <tt>processingFunc</tt>)
-     * (where <tt>processingFunc</tt> is the argument of this method).</li>
+     * functionOfSum}</tt>(<b>R</b>, <b>M</b>, <b>P</b>, <code>processingFunc</code>)
+     * (where <code>processingFunc</code> is the argument of this method).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -383,11 +396,11 @@ public class RankProcessors {
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
      *                       can be {@code null}, then it will be ignored.
      * @param processingFunc the function, which should be applied to every calculated aperture sum.
-     * @return               the new streaming aperture processor, finding the given function of the aperture sum.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @return the new streaming aperture processor, finding the given function of the aperture sum.
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getSummator(ArrayContext context, Func processingFunc) {
@@ -404,14 +417,15 @@ public class RankProcessors {
      * The real indexes <i>r</i> of two percentiles for every element of the result are equal
      * to the corresponding elements of the additional matrices <b>M</b><sub>1</sub> and <b>M</b><sub>2</sub>.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt>, <tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> and
-     * <tt>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</tt> are the same as the arguments
+     * <p>so that <code>context</code>,
+     * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
+     * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
      * of this method. Then in the streaming aperture processor, created by this method:
      *
      * <ul>
@@ -422,23 +436,23 @@ public class RankProcessors {
      * <b>R</b>=<tt>rm.{@link
      * RankMorphology#asFunctionOfPercentilePair(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * asFunctionOfPercentilePair}</tt>(<b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
-     * <tt>processingFunc</tt>) (where <tt>processingFunc</tt> is the argument of this method),
-     * if <b>M</b><sub>0</sub>==<b>M</b> and the <tt>requiredType</tt> argument of
+     * <code>processingFunc</code>) (where <code>processingFunc</code> is the argument of this method),
+     * if <b>M</b><sub>0</sub>==<b>M</b> and the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
-     * <li>if <tt>requiredType</tt> is not equal to
+     * <li>if <code>requiredType</code> is not equal to
      * <b>M</b>.{@link Matrix#type() type()}, it analogously calculates
      * the function <i>f</i>(<i>v</i><sub>0</sub>, <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>)
      * of the matrix <b>M</b><sub>0</sub>
      * and two percentiles <i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>
      * of the source matrix&nbsp;<b>M</b>
-     * with maximal (<tt>double</tt>) precision and then
+     * with maximal (<code>double</code>) precision and then
      * casts the floating-point results to the desired element type by the same rules
      * as {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>;</li>
+     * method with the argument <code>truncateOverflows=true</code>;</li>
      *
      * <li>if <b>M</b><sub>0</sub>==<b>M</b>, {@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -446,7 +460,7 @@ public class RankProcessors {
      * <tt>rm.{@link
      * RankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * functionOfPercentilePair}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
-     * <tt>processingFunc</tt>) (where <tt>processingFunc</tt> is the argument of this method),
+     * <code>processingFunc</code>) (where <code>processingFunc</code> is the argument of this method),
      * in other case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
      * matrix instead of <b>M</b>.</li>
      * </ul>
@@ -467,7 +481,7 @@ public class RankProcessors {
      * and {@link
      * BasicRankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * functionOfPercentilePair}
-     * methods in {@link BasicRankMorphology} class. Those methods pass the same <tt>src</tt> matrix to this
+     * methods in {@link BasicRankMorphology} class. Those methods pass the same <code>src</code> matrix to this
      * processor twice: as the main source matrix <b>M</b> and as the first additional matrix <b>M</b><sub>0</sub>.
      *
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
@@ -477,21 +491,23 @@ public class RankProcessors {
      *                       where <i>v</i><sub>0</sub> is the element of <b>M</b><sub>0</sub> matrix,
      *                       <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles
      *                       of the source <b>M</b> matrix.
-     * @param interpolated   the histogram model used while calculating percentiles: <tt>true</tt> means
-     *                       the precise histogram model, <tt>false</tt> means the simple histogram model
+     * @param interpolated   the histogram model used while calculating percentiles: <code>true</code> means
+     *                       the precise histogram model, <code>false</code> means the simple histogram model
      *                       (see comments to {@link Histogram} class).
      * @param bitLevels      the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
-     * @return               the new streaming aperture processor, finding the given function of the additional
-     *                       matrix <b>M</b><sub>0</sub> and the pair of percentiles.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @return the new streaming aperture processor, finding the given function of the additional
+     * matrix <b>M</b><sub>0</sub> and the pair of percentiles.
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
-    public static StreamingApertureProcessor getPercentilePairProcessor(ArrayContext context,
-        Func processingFunc, boolean interpolated, int... bitLevels)
-    {
+    public static StreamingApertureProcessor getPercentilePairProcessor(
+            ArrayContext context,
+            Func processingFunc,
+            boolean interpolated,
+            int... bitLevels) {
         return new PercentilePairProcessor(context, processingFunc, interpolated, bitLevels);
     }
 }
