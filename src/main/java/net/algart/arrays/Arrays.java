@@ -1056,7 +1056,7 @@ public class Arrays {
          * Arrays.SystemSettings.globalDiskSynchronizer()}.{@link #doSynchronously
          * doSynchronously}(
          * &#32;   fileName,
-         * &#32;   new Callable<MappedByteBuffer>() {
+         * &#32;   new Callable&lt;MappedByteBuffer&gt;() {
          * &#32;       public MappedByteBuffer call() throws IOException {
          * &#32;           return fileChannel.map(mode, position, size);
          * &#32;       }
@@ -6723,7 +6723,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static int max(int a, int b, int c, int d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6789,7 +6789,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static long max(long a, long b, long c, long d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6855,7 +6855,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static float max(float a, float b, float c, float d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6921,7 +6921,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static double max(double a, double b, double c, double d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
