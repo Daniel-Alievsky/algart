@@ -71,19 +71,19 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>In other words, the transform is sequentially applied along the dimension 0,1,...,<i>N</i>&minus;1.</p>
  *
- * <p>The "real" case is chosen above if the second <tt>matrixIm</tt> argument of
+ * <p>The "real" case is chosen above if the second <code>matrixIm</code> argument of
  * {@link #directTransformMatrix directTransformMatrix} / {@link #inverseTransformMatrix inverseTransformMatrix}
  * methods is {@code null}; in this case, the
  * {@link RealScalarSampleArray#asSampleArray RealScalarSampleArray.asSampleArray} or
  * {@link RealVectorSampleArray#asSampleArray RealVectorSampleArray.asSampleArray} method is applied
  * to the corresponding {@link Array#subArr(long, long) subarrays} of the {@link Matrix#array() underlying array}
- * of the <tt>matrixRe</tt> argument.
+ * of the <code>matrixRe</code> argument.
  *
- * <p>The "complex" case is chosen if the second <tt>matrixIm</tt> argument is not {@code null}; in this case, the
+ * <p>The "complex" case is chosen if the second <code>matrixIm</code> argument is not {@code null}; in this case, the
  * {@link ComplexScalarSampleArray#asSampleArray ComplexScalarSampleArray.asSampleArray} or
  * {@link ComplexVectorSampleArray#asSampleArray ComplexVectorSampleArray.asSampleArray} method is applied
  * to the pairs of corresponding {@link Array#subArr(long, long) subarrays} of the
- * {@link Matrix#array() underlying arrays} of both <tt>matrixRe</tt> and <tt>matrixIm</tt>  arguments.</p>
+ * {@link Matrix#array() underlying arrays} of both <code>matrixRe</code> and <code>matrixIm</code>  arguments.</p>
  *
  * <p>This algorithm is a traditional way of generalizing 1-dimensional FFT (Fourier transform)
  * to 2-dimensional and multidimensional case.
@@ -122,7 +122,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *
      * <p>This constructor is called by all constructors of
      * {@link FastFourierTransform} and {@link SeparableFastHartleyTransform} classes,
-     * which have no <tt>maxTempJavaMemory</tt> argument.
+     * which have no <code>maxTempJavaMemory</code> argument.
      *
      * @see #AbstractSpectralTransform(long)
      */
@@ -133,7 +133,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
     /**
      * Creates a new instance of this class.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the amount of Java memory (heap),
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the amount of Java memory (heap),
      * that can be used by methods of this class for internal needs.
      * If this class was created by {@link #AbstractSpectralTransform() the costructor without argument},
      * then the standard value {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()} will be used.
@@ -143,15 +143,15 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * {@link #inverseTransformMatrix inverseTransformMatrix} methods),
      * especially for a case of very large matrices.
      *
-     * <p>If the <tt>maxTempJavaMemory</tt> argument is less then {@link #MIN_SPECTRAL_JAVA_MEMORY},
+     * <p>If the <code>maxTempJavaMemory</code> argument is less then {@link #MIN_SPECTRAL_JAVA_MEMORY},
      * it is ignored and {@link #MIN_SPECTRAL_JAVA_MEMORY} will be used instead.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> value is accesed via {@link #maxTempJavaMemory()} method only.
+     * <p>The <code>maxTempJavaMemory</code> value is accesed via {@link #maxTempJavaMemory()} method only.
      * If you override that method, you can change the described behaviour.
      *
      * <p>This constructor is called by all constructors of
      * {@link FastFourierTransform} and {@link SeparableFastHartleyTransform} classes,
-     * which have <tt>maxTempJavaMemory</tt> argument.
+     * which have <code>maxTempJavaMemory</code> argument.
      *
      * @param maxTempJavaMemory desired maximal amount of Java memory, in bytes, allowed for allocating
      *                          by methods of this class for internal needs.
@@ -166,28 +166,28 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
     public abstract boolean areComplexSamplesRequired();
 
     /**
-     * This implementation checks <tt>samples</tt> array and calls
+     * This implementation checks <code>samples</code> array and calls
      * {@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,false)}.
      *
-     * <p>Checking <tt>samples</tt> array means the following.
-     * First, if {@link #areComplexSamplesRequired()} returns <tt>true</tt>, this method checks the result
-     * of <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method, and if it is <tt>false</tt>,
-     * this method throws <tt>UnsupportedOperationException</tt>.
-     * Then this method checks <tt>samples.{@link SampleArray#length() length()}</tt>
+     * <p>Checking <code>samples</code> array means the following.
+     * First, if {@link #areComplexSamplesRequired()} returns <code>true</code>, this method checks the result
+     * of <code>samples.{@link SampleArray#isComplex() isComplex()}</code> method, and if it is <code>false</code>,
+     * this method throws <code>UnsupportedOperationException</code>.
+     * Then this method checks <code>samples.{@link SampleArray#length() length()}</code>
      * by {@link #isLengthAllowed(long)} method;
-     * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
-     * throws <tt>IllegalArgumentException</tt>.
+     * if {@link #isLengthAllowed(long) isLengthAllowed} returns <code>false</code>, this mewthod
+     * throws <code>IllegalArgumentException</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>samples</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>,
-     *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
-     *                                       returns <tt>false</tt>.
+     *                                       returns <code>false</code> for this value.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>,
+     *                                       but <code>samples.{@link SampleArray#isComplex() isComplex()}</code>
+     *                                       method returns <code>false</code>.
      */
     public final void directTransform(ArrayContext context, SampleArray samples) {
         checkSamples(samples);
@@ -195,28 +195,28 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
     }
 
     /**
-     * This implementation checks <tt>samples</tt> array and calls
+     * This implementation checks <code>samples</code> array and calls
      * {@link #transform(ArrayContext, SampleArray, boolean) transform(context,samples,true)}.
      *
-     * <p>Checking <tt>samples</tt> array means the following.
-     * First, if {@link #areComplexSamplesRequired()} returns <tt>true</tt>, this method checks the result
-     * of <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method, and if it is <tt>false</tt>,
-     * this method throws <tt>UnsupportedOperationException</tt>.
-     * Then this method checks <tt>samples.{@link SampleArray#length() length()}</tt>
+     * <p>Checking <code>samples</code> array means the following.
+     * First, if {@link #areComplexSamplesRequired()} returns <code>true</code>, this method checks the result
+     * of <code>samples.{@link SampleArray#isComplex() isComplex()}</code> method, and if it is <code>false</code>,
+     * this method throws <code>UnsupportedOperationException</code>.
+     * Then this method checks <code>samples.{@link SampleArray#length() length()}</code>
      * by {@link #isLengthAllowed(long)} method;
-     * if {@link #isLengthAllowed(long) isLengthAllowed} returns <tt>false</tt>, this mewthod
-     * throws <tt>IllegalArgumentException</tt>.
+     * if {@link #isLengthAllowed(long) isLengthAllowed} returns <code>false</code>, this mewthod
+     * throws <code>IllegalArgumentException</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>samples</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>,
-     *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
-     *                                       returns <tt>false</tt>.
+     *                                       returns <code>false</code> for this value.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>,
+     *                                       but <code>samples.{@link SampleArray#isComplex() isComplex()}</code>
+     *                                       method returns <code>false</code>.
      */
     public final void inverseTransform(ArrayContext context, SampleArray samples) {
         checkSamples(samples);
@@ -229,14 +229,14 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * transformMatrix(context,matrixRe,matrixIm,false)}.
      *
      * <p>Checking matrices means the following.
-     * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.
-     * Second, if {@link #areComplexSamplesRequired()} returns <tt>true</tt> and <tt>matrixIm</tt> argument
-     * is {@code null}, this method throws <tt>UnsupportedOperationException</tt>.
-     * Third, if <tt>matrixIm</tt> argument is not {@code null},
+     * First, if <code>matrixRe</code> argument is {@code null}, this method throws <code>NullPointerException</code>.
+     * Second, if {@link #areComplexSamplesRequired()} returns <code>true</code> and <code>matrixIm</code> argument
+     * is {@code null}, this method throws <code>UnsupportedOperationException</code>.
+     * Third, if <code>matrixIm</code> argument is not {@code null},
      * this method checks that its dimensions are {@link Matrix#dimEquals(Matrix) equal} to the dimensions
-     * of <tt>matrixRe</tt>. If it is not so, {@link SizeMismatchException} is thrown.
+     * of <code>matrixRe</code>. If it is not so, {@link SizeMismatchException} is thrown.
      * Last, this method checks, whether all dimensions of the passed matrices are allowed, i.e. that
-     * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
+     * {@link #isLengthAllowed(long)} method returns <code>true</code> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
      * @param context  the context that will be used by this algorithm; can be {@code null}
@@ -245,19 +245,19 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
      * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>matrixRe</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
+     *                                       returns <code>false</code> for this value.
      * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is {@code null}.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>
+     *                                       and <code>matrixIm</code> argument is {@code null}.
      */
-    public final void directTransformMatrix(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm)
-    {
+    public final void directTransformMatrix(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm) {
         checkMatrices(matrixRe, matrixIm);
         transformMatrix(context, matrixRe, matrixIm, false);
     }
@@ -268,14 +268,14 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * transformMatrix(context,matrixRe,matrixIm,true)}.
      *
      * <p>Checking matrices means the following.
-     * First, if <tt>matrixRe</tt> argument is {@code null}, this method throws <tt>NullPointerException</tt>.
-     * Second, if {@link #areComplexSamplesRequired()} returns <tt>true</tt> and <tt>matrixIm</tt> argument
-     * is {@code null}, this method throws <tt>UnsupportedOperationException</tt>.
-     * Third, if <tt>matrixIm</tt> argument is not {@code null},
+     * First, if <code>matrixRe</code> argument is {@code null}, this method throws <code>NullPointerException</code>.
+     * Second, if {@link #areComplexSamplesRequired()} returns <code>true</code> and <code>matrixIm</code> argument
+     * is {@code null}, this method throws <code>UnsupportedOperationException</code>.
+     * Third, if <code>matrixIm</code> argument is not {@code null},
      * this method checks that its dimensions are {@link Matrix#dimEquals(Matrix) equal} to the dimensions
-     * of <tt>matrixRe</tt>. If it is not so, {@link SizeMismatchException} is thrown.
+     * of <code>matrixRe</code>. If it is not so, {@link SizeMismatchException} is thrown.
      * Last, this method checks, whether all dimensions of the passed matrices are allowed, i.e. that
-     * {@link #isLengthAllowed(long)} method returns <tt>true</tt> for them. If it is not so,
+     * {@link #isLengthAllowed(long)} method returns <code>true</code> for them. If it is not so,
      * {@link IllegalArgumentException} is thrown.
      *
      * @param context  the context that will be used by this algorithm; can be {@code null}
@@ -284,33 +284,34 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
      * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>matrixRe</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
+     *                                       returns <code>false</code> for this value.
      * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is {@code null}.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>
+     *                                       and <code>matrixIm</code> argument is {@code null}.
      */
-    public final void inverseTransformMatrix(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm)
-    {
+    public final void inverseTransformMatrix(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm) {
         checkMatrices(matrixRe, matrixIm);
         transformMatrix(context, matrixRe, matrixIm, true);
     }
 
     /**
-     * Retrurns a message used while throwing <tt>IllegalArgumentException</tt> by methods of this class
+     * Retrurns a message used while throwing <code>IllegalArgumentException</code> by methods of this class
      * in a case, when the length of the samples array or some of the matrix dimensions is not allowed
      * according to {@link #isLengthAllowed(long)} method.
      * Typical examples of this message (implemented in {@link FastFourierTransform} and
      * {@link SeparableFastHartleyTransform} classes):
-     * <tt>"FFT algorithm can process only 2^k elements"</tt> or
-     * <tt>"FHT algorithm can process only 2^k elements"</tt>.
+     * <code>"FFT algorithm can process only 2^k elements"</code> or
+     * <code>"FHT algorithm can process only 2^k elements"</code>.
      *
-     * @return a message used while thrown exception if {@link #isLengthAllowed(long)} method returns <tt>false</tt>.
+     * @return a message used while thrown exception if {@link #isLengthAllowed(long)} method
+     * returns <code>false</code>.
      */
     protected abstract String unallowedLengthMessage();
 
@@ -319,16 +320,17 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *
      * <p>It is called from {@link #directTransform directTransform} / {@link #inverseTransform inverseTransform}
      * methods. In this case, there is a guarantee that:
-     * 1) <tt>samples!=null</tt>;
-     * 2) if {@link #areComplexSamplesRequired()}, then <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt>
-     * returns <tt>true</tt>;
-     * 3) {@link #isLengthAllowed(long)} returns <tt>true</tt> for <tt>samples.length()</tt>.
+     * 1) <code>samples!=null</code>;
+     * 2) if {@link #areComplexSamplesRequired()},
+     * then <code>samples.{@link SampleArray#isComplex() isComplex()}</code>
+     * returns <code>true</code>;
+     * 3) {@link #isLengthAllowed(long)} returns <code>true</code> for <code>samples.length()</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @param inverse <tt>true</tt> if this method implements the inverse transform,
-     *                <tt>false</tt> if this method implements the direct transform.
+     * @param inverse <code>true</code> if this method implements the inverse transform,
+     *                <code>false</code> if this method implements the direct transform.
      */
     protected abstract void transform(ArrayContext context, SampleArray samples, boolean inverse);
 
@@ -341,10 +343,10 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *
      * <p>This method is called from {@link #directTransformMatrix directTransformMatrix}
      * / {@link #inverseTransformMatrix inverseTransformMatrix} methods.
-     * In this case, there is a guarantee that: 1) <tt>matrixRe!=null</tt>;
-     * 2) in a case {@link #areComplexSamplesRequired()}, also <tt>matrixIm!=null</tt>;
-     * 3) <tt>matrixIm</tt> (if not {@code null}) has the same dimensions as <tt>matrixRe</tt> and
-     * 4) {@link #isLengthAllowed(long)} returns <tt>true</tt> for all these dimensions.
+     * In this case, there is a guarantee that: 1) <code>matrixRe!=null</code>;
+     * 2) in a case {@link #areComplexSamplesRequired()}, also <code>matrixIm!=null</code>;
+     * 3) <code>matrixIm</code> (if not {@code null}) has the same dimensions as <code>matrixRe</code> and
+     * 4) {@link #isLengthAllowed(long)} returns <code>true</code> for all these dimensions.
      *
      * @param context  the context that will be used by this algorithm; can be {@code null}
      *                 (see comments to {@link SpectralTransform}).
@@ -352,14 +354,14 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
      * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @param inverse  <tt>true</tt> if this method implements the inverse transform,
-     *                 <tt>false</tt> if this method implements the direct transform.
+     * @param inverse  <code>true</code> if this method implements the inverse transform,
+     *                 <code>false</code> if this method implements the direct transform.
      */
-    protected void transformMatrix(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm,
-        boolean inverse)
-    {
+    protected void transformMatrix(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm,
+            boolean inverse) {
         int numberOfTasks = Math.max(1, Arrays.getThreadPoolFactory(context).recommendedNumberOfTasks());
         transformMatrixRecursively(context, matrixRe, matrixIm, inverse, numberOfTasks);
     }
@@ -371,8 +373,8 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * returned by the {@link ArrayContext context}, passed to methods of this class.
      *
      * <p>By default, this method returns
-     * <tt>max({@link #MIN_SPECTRAL_JAVA_MEMORY},maxTempJavaMemory)</tt>,
-     * where <tt>maxTempJavaMemory</tt> is the argument of
+     * <code>max({@link #MIN_SPECTRAL_JAVA_MEMORY},maxTempJavaMemory)</code>,
+     * where <code>maxTempJavaMemory</code> is the argument of
      * {@link #AbstractSpectralTransform(long) the corresponding constructor}
      * or {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()},
      * if {@link #AbstractSpectralTransform() the costructor without argument} has been used.
@@ -384,7 +386,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * is a little integer number, usually from 1-2 to 10-20).
      *
      * @return maximal amount of Java memory, in bytes, allowed for allocating
-     *         by methods of this class for internal needs.
+     * by methods of this class for internal needs.
      */
     protected long maxTempJavaMemory() {
         return Math.max(maxTempJavaMemory, MIN_SPECTRAL_JAVA_MEMORY);
@@ -396,41 +398,40 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         }
         if (!isLengthAllowed(samples.length())) {
             throw new IllegalArgumentException("The length of sample array " + samples.length()
-                + " is not allowed: " + unallowedLengthMessage());
+                    + " is not allowed: " + unallowedLengthMessage());
         }
     }
 
     private void checkMatrices(
-        Matrix<? extends UpdatablePNumberArray> matrixRe,
-        Matrix<? extends UpdatablePNumberArray> matrixIm)
-    {
+            Matrix<? extends UpdatablePNumberArray> matrixRe,
+            Matrix<? extends UpdatablePNumberArray> matrixIm) {
         Objects.requireNonNull(matrixRe, "Null matrixRe argument");
         if (areComplexSamplesRequired() && matrixIm == null) {
             throw new UnsupportedOperationException("Null matrixRe argument, but "
-                + "Fast Fourier transformation requires complex samples");
+                    + "Fast Fourier transformation requires complex samples");
         }
         if (matrixIm != null && !matrixRe.dimEquals(matrixIm)) {
             throw new SizeMismatchException("matrixRe and matrixIm dimensions mismatch: "
-                + "matrixRe is " + matrixRe + ", matrixIm " + matrixIm);
+                    + "matrixRe is " + matrixRe + ", matrixIm " + matrixIm);
         }
         long[] dimensions = matrixRe.dimensions();
         for (int k = 0; k < dimensions.length; k++) {
             if (!isLengthAllowed(dimensions[k])) {
                 throw new IllegalArgumentException("The matrix dimension #" + k + " = " + dimensions[k]
-                    + " is not allowed: " + unallowedLengthMessage());
+                        + " is not allowed: " + unallowedLengthMessage());
             }
         }
     }
 
-    private void transformMatrixRecursively(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> matrixRe, Matrix<? extends UpdatablePNumberArray> matrixIm,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformMatrixRecursively(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> matrixRe, Matrix<? extends UpdatablePNumberArray> matrixIm,
+            boolean inverse, int numberOfTasks) {
         final long[] dim = matrixRe.dimensions();
         UpdatablePNumberArray arrayRe = matrixRe.array();
         UpdatablePNumberArray arrayIm = matrixIm == null ? null : matrixIm.array();
         boolean doClone = !areDirect(arrayRe, arrayIm)
-            && Arrays.sizeOf(arrayRe) <= maxTempJavaMemory() - (matrixIm == null ? 0 : Arrays.sizeOf(arrayIm));
+                && Arrays.sizeOf(arrayRe) <= maxTempJavaMemory() - (matrixIm == null ? 0 : Arrays.sizeOf(arrayIm));
         if (doClone) {
             UpdatablePNumberArray a = (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayRe);
             Arrays.copy(context == null ? null : context.part(0.0, matrixIm == null ? 0.1 : 0.05), a, arrayRe);
@@ -442,73 +443,73 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
             }
         }
 
-        transformMatrixBaseAlgorithm(context == null || !doClone? context : context.part(0.1, 0.9),
-            arrayRe, arrayIm, dim, inverse, numberOfTasks);
+        transformMatrixBaseAlgorithm(context == null || !doClone ? context : context.part(0.1, 0.9),
+                arrayRe, arrayIm, dim, inverse, numberOfTasks);
 
         if (doClone) {
             Arrays.copy(context == null ? null : context.part(0.9, arrayIm == null ? 1.0 : 0.95),
-                matrixRe.array(), arrayRe);
+                    matrixRe.array(), arrayRe);
             if (matrixIm != null) {
                 Arrays.copy(context == null ? null : context.part(0.95, 1.0), matrixIm.array(), arrayIm);
             }
         }
     }
 
-    private void transformMatrixBaseAlgorithm(ArrayContext context,
-        UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dim,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformMatrixBaseAlgorithm(
+            ArrayContext context,
+            UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dim,
+            boolean inverse, int numberOfTasks) {
         if (dim.length == 1) {
             SampleArray samples = arrayIm == null ?
-                RealScalarSampleArray.asSampleArray(arrayRe) :
-                ComplexScalarSampleArray.asSampleArray(arrayRe, arrayIm);
+                    RealScalarSampleArray.asSampleArray(arrayRe) :
+                    ComplexScalarSampleArray.asSampleArray(arrayRe, arrayIm);
             transform(context, samples, inverse);
         } else {
 //            long t1 = System.nanoTime();
             transformHorizontalRecursively(context == null ? null : context.part(0, dim.length - 1, dim.length),
-                arrayRe, arrayIm, dim, inverse, numberOfTasks);
+                    arrayRe, arrayIm, dim, inverse, numberOfTasks);
 //            long t2 = System.nanoTime();
             transformVertical(context == null ? null : context.part(dim.length - 1, dim.length, dim.length),
-                arrayRe, arrayIm, dim, inverse, numberOfTasks);
+                    arrayRe, arrayIm, dim, inverse, numberOfTasks);
 //            long t3 = System.nanoTime();
 //            System.out.printf("Horizontal time %.3f ms, vertical time %.3f ms%n", (t2 - t1) * 1e-6, (t3 - t2) * 1e-6);
         }
     }
 
-    private void transformHorizontalRecursively(ArrayContext context,
-        UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dimensions,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformHorizontalRecursively(
+            ArrayContext context,
+            UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dimensions,
+            boolean inverse, int numberOfTasks) {
         assert dimensions.length >= 2;
         final long[] layerDims = JArrays.copyOfRange(dimensions, 0, dimensions.length - 1);
         final long layerLen = Arrays.longMul(layerDims);
         final long lastDim = dimensions[dimensions.length - 1];
         final double elementSize = (arrayRe.bitsPerElement() + (arrayIm == null ? 0 : arrayIm.bitsPerElement())) / 8.0;
-        final long bufLen = (long)(Math.max(maxTempJavaMemory(), 0) / elementSize);
+        final long bufLen = (long) (Math.max(maxTempJavaMemory(), 0) / elementSize);
         boolean direct = areDirect(arrayRe, arrayIm);
         if (BUFFERING_LARGE_MATRICES && layerLen <= bufLen / 2 && !direct) {
             // (there should be at least 2 lines in a buffer; we do not use 2*layerLen operator to avoid overflow)
             transformHorizontalRecursivelyWithSplitting(context,
-                arrayRe, arrayIm, dimensions, layerLen, bufLen, inverse, numberOfTasks);
+                    arrayRe, arrayIm, dimensions, layerLen, bufLen, inverse, numberOfTasks);
         } else {
             transformHorizontalRecursivelyBaseAlgorithm(context,
-                arrayRe, arrayIm, layerDims, lastDim, layerLen, inverse, direct ? numberOfTasks : 1);
+                    arrayRe, arrayIm, layerDims, lastDim, layerLen, inverse, direct ? numberOfTasks : 1);
         }
     }
 
-    private void transformHorizontalRecursivelyBaseAlgorithm(final ArrayContext context,
-        final UpdatablePNumberArray arrayRe, final UpdatablePNumberArray arrayIm,
-        final long[] layerDims, final long lastDim, final long layerLen,
-        final boolean inverse, int numberOfTasks)
-    {
-        numberOfTasks = (int)Math.min(numberOfTasks, lastDim);
+    private void transformHorizontalRecursivelyBaseAlgorithm(
+            final ArrayContext context,
+            final UpdatablePNumberArray arrayRe, final UpdatablePNumberArray arrayIm,
+            final long[] layerDims, final long lastDim, final long layerLen,
+            final boolean inverse, int numberOfTasks) {
+        numberOfTasks = (int) Math.min(numberOfTasks, lastDim);
         if (numberOfTasks <= 1) { // maybe 0
             for (long k = 0, disp = 0; k < lastDim; k++, disp += layerLen) {
                 transformMatrixRecursively(null,
-                    Matrices.matrix((UpdatablePNumberArray)arrayRe.subArr(disp, layerLen), layerDims),
-                    arrayIm == null ? null :
-                        Matrices.matrix((UpdatablePNumberArray)arrayIm.subArr(disp, layerLen), layerDims),
-                    inverse, 1);
+                        Matrices.matrix((UpdatablePNumberArray) arrayRe.subArr(disp, layerLen), layerDims),
+                        arrayIm == null ? null :
+                                Matrices.matrix((UpdatablePNumberArray) arrayIm.subArr(disp, layerLen), layerDims),
+                        inverse, 1);
                 if (context != null) {
                     context.checkInterruptionAndUpdateProgress(null, k + 1, lastDim);
                 }
@@ -523,13 +524,13 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
                         final long layerStep = tasks.length * layerLen;
                         for (long k = ti, disp = ti * layerLen; k < lastDim; k += tasks.length, disp += layerStep) {
                             transformMatrixRecursively(null,
-                                Matrices.matrix((UpdatablePNumberArray)arrayRe.subArr(disp, layerLen), layerDims),
-                                arrayIm == null ? null :
-                                    Matrices.matrix((UpdatablePNumberArray)arrayIm.subArr(disp, layerLen), layerDims),
-                                inverse, 1);
+                                    Matrices.matrix((UpdatablePNumberArray) arrayRe.subArr(disp, layerLen), layerDims),
+                                    arrayIm == null ? null :
+                                            Matrices.matrix((UpdatablePNumberArray) arrayIm.subArr(disp, layerLen), layerDims),
+                                    inverse, 1);
                             if (context != null) {
                                 context.checkInterruptionAndUpdateProgress(null,
-                                    readyLayers.incrementAndGet(), lastDim);
+                                        readyLayers.incrementAndGet(), lastDim);
                             }
                         }
                     }
@@ -539,11 +540,11 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         }
     }
 
-    private void transformHorizontalRecursivelyWithSplitting(ArrayContext context,
-        UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm,
-        long[] dimensions, long layerLen, long bufLen,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformHorizontalRecursivelyWithSplitting(
+            ArrayContext context,
+            UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm,
+            long[] dimensions, long layerLen, long bufLen,
+            boolean inverse, int numberOfTasks) {
         assert layerLen <= bufLen / 2; // so, the splitting has a sense
         final long lastDim = dimensions[dimensions.length - 1];
         final long layersPerBuf = bufLen / layerLen;
@@ -551,23 +552,23 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         final long batchLength = layersPerBuf * layerLen;
 //        System.out.println("Splitting " + lastDim + " per " + layersPerBuf + " layers");
         UpdatablePNumberArray bufRe =
-            (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayRe.elementType(), batchLength);
+                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayRe.elementType(), batchLength);
         UpdatablePNumberArray bufIm = arrayIm == null ? null :
-            (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayIm.elementType(), batchLength);
+                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayIm.elementType(), batchLength);
         long[] subDim = dimensions.clone();
         for (long k = 0, disp = 0; k < lastDim; k += layersPerBuf, disp += batchLength) {
             final long lpb = Math.min(layersPerBuf, lastDim - k);
             subDim[subDim.length - 1] = lpb;
             final long bl = lpb * layerLen; // current batch length
-            UpdatablePNumberArray subArrayRe = (UpdatablePNumberArray)arrayRe.subArr(disp, bl);
+            UpdatablePNumberArray subArrayRe = (UpdatablePNumberArray) arrayRe.subArr(disp, bl);
             UpdatablePNumberArray subArrayIm = arrayIm == null ? null :
-                (UpdatablePNumberArray)arrayIm.subArr(disp, bl);
+                    (UpdatablePNumberArray) arrayIm.subArr(disp, bl);
             bufRe.copy(subArrayRe);
             if (arrayIm != null) {
                 bufIm.copy(subArrayIm);
             }
             transformHorizontalRecursively(context == null ? null : context.part(k, k + lpb, lastDim),
-                bufRe, bufIm, subDim, inverse, numberOfTasks);
+                    bufRe, bufIm, subDim, inverse, numberOfTasks);
             subArrayRe.copy(bufRe);
             if (arrayIm != null) {
                 subArrayIm.copy(bufIm);
@@ -575,16 +576,16 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         }
     }
 
-    private void transformVertical(ArrayContext context,
-        UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dimensions,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformVertical(
+            ArrayContext context,
+            UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm, long[] dimensions,
+            boolean inverse, int numberOfTasks) {
         assert dimensions.length >= 2;
         final long[] layerDims = JArrays.copyOfRange(dimensions, 0, dimensions.length - 1);
         final long layerLen = Arrays.longMul(layerDims);
         final long lastDim = dimensions[dimensions.length - 1];
         final double elementSize = (arrayRe.bitsPerElement() + (arrayIm == null ? 0 : arrayIm.bitsPerElement())) / 8.0;
-        final long bufLen = (long)(Math.max(maxTempJavaMemory(), 0) / elementSize);
+        final long bufLen = (long) (Math.max(maxTempJavaMemory(), 0) / elementSize);
         long columnLength = lastDim;
         for (int k = 0; k < dimensions.length - 2; k++) {
             columnLength *= dimensions[k];
@@ -593,24 +594,24 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         if (BUFFERING_LARGE_MATRICES && columnLength <= bufLen / 2 && !direct) {
             // (there should be at least 2 columns in a buffer; we do not use 2*layerLen operator to avoid overflow)
             transformVerticalWithSplitting(context,
-                arrayRe, arrayIm, dimensions, columnLength, bufLen, inverse, numberOfTasks);
+                    arrayRe, arrayIm, dimensions, columnLength, bufLen, inverse, numberOfTasks);
         } else {
             transformVerticalBaseAlgorithm(context,
-                arrayRe, arrayIm, lastDim, layerLen, inverse, direct ? numberOfTasks : 1);
+                    arrayRe, arrayIm, lastDim, layerLen, inverse, direct ? numberOfTasks : 1);
         }
     }
 
-    private void transformVerticalBaseAlgorithm(ArrayContext context,
-        final UpdatablePNumberArray arrayRe, final UpdatablePNumberArray arrayIm,
-        final long lastDim, final long layerLen,
-        final boolean inverse, int numberOfTasks)
-    {
+    private void transformVerticalBaseAlgorithm(
+            ArrayContext context,
+            final UpdatablePNumberArray arrayRe, final UpdatablePNumberArray arrayIm,
+            final long lastDim, final long layerLen,
+            final boolean inverse, int numberOfTasks) {
         numberOfTasks = (int) Math.min(numberOfTasks, layerLen); // note: not lastDim!
         MemoryModel mm = context == null ? null : context.getMemoryModel();
         if (numberOfTasks <= 1) { // maybe 0
             SampleArray samples = arrayIm == null ?
-                RealVectorSampleArray.asSampleArray(mm, arrayRe, layerLen, layerLen, lastDim) :
-                ComplexVectorSampleArray.asSampleArray(mm, arrayRe, arrayIm, layerLen, layerLen, lastDim);
+                    RealVectorSampleArray.asSampleArray(mm, arrayRe, layerLen, layerLen, lastDim) :
+                    ComplexVectorSampleArray.asSampleArray(mm, arrayRe, arrayIm, layerLen, layerLen, lastDim);
             transform(context, samples, inverse);
         } else {
             assert areDirect(arrayRe, arrayIm);
@@ -623,13 +624,13 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
                 final long layerTo = layerDelimiter;
                 final ArrayContext contextNoProgress = context == null ? null : context.noProgressVersion();
                 final SampleArray samples = arrayIm == null ?
-                    RealVectorSampleArray.asSampleArray(mm,
-                        (UpdatablePNumberArray) arrayRe.subArray(layerFrom, arrayRe.length()),
-                        layerTo - layerFrom, layerLen, lastDim) :
-                    ComplexVectorSampleArray.asSampleArray(mm,
-                        (UpdatablePNumberArray) arrayRe.subArray(layerFrom, arrayRe.length()),
-                        (UpdatablePNumberArray) arrayIm.subArray(layerFrom, arrayIm.length()),
-                        layerTo - layerFrom, layerLen, lastDim);
+                        RealVectorSampleArray.asSampleArray(mm,
+                                (UpdatablePNumberArray) arrayRe.subArray(layerFrom, arrayRe.length()),
+                                layerTo - layerFrom, layerLen, lastDim) :
+                        ComplexVectorSampleArray.asSampleArray(mm,
+                                (UpdatablePNumberArray) arrayRe.subArray(layerFrom, arrayRe.length()),
+                                (UpdatablePNumberArray) arrayIm.subArray(layerFrom, arrayIm.length()),
+                                layerTo - layerFrom, layerLen, lastDim);
                 tasks[threadIndex] = new Runnable() {
                     public void run() {
                         transform(contextNoProgress, samples, inverse);
@@ -643,11 +644,11 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         }
     }
 
-    private void transformVerticalWithSplitting(ArrayContext context,
-        UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm,
-        long[] dimensions, long columnLength, long bufLen,
-        boolean inverse, int numberOfTasks)
-    {
+    private void transformVerticalWithSplitting(
+            ArrayContext context,
+            UpdatablePNumberArray arrayRe, UpdatablePNumberArray arrayIm,
+            long[] dimensions, long columnLength, long bufLen,
+            boolean inverse, int numberOfTasks) {
         assert columnLength <= bufLen / 2; // so, the splitting has a sense
         final long previousDim = dimensions[dimensions.length - 2];
         final long columnsPerBuf = bufLen / columnLength;
@@ -655,13 +656,13 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
         final long batchLength = columnsPerBuf * columnLength;
 //        System.out.println("Splitting " + previousDim + " per " + columnsPerBuf + " columns");
         UpdatablePNumberArray bufRe =
-            (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayRe.elementType(),
-                batchLength);
+                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayRe.elementType(),
+                        batchLength);
         UpdatablePNumberArray bufIm = arrayIm == null ? null :
-            (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayIm.elementType(), batchLength);
+                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(arrayIm.elementType(), batchLength);
         Matrix<? extends UpdatablePNumberArray> matrixRe = Matrices.matrix(arrayRe, dimensions);
         Matrix<? extends UpdatablePNumberArray> matrixIm = arrayIm == null ? null :
-            Matrices.matrix(arrayIm, dimensions);
+                Matrices.matrix(arrayIm, dimensions);
         long[] subPos = new long[dimensions.length];
         long[] subDim = dimensions.clone();
         for (long k = 0; k < previousDim; k += columnsPerBuf) {
@@ -670,18 +671,18 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
             subDim[dimensions.length - 2] = cpb;
             final long bl = cpb * columnLength; // current batch length
             Matrix<? extends UpdatablePNumberArray> matrixBufRe = Matrices.matrix(
-                bl == batchLength ? bufRe : (UpdatablePNumberArray)bufRe.subArr(0, bl), subDim);
+                    bl == batchLength ? bufRe : (UpdatablePNumberArray) bufRe.subArr(0, bl), subDim);
             Matrix<? extends UpdatablePNumberArray> matrixBufIm = arrayIm == null ? null : Matrices.matrix(
-                bl == batchLength ? bufIm : (UpdatablePNumberArray)bufIm.subArr(0, bl), subDim);
+                    bl == batchLength ? bufIm : (UpdatablePNumberArray) bufIm.subArr(0, bl), subDim);
             Matrix<? extends UpdatablePNumberArray> subMatrixRe = matrixRe.subMatr(subPos, subDim);
             Matrix<? extends UpdatablePNumberArray> subMatrixIm = arrayIm == null ? null :
-                matrixIm.subMatr(subPos, subDim);
+                    matrixIm.subMatr(subPos, subDim);
             matrixBufRe.array().copy(subMatrixRe.array());
             if (arrayIm != null) {
                 matrixBufIm.array().copy(subMatrixIm.array());
             }
             transformVertical(context == null ? null : context.part(k, k + cpb, previousDim),
-                bufRe, bufIm, subDim, inverse, numberOfTasks);
+                    bufRe, bufIm, subDim, inverse, numberOfTasks);
             subMatrixRe.array().copy(matrixBufRe.array());
             if (arrayIm != null) {
                 subMatrixIm.array().copy(matrixBufIm.array());
@@ -690,8 +691,8 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
     }
 
     static boolean areDirect(Array arrayRe, Array arrayIm) {
-        return arrayRe instanceof DirectAccessible && ((DirectAccessible)arrayRe).hasJavaArray()
-            && (arrayIm == null ||
-            (arrayIm instanceof DirectAccessible && ((DirectAccessible)arrayIm).hasJavaArray()));
+        return arrayRe instanceof DirectAccessible && ((DirectAccessible) arrayRe).hasJavaArray()
+                && (arrayIm == null ||
+                (arrayIm instanceof DirectAccessible && ((DirectAccessible) arrayIm).hasJavaArray()));
     }
 }
