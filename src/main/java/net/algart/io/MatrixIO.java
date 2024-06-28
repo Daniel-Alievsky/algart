@@ -42,7 +42,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+/**
+ * <p>Tools for simple reading/writing images, represented by <code>BufferedImage</code> or
+ * {@link Matrix AlgART matrices}.</p>
+ *
+ * @author Daniel Alievsky
+ */
 public class MatrixIO {
+    /**
+     * Equivalent to {@link #extension(String) extension(file.getFileName().toString())}.
+     *
+     * @param file             some path.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException     if <code>file</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>file.getFileName()</code> is {@code null}
+     *                                  (the path has zero elements).
+     */
     public static String extension(Path file) {
         Objects.requireNonNull(file, "Null file");
         final Path fileName = file.getFileName();
@@ -52,6 +67,16 @@ public class MatrixIO {
         return extension(fileName.toString());
     }
 
+    /**
+     * Equivalent to {@link #extension(String, String) extension(file.getFileName().toString(), defaultExtension)}.
+     *
+     * @param file             some path.
+     * @param defaultExtension default extension; can be {@code null}.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException     if <code>file</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>file.getFileName()</code> is {@code null}
+     *                                  (the path has zero elements).
+     */
     public static String extension(Path file, String defaultExtension) {
         Objects.requireNonNull(file, "Null file");
         final Path fileName = file.getFileName();
@@ -61,16 +86,43 @@ public class MatrixIO {
         return extension(fileName.toString(), defaultExtension);
     }
 
+    /**
+     * Equivalent to {@link #extension(String) extension(file.getName())}.
+     *
+     * @param file some file.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException     if <code>file</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>file.getName()</code> is an empty string.
+     */
     public static String extension(File file) {
         Objects.requireNonNull(file, "Null file");
         return extension(file.getName());
     }
 
+    /**
+     * Equivalent to {@link #extension(String, String) extension(file.getName(), defaultExtension)}.
+     *
+     * @param file             some file.
+     * @param defaultExtension default extension; can be {@code null}.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException     if <code>file</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>file.getName()</code> is an empty string.
+     */
     public static String extension(File file, String defaultExtension) {
         Objects.requireNonNull(file, "Null file");
         return extension(file.getName(), defaultExtension);
     }
 
+    /**
+     * Analog of {@link #extension(String, String)}, but in a case when the file name does not contain a dot ".",
+     * throws <code>IllegalArgumentException</code> instead of returning default extension.
+     * This method never returns {@code null}.
+     *
+     * @param fileName some file name.
+     * @return the ending file extension (suffix) like "txt", "jpeg" etc.
+     * @throws NullPointerException     if <code>fileName</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>fileName</code> is an empty string.
+     */
     public static String extension(String fileName) {
         final String extension = extension(fileName, null);
         if (extension == null) {
@@ -80,9 +132,10 @@ public class MatrixIO {
     }
 
     /**
-     * If the given file name contains a dot ".", returns the substring after the last dot.
-     * Otherwise, returns <code>defaultExtension</code>.
-     * If the substring after the last dot is empty, also returns <code>defaultExtension</code>
+     * Returns the extension (suffix) of the specified file name.
+     * If the file name contains a dot ".", returns the substring after the last dot;
+     * otherwise, returns <code>defaultExtension</code>.
+     * If the substring after the last dot is empty, also returns <code>defaultExtension</code>.
      *
      * <p>The <code>fileName</code> argument must not be {@code null} or an empty string.</p>
      *
@@ -95,10 +148,13 @@ public class MatrixIO {
      *     <li>for "some_string. ", returns " "</li>
      * </ul>
      *
-     * @param fileName some file name.
+     * <p>This method can be used together with {@link #writeBufferedImageByExtension}</p>.
+     *
+     * @param fileName         some file name.
+     * @param defaultExtension default extension; can be {@code null}.
      * @return the ending file extension (suffix) like "txt", "jpeg" etc.
-     * @throws NullPointerException if <code>fileName</code> is {@code null}
-     *                              (but <code>defaultExtension</code> is allowed to be {@code null)}.
+     * @throws NullPointerException     if <code>fileName</code> is {@code null}
+     *                                  (but <code>defaultExtension</code> is allowed to be {@code null}).
      * @throws IllegalArgumentException if <code>fileName</code> is an empty string.
      */
     public static String extension(String fileName, String defaultExtension) {
@@ -135,36 +191,36 @@ public class MatrixIO {
 
     public static void writeBufferedImage(Path file, BufferedImage image, Consumer<ImageWriteParam> customizer)
             throws IOException {
-        writeBufferedImageBySuffix(file, image, extension(file), customizer);
+        writeBufferedImageByExtension(file, image, extension(file), customizer);
     }
 
-    public static void writeBufferedImageBySuffix(
+    public static void writeBufferedImageByExtension(
             Path file,
             BufferedImage image,
-            String fileSuffix) throws IOException {
-        writeBufferedImageBySuffix(file, image, fileSuffix, null);
+            String fileExtension) throws IOException {
+        writeBufferedImageByExtension(file, image, fileExtension, null);
     }
 
-    public static void writeBufferedImageBySuffix(
+    public static void writeBufferedImageByExtension(
             Path file,
             BufferedImage image,
-            String fileSuffix,
+            String fileExtension,
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
-        Objects.requireNonNull(fileSuffix, "Null fileSuffix");
+        Objects.requireNonNull(fileExtension, "Null fileExtension");
         // Note that the following call would be incorrect!
-        //      ImageIO.write(image, fileSuffix, file.toFile())
+        //      ImageIO.write(image, fileExtension, file.toFile())
         // ImageIO.write method uses "String formatName" argument, which can differ from
         // file extension, for example, for JPEG-2000 in com.github.jaiimageio:
         // the format names are "jpeg 2000", "JPEG 2000", "jpeg2000", "JPEG2000",
         // but the file suffixes are only "jp2".
 
-        final Iterator<ImageWriter> writers = ImageIO.getImageWritersBySuffix(fileSuffix);
+        final Iterator<ImageWriter> writers = ImageIO.getImageWritersBySuffix(fileExtension);
         final ImageWriter writer = writers.hasNext() ? writers.next() : null;
         if (writer == null) {
             throw new UnsupportedImageFormatException("Cannot write " + file +
-                    ": no writers found for file suffix \"" + fileSuffix + "\"");
+                    ": no writers found for file suffix \"" + fileExtension + "\"");
         }
         writeBufferedImage(file, image, writer, customizer);
     }

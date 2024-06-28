@@ -793,31 +793,96 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>There is a guarantee that this method works very quickly.
      *
      * @param n the index of dimension.
-     * @return the dimension <code>#n</code> of this matrix.
+     * @return the dimension <code>#n</code> of this matrix or 1 if the index is too large.
      * @throws IndexOutOfBoundsException if <code>n&lt;0</code> (but <i>not</i> if <code>n</code> is too large).
      */
     long dim(int n);
+
+    /**
+     * Returns the same result as the method {@link #dim(int) dim(n)} as 32-bit <code>int</code> value.
+     * If the dimension, returned by  {@link #dim(int) dim(n)}, is greater than <code>Integer.MAX_VALUE</code>,
+     * throws <code>TooLargeArrayException</code>.
+     *
+     * <p>This method is convenient when you are sure that matrix sizes
+     * cannot exceed the limit 2<sup>31</sup>&minus;1.</p>
+     *
+     * @param n the index of dimension.
+     * @return the dimension <code>#n</code> of this matrix, if it is less than 2<sup>31</sup>.
+     * @throws IndexOutOfBoundsException if <code>n&lt;0</code> (but <i>not</i> if <code>n</code> is too large).
+     * @throws TooLargeArrayException    if this matrix dimension is greater than
+     *                                   <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
+     */
+    default int dim32(int n) {
+        long result = dim(n);
+        if (result < 0) {
+            throw new AssertionError("Negative result " + result + " of dim() method");
+        }
+        if (result > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large matrix dimension #" + n + " (" +
+                    result + " >= 2^31): " + this);
+        }
+        return (int) result;
+    }
 
     /**
      * Equivalent to <code>{@link #dim(int) dim}(0)</code>.
      *
      * @return the first matrix dimension.
      */
-    long dimX();
+    default long dimX() {
+        return dim(0);
+    }
+
+    /**
+     * Equivalent to <code>{@link #dim32(int) dim32}(0)</code>.
+     *
+     * @return the first matrix dimension.
+     * @throws TooLargeArrayException    if this matrix dimension is greater than
+     *                                   <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
+     */
+    default int dimX32() {
+        return dim32(0);
+    }
 
     /**
      * Equivalent to <code>{@link #dim(int) dim}(1)</code>.
      *
-     * @return the second matrix dimension.
+     * @return the second matrix dimension (or 1 for 1-dimensional matrix).
      */
-    long dimY();
+    default long dimY() {
+        return dim(1);
+    }
+
+    /**
+     * Equivalent to <code>{@link #dim32(int) dim32}(1)</code>.
+     *
+     * @return the second matrix dimension (or 1 for 1-dimensional matrix).
+     * @throws TooLargeArrayException    if this matrix dimension is greater than
+     *                                   <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
+     */
+    default int dimY32() {
+        return dim32(1);
+    }
 
     /**
      * Equivalent to <code>{@link #dim(int) dim}(2)</code>.
      *
-     * @return the third matrix dimension.
+     * @return the third matrix dimension (or 1 for 1-dimensional or 2-dimensional matrix).
      */
-    long dimZ();
+    default long dimZ() {
+        return dim(2);
+    };
+
+    /**
+     * Equivalent to <code>{@link #dim32(int) dim32}(2)</code>.
+     *
+     * @return the third matrix dimension (or 1 for 1-dimensional or 2-dimensional matrix).
+     * @throws TooLargeArrayException    if this matrix dimension is greater than
+     *                                   <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
+     */
+    default int dimZ32() {
+        return dim32(2);
+    }
 
     /**
      * Indicates whether the other matrix has the same dimension array.

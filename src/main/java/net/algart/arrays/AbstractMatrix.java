@@ -119,18 +119,6 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 
     public abstract long dim(int n);
 
-    public long dimX() {
-        return dim(0);
-    }
-
-    public long dimY() {
-        return dim(1);
-    }
-
-    public long dimZ() {
-        return dim(2);
-    }
-
     /*Repeat.SectionStart dimEquals*/
     public boolean dimEquals(Matrix<?> m) {
         Objects.requireNonNull(m, "Null matrix");

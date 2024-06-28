@@ -38,5 +38,19 @@ public class MatrixNewDemo {
         System.out.println(m2);
         Matrix<UpdatableBitArray> m3 = Matrix.newBitMatrix(100, 100, 100);
         System.out.println(m3);
+        for (int k = 0; k < 10; k++) {
+            if (m3.dim(k) != m3.dim32(k)) {
+                throw new AssertionError();
+            }
+        }
+        if (m3.dimX() != m3.dimX32() || m3.dimY() != m3.dimY32() || m3.dimZ() != m3.dimZ32()) {
+            throw new AssertionError();
+        }
+        Matrix<UpdatableBitArray> m4 = Matrix.newBitMatrix(4000_000_000L, 2);
+        // The following calls lead to TooLargeArrayException
+//        if (m4.dimX() != m4.dimX32() || m4.dimY() != m4.dimY32() || m4.dimZ() != m4.dimZ32()) {
+//            throw new AssertionError();
+//        }
+        System.out.println(m4);
     }
 }

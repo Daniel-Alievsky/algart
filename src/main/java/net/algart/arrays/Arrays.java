@@ -7988,7 +7988,7 @@ public class Arrays {
     public static abstract class ParallelExecutor {
         /**
          * The reference to the destination array. Equal to the corresponding argument of the constructor.
-         * May be {@code null} for algorithms that do not produce any destination arrays.
+         * Can be {@code null} for algorithms that do not produce any destination arrays.
          */
         protected final UpdatableArray dest;
 

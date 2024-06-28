@@ -174,14 +174,14 @@ public interface Array {
      *                                <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
      */
     default int length32() throws TooLargeArrayException {
-        long r = length();
-        if (r < 0) {
-            throw new AssertionError("Negative result " + r + " of length() method");
+        long result = length();
+        if (result < 0) {
+            throw new AssertionError("Negative result " + result + " of length() method");
         }
-        if (r > Integer.MAX_VALUE) {
+        if (result > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large array (>= 2^31 elements): " + this);
         }
-        return (int) r;
+        return (int) result;
     }
 
     /**

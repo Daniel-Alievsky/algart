@@ -42,7 +42,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
 {
 
     /**
-     * Current execution context. It is returned by {@link #context()} method. May be {@code null}.
+     * Current execution context. It is returned by {@link #context()} method. Can be {@code null}.
      */
     private ArrayContext context;
 
