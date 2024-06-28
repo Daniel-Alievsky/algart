@@ -101,7 +101,7 @@ public interface CustomRankPrecision {
      *
      * <li>{12, 24} &mdash; the rank operations will be performed with a two-level pyramid of histograms,
      * consisting of 2<sup>24</sup>=16777216 bars (or min(2<sup>24</sup>,2<sup>&beta;</sup>)=256 or 65636
-     * for <tt>byte</tt> or <tt>short</tt>/<tt>char</tt> matrices),
+     * for <code>byte</code> or <code>short</code>/<code>char</code> matrices),
      * which will be grouped by 4096 bars into "wide" bars of the 2nd level;
      * this precision is equivalent to the previous example, but usually provides better performance.</li>
      * </ul>
@@ -127,7 +127,7 @@ public interface CustomRankPrecision {
 
     /**
      * Selects the histogram model used while calculating rank characteristics:
-     * <tt>true</tt> means the precise histogram model, <tt>false</tt> means the simple histogram model.
+     * <code>true</code> means the precise histogram model, <code>false</code> means the simple histogram model.
      * See comments to {@link net.algart.arrays.Histogram} and {@link net.algart.arrays.SummingHistogram} classes
      * about these models.
      *

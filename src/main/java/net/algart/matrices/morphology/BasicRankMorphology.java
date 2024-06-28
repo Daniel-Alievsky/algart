@@ -109,40 +109,40 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * <li>this double value <code>index</code>=<i>r</i>, if the element type of
      * the source matrix <code>src</code> is <code>float</code> or <code>double</code> <b>or</b>
      * if we are using the precise histogram model
-     * (<tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> is <tt>true</tt>);</li>
-     * <li>or the rounded (<tt>long</tt>) integer value <tt>index=Math.round(</tt><i>r</i><tt>)</tt>,
+     * (<code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> is <code>true</code>);</li>
+     * <li>or the rounded (<code>long</code>) integer value <code>index=Math.round(</code><i>r</i><code>)</code>,
      * if the source matrix is fixed-point <b>and</b> we are using the simple histogram model
-     * (<tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> is <tt>false</tt>).</li>
+     * (<code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> is <code>false</code>).</li>
      * </ul>
      *
-     * <p>At last, let <b>P</b> be <tt>pattern</tt>
-     * in a case of dilation (<tt>isDilation</tt> argument is <tt>true</tt>)
-     * or <tt>pattern.{@link Pattern#symmetric() symmetric()}</tt>
-     * in a case of erosion (<tt>isDilation</tt> argument is <tt>false</tt>).
+     * <p>At last, let <b>P</b> be <code>pattern</code>
+     * in a case of dilation (<code>isDilation</code> argument is <code>true</code>)
+     * or <code>pattern.{@link Pattern#symmetric() symmetric()}</code>
+     * in a case of erosion (<code>isDilation</code> argument is <code>false</code>).
      *
      * <p>Then, in the returned object the 1st method
      * {@link #asDilationOrErosion(Matrix, Pattern, boolean) asDilationOrErosion}
      * is equivalent to
-     * <tt>{@link #asPercentile(Matrix, double, Pattern) asPercentile}(src,index,<b>P</b>)</tt>
+     * <code>{@link #asPercentile(Matrix, double, Pattern) asPercentile}(src,index,<b>P</b>)</code>
      * and the 2nd method {@link #dilationOrErosion(Matrix, Matrix, Pattern, boolean, boolean) dilationOrErosion}
      * is equivalent to
-     * <tt>{@link #percentile(Matrix, Matrix, double, Pattern) percentile}(dest,src,index,<b>P</b>)</tt>.
-     * (The <tt>disableMemoryAllocation</tt> argument of
+     * <code>{@link #percentile(Matrix, Matrix, double, Pattern) percentile}(dest,src,index,<b>P</b>)</code>.
+     * (The <code>disableMemoryAllocation</code> argument of
      * {@link #dilationOrErosion(Matrix, Matrix, Pattern, boolean, boolean) dilationOrErosion} method
      * is ignored by this implementation.)
      *
-     * <p>Please note: using <tt>Math.round</tt> for rounding the percentile index does not correspond
+     * <p>Please note: using <code>Math.round</code> for rounding the percentile index does not correspond
      * to the standard behaviour of integer percentiles, which are rounded, in a case of the precise histogram model,
      * according more complicated rules (see comments to
      * {@link RankMorphology#percentile(Matrix, Matrix, Pattern)} and
      * {@link Histogram#iPreciseValue(long[], double)} methods).
      * So, this method does not try to round the real percentile index <i>r</i> in the precise histogram model.
      * But in the simple histogram model, when the element type is fixed-point and some form of rounding is required
-     * in any case, this method calls <tt>Math.round</tt> &mdash; it provides
+     * in any case, this method calls <code>Math.round</code> &mdash; it provides
      * better "symmetry" between dilation and erosion operations.
      *
      * <p>The precise behaviour of all methods of {@link RankMorphology} interface in the returned object
-     * depends on <tt>precision</tt> object: see comments to {@link CustomRankPrecision} and
+     * depends on <code>precision</code> object: see comments to {@link CustomRankPrecision} and
      * {@link RankMorphology}.
      *
      * @param context       the {@link #context() context} that will be used by this object;
@@ -151,9 +151,10 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *                      interface, 0.5 means median, 0.0 means that dilation works like erosion and erosion
      *                      works like dilation (but with a {@link Pattern#symmetric() symmetric} pattern).
      * @param precision     precision characteristics of all rank operations, performed by the created object.
-     * @return              new instance of this class.
-     * @throws NullPointerException     if <tt>precision</tt> argument is {@code null}
-     * @throws IllegalArgumentException if the <tt>dilationLevel</tt> argument is out of <tt>0.0..1.0</tt> range
+     * @return new instance of this class.
+     * @throws NullPointerException     if <code>precision</code> argument is {@code null}
+     * @throws IllegalArgumentException if the <code>dilationLevel</code> argument
+     *                                  is out of <code>0.0..1.0</code> range
      *                                  of if <tt>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
      *                                  bitLevels()}</tt> are incorrect:
      *                                  <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
@@ -161,11 +162,12 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
      *                                  for some&nbsp;<i>k</i>.
      */
-    public static RankMorphology getInstance(ArrayContext context, double dilationLevel,
-        CustomRankPrecision precision)
-    {
+    public static RankMorphology getInstance(
+            ArrayContext context,
+            double dilationLevel,
+            CustomRankPrecision precision) {
         return new FixedPercentileRankMorphology(context, dilationLevel,
-            precision.interpolated(), precision.bitLevels());
+                precision.interpolated(), precision.bitLevels());
     }
 
     @Override
@@ -174,130 +176,153 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
     }
 
     @Override
-    protected abstract Matrix<? extends PArray> asDilationOrErosion(Matrix<? extends PArray> src, Pattern pattern,
-        boolean isDilation);
+    protected abstract Matrix<? extends PArray> asDilationOrErosion(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean isDilation);
 
     @Override
     protected abstract Matrix<? extends UpdatablePArray> dilationOrErosion(
-        Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern, boolean isDilation,
-        boolean disableMemoryAllocation);
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean isDilation,
+            boolean disableMemoryAllocation);
 
     @Override
     public Matrix<? extends PArray> asPercentile(
-        Matrix<? extends PArray> src, Matrix<? extends PArray> percentileIndexes, Pattern pattern)
-    {
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes,
+            Pattern pattern) {
         StreamingApertureProcessor percentiler = RankProcessors.getPercentiler(context(), interpolated, bitLevels);
         return percentiler.asProcessed(src.array().type(), src, percentileIndexes, pattern);
     }
 
     @Override
-    public void percentile(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentileIndexes, Pattern pattern)
-    {
+    public void percentile(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentileIndexes,
+            Pattern pattern) {
         StreamingApertureProcessor percentiler = RankProcessors.getPercentiler(context(), interpolated, bitLevels);
         percentiler.process(dest, src, percentileIndexes, pattern);
     }
 
     @Override
-    public <T extends PArray> Matrix<T> asRank(Class<? extends T> requiredType,
-        Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern)
-    {
+    public <T extends PArray> Matrix<T> asRank(
+            Class<? extends T> requiredType,
+            Matrix<? extends PArray> baseMatrix,
+            Matrix<? extends PArray> rankedMatrix,
+            Pattern pattern) {
         StreamingApertureProcessor ranker = RankProcessors.getRanker(context(),
-            interpolated && PFloatingArray.class.isAssignableFrom(requiredType), bitLevels);
+                interpolated && PFloatingArray.class.isAssignableFrom(requiredType), bitLevels);
         // if requiredType is not floating-point, interpolation leads to the same ranks
         return ranker.asProcessed(requiredType, baseMatrix, rankedMatrix, pattern);
     }
 
     @Override
-    public void rank(Matrix<? extends UpdatablePArray> dest,
-        Matrix<? extends PArray> baseMatrix, Matrix<? extends PArray> rankedMatrix, Pattern pattern)
-    {
+    public void rank(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> baseMatrix,
+            Matrix<? extends PArray> rankedMatrix,
+            Pattern pattern) {
         StreamingApertureProcessor ranker = RankProcessors.getRanker(context(),
-            interpolated && PFloatingArray.class.isAssignableFrom(dest.type()), bitLevels);
+                interpolated && PFloatingArray.class.isAssignableFrom(dest.type()), bitLevels);
         // if dest.type() is not floating-point, interpolation leads to the same ranks
         ranker.process(dest, baseMatrix, rankedMatrix, pattern);
     }
 
     @Override
-    public Matrix<? extends PArray> asMeanBetweenPercentiles(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> fromPercentilesIndexes,
-        Matrix<? extends PArray> toPercentilesIndexes,
-        Pattern pattern, double filler)
-    {
+    public Matrix<? extends PArray> asMeanBetweenPercentiles(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> fromPercentilesIndexes,
+            Matrix<? extends PArray> toPercentilesIndexes,
+            Pattern pattern,
+            double filler) {
         StreamingApertureProcessor averager = RankProcessors.getAveragerBetweenPercentiles(context(), filler,
-            interpolated, bitLevels);
+                interpolated, bitLevels);
         return averager.asProcessed(src.array().type(), src, fromPercentilesIndexes, toPercentilesIndexes, pattern);
     }
 
     @Override
-    public void meanBetweenPercentiles(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> fromPercentilesIndexes,
-        Matrix<? extends PArray> toPercentilesIndexes,
-        Pattern pattern, double filler)
-    {
+    public void meanBetweenPercentiles(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> fromPercentilesIndexes,
+            Matrix<? extends PArray> toPercentilesIndexes,
+            Pattern pattern,
+            double filler) {
         StreamingApertureProcessor averager = RankProcessors.getAveragerBetweenPercentiles(context(), filler,
-            interpolated, bitLevels);
+                interpolated, bitLevels);
         averager.process(dest, src, fromPercentilesIndexes, toPercentilesIndexes, pattern);
     }
 
     @Override
-    public Matrix<? extends PArray> asMeanBetweenValues(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> minValues,
-        Matrix<? extends PArray> maxValues,
-        Pattern pattern, double filler)
-    {
+    public Matrix<? extends PArray> asMeanBetweenValues(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> minValues,
+            Matrix<? extends PArray> maxValues,
+            Pattern pattern,
+            double filler) {
         StreamingApertureProcessor averager = RankProcessors.getAveragerBetweenValues(context(), filler,
-            interpolated, bitLevels);
+                interpolated, bitLevels);
         return averager.asProcessed(src.array().type(), src, minValues, maxValues, pattern);
     }
 
     @Override
-    public void meanBetweenValues(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> minValues,
-        Matrix<? extends PArray> maxValues,
-        Pattern pattern, double filler)
-    {
+    public void meanBetweenValues(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> minValues,
+            Matrix<? extends PArray> maxValues,
+            Pattern pattern,
+            double filler) {
         StreamingApertureProcessor averager = RankProcessors.getAveragerBetweenValues(context(), filler,
-            interpolated, bitLevels);
+                interpolated, bitLevels);
         averager.process(dest, src, minValues, maxValues, pattern);
     }
 
     @Override
-    public Matrix<? extends PArray> asFunctionOfSum(Matrix<? extends PArray> src,
-        Pattern pattern, Func processingFunc)
-    {
+    public Matrix<? extends PArray> asFunctionOfSum(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            Func processingFunc) {
         StreamingApertureProcessor averager = RankProcessors.getSummator(context(), processingFunc);
         return averager.asProcessed(src.array().type(), src, pattern);
     }
 
     @Override
-    public void functionOfSum(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Pattern pattern, Func processingFunc)
-    {
+    public void functionOfSum(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            Func processingFunc) {
         StreamingApertureProcessor averager = RankProcessors.getSummator(context(), processingFunc);
         averager.process(dest, src, pattern);
     }
 
     @Override
-    public Matrix<? extends PArray> asFunctionOfPercentilePair(Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentilesIndexes1,
-        Matrix<? extends PArray> percentilesIndexes2,
-        Pattern pattern, Func processingFunc)
-    {
+    public Matrix<? extends PArray> asFunctionOfPercentilePair(
+            Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentilesIndexes1,
+            Matrix<? extends PArray> percentilesIndexes2,
+            Pattern pattern,
+            Func processingFunc) {
         StreamingApertureProcessor contraster = RankProcessors.getPercentilePairProcessor(context(),
-            processingFunc, interpolated, bitLevels);
+                processingFunc, interpolated, bitLevels);
         return contraster.asProcessed(src.array().type(),
-            src, src, percentilesIndexes1, percentilesIndexes2, pattern);
+                src, src, percentilesIndexes1, percentilesIndexes2, pattern);
     }
 
     @Override
-    public void functionOfPercentilePair(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-        Matrix<? extends PArray> percentilesIndexes1,
-        Matrix<? extends PArray> percentilesIndexes2,
-        Pattern pattern, Func processingFunc)
-    {
+    public void functionOfPercentilePair(
+            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
+            Matrix<? extends PArray> percentilesIndexes1,
+            Matrix<? extends PArray> percentilesIndexes2,
+            Pattern pattern,
+            Func processingFunc) {
         StreamingApertureProcessor contraster = RankProcessors.getPercentilePairProcessor(context(),
-            processingFunc, interpolated, bitLevels);
+                processingFunc, interpolated, bitLevels);
         contraster.process(dest, src, src, percentilesIndexes1, percentilesIndexes2, pattern);
     }
 

@@ -94,7 +94,7 @@ import net.algart.math.patterns.Pattern;
  * where <i>x</i>'<sub><i>k</i></sub> = <i>x</i><sub><i>k</i></sub>&minus;<i>p</i><sub><i>i,k</i></sub>.
  * In particular, it is true for all implementations offered by this package.
  * If the point <b>x</b>' = <b>x</b>&minus;<b>p</b><sub><i>i</i></sub> lies outside the matrix
-* (<i>x</i>'<sub><i>k</i></sub>&lt;0 or
+ * (<i>x</i>'<sub><i>k</i></sub>&lt;0 or
  * <i>x</i>'<sub><i>k</i></sub>&ge;<b>M</b>.<code>{@link Matrix#dim(int) dim}(<i>k</i>)</code>
  * for some <i>k</i>), then:
  *     <ul>
@@ -425,7 +425,7 @@ public interface RankMorphology extends Morphology {
      * the mean is considered to be equal to
      * (<i>v</i><sub>1</sub>+<i>v</i><sub>2</sub>)/2.</li>
      * </ol>
-     *
+     * <p>
      * See the {@link RankMorphology comments to this class}, section 4 about the
      * "<i>mean between 2 values</i>" term.
      *
@@ -459,7 +459,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat.SectionStart percentile_fixed_point_note-->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -489,13 +488,12 @@ public interface RankMorphology extends Morphology {
      * For {@link BasicRankMorphology} object, &mu; is chosen while
      * {@link BasicRankMorphology#getInstance(ArrayContext, double, CustomRankPrecision) instantiating this object}
      * as min(<code>bitLevels[bitLevels.length-1]</code>, &beta;).
-     <!--Repeat.SectionEnd percentile_fixed_point_note-->
      *
      * @param src               the source matrix.
      * @param percentileIndexes the matrix containing <i>r</i> argument: the indexes of the percentile
      *                          for every element of the result.
      * @param pattern           the pattern: the shape of the aperture.
-     * @return                  the "lazy" matrix containing the percentile of the source matrix.
+     * @return the "lazy" matrix containing the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -524,7 +522,6 @@ public interface RankMorphology extends Morphology {
      * asPercentile}(src, src.matrix({@link Arrays#nDoubleCopies(long, double)
      * Arrays.nDoubleCopies}(src.size(), percentileIndex), pattern)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, percentile_fixed_point_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -554,12 +551,11 @@ public interface RankMorphology extends Morphology {
      * For {@link BasicRankMorphology} object, &mu; is chosen while
      * {@link BasicRankMorphology#getInstance(ArrayContext, double, CustomRankPrecision) instantiating this object}
      * as min(<code>bitLevels[bitLevels.length-1]</code>, &beta;).
-     <!--Repeat.IncludeEnd-->
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
      * @param pattern         the pattern: the shape of the aperture.
-     * @return                the "lazy" matrix containing the percentile of the source matrix.
+     * @return the "lazy" matrix containing the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -581,7 +577,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, percentile_fixed_point_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -611,13 +606,12 @@ public interface RankMorphology extends Morphology {
      * For {@link BasicRankMorphology} object, &mu; is chosen while
      * {@link BasicRankMorphology#getInstance(ArrayContext, double, CustomRankPrecision) instantiating this object}
      * as min(<code>bitLevels[bitLevels.length-1]</code>, &beta;).
-     <!--Repeat.IncludeEnd-->
      *
      * @param src               the source matrix.
      * @param percentileIndexes the matrix containing <i>r</i> argument: the indexes of the percentile
      *                          for every element of the result.
      * @param pattern           the pattern: the shape of the aperture.
-     * @return                  the percentile of the source matrix.
+     * @return the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -645,7 +639,6 @@ public interface RankMorphology extends Morphology {
      * percentile}(src, src.matrix({@link Arrays#nDoubleCopies(long, double)
      * Arrays.nDoubleCopies}(src.size(), percentileIndex), pattern)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, percentile_fixed_point_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -675,12 +668,11 @@ public interface RankMorphology extends Morphology {
      * For {@link BasicRankMorphology} object, &mu; is chosen while
      * {@link BasicRankMorphology#getInstance(ArrayContext, double, CustomRankPrecision) instantiating this object}
      * as min(<code>bitLevels[bitLevels.length-1]</code>, &beta;).
-     <!--Repeat.IncludeEnd-->
      *
      * @param src             the source matrix.
      * @param percentileIndex <i>r</i> argument of the percentile.
      * @param pattern         the pattern: the shape of the aperture.
-     * @return                the percentile of the source matrix.
+     * @return the percentile of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -781,7 +773,6 @@ public interface RankMorphology extends Morphology {
      * {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
      *
-     <!--Repeat.SectionStart rank_casting_note-->
      * <p>The element types of <code>baseMatrix</code> and <code>rankedMatrix</code> are usually equal.
      * If they are different (<code>baseMatrix.{@link Matrix#elementType()
      * elementType()}!=rankedMatrix.{@link Matrix#elementType() elementType()}</code>),
@@ -802,14 +793,13 @@ public interface RankMorphology extends Morphology {
      * (<code>pattern.{@link Pattern#pointCount() pointCount()}</code>) is less than
      * 2<sup>16</sup>=65536 or 2<sup>8</sup>=256, it is enough to specify correspondingly
      * <code>requiredType=ShortArray.class</code> or <code>ByteArray.class</code>.
-     <!--Repeat.SectionEnd rank_casting_note-->
      *
      * @param requiredType the desired type of the built-in array in the returned matrix.
      * @param baseMatrix   the source matrix.
      * @param rankedMatrix the matrix containing <i>v</i> argument: the values,
      *                     the rank of which should be calculated.
      * @param pattern      the pattern: the shape of the aperture.
-     * @return             the "lazy" matrix containing the rank of the given values.
+     * @return the "lazy" matrix containing the rank of the given values.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -852,7 +842,6 @@ public interface RankMorphology extends Morphology {
      * {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, rank_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>The element types of <code>baseMatrix</code> and <code>rankedMatrix</code> are usually equal.
      * If they are different (<code>baseMatrix.{@link Matrix#elementType()
      * elementType()}!=rankedMatrix.{@link Matrix#elementType() elementType()}</code>),
@@ -873,7 +862,6 @@ public interface RankMorphology extends Morphology {
      * (<code>pattern.{@link Pattern#pointCount() pointCount()}</code>) is less than
      * 2<sup>16</sup>=65536 or 2<sup>8</sup>=256, it is enough to specify correspondingly
      * <code>requiredType=ShortArray.class</code> or <code>ByteArray.class</code>.
-     <!--Repeat.IncludeEnd-->
      * The less result precision allows you to save memory.
      *
      * @param requiredType the desired type of the built-in array in the returned matrix.
@@ -881,7 +869,7 @@ public interface RankMorphology extends Morphology {
      * @param rankedMatrix the matrix containing <i>v</i> argument: the values,
      *                     the rank of which should be calculated.
      * @param pattern      the pattern: the shape of the aperture.
-     * @return             the rank of the given values.
+     * @return the rank of the given values.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -920,7 +908,6 @@ public interface RankMorphology extends Morphology {
      * <pre>{@link #rank(Class, Matrix, Matrix, Pattern)
      * rank}(dest.array().{@link Array#type() type()}, baseMatrix, rankedMatrix, pattern)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, rank_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>The element types of <code>baseMatrix</code> and <code>rankedMatrix</code> are usually equal.
      * If they are different (<code>baseMatrix.{@link Matrix#elementType()
      * elementType()}!=rankedMatrix.{@link Matrix#elementType() elementType()}</code>),
@@ -941,7 +928,6 @@ public interface RankMorphology extends Morphology {
      * (<code>pattern.{@link Pattern#pointCount() pointCount()}</code>) is less than
      * 2<sup>16</sup>=65536 or 2<sup>8</sup>=256, it is enough to specify correspondingly
      * <code>requiredType=ShortArray.class</code> or <code>ByteArray.class</code>.
-     <!--Repeat.IncludeEnd-->
      * The less result precision allows you to save memory.
      *
      * @param dest         the target matrix.
@@ -974,7 +960,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat.SectionStart mean_casting_note-->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -985,7 +970,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.SectionEnd mean_casting_note-->
      *
      * @param src                   the source matrix.
      * @param fromPercentileIndexes the matrix containing <i>r</i><sub>1</sub> argument: the indexes of
@@ -995,8 +979,8 @@ public interface RankMorphology extends Morphology {
      * @param pattern               the pattern: the shape of the aperture.
      * @param filler                the reserved value, returned when
      *                              <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
-     * @return                      the "lazy" matrix containing the mean between 2 given percentiles
-     *                              of the source matrix.
+     * @return the "lazy" matrix containing the mean between 2 given percentiles
+     * of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1035,7 +1019,6 @@ public interface RankMorphology extends Morphology {
      * Arrays.nDoubleCopies}(src.size(), toPercentileIndex),
      * &#32;   pattern, filler)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1046,7 +1029,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -1056,8 +1038,8 @@ public interface RankMorphology extends Morphology {
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
      *                            <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
-     * @return                    the "lazy" matrix containing the mean between 2 given percentiles
-     *                            of the source matrix.
+     * @return the "lazy" matrix containing the mean between 2 given percentiles
+     * of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1084,7 +1066,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat.SectionStart mean_casting_note-->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1095,7 +1076,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.SectionEnd mean_casting_note-->
      *
      * @param src                   the source matrix.
      * @param fromPercentileIndexes the matrix containing <i>r</i><sub>1</sub> argument: the indexes of
@@ -1105,7 +1085,7 @@ public interface RankMorphology extends Morphology {
      * @param pattern               the pattern: the shape of the aperture.
      * @param filler                the reserved value, returned when
      *                              <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
-     * @return                      the mean between 2 given percentiles of the source matrix.
+     * @return the mean between 2 given percentiles of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1143,7 +1123,6 @@ public interface RankMorphology extends Morphology {
      * Arrays.nDoubleCopies}(src.size(), toPercentileIndex),
      * &#32;   pattern, filler)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1154,7 +1133,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param src                 the source matrix.
      * @param fromPercentileIndex <i>r</i><sub>1</sub> argument: the index of
@@ -1164,7 +1142,7 @@ public interface RankMorphology extends Morphology {
      * @param pattern             the pattern: the shape of the aperture.
      * @param filler              the reserved value, returned when
      *                            <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
-     * @return                    the mean between 2 given percentiles of the source matrix.
+     * @return the mean between 2 given percentiles of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1183,9 +1161,6 @@ public interface RankMorphology extends Morphology {
      * Equivalent to {@link #meanBetweenPercentiles(Matrix, Matrix, Matrix, Pattern, double)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1196,7 +1171,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param dest                  the target matrix.
      * @param src                   the source matrix.
@@ -1226,9 +1200,6 @@ public interface RankMorphology extends Morphology {
      * Equivalent to {@link #meanBetweenPercentiles(Matrix, double, double, Pattern, double)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1239,7 +1210,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param dest                the target matrix.
      * @param src                 the source matrix.
@@ -1290,7 +1260,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1301,7 +1270,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param src       the source matrix.
      * @param minValues the matrix containing <i>v</i><sub>1</sub> argument: the low bound
@@ -1313,7 +1281,7 @@ public interface RankMorphology extends Morphology {
      *                  <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
      *                  or one of the special keys {@link #FILL_MIN_VALUE}, {@link #FILL_MAX_VALUE},
      *                  {@link #FILL_NEAREST_VALUE}, which mean using of special calculation modes B, C, D.
-     * @return          the "lazy" matrix containing the mean between 2 given values of the source matrix.
+     * @return the "lazy" matrix containing the mean between 2 given values of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1326,7 +1294,7 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends PArray> src,
             Matrix<? extends PArray> minValues,
             Matrix<? extends PArray> maxValues,
-                                                 Pattern pattern, double filler);
+            Pattern pattern, double filler);
 
     /**
      * Returns a new updatable matrix, containing the <i>mean between 2 values</i>
@@ -1352,7 +1320,6 @@ public interface RankMorphology extends Morphology {
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1363,7 +1330,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param src       the source matrix.
      * @param minValues the matrix containing <i>v</i><sub>1</sub> argument: the low bound
@@ -1375,7 +1341,7 @@ public interface RankMorphology extends Morphology {
      *                  <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
      *                  or one of the special keys {@link #FILL_MIN_VALUE}, {@link #FILL_MAX_VALUE},
      *                  {@link #FILL_NEAREST_VALUE}, which mean using of special calculation modes B, C, D.
-     * @return          the mean between 2 given values of the source matrix.
+     * @return the mean between 2 given values of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1394,9 +1360,6 @@ public interface RankMorphology extends Morphology {
      * Equivalent to {@link #meanBetweenValues(Matrix, Matrix, Matrix, Pattern, double)} method, but the result matrix
      * will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1407,7 +1370,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param dest      the target matrix.
      * @param src       the source matrix.
@@ -1463,8 +1425,6 @@ public interface RankMorphology extends Morphology {
      * <i>N</i> + 0.5.</li>
      * </ul>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         in\s+the\s+comments\s+to\s+this\s+class ==> above  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1475,9 +1435,7 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     <!--Repeat.SectionStart usual_mean_notes-->
      * <p>The described rounding rule explains, why we add 0.5 to the mean in the case of a fixed-point source
      * elements. Namely, in this case the combination of adding 0.5 and further truncation to the integer part
      * works as rounding to the nearest integer:
@@ -1525,11 +1483,10 @@ public interface RankMorphology extends Morphology {
      *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
-     <!--Repeat.SectionEnd usual_mean_notes-->
      *
-     * @param src                 the source matrix.
-     * @param pattern             the pattern: the shape of the aperture.
-     * @return                    the "lazy" matrix containing the mean of the source matrix.
+     * @param src     the source matrix.
+     * @param pattern the pattern: the shape of the aperture.
+     * @return the "lazy" matrix containing the mean of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1567,8 +1524,6 @@ public interface RankMorphology extends Morphology {
      * <i>N</i> + 0.5.</li>
      * </ul>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         in\s+the\s+comments\s+to\s+this\s+class ==> above  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1579,10 +1534,7 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, usual_mean_notes)
-         asMeanBetweenPercentiles ==> meanBetweenPercentiles  !! Auto-generated: NOT EDIT !! -->
      * <p>The described rounding rule explains, why we add 0.5 to the mean in the case of a fixed-point source
      * elements. Namely, in this case the combination of adding 0.5 and further truncation to the integer part
      * works as rounding to the nearest integer:
@@ -1630,11 +1582,10 @@ public interface RankMorphology extends Morphology {
      *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
-     <!--Repeat.IncludeEnd-->
      *
-     * @param src                 the source matrix.
-     * @param pattern             the pattern: the shape of the aperture.
-     * @return                    the mean of the source matrix.
+     * @param src     the source matrix.
+     * @param pattern the pattern: the shape of the aperture.
+     * @return the mean of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1648,10 +1599,6 @@ public interface RankMorphology extends Morphology {
      * Equivalent to {@link #mean(Matrix, Pattern)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, mean_casting_note)
-         in\s+the\s+comments\s+to\s+this\s+class ==> above ;;
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1662,11 +1609,7 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point means to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, usual_mean_notes)
-         asMeanBetweenPercentiles\(Matrix ==> meanBetweenPercentiles(Matrix, Matrix ;;
-         asMeanBetweenPercentiles ==> meanBetweenPercentiles  !! Auto-generated: NOT EDIT !! -->
      * <p>The described rounding rule explains, why we add 0.5 to the mean in the case of a fixed-point source
      * elements. Namely, in this case the combination of adding 0.5 and further truncation to the integer part
      * works as rounding to the nearest integer:
@@ -1684,9 +1627,9 @@ public interface RankMorphology extends Morphology {
      * Really, in this case the mean between 2 percentiles is equal to
      *
      * <blockquote>(<i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)) /
-     *     ((<i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub>)*&sigma;) = <i>S</i>(<i>N</i>) / (<i>N</i>*&sigma;) =
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
-     *     / (<i>N</i>*&sigma;)
+     * ((<i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub>)*&sigma;) = <i>S</i>(<i>N</i>) / (<i>N</i>*&sigma;) =
+     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
+     * / (<i>N</i>*&sigma;)
      * </blockquote>
      *
      * <p>In the simplest case, when the source elements are real numbers in the "standard" allowed range
@@ -1696,10 +1639,10 @@ public interface RankMorphology extends Morphology {
      * and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
-     *     (<i>v'</i><sub>0</sub>+<i>v'</i><sub>1</sub>+...+<i>v'</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
-     *     + 0.5 / <i>M</i> &asymp;
-     *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
+     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
+     * (<i>v'</i><sub>0</sub>+<i>v'</i><sub>1</sub>+...+<i>v'</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
+     * + 0.5 / <i>M</i> &asymp;
+     * (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
      * </blockquote>
      *
      * <p>where <i>v'<sub>i</sub></i> = <i>a<sub>i</sub></i>/<i>M</i> is an attempt
@@ -1711,14 +1654,13 @@ public interface RankMorphology extends Morphology {
      * we have <i>a<sub>i</sub></i> = <i>v<sub>i</sub></i>, and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
-     *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
+     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
+     * (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
-     <!--Repeat.IncludeEnd-->
-
-     * @param dest                  the target matrix.
-     * @param src                   the source matrix.
-     * @param pattern               the pattern: the shape of the aperture.
+     *
+     * @param dest    the target matrix.
+     * @param src     the source matrix.
+     * @param pattern the pattern: the shape of the aperture.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1745,7 +1687,6 @@ public interface RankMorphology extends Morphology {
      * <code>processingFunc.{@link Func#get(double) get}(</code><i>S</i><code>)</code>
      * in the corresponding element of the resulting matrix.
      *
-     <!--Repeat.SectionStart function_casting_note-->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1755,15 +1696,14 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.SectionEnd function_casting_note-->
      *
      * <p>This method can be considered as a generalization of {@link #asMean(Matrix, Pattern)}.
      *
-     * @param src                   the source matrix.
-     * @param pattern               the pattern: the shape of the aperture.
-     * @param processingFunc        the function, which should be applied to every calculated aperture sum.
-     * @return                      the "lazy" matrix containing the result of the given function for
-     *                              the aperture sum of the source matrix.
+     * @param src            the source matrix.
+     * @param pattern        the pattern: the shape of the aperture.
+     * @param processingFunc the function, which should be applied to every calculated aperture sum.
+     * @return the "lazy" matrix containing the result of the given function for
+     * the aperture sum of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1773,7 +1713,8 @@ public interface RankMorphology extends Morphology {
      */
     Matrix<? extends PArray> asFunctionOfSum(
             Matrix<? extends PArray> src,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -1790,7 +1731,6 @@ public interface RankMorphology extends Morphology {
      * <code>processingFunc.{@link Func#get(double) get}(</code><i>S</i><code>)</code>
      * in the corresponding element of the resulting matrix.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)   !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1800,14 +1740,13 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * <p>This method can be considered as a generalization of {@link #mean(Matrix, Pattern)}.
      *
-     * @param src                   the source matrix.
-     * @param pattern               the pattern: the shape of the aperture.
-     * @param processingFunc        the function, which should be applied to every calculated aperture sum.
-     * @return                      the result of the given function for the aperture sum of the source matrix.
+     * @param src            the source matrix.
+     * @param pattern        the pattern: the shape of the aperture.
+     * @param processingFunc the function, which should be applied to every calculated aperture sum.
+     * @return the result of the given function for the aperture sum of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1823,9 +1762,6 @@ public interface RankMorphology extends Morphology {
      * Equivalent to {@link #functionOfSum(Matrix, Pattern, Func)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1835,14 +1771,13 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * <p>This method can be considered as a generalization of {@link #mean(Matrix, Matrix, Pattern)}.
      *
-     * @param dest                  the target matrix.
-     * @param src                   the source matrix.
-     * @param pattern               the pattern: the shape of the aperture.
-     * @param processingFunc        the function, which should be applied to every calculated aperture sum.
+     * @param dest           the target matrix.
+     * @param src            the source matrix.
+     * @param pattern        the pattern: the shape of the aperture.
+     * @param processingFunc the function, which should be applied to every calculated aperture sum.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1852,8 +1787,10 @@ public interface RankMorphology extends Morphology {
      * @see #functionOfSum(Matrix, Pattern, Func)
      */
     void functionOfSum(
-            Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
-            Pattern pattern, Func processingFunc);
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1877,7 +1814,6 @@ public interface RankMorphology extends Morphology {
      * get}(</code><i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub><code>)</code>
      * in the corresponding element of the resulting matrix.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1887,9 +1823,8 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     * <p>You can get the same results by 2 calls of {@link #asPercentile(Matrix,  Matrix, Pattern)} method
+     * <p>You can get the same results by 2 calls of {@link #asPercentile(Matrix, Matrix, Pattern)} method
      * for both matrices of percentile indexes and applying the function to them and to the source matrix via
      * {@link Matrices#asFuncMatrix(Func, Class, Matrix, Matrix, Matrix)} method.
      * But such a way works slower and is less convenient, than this method. A typical application of this method
@@ -1906,7 +1841,7 @@ public interface RankMorphology extends Morphology {
      *                           (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                           where <i>v</i> is the element of the source matrix,
      *                           <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
-     * @return                   the "lazy" matrix containing the result of the given function.
+     * @return the "lazy" matrix containing the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -1920,7 +1855,8 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends PArray> src,
             Matrix<? extends PArray> percentileIndexes1,
             Matrix<? extends PArray> percentileIndexes2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Returns an immutable view of the passed source matrix,
@@ -1943,8 +1879,6 @@ public interface RankMorphology extends Morphology {
      * &#32;   src.matrix({@link Arrays#nDoubleCopies(long, double)
      * Arrays.nDoubleCopies}(src.size(), percentileIndex1),
      * &#32;   pattern, processingFunc)</pre>
-     *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -1954,9 +1888,8 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     * <p>You can get the same results by 2 calls of {@link #asPercentile(Matrix,  double, Pattern)} method
+     * <p>You can get the same results by 2 calls of {@link #asPercentile(Matrix, double, Pattern)} method
      * for both matrices of percentile indexes and applying the function to them and to the source matrix via
      * {@link Matrices#asFuncMatrix(Func, Class, Matrix, Matrix, Matrix)} method.
      * But such a way works slower and is less convenient, than this method. A typical application of this method
@@ -1972,7 +1905,7 @@ public interface RankMorphology extends Morphology {
      *                         (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
-     * @return                 the "lazy" matrix containing the result of the given function.
+     * @return the "lazy" matrix containing the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -1985,7 +1918,8 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends PArray> src,
             double percentileIndex1,
             double percentileIndex2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -2008,7 +1942,6 @@ public interface RankMorphology extends Morphology {
      * get}(</code><i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub><code>)</code>
      * in the corresponding element of the resulting matrix.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -2018,9 +1951,8 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     * <p>You can get the same results by 2 calls of {@link #percentile(Matrix,  Matrix, Pattern)} method
+     * <p>You can get the same results by 2 calls of {@link #percentile(Matrix, Matrix, Pattern)} method
      * for both matrices of percentile indexes and applying the function to them and to the source matrix via
      * {@link Matrices#asFuncMatrix(Func, Class, Matrix, Matrix, Matrix)} method.
      * But such a way works slower and is less convenient, than this method. A typical application of this method
@@ -2037,7 +1969,7 @@ public interface RankMorphology extends Morphology {
      *                           (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                           where <i>v</i> is the element of the source matrix,
      *                           <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
-     * @return                   the result of the given function.
+     * @return the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws SizeMismatchException    if the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
@@ -2051,7 +1983,8 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends PArray> src,
             Matrix<? extends PArray> percentileIndexes1,
             Matrix<? extends PArray> percentileIndexes2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Returns a new updatable matrix, containing the result of some given function
@@ -2074,7 +2007,6 @@ public interface RankMorphology extends Morphology {
      * Arrays.nDoubleCopies}(src.size(), percentileIndex1),
      * &#32;   pattern, processingFunc)</pre>
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of the source matrix (and, thus, of the result) is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -2084,9 +2016,8 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
-     * <p>You can get the same results by 2 calls of {@link #percentile(Matrix,  double, Pattern)} method
+     * <p>You can get the same results by 2 calls of {@link #percentile(Matrix, double, Pattern)} method
      * for both matrices of percentile indexes and applying the function to them and to the source matrix via
      * {@link Matrices#asFuncMatrix(Func, Class, Matrix, Matrix, Matrix)} method.
      * But such a way works slower and is less convenient, than this method. A typical application of this method
@@ -2101,7 +2032,7 @@ public interface RankMorphology extends Morphology {
      *                         (<i>v</i>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                         where <i>v</i> is the element of the source matrix,
      *                         <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub> are the corresponding percentiles.
-     * @return                 the result of the given function.
+     * @return the result of the given function.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
@@ -2114,15 +2045,13 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends PArray> src,
             double percentileIndex1,
             double percentileIndex2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Equivalent to {@link #functionOfPercentilePair(Matrix, Matrix, Matrix, Pattern, Func)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -2132,7 +2061,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param dest               the target matrix.
      * @param src                the source matrix.
@@ -2158,15 +2086,13 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
             Matrix<? extends PArray> percentileIndexes1,
             Matrix<? extends PArray> percentileIndexes2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 
     /**
      * Equivalent to {@link #functionOfPercentilePair(Matrix, double, double, Pattern, Func)} method,
      * but the result matrix will be placed in the <code>dest</code> argument.
      *
-     <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, function_casting_note)
-         the element type of the source matrix \(.*?\) ==>
-         the element type of <code>dest</code> matrix  !! Auto-generated: NOT EDIT !! -->
      * <p>If the element type of <code>dest</code> matrix is fixed-point &mdash;
      * <code>boolean</code>, <code>char</code>, <code>byte</code>, <code>short</code>,
      * <code>int</code> or <code>long</code> &mdash;
@@ -2176,7 +2102,6 @@ public interface RankMorphology extends Morphology {
      * More precisely, the rules of casting the floating-point function results to the desired element type
      * are the same as in {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)}
      * method with the argument <code>truncateOverflows=true</code>.
-     <!--Repeat.IncludeEnd-->
      *
      * @param dest             the target matrix.
      * @param src              the source matrix.
@@ -2200,5 +2125,6 @@ public interface RankMorphology extends Morphology {
             Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src,
             double percentileIndex1,
             double percentileIndex2,
-            Pattern pattern, Func processingFunc);
+            Pattern pattern,
+            Func processingFunc);
 }

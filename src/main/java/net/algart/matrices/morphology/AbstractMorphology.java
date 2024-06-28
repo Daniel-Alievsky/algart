@@ -81,36 +81,42 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         return dilationOrErosion(null, src, pattern, false, false);
     }
 
-    public Matrix<? extends UpdatablePArray> dilation(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> dilation(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            SubtractionMode subtractionMode) {
         Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         Matrix<? extends UpdatablePArray> dilation =
-            (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).dilation(src, pattern);
+                (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).dilation(src, pattern);
         subtractionMode.subtract(contextPart(0.9, 1.0), dilation, src);
         return dilation;
     }
 
-    public Matrix<? extends UpdatablePArray> erosion(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> erosion(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            SubtractionMode subtractionMode) {
         Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         Matrix<? extends UpdatablePArray> erosion =
-            (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).erosion(src, pattern);
+                (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).erosion(src, pattern);
         subtractionMode.subtract(contextPart(0.9, 1.0), erosion, src);
         return erosion;
     }
 
-    public void dilation(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
-        boolean disableMemoryAllocation)
-    {
+    public void dilation(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean disableMemoryAllocation) {
         Objects.requireNonNull(dest, "Null dest argument");
         dilationOrErosion(dest, src, pattern, true, disableMemoryAllocation);
     }
 
-    public void erosion(Matrix<? extends UpdatablePArray> dest, Matrix<? extends PArray> src, Pattern pattern,
-        boolean disableMemoryAllocation)
-    {
+    public void erosion(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean disableMemoryAllocation) {
         Objects.requireNonNull(dest, "Null dest argument");
         dilationOrErosion(dest, src, pattern, false, disableMemoryAllocation);
     }
@@ -123,9 +129,11 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         erosion(dest, src, pattern, false);
     }
 
-    public Matrix<? extends UpdatablePArray> dilationErosion(Matrix<? extends PArray> src,
-        Pattern dilationPattern, Pattern erosionPattern, SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> dilationErosion(
+            Matrix<? extends PArray> src,
+            Pattern dilationPattern,
+            Pattern erosionPattern,
+            SubtractionMode subtractionMode) {
         Objects.requireNonNull(dilationPattern, "Null dilationPattern argument");
         Objects.requireNonNull(erosionPattern, "Null erosionPattern argument");
         if (!dimensionsAllowed(src, dilationPattern)) {
@@ -142,9 +150,11 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         return actual;
     }
 
-    public Matrix<? extends UpdatablePArray> erosionDilation(Matrix<? extends PArray> src,
-        Pattern erosionPattern, Pattern dilationPattern, SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> erosionDilation(
+            Matrix<? extends PArray> src,
+            Pattern erosionPattern,
+            Pattern dilationPattern,
+            SubtractionMode subtractionMode) {
         Objects.requireNonNull(erosionPattern, "Null erosionPattern argument");
         Objects.requireNonNull(dilationPattern, "Null dilationPattern argument");
         if (!dimensionsAllowed(src, dilationPattern)) {
@@ -160,15 +170,16 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         return actual;
     }
 
-    public Matrix<? extends UpdatablePArray> closing(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> closing(
+            Matrix<? extends PArray> src, Pattern pattern,
+            SubtractionMode subtractionMode) {
         return dilationErosion(src, pattern, pattern, subtractionMode);
     }
 
-    public Matrix<? extends UpdatablePArray> opening(Matrix<? extends PArray> src, Pattern pattern,
-        SubtractionMode subtractionMode)
-    {
+    public Matrix<? extends UpdatablePArray> opening(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            SubtractionMode subtractionMode) {
         return erosionDilation(src, pattern, pattern, subtractionMode);
     }
 
@@ -176,8 +187,8 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         Matrix<? extends UpdatablePArray> dilation = context(contextPart(0.0, 0.5)).dilation(src, pattern);
         Matrix<? extends UpdatablePArray> closing = context(contextPart(0.45, 0.9)).erosion(dilation, pattern);
         Matrices.applyFunc(contextPart(0.9, 1.0),
-            !(this instanceof BasicMorphology), // overflow is impossible for BasicMorphology
-            LinearFunc.getInstance(0, 1, -1, 1), dilation, dilation, closing, src);
+                !(this instanceof BasicMorphology), // overflow is impossible for BasicMorphology
+                LinearFunc.getInstance(0, 1, -1, 1), dilation, dilation, closing, src);
         return dilation;
     }
 
@@ -185,25 +196,27 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         Matrix<? extends UpdatablePArray> erosion = context(contextPart(0.0, 0.5)).erosion(src, pattern);
         Matrix<? extends UpdatablePArray> opening = context(contextPart(0.45, 0.9)).dilation(erosion, pattern);
         Matrices.applyFunc(contextPart(0.9, 1.0),
-            !(this instanceof BasicMorphology), // overflow is impossible for BasicMorphology
-            LinearFunc.getInstance(0, 1, -1, 1), erosion, erosion, opening, src);
+                !(this instanceof BasicMorphology), // overflow is impossible for BasicMorphology
+                LinearFunc.getInstance(0, 1, -1, 1), erosion, erosion, opening, src);
         return erosion;
     }
 
-    public Matrix<? extends UpdatablePArray> maskedDilationErosion(Matrix<? extends PArray> src,
-        Pattern dilationPattern, Pattern erosionPattern)
-    {
+    public Matrix<? extends UpdatablePArray> maskedDilationErosion(
+            Matrix<? extends PArray> src,
+            Pattern dilationPattern, Pattern erosionPattern) {
+
         Matrix<? extends UpdatablePArray> actual = context(contextPart(0.0, 0.95)).dilationErosion(
-            src, dilationPattern, erosionPattern, SubtractionMode.NONE);
+                src, dilationPattern, erosionPattern, SubtractionMode.NONE);
         Matrices.applyFunc(contextPart(0.95, 1.0), Func.MIN, actual, actual, src);
         return actual;
     }
 
-    public Matrix<? extends UpdatablePArray> maskedErosionDilation(Matrix<? extends PArray> src,
-        Pattern erosionPattern, Pattern dilationPattern)
-    {
+    public Matrix<? extends UpdatablePArray> maskedErosionDilation(
+            Matrix<? extends PArray> src,
+            Pattern erosionPattern,
+            Pattern dilationPattern) {
         Matrix<? extends UpdatablePArray> actual = context(contextPart(0.0, 0.95)).erosionDilation(
-            src, erosionPattern, dilationPattern, SubtractionMode.NONE);
+                src, erosionPattern, dilationPattern, SubtractionMode.NONE);
         Matrices.applyFunc(contextPart(0.95, 1.0), Func.MAX, actual, actual, src);
         return actual;
     }
@@ -228,14 +241,16 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * @param src        the source matrix.
      * @param pattern    the pattern.
      * @param isDilation what should return this method: dilation or erosion.
-     * @return           the "lazy" matrix containing the dilation or erosion of the source matrix.
+     * @return the "lazy" matrix containing the dilation or erosion of the source matrix.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
      *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
-    protected abstract Matrix<? extends PArray> asDilationOrErosion(Matrix<? extends PArray> src, Pattern pattern,
-        boolean isDilation);
+    protected abstract Matrix<? extends PArray> asDilationOrErosion(
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean isDilation);
 
     /**
      * This method must be equivalent to
@@ -287,18 +302,20 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * @param disableMemoryAllocation if <code>false</code>, this method may allocate additional temporary matrices
      *                                for optimizing the algorithm speed;
      *                                if <code>true</code>, no any work memory will be allocated.
-     * @return                        the reference to <code>dest</code> argument if it is not {@code null},
-     *                                newly allocated resulting matrix in other case.
+     * @return the reference to <code>dest</code> argument if it is not {@code null},
+     * newly allocated resulting matrix in other case.
      * @throws NullPointerException     if <code>src</code> or <code>pattern</code> argument is {@code null}.
      * @throws SizeMismatchException    if <code>dest!=null</code> and the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
      *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.
      */
-    protected Matrix<? extends UpdatablePArray> dilationOrErosion(Matrix<? extends UpdatablePArray> dest,
-        Matrix<? extends PArray> src,
-        Pattern pattern, boolean isDilation, boolean disableMemoryAllocation)
-    {
+    protected Matrix<? extends UpdatablePArray> dilationOrErosion(
+            Matrix<? extends UpdatablePArray> dest,
+            Matrix<? extends PArray> src,
+            Pattern pattern,
+            boolean isDilation,
+            boolean disableMemoryAllocation) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(pattern, "Null pattern argument");
         if (!dimensionsAllowed(src, pattern)) {
@@ -309,11 +326,11 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
         } else {
             if (!dest.dimEquals(src)) {
                 throw new SizeMismatchException("Destination and source matrix dimensions mismatch: "
-                    + dest + " and " + src);
+                        + dest + " and " + src);
             }
             Matrix<? extends UpdatablePArray> castDest = dest.elementType() == src.elementType() ? dest :
-                Matrices.asUpdatableFuncMatrix(true, Func.UPDATABLE_IDENTITY,
-                    src.updatableType(UpdatablePArray.class), dest);
+                    Matrices.asUpdatableFuncMatrix(true, Func.UPDATABLE_IDENTITY,
+                            src.updatableType(UpdatablePArray.class), dest);
             Matrices.copy(context(), castDest, asDilationOrErosion(src, pattern, isDilation));
         }
         return dest;
