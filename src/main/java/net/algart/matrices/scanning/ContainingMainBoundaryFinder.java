@@ -136,10 +136,10 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
      * position (x',y), X_MINUS pixel side. If the given position is outside any main boundary,
      * returns -1.
      *
-     * @param x x-coordinate. Note that it must be actually <tt>int</tt> value in current implementation
+     * @param x x-coordinate. Note that it must be actually <code>int</code> value in current implementation
      *          (this class does not support matrices with a width &ge;Integer.MAX_VALUE).
      * @param y y-coordinate.
-     * @return <tt>-1</tt> if this point is outside all main boundaries;
+     * @return <code>-1</code> if this point is outside all main boundaries;
      * x-coordinate of the left pixel of some main boundary, where this point is inside
      * (its y-coordinate is the same as the argument).
      * @throws IndexOutOfBoundsException if these coordinates are out of the source matrix.

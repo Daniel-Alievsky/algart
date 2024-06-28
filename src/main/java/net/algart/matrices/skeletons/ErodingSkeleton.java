@@ -36,23 +36,24 @@ import java.util.Objects;
  * {@link Morphology#erosion(Matrix, Pattern) erosions} of the matrix by some small pattern.</p>
  *
  * <p>More precisely, this class is an implementation of {@link IterativeArrayProcessor} interface,
- * iteratively processing some bit matrix (<tt>{@link Matrix}({@link UpdatableBitArray})</tt>), named
- * <tt>result</tt> and passed to the {@link #getInstance getInstance} method.
+ * iteratively processing some bit matrix (<code>{@link Matrix}({@link UpdatableBitArray})</code>), named
+ * <code>result</code> and passed to the {@link #getInstance getInstance} method.
  * In this implementation:</p>
  *
  * <ul>
  * <li>{@link #performIteration(ArrayContext)} method
- * calculates <tt>{@link Morphology#erosion(Matrix, Pattern) erosion}(result,P)</tt> of the current <tt>result</tt> matrix
- * by some small pattern <tt>P</tt> (usually little circle or square, in 2-dimensional case) and
+ * calculates <code>{@link Morphology#erosion(Matrix, Pattern) erosion}(result,P)</code>
+ * of the current <code>result</code> matrix
+ * by some small pattern <code>P</code> (usually little circle or square, in 2-dimensional case) and
  * <tt>{@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)
  * opening}(result,Q,{@link net.algart.matrices.morphology.Morphology.SubtractionMode#NONE})</tt> of this matrix
- * by some other pattern <tt>Q</tt>, usually equal to <tt>P</tt> or little greater than <tt>P</tt>.
- * The opening is subtracted (in the set-theoretical sense) from the source <tt>result</tt> matrix
+ * by some other pattern <code>Q</code>, usually equal to <code>P</code> or little greater than <code>P</code>.
+ * The opening is subtracted (in the set-theoretical sense) from the source <code>result</code> matrix
  * and the difference (i.e. "thin" areas in the bit image) is united with the erosion
  * (also in the set-theoretical sense).
- * Then the <tt>result</tt> matrix is replaced with this union.</li>
+ * Then the <code>result</code> matrix is replaced with this union.</li>
  *
- * <li>{@link #done()} method returns <tt>true</tt> if the last iteration was unable to change the matrix:
+ * <li>{@link #done()} method returns <code>true</code> if the last iteration was unable to change the matrix:
  * all "objects" are already "thin" (removed after the erosion).</li>
  *
  * <li>{@link #result()} method always returns the reference to the source matrix, passed to
@@ -62,7 +63,7 @@ import java.util.Objects;
  * <p>The algorithm, implemented by this class, does not guarantee that connected "objects"
  * (areas filled by 1 elements) stay connected
  * and does not guarantee that the resulting "skeleton" will be "thin" enough.
- * But it guarantees that resulting "skeleton" does not contain areas "larger" than the pattern <tt>Q</tt>
+ * But it guarantees that resulting "skeleton" does not contain areas "larger" than the pattern <code>Q</code>
  * used for opening operation.</p>
  *
  * <p>This class is based on {@link Matrices#asShifted Matrices.asShifted} method
@@ -72,7 +73,8 @@ import java.util.Objects;
  * You can change this behavior by appending the source matrix with zero elements
  * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <tt>continuationMode</tt> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument is
+ * {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <p>This class can process a matrix with any number of dimensions.</p>
  *

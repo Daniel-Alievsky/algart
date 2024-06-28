@@ -338,26 +338,26 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
     /**
      * Creates a new instance of this class, performing separable Hartley transform according either to the formula 1
      * from the {@link SeparableFastHartleyTransform comments to this class},
-     * if <tt>normalizeDirectTransform</tt> argument is <tt>false</tt>,
-     * or to the formula 2, if this argument is <tt>true</tt>.
-     * The default value, used by the constructors without <tt>normalizeDirectTransform</tt> argument,
-     * is <tt>false</tt>.
+     * if <code>normalizeDirectTransform</code> argument is <code>false</code>,
+     * or to the formula 2, if this argument is <code>true</code>.
+     * The default value, used by the constructors without <code>normalizeDirectTransform</code> argument,
+     * is <code>false</code>.
      *
-     * <p>Please note: the value of <tt>normalizeDirectTransform</tt> argument affects only the transformation
+     * <p>Please note: the value of <code>normalizeDirectTransform</code> argument affects only the transformation
      * methods {@link #directTransform directTransform}, {@link #inverseTransform inverseTransform},
      * {@link #directTransformMatrix directTransformMatrix}, {@link #inverseTransformMatrix inverseTransformMatrix}.
      * This value does not matter in other methods of this class: conversions between Hartley and Fourier spectrum,
      * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)} and
      * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)}.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the amount of Java memory (heap),
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the amount of Java memory (heap),
      * that can be used by methods of this class for internal needs. It is passed to the corresponding
      * constructor of {@link AbstractSpectralTransform}: see
      * {@link AbstractSpectralTransform#AbstractSpectralTransform(long) comments to that constructor}.
      *
      * @param maxTempJavaMemory        desired maximal amount of Java memory, in bytes, allowed for allocating
      *                                 by methods of this class for internal needs.
-     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization
+     * @param normalizeDirectTransform <code>true</code> if you want to perform normalization
      *                                 (division by the number of
      *                                 samples <i>N</i>) after the direct transform,
      *                                 <code>false</code> (the default value)

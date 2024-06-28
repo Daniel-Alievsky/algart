@@ -63,7 +63,7 @@ import java.util.Objects;
  *
  * <p>Please also note that <i>not all parameters</i>, available via {@link #area()}, {@link #perimeter()} and other
  * methods, are measured by this class. The set of parameters that should be really measured
- * is specified via <tt>EnumSet</tt> while creating the instance in the instantiation method.
+ * is specified via <code>EnumSet</code> while creating the instance in the instantiation method.
  * You should not specify extra parameters, that are not needful: extra calculations can slow down
  * the scanning.</p>
  *
@@ -128,7 +128,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
          * <p>Note that the centroid may be undefined for some styles of contours, if the area
          * of the figure inside the contour is zero. For example, it is possible for "thin" 1-pixel "lines"
          * in a case of {@link ContourLineType#PIXEL_CENTERS_POLYLINE}.
-         * In this case, {@link #centroidX()} and {@link #centroidY()} methods return <tt>Double.NaN</tt>.
+         * In this case, {@link #centroidX()} and {@link #centroidY()} methods return <code>Double.NaN</code>.
          *
          * @see Boundary2DSimpleMeasurer#centroidX()
          * @see Boundary2DSimpleMeasurer#centroidY()
@@ -534,10 +534,10 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the minimal <i>x</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
-     * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
+     * <p>If <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>, the result
      * is equal to the minimal value of the result of {@link #x() x()} method
      * since the last {@link #resetCounters()} call.
-     * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
+     * If <code>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</code> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is less by 0.5.
      *
@@ -550,10 +550,10 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the maximal <i>x</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
-     * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
+     * <p>If <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>, the result
      * is equal to the maximal value of the result of {@link #x() x()} method
      * since the last {@link #resetCounters()} call.
-     * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
+     * If <code>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</code> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is greater by 0.5.
      *
@@ -566,10 +566,10 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the minimal <i>y</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
-     * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
+     * <p>If <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>, the result
      * is equal to the minimal value of the result of {@link #y() y()} method
      * since the last {@link #resetCounters()} call.
-     * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
+     * If <code>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</code> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is less by 0.5.
      *
@@ -582,10 +582,10 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the maximal <i>y</i>-coordinate of all points at the contour, following along the scanned boundary.
      *
-     * <p>If <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>, the result
+     * <p>If <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>, the result
      * is equal to the maximal value of the result of {@link #y() y()} method
      * since the last{@link #resetCounters()} call.
-     * If <tt>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</tt> or
+     * If <code>{@link #contourLineType()}=={@link ContourLineType#STRICT_BOUNDARY}</code> or
      * {@link #contourLineType()}=={@link ContourLineType#SEGMENT_CENTERS_POLYLINE}, the result
      * is greater by 0.5.
      *
@@ -646,8 +646,8 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * <p>Note that the centroid may be undefined for some styles of contours, if the area
      * of the figure inside the contour, returned by {@link #area()} method, is zero.
      * For example, it is possible for "thin" 1-pixel "lines"
-     * in the case <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>.
-     * In this case, this method returns <tt>Double.NaN</tt>.
+     * in the case <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>.
+     * In this case, this method returns <code>Double.NaN</code>.
      *
      * <p>Also note: if it is an internal boundary, it is the centroid of a "hole".
      *
@@ -665,8 +665,8 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * <p>Note that the centroid may be undefined for some styles of contours, if the area
      * of the figure inside the contour, returned by {@link #area()} method, is zero.
      * For example, it is possible for "thin" 1-pixel "lines"
-     * in the case <tt>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</tt>.
-     * In this case, this method returns <tt>Double.NaN</tt>.
+     * in the case <code>{@link #contourLineType()}=={@link ContourLineType#PIXEL_CENTERS_POLYLINE}</code>.
+     * In this case, this method returns <code>Double.NaN</code>.
      *
      * <p>Also note: if it is an internal boundary, it is the centroid of a "hole".
      *
