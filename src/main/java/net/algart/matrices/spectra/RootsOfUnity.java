@@ -52,34 +52,36 @@ class RootsOfUnity {
 
 
     /**
-     * Returns sin &phi;, &phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>.
-     * The <tt>angleIndex</tt> must be in range <tt>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</tt>,
+     * Returns sin &phi;, &phi; = &pi;<code>*angleIndex/{@link #CACHE_SIZE}</code>.
+     * The <code>angleIndex</code> must be in range <code>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</code>,
      * so 0&le;&phi;&le;&pi;.
      *
      * @param angleIndex the angle &phi;, measured in &pi;/{@link #CACHE_SIZE} units
-     *                   (&phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>).
-     * @return           sin &phi;.
-     * @throws IndexOutOfBoundsException if <tt>angleIndex</tt> is not in <tt>0..{@link #CACHE_SIZE}</tt> range.
+     *                   (&phi; = &pi;<code>*angleIndex/{@link #CACHE_SIZE}</code>).
+     * @return sin &phi;.
+     * @throws IndexOutOfBoundsException if <code>angleIndex</code> is not
+     *                                   in <code>0..{@link #CACHE_SIZE}</code> range.
      */
     public static double quickSin(int angleIndex) {
         return angleIndex < HALF_CACHE_SIZE ?
-            SINE_CACHE[angleIndex] :
-            SINE_CACHE[2 * HALF_CACHE_SIZE - angleIndex];
+                SINE_CACHE[angleIndex] :
+                SINE_CACHE[2 * HALF_CACHE_SIZE - angleIndex];
     }
 
     /**
-     * Returns cos &phi;, &phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>.
-     * The <tt>angleIndex</tt> must be in range <tt>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</tt>,
+     * Returns cos &phi;, &phi; = &pi;<code>*angleIndex/{@link #CACHE_SIZE}</code>.
+     * The <code>angleIndex</code> must be in range <code>0&lt;=angleIndex&lt;={@link #CACHE_SIZE}</code>,
      * so 0&le;&phi;&le;&pi;.
      *
      * @param angleIndex the angle &phi;, measured in &pi;/{@link #CACHE_SIZE} units
-     *                   (&phi; = &pi;<tt>*angleIndex/{@link #CACHE_SIZE}</tt>).
-     * @return           cos &phi;.
-     * @throws IndexOutOfBoundsException if <tt>angleIndex</tt> is not in <tt>0..{@link #CACHE_SIZE}</tt> range.
+     *                   (&phi; = &pi;<code>*angleIndex/{@link #CACHE_SIZE}</code>).
+     * @return cos &phi;.
+     * @throws IndexOutOfBoundsException if <code>angleIndex</code> is not
+     *                                   in <code>0..{@link #CACHE_SIZE}</code> range.
      */
     public static double quickCos(int angleIndex) {
         return angleIndex < HALF_CACHE_SIZE ?
-            SINE_CACHE[HALF_CACHE_SIZE - angleIndex] :
-            -SINE_CACHE[angleIndex - HALF_CACHE_SIZE];
+                SINE_CACHE[HALF_CACHE_SIZE - angleIndex] :
+                -SINE_CACHE[angleIndex - HALF_CACHE_SIZE];
     }
 }
