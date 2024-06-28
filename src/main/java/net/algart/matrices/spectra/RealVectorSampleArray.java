@@ -32,7 +32,7 @@ import java.util.Objects;
 
 /**
  * <p>Array of samples, where each sample is a vector of real numbers with some fixed length,
- * represented by an array of <tt>double</tt> values,
+ * represented by an array of <code>double</code> values,
  * stored in an AlgART arras {@link UpdatablePNumberArray}.
  * These vectors correspond to ranges in this array, given with some fixed step.</p>
  *
@@ -41,11 +41,13 @@ import java.util.Objects;
  * samples in an  AlgART array.</p>
  *
  * <p>All operations over samples (adding, subtracting, multiplying) are performed via corresponding operations
- * over elements of the AlgART array. Elements of this array are interpreted as <tt>double</tt> values,
+ * over elements of the AlgART array. Elements of this array are interpreted as <code>double</code> values,
  * as if they are read/written by {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)}
  * methods. There is the only exception: if the element type of the underlying AlgART array
- * is not <tt>float</tt> or <tt>double</tt>, and an operation leads to overflow (for example, we try to multiply
- * a sample by the real scalar <tt>1e10</tt>), then the results can differ from the results of the simplest code based
+ * is not <code>float</code> or <code>double</code>, and an operation leads to overflow (for example,
+ * we try to multiply
+ * a sample by the real scalar <code>1e10</code>), then the results can differ from the results
+ * of the simplest code based
  * on {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)} calls.</p>
  *
  * <p>The instances of this class are not thread-safe, but <b>are thread-compatible</b>
@@ -93,46 +95,46 @@ public abstract class RealVectorSampleArray implements SampleArray {
 
     /**
      * Returns a view of the specified pair of AlgART arrays as an array of real vector samples.
-     * Real vectors are stored in the specified array <tt>samples</tt>.
-     * More precisely, the sample <tt>#k</tt> in the returned sample array is a vector of <tt>vectorLength</tt>
-     * real numbers, where the number <tt>#j</tt> is stored in the element
-     * <tt>#(k*vectorStep)+j</tt> of <tt>samples</tt> array.
+     * Real vectors are stored in the specified array <code>samples</code>.
+     * More precisely, the sample <code>#k</code> in the returned sample array is a vector of <code>vectorLength</code>
+     * real numbers, where the number <code>#j</code> is stored in the element
+     * <code>#(k*vectorStep)+j</code> of <code>samples</code> array.
      *
      * <p>The returned sample array is backed by this AlgART array, so any changes of the samples
      * in the returned array are reflected in this array, and vice-versa.
      * More precisely, the returned sample array is backed by
-     * <tt>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</tt>:
+     * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of its length
      * will not affect behaviour of the returned sample array.
      *
-     * <p>The length of each vector sample, <tt>vectorLength</tt>, must be in range
-     * <tt>0&lt;=vectorLength&lt;=vectorStep</tt>. Moreover, <tt>samples</tt>
-     * array must be long enough for storing <tt>length</tt> vectors with specified <tt>vectorStep</tt>:
-     * <tt>(length-1)*vectorStep+vectorLength &lt;= samples.length()</tt>.
+     * <p>The length of each vector sample, <code>vectorLength</code>, must be in range
+     * <code>0&lt;=vectorLength&lt;=vectorStep</code>. Moreover, <code>samples</code>
+     * array must be long enough for storing <code>length</code> vectors with specified <code>vectorStep</code>:
+     * <code>(length-1)*vectorStep+vectorLength &lt;= samples.length()</code>.
      *
      * @param memoryModel  the memory model, which will be used, when necessary, by
      *                     {@link #newCompatibleSamplesArray(long)} method; can be {@code null},
      *                     then {@link SimpleMemoryModel} will be used.
      * @param samples      the samples.
      * @param vectorLength the length of each real vector.
-     * @param vectorStep   the step of storing vectors in <tt>samples</tt> array.
+     * @param vectorStep   the step of storing vectors in <code>samples</code> array.
      * @param length       the length of the returned sample array.
      * @return             the array of vector real samples, represented by corresponding ranges (subarrays)
      *                     of this AlgART array.
-     * @throws NullPointerException     if <tt>samples</tt> is {@code null}.
-     * @throws IllegalArgumentException if <tt>vectorLength&lt;0</tt>, <tt>vectorStep&lt;vectorLength</tt>,
-     *                                  <tt>length&lt;0</tt> or
+     * @throws NullPointerException     if <code>samples</code> is {@code null}.
+     * @throws IllegalArgumentException if <code>vectorLength&lt;0</code>, <code>vectorStep&lt;vectorLength</code>,
+     *                                  <code>length&lt;0</code> or
      *                                  <tt>(length-1)*vectorStep+vectorLength &lt;=
      *                                  samples.length()</tt>
      *                                  (the last condition is checked mathematically accurately even if these
-     *                                  values <tt>&gt;Long.MAX_VALUE</tt>).
+     *                                  values <code>&gt;Long.MAX_VALUE</code>).
      * @throws TooLargeArrayException   (little probability)
      *                                  if the {@link MemoryModel#maxSupportedLength(Class) maximal length},
      *                                  supported by the specified memory model
-     *                                  (or {@link SimpleMemoryModel} if <tt>memoryModel==null</tt>)
+     *                                  (or {@link SimpleMemoryModel} if <code>memoryModel==null</code>)
      *                                  is not enough for allocating
-     *                                  <tt>{@link #GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH}*vectorLength</tt>
-     *                                  elements with the type <tt>samples.elementType()</tt>.
+     *                                  <code>{@link #GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH}*vectorLength</code>
+     *                                  elements with the type <code>samples.elementType()</code>.
      */
     public static RealVectorSampleArray asSampleArray(
         MemoryModel memoryModel,

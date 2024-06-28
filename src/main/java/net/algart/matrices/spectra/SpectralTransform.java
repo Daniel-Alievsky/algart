@@ -74,11 +74,11 @@ import net.algart.arrays.*;
  * You can check, whether some size is allowed or no, by {@link #isLengthAllowed(long)} method.</p>
  *
  * <p>All numeric algorithms, performed by methods of this interface and its implementations,
- * are performed over floating-point numbers, corresponding to <tt>float</tt> or <tt>double</tt> Java types.
- * Single precision is used, if the passed sample arrays are represented by <tt>float</tt> element type;
- * double precision is used, if the passed sample arrays are represented by <tt>double</tt> element type.
+ * are performed over floating-point numbers, corresponding to <code>float</code> or <code>double</code> Java types.
+ * Single precision is used, if the passed sample arrays are represented by <code>float</code> element type;
+ * double precision is used, if the passed sample arrays are represented by <code>double</code> element type.
  * It is theoretically possible to process sample arrays, represented by fixed-point numbers,
- * alike Java <tt>int</tt>, <tt>long</tt>, <tt>short</tt> and other types (for example,
+ * alike Java <code>int</code>, <code>long</code>, <code>short</code> and other types (for example,
  * if the passed AlgART matrix is {@link Matrix Matrix &lt;? extends UpdatableIntArray&gt;}
  * or if the passed {@link SampleArray} is {@link RealScalarSampleArray}, built on the base of
  * {@link UpdatableByteArray UpdatableByteArray}). In this situation,
@@ -94,7 +94,7 @@ import net.algart.arrays.*;
  * or Fourier and Hartley spectra in
  * {@link SeparableFastHartleyTransform#separableHartleyToFourier
  * SeparableFastHartleyTransform.separableHartleyToFourier} method &mdash;
- * then all passed arrays usually have the same numeric precision (<tt>float</tt>, <tt>double</tt>
+ * then all passed arrays usually have the same numeric precision (<code>float</code>, <code>double</code>
  * or some fixed-point type). But it is not a requirement: for example, you may store the real part
  * of the complex matrix in {@link Matrix Matrix &lt;? extends UpdatableDoubleArray&gt;}
  * and the imaginary part in {@link Matrix Matrix &lt;? extends UpdatableFloatArray&gt;}.
@@ -117,20 +117,20 @@ import net.algart.arrays.*;
  */
 public interface SpectralTransform {
     /**
-     * Returns <tt>true</tt> if the specified argument is an allowed dimension for arrays or matrices,
+     * Returns <code>true</code> if the specified argument is an allowed dimension for arrays or matrices,
      * transformed by {@link #directTransform directTransform}, {@link #inverseTransform inverseTransform},
      * {@link #directTransformMatrix directTransformMatrix} or {@link #inverseTransformMatrix inverseTransformMatrix}
      * method.
      *
-     * <p>More precisely, if this method returns <tt>false</tt> for the length of a sample array,
+     * <p>More precisely, if this method returns <code>false</code> for the length of a sample array,
      * passed to 1st or 2nd methods, or for some dimension of some matrix, passed to 3rd or 4th method,
      * then those methods throw {@link IllegalArgumentException}.
      * In other case, those methods will process that passed data.
      *
      * <p>In both implementations of this interface, offered by this package,
-     * this method returns <tt>true</tt> if the passed length is a power of two (2<sup><i>k</i></sup>).
+     * this method returns <code>true</code> if the passed length is a power of two (2<sup><i>k</i></sup>).
      *
-     * <p>If the <tt>length</tt> argument is negative, the result of this method is unspecified.
+     * <p>If the <code>length</code> argument is negative, the result of this method is unspecified.
      * It is not a problem, because lengths of sample arrays and dimensions of AlgART matrices
      * cannot be negative.
      *
@@ -141,25 +141,26 @@ public interface SpectralTransform {
     boolean isLengthAllowed(long length);
 
     /**
-     * Returns <tt>true</tt> if the transformation methods of this class ({@link #directTransform directTransform},
+     * Returns <code>true</code> if the transformation methods of this class ({@link #directTransform directTransform},
      * {@link #inverseTransform inverseTransform}, {@link #directTransformMatrix directTransformMatrix},
      * {@link #inverseTransformMatrix inverseTransformMatrix}) can process only complex samples,
-     * <tt>false</tt> if the real samples are also allowed.
+     * <code>false</code> if the real samples are also allowed.
      *
-     * <p>More precisely, if this method returns <tt>true</tt>,
+     * <p>More precisely, if this method returns <code>true</code>,
      * then the methods {@link #directTransform directTransform} / {@link #inverseTransform inverseTransform}
-     * checks, whether {@link SampleArray#isComplex()} method returns <tt>true</tt> for the <tt>samples</tt> argument,
+     * checks, whether {@link SampleArray#isComplex()} method returns <code>true</code>
+     * for the <code>samples</code> argument,
      * and the methods {@link #directTransformMatrix directTransformMatrix} /
-     * {@link #inverseTransformMatrix inverseTransformMatrix} checks, whether the <tt>matrixIm</tt> argument is
+     * {@link #inverseTransformMatrix inverseTransformMatrix} checks, whether the <code>matrixIm</code> argument is
      * not {@code null}. If this condition is not fulfilled, these methods throw
-     * <tt>UnsupportedOperationException</tt>.
+     * <code>UnsupportedOperationException</code>.
      * In other case, these methods work normally.
      *
-     * <p>In implementations, offered by this package, this method returns <tt>true</tt>
-     * in {@link FastFourierTransform} class and <tt>false</tt> in {@link SeparableFastHartleyTransform} class.
+     * <p>In implementations, offered by this package, this method returns <code>true</code>
+     * in {@link FastFourierTransform} class and <code>false</code> in {@link SeparableFastHartleyTransform} class.
      *
-     * @return <tt>true</tt> if this class can transform complex samples only,
-     * <tt>false</tt> if real samples can be transformed too.
+     * @return <code>true</code> if this class can transform complex samples only,
+     * <code>false</code> if real samples can be transformed too.
      */
     boolean areComplexSamplesRequired();
 
@@ -171,13 +172,13 @@ public interface SpectralTransform {
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>samples</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>,
-     *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
-     *                                       returns <tt>false</tt>.
+     *                                       returns <code>false</code> for this value.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>,
+     *                                       but <code>samples.{@link SampleArray#isComplex() isComplex()}</code>
+     *                                       method returns <code>false</code>.
      */
     void directTransform(ArrayContext context, SampleArray samples);
 
@@ -188,25 +189,25 @@ public interface SpectralTransform {
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param samples the transformed samples.
-     * @throws NullPointerException          if the <tt>samples</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>samples</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the {@link SampleArray#length() length} of the passed array
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>,
-     *                                       but <tt>samples.{@link SampleArray#isComplex() isComplex()}</tt> method
-     *                                       returns <tt>false</tt>.
+     *                                       returns <code>false</code> for this value.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>,
+     *                                       but <code>samples.{@link SampleArray#isComplex() isComplex()}</code>
+     *                                       method returns <code>false</code>.
      */
     void inverseTransform(ArrayContext context, SampleArray samples);
 
 
     /**
      * Direct transform of the passed matrix of real or complex numbers to its spectrum.
-     * The complex matrix is represented as a pair of AlgART matrices <tt>(matrixRe,matrixIm)</tt>:
+     * The complex matrix is represented as a pair of AlgART matrices <code>(matrixRe,matrixIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix.
-     * The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
-     * in this case, <tt>matrixIm</tt> argument must be {@code null}.
-     * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
+     * The real matrix is represented as a single AlgART matrix <code>matrixRe</code>;
+     * in this case, <code>matrixIm</code> argument must be {@code null}.
+     * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <code>false</code>.)
      * The resulting data are returned in the same AlgART matrices.
      *
      * @param context  the context that will be used by this algorithm; can be {@code null}
@@ -215,14 +216,14 @@ public interface SpectralTransform {
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
      * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>matrixRe</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
+     *                                       returns <code>false</code> for this value.
      * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is {@code null}.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>
+     *                                       and <code>matrixIm</code> argument is {@code null}.
      */
     void directTransformMatrix(
             ArrayContext context,
@@ -231,12 +232,12 @@ public interface SpectralTransform {
 
     /**
      * Inverse transform of the spectrum back to the original matrix of real or complex numbers.
-     * The complex matrix is represented as a pair of AlgART matrices <tt>(matrixRe,matrixIm)</tt>:
+     * The complex matrix is represented as a pair of AlgART matrices <code>(matrixRe,matrixIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix.
-     * The real matrix is represented as a single AlgART matrix <tt>matrixRe</tt>;
-     * in this case, <tt>matrixIm</tt> argument must be {@code null}.
-     * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <tt>false</tt>.)
+     * The real matrix is represented as a single AlgART matrix <code>matrixRe</code>;
+     * in this case, <code>matrixIm</code> argument must be {@code null}.
+     * (It is allowed only if {@link #areComplexSamplesRequired()} method returns <code>false</code>.)
      * The resulting data are returned in the same AlgART matrices.
      *
      * @param context  the context that will be used by this algorithm; can be {@code null}
@@ -245,14 +246,14 @@ public interface SpectralTransform {
      *                 the real parts of the elements of the transformed matrix if it is a complex matrix.
      * @param matrixIm {@code null} if we have a real matrix;
      *                 the imaginary parts of the elements of the transformed matrix if it is a complex matrix.
-     * @throws NullPointerException          if the <tt>matrixRe</tt> argument is {@code null}.
+     * @throws NullPointerException          if the <code>matrixRe</code> argument is {@code null}.
      * @throws IllegalArgumentException      if the some of {@link Matrix#dim(int) dimensions} of the passed matrices
      *                                       is not allowed, i.e. if {@link #isLengthAllowed} method
-     *                                       returns <tt>false</tt> for this value.
+     *                                       returns <code>false</code> for this value.
      * @throws SizeMismatchException         if both passed matrices are not {@code null} (the case of the complex
      *                                       matrix) and have different dimensions.
-     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <tt>true</tt>
-     *                                       and <tt>matrixIm</tt> argument is {@code null}.
+     * @throws UnsupportedOperationException if {@link #areComplexSamplesRequired()} method returns <code>true</code>
+     *                                       and <code>matrixIm</code> argument is {@code null}.
      */
     void inverseTransformMatrix(
             ArrayContext context,

@@ -37,7 +37,7 @@ import java.util.Objects;
  * the resulting transformation for 2- or multidimensional {@link Matrix AlgART numeric matrices} is usually called
  * <i>separable fast Hartley transform</i> (SFHT).
  * The samples, processed by this class, can be both real or complex ({@link #areComplexSamplesRequired()} method
- * returns <tt>false</tt>). This class is especially useful in a case of real samples. In this case
+ * returns <code>false</code>). This class is especially useful in a case of real samples. In this case
  * it is performed faster than the classic FFT, {@link FastFourierTransform} class, because
  * there are no needs to allocate and process arrays of imaginary parts.
  * The simple relation between Hartley and Fourier transform (see below) allows to use this transform
@@ -78,9 +78,11 @@ import java.util.Objects;
  *
  * <p>The only difference is when to normalize the result: while inverse transform (case 1) or direct transform
  * (case 2). The Wikipedia offers formulas of the 1st case. This class allows to calculate both variants:
- * the 1st case is chosen if the <tt>normalizeDirectTransform</tt> argument of the constructors is <tt>false</tt>
+ * the 1st case is chosen if the <code>normalizeDirectTransform</code> argument
+ * of the constructors is <code>false</code>
  * or if this class is created by a constructor without this argument (it is the default behaviour),
- * the 2nd case is chosen  if the <tt>normalizeDirectTransform</tt> argument of the constructors is <tt>true</tt>.</p>
+ * the 2nd case is chosen  if the <code>normalizeDirectTransform</code>
+ * argument of the constructors is <code>true</code>.</p>
  *
  * <p>The very useful feature of DHT is that <i>for real samples x<sub>k</sub> the Hartley spectrum
  * H<sub>k</sub> is also real</i> &mdash; unlike DFT, when even real samples lead to complex spectrum.
@@ -272,7 +274,7 @@ import java.util.Objects;
  * methods of calculation of the spectrum of convolution
  * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)} and
  * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)},
- * if all processed matrices have the same <tt>float</tt> or <tt>double</tt> element types.</p>
+ * if all processed matrices have the same <code>float</code> or <code>double</code> element types.</p>
  */
 public class SeparableFastHartleyTransform extends AbstractSpectralTransform implements SpectralTransform {
 
@@ -293,7 +295,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * Creates a new instance of this class, performing separable Hartley transform according to the formula 1 from
      * the {@link SeparableFastHartleyTransform comments to this class}.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the amount of Java memory (heap),
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the amount of Java memory (heap),
      * that can be used by methods of this class for internal needs. It is passed to the corresponding
      * constructor of {@link AbstractSpectralTransform}: see
      * {@link AbstractSpectralTransform#AbstractSpectralTransform(long) comments to that constructor}.
@@ -310,20 +312,22 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
     /**
      * Creates a new instance of this class, performing separable Hartley transform according either to the formula 1
      * from the {@link SeparableFastHartleyTransform comments to this class},
-     * if <tt>normalizeDirectTransform</tt> argument is <tt>false</tt>,
-     * or to the formula 2, if this argument is <tt>true</tt>.
-     * The default value, used by the constructors without <tt>normalizeDirectTransform</tt> argument,
-     * is <tt>false</tt>.
+     * if <code>normalizeDirectTransform</code> argument is <code>false</code>,
+     * or to the formula 2, if this argument is <code>true</code>.
+     * The default value, used by the constructors without <code>normalizeDirectTransform</code> argument,
+     * is <code>false</code>.
      *
-     * <p>Please note: the value of <tt>normalizeDirectTransform</tt> argument affects only the transformation
+     * <p>Please note: the value of <code>normalizeDirectTransform</code> argument affects only the transformation
      * methods {@link #directTransform directTransform}, {@link #inverseTransform inverseTransform},
      * {@link #directTransformMatrix directTransformMatrix}, {@link #inverseTransformMatrix inverseTransformMatrix}.
      * This value does not matter in other methods of this class: conversions between Hartley and Fourier spectrum,
      * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)} and
      * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)}.
      *
-     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization (division by the number of
-     *                                 samples <i>N</i>) after the direct transform, <tt>false</tt> (the default value)
+     * @param normalizeDirectTransform <code>true</code> if you want to perform normalization
+     *                                 (division by the number of
+     *                                 samples <i>N</i>) after the direct transform,
+     *                                 <code>false</code> (the default value)
      *                                 if you want to perform normalization after the inverse transform.
      * @see #SeparableFastHartleyTransform(boolean, long)
      */
@@ -353,8 +357,10 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      *
      * @param maxTempJavaMemory        desired maximal amount of Java memory, in bytes, allowed for allocating
      *                                 by methods of this class for internal needs.
-     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization (division by the number of
-     *                                 samples <i>N</i>) after the direct transform, <tt>false</tt> (the default value)
+     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization
+     *                                 (division by the number of
+     *                                 samples <i>N</i>) after the direct transform,
+     *                                 <code>false</code> (the default value)
      *                                 if you want to perform normalization after the inverse transform.
      * @see #SeparableFastHartleyTransform(boolean)
      */
@@ -369,37 +375,39 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * See the {@link SeparableFastHartleyTransform comments to this class} about the relation formulas between
      * separable Hartley and Fourier spectra.
      *
-     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <tt>(fRe,fIm)</tt>:
+     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <code>(fRe,fIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>F</i>.
-     * The real matrix <i>H</i> is passed as an AlgART matrix <tt>h</tt>.
+     * The real matrix <i>H</i> is passed as an AlgART matrix <code>h</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
-     * <p>This method works correctly, if you pass the same matrix as <tt>fRe</tt> / <tt>fIm</tt> and <tt>h</tt>.
+     * <p>This method works correctly, if you pass the same matrix as
+     * <code>fRe</code> / <code>fIm</code> and <code>h</code>.
      *
      * <p>If you need to convert spectrum in a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param fRe     the real parts of the elements of the resulting matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
      * @param h       the source real matrix (separable Hartley spectrum).
-     * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>h</tt> arguments is {@code null}.
+     * @throws NullPointerException  if one of <code>fRe</code>, <code>fIm</code>,
+     *                               <code>h</code> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
-    public void separableHartleyToFourier(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
-        Matrix<? extends PNumberArray> h)
-    {
+    public void separableHartleyToFourier(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
+            Matrix<? extends PNumberArray> h) {
         Objects.requireNonNull(fRe, "Null fRe argument");
         Objects.requireNonNull(fIm, "Null fIm argument");
         Objects.requireNonNull(h, "Null h argument");
@@ -411,8 +419,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.separableHartleyToFourierRecoursive(context, maxTempJavaMemory(),
-            fRe.array(), fIm.array(), h.array(), null,
-            fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                fRe.array(), fIm.array(), h.array(), null,
+                fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     /**
@@ -421,14 +429,14 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * See the {@link SeparableFastHartleyTransform comments to this class} about the relation formulas between
      * separable Hartley and Fourier spectra.
      *
-     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <tt>(fRe,fIm)</tt>:
+     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <code>(fRe,fIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>F</i>.
-     * Similarly, the complex matrix <i>H</i> is represented as a pair of AlgART matrices <tt>(hRe,hIm)</tt>.
+     * Similarly, the complex matrix <i>H</i> is represented as a pair of AlgART matrices <code>(hRe,hIm)</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
@@ -438,7 +446,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>If you need to convert spectrum in a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
@@ -446,15 +454,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param fIm     the imaginary parts of the elements of the resulting matrix (Fourier spectrum).
      * @param hRe     the real parts of the elements of the source matrix (separable Hartley spectrum).
      * @param hIm     the imaginary parts of the elements of the source matrix (separable Hartley spectrum).
-     * @throws NullPointerException  if one of <tt>fRe</tt>, <tt>fIm</tt>, <tt>hRe</tt>, <tt>hIm</tt>
+     * @throws NullPointerException  if one of <code>fRe</code>, <code>fIm</code>, <code>hRe</code>, <code>hIm</code>
      *                               arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #separableHartleyToFourier(ArrayContext, Matrix, Matrix, Matrix)
      */
-    public void separableHartleyToFourier(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
-        Matrix<? extends PNumberArray> hRe, Matrix<? extends PNumberArray> hIm)
-    {
+    public void separableHartleyToFourier(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> fRe, Matrix<? extends UpdatablePNumberArray> fIm,
+            Matrix<? extends PNumberArray> hRe, Matrix<? extends PNumberArray> hIm) {
         Objects.requireNonNull(fRe, "Null fRe argument");
         Objects.requireNonNull(fIm, "Null fIm argument");
         Objects.requireNonNull(hRe, "Null hRe argument");
@@ -470,8 +478,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.separableHartleyToFourierRecoursive(context, maxTempJavaMemory(),
-            fRe.array(), fIm.array(), hRe.array(), hIm.array(),
-            fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                fRe.array(), fIm.array(), hRe.array(), hIm.array(),
+                fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     /**
@@ -483,38 +491,39 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * if the inverse Fourier transform of <i>F</i> matrix contains nonzero imaginary parts),
      * then this method still correctly calculates the real parts of the separable Hartley spectrum <i>H</i>.
      *
-     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <tt>(fRe,fIm)</tt>:
+     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <code>(fRe,fIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>F</i>.
      * The real matrix <i>H</i> (or the real parts of <i>H</i>, if the passed <i>F</i> matrix
-     * is not a spectrum of a real matrix) is passed as an AlgART matrix <tt>h</tt>.
+     * is not a spectrum of a real matrix) is passed as an AlgART matrix <code>h</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
-     * <p>This method works correctly, if you pass the same matrix as <tt>fRe</tt> / <tt>fIm</tt> and <tt>h</tt>.
+     * <p>This method works correctly, if you pass the same matrix as
+     * <code>fRe</code> / <code>fIm</code> and <code>h</code>.
      *
      * <p>If you need to convert spectrum in a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param h       the resulting real matrix (separable Hartley spectrum).
      * @param fRe     the real parts of the elements of the source matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
-     * @throws NullPointerException  if one of <tt>h</tt>, <tt>fRe</tt>, <tt>fIm</tt> arguments is {@code null}.
+     * @throws NullPointerException  if one of <code>h</code>, <code>fRe</code>, <code>fIm</code> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix, Matrix)
      */
-    public void fourierToSeparableHartley(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> h,
-        Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm)
-    {
+    public void fourierToSeparableHartley(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> h,
+            Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm) {
         Objects.requireNonNull(h, "Null h argument");
         Objects.requireNonNull(fRe, "Null fRe argument");
         Objects.requireNonNull(fIm, "Null fIm argument");
@@ -526,8 +535,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.fourierToSeparableHartleyRecursive(context, maxTempJavaMemory(),
-            h.array(), null, fRe.array(), fIm.array(),
-            fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                h.array(), null, fRe.array(), fIm.array(),
+                fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     /**
@@ -536,14 +545,14 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * See the {@link SeparableFastHartleyTransform comments to this class} about the relation formulas between
      * separable Hartley and Fourier spectra.
      *
-     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <tt>(fRe,fIm)</tt>:
+     * <p>The complex matrix <i>F</i> is represented as a pair of AlgART matrices <code>(fRe,fIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>F</i>.
-     * Similarly, the complex matrix <i>H</i> is represented as a pair of AlgART matrices <tt>(hRe,hIm)</tt>.
+     * Similarly, the complex matrix <i>H</i> is represented as a pair of AlgART matrices <code>(hRe,hIm)</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
@@ -553,7 +562,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>If you need to convert spectrum in a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
@@ -561,15 +570,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param hIm     the imaginary parts of the elements of the resulting matrix (separable Hartley spectrum).
      * @param fRe     the real parts of the elements of the source matrix (Fourier spectrum).
      * @param fIm     the imaginary parts of the elements of the source matrix (Fourier spectrum).
-     * @throws NullPointerException  if one of <tt>hRe</tt>, <tt>hIm</tt>, <tt>fRe</tt>, <tt>fIm</tt>
+     * @throws NullPointerException  if one of <code>hRe</code>, <code>hIm</code>, <code>fRe</code>, <code>fIm</code>
      *                               arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #fourierToSeparableHartley(ArrayContext, Matrix, Matrix, Matrix)
      */
-    public void fourierToSeparableHartley(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> hRe, Matrix<? extends UpdatablePNumberArray> hIm,
-        Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm)
-    {
+    public void fourierToSeparableHartley(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> hRe, Matrix<? extends UpdatablePNumberArray> hIm,
+            Matrix<? extends PNumberArray> fRe, Matrix<? extends PNumberArray> fIm) {
         Objects.requireNonNull(hRe, "Null hRe argument");
         Objects.requireNonNull(fRe, "Null fRe argument");
         Objects.requireNonNull(fIm, "Null fIm argument");
@@ -585,8 +594,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         Conversions.fourierToSeparableHartleyRecursive(context, maxTempJavaMemory(),
-            hRe.array(), hIm.array(), fRe.array(), fIm.array(),
-            fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                hRe.array(), hIm.array(), fRe.array(), fIm.array(),
+                fRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     /**
@@ -594,11 +603,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * on the base of <i>P</i> and <i>Q</i> &mdash; the separable Hartley spectra of these two real matrices.
      *
      * <p>The real matrices <i>P</i>, <i>Q</i>, <i>C</i> are passed as AlgART matrices
-     * <tt>p</tt>, <tt>q</tt>, <tt>c</tt>.
+     * <code>p</code>, <code>q</code>, <code>c</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
@@ -609,22 +618,22 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>If you need to calculate the Hartley spectrum of convolution for a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
      * @param c       the resulting matrix (spectrum of the convolution).
      * @param p       the spectrum of the 1st matrix.
      * @param q       the spectrum of the 2nd matrix.
-     * @throws NullPointerException  if one of <tt>c</tt>, <tt>p</tt>, <tt>q</tt> arguments is {@code null}.
+     * @throws NullPointerException  if one of <code>c</code>, <code>p</code>, <code>q</code> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)
      */
-    public void spectrumOfConvolution(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> c,
-        Matrix<? extends PNumberArray> p,
-        Matrix<? extends PNumberArray> q)
-    {
+    public void spectrumOfConvolution(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> c,
+            Matrix<? extends PNumberArray> p,
+            Matrix<? extends PNumberArray> q) {
         Objects.requireNonNull(c, "Null c argument");
         Objects.requireNonNull(p, "Null p argument");
         Objects.requireNonNull(q, "Null q argument");
@@ -636,23 +645,23 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         SpectraOfConvolution.separableHartleySpectrumOfConvolution(context, maxTempJavaMemory(),
-            c.array(), null, p.array(), null, q.array(), null,
-            c.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                c.array(), null, p.array(), null, q.array(), null,
+                c.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     /**
      * Calculates <i>C</i>, the separable Hartley spectrum of the <i>convolution</i> of some two complex matrices,
      * on the base of <i>P</i> and <i>Q</i> &mdash; the separable Hartley spectra of these two complex matrices.
      *
-     * <p>The complex matrix <i>P</i> is represented as a pair of AlgART matrices <tt>(pRe,pIm)</tt>:
+     * <p>The complex matrix <i>P</i> is represented as a pair of AlgART matrices <code>(pRe,pIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>P</i>.
-     * Similarly, the complex matrix <i>Q</i> is represented as a pair of AlgART matrices <tt>(qRe,qIm)</tt>,
-     * and the complex matrix <i>C</i> is represented as a pair of AlgART matrices <tt>(cRe,cIm)</tt>.
+     * Similarly, the complex matrix <i>Q</i> is represented as a pair of AlgART matrices <code>(qRe,qIm)</code>,
+     * and the complex matrix <i>C</i> is represented as a pair of AlgART matrices <code>(cRe,cIm)</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
@@ -663,7 +672,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * <p>If you need to calculate the Hartley spectrum of convolution for a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
@@ -673,16 +682,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
      * @param pIm     the imaginary parts of the elements of the spectrum of the 1st matrix.
      * @param qRe     the real parts of the elements of the spectrum of the 2nd matrix.
      * @param qIm     the imaginary parts of the elements of the spectrum of the 2nd matrix.
-     * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
-     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is {@code null}.
+     * @throws NullPointerException  if one of <code>cRe</code>, <code>cIm</code>, <code>pRe</code>, <code>pIm</code>,
+     *                               <code>qRe</code>, <code>qIm</code> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      * @see #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix)
      */
-    public void spectrumOfConvolution(ArrayContext context,
-        Matrix<? extends UpdatablePNumberArray> cRe, Matrix<? extends UpdatablePNumberArray> cIm,
-        Matrix<? extends PNumberArray> pRe, Matrix<? extends PNumberArray> pIm,
-        Matrix<? extends PNumberArray> qRe, Matrix<? extends PNumberArray> qIm)
-    {
+    public void spectrumOfConvolution(
+            ArrayContext context,
+            Matrix<? extends UpdatablePNumberArray> cRe, Matrix<? extends UpdatablePNumberArray> cIm,
+            Matrix<? extends PNumberArray> pRe, Matrix<? extends PNumberArray> pIm,
+            Matrix<? extends PNumberArray> qRe, Matrix<? extends PNumberArray> qIm) {
         Objects.requireNonNull(cRe, "Null cRe argument");
         Objects.requireNonNull(cIm, "Null cIm argument");
         Objects.requireNonNull(pRe, "Null pRe argument");
@@ -706,8 +715,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
         ThreadPoolFactory tpf = Arrays.getThreadPoolFactory(context);
         SpectraOfConvolution.separableHartleySpectrumOfConvolution(context, maxTempJavaMemory(),
-            cRe.array(), cIm.array(), pRe.array(), pIm.array(), qRe.array(), qIm.array(),
-            cRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
+                cRe.array(), cIm.array(), pRe.array(), pIm.array(), qRe.array(), qIm.array(),
+                cRe.dimensions(), Math.max(1, tpf.recommendedNumberOfTasks()));
     }
 
     @Override
@@ -749,15 +758,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
     private static final double SQRT2 = StrictMath.sqrt(2.0);
     private static final double HALF_SQRT2 = 0.5 * SQRT2;
     private static final int
-        S01 = 0, D01 = 1, S23 = 2, D23 = 3,
-        S45 = 0, D45 = 1, S67 = 2, D67 = 3, // reusing
-        SS0123 = 4, SD0123 = 5, DS0123 = 6, DD0123 = 7,
-        SS4567 = 8, DS4567 = 9,
-        R1 = 0, R2 = 1,
-        L1 = 2,
-        L2 = 2, // reusing,
-        CAS = 3,
-        NUMBER_OF_WORK_VARIABLES = 10;
+            S01 = 0, D01 = 1, S23 = 2, D23 = 3,
+            S45 = 0, D45 = 1, S67 = 2, D67 = 3, // reusing
+            SS0123 = 4, SD0123 = 5, DS0123 = 6, DD0123 = 7,
+            SS4567 = 8, DS4567 = 9,
+            R1 = 0, R2 = 1,
+            L1 = 2,
+            L2 = 2, // reusing,
+            CAS = 3,
+            NUMBER_OF_WORK_VARIABLES = 10;
 
     private static void fhtMainLoop(ArrayContext context, SampleArray samples) {
         final int logN = 63 - Long.numberOfLeadingZeros(samples.length());
@@ -766,10 +775,10 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
         }
 
         if (samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealFloatSampleArray
-            || samples instanceof RealScalarSampleArray.DirectRealFloatSampleArray) {
+                || samples instanceof RealScalarSampleArray.DirectRealFloatSampleArray) {
             fhtJavaFloatMainLoop(context, samples, 0, logN, logN);
         } else if (samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealDoubleSampleArray
-            || samples instanceof RealScalarSampleArray.DirectRealDoubleSampleArray) {
+                || samples instanceof RealScalarSampleArray.DirectRealDoubleSampleArray) {
             fhtJavaDoubleMainLoop(context, samples, 0, logN, logN);
 // The functions below are anti-optimization in the large applications in the current version of 32-bit Java 1.7
 //        } else if (samples instanceof RealVectorSampleArray.DirectRealFloatVectorSampleArray) {
@@ -784,13 +793,13 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
 //                    newCompatibleSamplesArray(NUMBER_OF_WORK_VARIABLES));
         } else {
             fhtCommonMainLoop(context, samples,
-                0, logN, logN, samples.newCompatibleSamplesArray(NUMBER_OF_WORK_VARIABLES));
+                    0, logN, logN, samples.newCompatibleSamplesArray(NUMBER_OF_WORK_VARIABLES));
         }
     }
 
-    private static void fhtCommonMainLoop(ArrayContext context, SampleArray samples,
-        final long pos, final int logN, final int originalLogN, SampleArray work)
-    {
+    private static void fhtCommonMainLoop(
+            ArrayContext context, SampleArray samples,
+            final long pos, final int logN, final int originalLogN, SampleArray work) {
         switch (logN) { // in comments below xK, rK, yK means the source, the reordered source and the result
             case 1: {
                 work.sub(0, samples, pos, pos + 1);
@@ -827,19 +836,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 samples.sub(pos + 4, work, SS0123, SS4567); // y4 = r0 + r1 + r2 + r3 - r4 - r5 - r6 - r7
                 samples.add(pos, work, SS0123, SS4567);     // y0 = r0 + ... + r7 = x0 + ... + x7
                 samples.sub(pos + 6, work, DS0123, DS4567); // y6 = r0 + r1 - r2 - r3 - r4 - r5 + r6 + r7
-                                                            //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
+                //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                 samples.add(pos + 2, work, DS0123, DS4567); // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
-                                                            //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
+                //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
                 work.multiplyByRealScalar(D45, SQRT2);
                 work.multiplyByRealScalar(D67, SQRT2);
                 samples.sub(pos + 5, work, SD0123, D45);    // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                 samples.add(pos + 1, work, SD0123, D45);    // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
                 samples.sub(pos + 7, work, DD0123, D67);    // y7 = r0 - r1 - r2 + r3 - sqrt(2)*r6 + sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
                 samples.add(pos + 3, work, DD0123, D67);    // y3 = r0 - r1 - r2 + r3 + sqrt(2)*r6 - sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
                 break;
             }
             default: {
@@ -893,17 +902,17 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
 
                     if ((j & (ANGLE_STEP - 1)) == ANGLE_STEP - 1) {
                         if (allAnglesInCache) {
-                            int angleIndex = (int)(j + 1) >> LOG_ANGLE_STEP
-                                << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
+                            int angleIndex = (int) (j + 1) >> LOG_ANGLE_STEP
+                                    << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
                             // (j + 1) * CACHE_SIZE/nDiv2
                             // cos = RootsOfUnity.quickCos(angleIndex);
                             // sin = RootsOfUnity.quickSin(angleIndex);
                             cos = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
-                                -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
+                                    -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
                             sin = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[angleIndex] :
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
+                                    RootsOfUnity.SINE_CACHE[angleIndex] :
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
                         } else {
                             double angle = (j + 1) * rotationAngle;
                             double sinHalf = Math.sin(0.5 * angle);
@@ -953,14 +962,14 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
     //           \(double\)\s*\(([^)]+)\) ==> $1 ]]
-    private static void fhtJavaFloatMainLoop(ArrayContext context, SampleArray samples,
-        final int pos, final int logN, final int originalLogN)
-    {
+    private static void fhtJavaFloatMainLoop(
+            ArrayContext context, SampleArray samples,
+            final int pos, final int logN, final int originalLogN) {
         final float[] values = samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealFloatSampleArray ?
-            ((RealScalarSampleArray.DirectZeroOffsetsRealFloatSampleArray)samples).samples :
-            ((RealScalarSampleArray.DirectRealFloatSampleArray)samples).samples;
+                ((RealScalarSampleArray.DirectZeroOffsetsRealFloatSampleArray) samples).samples :
+                ((RealScalarSampleArray.DirectRealFloatSampleArray) samples).samples;
         final int ofs = pos + (samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealFloatSampleArray ? 0 :
-            ((RealScalarSampleArray.DirectRealFloatSampleArray)samples).ofs);
+                ((RealScalarSampleArray.DirectRealFloatSampleArray) samples).ofs);
         switch (logN) { // in comments below xK, rK, yK means the source, the reordered source and the result
             case 1: {
                 float temp = values[ofs] - values[ofs + 1];
@@ -997,19 +1006,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 values[ofs + 4] = ss0123 - ss4567;          // y4 = r0 + r1 + r2 + r3 - r4 - r5 - r6 - r7
                 values[ofs] = ss0123 + ss4567;              // y0 = r0 + ... + r7 = x0 + ... + x7
                 values[ofs + 6] = ds0123 - ds4567;          // y6 = r0 + r1 - r2 - r3 - r4 - r5 + r6 + r7
-                                                            //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
+                //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                 values[ofs + 2] = ds0123 + ds4567;          // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
-                                                            //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
+                //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
                 d45 *= SQRT2;
                 d67 *= SQRT2;
                 values[ofs + 5] = sd0123 - d45;             // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                 values[ofs + 1] = sd0123 + d45;             // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
                 values[ofs + 7] = dd0123 - d67;             // y7 = r0 - r1 - r2 + r3 - sqrt(2)*r6 + sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
                 values[ofs + 3] = dd0123 + d67;             // y3 = r0 - r1 - r2 + r3 + sqrt(2)*r6 - sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
                 break;
             }
             default: {
@@ -1036,11 +1045,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     //[[Repeat.SectionStart JavaFloatButterfly]]
                     r1 = values[nDiv2 + j1];
                     r2 = values[nDiv2 + j2];
-                    cas = (float)(r1 * cos + r2 * sin);
+                    cas = (float) (r1 * cos + r2 * sin);
                     l1 = values[j1];
                     values[j1] = l1 + cas;
                     values[nDiv2 + j1] = l1 - cas;
-                    cas = (float)(r1 * sin - r2 * cos);
+                    cas = (float) (r1 * sin - r2 * cos);
                     l2 = values[j2];
                     values[j2] = l2 + cas;
                     values[nDiv2 + j2] = l2 - cas;
@@ -1052,11 +1061,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     //  cos ==> TTTT;; sin ==> cos;; TTTT ==> sin !! Generated by Repeater: DO NOT EDIT !! ]]
                     r1 = values[nDiv2 + j1];
                     r2 = values[nDiv2 + j2];
-                    cas = (float)(r1 * sin + r2 * cos);
+                    cas = (float) (r1 * sin + r2 * cos);
                     l1 = values[j1];
                     values[j1] = l1 + cas;
                     values[nDiv2 + j1] = l1 - cas;
-                    cas = (float)(r1 * cos - r2 * sin);
+                    cas = (float) (r1 * cos - r2 * sin);
                     l2 = values[j2];
                     values[j2] = l2 + cas;
                     values[nDiv2 + j2] = l2 - cas;
@@ -1065,16 +1074,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     if ((j & (ANGLE_STEP - 1)) == ANGLE_STEP - 1) {
                         if (allAnglesInCache) {
                             int angleIndex = (j + 1) >> LOG_ANGLE_STEP
-                                << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
+                                    << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
                             // (j + 1) * CACHE_SIZE/nDiv2
                             // cos = RootsOfUnity.quickCos(angleIndex);
                             // sin = RootsOfUnity.quickSin(angleIndex);
                             cos = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
-                                -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
+                                    -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
                             sin = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[angleIndex] :
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
+                                    RootsOfUnity.SINE_CACHE[angleIndex] :
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
                         } else {
                             double angle = (j + 1) * rotationAngle;
                             double sinHalf = Math.sin(0.5 * angle);
@@ -1096,11 +1105,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 //  \s\s\s\s(r1\s|r2\s|cas\s|l1\s|l2\s|values\b|$) ==> $1 !! Generated by Repeater: DO NOT EDIT !! ]]
                 r1 = values[nDiv2 + j1];
                 r2 = values[nDiv2 + j2];
-                cas = (float)(r1 * HALF_SQRT2 + r2 * HALF_SQRT2);
+                cas = (float) (r1 * HALF_SQRT2 + r2 * HALF_SQRT2);
                 l1 = values[j1];
                 values[j1] = l1 + cas;
                 values[nDiv2 + j1] = l1 - cas;
-                cas = (float)(r1 * HALF_SQRT2 - r2 * HALF_SQRT2);
+                cas = (float) (r1 * HALF_SQRT2 - r2 * HALF_SQRT2);
                 l2 = values[j2];
                 values[j2] = l2 + cas;
                 values[nDiv2 + j2] = l2 - cas;
@@ -1120,15 +1129,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
             }
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-    private static void fhtJavaDoubleMainLoop(ArrayContext context, SampleArray samples,
-        final int pos, final int logN, final int originalLogN)
-    {
+    private static void fhtJavaDoubleMainLoop(
+            ArrayContext context, SampleArray samples,
+            final int pos, final int logN, final int originalLogN) {
         final double[] values = samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealDoubleSampleArray ?
-            ((RealScalarSampleArray.DirectZeroOffsetsRealDoubleSampleArray)samples).samples :
-            ((RealScalarSampleArray.DirectRealDoubleSampleArray)samples).samples;
+                ((RealScalarSampleArray.DirectZeroOffsetsRealDoubleSampleArray) samples).samples :
+                ((RealScalarSampleArray.DirectRealDoubleSampleArray) samples).samples;
         final int ofs = pos + (samples instanceof RealScalarSampleArray.DirectZeroOffsetsRealDoubleSampleArray ? 0 :
-            ((RealScalarSampleArray.DirectRealDoubleSampleArray)samples).ofs);
+                ((RealScalarSampleArray.DirectRealDoubleSampleArray) samples).ofs);
         switch (logN) { // in comments below xK, rK, yK means the source, the reordered source and the result
             case 1: {
                 double temp = values[ofs] - values[ofs + 1];
@@ -1165,19 +1175,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 values[ofs + 4] = ss0123 - ss4567;          // y4 = r0 + r1 + r2 + r3 - r4 - r5 - r6 - r7
                 values[ofs] = ss0123 + ss4567;              // y0 = r0 + ... + r7 = x0 + ... + x7
                 values[ofs + 6] = ds0123 - ds4567;          // y6 = r0 + r1 - r2 - r3 - r4 - r5 + r6 + r7
-                                                            //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
+                //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                 values[ofs + 2] = ds0123 + ds4567;          // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
-                                                            //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
+                //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
                 d45 *= SQRT2;
                 d67 *= SQRT2;
                 values[ofs + 5] = sd0123 - d45;             // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                 values[ofs + 1] = sd0123 + d45;             // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
+                //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
                 values[ofs + 7] = dd0123 - d67;             // y7 = r0 - r1 - r2 + r3 - sqrt(2)*r6 + sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
                 values[ofs + 3] = dd0123 + d67;             // y3 = r0 - r1 - r2 + r3 + sqrt(2)*r6 - sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
+                //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
                 break;
             }
             default: {
@@ -1232,16 +1242,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     if ((j & (ANGLE_STEP - 1)) == ANGLE_STEP - 1) {
                         if (allAnglesInCache) {
                             int angleIndex = (j + 1) >> LOG_ANGLE_STEP
-                                << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
+                                    << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
                             // (j + 1) * CACHE_SIZE/nDiv2
                             // cos = RootsOfUnity.quickCos(angleIndex);
                             // sin = RootsOfUnity.quickSin(angleIndex);
                             cos = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
-                                -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
+                                    -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
                             sin = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[angleIndex] :
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
+                                    RootsOfUnity.SINE_CACHE[angleIndex] :
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
                         } else {
                             double angle = (j + 1) * rotationAngle;
                             double sinHalf = Math.sin(0.5 * angle);
@@ -1285,19 +1295,20 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
             }
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
-    private static void fhtJavaFloatMultidimensionalMainLoop(ArrayContext context,
-        RealVectorSampleArray.DirectRealFloatVectorSampleArray samples,
-        final int pos, final int logN, final int originalLogN,
-        RealVectorSampleArray.DirectRealFloatVectorSampleArray work)
-    {
+    //           \(double\)\s*\(([^)]+)\) ==> $1 ]]
+    private static void fhtJavaFloatMultidimensionalMainLoop(
+            ArrayContext context,
+            RealVectorSampleArray.DirectRealFloatVectorSampleArray samples,
+            final int pos, final int logN, final int originalLogN,
+            RealVectorSampleArray.DirectRealFloatVectorSampleArray work) {
         final float[] values = samples.samples;
-        final int step = (int)samples.vectorStep;
+        final int step = (int) samples.vectorStep;
         final int ofs = pos * step + samples.ofs;
         switch (logN) { // in comments below xK, rK, yK means the source, the reordered source and the result
             case 1: {
@@ -1340,19 +1351,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     values[k + 4 * step] = ss0123 - ss4567; // y4 = r0 + r1 + r2 + r3 - r4 - r5 - r6 - r7
                     values[k] = ss0123 + ss4567;            // y0 = r0 + ... + r7 = x0 + ... + x7
                     values[k + 6 * step] = ds0123 - ds4567; // y6 = r0 + r1 - r2 - r3 - r4 - r5 + r6 + r7
-                                                            //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
+                    //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                     values[k + 2 * step] = ds0123 + ds4567; // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
-                                                            //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
+                    //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
                     d45 *= SQRT2;
                     d67 *= SQRT2;
                     values[k + 5 * step] = sd0123 - d45;    // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
+                    //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                     values[k + step] = sd0123 + d45;        // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
+                    //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
                     values[k + 7 * step] = dd0123 - d67;    // y7 = r0 - r1 - r2 + r3 - sqrt(2)*r6 + sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
+                    //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
                     values[k + 3 * step] = dd0123 + d67;    // y3 = r0 - r1 - r2 + r3 + sqrt(2)*r6 - sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
+                    //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
 
                 }
                 break;
@@ -1385,11 +1396,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                         //[[Repeat.SectionStart JavaFloatMultidimensionalButterfly]]
                         r1 = values[nDiv2Step + j1Step1];
                         r2 = values[nDiv2Step + j2Step1];
-                        cas = (float)(r1 * cos + r2 * sin);
+                        cas = (float) (r1 * cos + r2 * sin);
                         l1 = values[j1Step1];
                         values[j1Step1] = l1 + cas;
                         values[nDiv2Step + j1Step1] = l1 - cas;
-                        cas = (float)(r1 * sin - r2 * cos);
+                        cas = (float) (r1 * sin - r2 * cos);
                         l2 = values[j2Step1];
                         values[j2Step1] = l2 + cas;
                         values[nDiv2Step + j2Step1] = l2 - cas;
@@ -1401,11 +1412,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                         //  cos ==> TTTT;; sin ==> cos;; TTTT ==> sin !! Generated by Repeater: DO NOT EDIT !! ]]
                         r1 = values[nDiv2Step + j1Step1];
                         r2 = values[nDiv2Step + j2Step1];
-                        cas = (float)(r1 * sin + r2 * cos);
+                        cas = (float) (r1 * sin + r2 * cos);
                         l1 = values[j1Step1];
                         values[j1Step1] = l1 + cas;
                         values[nDiv2Step + j1Step1] = l1 - cas;
-                        cas = (float)(r1 * cos - r2 * sin);
+                        cas = (float) (r1 * cos - r2 * sin);
                         l2 = values[j2Step1];
                         values[j2Step1] = l2 + cas;
                         values[nDiv2Step + j2Step1] = l2 - cas;
@@ -1414,16 +1425,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     if ((j & (ANGLE_STEP - 1)) == ANGLE_STEP - 1) {
                         if (allAnglesInCache) {
                             int angleIndex = (j + 1) >> LOG_ANGLE_STEP
-                                << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
+                                    << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
                             // (j + 1) * CACHE_SIZE/nDiv2
                             // cos = RootsOfUnity.quickCos(angleIndex);
                             // sin = RootsOfUnity.quickSin(angleIndex);
                             cos = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
-                                -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
+                                    -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
                             sin = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[angleIndex] :
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
+                                    RootsOfUnity.SINE_CACHE[angleIndex] :
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
                         } else {
                             double angle = (j + 1) * rotationAngle;
                             double sinHalf = Math.sin(0.5 * angle);
@@ -1446,11 +1457,11 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     //  \s\s\s\s(r1\s|r2\s|cas\s|l1\s|l2\s|values\b|$) ==> $1 !! Generated by Repeater: DO NOT EDIT !! ]]
                     r1 = values[nDiv2Step + j1Step];
                     r2 = values[nDiv2Step + j2Step];
-                    cas = (float)(r1 * HALF_SQRT2 + r2 * HALF_SQRT2);
+                    cas = (float) (r1 * HALF_SQRT2 + r2 * HALF_SQRT2);
                     l1 = values[j1Step];
                     values[j1Step] = l1 + cas;
                     values[nDiv2Step + j1Step] = l1 - cas;
-                    cas = (float)(r1 * HALF_SQRT2 - r2 * HALF_SQRT2);
+                    cas = (float) (r1 * HALF_SQRT2 - r2 * HALF_SQRT2);
                     l2 = values[j2Step];
                     values[j2Step] = l2 + cas;
                     values[nDiv2Step + j2Step] = l2 - cas;
@@ -1470,14 +1481,15 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
             }
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
-    private static void fhtJavaDoubleMultidimensionalMainLoop(ArrayContext context,
-        RealVectorSampleArray.DirectRealDoubleVectorSampleArray samples,
-        final int pos, final int logN, final int originalLogN,
-        RealVectorSampleArray.DirectRealDoubleVectorSampleArray work)
-    {
+    private static void fhtJavaDoubleMultidimensionalMainLoop(
+            ArrayContext context,
+            RealVectorSampleArray.DirectRealDoubleVectorSampleArray samples,
+            final int pos, final int logN, final int originalLogN,
+            RealVectorSampleArray.DirectRealDoubleVectorSampleArray work) {
         final double[] values = samples.samples;
-        final int step = (int)samples.vectorStep;
+        final int step = (int) samples.vectorStep;
         final int ofs = pos * step + samples.ofs;
         switch (logN) { // in comments below xK, rK, yK means the source, the reordered source and the result
             case 1: {
@@ -1520,19 +1532,19 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     values[k + 4 * step] = ss0123 - ss4567; // y4 = r0 + r1 + r2 + r3 - r4 - r5 - r6 - r7
                     values[k] = ss0123 + ss4567;            // y0 = r0 + ... + r7 = x0 + ... + x7
                     values[k + 6 * step] = ds0123 - ds4567; // y6 = r0 + r1 - r2 - r3 - r4 - r5 + r6 + r7
-                                                            //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
+                    //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                     values[k + 2 * step] = ds0123 + ds4567; // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
-                                                            //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
+                    //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
                     d45 *= SQRT2;
                     d67 *= SQRT2;
                     values[k + 5 * step] = sd0123 - d45;    // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
+                    //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                     values[k + step] = sd0123 + d45;        // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
-                                                            //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
+                    //    = x0 - x4 + x2 - x6 + sqrt(2)*x1 - sqrt(2)*x5
                     values[k + 7 * step] = dd0123 - d67;    // y7 = r0 - r1 - r2 + r3 - sqrt(2)*r6 + sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
+                    //    = x0 - x4 - x2 + x6 - sqrt(2)*x3 + sqrt(2)*x7
                     values[k + 3 * step] = dd0123 + d67;    // y3 = r0 - r1 - r2 + r3 + sqrt(2)*r6 - sqrt(2)*r7
-                                                            //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
+                    //    = x0 - x4 - x2 + x6 + sqrt(2)*x3 - sqrt(2)*x7
 
                 }
                 break;
@@ -1593,16 +1605,16 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     if ((j & (ANGLE_STEP - 1)) == ANGLE_STEP - 1) {
                         if (allAnglesInCache) {
                             int angleIndex = (j + 1) >> LOG_ANGLE_STEP
-                                << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
+                                    << (RootsOfUnity.LOG_CACHE_SIZE - (logN - 1) + LOG_ANGLE_STEP);
                             // (j + 1) * CACHE_SIZE/nDiv2
                             // cos = RootsOfUnity.quickCos(angleIndex);
                             // sin = RootsOfUnity.quickSin(angleIndex);
                             cos = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
-                                -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.HALF_CACHE_SIZE - angleIndex] :
+                                    -RootsOfUnity.SINE_CACHE[angleIndex - RootsOfUnity.HALF_CACHE_SIZE];
                             sin = angleIndex < RootsOfUnity.HALF_CACHE_SIZE ?
-                                RootsOfUnity.SINE_CACHE[angleIndex] :
-                                RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
+                                    RootsOfUnity.SINE_CACHE[angleIndex] :
+                                    RootsOfUnity.SINE_CACHE[RootsOfUnity.CACHE_SIZE - angleIndex];
                         } else {
                             double angle = (j + 1) * rotationAngle;
                             double sinHalf = Math.sin(0.5 * angle);
@@ -1647,5 +1659,6 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
             }
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 }

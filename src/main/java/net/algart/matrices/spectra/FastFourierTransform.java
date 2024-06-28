@@ -33,7 +33,7 @@ import java.util.Objects;
  * <p><i>Fast Fourier transform</i> (FFT). This class implements traditional one- and multidimensional FFT algorithm
  * over an abstract {@link SampleArray} and 1-, 2- or multidimensional {@link Matrix AlgART numeric matrices}.
  * All samples must be complex to be processed by this class ({@link #areComplexSamplesRequired()} method
- * returns <tt>true</tt>). For needs of spectral processing real arrays and matrices, in most cases
+ * returns <code>true</code>). For needs of spectral processing real arrays and matrices, in most cases
  * you should use {@link SeparableFastHartleyTransform} class.</p>
  *
  * <p>More precisely, this class implements the classic fast "butterfly" algorithm (FFT) for calculating
@@ -71,9 +71,11 @@ import java.util.Objects;
  *
  * <p>The only difference is when to normalize the result: while inverse transform (case 1) or direct transform
  * (case 2). The Wikipedia offers formulas of the 1st case. This class allows to calculate both variants:
- * the 1st case is chosen if the <tt>normalizeDirectTransform</tt> argument of the constructors is <tt>false</tt>
+ * the 1st case is chosen if the <code>normalizeDirectTransform</code> argument
+ * of the constructors is <code>false</code>
  * or if this class is created by a constructor without this argument (it is the default behaviour),
- * the 2nd case is chosen  if the <tt>normalizeDirectTransform</tt> argument of the constructors is <tt>true</tt>.</p>
+ * the 2nd case is chosen  if the <code>normalizeDirectTransform</code> argument
+ * of the constructors is <code>true</code>.</p>
  *
  * <p>The formulas above correspond to one-dimensional transforms and specify the results of
  * {@link #directTransform directTransform} / {@link #inverseTransform inverseTransform} methods.
@@ -138,7 +140,7 @@ import java.util.Objects;
  * of the matrix into {@link SimpleMemoryModel}.
  * This problem also does not occur while using
  * {@link #spectrumOfConvolution(ArrayContext, Matrix, Matrix, Matrix, Matrix, Matrix, Matrix)} method,
- * if all processed matrices have the same <tt>float</tt> or <tt>double</tt> element types.</p>
+ * if all processed matrices have the same <code>float</code> or <code>double</code> element types.</p>
  *
  * @author Daniel Alievsky
  */
@@ -163,7 +165,7 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * Creates a new instance of this class, performing Fourier transform according to the formula 1 from
      * the {@link FastFourierTransform comments to this class}.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the amount of Java memory (heap),
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the amount of Java memory (heap),
      * that can be used by methods of this class for internal needs. It is passed to the corresponding
      * constructor of {@link AbstractSpectralTransform}: see
      * {@link AbstractSpectralTransform#AbstractSpectralTransform(long) comments to that constructor}.
@@ -179,18 +181,20 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
 
     /**
      * Creates a new instance of this class, performing Fourier transform according either to the formula 1 from
-     * the {@link FastFourierTransform comments to this class}, if <tt>normalizeDirectTransform</tt> argument is
-     * <tt>false</tt>, or to the formula 2, if this argument is <tt>true</tt>.
-     * The default value, used by the constructors without <tt>normalizeDirectTransform</tt> argument,
-     * is <tt>false</tt>.
+     * the {@link FastFourierTransform comments to this class}, if <code>normalizeDirectTransform</code> argument is
+     * <code>false</code>, or to the formula 2, if this argument is <code>true</code>.
+     * The default value, used by the constructors without <code>normalizeDirectTransform</code> argument,
+     * is <code>false</code>.
      *
-     * <p>Please note: the value of <tt>normalizeDirectTransform</tt> argument affects only the transformation
+     * <p>Please note: the value of <code>normalizeDirectTransform</code> argument affects only the transformation
      * methods {@link #directTransform directTransform}, {@link #inverseTransform inverseTransform},
      * {@link #directTransformMatrix directTransformMatrix}, {@link #inverseTransformMatrix inverseTransformMatrix}.
      * This value does not matter in {@link #spectrumOfConvolution spectrumOfConvolution} method.
      *
-     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization (division by the number of
-     *                                 samples <i>N</i>) after the direct transform, <tt>false</tt> (the default value)
+     * @param normalizeDirectTransform <code>true</code> if you want to perform normalization
+     *                                 (division by the number of
+     *                                 samples <i>N</i>) after the direct transform,
+     *                                 <code>false</code> (the default value)
      *                                 if you want to perform normalization after the inverse transform.
      * @see #FastFourierTransform(boolean, long)
      */
@@ -200,25 +204,27 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
 
     /**
      * Creates a new instance of this class, performing Fourier transform according either to the formula 1 from
-     * the {@link FastFourierTransform comments to this class}, if <tt>normalizeDirectTransform</tt> argument is
-     * <tt>false</tt>, or to the formula 2, if this argument is <tt>true</tt>.
-     * The default value, used by the constructors without <tt>normalizeDirectTransform</tt> argument,
-     * is <tt>false</tt>.
+     * the {@link FastFourierTransform comments to this class}, if <code>normalizeDirectTransform</code> argument is
+     * <code>false</code>, or to the formula 2, if this argument is <code>true</code>.
+     * The default value, used by the constructors without <code>normalizeDirectTransform</code> argument,
+     * is <code>false</code>.
      *
-     * <p>Please note: the value of <tt>normalizeDirectTransform</tt> argument affects only the transformation
+     * <p>Please note: the value of <code>normalizeDirectTransform</code> argument affects only the transformation
      * methods {@link #directTransform directTransform}, {@link #inverseTransform inverseTransform},
      * {@link #directTransformMatrix directTransformMatrix}, {@link #inverseTransformMatrix inverseTransformMatrix}.
      * This value does not matter in {@link #spectrumOfConvolution spectrumOfConvolution} method.
      *
-     * <p>The <tt>maxTempJavaMemory</tt> argument specifies the amount of Java memory (heap),
+     * <p>The <code>maxTempJavaMemory</code> argument specifies the amount of Java memory (heap),
      * that can be used by methods of this class for internal needs. It is passed to the corresponding
      * constructor of {@link AbstractSpectralTransform}: see
      * {@link AbstractSpectralTransform#AbstractSpectralTransform(long) comments to that constructor}.
      *
      * @param maxTempJavaMemory        desired maximal amount of Java memory, in bytes, allowed for allocating
      *                                 by methods of this class for internal needs.
-     * @param normalizeDirectTransform <tt>true</tt> if you want to perform normalization (division by the number of
-     *                                 samples <i>N</i>) after the direct transform, <tt>false</tt> (the default value)
+     * @param normalizeDirectTransform <code>true</code> if you want to perform normalization
+     *                                 (division by the number of
+     *                                 samples <i>N</i>) after the direct transform,
+     *                                 <code>false</code> (the default value)
      *                                 if you want to perform normalization after the inverse transform.
      * @see #FastFourierTransform(boolean)
      */
@@ -238,15 +244,15 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * >http://en.wikipedia.org/wiki/Discrete_Fourier_transform</a> and
      * in the {@link FastFourierTransform comments to this class}.
      *
-     * <p>The complex matrix <i>P</i> is represented as a pair of AlgART matrices <tt>(pRe,pIm)</tt>:
+     * <p>The complex matrix <i>P</i> is represented as a pair of AlgART matrices <code>(pRe,pIm)</code>:
      * the corresponding elements of these 2 matrices contain the real and imaginary parts
      * of the corresponding elements of the complex matrix <i>P</i>.
-     * Similarly, the complex matrix <i>Q</i> is represented as a pair of AlgART matrices <tt>(qRe,qIm)</tt>,
-     * and the complex matrix <i>C</i> is represented as a pair of AlgART matrices <tt>(cRe,cIm)</tt>.
+     * Similarly, the complex matrix <i>Q</i> is represented as a pair of AlgART matrices <code>(qRe,qIm)</code>,
+     * and the complex matrix <i>C</i> is represented as a pair of AlgART matrices <code>(cRe,cIm)</code>.
      *
      * <p>All matrices, passed to this method, must have {@link Matrix#dimEquals(Matrix) equal dimensions}.
      * The {@link Matrix#elementType() element type} of the passed matrices can be different, but we recommend
-     * using the same <tt>float</tt> or <tt>double</tt> element type for all matrices.
+     * using the same <code>float</code> or <code>double</code> element type for all matrices.
      * There are no restrictions for the dimensions of the passed matrices:
      * {@link #isLengthAllowed(long)} method is not used here.
      *
@@ -257,7 +263,7 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * <p>If you need to calculate the Fourier spectrum of convolution for a case of one-dimensional
      * numeric AlgART arrays, you just need to convert them into one-dimensional AlgART matrices by
      * {@link Matrices#matrix(Array, long...)} call, for example:
-     * <tt>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</tt>.
+     * <code>{@link Matrices#matrix(Array, long...) Matrices.matrix}(array, array.length())</code>.
      *
      * @param context the context that will be used by this algorithm; can be {@code null}
      *                (see comments to {@link SpectralTransform}).
@@ -267,8 +273,8 @@ public class FastFourierTransform extends AbstractSpectralTransform implements S
      * @param pIm     the imaginary parts of the elements of the 1st source matrix.
      * @param qRe     the real parts of the elements of the 2nd source matrix.
      * @param qIm     the imaginary parts of the elements of the 2nd source matrix.
-     * @throws NullPointerException  if one of <tt>cRe</tt>, <tt>cIm</tt>, <tt>pRe</tt>, <tt>pIm</tt>,
-     *                               <tt>qRe</tt>, <tt>qIm</tt> arguments is {@code null}.
+     * @throws NullPointerException  if one of <code>cRe</code>, <code>cIm</code>, <code>pRe</code>, <code>pIm</code>,
+     *                               <code>qRe</code>, <code>qIm</code> arguments is {@code null}.
      * @throws SizeMismatchException if some of the passed matrices have different dimensions.
      */
     public void spectrumOfConvolution(ArrayContext context,

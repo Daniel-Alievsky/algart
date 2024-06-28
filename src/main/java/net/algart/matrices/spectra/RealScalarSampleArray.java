@@ -29,14 +29,14 @@ import net.algart.arrays.*;
 import java.util.Objects;
 
 /**
- * <p>Array of samples, where each sample is a real number, represented by a <tt>double</tt> value,
+ * <p>Array of samples, where each sample is a real number, represented by a <code>double</code> value,
  * stored in an AlgART array {@link UpdatablePNumberArray}.</p>
  *
  * <p>Please use {@link #asSampleArray(UpdatablePNumberArray)} method for
  * creating instances of this class.</p>
  *
  * <p>All operations over samples (adding, subtracting, multiplying) are performed via corresponding operations
- * over elements of the AlgART array. Elements of this array are interpreted as <tt>double</tt> values,
+ * over elements of the AlgART array. Elements of this array are interpreted as <code>double</code> values,
  * as if they are read/written by {@link PArray#getDouble(long)} and {@link UpdatablePArray#setDouble(long, double)}
  * methods.</p>
  *
@@ -49,24 +49,24 @@ public abstract class RealScalarSampleArray implements SampleArray {
 
     /**
      * Returns a view of the specified AlgART array as an array of scalar real samples.
-     * More precisely, the sample <tt>#k</tt> in the returned sample array is stored
-     * in the element <tt>#k</tt> of <tt>samples</tt> array.
+     * More precisely, the sample <code>#k</code> in the returned sample array is stored
+     * in the element <code>#k</code> of <code>samples</code> array.
      *
      * <p>The returned sample array is backed by this AlgART array, so any changes of the samples
      * in the returned array are reflected in this array, and vice-versa.
      * More precisely, the returned sample array is backed by
-     * <tt>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</tt>:
+     * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed array is {@link MutableArray resizable}, possible future changes of its length
      * will not affect behaviour of the returned sample array.
      *
-     * <p>The {@link #length() length} of the returned sample array is equal to length of <tt>samples</tt> array.
+     * <p>The {@link #length() length} of the returned sample array is equal to length of <code>samples</code> array.
      *
      * <p>This method detects, if the passed arrays are {@link DirectAccessible}
      * (i.e. the data are stored in usual Java arrays), and provides optimized implementations for this case.
      *
      * @param samples the samples.
      * @return        the array of scalar real samples, represented by this array.
-     * @throws NullPointerException  if <tt>samples</tt> is {@code null}.
+     * @throws NullPointerException  if <code>samples</code> is {@code null}.
      */
     public static RealScalarSampleArray asSampleArray(UpdatablePNumberArray samples) {
         Objects.requireNonNull(samples, "Null samples");

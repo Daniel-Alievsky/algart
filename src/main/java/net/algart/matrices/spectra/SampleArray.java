@@ -28,7 +28,7 @@ package net.algart.matrices.spectra;
  * <p>Array of samples for transforming by some spectral algorithm like FFT.</p>
  *
  * <p>A <i>sample</i> can be an element of any linear space, real or complex. Usually samples are
- * either usual complex numbers (represented by pairs of <tt>float</tt> or <tt>double</tt> values)
+ * either usual complex numbers (represented by pairs of <code>float</code> or <code>double</code> values)
  * or vectors of such numbers. The first case is used for 1-dimensional transformations,
  * the second case is used for multidimensional transformations, when we need parallel processing (adding,
  * subtracting, multiplying by scalar) whole lines of a matrix.</p>
@@ -43,7 +43,7 @@ package net.algart.matrices.spectra;
  * of temporary samples in a form of new sample array of the same type.</p>
  *
  * <p>Different implementations of this interface can store samples of different <i>kinds</i>.
- * For example, the complex numbers with <tt>double</tt> precision is one possible kind of samples,
+ * For example, the complex numbers with <code>double</code> precision is one possible kind of samples,
  * and the vectors of complex numbers with some fixed length is another kind
  * (vectors with different lengths belong to different kinds).
  * Moreover, usual complex numbers, stored by different technologies (by different implementations
@@ -57,20 +57,20 @@ package net.algart.matrices.spectra;
  * There is also a guarantee that the samples in the array, created by {@link #newCompatibleSamplesArray(long)}
  * method, also belong to the same kind.</p>
  *
- * <p>All indexes, passed to methods of this class, must be in range <tt>0..length-1</tt>,
- * where <tt>length</tt> is the {@link #length() length} of the corresponding sample array.
+ * <p>All indexes, passed to methods of this class, must be in range <code>0..length-1</code>,
+ * where <code>length</code> is the {@link #length() length} of the corresponding sample array.
  * (In a case of {@link #multiplyRangeByRealScalar multiplyRangeByRealScalar} method,
- * its arguments must comply the conditions <tt>0&lt;=fromIndex&lt;=toIndex&lt;=length</tt>.)
+ * its arguments must comply the conditions <code>0&lt;=fromIndex&lt;=toIndex&lt;=length</code>.)
  * If this requirement is not satisfied, the results are unspecified.
  * ("Unspecified" means that any elements of sample arrays can be read or changed,
- * or that <tt>IndexOutOfBoundsException</tt> can be thrown.)
+ * or that <code>IndexOutOfBoundsException</code> can be thrown.)
  * The reason of this behaviour is that this interface is designed for maximal performance,
  * and its methods do not always check the passed indexes.</p>
  *
  * <p>All calculations, performed by methods of this interface and its implementations,
- * are performed over floating-point numbers, corresponding to <tt>float</tt> or <tt>double</tt> Java types.
+ * are performed over floating-point numbers, corresponding to <code>float</code> or <code>double</code> Java types.
  * It is theoretically possible to work with sample arrays, represented by fixed-point numbers,
- * alike Java <tt>int</tt>, <tt>long</tt>, <tt>short</tt> and other types (for example,
+ * alike Java <code>int</code>, <code>long</code>, <code>short</code> and other types (for example,
  * if it is {@link RealScalarSampleArray}, built on the base of
  * {@link net.algart.arrays.UpdatableByteArray UpdatableByteArray}). In this situation,
  * calculations can be performed with some form of rounding, possible overflows lead to unspecified results
@@ -93,14 +93,14 @@ public interface SampleArray {
     int GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH = 64;
 
     /**
-     * Returns <tt>true</tt> if the samples in this array are complex, <tt>false</tt> if they are real.
+     * Returns <code>true</code> if the samples in this array are complex, <code>false</code> if they are real.
      * The method {@link #multiplyByScalar(long, SampleArray, long, double, double)} works correctly
-     * if and only if this method returns <tt>true</tt>.
+     * if and only if this method returns <code>true</code>.
      *
      * <p>Some methods of this package, for example, Fourier transformations
-     * throw {@link UnsupportedOperationException} if this method returns <tt>false</tt>.
+     * throw {@link UnsupportedOperationException} if this method returns <code>false</code>.
      *
-     * @return <tt>true</tt> if the samples in this array are complex.
+     * @return <code>true</code> if the samples in this array are complex.
      */
     boolean isComplex();
 
@@ -114,9 +114,9 @@ public interface SampleArray {
 
     /**
      * Creates a new array of samples of the same kind as this one.
-     * For example, if the samples are vectors of N complex numbers with <tt>float</tt> precision,
+     * For example, if the samples are vectors of N complex numbers with <code>float</code> precision,
      * then the elements of the returned arrays will also be vectors of N complex numbers
-     * with <tt>float</tt> precision.
+     * with <code>float</code> precision.
      *
      * <p>The typical usage of this method is allocating temporary elements for storing one or several
      * samples inside FFT algorithm.
@@ -132,14 +132,14 @@ public interface SampleArray {
      * but only in a case, when the length of each real/complex vector (a sample) is large
      * (for relatively little samples, {@link net.algart.arrays.SimpleMemoryModel SimpleMemoryModel} is used always).
      *
-     * <p>If the required length is too long and there is not enough memory, <tt>OutOfMemoryError</tt> or similar
-     * errors will be thrown. However, for very large <tt>length</tt> values, it is also possible
+     * <p>If the required length is too long and there is not enough memory, <code>OutOfMemoryError</code> or similar
+     * errors will be thrown. However, for very large <code>length</code> values, it is also possible
      * that there is enough memory, but this method throws an exception &mdash; because the technology
      * of storing elements does not support such large lengths. For example, if it is an array of real
-     * vectors with length 1000000, and all vectors are stored inside a single Java array <tt>float[]</tt>,
-     * then <tt>length=10000</tt> will lead to an exception, even if there is necessary amount of Java memory
+     * vectors with length 1000000, and all vectors are stored inside a single Java array <code>float[]</code>,
+     * then <code>length=10000</code> will lead to an exception, even if there is necessary amount of Java memory
      * (~40&nbsp;GB) &mdash; because Java cannot allocate an array longer than
-     * <tt>Integer.MAX_VALUE</tt>. But there is the following guarantee:
+     * <code>Integer.MAX_VALUE</code>. But there is the following guarantee:
      * this method always works correctly, if there is enough memory and
      *
      * <pre>
@@ -159,24 +159,24 @@ public interface SampleArray {
     SampleArray newCompatibleSamplesArray(long length);
 
     /**
-     * Copies the sample #<tt>srcIndex</tt> from <tt>src</tt> array into position
-     * #<tt>destIndex</tt> in this array.
+     * Copies the sample #<code>srcIndex</code> from <code>src</code> array into position
+     * #<code>destIndex</code> in this array.
      *
      * @param destIndex index of sample in this array to replace.
      * @param src       the source sample array (maybe, a reference to this array).
-     * @param srcIndex  index of sample in <tt>src</tt> array to be copied.
-     * @throws IllegalArgumentException if elements of <tt>src</tt> array do not belong to the same kind
+     * @param srcIndex  index of sample in <code>src</code> array to be copied.
+     * @throws IllegalArgumentException if elements of <code>src</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
     void copy(long destIndex, SampleArray src, long srcIndex);
 
     /**
-     * Swaps samples at positions #<tt>firstIndex</tt> and #<tt>secondIndex</tt> inside this array.
-     * #<tt>destIndex</tt> in this array.
+     * Swaps samples at positions #<code>firstIndex</code> and #<code>secondIndex</code> inside this array.
+     * #<code>destIndex</code> in this array.
      *
      * @param firstIndex  first index of sample to exchange.
      * @param secondIndex second index of sample to exchange.
@@ -184,85 +184,85 @@ public interface SampleArray {
     void swap(long firstIndex, long secondIndex);
 
     /**
-     * Adds the sample #<tt>srcIndex2</tt> of <tt>src</tt> array to the sample #<tt>srcIndex1</tt>
-     * of <tt>src</tt> array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>,
-     * and <tt>src</tt> array can be a reference to this array: these situations are processed correctly.
+     * Adds the sample #<code>srcIndex2</code> of <code>src</code> array to the sample #<code>srcIndex1</code>
+     * of <code>src</code> array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>,
+     * and <code>src</code> array can be a reference to this array: these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param src       some other array (or, maybe, a reference to this array).
-     * @param srcIndex1 the index of the first summand in <tt>src</tt> array.
-     * @param srcIndex2 the index of the second summand in <tt>src</tt> array.
-     * @throws IllegalArgumentException if elements of <tt>src</tt> array do not belong to the same kind
+     * @param srcIndex1 the index of the first summand in <code>src</code> array.
+     * @param srcIndex2 the index of the second summand in <code>src</code> array.
+     * @throws IllegalArgumentException if elements of <code>src</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
     void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
 
     /**
-     * Subtracts the sample #<tt>srcIndex2</tt> of <tt>src</tt> array from the sample #<tt>srcIndex1</tt>
-     * of <tt>src</tt> array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>,
-     * and <tt>src</tt> array can be a reference to this array: these situations are processed correctly.
+     * Subtracts the sample #<code>srcIndex2</code> of <code>src</code> array from the sample #<code>srcIndex1</code>
+     * of <code>src</code> array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>,
+     * and <code>src</code> array can be a reference to this array: these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param src       some other array (or, maybe, a reference to this array).
-     * @param srcIndex1 the index of the minuend in <tt>src</tt> array.
-     * @param srcIndex2 the index of the subtrahend in <tt>src</tt> array.
-     * @throws IllegalArgumentException if elements of <tt>src</tt> array do not belong to the same kind
+     * @param srcIndex1 the index of the minuend in <code>src</code> array.
+     * @param srcIndex2 the index of the subtrahend in <code>src</code> array.
+     * @throws IllegalArgumentException if elements of <code>src</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
     void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2);
 
     /**
-     * Adds the sample #<tt>srcIndex2</tt> of <tt>src2</tt> array to the sample #<tt>srcIndex1</tt>
-     * of this array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>,
-     * and <tt>src2</tt> array can be a reference to this array: these situations are processed correctly.
+     * Adds the sample #<code>srcIndex2</code> of <code>src2</code> array to the sample #<code>srcIndex1</code>
+     * of this array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>,
+     * and <code>src2</code> array can be a reference to this array: these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param srcIndex1 the index of the first summand in this array.
      * @param src2      some other array (or, maybe, a reference to this array).
-     * @param srcIndex2 the index of the second summand in <tt>src2</tt> array.
-     * @throws IllegalArgumentException if elements of <tt>src2</tt> array do not belong to the same kind
+     * @param srcIndex2 the index of the second summand in <code>src2</code> array.
+     * @throws IllegalArgumentException if elements of <code>src2</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
     void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
 
     /**
-     * Subtracts the sample #<tt>srcIndex2</tt> of <tt>src2</tt> array from the sample #<tt>srcIndex1</tt>
-     * of this array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>,
-     * and <tt>src2</tt> array can be a reference to this array: these situations are processed correctly.
+     * Subtracts the sample #<code>srcIndex2</code> of <code>src2</code> array from the sample #<code>srcIndex1</code>
+     * of this array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>,
+     * and <code>src2</code> array can be a reference to this array: these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param srcIndex1 the index of the minuend in this array.
      * @param src2      some other array (or, maybe, a reference to this array).
-     * @param srcIndex2 the index of the subtrahend in <tt>src2</tt> array.
-     * @throws IllegalArgumentException if elements of <tt>src2</tt> array do not belong to the same kind
+     * @param srcIndex2 the index of the subtrahend in <code>src2</code> array.
+     * @throws IllegalArgumentException if elements of <code>src2</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      */
     void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2);
 
     /**
-     * Adds the sample #<tt>srcIndex2</tt> of this array to the sample #<tt>srcIndex1</tt>
-     * of this array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>:
+     * Adds the sample #<code>srcIndex2</code> of this array to the sample #<code>srcIndex1</code>
+     * of this array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>:
      * these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
@@ -272,9 +272,9 @@ public interface SampleArray {
     void add(long destIndex, long srcIndex1, long srcIndex2);
 
     /**
-     * Subtracts the sample #<tt>srcIndex2</tt> of this array from the sample #<tt>srcIndex1</tt>
-     * of this array and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex1</tt> or <tt>srcIndex2</tt>:
+     * Subtracts the sample #<code>srcIndex2</code> of this array from the sample #<code>srcIndex1</code>
+     * of this array and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex1</code> or <code>srcIndex2</code>:
      * these situations are processed correctly.
      *
      * @param destIndex index of sample in this array to store the result.
@@ -284,33 +284,33 @@ public interface SampleArray {
     void sub(long destIndex, long srcIndex1, long srcIndex2);
 
     /**
-     * Multiplies the sample #<tt>srcIndex</tt> of <tt>src</tt> array by the complex scalar
-     * <tt>aRe+aIm</tt>*<i>i</i> (<i>i</i> is the imaginary unit)
-     * and stores the result into position #<tt>destIndex</tt> of this array.
-     * The <tt>destIndex</tt> can be the same as <tt>srcIndex</tt>
-     * and <tt>src</tt> array can be a reference to this array: this situations is processed correctly.
+     * Multiplies the sample #<code>srcIndex</code> of <code>src</code> array by the complex scalar
+     * <code>aRe+aIm</code>*<i>i</i> (<i>i</i> is the imaginary unit)
+     * and stores the result into position #<code>destIndex</code> of this array.
+     * The <code>destIndex</code> can be the same as <code>srcIndex</code>
+     * and <code>src</code> array can be a reference to this array: this situations is processed correctly.
      *
      * <p>If this sample array consists of real samples (for example, real numbers or vectors of real numbers),
-     * then the imaginary part <tt>aIm</tt> is ignored.
+     * then the imaginary part <code>aIm</code> is ignored.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param src       some other array (or, maybe, a reference to this array).
-     * @param srcIndex  the index of the sample in <tt>src</tt> array.
+     * @param srcIndex  the index of the sample in <code>src</code> array.
      * @param aRe       the real part of the complex scalar.
      * @param aIm       the imaginary part of the complex scalar.
-     * @throws IllegalArgumentException if elements of <tt>src</tt> array do not belong to the same kind
+     * @throws IllegalArgumentException if elements of <code>src</code> array do not belong to the same kind
      *                                  as elements of this array, for example, they are vectors of
-     *                                  complex numbers with another length. Instead of this exteption,
+     *                                  complex numbers with another length. Instead of this exception,
      *                                  some other exceptions are also possible in this case, for example,
-     *                                  <tt>ClassCastException</tt> or
+     *                                  <code>ClassCastException</code> or
      *                                  {@link net.algart.arrays.SizeMismatchException}.
      * @see #isComplex()
      */
     void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm);
 
     /**
-     * Multiplies the sample #<tt>destIndex</tt> of this array by the real scalar <tt>a</tt>
-     * and stores the result into the same position #<tt>destIndex</tt> of this array.
+     * Multiplies the sample #<code>destIndex</code> of this array by the real scalar <code>a</code>
+     * and stores the result into the same position #<code>destIndex</code> of this array.
      * Equivalent to <tt>{@link #multiplyByScalar
      * multiplyByScalar}(destIndex,thisInstance,destIndex,a,0.0)</tt>.
      *
@@ -320,9 +320,9 @@ public interface SampleArray {
     void multiplyByRealScalar(long index, double a);
 
     /**
-     * Multiplies the sample #<tt>srcIndex1</tt> of this array by the real scalar <tt>a1</tt>,
-     * multiplies the sample #<tt>srcIndex2</tt> of this array by the real scalar <tt>a2</tt>
-     * and stores the sum of this two products result into position #<tt>destIndex</tt> of this array.
+     * Multiplies the sample #<code>srcIndex1</code> of this array by the real scalar <code>a1</code>,
+     * multiplies the sample #<code>srcIndex2</code> of this array by the real scalar <code>a2</code>
+     * and stores the sum of this two products result into position #<code>destIndex</code> of this array.
      *
      * @param destIndex index of sample in this array to store the result.
      * @param srcIndex1 the index of the first sample in this array.
@@ -333,10 +333,10 @@ public interface SampleArray {
     void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2);
 
     /**
-     * Multiplies the samples #<tt>fromIndex..toIndex-1</tt> of this array by the real scalar <tt>a</tt>
+     * Multiplies the samples #<code>fromIndex..toIndex-1</code> of this array by the real scalar <code>a</code>
      * and stores the result into the same positions of this array.
      * Equivalent to the loop of {@link #multiplyByRealScalar(long, double) multiplyByRealScalar(index, a)}
-     * for <tt>index=fromIndex,fromIndex+1,...,toIndex-1</tt>.
+     * for <code>index=fromIndex,fromIndex+1,...,toIndex-1</code>.
      *
      * @param fromIndex low index (inclusive) of elements to be multiplied.
      * @param toIndex   high index (exclusive) of elements to be multiplied.
@@ -346,27 +346,27 @@ public interface SampleArray {
 
     /**
      * Returns a string representation of this sample array as contatenated string representations of samples,
-     * separating by the given <tt>separator</tt>.
+     * separating by the given <code>separator</code>.
      *
      * <p>If the samples are numbers (real or complex) or vectors of numbers,
-     * this method may use the <tt>format</tt> argument
-     * to clarify the format of numbers according the rules of <tt>String.format</tt> method.
+     * this method may use the <code>format</code> argument
+     * to clarify the format of numbers according the rules of <code>String.format</code> method.
      * In other cases, this argument may be ignored.
      *
-     * <p>If the necessary string length exceeds <tt>maxStringLength</tt> characters,
+     * <p>If the necessary string length exceeds <code>maxStringLength</code> characters,
      * this method break concatenation after the element, which leads to exceeding this limit,
      * and adds "..." instead of all further elements. So, the length of returning
-     * string will never be essentially larger than <tt>maxStringLength</tt> characters.
+     * string will never be essentially larger than <code>maxStringLength</code> characters.
      *
-     * <p>If the passed array is empty, returns the empty string (<tt>""</tt>).
+     * <p>If the passed array is empty, returns the empty string (<code>""</code>).
      *
      * @param format          format string for numeric samples.
      * @param separator       the string used for separating elements.
      * @param maxStringLength the maximal allowed length of returned string (longer results are trunctated
      *                        with adding "..." at the end).
      * @return                the string representations of all samples joined into one string.
-     * @throws NullPointerException     if <tt>format</tt> or <tt>separator</tt> argument is {@code null}
-     * @throws IllegalArgumentException if <tt>maxStringLength</tt> &lt;= 0.
+     * @throws NullPointerException     if <code>format</code> or <code>separator</code> argument is {@code null}
+     * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
     String toString(String format, String separator, int maxStringLength);
 }
