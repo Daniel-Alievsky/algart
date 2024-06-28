@@ -48,9 +48,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code>, <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
      * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
@@ -61,22 +61,22 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <b>R</b>=<tt>rm.{@link RankMorphology#asPercentile(Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asPercentile}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>), if the <code>requiredType</code> argument of
+     * <b>R</b>=<code>rm.{@link RankMorphology#asPercentile(Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * asPercentile}</code>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>), if the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
      * <li>if <code>requiredType</code> is not equal to <b>M</b>.{@link Matrix#type() type()}, it is equivalent to
-     * <tt>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)
-     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </tt><b>R</b><code>)</code>;</li>
+     * <code>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)
+     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </code><b>R</b><code>)</code>;</li>
      *
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link RankMorphology#percentile(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * percentile}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
+     * <code>rm.{@link RankMorphology#percentile(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * percentile}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -112,9 +112,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code>,
      * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
@@ -126,8 +126,8 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <tt>rm.{@link RankMorphology#asRank(Class, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asRank}</tt>(<code>requiredType</code>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>),
+     * <code>rm.{@link RankMorphology#asRank(Class, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * asRank}</code>(<code>requiredType</code>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>),
      * where <code>requiredType</code> is the first argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -136,8 +136,8 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link RankMorphology#rank(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * rank}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
+     * <code>rm.{@link RankMorphology#rank(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern)
+     * rank}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>).</li>
      * </ul>
      *
      * <p>This processor is really created and called in the implementation of
@@ -176,9 +176,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code>,
      * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
@@ -190,9 +190,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<code>rm.{@link
      * RankMorphology#asMeanBetweenPercentiles(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
-     * asMeanBetweenPercentiles}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+     * asMeanBetweenPercentiles}</code>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
      * <code>filler</code>) (where <code>filler</code> is the argument of this method),
      * if the <code>requiredType</code> argument of
      * {@link
@@ -211,9 +211,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link
+     * <code>rm.{@link
      * RankMorphology#meanBetweenPercentiles(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
-     * meanBetweenPercentiles}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+     * meanBetweenPercentiles}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
      * <code>filler</code>) (where <code>filler</code> is the argument of this method).</li>
      * </ul>
      *
@@ -260,9 +260,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code>,
      * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
@@ -274,9 +274,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<code>rm.{@link
      * RankMorphology#asMeanBetweenValues(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
-     * asMeanBetweenValues}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+     * asMeanBetweenValues}</code>(<b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
      * <code>filler</code>) (where <code>filler</code> is the argument of this method),
      * if the <code>requiredType</code> argument of
      * {@link
@@ -295,9 +295,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link
+     * <code>rm.{@link
      * RankMorphology#meanBetweenValues(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, double)
-     * meanBetweenValues}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
+     * meanBetweenValues}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>0</sub>, <b>M</b><sub>1</sub>, <b>P</b>,
      * <code>filler</code>) (where <code>filler</code> is the argument of this method).</li>
      * </ul>
      *
@@ -345,9 +345,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code> is the same as the argument
      * of this method and other argument are any (they do not affect calculating the aperture sum).
@@ -358,9 +358,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<code>rm.{@link
      * RankMorphology#asFunctionOfSum(Matrix, net.algart.math.patterns.Pattern, Func)
-     * asFunctionOfSum}</tt>(<b>M</b>, <b>P</b>, <code>processingFunc</code>)
+     * asFunctionOfSum}</code>(<b>M</b>, <b>P</b>, <code>processingFunc</code>)
      * (where <code>processingFunc</code> is the argument of this method),
      * if the <code>requiredType</code> argument of
      * {@link
@@ -380,9 +380,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link
+     * <code>rm.{@link
      * RankMorphology#functionOfSum(Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
-     * functionOfSum}</tt>(<b>R</b>, <b>M</b>, <b>P</b>, <code>processingFunc</code>)
+     * functionOfSum}</code>(<b>R</b>, <b>M</b>, <b>P</b>, <code>processingFunc</code>)
      * (where <code>processingFunc</code> is the argument of this method).</li>
      * </ul>
      *
@@ -419,9 +419,9 @@ public class RankProcessors {
      *
      * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
-     * <blockquote><tt>rm = {@link
+     * <blockquote><code>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
-     * </tt></blockquote>
+     * </code></blockquote>
      *
      * <p>so that <code>context</code>,
      * <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
@@ -433,9 +433,9 @@ public class RankProcessors {
      * <li>{@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
-     * <b>R</b>=<tt>rm.{@link
+     * <b>R</b>=<code>rm.{@link
      * RankMorphology#asFunctionOfPercentilePair(Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
-     * asFunctionOfPercentilePair}</tt>(<b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
+     * asFunctionOfPercentilePair}</code>(<b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
      * <code>processingFunc</code>) (where <code>processingFunc</code> is the argument of this method),
      * if <b>M</b><sub>0</sub>==<b>M</b> and the <code>requiredType</code> argument of
      * {@link
@@ -457,9 +457,9 @@ public class RankProcessors {
      * <li>if <b>M</b><sub>0</sub>==<b>M</b>, {@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * process} method is equivalent to
-     * <tt>rm.{@link
+     * <code>rm.{@link
      * RankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
-     * functionOfPercentilePair}</tt>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
+     * functionOfPercentilePair}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
      * <code>processingFunc</code>) (where <code>processingFunc</code> is the argument of this method),
      * in other case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
      * matrix instead of <b>M</b>.</li>

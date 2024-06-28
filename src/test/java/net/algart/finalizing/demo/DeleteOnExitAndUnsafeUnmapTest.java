@@ -31,7 +31,7 @@ import java.lang.reflect.*;
 import java.security.*;
 
 /**
- * <p>Simplest test for <tt>File.deleteOnExit()</tt> method.</p>
+ * <p>Simplest test for <code>File.deleteOnExit()</code> method.</p>
  *
  * @author Daniel Alievsky
  */

@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.Locale;
 
 /**
- * <p>Simple test that allocates very large Java collections (<tt>List</tt> or <tt>Set</tt>).
+ * <p>Simple test that allocates very large Java collections (<code>List</code> or <code>Set</code>).
  * Illustrates correct (or incorrect) error messages while creating more than 2^31 elements.
  * Should be called in 64-bit JVMs.</p>
  *

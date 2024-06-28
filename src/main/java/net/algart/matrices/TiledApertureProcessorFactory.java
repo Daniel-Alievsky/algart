@@ -219,8 +219,8 @@ import java.util.*;
  *             {@link ApertureProcessor#process(Map, Map) process} method of
  *             the one-tile processor is called with the arguments <b>m'</b><sub><i>j</i></sub>
  *             and <b>m</b><sub><i>i</i></sub> &mdash;
- *             <tt>oneTileProcessor.{@link ApertureProcessor#process(Map, Map)
- *             process}(destTile, srcTile)</tt>.<br>
+ *             <code>oneTileProcessor.{@link ApertureProcessor#process(Map, Map)
+ *             process}(destTile, srcTile)</code>.<br>
  *             Note that, as a result, all null small matrices <b>m'</b><sub><i>j</i></sub>
  *             (<code>destTile.get(<i>j</i>)</code>) will become not null &mdash; it is a requirement,
  *             described in {@link ApertureProcessor#process(Map, Map)
@@ -349,21 +349,21 @@ import java.util.*;
  * to this context before calling its
  * {@link ApertureProcessor#process(Map dest, Map src) process} method.
  * In other words, at the stage <b>4.c</b> the tiled processor calls not<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>oneTileProcessor.{@link
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>oneTileProcessor.{@link
  * ApertureProcessor#process(Map, Map)
- * process}(destTile, srcTile)</tt>,<br>
+ * process}(destTile, srcTile)</code>,<br>
  * but<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tt>((ApertureProcessor&lt;K&gt;)(oneTileProcessor.{@link
+ * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<code>((ApertureProcessor&lt;K&gt;)(oneTileProcessor.{@link
  * ArrayProcessorWithContextSwitching#context(ArrayContext)
  * context}(tileContext))).{@link ApertureProcessor#process(Map, Map)
- * process}(destTile, srcTile)</tt>.<br>
+ * process}(destTile, srcTile)</code>.<br>
  * (By the way, it means that you are able not to think about the initial value of the
  * {@link ArrayProcessor#context() current context} in the constructor of your one-tile processor:
  * it will be surely replaced with <code>tileContext</code> before usage of your processor.
  * For example, you may initialize it by {@code null}.)
  * Of course, it is supposed that the switching method
- * <tt>oneTileProcessor.{@link ArrayProcessorWithContextSwitching#context(ArrayContext)
- * context}(tileContext)</tt> returns an object that also implements {@link ApertureProcessor} &mdash;
+ * <code>oneTileProcessor.{@link ArrayProcessorWithContextSwitching#context(ArrayContext)
+ * context}(tileContext)</code> returns an object that also implements {@link ApertureProcessor} &mdash;
  * if it is not so, it means an invalid implementation of that method, and <code>AssertionError</code>
  * or <code>ClassCastException</code> can be thrown in this case.</p>
  *
@@ -375,8 +375,8 @@ import java.util.*;
  * (As written above, by default the current context of the tiled processor is equal to the
  * {@link #context() current context} of the tiler.)
  * Thus, the tiler provides correct behaviour of
- * <tt>oneTileProcessor.{@link ArrayProcessor#context()
- * context()}.{@link ArrayContext#updateProgress(ArrayContext.Event) updateProgress(...)}</tt>
+ * <code>oneTileProcessor.{@link ArrayProcessor#context()
+ * context()}.{@link ArrayContext#updateProgress(ArrayContext.Event) updateProgress(...)}</code>
  * inside {@link ApertureProcessor#process(Map, Map) process} method
  * of your one-tile processor.
  * If the current context of the tiled processor is {@code null},
@@ -584,9 +584,9 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
-     * <tt>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
+     * <code>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      * getInstance}(context, continuationMode, maxTempJavaMemory, tileDim, {@link
-     * Matrices#defaultTileDimensions(int) Matrices.defaultTileDimensions}(tileDim.length), 0)</tt>.
+     * Matrices#defaultTileDimensions(int) Matrices.defaultTileDimensions}(tileDim.length), 0)</code>.
      *
      * @param context           see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
@@ -603,8 +603,8 @@ public final class TiledApertureProcessorFactory {
      * @return new tiler.
      * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>continuationMode=={@link
-     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
+     * @throws IllegalArgumentException if <code>continuationMode=={@link
+     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</code>,
      *                                  or if <code>maxTempJavaMemory&lt;0</code>,
      *                                  or if <code>tileDim.length==0</code>,
      *                                  or if one of elements of <code>tileDim</code> Java array is zero or negative.
@@ -618,8 +618,8 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
-     * <tt>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
-     * getInstance}(context, continuationMode, maxTempJavaMemory, tileDim, allocationTileDim, 0)</tt>.
+     * <code>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
+     * getInstance}(context, continuationMode, maxTempJavaMemory, tileDim, allocationTileDim, 0)</code>.
      *
      * @param context           see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
@@ -639,8 +639,8 @@ public final class TiledApertureProcessorFactory {
      * @return new tiler.
      * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>continuationMode=={@link
-     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
+     * @throws IllegalArgumentException if <code>continuationMode=={@link
+     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</code>,
      *                                  or if <code>maxTempJavaMemory&lt;0</code>,
      *                                  or if <code>tileDim.length==0</code>,
      *                                  or if <code>allocationTileDim!=null</code> and
@@ -659,9 +659,9 @@ public final class TiledApertureProcessorFactory {
 
     /**
      * Creates new instance of the tiler. Equivalent to the following call of the basic instantiation method:<br>
-     * <tt>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
+     * <code>{@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      * getInstance}(context, continuationMode, maxTempJavaMemory, tileDim, {@link
-     * Matrices#defaultTileDimensions(int) Matrices.defaultTileDimensions}(tileDim.length), numberOfTasks)</tt>.
+     * Matrices#defaultTileDimensions(int) Matrices.defaultTileDimensions}(tileDim.length), numberOfTasks)</code>.
      *
      * @param context           see the basic {@link
      *                          #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
@@ -681,8 +681,8 @@ public final class TiledApertureProcessorFactory {
      * @return new tiler.
      * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>continuationMode=={@link
-     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
+     * @throws IllegalArgumentException if <code>continuationMode=={@link
+     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</code>,
      *                                  or if <code>maxTempJavaMemory&lt;0</code>,
      *                                  or if <code>tileDim.length==0</code>,
      *                                  or if <code>numberOfTasks&lt;0</code>,
@@ -730,17 +730,17 @@ public final class TiledApertureProcessorFactory {
      * @param numberOfTasks     the desired number of tiles, which should be processed simultaneously in
      *                          parallel threads to optimize calculations on multiprocessor or multicore computers;
      *                          may be 0, then it will be detected automatically as
-     *                          <tt>{@link Arrays#getThreadPoolFactory(ArrayContext)
+     *                          <code>{@link Arrays#getThreadPoolFactory(ArrayContext)
      *                          Arrays.getThreadPoolFactory}(context).{@link
-     *                          ThreadPoolFactory#recommendedNumberOfTasks() recommendedNumberOfTasks()}</tt>.
+     *                          ThreadPoolFactory#recommendedNumberOfTasks() recommendedNumberOfTasks()}</code>.
      *                          You may specify <code>numberOfTasks=1</code> for saving memory, if you know that
      *                          the one-tile processors, which you are going to tile, provide multithreading
      *                          optimization themselves.
      * @return new tiler.
      * @throws NullPointerException     if <code>continuationMode</code> or <code>tileDim</code>
      *                                  argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>continuationMode=={@link
-     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>,
+     * @throws IllegalArgumentException if <code>continuationMode=={@link
+     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</code>,
      *                                  or if <code>maxTempJavaMemory&lt;0</code>,
      *                                  or if <code>tileDim.length==0</code>,
      *                                  or if <code>allocationTileDim!=null</code> and
@@ -866,9 +866,9 @@ public final class TiledApertureProcessorFactory {
      * <li><code>numberOfTasks</code> argument if this instance was created by
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[], int)
      * getInstance} method, having such argument, and if this argument was non-zero or</li>
-     * <li><tt>{@link Arrays#getThreadPoolFactory(ArrayContext)
+     * <li><code>{@link Arrays#getThreadPoolFactory(ArrayContext)
      * Arrays.getThreadPoolFactory}({@link #context()}).{@link ThreadPoolFactory#recommendedNumberOfTasks()
-     * recommendedNumberOfTasks()}</tt> if this instance was created by
+     * recommendedNumberOfTasks()}</code> if this instance was created by
      * {@link #getInstance(ArrayContext, Matrix.ContinuationMode, long, long[], long[]) getInstance}
      * method without <code>numberOfTasks</code> argument or if this argument was zero
      * (<code>numberOfTasks=0</code>).</li>

@@ -81,11 +81,11 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * Returns new instance of some inheritor of this class, implementing dilation and erosion operations
      * via the percentiles. Namely, in the created object
      * <code>{@link #dilation(Matrix, Pattern) dilation}(m,pattern)</code> method is equivalent to
-     * <tt>{@link #percentile(Matrix, double, Pattern)
-     * percentile}(m,dilationLevel*<i>N</i>,pattern)</tt> and
+     * <code>{@link #percentile(Matrix, double, Pattern)
+     * percentile}(m,dilationLevel*<i>N</i>,pattern)</code> and
      * <code>{@link #erosion(Matrix, Pattern) erosion}(m,pattern)</code> method is equivalent to
-     * <tt>{@link #percentile(Matrix, double, Pattern)
-     * percentile}(m,dilationLevel*<i>N</i>,pattern.{@link Pattern#symmetric() symmetric()})</tt>,
+     * <code>{@link #percentile(Matrix, double, Pattern)
+     * percentile}(m,dilationLevel*<i>N</i>,pattern.{@link Pattern#symmetric() symmetric()})</code>,
      * where <code><i>N</i>=pattern.{@link Pattern#pointCount() pointCount()}-1</code>
      * and <code>dilationLevel</code> is the argument of this method. This argument must be in range
      * <code>0.0 &le; dilationLevel &le; 1.0</code>.
@@ -155,8 +155,8 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * @throws NullPointerException     if <code>precision</code> argument is {@code null}
      * @throws IllegalArgumentException if the <code>dilationLevel</code> argument
      *                                  is out of <code>0.0..1.0</code> range
-     *                                  of if <tt>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
-     *                                  bitLevels()}</tt> are incorrect:
+     *                                  of if <code>bitLevels=precision.{@link CustomRankPrecision#bitLevels()
+     *                                  bitLevels()}</code> are incorrect:
      *                                  <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
      *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
      *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]

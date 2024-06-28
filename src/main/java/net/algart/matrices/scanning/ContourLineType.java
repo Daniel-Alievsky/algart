@@ -119,8 +119,8 @@ public enum ContourLineType {
      * <table cellpadding=0 cellspacing=0 border=0>
      * <caption></caption>
      * <tr>
-     * <td><tt>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#lastStep()
-     * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexX() pixelVertexX()}</tt></td>
+     * <td><code>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#lastStep()
+     * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexX() pixelVertexX()}</code></td>
      * <td>&nbsp;&nbsp;&nbsp; for {@link #STRICT_BOUNDARY};</td>
      * </tr>
      * <tr>
@@ -128,8 +128,8 @@ public enum ContourLineType {
      * <td>&nbsp;&nbsp;&nbsp; for {@link #PIXEL_CENTERS_POLYLINE};</td>
      * </tr>
      * <tr>
-     * <td><tt>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#side()
-     * side()}.{@link Boundary2DScanner.Side#centerX() centerX()}</tt></td>
+     * <td><code>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#side()
+     * side()}.{@link Boundary2DScanner.Side#centerX() centerX()}</code></td>
      * <td>&nbsp;&nbsp;&nbsp; for {@link #SEGMENT_CENTERS_POLYLINE};</td>
      * </tr>
      * </table>
@@ -153,8 +153,8 @@ public enum ContourLineType {
      * <blockquote>
      * <table cellpadding=0 cellspacing=0 border=0><caption></caption>
      * <tr>
-     * <td><tt>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#lastStep()
-     * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexY() pixelVertexY()}</tt></td>
+     * <td><code>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#lastStep()
+     * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexY() pixelVertexY()}</code></td>
      * <td>&nbsp;&nbsp;&nbsp; for {@link #STRICT_BOUNDARY};</td>
      * </tr>
      * <tr>
@@ -162,8 +162,8 @@ public enum ContourLineType {
      * <td>&nbsp;&nbsp;&nbsp; for {@link #PIXEL_CENTERS_POLYLINE};</td>
      * </tr>
      * <tr>
-     * <td><tt>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#side()
-     * side()}.{@link Boundary2DScanner.Side#centerY() centerY()}</tt></td>
+     * <td><code>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#side()
+     * side()}.{@link Boundary2DScanner.Side#centerY() centerY()}</code></td>
      * <td>&nbsp;&nbsp;&nbsp; for {@link #SEGMENT_CENTERS_POLYLINE};</td>
      * </tr>
      * </table>

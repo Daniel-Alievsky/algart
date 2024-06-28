@@ -64,8 +64,8 @@ public interface CustomRankPrecision {
      * See more details in comments to {@link RankMorphology} interface, section 3.
      *
      * <p>First <code>bitLevels.length-1</code> elements of this array, i.e.
-     * <tt>{@link net.algart.arrays.JArrays#copyOfRange(int[], int, int)
-     * JArrays.copyOfRange}(bitLevels,0,bitLevels.length-1)</tt>,
+     * <code>{@link net.algart.arrays.JArrays#copyOfRange(int[], int, int)
+     * JArrays.copyOfRange}(bitLevels,0,bitLevels.length-1)</code>,
      * are passed as <code>bitLevelsOfPyramid</code> argument of
      * {@link net.algart.arrays.Histogram#newIntHistogram(int, int...) Histogram.newIntHistogram}
      * or {@link net.algart.arrays.SummingHistogram#newSummingIntHistogram(int, int...)

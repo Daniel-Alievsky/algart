@@ -1217,9 +1217,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
     }
 
     /**
-     * Equivalent to <tt>context==null ? thisInstance : {@link #context(ArrayContext)
+     * Equivalent to <code>context==null ? thisInstance : {@link #context(ArrayContext)
      * context}(context().{@link ArrayContext#part(double, double)
-     * part}(fromPart/totalSize, (fromPart+subtaskSize)/totalSize))</tt>.
+     * part}(fromPart/totalSize, (fromPart+subtaskSize)/totalSize))</code>.
      *
      * <p>This method is useful to perform a subtask of the full morphology task
      * with correct progress visualization via

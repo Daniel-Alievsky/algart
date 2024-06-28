@@ -57,8 +57,8 @@ import static net.algart.matrices.DependenceApertureBuilder.*;
  * The dependence aperture <code>p.{@link ApertureProcessor#dependenceAperture(Object) dependenceAperture(...)}</code>
  * is calculated automatically on the base of the patterns and the performed operation.
  * Then, the method of this object executes the required operation with help of
- * <tt>{@link #tiler() tiler()}.{@link TiledApertureProcessorFactory#tile(ApertureProcessor)
- * tile}(p).{@link ApertureProcessor#process(Map, Map) process(dest,src)}</tt> call
+ * <code>{@link #tiler() tiler()}.{@link TiledApertureProcessorFactory#tile(ApertureProcessor)
+ * tile}(p).{@link ApertureProcessor#process(Map, Map) process(dest,src)}</code> call
  * &mdash; the source matrix is passed via <code>src</code>, the result is retrieved from <code>dest</code>.
  * As a result, the same operation is performed tile-by-tile.</p>
  *
@@ -102,8 +102,8 @@ public class TiledConvolution implements Convolution {
      * <code>parent.{@link Convolution#context() context()}</code>, and
      * the {@link TiledApertureProcessorFactory#context() context} of the passed tiler
      * is automatically replaced with the same one &mdash; the current {@link #tiler() tiler}
-     * of the created object is <tt>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
-     * context}(newInstance.{@link #context() context()})</tt>.
+     * of the created object is <code>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
+     * context}(newInstance.{@link #context() context()})</code>.
      * It means that the {@link TiledApertureProcessorFactory#context() context} of the passed tiler is not important
      * and can be {@code null}.</p>
      *
@@ -148,9 +148,9 @@ public class TiledConvolution implements Convolution {
      * {@link ArrayContext#part(double, double) subtask} of the full task.
      *
      * <p>More precisely, this method is equivalent to
-     * <tt>{@link #getInstance(Convolution, TiledApertureProcessorFactory)
+     * <code>{@link #getInstance(Convolution, TiledApertureProcessorFactory)
      * getInstance}({@link #parent()}.{@link Convolution#context(ArrayContext)
-     * context}(newContext), {@link #tiler() tiler()}).</tt>
+     * context}(newContext), {@link #tiler() tiler()}).</code>
      *
      * @param newContext another context, used by the returned instance; can be {@code null}.
      * @return           new instance with another context.
@@ -164,8 +164,8 @@ public class TiledConvolution implements Convolution {
      * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC
      * pseudo-cyclic continuation mode}.
      * More precisely, returns <code>true</code> if and only if
-     * <tt>{@link #tiler()}.{@link TiledApertureProcessorFactory#continuationMode()
-     * continuationMode()}</tt> is {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC PSEUDO_CYCLIC}.
+     * <code>{@link #tiler()}.{@link TiledApertureProcessorFactory#continuationMode()
+     * continuationMode()}</code> is {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC PSEUDO_CYCLIC}.
      *
      * @return whether this class works in the pseudo-cyclic continuation mode.
      */

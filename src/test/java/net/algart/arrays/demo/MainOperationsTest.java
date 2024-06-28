@@ -44,7 +44,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  *
  * <p>An example of call (64-bit Java):</p>
  *
- * <p><tt>java -ea -server -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE
+ * <p><code>java -ea -server -Xmx200m -Dnet.algart.arrays.globalMemoryModel=LARGE
  * -Dnet.algart.arrays.serverOptimization=true
  * -Dnet.algart.arrays.CPUCount=4
  * -Dnet.algart.arrays.DefaultDataFileModel.resizableBankSize=256
@@ -52,7 +52,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * -Dnet.algart.arrays.DefaultDataFileModel.singleMappingLimit=0
  * -Dnet.algart.arrays.LargeMemoryModel.dataFileModel=DEFAULT
  * net.algart.arrays.demo.MainOperationsTest ALL 1000 2000
- * </tt></p>
+ * </code></p>
  *
  * <p>Please test with different values of the listed properties and arguments:
  * they change the behavior of the tested algorithms.

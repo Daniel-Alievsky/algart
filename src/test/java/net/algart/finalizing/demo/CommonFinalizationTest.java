@@ -31,7 +31,7 @@ import java.nio.*;
 import java.nio.channels.*;
 
 /**
- * <p>Common test for finalization via reference queues an <tt>finalize()</tt> method.</p>
+ * <p>Common test for finalization via reference queues an <code>finalize()</code> method.</p>
  *
  * @author Daniel Alievsky
  */

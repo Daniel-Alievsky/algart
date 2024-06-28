@@ -56,8 +56,8 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
     double increment(Class<?> elementType);
 
     /**
-     * Equivalent to <tt>{@link #asConvolution(Class, Matrix, WeightedPattern)
-     * asConvolution}(src.{@link Matrix#type(Class) type}(PArray.class), src, pattern)</tt>.
+     * Equivalent to <code>{@link #asConvolution(Class, Matrix, WeightedPattern)
+     * asConvolution}(src.{@link Matrix#type(Class) type}(PArray.class), src, pattern)</code>.
      * In other words, the element type of the returned matrix is chosen the same as in <code>src</code> matrix.
      *
      * @param src     the source matrix.
@@ -121,11 +121,11 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * equal to all pattern points, with weights, equal to
      * {@link WeightedPattern#weight(net.algart.math.IPoint) weights}
      * of the pattern points.
-     * More precisely, let <i>m</i><sub><i>i</i></sub><tt>={@link Matrices#asShifted(Matrix, long...)
-     * Matrices.asShifted}(src,ip.{@link net.algart.math.IPoint#coordinates() coordinates()})</tt>,
+     * More precisely, let <i>m</i><sub><i>i</i></sub><code>={@link Matrices#asShifted(Matrix, long...)
+     * Matrices.asShifted}(src,ip.{@link net.algart.math.IPoint#coordinates() coordinates()})</code>,
      * where <code>ip</code> is the point <code>#<i>i</i></code> from all points contained in the pattern,
-     * and let <i>w</i><i>i</i>=<tt>pattern.{@link WeightedPattern#weight(net.algart.math.IPoint)
-     * weight}(ip)</tt>.
+     * and let <i>w</i><i>i</i>=<code>pattern.{@link WeightedPattern#weight(net.algart.math.IPoint)
+     * weight}(ip)</code>.
      * Then the every element of the returned matrix is the weighted sum of all corresponding elements
      * of all <i>m</i><sub><i>i</i></sub> matrices:</p>
      *

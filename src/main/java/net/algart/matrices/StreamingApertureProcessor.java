@@ -291,9 +291,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #asProcessed(Class, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #asProcessed(Class, Matrix, List, Pattern)
      * asProcessed}(requiredType, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class), pattern)</tt>.
+     * Matrices.several}(PArray.class), pattern)</code>.
      *
      * @param requiredType desired type of the built-in array in the returned matrix.
      * @param src          the source matrix <b>M</b>.
@@ -314,9 +314,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #asProcessed(Class, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #asProcessed(Class, Matrix, List, Pattern)
      * asProcessed}(requiredType, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix), pattern)</code>.
      *
      * @param requiredType     desired type of the built-in array in the returned matrix.
      * @param src              the source matrix <b>M</b>.
@@ -341,9 +341,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #asProcessed(Class, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #asProcessed(Class, Matrix, List, Pattern)
      * asProcessed}(requiredType, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2), pattern)</code>.
      *
      * @param requiredType      desired type of the built-in array in the returned matrix.
      * @param src               the source matrix <b>M</b>.
@@ -370,9 +370,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #asProcessed(Class, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #asProcessed(Class, Matrix, List, Pattern)
      * asProcessed}(requiredType, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2, additionalMatrix3), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2, additionalMatrix3), pattern)</code>.
      *
      * @param requiredType      the desired type of the built-in array in the returned matrix.
      * @param src               the source matrix <b>M</b>.
@@ -454,9 +454,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
         Pattern pattern);
 
     /**
-     * Equivalent to <tt>{@link #process(Matrix, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #process(Matrix, Matrix, List, Pattern)
      * process}(dest, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class), pattern)</tt>.
+     * Matrices.several}(PArray.class), pattern)</code>.
      *
      * @param dest    the resulting matrix <b>R</b>.
      * @param src     the source matrix <b>M</b>.
@@ -475,9 +475,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #process(Matrix, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #process(Matrix, Matrix, List, Pattern)
      * process}(dest, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix1), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix1), pattern)</code>.
      *
      * @param dest             the resulting matrix <b>R</b>.
      * @param src              the source matrix <b>M</b>.
@@ -499,9 +499,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #process(Matrix, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #process(Matrix, Matrix, List, Pattern)
      * process}(dest, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2), pattern)</code>.
      *
      * @param dest              the resulting matrix <b>R</b>.
      * @param src               the source matrix <b>M</b>.
@@ -525,9 +525,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Equivalent to <tt>{@link #process(Matrix, Matrix, List, Pattern)
+     * Equivalent to <code>{@link #process(Matrix, Matrix, List, Pattern)
      * process}(dest, src, {@link Matrices#several(Class, Matrix[])
-     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2, additionalMatrix3), pattern)</tt>.
+     * Matrices.several}(PArray.class, additionalMatrix1, additionalMatrix2, additionalMatrix3), pattern)</code>.
      *
      * @param dest              the resulting matrix <b>R</b>.
      * @param src               the source matrix <b>M</b>.
@@ -764,9 +764,9 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * {@link #process(Matrix, Matrix, List, Pattern) process}  method.
      *
      * <p>By default, this method returns <code>Math.round(maxTempJavaMemory/elementSize)</code>,
-     * where <tt>maxTempJavaMemory =
+     * where <code>maxTempJavaMemory =
      * Math.max({@link net.algart.arrays.Arrays.SystemSettings#MIN_OPTIMIZATION_JAVA_MEMORY},
-     * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()})</tt>
+     * {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()})</code>
      * and <code>elementSize</code> is the number of bytes, required for each element of <code>src</code> array
      * (i.e. <code>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</code>).
      *

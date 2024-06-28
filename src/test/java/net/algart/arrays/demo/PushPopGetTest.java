@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * <p>Test for <tt>MutablePArrays.getNnn/popNnn/pushNnn/add<tt> methods.</p>
+ * <p>Test for <code>MutablePArrays.getNnn/popNnn/pushNnn/add</code> methods.</p>
  *
  * @author Daniel Alievsky
  */

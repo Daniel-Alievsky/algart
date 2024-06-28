@@ -29,7 +29,7 @@ import net.algart.arrays.*;
 import java.util.Locale;
 
 /**
- * <p>Test for <tt>Arrays.n<i>Xxx</i>Copies<tt> methods.</p>
+ * <p>Test for <code>Arrays.n<i>Xxx</i>Copies</code> methods.</p>
  *
  * @author Daniel Alievsky
  */

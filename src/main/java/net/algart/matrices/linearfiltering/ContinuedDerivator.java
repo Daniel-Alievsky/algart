@@ -57,8 +57,8 @@ public class ContinuedDerivator implements Derivator {
      * @param continuationMode the mode of continuation outside the source matrix.
      * @return                 new instance of this class.
      * @throws NullPointerException     if <code>parent</code> or <code>continuationMode</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>continuationMode=={@link
-     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</tt>.
+     * @throws IllegalArgumentException if <code>continuationMode=={@link
+     *                                  net.algart.arrays.Matrix.ContinuationMode#NONE}</code>.
      * @see #parent()
      * @see #continuationMode()
      */

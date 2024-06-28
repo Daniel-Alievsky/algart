@@ -27,7 +27,7 @@ package net.algart.finalizing.demo;
 import java.io.*;
 
 /**
- * <p>Test for very intensive calls of <tt>System.gc()</tt> methods.</p>
+ * <p>Test for very intensive calls of <code>System.gc()</code> methods.</p>
  *
  * @author Daniel Alievsky
  */

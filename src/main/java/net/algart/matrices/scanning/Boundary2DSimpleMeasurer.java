@@ -510,8 +510,8 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the oriented area inside the contour, following along the scanned boundary.
      * "Oriented" means that the result is equal to the area of the figure inside this contour,
-     * Equivalent to <tt>{@link #area(ContourLineType) area}(thisObject.{@link #contourLineType()
-     * contourLineType()})</tt>.
+     * Equivalent to <code>{@link #area(ContourLineType) area}(thisObject.{@link #contourLineType()
+     * contourLineType()})</code>.
      *
      * @return the oriented area inside the scanned contour.
      */
@@ -522,8 +522,8 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
     /**
      * Returns the total length of the contour, following along the scanned boundary:
      * an estimated perimeter of the measured object, "drawn" at the bit matrix.
-     * Equivalent to <tt>{@link #perimeter(ContourLineType) perimeter}(thisObject.{@link #contourLineType()
-     * contourLineType()})</tt>.
+     * Equivalent to <code>{@link #perimeter(ContourLineType) perimeter}(thisObject.{@link #contourLineType()
+     * contourLineType()})</code>.
      *
      * @return the length of the contour line, following along the scanned boundary.
      */

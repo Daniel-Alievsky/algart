@@ -29,7 +29,7 @@ import net.algart.arrays.*;
 import java.util.Random;
 
 /**
- * <p>Test for <tt>Arrays.n<i>Xxx</i>Copies.getNnn<tt> methods.</p>
+ * <p>Test for <code>Arrays.n<i>Xxx</i>Copies.getNnn</code> methods.</p>
  *
  * @author Daniel Alievsky
  */

@@ -561,8 +561,8 @@ public abstract class SkeletonPixelClassifier {
      * (<code>{@link #isFreeBranchEndPixelType(int) isFreeBranchEndPixelType}(pixelType)</code>
      * returns <code>true</code>).
      * Equivalent to<br>
-     * <tt>pixelType &gt;= {@link #TYPE_NODE_OR_BRANCH_END_MIN} &amp;&amp;
-     * pixelType &lt;= {@link #TYPE_NODE_OR_BRANCH_END_MAX}</tt>.
+     * <code>pixelType &gt;= {@link #TYPE_NODE_OR_BRANCH_END_MIN} &amp;&amp;
+     * pixelType &lt;= {@link #TYPE_NODE_OR_BRANCH_END_MAX}</code>.
      *
      * <p>Note that all such pixels (nodes and free branch ends) corresponds to
      * nodes of a graph, describing the geometric structure of the skeleton
@@ -584,8 +584,8 @@ public abstract class SkeletonPixelClassifier {
      * (where <code>{@link #isAttachableBranchEndPixelType(int) isAttachablePixelType}(pixelType)</code>
      * returns <code>true</code>).
      * Equivalent to<br>
-     * <tt>pixelType &gt;= 0 ||
-     * (pixelType &gt;= {@link #TYPE_BRANCH_MIN} &amp;&amp; pixelType &lt;= {@link #TYPE_BRANCH_MAX})</tt>.
+     * <code>pixelType &gt;= 0 ||
+     * (pixelType &gt;= {@link #TYPE_BRANCH_MIN} &amp;&amp; pixelType &lt;= {@link #TYPE_BRANCH_MAX})</code>.
      *
      * <p>Note that all unit pixels in the skeleton, excepting {@link #isIllegalPixelType(int) "illegal"},
      * are separated into 2 groups:

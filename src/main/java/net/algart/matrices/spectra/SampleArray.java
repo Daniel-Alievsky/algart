@@ -311,8 +311,8 @@ public interface SampleArray {
     /**
      * Multiplies the sample #<code>destIndex</code> of this array by the real scalar <code>a</code>
      * and stores the result into the same position #<code>destIndex</code> of this array.
-     * Equivalent to <tt>{@link #multiplyByScalar
-     * multiplyByScalar}(destIndex,thisInstance,destIndex,a,0.0)</tt>.
+     * Equivalent to <code>{@link #multiplyByScalar
+     * multiplyByScalar}(destIndex,thisInstance,destIndex,a,0.0)</code>.
      *
      * @param index index of sample in this array.
      * @param a     the real scalar.

@@ -32,7 +32,7 @@ import java.math.BigInteger;
 import java.util.Random;
 
 /**
- * <p>Testing extra-large index calculation in the {@link Matrix matrices} (<tt>&gt;Long.MAX_VALUE</tt>).</p>
+ * <p>Testing extra-large index calculation in the {@link Matrix matrices} (<code>&gt;Long.MAX_VALUE</code>).</p>
  *
  * @author Daniel Alievsky
  */

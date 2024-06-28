@@ -54,9 +54,9 @@ import java.util.Random;
  * to the current context of the {@link Morphology} object, passed to {@link #getInstance getInstance} method.</li>
  *
  * <li>{@link #performIteration(ArrayContext)} method calculates<br>
- * &nbsp;&nbsp;&nbsp;&nbsp;<tt>{@link Morphology#erosion(Matrix, Pattern) erosion}(source_matrix,
+ * &nbsp;&nbsp;&nbsp;&nbsp;<code>{@link Morphology#erosion(Matrix, Pattern) erosion}(source_matrix,
  * {@link Patterns#newMinkowskiSum(Pattern[])
- * Patterns.newMinkowskiSum}(ptn<sub>0</sub>,ptn<sub>1</sub>,...,ptn<sub>k</sub>))</tt>
+ * Patterns.newMinkowskiSum}(ptn<sub>0</sub>,ptn<sub>1</sub>,...,ptn<sub>k</sub>))</code>
  * (<code>k+1</code> summands),<br>
  * where <code>k</code> is the index of the current iteration (0, 1, 2, ...)
  * and <code>ptn<sub>i</sub>=patterns[i%patterns.length]</code>, <code>patterns</code> is the argument of

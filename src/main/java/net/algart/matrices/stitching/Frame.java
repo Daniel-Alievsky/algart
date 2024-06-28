@@ -69,9 +69,9 @@ public interface Frame<P extends FramePosition> {
     /**
      * The position in <i>n</i>-dimensional space, where the given {@link #matrix() matrix} is placed.
      * There is a guarantee that
-     * <tt>thisInstance.{@link #position()}.{@link FramePosition#area()
+     * <code>thisInstance.{@link #position()}.{@link FramePosition#area()
      * area()}.{@link net.algart.math.RectangularArea#coordCount()
-     * coordCount()}==thisInstance.{@link #dimCount()}</tt>.
+     * coordCount()}==thisInstance.{@link #dimCount()}</code>.
      *
      * @return position in <i>n</i>-dimensional space, where the given {@link #matrix() matrix} is placed.
      */
