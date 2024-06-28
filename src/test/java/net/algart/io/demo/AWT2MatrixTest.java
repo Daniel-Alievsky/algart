@@ -60,13 +60,13 @@ public class AWT2MatrixTest {
         MatrixIO.writeBufferedImage(resultFile1, bi1);
 
         final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
-        List<Matrix<UpdatablePArray>> matrices = Matrices.separate(null, matrix);
+        List<Matrix<UpdatablePArray>> matrices = Matrices.separate(matrix);
         final int dimX = matrices.get(0).dimX32();
         final int dimY = matrices.get(0).dimY32();
 
         //TODO!! another converter
         BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(
-                Matrices.interleave(null, matrices));
+                Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi3);
         System.out.printf("Writing AlgART conversion to %s...%n", resultFile3);
         MatrixIO.writeBufferedImage(resultFile3, bi3);

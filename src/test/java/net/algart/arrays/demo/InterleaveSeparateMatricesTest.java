@@ -59,7 +59,7 @@ public class InterleaveSeparateMatricesTest {
                 source.toArray(new Matrix<?>[0]));
         // - matrices, loaded by MatrixIO, are not binary
         System.out.printf("List: %s%n", matrices);
-        Matrix<PArray> merged = Matrices.mergeLayers(Arrays.SMM, matrices);
+        Matrix<PArray> merged = Matrices.mergeLayers(matrices);
         System.out.printf("Merged: %s%n", merged);
         MatrixIO.writeAlgARTImage(matrixFolder, List.of(merged));
         List<Matrix<PArray>> unpacked = Matrices.asLayers(merged);

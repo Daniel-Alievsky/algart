@@ -76,7 +76,7 @@ public class WriteDemoImageTest {
         Object array = makeSamples(elementType, channels, dimX, dimY);
         List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
-        final Matrix<PArray> matrix = Matrices.interleave(null, image);
+        final Matrix<PArray> matrix = Matrices.interleave(image);
         final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);

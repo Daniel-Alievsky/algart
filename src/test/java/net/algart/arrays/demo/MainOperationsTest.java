@@ -2801,7 +2801,7 @@ public class MainOperationsTest implements Cloneable {
                     Matrices.copyRegion(null, destMatr1, srcMatr, region, shifts, outsideValue);
                 } else {
                     try {
-                        Matrices.copyRegion(null, destMatr1, srcMatr, region, shifts);
+                        Matrices.copyRegion(destMatr1, srcMatr, region, shifts);
                     } catch (IndexOutOfBoundsException e) {
                         illegalRegion = true;
                     }

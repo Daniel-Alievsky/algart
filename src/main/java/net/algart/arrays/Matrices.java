@@ -1858,6 +1858,30 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #separate(ArrayContext, List, Matrix)
+     * separate((ArrayContext) null, result, interleaved)}.
+     *
+     * @param result      the list of the result matrices.
+     * @param interleaved the source interleaved matrix.
+     * @throws NullPointerException     if <code>interleaved</code> argument, the <code>results</code> list or
+     *                                  one of its elements is {@code null}.
+     * @throws SizeMismatchException    if some of the result matrices have dimensions, that do not match the last
+     *                                  <i>n</i> dimensions
+     *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     *                                  of (<i>n</i>+1)-dimensional source <code>interleaved</code> matrix.
+     * @throws IllegalArgumentException if number of elements in the <code>result</code> list is not equal to
+     *                                  the first <code>interleaved</code> dimension <i>M</i><sub>0</sub>,
+     *                                  or if some of the result matrices have element type that is different from
+     *                                  the element type of the source <code>interleaved</code> matrix.
+     * @throws IllegalStateException    if <code>interleaved</code> matrix is 1-dimensional.
+     */
+    public static void separate(
+            List<? extends Matrix<? extends UpdatablePArray>> result,
+            Matrix<? extends PArray> interleaved) {
+        separate(null, result, interleaved);
+    }
+
+    /**
      * Analog of <code>{@link #separate(ArrayContext, Matrix)}</code> method, that does not allocate memory,
      * but stores the results into previously created list of matrices.
      *
@@ -1866,7 +1890,8 @@ public class Matrices {
      * then the <code>result</code> list must contain <i>M</i><sub>0</sub> elements, and each of them must be
      * <i>n</i>-dimensional matrix <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>.
      *
-     * @param context     the context.
+     * @param context     the context;
+     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param result      the list of the result matrices.
      * @param interleaved the source interleaved matrix.
      * @throws NullPointerException     if <code>interleaved</code> argument, the <code>results</code> list or
@@ -1900,11 +1925,26 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #separate(ArrayContext, Matrix)
+     * separate((ArrayContext) null, interleaved)}.
+     *
+     * @param <T>         the generic type of the built-in AlgART arrays.
+     * @param interleaved the source interleaved matrix.
+     * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
+     * @throws NullPointerException  if <code>interleaved</code> argument is {@code null}.
+     * @throws IllegalStateException if <code>interleaved</code> matrix is 1-dimensional.
+     */
+    public static <T extends PArray> List<Matrix<T>> separate(Matrix<? extends T> interleaved) {
+        return separate((ArrayContext) null, interleaved);
+    }
+
+    /**
      * Equivalent to <code>{@link #separate(ArrayContext, Matrix, int)
      * separate}(context, interleaved, Integer.MAX_VALUE)</code> (no limitations).
      *
      * @param <T>         the generic type of the built-in AlgART arrays.
-     * @param context     the context.
+     * @param context     the context;
+     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
      * @throws NullPointerException  if <code>interleaved</code> argument is {@code null}.
@@ -1912,6 +1952,26 @@ public class Matrices {
      */
     public static <T extends PArray> List<Matrix<T>> separate(ArrayContext context, Matrix<? extends T> interleaved) {
         return separate(context, interleaved, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Equivalent to {@link #separate(ArrayContext, Matrix, int)
+     * separate((ArrayContext) null, interleaved, limit)}.
+     *
+     * @param <T>         the generic type of the built-in AlgART arrays.
+     * @param interleaved the source interleaved matrix.
+     * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
+     * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension
+     * (like the red, green, blue channels for 3-channel RGB image, stored in RGBRGB... format).
+     * @throws NullPointerException     if <code>interleaved</code> argument is {@code null}.
+     * @throws IllegalStateException    if <code>interleaved</code> matrix is 1-dimensional.
+     * @throws IllegalArgumentException if <code>limit &le; 0</code> or
+     *                                  if the number of returned matrices {@code >limit}.
+     */
+    public static <T extends PArray> List<Matrix<T>> separate(
+            Matrix<? extends T> interleaved,
+            int limit) {
+        return separate(null, interleaved, limit);
     }
 
     /**
@@ -1983,6 +2043,31 @@ public class Matrices {
 
 
     /**
+     * Equivalent to {@link #interleave(ArrayContext, Matrix, List)
+     * interleave((ArrayContext) null, result, separated)}.
+     *
+     * @param result    the result matrix.
+     * @param separated list of the source matrices; must be non-empty.
+     * @throws NullPointerException     if <code>result</code> argument, the <code>separated</code> list or
+     *                                  one of its elements is {@code null}.
+     * @throws SizeMismatchException    if some of the source matrices have dimensions, that do not match the last
+     *                                  <i>n</i> dimensions
+     *                                  <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>
+     *                                  of (<i>n</i>+1)-dimensional <code>result</code> matrix.
+     * @throws IllegalArgumentException if <code>separated</code> list is empty, or
+     *                                  if number of elements in the <code>separated</code> list is not equal to
+     *                                  the first <code>result</code> dimension <i>M</i><sub>0</sub>,
+     *                                  or if some of the source matrices have element type that is different from
+     *                                  the element type of the <code>result</code> matrix.
+     * @throws IllegalStateException    if <code>result</code> matrix is 1-dimensional.
+     */
+    public static void interleave(
+            Matrix<? extends UpdatablePArray> result,
+            List<? extends Matrix<? extends PArray>> separated) {
+        interleave(null, result, separated);
+    }
+
+    /**
      * Analog of <code>{@link #interleave(ArrayContext, List)}</code> method, that does not allocate memory,
      * but stores the results into previously created <code>result</code> matrix.
      *
@@ -1995,7 +2080,8 @@ public class Matrices {
      *
      * <p>The <code>separated</code> list must not be empty (<i>M</i><sub>0</sub>&gt;0).</p>
      *
-     * @param context   the context.
+     * @param context   the context;
+     *                  can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param result    the result matrix.
      * @param separated list of the source matrices; must be non-empty.
      * @throws NullPointerException     if <code>result</code> argument, the <code>separated</code> list or
@@ -2030,6 +2116,27 @@ public class Matrices {
         try (var packer = InterleavingBandsPacker.getInstance(context, arrays, result.array())) {
             packer.process();
         }
+    }
+
+    /**
+     * Equivalent to {@link #interleave(ArrayContext, List)
+     * interleave((ArrayContext) null, separated)}.
+     *
+     * @param <T>       the generic type of the built-in AlgART arrays.
+     * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
+     *                  RGB image); must be non-empty.
+     * @return result matrix, where "channels" are interleaved along the first dimension
+     * (RGBRGB... sequence for 3-channel RGB image).
+     * @throws NullPointerException     if <code>separated</code> list or one of its elements is {@code null}.
+     * @throws SizeMismatchException    if <code>separated.size()&gt;1</code> and some of the passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <code>separated</code> list is empty, or if
+     *                                  <code>separated.size()&gt;1</code> and some of the passed matrices have
+     *                                  different element type.
+     */
+    public static <T extends PArray> Matrix<T> interleave(
+            List<? extends Matrix<? extends T>> separated) {
+        return interleave((ArrayContext) null, separated);
     }
 
     /**
@@ -2169,6 +2276,27 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #mergeLayers(MemoryModel, List)
+     * mergeLayers(Arrays.SMM, matrices)}.
+     *
+     * @param <T>      the generic type of the built-in AlgART arrays.
+     * @param matrices list of the source matrices; must be non-empty.
+     * @return result merged matrix.
+     * @throws NullPointerException     if <code>matrices</code> list or
+     *                                  one of its elements is {@code null}.
+     * @throws SizeMismatchException    if <code>matrices.size()&gt;1</code> and some of the passed matrices have
+     *                                  different dimensions.
+     * @throws IllegalArgumentException if <code>matrices</code> list is empty, or if
+     *                                  <code>matrices.size()&gt;1</code> and some of the passed matrices have
+     *                                  different element type.
+     */
+    public static <T extends Array> Matrix<T> mergeLayers(
+            List<? extends Matrix<? extends T>> matrices) {
+        return mergeLayers(Arrays.SMM, matrices);
+
+    }
+
+    /**
      * Merges (concatenates) <i>K</i> <i>n</i>-dimensional matrices with identical element types and dimensions
      * <i>M</i><sub>0</sub>x<i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i>&minus;1</sub>,
      * passed in the <code>matrices</code> list,
@@ -2191,8 +2319,8 @@ public class Matrices {
      * @param memoryModel memory model for creating the result matrix.
      * @param matrices    list of the source matrices; must be non-empty.
      * @return result merged matrix.
-     * @throws NullPointerException     if <code>arrayClass</code> argument, the <code>matrices</code> list,
-     *                                  one of its elements or memory model is {@code null}.
+     * @throws NullPointerException     if <code>memoryModel</code> argument, the <code>matrices</code> list or
+     *                                  one of its elements is {@code null}.
      * @throws SizeMismatchException    if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                                  different dimensions.
      * @throws IllegalArgumentException if <code>matrices</code> list is empty, or if
@@ -3209,7 +3337,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       the source matrix.
@@ -3235,7 +3363,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x))</code>.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3251,8 +3379,11 @@ public class Matrices {
      *                                  <code>Thread.interrupt()</code> call.
      */
     public static void applyFunc(
-            ArrayContext context, boolean truncateOverflows, Func f,
-            Matrix<? extends UpdatablePArray> result, Matrix<? extends PArray> x) {
+            ArrayContext context,
+            boolean truncateOverflows,
+            Func f,
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> x) {
         applyFunc(context, truncateOverflows, f, result, several(PArray.class, x));
     }
 
@@ -3285,7 +3416,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3313,7 +3444,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2))</code>.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3370,7 +3501,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3399,7 +3530,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3))</code>.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3460,7 +3591,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, Matrix, Matrix, Matrix)
      * applyFunc(context, true, f, result, x1, x2, x3, x4)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x1      1st AlgART matrix.
@@ -3492,7 +3623,7 @@ public class Matrices {
      * applyFunc}(context, truncateOverflows, f, result, {@link #several(Class, Matrix[])
      * several}(PArray.class, x1, x2, x3, x4))</code>.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3549,7 +3680,7 @@ public class Matrices {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, Matrix, List)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART matrices.
      * @param result  the destination matrix.
      * @param x       several AlgART matrices; may be empty.
@@ -3580,7 +3711,7 @@ public class Matrices {
      * {@link Matrix#dimEquals(Matrix) same dimensions} as <code>result</code> one,
      * and throws an exception in other case.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
      *                          <code>byte</code> and <code>char</code> resulting values (see comments to
      *                          {@link Arrays#asFuncArray(boolean, Func, Class, PArray...)} method).
@@ -3704,6 +3835,21 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #applyPrecision(ArrayContext, Matrix, Matrix)
+     * applyPrecision(null, result, matrix)}.
+     *
+     * @param result the destination matrix.
+     * @param matrix the source matrix.
+     * @throws NullPointerException  if <code>result</code> or <code>matrix</code> is {@code null}.
+     * @throws SizeMismatchException if passed matrices have different dimensions.
+     */
+    public static void applyPrecision(
+            Matrix<? extends UpdatablePArray> result,
+            Matrix<? extends PArray> matrix) {
+        applyPrecision(null, result, matrix);
+    }
+
+    /**
      * Equivalent to creating a "lazy" matrix by <code>lazy = {@link #asPrecision(Matrix, Class)
      * asPrecision(matrix, result.elementType()}</code> call
      * and copying it into the <code>result</code> argument by
@@ -3716,7 +3862,7 @@ public class Matrices {
      * <p>If the source and result matrices have the same element type, this method just copies <code>matrix</code>
      * to <code>result</code>.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param result  the destination matrix.
      * @param matrix  the source matrix.
      * @throws NullPointerException  if <code>result</code> or <code>matrix</code> is {@code null}.
@@ -4146,7 +4292,6 @@ public class Matrices {
     public static void bitNotToOther(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> source) {
         Matrices.applyFunc(ArrayContext.DEFAULT_SINGLE_THREAD, Func.REVERSE, result, source);
     }
-
 
     /*Repeat() packBitsGreater ==> packBitsLess,,packBitsGreaterOrEqual,,packBitsLessOrEqual */
 
@@ -4642,7 +4787,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the information about copying.
@@ -4666,7 +4811,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; can be {@code null}, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
@@ -4699,7 +4844,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context       the context of copying; can be {@code null}, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination matrix.
      * @param src           the source matrix.
      * @param numberOfTasks the required number of parallel tasks;
@@ -4734,7 +4879,7 @@ public class Matrices {
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
      * or throws {@link SizeMismatchException} in other case.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param dest    the destination matrix.
      * @param src     the source matrix.
      * @return the result of {@link Arrays#compareAndCopy Arrays.compareAndCopy} call.
@@ -4772,6 +4917,34 @@ public class Matrices {
         copy(ArrayContext.DEFAULT_SINGLE_THREAD, dest, src);
     }
 
+    /**
+     * Equivalent to {@link #copyRegion(ArrayContext, Matrix, Matrix, Region, long...)
+     * copyRegion(null, dest, src, destRegion, shifts)}.
+     *
+     * @param dest       the destination matrix.
+     * @param src        the source matrix.
+     * @param destRegion the region in the destination matrix that should be copied from the source one.
+     * @param shifts     the shift between the source and destination regions.
+     * @throws NullPointerException      if <code>dest</code>, <code>src</code>, <code>destRegion</code>
+     *                                   or <code>shifts</code> argument is {@code null}.
+     * @throws IllegalArgumentException  if the source and destination element types do not match,
+     *                                   i.e. if <code>dest.{@link Matrix#elementType() elementType()}</code>
+     *                                   is not equal to <code>src.{@link Matrix#elementType() elementType()}</code>
+     *                                   and is not its superclass (for non-primitive element types).
+     * @throws IndexOutOfBoundsException if some integer point <i>x</i>, belonging to <code>destRegion</code>,
+     *                                   lies outside <code>dest</code> matrix,
+     *                                   or the integer point <i>x</i>', obtained from it by
+     *                                   subtracting <code>shifts</code>,  lies outside <code>src</code> matrix
+     *                                   (for regions, other than {@link Matrices.Hyperparallelepiped}, can be thrown
+     *                                   in the middle of working <i>after</i> copying some elements).
+     */
+    public static void copyRegion(
+            Matrix<? extends UpdatableArray> dest,
+            Matrix<? extends Array> src,
+            Region destRegion,
+            long... shifts) {
+        copyRegion(null, dest, src, destRegion, shifts);
+    }
 
     /**
      * Copies the specified region from <code>src</code> AlgART matrix to <code>dest</code> AlgART matrix.
@@ -4781,7 +4954,7 @@ public class Matrices {
      * is obtained from <code>destRegion</code> by <i>subtracting</i> the specified <code>shifts</code>
      * from all coordinates of <code>destRegion</code>.
      *
-     * <p>More precisely, this method is equivalent to the following loop (and, of course, works faster):
+     * <p>More precisely, this method is 3 the following loop (and, of course, works faster):
      *
      * <pre>
      * for (all possible long coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub
@@ -4838,7 +5011,7 @@ public class Matrices {
      * before starting the copying, and <code>IndexOutOfBoundsException</code> is thrown if necessary
      * in the very beginning: so, this method is atomic regarding failures for hyperparallelepipeds.
      *
-     * @param context    the context of copying; can be {@code null}, then it will be ignored.
+     * @param context    the context of copying; can be {@code null}.
      * @param dest       the destination matrix.
      * @param src        the source matrix.
      * @param destRegion the region in the destination matrix that should be copied from the source one.
@@ -4861,7 +5034,8 @@ public class Matrices {
             ArrayContext context,
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
-            Region destRegion, long... shifts) {
+            Region destRegion,
+            long... shifts) {
         Objects.requireNonNull(dest, "Null dest argument");
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(destRegion, "Null destRegion argument");
@@ -4941,7 +5115,7 @@ public class Matrices {
      * }
      * </pre>
      *
-     * @param context      the context of copying; can be {@code null}, then it will be ignored.
+     * @param context      the context of copying; can be {@code null}.
      * @param dest         the destination matrix.
      * @param src          the source matrix.
      * @param destRegion   the region in the destination matrix that should be copied from the source one.
@@ -4963,7 +5137,9 @@ public class Matrices {
             ArrayContext context,
             Matrix<? extends UpdatableArray> dest,
             Matrix<? extends Array> src,
-            Region destRegion, long[] shifts, Object outsideValue) {
+            Region destRegion,
+            long[] shifts,
+            Object outsideValue) {
         Objects.requireNonNull(dest, "Null dest argument");
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(destRegion, "Null destRegion argument");
@@ -5001,6 +5177,27 @@ public class Matrices {
     }
 
     /**
+     * Equivalent to {@link #fillRegion(ArrayContext, Matrix, Region, Object)
+     * fillRegion(null, dest, destRegion, value)}.
+     *
+     * @param dest       the destination matrix.
+     * @param destRegion the region in the destination matrix that should be filled by the specified value.
+     * @param value      the value to be stored in all elements of the matrix inside the region.
+     * @throws NullPointerException if <code>dest</code> or <code>destRegion</code>
+     *                              argument is {@code null}.
+     * @throws ClassCastException   if <code>value</code> is not {@code null} and its class is illegal, i.e.
+     *                              cannot be cast to the necessary type according the rules specified
+     *                              for the {@link Matrix.ContinuationMode#getConstantMode(Object)
+     *                              constant submatrix continuation mode}.
+     */
+    public static void fillRegion(
+            Matrix<? extends UpdatableArray> dest,
+            Region destRegion,
+            Object value) {
+        fillRegion(null, dest, destRegion, value);
+    }
+
+    /**
      * Fills the specified region in <code>dest</code> AlgART matrix with the specified value.
      * Equivalent to the following call:
      * <pre>
@@ -5025,7 +5222,7 @@ public class Matrices {
      * @param dest       the destination matrix.
      * @param destRegion the region in the destination matrix that should be filled by the specified value.
      * @param value      the value to be stored in all elements of the matrix inside the region.
-     * @throws NullPointerException if <code>dest</code>, <code>src</code> or <code>destRegion</code>
+     * @throws NullPointerException if <code>dest</code> or <code>destRegion</code>
      *                              argument is {@code null}.
      * @throws ClassCastException   if <code>value</code> is not {@code null} and its class is illegal, i.e.
      *                              cannot be cast to the necessary type according the rules specified
@@ -5035,7 +5232,8 @@ public class Matrices {
     public static void fillRegion(
             ArrayContext context,
             Matrix<? extends UpdatableArray> dest,
-            Region destRegion, Object value) {
+            Region destRegion,
+            Object value) {
         copyRegion(context, dest, dest, destRegion, dest.dimensions(), value);
     }
 

@@ -37,7 +37,7 @@ import java.util.Locale;
 import java.util.Random;
 
 /**
- * <p>Test for {@link Matrices#fillRegion(ArrayContext, Matrix, Matrices.Region, Object)} method
+ * <p>Test for {@link Matrices#fillRegion(Matrix, Matrices.Region, Object)} method
  * for a case of {@link Matrices.Polygon2D}.</p>
  *
  * @author Daniel Alievsky
@@ -46,8 +46,8 @@ public class FillPolygonTest {
     public static void main(String[] args) throws IOException {
         if (args.length < 4) {
             System.out.println("Usage: " + FillPolygonTest.class.getName()
-                + " numberOfTests elementType style matrixWidth matrixHeight numberOfVertices"
-                + " resultFileName resultAWTFileName [randSeed]");
+                    + " numberOfTests elementType style matrixWidth matrixHeight numberOfVertices"
+                    + " resultFileName resultAWTFileName [randSeed]");
             return;
         }
         final int numberOfTests = Integer.parseInt(args[0]);
@@ -122,17 +122,17 @@ public class FillPolygonTest {
                 } else if (style.equals("rectangle")) {
                     int n1 = numberOfVertices / 4, n2 = numberOfVertices / 2, n3 = 3 * numberOfVertices / 4;
                     vertices[k][0] = k < n1 ? (double) k / n1 * width
-                        : k < n2 ? 0.9 * width
-                        : k < n3 ? (double) (n3 - k) / n1 * width
-                        : 0.1 * width;
+                            : k < n2 ? 0.9 * width
+                            : k < n3 ? (double) (n3 - k) / n1 * width
+                            : 0.1 * width;
                     vertices[k][1] = k < n1 ? 0.1 * height
-                        : k < n2 ? (double) (k - n1) / n1 * height
-                        : k < n3 ? 0.9 * height
-                        : (double) (numberOfVertices - k) / n1 * height;
+                            : k < n2 ? (double) (k - n1) / n1 * height
+                            : k < n3 ? 0.9 * height
+                            : (double) (numberOfVertices - k) / n1 * height;
                 } else if (style.equals("spiral") || style.equals("bigspiral") || style.equals("largespiral")) {
                     final double fi = 50.0 * Math.PI * (double) k / (double) numberOfVertices;
                     final double r = (style.equals("spiral") ? 0.5 : style.equals("bigspiral") ? 3.0 : 1e9)
-                        * (height - 1) * (double) k / (double) numberOfVertices;
+                            * (height - 1) * (double) k / (double) numberOfVertices;
                     vertices[k][0] = 0.5 * width + r * Math.cos(fi);
                     vertices[k][1] = 0.5 * height + r * Math.sin(fi);
                 } else if (style.equals("horizontal")) {
@@ -167,19 +167,19 @@ public class FillPolygonTest {
                 if (testCount == 0) {
                     if (k < 20) {
                         System.out.printf(Locale.US,
-                            "Making vertex #%d: (%.3f, %.3f)%n", k, vertices[k][0], vertices[k][1]);
+                                "Making vertex #%d: (%.3f, %.3f)%n", k, vertices[k][0], vertices[k][1]);
                     } else if (k == 20) {
                         System.out.println("...");
                     }
                 }
             }
             final Matrix<? extends UpdatablePArray> matrix = Arrays.SMM.newMatrix(
-                UpdatablePArray.class, elementType, width, height);
+                    UpdatablePArray.class, elementType, width, height);
             final Matrices.Polygon2D polygon = Matrices.Region.getPolygon2D(vertices);
             System.out.printf("Filling polygon \"%s\" with %d vertices at matrix %s[%dx%d]...%n",
-                style, numberOfVertices, elementType, width, height);
+                    style, numberOfVertices, elementType, width, height);
             long t1 = System.nanoTime();
-            Matrices.fillRegion(null, matrix, polygon, matrix.array().maxPossibleValue(1.0));
+            Matrices.fillRegion(matrix, polygon, matrix.array().maxPossibleValue(1.0));
             long t2 = System.nanoTime();
             System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
             MatrixIO.writeImage(resultFile.toPath(), Collections.singletonList(matrix));
@@ -188,7 +188,7 @@ public class FillPolygonTest {
             if (width == (int) width && height == (int) height) {
                 System.out.printf("Filling polygon by AWT with %d vertices...%n", numberOfVertices);
                 final BufferedImage bufferedImage = new BufferedImage(
-                    (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
+                        (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
                 final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
                 final int[] xPoints = new int[numberOfVertices];
                 final int[] yPoints = new int[numberOfVertices];

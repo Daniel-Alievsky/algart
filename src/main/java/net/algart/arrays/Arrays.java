@@ -2811,7 +2811,7 @@ public class Arrays {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, Func, UpdatablePArray, PArray...)
      * applyFunc(context, true, f, result, x)}.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param f       the mathematical function applied to the source AlgART arrays.
      * @param result  the destination array.
      * @param x       the source arrays; may be empty;
@@ -2835,7 +2835,7 @@ public class Arrays {
      * Equivalent to {@link #applyFunc(ArrayContext, boolean, int, boolean, Func, UpdatablePArray, PArray...)
      * applyFunc(context, f, truncateOverflows, 0, true, result, x)}.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows the behavior of typecasting: see
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)}.
      * @param f                 the mathematical function applied to the source AlgART arrays.
@@ -2876,7 +2876,7 @@ public class Arrays {
      * another way: <code>lazy = {@link #asIndexFuncArray(boolean, Func, Class, long)
      * asIndexFuncArray(truncateOverflows, f, result.type(), result.length())}</code>.
      *
-     * @param context           the context of copying; can be {@code null}, then it will be ignored.
+     * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows the behavior of typecasting: see
      *                          {@link #asFuncArray(boolean, Func, Class, PArray...)}.
      * @param numberOfTasks     the desired number of parallel tasks;
@@ -3349,7 +3349,7 @@ public class Arrays {
      * {@link MutableObjectArray} subinterfaces), this method may copy only references to elements,
      * but also may copy the content of elements: it depends on implementation.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param dest    the destination array.
      * @param src     the source array.
      * @return the information about copying.
@@ -3380,7 +3380,7 @@ public class Arrays {
      * <p>This method can be convenient, for example, if you are sure that multithreading
      * is not useful in a concrete algorithm and the number of tasks should be <code>1</code>.
      *
-     * @param context       the context of copying; can be {@code null}, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of parallel tasks;
@@ -3421,7 +3421,7 @@ public class Arrays {
      * <p>If <code>strictMode=true</code>, this method is equivalent to
      * {@link #copy(ArrayContext context, UpdatableArray dest, Array src, int numberOfTasks)}.
      *
-     * @param context       the context of copying; can be {@code null}, then it will be ignored.
+     * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination array.
      * @param src           the source array.
      * @param numberOfTasks the desired number of parallel tasks;
@@ -3456,7 +3456,7 @@ public class Arrays {
      * array was changed as a result of copying from <code>src</code> array,
      * in terms of the {@link Array#equals(Object)} method.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param dest    the destination array.
      * @param src     the source array.
      * @return the information about copying.
@@ -3592,7 +3592,7 @@ public class Arrays {
      * It can be useful if you call this method in a separate thread and need to use
      * the calculated information after finishing this method.
      *
-     * @param context    the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context    the context of calculations; can be {@code null}.
      * @param array      some primitive array.
      * @param minMaxInfo the object where to store the indexes and values of found minimum and maximum;
      *                   can be {@code null} if you need only the values of the minimum and maximum.
@@ -3632,7 +3632,7 @@ public class Arrays {
     /**
      * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(context, array, null)}.
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array.
      * @return the values of the found minimal and maximal elements.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
@@ -3671,7 +3671,7 @@ public class Arrays {
      *
      * <p>Please remember that <code>ByteArray</code> and <code>ShortArray</code> are interpreted as unsigned.
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array.
      * @return the sum of all array elements.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
@@ -3737,7 +3737,7 @@ public class Arrays {
      *
      * <p>Please remember that <code>ByteArray</code> and <code>ShortArray</code> are interpreted as unsigned.
      *
-     * @param context       the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context       the context of calculations; can be {@code null}.
      * @param array         some primitive array, excluding floating point arrays.
      * @param checkOverflow whether overflow should lead to <code>ArithmeticException</code>
      * @return the sum of all array elements.
@@ -3775,7 +3775,7 @@ public class Arrays {
      * Equivalent to <code>{@link #preciseSumOf(ArrayContext, PFixedArray, boolean)
      * preciseSumOf(context, array, false)}</code>.
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array, excluding floating point arrays.
      * @return the sum of all array elements.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
@@ -3792,7 +3792,7 @@ public class Arrays {
      * Equivalent to <code>{@link #preciseSumOf(ArrayContext, PFixedArray)
      * preciseSumOf(context, bitArray)}</code>.
      *
-     * @param context  the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context  the context of calculations; can be {@code null}.
      * @param bitArray the bit array.
      * @return the number of bits set to <code>true</code> in this array.
      * @throws NullPointerException if <code>bitArray</code> argument is {@code null}.
@@ -3879,7 +3879,7 @@ public class Arrays {
      *
      * <p>Please remember that <code>ByteArray</code> and <code>ShortArray</code> are interpreted as unsigned.
      *
-     * @param context   the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context   the context of calculations; can be {@code null}.
      * @param array     some primitive array.
      * @param histogram the histogram to be incremented: <code>histogram.length</code> columns
      *                  between <code>from</code> and <code>to</code>.
@@ -3938,7 +3938,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context   the context of calculations; can be {@code null}.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <code>array</code>.
@@ -3992,7 +3992,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context   the context of calculations; can be {@code null}.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <code>array</code>.
@@ -4047,7 +4047,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context   the context of calculations; can be {@code null}.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <code>array</code>.
@@ -4101,7 +4101,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context   the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context   the context of calculations; can be {@code null}.
      * @param bits      the bit array that will contain results of comparison of the passed array with the threshold.
      * @param array     some primitive array that should be compared with the threshold.
      * @param threshold the threshold that will be compared with all elements of <code>array</code>.
@@ -4181,7 +4181,7 @@ public class Arrays {
      * {@link UpdatablePArray#setDouble(long, double)} and
      * {@link #asFuncArray(boolean, Func, Class, PArray...) asFuncArray} methods.)
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array.
      * @param bits    the bit array that should be "unpacked" to <code>array</code>.
      * @param filler0 the value that will be set in <code>array</code> for zero bits.
@@ -4251,7 +4251,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array.
      * @param bits    the bit array, the unit elements of which should be "unpacked" to <code>array</code>.
      * @param filler1 the value that will be set in <code>array</code> for unit bits.
@@ -4310,7 +4310,7 @@ public class Arrays {
      * and may be interruptible by <code>Thread.interrupt()</code>, alike
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
      *
-     * @param context the context of calculations; can be {@code null}, then it will be ignored.
+     * @param context the context of calculations; can be {@code null}.
      * @param array   some primitive array.
      * @param bits    the bit array, the zero elements of which should be "unpacked" to <code>array</code>.
      * @param filler0 the value that will be set in <code>array</code> for zero bits.
@@ -4377,6 +4377,19 @@ public class Arrays {
     }
 
     /**
+     * Equivalent to {@link #applyPrecision(ArrayContext, UpdatablePArray, PArray)
+     * applyPrecision(null, result, array)}.
+     *
+     * @param result  the destination array.
+     * @param array   the source array.
+     * @throws NullPointerException  if <code>result</code> or <code>array</code> is {@code null}.
+     * @throws SizeMismatchException if passed arrays have different lengths.
+     */
+    public static void applyPrecision(UpdatablePArray result, PArray array) {
+        applyPrecision(null, result, array);
+    }
+
+    /**
      * Equivalent to creating a "lazy" array by <code>lazy = {@link #asPrecision(PArray, Class)
      * asPrecision(array, result.elementType()}</code> call
      * and copying it into the <code>result</code> argument by
@@ -4388,7 +4401,7 @@ public class Arrays {
      * <p>If the source and result array have the same element type, this method just copies <code>array</code>
      * to <code>result</code>.
      *
-     * @param context the context of copying; can be {@code null}, then it will be ignored.
+     * @param context the context of copying; can be {@code null}.
      * @param result  the destination array.
      * @param array   the source array.
      * @throws NullPointerException  if <code>result</code> or <code>array</code> is {@code null}.
@@ -8056,7 +8069,7 @@ public class Arrays {
          * If this argument is not {@code null}, the lengths of the source and destination arrays
          * must be identical.
          *
-         * @param context        the context of processing; can be {@code null}, then it will be ignored.
+         * @param context        the context of processing; can be {@code null}.
          * @param dest           the destination array or {@code null} if this algorithm does not write data
          *                       to any resulting AlgART array.
          * @param src            the source processed array.
@@ -8973,7 +8986,7 @@ public class Arrays {
          * Arrays.copy(context, dest, src, numberOfTasks)} call, excepting that
          * the last method sometimes uses more complex copying algorithms.
          *
-         * @param context        the context of copying; can be {@code null}, then it will be ignored.
+         * @param context        the context of copying; can be {@code null}.
          * @param dest           the destination array.
          * @param src            the source array.
          * @param numberOfTasks  the desired number of parallel tasks or 0 if you want to determine

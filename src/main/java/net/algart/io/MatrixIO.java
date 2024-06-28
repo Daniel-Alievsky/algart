@@ -297,7 +297,7 @@ public class MatrixIO {
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
-        final Matrix<PArray> matrix = Matrices.interleave(null, image);
+        final Matrix<PArray> matrix = Matrices.interleave(image);
         BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
         writeBufferedImage(file, bufferedImage, customizer);
     }
@@ -305,7 +305,7 @@ public class MatrixIO {
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         BufferedImage bufferedImage = readBufferedImage(file);
         final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
-        return Matrices.separate(null, matrix);
+        return Matrices.separate(matrix);
     }
 
     /**
