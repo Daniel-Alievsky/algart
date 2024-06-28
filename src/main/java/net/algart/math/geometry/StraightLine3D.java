@@ -400,7 +400,8 @@ public final class StraightLine3D implements Cloneable {
      * Returns projection of the given vector <b>a</b> to this straight: <code>ax * dx + ay * dy + az * dz</code>.
      *
      * <p>Equivalent to
-     * <code>{@link Orthonormal3DBasis#scalarProduct Orthonormal3DBasis.scalarProduct}(ax, ay, ax, dx, dy, dz).</p>
+     * <code>{@link Orthonormal3DBasis#scalarProduct
+     * Orthonormal3DBasis.scalarProduct}(ax, ay, ax, dx, dy, dz)</code>.</p>
      *
      * @param ax x-component of the vector.
      * @param ay y-component of the vector.

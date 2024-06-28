@@ -6685,7 +6685,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static int min(int a, int b, int c) {
         return Math.min(Math.min(a, b), c);
@@ -6697,7 +6697,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static int max(int a, int b, int c) {
         return Math.max(Math.max(a, b), c);
@@ -6710,7 +6710,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static int min(int a, int b, int c, int d) {
         return Math.min(Math.min(a, b), Math.min(c, d));
@@ -6723,7 +6723,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
      */
     public static int max(int a, int b, int c, int d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6751,7 +6751,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static long min(long a, long b, long c) {
         return Math.min(Math.min(a, b), c);
@@ -6763,7 +6763,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static long max(long a, long b, long c) {
         return Math.max(Math.max(a, b), c);
@@ -6776,7 +6776,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static long min(long a, long b, long c, long d) {
         return Math.min(Math.min(a, b), Math.min(c, d));
@@ -6789,7 +6789,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
      */
     public static long max(long a, long b, long c, long d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6817,7 +6817,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static float min(float a, float b, float c) {
         return Math.min(Math.min(a, b), c);
@@ -6829,7 +6829,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static float max(float a, float b, float c) {
         return Math.max(Math.max(a, b), c);
@@ -6842,7 +6842,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static float min(float a, float b, float c, float d) {
         return Math.min(Math.min(a, b), Math.min(c, d));
@@ -6855,7 +6855,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
      */
     public static float max(float a, float b, float c, float d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
@@ -6883,7 +6883,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static double min(double a, double b, double c) {
         return Math.min(Math.min(a, b), c);
@@ -6895,7 +6895,7 @@ public class Arrays {
      * @param a 1st value.
      * @param b 2nd value.
      * @param c 3rd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>.
+     * @return maximum from <code>a</code>, <code>b</code>, <code>c</code>.
      */
     public static double max(double a, double b, double c) {
         return Math.max(Math.max(a, b), c);
@@ -6908,7 +6908,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return minimum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return minimum from <code>a</code>, <code>b</code>, <code>c</code>, <code>d</code>.
      */
     public static double min(double a, double b, double c, double d) {
         return Math.min(Math.min(a, b), Math.min(c, d));
@@ -6921,7 +6921,7 @@ public class Arrays {
      * @param b 2nd value.
      * @param c 3rd value.
      * @param d 4thd value.
-     * @return maximum from <code>a</code>, <code></code>b</ty>, <code>c</code>, <code>d</code>.
+     * @return maximum from <code>a</code>, <code>b<</code>, <code>c</code>, <code>d</code>.
      */
     public static double max(double a, double b, double c, double d) {
         return Math.max(Math.max(a, b), Math.max(c, d));
