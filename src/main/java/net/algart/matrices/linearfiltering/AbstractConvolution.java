@@ -37,12 +37,12 @@ public abstract class AbstractConvolution extends AbstractArrayProcessorWithCont
      * Creates an instance of this class with the given context.
      *
      * @param context                   the context used by this instance for all operations.
-     * @param incrementForUnsigned      if <tt>true</tt>, when the type of the convolution result is
+     * @param incrementForUnsigned      if <code>true</code>, when the type of the convolution result is
      *                                  an unsigned number in terms of AlgART libraries &mdash;
-     *                                  <tt>byte</tt>, <tt>short</tt>, <tt>char</tt> &mdash;
-     *                                  it is automatically incremented by 128 (<tt>byte</tt>) or 32768
-     *                                  (<tt>short</tt> and <tt>char</tt>).
-     * @param incrementByHalfForInteger if <tt>true</tt>, when the type of the convolution result is integer,
+     *                                  <code>byte</code>, <code>short</code>, <code>char</code> &mdash;
+     *                                  it is automatically incremented by 128 (<code>byte</code>) or 32768
+     *                                  (<code>short</code> and <code>char</code>).
+     * @param incrementByHalfForInteger if <code>true</code>, when the type of the convolution result is integer,
      *                                  the precise result is automatically increments by 0.5 before casting.
      */
     protected AbstractConvolution(ArrayContext context,

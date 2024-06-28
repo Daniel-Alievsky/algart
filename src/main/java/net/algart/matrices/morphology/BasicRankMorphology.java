@@ -80,15 +80,15 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
     /**
      * Returns new instance of some inheritor of this class, implementing dilation and erosion operations
      * via the percentiles. Namely, in the created object
-     * <tt>{@link #dilation(Matrix, Pattern) dilation}(m,pattern)</tt> method is equivalent to
+     * <code>{@link #dilation(Matrix, Pattern) dilation}(m,pattern)</code> method is equivalent to
      * <tt>{@link #percentile(Matrix, double, Pattern)
      * percentile}(m,dilationLevel*<i>N</i>,pattern)</tt> and
-     * <tt>{@link #erosion(Matrix, Pattern) erosion}(m,pattern)</tt> method is equivalent to
+     * <code>{@link #erosion(Matrix, Pattern) erosion}(m,pattern)</code> method is equivalent to
      * <tt>{@link #percentile(Matrix, double, Pattern)
      * percentile}(m,dilationLevel*<i>N</i>,pattern.{@link Pattern#symmetric() symmetric()})</tt>,
-     * where <tt><i>N</i>=pattern.{@link Pattern#pointCount() pointCount()}-1</tt>
-     * and <tt>dilationLevel</tt> is the argument of this method. This argument must be in range
-     * <tt>0.0 &le; dilationLevel &le; 1.0</tt>.
+     * where <code><i>N</i>=pattern.{@link Pattern#pointCount() pointCount()}-1</code>
+     * and <code>dilationLevel</code> is the argument of this method. This argument must be in range
+     * <code>0.0 &le; dilationLevel &le; 1.0</code>.
      *
      * <p>More precisely, in the created object the methods
      * <ol>
@@ -100,14 +100,14 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * <p>work in the following way.
      *
      * <p>Let the double value <i>r</i> be
-     * <i>r</i>=<tt>dilationLevel*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt>
-     * in a case of dilation (<tt>isDilation</tt> argument is <tt>true</tt>) or
-     * <i>r</i>=<tt>(1.0-dilationLevel)*(pattern.{@link Pattern#pointCount() pointCount()}-1)</tt>
-     * in a case of erosion (<tt>isDilation</tt> argument is <tt>false</tt>).
-     * Then, let <tt>index</tt> be:
+     * <i>r</i>=<code>dilationLevel*(pattern.{@link Pattern#pointCount() pointCount()}-1)</code>
+     * in a case of dilation (<code>isDilation</code> argument is <code>true</code>) or
+     * <i>r</i>=<code>(1.0-dilationLevel)*(pattern.{@link Pattern#pointCount() pointCount()}-1)</code>
+     * in a case of erosion (<code>isDilation</code> argument is <code>false</code>).
+     * Then, let <code>index</code> be:
      * <ul>
-     * <li>this double value <tt>index</tt>=<i>r</i>, if the element type of
-     * the source matrix <tt>src</tt> is <tt>float</tt> or <tt>double</tt> <b>or</b>
+     * <li>this double value <code>index</code>=<i>r</i>, if the element type of
+     * the source matrix <code>src</code> is <code>float</code> or <code>double</code> <b>or</b>
      * if we are using the precise histogram model
      * (<tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> is <tt>true</tt>);</li>
      * <li>or the rounded (<tt>long</tt>) integer value <tt>index=Math.round(</tt><i>r</i><tt>)</tt>,

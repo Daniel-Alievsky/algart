@@ -45,7 +45,7 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
      *
      * @param context                   the {@link #context() context} that will be used by this object;
      *                                  can be {@code null}, then it will be ignored.
-     * @param incrementByHalfForInteger if <tt>true</tt>, when the type of the convolution result is integer,
+     * @param incrementByHalfForInteger if <code>true</code>, when the type of the convolution result is integer,
      *                                  the precise result is automatically increments by 0.5 before casting.
      * @return                          new instance of this class.
      */
@@ -56,8 +56,8 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
     /**
      * Returns new instance of this class, correcting unsigned convolutions results.
      * If the type of the convolution result is an unsigned number in terms of AlgART libraries &mdash;
-     * <tt>byte</tt>, <tt>short</tt>, <tt>char</tt> &mdash; it is automatically incremented by 128
-     * (<tt>byte</tt>) or 32768 (<tt>short</tt> and <tt>char</tt>).
+     * <code>byte</code>, <code>short</code>, <code>char</code> &mdash; it is automatically incremented by 128
+     * (<code>byte</code>) or 32768 (<code>short</code> and <code>char</code>).
      *
      * @param context                   the {@link #context() context} that will be used by this object;
      *                                  can be {@code null}, then it will be ignored.

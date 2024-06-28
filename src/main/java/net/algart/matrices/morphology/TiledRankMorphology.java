@@ -49,21 +49,22 @@ import java.util.Map;
  * This object works almost identically to the parent object with the only difference,
  * that it uses the specified tiler for performing all operations.</p>
  *
- * <p>More precisely, each method of this object creates an implementation <tt>p</tt> of {@link ApertureProcessor}
+ * <p>More precisely, each method of this object creates an implementation <code>p</code> of {@link ApertureProcessor}
  * interface. The only thing, performed by
  * {@link ApertureProcessor#process(Map, Map) process} method of
- * that object <tt>p</tt>, is calling the same method of <i>parent</i> object with the arguments
- * of <tt>p.{@link ApertureProcessor#process(Map, Map) process(dest,src)}</tt> method
- * (the source matrix or matrices are retrieved from <tt>src</tt>, the result is saved into <tt>dest</tt>).
- * The dependence aperture <tt>p.{@link ApertureProcessor#dependenceAperture(Object) dependenceAperture(...)}</tt>
+ * that object <code>p</code>, is calling the same method of <i>parent</i> object with the arguments
+ * of <code>p.{@link ApertureProcessor#process(Map, Map) process(dest,src)}</code> method
+ * (the source matrix or matrices are retrieved from <code>src</code>, the result is saved into <code>dest</code>).
+ * The dependence aperture <code>p.{@link ApertureProcessor#dependenceAperture(Object) dependenceAperture(...)}</code>
  * is calculated automatically on the base of the patterns and the performed operation.
  * Then, the method of this object executes the required operation with help of
  * <tt>{@link #tiler() tiler()}.{@link TiledApertureProcessorFactory#tile(ApertureProcessor)
  * tile}(p).{@link ApertureProcessor#process(Map, Map) process(dest,src)}</tt> call
- * &mdash; the source matrix or matrices are passed via <tt>src</tt>, the result is retrieved from <tt>dest</tt>.
+ * &mdash; the source matrix or matrices are passed via <code>src</code>,
+ * the result is retrieved from <code>dest</code>.
  * As a result, the same operation is performed tile-by-tile.</p>
  *
- * <p>The methods "<tt>as<i>Operation</i></tt>", returning a view of the passed sources matrices
+ * <p>The methods "<code>as<i>Operation</i></code>", returning a view of the passed sources matrices
  * (like {@link #asDilation(Matrix, Pattern)}, {@link #asPercentile(Matrix, double, Pattern)},
  * {@link #asRank(Class, Matrix, Matrix, Pattern)}, etc.) are an exception
  * from this rule. These methods of this class works in the same way, as in
@@ -73,8 +74,8 @@ import java.util.Map;
  * <p>Note: in improbable cases, when the dimensions of the source matrix and/or
  * the sizes of the pattern are extremely large (about 2<sup>63</sup>),
  * so that the necessary appended matrices should have dimensions or total number of elements,
- * greater than <tt>Long.MAX_VALUE</tt>,
- * the methods of this class throw <tt>IndexOutOfBoundsException</tt> and do nothing.
+ * greater than <code>Long.MAX_VALUE</code>,
+ * the methods of this class throw <code>IndexOutOfBoundsException</code> and do nothing.
  * See comments to {@link TiledApertureProcessorFactory} class, "Restriction" section for precise details.
  * Of course, these are very improbable cases.</p>
  *
@@ -98,7 +99,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
      * and the specified processing tiler.
      *
      * <p>Note: the {@link #context() context} of the created object is retrieved from
-     * <tt>parent.{@link Morphology#context() context()}</tt>, and
+     * <code>parent.{@link Morphology#context() context()}</code>, and
      * the {@link TiledApertureProcessorFactory#context() context} of the passed tiler
      * is automatically replaced with the same one &mdash; the current {@link #tiler() tiler}
      * of the created object is <tt>tiler.{@link TiledApertureProcessorFactory#context(ArrayContext)
@@ -110,7 +111,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
      *               that will perform all operations.
      * @param tiler  the tiler, which will be used for processing matrices by this class.
      * @return       new instance of this class.
-     * @throws NullPointerException if <tt>parent</tt> or <tt>tiler</tt> argument is {@code null}.
+     * @throws NullPointerException if <code>parent</code> or <code>tiler</code> argument is {@code null}.
      */
     public static TiledRankMorphology getInstance(RankMorphology parent, TiledApertureProcessorFactory tiler) {
         return new TiledRankMorphology(parent, tiler);

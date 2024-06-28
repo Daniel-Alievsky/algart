@@ -45,14 +45,14 @@ public class RankProcessors {
      * The real index <i>r</i> of the percentile for every element of the result is equal
      * to the corresponding element of the additional matrix <b>M</b><sub>0</sub>.
      *
-     * <p>More precisely, let <tt>rm</tt> is an instance of {@link BasicRankMorphology}, created by the call
+     * <p>More precisely, let <code>rm</code> is an instance of {@link BasicRankMorphology}, created by the call
      *
      * <blockquote><tt>rm = {@link
      * BasicRankMorphology#getInstance(ArrayContext context, double dilationLevel, CustomRankPrecision precision)},
      * </tt></blockquote>
      *
-     * <p>so that <tt>context</tt>, <tt>precision.{@link CustomRankPrecision#interpolated() interpolated()}</tt> and
-     * <tt>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</tt> are the same as the arguments
+     * <p>so that <code>context</code>, <code>precision.{@link CustomRankPrecision#interpolated() interpolated()}</code> and
+     * <code>precision.{@link CustomRankPrecision#bitLevels() bitLevels()}</code> are the same as the arguments
      * of this method. Then in the streaming aperture processor, created by this method:
      *
      * <ul>
@@ -61,15 +61,15 @@ public class RankProcessors {
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equivalent to
      * <b>R</b>=<tt>rm.{@link RankMorphology#asPercentile(Matrix, Matrix, net.algart.math.patterns.Pattern)
-     * asPercentile}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>), if the <tt>requiredType</tt> argument of
+     * asPercentile}</tt>(<b>M</b>, <b>M</b><sub>0</sub>, <b>P</b>), if the <code>requiredType</code> argument of
      * {@link
      * StreamingApertureProcessor#asProcessed(Class, Matrix, java.util.List, net.algart.math.patterns.Pattern)
      * asProcessed} method is equal to
      * <b>M</b>.{@link Matrix#type() type()}==<b>R</b>.{@link Matrix#type() type()};</li>
      *
-     * <li>if <tt>requiredType</tt> is not equal to <b>M</b>.{@link Matrix#type() type()}, it is equivalent to
+     * <li>if <code>requiredType</code> is not equal to <b>M</b>.{@link Matrix#type() type()}, it is equivalent to
      * <tt>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)
-     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </tt><b>R</b><tt>)</tt>;</li>
+     * Matrices.asFuncMatrix}(true, {@link Func#IDENTITY}, requiredType, </tt><b>R</b><code>)</code>;</li>
      *
      * <li>{@link
      * StreamingApertureProcessor#process(Matrix, Matrix, java.util.List, net.algart.math.patterns.Pattern)
@@ -85,15 +85,15 @@ public class RankProcessors {
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
      *                     can be {@code null}, then it will be ignored.
-     * @param interpolated the histogram model used while calculating percentile: <tt>true</tt> means
-     *                     the precise histogram model, <tt>false</tt> means the simple histogram model
+     * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
+     *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
      * @param bitLevels    the {@link CustomRankPrecision#bitLevels() bit levels} used while calculations.
      * @return             the new streaming aperture processor, finding the percentile.
-     * @throws NullPointerException     if <tt>bitLevels</tt> argument is {@code null}.
-     * @throws IllegalArgumentException if <tt>bitLevels.length==0</tt>, or if <tt>bitLevels.length&gt;31</tt>,
-     *                                  or if some of the elements <tt>bitLevels</tt> is not in 1..30 range, or if
-     *                                  <tt>bitLevels</tt>[<i>k</i>]&gt;=<tt>bitLevels</tt>[<i>k</i>+1]
+     * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bitLevels.length==0</code>, or if <code>bitLevels.length&gt;31</code>,
+     *                                  or if some of the elements <code>bitLevels</code> is not in 1..30 range, or if
+     *                                  <code>bitLevels</code>[<i>k</i>]&gt;=<code>bitLevels</code>[<i>k</i>+1]
      *                                  for some <i>k</i>.
      */
     public static StreamingApertureProcessor getPercentiler(ArrayContext context,

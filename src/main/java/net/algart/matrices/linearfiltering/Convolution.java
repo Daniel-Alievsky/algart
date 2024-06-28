@@ -32,7 +32,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
     Convolution context(ArrayContext newContext);
 
     /**
-     * Returns <tt>true</tt>, if this class works in the default
+     * Returns <code>true</code>, if this class works in the default
      * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC
      * pseudo-cyclic continuation mode}.
      *
@@ -43,8 +43,8 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * the comments to the {@link #convolution(Matrix, WeightedPattern)}
      * method as the default definition of convolution.
      *
-     * <p>This method returns <tt>true</tt> in {@link BasicConvolution} implementation.
-     * However, it usually returns <tt>false</tt> in {@link ContinuedConvolution} class
+     * <p>This method returns <code>true</code> in {@link BasicConvolution} implementation.
+     * However, it usually returns <code>false</code> in {@link ContinuedConvolution} class
      * &mdash; excepting the only degenerated case when the used
      * {@link ContinuedConvolution#continuationMode() continuation mode} is
      * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC PSEUDO_CYCLIC}.
@@ -58,7 +58,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
     /**
      * Equivalent to <tt>{@link #asConvolution(Class, Matrix, WeightedPattern)
      * asConvolution}(src.{@link Matrix#type(Class) type}(PArray.class), src, pattern)</tt>.
-     * In other words, the element type of the returned matrix is chosen the same as in <tt>src</tt> matrix.
+     * In other words, the element type of the returned matrix is chosen the same as in <code>src</code> matrix.
      *
      * @param src     the source matrix.
      * @param pattern the pattern.
@@ -79,13 +79,14 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * {@link ByteArray}, {@link ShortArray},
      * {@link IntArray}, {@link LongArray},
      * {@link FloatArray} or {@link DoubleArray}.
-     * The class of desired interface (one of 8 possible classes) must be passed as <tt>requiredType</tt> argument.
+     * The class of desired interface (one of 8 possible classes) must be passed as <code>requiredType</code> argument.
      * So, it defines the element type of the returned matrix.
-     * For example, if <tt>requiredType={@link ByteArray}.class</tt>, the returned matrix consists of <tt>byte</tt>
+     * For example, if <code>requiredType={@link ByteArray}.class</code>,
+     * the returned matrix consists of <code>byte</code>
      * elements. The rules of casting the real numbers, results of the convolution, to the desired element type
      * are the same as in
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...)}
-     * method with the argument <tt>truncateOverflows=true</tt>.
+     * method with the argument <code>truncateOverflows=true</code>.
      *
      * <p>The result is usually "lazy", that means that this method finishes immediately and all
      * actual calculations are performed while getting elements of the returned matrix.
@@ -122,7 +123,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * of the pattern points.
      * More precisely, let <i>m</i><sub><i>i</i></sub><tt>={@link Matrices#asShifted(Matrix, long...)
      * Matrices.asShifted}(src,ip.{@link net.algart.math.IPoint#coordinates() coordinates()})</tt>,
-     * where <tt>ip</tt> is the point <tt>#<i>i</i></tt> from all points contained in the pattern,
+     * where <code>ip</code> is the point <code>#<i>i</i></code> from all points contained in the pattern,
      * and let <i>w</i><i>i</i>=<tt>pattern.{@link WeightedPattern#weight(net.algart.math.IPoint)
      * weight}(ip)</tt>.
      * Then the every element of the returned matrix is the weighted sum of all corresponding elements
@@ -134,7 +135,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * <p>
      * The {@link Matrix#elementType() element type}
      * of the created matrix is the same as the element type of the source one.
-     * The <tt>byte</tt> and <tt>short</tt> elements are considered to be unsigned.
+     * The <code>byte</code> and <code>short</code> elements are considered to be unsigned.
      * If the element type if integer, the precise is rounded to the nearest integer.
      *
      * <p>The {@link BasicConvolution} class strictly complies this definition.
