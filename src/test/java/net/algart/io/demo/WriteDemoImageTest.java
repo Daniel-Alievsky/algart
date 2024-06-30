@@ -31,6 +31,8 @@ import net.algart.io.awt.MatrixToBufferedImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.SampleModel;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -78,9 +80,10 @@ public class WriteDemoImageTest {
 
         final Matrix<PArray> matrix = Matrices.interleave(image);
         //TODO!!
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPacked()
+        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
+        System.out.println(toString(bi));
         final String fileSuffix = MatrixIO.extension(targetFile);
         if (imageIOWrite) {
             System.out.println("Writing " + targetFile + " via ImageIO.write...");
@@ -107,7 +110,7 @@ public class WriteDemoImageTest {
         }
     }
 
-    private static Object makeSamples(Class<?> elementType, int bandCount, int dimX, int dimY) {
+    static Object makeSamples(Class<?> elementType, int bandCount, int dimX, int dimY) {
         final int matrixSize = dimX * dimY;
         if (elementType == byte.class) {
             byte[] channels = new byte[matrixSize * bandCount];
@@ -172,5 +175,14 @@ public class WriteDemoImageTest {
             return channels;
         }
         throw new UnsupportedOperationException("Unsupported elementType = " + elementType);
+    }
+
+    static String toString(BufferedImage bi) {
+        final SampleModel sm = bi.getSampleModel();
+        final DataBuffer db = bi.getData().getDataBuffer();
+        return bi
+                + "; sample model: " + sm + " " + sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands()
+                + " type " + sm.getDataType()
+                + "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
     }
 }

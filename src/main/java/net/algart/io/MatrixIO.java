@@ -299,13 +299,13 @@ public class MatrixIO {
         Objects.requireNonNull(image, "Null image");
         final Matrix<PArray> matrix = Matrices.interleave(image);
         //TODO!!
-        BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(matrix);
-        writeBufferedImage(file, bufferedImage, customizer);
+        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples().toBufferedImage(matrix);
+        writeBufferedImage(file, bi, customizer);
     }
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
-        BufferedImage bufferedImage = readBufferedImage(file);
-        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
+        final BufferedImage bi = readBufferedImage(file);
+        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bi);
         return Matrices.separate(matrix);
     }
 

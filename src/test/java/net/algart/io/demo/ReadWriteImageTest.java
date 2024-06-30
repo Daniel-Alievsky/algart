@@ -49,11 +49,13 @@ public class ReadWriteImageTest {
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
             var toMatrix = new BufferedImageToMatrix.ToInterleavedRGB();
-            var toBufferedImage = new MatrixToBufferedImage.InterleavedRGBToPacked();
+            var toBufferedImage = new MatrixToBufferedImage.InterleavedRGBToPackedSamples();
             toMatrix.setEnableAlpha(true);
             toBufferedImage.setAlwaysAddAlpha(false);
 
+            System.out.println("Reading " + sourceFile + "...");
             final BufferedImage bi = MatrixIO.readBufferedImage(sourceFile);
+            System.out.println(WriteDemoImageTest.toString(bi));
             long t1 = System.nanoTime();
             final List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
             long t2 = System.nanoTime();

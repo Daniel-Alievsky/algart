@@ -87,15 +87,6 @@ public abstract class MatrixToBufferedImage {
         }
         final int dimX = getWidth(interleavedMatrix);
         final int dimY = getHeight(interleavedMatrix);
-        final int bandCount = getBandCount(interleavedMatrix);
-        int[] bandMasks = rgbAlphaMasks(bandCount);
-        if (bandMasks != null) {
-            WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
-            DirectColorModel cm = bandMasks.length > 3 ?
-                    new DirectColorModel(32, bandMasks[0], bandMasks[1], bandMasks[2], bandMasks[3]) :
-                    new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
-            return new BufferedImage(cm, wr, false, null);
-        }
         byte[][] palette = palette();
         if (palette != null) {
             if (palette.length < 3)
@@ -105,6 +96,16 @@ public abstract class MatrixToBufferedImage {
                     new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2], palette[3]);
             WritableRaster wr = Raster.createInterleavedRaster(
                     dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null);
+            return new BufferedImage(cm, wr, false, null);
+        }
+        //TODO!! extract to method
+        final int bandCount = getBandCount(interleavedMatrix);
+        int[] bandMasks = rgbAlphaMasks(bandCount);
+        if (bandMasks != null) {
+            WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
+            DirectColorModel cm = bandMasks.length > 3 ?
+                    new DirectColorModel(32, bandMasks[0], bandMasks[1], bandMasks[2], bandMasks[3]) :
+                    new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
             return new BufferedImage(cm, wr, false, null);
         }
         int[] indexes = new int[dataBuffer.getNumBanks()];
@@ -328,14 +329,14 @@ public abstract class MatrixToBufferedImage {
         System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
-    public static class InterleavedRGBToPacked extends MatrixToBufferedImage {
+    public static class InterleavedRGBToPackedSamples extends MatrixToBufferedImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {
             return alwaysAddAlpha;
         }
 
-        public InterleavedRGBToPacked setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+        public InterleavedRGBToPackedSamples setAlwaysAddAlpha(boolean alwaysAddAlpha) {
             this.alwaysAddAlpha = alwaysAddAlpha;
             return this;
         }
@@ -430,7 +431,7 @@ public abstract class MatrixToBufferedImage {
     }
 
     //TODO!!
-    static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
+    static class InterleavedRGBToInterleavedSamples extends MatrixToBufferedImage {
         @Override
         public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
             return color.getRGB();
@@ -473,7 +474,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
+    public static class InterleavedBGRToPackedSamples extends InterleavedRGBToPackedSamples {
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
@@ -585,7 +586,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class MonochromeToIndexed extends InterleavedRGBToPacked {
+    public static class MonochromeToIndexed extends InterleavedRGBToPackedSamples {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {
