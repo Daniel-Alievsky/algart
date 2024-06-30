@@ -25,14 +25,15 @@
 package net.algart.arrays;
 
 import net.algart.math.IRange;
-import net.algart.math.functions.*;
+import net.algart.math.functions.ApertureFilterOperator;
+import net.algart.math.functions.ConstantFunc;
+import net.algart.math.functions.Func;
+import net.algart.math.functions.LinearOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.DoublePredicate;
-import java.util.function.DoubleUnaryOperator;
 
 /**
  * <p>Utilities useful for working with {@link Matrix AlgART matrices}.</p>
@@ -3744,58 +3745,6 @@ public class Matrices {
             arrays[k++] = m.array();
         }
         Arrays.applyFunc(context, truncateOverflows, f, result.array(), arrays);
-    }
-
-    /**
-     * Performs the specified predicate for all elements of <code>source</code> to produce <code>result</code>.
-     * <p>Equivalent to <code>{@link #applyFunc(ArrayContext, Func, Matrix, List)
-     * applyFunc}(context, func, result, source)</code>, where <code>func</code> has the following implementation:
-     * <pre>
-     *  public double get(double... x) {
-     *     return predicate.test(x[0]) ? 1.0 : 0.0;
-     *  }
-     * </pre>
-     *
-     * @param context   the context.
-     * @param predicate predicate to apply.
-     * @param result    the result matrix.
-     * @param source    the source matrix.
-     */
-    public static void applyPredicate(
-            ArrayContext context,
-            DoublePredicate predicate,
-            Matrix<? extends UpdatableBitArray> result,
-            Matrix<? extends PArray> source) {
-        Objects.requireNonNull(predicate);
-        Matrices.applyFunc(
-                context,
-                (Func1) x0 -> predicate.test(x0) ? 1.0 : 0.0, result, source);
-    }
-
-    /**
-     * Performs the specified function for all elements of <code>source</code> to produce <code>result</code>.
-     * <p>Equivalent to <code>{@link #applyFunc(ArrayContext, Func, Matrix, List)
-     * applyFunc}(context, func, result, source)</code>, where <code>func</code> has the following implementation:
-     * <pre>
-     *  public double get(double... x) {
-     *     return function.applyAsDouble(x[0]);
-     *  }
-     * </pre>
-     *
-     * @param context  the context.
-     * @param function function to apply.
-     * @param result   the result matrix.
-     * @param source   the source matrix.
-     */
-    public static void applyFunction(
-            ArrayContext context,
-            DoubleUnaryOperator function,
-            Matrix<? extends UpdatablePArray> result,
-            Matrix<? extends PArray> source) {
-        Objects.requireNonNull(function);
-        Matrices.applyFunc(
-                context,
-                (Func1) function::applyAsDouble, result, source);
     }
 
     /**

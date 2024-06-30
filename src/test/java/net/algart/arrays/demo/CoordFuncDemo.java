@@ -28,6 +28,7 @@ import net.algart.arrays.*;
 import net.algart.io.MatrixIO;
 import net.algart.math.functions.AbstractFunc;
 import net.algart.math.functions.Func;
+import net.algart.math.functions.Func1;
 import net.algart.math.functions.Func2;
 
 import java.io.IOException;
@@ -36,7 +37,15 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class CoordFuncDemo {
-    private static double myFunc(double x, double y) {
+    private static double myFuncForArray(double x) {
+        return x * 10;
+    }
+
+    private static boolean myPredicateForArray(double x) {
+        return (int) x % 5 == 0;
+    }
+
+    private static double myFuncForMatrix(double x, double y) {
         return (x + y) * 0.0001;
     }
 
@@ -51,24 +60,34 @@ public class CoordFuncDemo {
         final int dimX = Integer.parseInt(args[1]);
         final int dimY = Integer.parseInt(args[2]);
 
+        final PArray array1 = Arrays.asIndexFuncArray(
+                (Func1) CoordFuncDemo::myFuncForArray, DoubleArray.class, 100);
+        System.out.printf("Array, built on function:%n%s%n",
+                Arrays.toString(array1, "; ", 1000));
+
+        final PArray array2 = Arrays.asIndexFuncArray(
+                Func.of(CoordFuncDemo::myPredicateForArray), IntArray.class, 100);
+        System.out.printf("Array, built on function:%n%s%n",
+                Arrays.toString(array2, "; ", 1000));
+
         Func fSlow = new AbstractFunc() {
             @Override
             public double get(double... x) {
-                return myFunc(x[0], x[1]);
+                return myFuncForMatrix(x[0], x[1]);
             }
         };
         Func fQuick = new AbstractFunc() {
             @Override
             public double get(double... x) {
-                return myFunc(x[0], x[1]);
+                return myFuncForMatrix(x[0], x[1]);
             }
 
             @Override
             public double get(double x0, double x1) {
-                return myFunc(x0, x1);
+                return myFuncForMatrix(x0, x1);
             }
         };
-        Func2 fLambda = CoordFuncDemo::myFunc;
+        Func2 fLambda = CoordFuncDemo::myFuncForMatrix;
         Matrix<UpdatablePArray> m1 = Matrix.newMatrix(float.class, dimX, dimY);
         Matrix<UpdatablePArray> m2 = Matrix.newMatrix(float.class, dimX, dimY);
         Matrix<UpdatablePArray> m3 = Matrix.newMatrix(float.class, dimX, dimY);

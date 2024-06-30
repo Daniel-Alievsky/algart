@@ -28,6 +28,8 @@ import net.algart.math.IPoint;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.DoublePredicate;
 
 /**
  * <p>Abstract mathematical function
@@ -406,4 +408,21 @@ public interface Func {
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 5 arguments.
      */
     double get(double x0, double x1, double x2, double x3);
+
+    /**
+     * Returns the function {@link Func1} that is based on the given predicate and returns
+     * 1.0 for all values for which this predicate returns <code>true</code>,
+     * and 0.0 for all values for which this predicate returns <code>false</code>.
+     * Equivalent to
+     * <pre>
+     *     (Func1) x0 -> predicate.test(x0) ? 1.0 : 0.0;
+     * </pre>
+     * @param predicate some predicate for double values.
+     * @return equivalent AlgART function.
+     * @throws NullPointerException if the argument is {@code null}.
+     */
+    static Func1 of(DoublePredicate predicate) {
+        Objects.requireNonNull(predicate, "Null predicate");
+        return x0 -> predicate.test(x0) ? 1.0 : 0.0;
+    }
 }
