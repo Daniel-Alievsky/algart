@@ -298,7 +298,8 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
+        //TODO!!
+        BufferedImage bufferedImage = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(matrix);
         writeBufferedImage(file, bufferedImage, customizer);
     }
 

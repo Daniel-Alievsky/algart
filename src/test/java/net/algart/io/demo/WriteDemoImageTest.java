@@ -77,7 +77,8 @@ public class WriteDemoImageTest {
         List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
+        //TODO!!
+        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPacked()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
         final String fileSuffix = MatrixIO.extension(targetFile);

@@ -65,7 +65,7 @@ public class AWT2MatrixTest {
         final int dimY = matrices.get(0).dimY32();
 
         //TODO!! another converter
-        BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(
+        BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(
                 Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi3);
         System.out.printf("Writing AlgART conversion to %s...%n", resultFile3);

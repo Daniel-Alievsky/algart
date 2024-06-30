@@ -49,7 +49,7 @@ public class ReadWriteImageTest {
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
             var toMatrix = new BufferedImageToMatrix.ToInterleavedRGB();
-            var toBufferedImage = new MatrixToBufferedImage.InterleavedRGBToInterleaved();
+            var toBufferedImage = new MatrixToBufferedImage.InterleavedRGBToPacked();
             toMatrix.setEnableAlpha(true);
             toBufferedImage.setAlwaysAddAlpha(false);
 

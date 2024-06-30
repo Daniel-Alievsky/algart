@@ -328,14 +328,14 @@ public abstract class MatrixToBufferedImage {
         System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
-    public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
+    public static class InterleavedRGBToPacked extends MatrixToBufferedImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {
             return alwaysAddAlpha;
         }
 
-        public InterleavedRGBToInterleaved setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+        public InterleavedRGBToPacked setAlwaysAddAlpha(boolean alwaysAddAlpha) {
             this.alwaysAddAlpha = alwaysAddAlpha;
             return this;
         }
@@ -347,7 +347,7 @@ public abstract class MatrixToBufferedImage {
 
         @Override
         public String toString() {
-            return "InterleavedToInterleavedRGB (alwaysAddAlpha=" + alwaysAddAlpha + ")";
+            return "InterleavedRGBToPacked (alwaysAddAlpha=" + alwaysAddAlpha + ")";
         }
 
         @Override
@@ -429,7 +429,51 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
+    //TODO!!
+    static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
+        @Override
+        public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
+            return color.getRGB();
+        }
+
+        @Override
+        public String toString() {
+            return "InterleavedRGBToInterleaved";
+        }
+
+        @Override
+        protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
+            if (!(interleavedArray instanceof ByteArray)) {
+                throw new IllegalArgumentException("ByteArray required");
+            }
+            if (!(interleavedArray instanceof DirectAccessible da)) {
+                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
+            }
+            int len = (int) (interleavedArray.length() / bandCount);
+            if ((long) len * (long) bandCount != interleavedArray.length()) {
+                throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
+                        " is not divided by band count = " + bandCount);
+            }
+            byte[] ja = (byte[]) da.javaArray();
+            int offset = da.javaArrayOffset();
+            byte[] result = new byte[da.javaArrayLength()];
+            //
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        protected int[] rgbAlphaMasks(int bandCount) {
+            if (bandCount == 4 || bandCount == 2) {
+                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
+            } else if (bandCount == 3) {
+                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff};
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
         @Override
         protected int[] rgbAlphaMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
@@ -443,7 +487,7 @@ public abstract class MatrixToBufferedImage {
 
         @Override
         public String toString() {
-            return "InterleavedToInterleavedBGR (alwaysAddAlpha=" + isAlwaysAddAlpha() + ")";
+            return "InterleavedBGRToPacked (alwaysAddAlpha=" + isAlwaysAddAlpha() + ")";
         }
 
     }
@@ -541,7 +585,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class MonochromeToIndexed extends InterleavedRGBToInterleaved {
+    public static class MonochromeToIndexed extends InterleavedRGBToPacked {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {
