@@ -64,6 +64,8 @@ public class ReadWriteImageTest {
                 case "BGRToPacked" -> MatrixToBufferedImage.InterleavedBGRToPackedSamples.class;
                 case "RGBToInterleaved" -> MatrixToBufferedImage.InterleavedRGBToInterleavedSamples.class;
                 case "BGRToInterleaved" -> MatrixToBufferedImage.InterleavedBGRToInterleavedSamples.class;
+                case "RGBToBanded" -> MatrixToBufferedImage.InterleavedRGBToBanded.class;
+                case "BGRToBanded" -> MatrixToBufferedImage.InterleavedBGRToBanded.class;
                 default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 3]);
             };
         }
