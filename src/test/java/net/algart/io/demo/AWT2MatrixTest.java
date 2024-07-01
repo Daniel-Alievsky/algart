@@ -72,13 +72,17 @@ public class AWT2MatrixTest {
         MatrixIO.writeBufferedImage(resultFile3, bi3);
 
         BufferedImage bi4 = new BufferedImage(dimX, dimY, BufferedImage.TYPE_INT_BGR);
-        Graphics graphics = bi4.getGraphics();
-        graphics.setFont(new Font("Monospaced", Font.PLAIN, 50));
-        graphics.setColor(Color.GREEN);
-        graphics.drawString("Hello", 100, 100);
+        drawTextOnImage(bi4);
         System.out.printf("BufferedImage: %s%n", bi4);
         System.out.printf("Writing new test image to %s...%n", resultFile4);
         MatrixIO.writeBufferedImage(resultFile4, bi4);
         // Note: JPEG2000 will be written incorrectly in jai-imageio-jpeg2000 1.4.0!
+    }
+
+    static void drawTextOnImage(BufferedImage bi4) {
+        Graphics graphics = bi4.getGraphics();
+        graphics.setFont(new Font("Monospaced", Font.BOLD, 60));
+        graphics.setColor(new Color(0x808080));
+        graphics.drawString("Hello", 100, 100);
     }
 }

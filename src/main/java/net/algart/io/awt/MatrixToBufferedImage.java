@@ -431,7 +431,7 @@ public abstract class MatrixToBufferedImage {
     }
 
     //TODO!!
-    static class InterleavedRGBToInterleavedSamples extends MatrixToBufferedImage {
+    public static class InterleavedRGBToInterleavedSamples extends MatrixToBufferedImage {
         @Override
         public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
             return color.getRGB();
@@ -472,6 +472,9 @@ public abstract class MatrixToBufferedImage {
                 return null;
             }
         }
+    }
+
+    public static class InterleavedBGRToInterleavedSamples extends InterleavedRGBToInterleavedSamples {
     }
 
     public static class InterleavedBGRToPackedSamples extends InterleavedRGBToPackedSamples {
