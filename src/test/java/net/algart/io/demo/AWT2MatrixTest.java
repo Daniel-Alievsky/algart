@@ -64,13 +64,13 @@ public class AWT2MatrixTest {
         final int dimX = matrices.get(0).dimX32();
         final int dimY = matrices.get(0).dimY32();
 
-        BufferedImage bi2 = new MatrixToBufferedImage.InterleavedRGBToInterleavedSamples().toBufferedImage(
+        BufferedImage bi2 = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(
                 Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi2);
         System.out.printf("Writing AlgART InterleavedRGBToInterleavedSamples to %s...%n", resultFile2);
         MatrixIO.writeBufferedImage(resultFile2, bi2);
 
-        BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToPackedSamples().toBufferedImage(
+        BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(
                 Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi3);
         System.out.printf("Writing AlgART InterleavedRGBToPackedSamples to %s...%n", resultFile3);

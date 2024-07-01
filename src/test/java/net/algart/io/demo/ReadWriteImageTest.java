@@ -57,13 +57,13 @@ public class ReadWriteImageTest {
         final Path targetFile1 = Paths.get(args[startArgIndex + 1]);
         final Path targetFile2 = Paths.get(args[startArgIndex + 2]);
         Class<? extends MatrixToBufferedImage> matrixToBufferedImageClass =
-                MatrixToBufferedImage.InterleavedRGBToPackedSamples.class;
+                MatrixToBufferedImage.InterleavedRGBToPacked.class;
         if (args.length > startArgIndex + 3) {
             matrixToBufferedImageClass = switch (args[startArgIndex + 3]) {
-                case "RGBToPacked" -> MatrixToBufferedImage.InterleavedRGBToPackedSamples.class;
-                case "BGRToPacked" -> MatrixToBufferedImage.InterleavedBGRToPackedSamples.class;
-                case "RGBToInterleaved" -> MatrixToBufferedImage.InterleavedRGBToInterleavedSamples.class;
-                case "BGRToInterleaved" -> MatrixToBufferedImage.InterleavedBGRToInterleavedSamples.class;
+                case "RGBToPacked" -> MatrixToBufferedImage.InterleavedRGBToPacked.class;
+                case "BGRToPacked" -> MatrixToBufferedImage.InterleavedBGRToPacked.class;
+                case "RGBToInterleaved" -> MatrixToBufferedImage.InterleavedRGBToInterleaved.class;
+                case "BGRToInterleaved" -> MatrixToBufferedImage.InterleavedBGRToInterleaved.class;
                 case "RGBToBanded" -> MatrixToBufferedImage.InterleavedRGBToBanded.class;
                 case "BGRToBanded" -> MatrixToBufferedImage.InterleavedBGRToBanded.class;
                 default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 3]);
@@ -82,7 +82,7 @@ public class ReadWriteImageTest {
                 System.out.println("Conversion to monochrome...");
                 var separate = Matrices.separate(toMatrix.toMatrix(bi));
                 var intensity = ColorMatrices.asRGBIntensity(separate).clone();
-                bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples().toBufferedImage(intensity);
+                bi = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(intensity);
             }
 
             long t1 = System.nanoTime();

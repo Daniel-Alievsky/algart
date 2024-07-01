@@ -404,14 +404,14 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedRGBToPackedSamples extends MatrixToBufferedImage {
+    public static class InterleavedRGBToPacked extends MatrixToBufferedImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {
             return alwaysAddAlpha;
         }
 
-        public InterleavedRGBToPackedSamples setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+        public InterleavedRGBToPacked setAlwaysAddAlpha(boolean alwaysAddAlpha) {
             this.alwaysAddAlpha = alwaysAddAlpha;
             return this;
         }
@@ -494,7 +494,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedBGRToPackedSamples extends InterleavedRGBToPackedSamples {
+    public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
         @Override
         protected int[] packedSamplesRGBAMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
@@ -513,7 +513,7 @@ public abstract class MatrixToBufferedImage {
 
     }
 
-    public static class InterleavedRGBToInterleavedSamples extends MatrixToBufferedImage {
+    public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
         @Override
         public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
             return color.getRGB();
@@ -533,7 +533,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedBGRToInterleavedSamples extends InterleavedRGBToInterleavedSamples {
+    public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
         @Override
         protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
             return IntStream.range(0, bandCount).map(k -> bandCount - 1 - k).toArray();
@@ -629,7 +629,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class MonochromeToIndexed extends InterleavedRGBToPackedSamples {
+    public static class MonochromeToIndexed extends InterleavedRGBToPacked {
         private final byte[] baseColor0, baseColor255;
 
         public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {

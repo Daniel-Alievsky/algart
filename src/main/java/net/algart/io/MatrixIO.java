@@ -298,14 +298,14 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        //TODO!!
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples().toBufferedImage(matrix);
+        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
         writeBufferedImage(file, bi, customizer);
     }
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         final BufferedImage bi = readBufferedImage(file);
-        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bi);
+        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB()
+                .toMatrix(bi);
         return Matrices.separate(matrix);
     }
 

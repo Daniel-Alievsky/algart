@@ -79,8 +79,7 @@ public class WriteDemoImageTest {
         List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        //TODO!!
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples()
+        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
         System.out.println(toString(bi));
