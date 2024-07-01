@@ -31,6 +31,11 @@ import java.awt.image.*;
 import java.awt.image.DataBuffer;
 import java.util.Objects;
 
+/**
+ * Converter from {@link BufferedImage} into AlgART 3D interleaved matrices.
+ *
+ * @author Daniel Alievsky
+ */
 public abstract class BufferedImageToMatrix {
     private static final boolean USE_3_BANDS_FOR_NON_BANDED_GRAY = true;
     // - must be true to avoid a problem with reading gray images via Graphics2D ("simplest" algorithm)

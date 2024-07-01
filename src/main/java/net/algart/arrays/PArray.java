@@ -227,8 +227,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>byte[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -251,8 +252,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>char[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -275,8 +277,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>short[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -299,8 +302,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>int[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -323,8 +327,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>long[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -347,8 +352,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>float[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>
@@ -371,8 +377,9 @@ public interface PArray extends Array {
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>double[]</code> array.</p>
      *
-     * <p><b>Be careful: this method is potentially unsafe!</b> The main purpose of this method
-     * is to quickly access array data for <i>reading</i>. But it also allows you to <i>modify</i> this data,
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * The main purpose of this method is to quickly access array data for <i>reading</i>.
+     * But it also allows you to <i>modify</i> this data,
      * and the result of such modification is unpredictable: this may change the original AlgART array,
      * but may also not change. Typically you <b>should not</b> attempt to modify the Java array returned by this method;
      * this helps to avoid difficult bugs.</p>

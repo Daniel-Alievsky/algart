@@ -83,7 +83,6 @@ public class ReadWriteImageTest {
                 bi = new MatrixToBufferedImage.InterleavedRGBToPackedSamples().toBufferedImage(intensity);
             }
 
-            System.out.println(WriteDemoImageTest.toString(bi));
             long t1 = System.nanoTime();
             final List<Matrix<UpdatablePArray>> image = Matrices.separate(toMatrix.toMatrix(bi));
             long t2 = System.nanoTime();
@@ -104,6 +103,10 @@ public class ReadWriteImageTest {
             AWT2MatrixTest.drawTextOnImage(bi2);
             System.out.println("Writing " + targetFile2 + "...");
             MatrixIO.writeBufferedImage(targetFile2, bi2);
+
+            System.out.println("Source: " + WriteDemoImageTest.toString(bi));
+            System.out.println("Converted 1: " + WriteDemoImageTest.toString(bi1));
+            System.out.println("Converted 2: " + WriteDemoImageTest.toString(bi2));
             System.out.println("Matrix: " + matrix1);
             if (!matrix1.equals(matrix2)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");

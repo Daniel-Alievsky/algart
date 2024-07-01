@@ -30,9 +30,17 @@ import net.algart.math.functions.LinearFunc;
 import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
+import java.awt.image.DataBuffer;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
+/**
+ * Converter from AlgART 3D interleaved matrices into {@link BufferedImage}.
+ * For monochrome images, 2D matrices are also allowed.
+ *
+ * @author Daniel Alievsky
+ */
 public abstract class MatrixToBufferedImage {
     private boolean unsignedInt32 = false;
 
@@ -87,10 +95,16 @@ public abstract class MatrixToBufferedImage {
         }
         final int dimX = getWidth(interleavedMatrix);
         final int dimY = getHeight(interleavedMatrix);
+        final int bandCount = getBandCount(interleavedMatrix);
         byte[][] palette = palette();
         if (palette != null) {
-            if (palette.length < 3)
+            if (bandCount != 1) {
+                throw new AssertionError(bandCount + " > 1 bands must not be allowed when " +
+                        "palette() method returns non-null value");
+            }
+            if (palette.length < 3) {
                 throw new AssertionError("palette() method must return palette with 3 or 4 bands");
+            }
             IndexColorModel cm = palette.length == 3 ?
                     new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2]) :
                     new IndexColorModel(Byte.SIZE, 256, palette[0], palette[1], palette[2], palette[3]);
@@ -98,9 +112,7 @@ public abstract class MatrixToBufferedImage {
                     dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null);
             return new BufferedImage(cm, wr, false, null);
         }
-        //TODO!! extract to method
-        final int bandCount = getBandCount(interleavedMatrix);
-        int[] bandMasks = rgbAlphaMasks(bandCount);
+        final int[] bandMasks = packedSamplesRGBAMasks(bandCount);
         if (bandMasks != null) {
             WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
             DirectColorModel cm = bandMasks.length > 3 ?
@@ -108,21 +120,29 @@ public abstract class MatrixToBufferedImage {
                     new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
             return new BufferedImage(cm, wr, false, null);
         }
-        int[] indexes = new int[dataBuffer.getNumBanks()];
-        int[] offsets = new int[dataBuffer.getNumBanks()];
-        for (int k = 0; k < indexes.length; k++) {
-            indexes[k] = k;
-            offsets[k] = 0;
+        final int[] sampleOffsets = interleavedSamplesRGBAOffsets(bandCount);
+        if (sampleOffsets == null || sampleOffsets.length == 0) {
+            throw new AssertionError("interleavedSamplesRGBAOffsets() must return non-empty array, " +
+                    "but it returns " + java.util.Arrays.toString(sampleOffsets));
         }
-        WritableRaster wr = indexes.length == 1 ?
-                Raster.createInterleavedRaster(dataBuffer, dimX, dimY, dimX, 1, new int[]{0}, null) :
-                // - important! in other case,
-                // createGraphics().drawXxx method will use incorrect (translated) intensity
-                Raster.createBandedRaster(dataBuffer, dimX, dimY, dimX, indexes, offsets, null);
-        ColorSpace cs = ColorSpace.getInstance(indexes.length == 1 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
-        boolean hasAlpha = indexes.length > 3;
-        ComponentColorModel cm = new ComponentColorModel(cs, null,
-                hasAlpha, false, hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE, dataBuffer.getDataType());
+        final int numberOfChannels = sampleOffsets.length;
+        final int numberOfBanks = dataBuffer.getNumBanks();
+        final WritableRaster wr;
+        if (numberOfBanks == 1) {
+            wr = Raster.createInterleavedRaster(
+                    dataBuffer, dimX, dimY, dimX * numberOfChannels,
+                    numberOfChannels, sampleOffsets, null);
+        } else {
+            final int[] offsets = IntStream.range(0, numberOfBanks).map(k -> 0).toArray();
+            final int[] indexes = IntStream.range(0, numberOfBanks).toArray();
+            wr = Raster.createBandedRaster(
+                    dataBuffer, dimX, dimY, dimX,
+                    indexes, offsets, null);
+        }
+        // - Important! Even for monochrome case (numberOfChannels == 1), we must use createInterleavedRaster!
+        // If we try to call createBandedRaster in this case,
+        // createGraphics().drawXxx method will use incorrect (translated) intensity
+        ComponentColorModel cm = getComponentColorModel(dataBuffer, numberOfChannels);
         return new BufferedImage(cm, wr, false, null);
     }
 
@@ -271,18 +291,41 @@ public abstract class MatrixToBufferedImage {
     protected abstract java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount);
 
     /**
-     * Returns the band masks, which will be passed to <code>Raster.createPackedRaster</code> method,
+     * Returns the band masks, which will be passed to {@link
+     * Raster#createPackedRaster(java.awt.image.DataBuffer, int, int, int, int[], Point)} method,
      * if you want to convert data into a packed <code>BufferedImage</code>.
-     * The resulting array can be {@code null}, that means an unpacked form of the raster
-     * (<code>Raster.createBandedRaster</code>), or an array containing <code>bandCount</code> elements:
+     * The resulting array can be {@code null}, that means an interleaved or banded raster,
+     * or an array containing <code>bandCount</code> elements:
      * red, green, blue and (if necessary) alpha masks.
      *
-     * @param bandCount the number of masks (3 or 4, in other cases {@code null} is returned).
+     * <p>Note that actual number of color channels will be equal to the length of the returned array,
+     * not to the original <code>bandCount</code>; for example, this allows to automatically add
+     * alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
+     *
+     * @param bandCount the number of bands (color channels) in the source matrix
+     * @return the bit masks for storing bands in the packed <code>int</code> values;
+     * should be {@code null} if {@code bandCount <= 1}.
+     */
+    protected int[] packedSamplesRGBAMasks(int bandCount) {
+        return null;
+    }
+
+    /**
+     * Returns the band offsets inside the single bank, which will be passed to {@link
+     * Raster#createInterleavedRaster(java.awt.image.DataBuffer, int, int, int, int, int[], Point)} method,
+     * if you want to convert data into an interleaved <code>BufferedImage</code>.
+     * The resulting array must contain at least 1 element.
+     *
+     * <p>Note that actual number of color channels will be equal to the length of the returned array,
+     * not to the original <code>bandCount</code>; for example, this allows to automatically add
+     * alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
+     * But this feature is not used by the classes in this package.
+     *
+     * @param bandCount the number of bands (color channels) in the source matrix.
      * @return the bit masks for storing bands in the packed <code>int</code> values.
      */
-
-    protected int[] rgbAlphaMasks(int bandCount) {
-        return null;
+    protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
+        return new int[]{0};
     }
 
     /**
@@ -306,8 +349,19 @@ public abstract class MatrixToBufferedImage {
             return ((java.awt.image.DataBufferFloat) dataBuffer).getData(bankIndex);
         } else if (dataBuffer instanceof java.awt.image.DataBufferDouble) {
             return ((java.awt.image.DataBufferDouble) dataBuffer).getData(bankIndex);
-        } else
+        } else {
             throw new UnsupportedOperationException("Unknown DataBuffer type");
+        }
+    }
+
+    private static ComponentColorModel getComponentColorModel(DataBuffer dataBuffer, int numberOfChannels) {
+        ColorSpace cs = ColorSpace.getInstance(numberOfChannels == 1 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
+        boolean hasAlpha = numberOfChannels > 3;
+        return new ComponentColorModel(cs, null,
+                hasAlpha,
+                false,
+                hasAlpha ? ColorModel.TRANSLUCENT : ColorModel.OPAQUE,
+                dataBuffer.getDataType());
     }
 
     private void checkMatrix(Matrix<? extends PArray> interleavedMatrix) {
@@ -319,14 +373,10 @@ public abstract class MatrixToBufferedImage {
         if (bandCount < 1 || bandCount > 4) {
             throw new IllegalArgumentException("The number of color channels(RGBA) must be in 1..4 range");
         }
-        if (interleavedMatrix.dim(1) > Integer.MAX_VALUE || interleavedMatrix.dim(2) > Integer.MAX_VALUE) {
+        if (interleavedMatrix.size() > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large interleaved matrix " + interleavedMatrix
-                    + ": dim(1)/dim(2) must be in <=Integer.MAX_VALUE");
+                    + ": number of elements must be <= Integer.MAX_VALUE");
         }
-    }
-
-    protected void toDataBufferBand0Filter(byte[] src, int srcPos, byte[] dest) {
-        System.arraycopy(src, srcPos, dest, 0, dest.length);
     }
 
     public static class InterleavedRGBToPackedSamples extends MatrixToBufferedImage {
@@ -356,21 +406,17 @@ public abstract class MatrixToBufferedImage {
             if (!(interleavedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
             }
-            if (!(interleavedArray instanceof DirectAccessible)) {
-                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
-            }
-            int len = (int) (interleavedArray.length() / bandCount);
+            int len = interleavedArray.length32() / bandCount;
             if ((long) len * (long) bandCount != interleavedArray.length()) {
                 throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
                         " is not divided by band count = " + bandCount);
             }
-            byte[] ja = (byte[]) ((DirectAccessible) interleavedArray).javaArray();
-            int offset = ((DirectAccessible) interleavedArray).javaArrayOffset();
+            byte[] ja = interleavedArray.jaByte();
             switch (bandCount) {
                 case 1: {
                     if (alwaysAddAlpha) {
                         int[] result = new int[len];
-                        for (int j = 0, disp = offset; j < len; j++, disp++) {
+                        for (int j = 0, disp = 0; j < len; j++, disp++) {
                             result[j] = (ja[disp] & 0xFF) << 16
                                     | (ja[disp] & 0xFF) << 8
                                     | (ja[disp] & 0xFF)
@@ -379,13 +425,13 @@ public abstract class MatrixToBufferedImage {
                         return new java.awt.image.DataBufferInt(result, len);
                     } else {
                         byte[] result = new byte[len];
-                        toDataBufferBand0Filter(ja, offset, result);
+                        System.arraycopy(ja, 0, result, 0, result.length);
                         return new java.awt.image.DataBufferByte(result, len);
                     }
                 }
                 case 2: {
                     int[] result = new int[len];
-                    for (int j = 0, disp = offset; j < len; j++, disp += 2) {
+                    for (int j = 0, disp = 0; j < len; j++, disp += 2) {
                         result[j] = (ja[disp] & 0xFF) << 16
                                 | (ja[disp] & 0xFF) << 8
                                 | (ja[disp] & 0xFF)
@@ -395,7 +441,7 @@ public abstract class MatrixToBufferedImage {
                 }
                 case 3: {
                     int[] result = new int[len];
-                    for (int j = 0, disp = offset; j < len; j++, disp += 3) {
+                    for (int j = 0, disp = 0; j < len; j++, disp += 3) {
                         result[j] = (ja[disp] & 0xFF) << 16
                                 | (ja[disp + 1] & 0xFF) << 8
                                 | (ja[disp + 2] & 0xFF)
@@ -405,7 +451,7 @@ public abstract class MatrixToBufferedImage {
                 }
                 case 4: {
                     int[] result = new int[len];
-                    for (int j = 0, disp = offset; j < len; j++, disp += 4) {
+                    for (int j = 0, disp = 0; j < len; j++, disp += 4) {
                         result[j] = (ja[disp] & 0xFF) << 16
                                 | (ja[disp + 1] & 0xFF) << 8
                                 | (ja[disp + 2] & 0xFF)
@@ -419,7 +465,7 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
-        protected int[] rgbAlphaMasks(int bandCount) {
+        protected int[] packedSamplesRGBAMasks(int bandCount) {
             if (alwaysAddAlpha || bandCount == 4 || bandCount == 2) {
                 return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
             } else if (bandCount == 3) {
@@ -447,39 +493,32 @@ public abstract class MatrixToBufferedImage {
             if (!(interleavedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
             }
-            if (!(interleavedArray instanceof DirectAccessible da)) {
-                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
-            }
-            int len = (int) (interleavedArray.length() / bandCount);
+            int len = interleavedArray.length32() / bandCount;
             if ((long) len * (long) bandCount != interleavedArray.length()) {
                 throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
                         " is not divided by band count = " + bandCount);
             }
-            byte[] ja = (byte[]) da.javaArray();
-            int offset = da.javaArrayOffset();
-            byte[] result = new byte[da.javaArrayLength()];
-            //
-            throw new UnsupportedOperationException();
+            final byte[] result = Arrays.toByteJavaArray(interleavedArray);
+            // - not jaByte(): we must be sure that "result" is a newly created Java array
+            return new java.awt.image.DataBufferByte(result, result.length);
         }
 
         @Override
-        protected int[] rgbAlphaMasks(int bandCount) {
-            if (bandCount == 4 || bandCount == 2) {
-                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
-            } else if (bandCount == 3) {
-                return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff};
-            } else {
-                return null;
-            }
+        protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
+            return IntStream.range(0, bandCount).toArray();
         }
     }
 
     public static class InterleavedBGRToInterleavedSamples extends InterleavedRGBToInterleavedSamples {
+        @Override
+        protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
+            return IntStream.range(0, bandCount).map(k -> bandCount - 1 - k).toArray();
+        }
     }
 
     public static class InterleavedBGRToPackedSamples extends InterleavedRGBToPackedSamples {
         @Override
-        protected int[] rgbAlphaMasks(int bandCount) {
+        protected int[] packedSamplesRGBAMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
                 return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000};
             } else if (bandCount == 3) {
@@ -518,34 +557,30 @@ public abstract class MatrixToBufferedImage {
             if (!(interleavedArray instanceof ByteArray)) {
                 throw new IllegalArgumentException("ByteArray required");
             }
-            if (!(interleavedArray instanceof DirectAccessible)) {
-                throw new IllegalArgumentException("DirectAccessible interleavedArray required");
-            }
-            int len = (int) (interleavedArray.length() / bandCount);
+            int len = interleavedArray.length32() / bandCount;
             if ((long) len * (long) bandCount != interleavedArray.length()) {
                 throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
                         " is not divided by band count = " + bandCount);
             }
-            byte[] ja = (byte[]) ((DirectAccessible) interleavedArray).javaArray();
-            int offset = ((DirectAccessible) interleavedArray).javaArrayOffset();
+            byte[] ja = interleavedArray.jaByte();
             switch (bandCount) {
                 case 1: {
                     if (alwaysAddAlpha) {
                         byte[][] result = new byte[4][len];
-                        System.arraycopy(ja, offset, result[0], 0, len);
-                        System.arraycopy(ja, offset, result[1], 0, len);
-                        System.arraycopy(ja, offset, result[2], 0, len);
+                        System.arraycopy(ja, 0, result[0], 0, len);
+                        System.arraycopy(ja, 0, result[1], 0, len);
+                        System.arraycopy(ja, 0, result[2], 0, len);
                         JArrays.fillByteArray(result[3], (byte) 0xFF);
                         return new java.awt.image.DataBufferByte(result, len);
                     } else {
                         byte[] result = new byte[len];
-                        System.arraycopy(ja, offset, result, 0, len);
+                        System.arraycopy(ja, 0, result, 0, len);
                         return new java.awt.image.DataBufferByte(result, len);
                     }
                 }
                 case 2: {
                     byte[][] result = new byte[4][len];
-                    for (int j = 0, disp = offset; j < len; j++, disp += 2) {
+                    for (int j = 0, disp = 0; j < len; j++, disp += 2) {
                         result[0][j] = ja[disp];
                         result[1][j] = ja[disp];
                         result[2][j] = ja[disp];
@@ -557,7 +592,7 @@ public abstract class MatrixToBufferedImage {
                     byte[][] result;
                     if (alwaysAddAlpha) {
                         result = new byte[4][len];
-                        for (int j = 0, disp = offset; j < len; j++, disp += 3) {
+                        for (int j = 0, disp = 0; j < len; j++, disp += 3) {
                             result[0][j] = ja[disp];
                             result[1][j] = ja[disp + 1];
                             result[2][j] = ja[disp + 2];
@@ -565,7 +600,7 @@ public abstract class MatrixToBufferedImage {
                         }
                     } else {
                         result = new byte[3][len];
-                        for (int j = 0, disp = offset; j < len; j++, disp += 3) {
+                        for (int j = 0, disp = 0; j < len; j++, disp += 3) {
                             result[0][j] = ja[disp];
                             result[1][j] = ja[disp + 1];
                             result[2][j] = ja[disp + 2];
@@ -575,7 +610,7 @@ public abstract class MatrixToBufferedImage {
                 }
                 case 4: {
                     byte[][] result = new byte[4][len];
-                    for (int j = 0, disp = offset; j < len; j++, disp += 4) {
+                    for (int j = 0, disp = 0; j < len; j++, disp += 4) {
                         result[0][j] = ja[disp];
                         result[1][j] = ja[disp + 1];
                         result[2][j] = ja[disp + 2];
@@ -645,16 +680,17 @@ public abstract class MatrixToBufferedImage {
         public String toString() {
             return "MonochromeToIndexed ("
                     + "baseColor0=(" + JArrays.toString(
-                            baseColor0, Locale.US, "0x%X", ",", 100)
+                    baseColor0, Locale.US, "0x%X", ",", 100)
                     + "(, baseColor255=(" + JArrays.toString(
-                            baseColor255, Locale.US, "0x%X", ",", 100)
+                    baseColor255, Locale.US, "0x%X", ",", 100)
                     + "))";
         }
 
         @Override
         protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
-            if (bandCount != 1)
-                throw new IllegalArgumentException("Illegal bandCount = " + bandCount + " (must be 1)");
+            if (bandCount != 1) {
+                throw new IllegalArgumentException("Illegal bandCount = " + bandCount + ": must be 1 for " + this);
+            }
             return super.toDataBuffer(interleavedArray, bandCount);
         }
     }

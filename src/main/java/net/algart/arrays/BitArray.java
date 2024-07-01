@@ -350,7 +350,7 @@ public interface BitArray extends PFixedArray {
      * But this method works very quickly when possible, in particular, for most bit arrays created
      * by {@link SimpleMemoryModel}.</p>
      *
-     * <p>Be careful: this method can be potentially unsafe while inaccurate usage!
+     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
      * The typical purpose of this method is to quickly access array data for <i>reading</i>.
      * But it also allows you to <i>modify</i> this data,
      * and the results of such modification can be different: this may change the original AlgART array,
