@@ -84,10 +84,10 @@ public class AWT2MatrixTest {
         // Note: JPEG2000 will be written incorrectly in jai-imageio-jpeg2000 1.4.0!
     }
 
-    static void drawTextOnImage(BufferedImage bi4) {
-        Graphics graphics = bi4.getGraphics();
+    static void drawTextOnImage(BufferedImage bufferedImage) {
+        Graphics graphics = bufferedImage.getGraphics();
         graphics.setFont(new Font("Monospaced", Font.BOLD, 60));
-        graphics.setColor(new Color(0x808080));
+        graphics.setColor(new Color(0xFFFF80));
         graphics.drawString("Hello", 100, 100);
     }
 }
