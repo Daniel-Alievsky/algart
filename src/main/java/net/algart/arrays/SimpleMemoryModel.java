@@ -614,11 +614,16 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Equivalent to <code>{@link Matrices#matrix Matrices.matrix}({@link #asUpdatablePArray(Object)
-     * asUpdatablePArray}(array), dim)</code>.
+     * asUpdatablePArray}(array), dim)</code> or, if the <code>array</code>argument is an instance of
+     * {@link Array} interface, equivalent to <code>{@link Matrices#matrix Matrices.matrix}(array)</code>.
      *
-     * <p>Note that this method <b>cannot be used</b> with <code>Object[]</code> array. If you still need to
-     * return a matrix of objects, you may use <code>Matrices.matrix</code> method together with
+     * <p>Note that this method <b>cannot</b> be used with <code>Object[]</code> array. If you still need to
+     * return a matrix of objects, you may use {@link Matrices#matrix} method together with
      * {@link #asUpdatableArray(Object)}.
+     *
+     * <p>Note that this method <b>can</b> be used with AlgART array, but in this case it must
+     * be an instance of {@link UpdatablePArray}. If you need to build a matrix on the base on other kind of
+     * AlgART array, you may use {@link Matrices#matrix} method directly.</p>
      *
      * <p>This method has a brief alias: {@link Matrix#as(Object, long...)}.</p>
      *
@@ -626,8 +631,9 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
      * @param dim   the matrix dimensions.
      * @return a matrix backed by the specified Java array with the specified dimensions.
      * @throws NullPointerException     if <code>array</code> or <code>dim</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>array</code> argument is not an array,
-     *                                  or <code>boolean[]</code> array, or array of objects,
+     * @throws IllegalArgumentException if <code>array</code> argument is not a Java array
+     *                                  and is not {@link UpdatablePArray},
+     *                                  or if it is <code>boolean[]</code> array, or array of objects,
      *                                  or if the number of dimensions is 0 (empty <code>dim</code> Java array),
      *                                  or if some of the dimensions are negative.
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
@@ -639,6 +645,13 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
         }
         if (array instanceof boolean[]) {
             throw new IllegalArgumentException("boolean[] Java array cannot be viewed as Matrix<UpdatablePArray>");
+        }
+        if (array instanceof Array) {
+            if (!(array instanceof UpdatablePArray a)) {
+                throw new IllegalArgumentException("AlgART array, which is not UpdatablePArray, " +
+                        "cannot be viewed as Matrix<UpdatablePArray>: " + array);
+            }
+            return Matrices.matrix(a, dim);
         }
         return Matrices.matrix((UpdatablePArray) asUpdatableArray(array), dim);
     }

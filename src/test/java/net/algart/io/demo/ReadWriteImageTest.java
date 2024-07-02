@@ -119,7 +119,7 @@ public class ReadWriteImageTest {
             }
 
             System.out.printf("BufferedImageToMatrix + separate: %.3f ms, %.3f MB/sec%n",
-                    (t2 - t1) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t2 - t1) * 1e-9));
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(image) / ((t2 - t1) * 1e-9));
             System.out.printf("interleave + MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
                     (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
             System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",

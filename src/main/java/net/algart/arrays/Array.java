@@ -1177,6 +1177,7 @@ public interface Array {
      * @see PArray#jaLong()
      * @see PArray#jaFloat()
      * @see PArray#jaDouble()
+     * @see Matrix#ja()
      */
     Object ja();
 

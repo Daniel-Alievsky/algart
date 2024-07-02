@@ -43,6 +43,9 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public class Matrices {
+    private static final double INVERTED_MEGABYTE = 1.0 / 1048576.0;
+    // - calculated exactly
+
     private Matrices() {
     }
 
@@ -1675,7 +1678,7 @@ public class Matrices {
     }
 
     /**
-     * Estimates the size (in bytes) of the matrix.
+     * Estimates the size of the matrix in bytes.
      * Equivalent to <code>{@link Arrays#sizeOf(Array) Arrays.sizeOf}(matrix.{@link Matrix#array() array()})</code>.
      *
      * @param matrix some AlgART matrix.
@@ -1689,7 +1692,19 @@ public class Matrices {
     }
 
     /**
-     * Estimates the summary size (in bytes) of all the matrices in the specified collection.
+     * Estimates the size of the matrix in megabytes.
+     * Equivalent to <code>(double) {@link #sizeOf(Matrix)} / 1048576.0</code>.
+     *
+     * @param matrix some AlgART matrix.
+     * @return the estimated size of this matrix in megabytes.
+     * @throws NullPointerException if the argument is {@code null}.
+     */
+    public static double sizeOfMB(Matrix<?> matrix) {
+        return (double) sizeOf(matrix) * INVERTED_MEGABYTE;
+    }
+
+    /**
+     * Estimates the summary size of all the matrices in the specified collection in bytes.
      * This method just calls {@link #sizeOf(Matrix)} method for each element of this collection
      * and returns the sum of the results of all these calls.
      *
@@ -1699,13 +1714,26 @@ public class Matrices {
      *                              if one of elements of the passed collection is {@code null}.
      * @see Arrays#sizeOf(Array)
      */
-    public static <T extends Array> double sizeOf(Collection<Matrix<? extends T>> matrices) {
+    public static double sizeOf(Collection<? extends Matrix<?>> matrices) {
         Objects.requireNonNull(matrices, "Null matrices argument");
         double result = 0.0;
         for (Matrix<?> matrix : matrices) {
             result += sizeOf(matrix);
         }
         return result;
+    }
+
+    /**
+     * Estimates the summary size of all the matrices in the specified collection in megabytes.
+     * Equivalent to <code>{@link #sizeOf(Collection)} / 1048576.0</code>.
+     *
+     * @param matrices some collection of AlgART matrices.
+     * @return the estimated summary size of all these matrices in megabytes.
+     * @throws NullPointerException if the argument is {@code null} or
+     *                              if one of elements of the passed collection is {@code null}.
+     */
+    public static double sizeOfMB(Collection<? extends Matrix<?>> matrices) {
+        return sizeOf(matrices) * INVERTED_MEGABYTE;
     }
 
     /**

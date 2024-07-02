@@ -1535,7 +1535,7 @@ public class Arrays {
     }
 
     /**
-     * Estimates the size in bytes of the array.
+     * Estimates the size of the array in bytes.
      *
      * <p>More precisely:
      * <ol>

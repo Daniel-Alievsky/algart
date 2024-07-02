@@ -237,6 +237,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>byte</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaByte()
      */
     default byte[] jaByte() {
         return this instanceof ByteArray a ? a.ja() : Arrays.toByteJavaArray(this);
@@ -262,6 +263,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>char</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaChar()
      */
     default char[] jaChar() {
         return this instanceof CharArray a ? a.ja() : Arrays.toCharJavaArray(this);
@@ -287,6 +289,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>short</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaShort()
      */
     default short[] jaShort() {
         return this instanceof ShortArray a ? a.ja() : Arrays.toShortJavaArray(this);
@@ -312,6 +315,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>int</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaInt()
      */
     default int[] jaInt() {
         return this instanceof IntArray a ? a.ja() : Arrays.toIntJavaArray(this);
@@ -337,6 +341,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>long</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaLong()
      */
     default long[] jaLong() {
         return this instanceof LongArray a ? a.ja() : Arrays.toLongJavaArray(this);
@@ -362,6 +367,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>float</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaFloat()
      */
     default float[] jaFloat() {
         return this instanceof FloatArray a ? a.ja() : Arrays.toFloatJavaArray(this);
@@ -387,6 +393,7 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>double</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see Matrix#jaDouble()
      */
     default double[] jaDouble() {
         return this instanceof DoubleArray a ? a.ja() : Arrays.toDoubleJavaArray(this);
