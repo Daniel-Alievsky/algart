@@ -51,6 +51,11 @@ public class MatrixNewDemo {
 //        if (m4.dimX() != m4.dimX32() || m4.dimY() != m4.dimY32() || m4.dimZ() != m4.dimZ32()) {
 //            throw new AssertionError();
 //        }
+        if (m4.isEmpty()) throw new AssertionError();
         System.out.println(m4);
+
+        Matrix<? extends UpdatablePArray> m5 = Matrix.newCharMatrix(0, 100);
+        if (!m5.isEmpty()) throw new AssertionError();
+        System.out.print(m5);
     }
 }
