@@ -77,30 +77,70 @@ public class ReadWriteImageTest {
             toMatrix.setEnableAlpha(true);
 
             System.out.println("Reading " + sourceFile + "...");
+            long t1 = System.nanoTime();
             BufferedImage bi = MatrixIO.readBufferedImage(sourceFile);
+            long t2 = System.nanoTime();
+            System.out.printf("readBufferedImage: %.3f ms%n", (t2 - t1) * 1e-6);
             if (monochrome) {
-                System.out.println("Conversion to monochrome...");
+                t1 = System.nanoTime();
                 var separate = Matrices.separate(toMatrix.toMatrix(bi));
                 var intensity = ColorMatrices.asRGBIntensity(separate).clone();
                 bi = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(intensity);
+                t2 = System.nanoTime();
+                System.out.printf("Converted to monochrome in %.3f ms%n", (t2 - t1) * 1e-6);
             }
 
-            long t1 = System.nanoTime();
-            final List<Matrix<UpdatablePArray>> image = Matrices.separate(toMatrix.toMatrix(bi));
-            long t2 = System.nanoTime();
-            final BufferedImage bi1 = toBufferedImage.toBufferedImage(Matrices.interleave(image));
-            long t3 = System.nanoTime();
+            t1 = System.nanoTime();
+            final Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
+            t2 = System.nanoTime();
+            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
 
+            t1 = System.nanoTime();
+            final List<Matrix<UpdatablePArray>> image = Matrices.separate(matrix1);
+            t2 = System.nanoTime();
+            System.out.printf("separate: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
+
+            t1 = System.nanoTime();
+            final Matrix<UpdatablePArray> interleave = Matrices.interleave(image);
+            t2 = System.nanoTime();
+            System.out.printf("interleave: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
+            if (!matrix1.equals(interleave)) {
+                throw new AssertionError("separate/interleave mismatch");
+            }
+
+            t1 = System.nanoTime();
+            final BufferedImage bi1 = toBufferedImage.toBufferedImage(interleave);
+            t2 = System.nanoTime();
+            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
+
+            t1 = System.nanoTime();
             AWT2MatrixTest.drawTextOnImage(bi1);
+            t2 = System.nanoTime();
+            System.out.printf("drawing text: %.3f ms%n", (t2 - t1) * 1e-6);
+
             System.out.println("Writing " + targetFile1 + "...");
+            t1 = System.nanoTime();
             MatrixIO.writeBufferedImage(targetFile1, bi1);
-            long t4 = System.nanoTime();
-            Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
-            long t5 = System.nanoTime();
-            Matrix<UpdatablePArray> matrix2 = toMatrix.setReadPixelValuesViaGraphics2D(true).toMatrix(bi);
-            long t6 = System.nanoTime();
-            final BufferedImage bi2 = toBufferedImage.toBufferedImage(matrix1);
-            long t7 = System.nanoTime();
+            t2 = System.nanoTime();
+            System.out.printf("writeBufferedImage: %.3f ms, %.3f MB/sec%n",
+                (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
+
+            toMatrix.setReadPixelValuesViaGraphics2D(true);
+            t1 = System.nanoTime();
+            final Matrix<UpdatablePArray> matrix2 = toMatrix.toMatrix(bi);
+            t2 = System.nanoTime();
+            System.out.printf("BufferedImageToMatrix, Graphics2D: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
+
+            t1 = System.nanoTime();
+            final BufferedImage bi2 = toBufferedImage.toBufferedImage(matrix2);
+            t2 = System.nanoTime();
+            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
 
             AWT2MatrixTest.drawTextOnImage(bi2);
             System.out.println("Writing " + targetFile2 + "...");
@@ -114,20 +154,11 @@ public class ReadWriteImageTest {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
                 Path altFile = Paths.get(targetFile2 + ".alt.png");
                 System.out.println("        " + matrix2);
-                MatrixIO.writeBufferedImage(altFile, toBufferedImage.toBufferedImage(matrix2));
+                BufferedImage biAlt = toBufferedImage.toBufferedImage(matrix2);
+                AWT2MatrixTest.drawTextOnImage(biAlt);
+                MatrixIO.writeBufferedImage(altFile, biAlt);
                 System.out.println("        saved in " + altFile);
             }
-
-            System.out.printf("BufferedImageToMatrix + separate: %.3f ms, %.3f MB/sec%n",
-                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(image) / ((t2 - t1) * 1e-9));
-            System.out.printf("interleave + MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
-                    (t3 - t2) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t3 - t2) * 1e-9));
-            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
-                    (t5 - t4) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t5 - t4) * 1e-9));
-            System.out.printf("BufferedImageToMatrix, Graphics2D: %.3f ms, %.3f MB/sec%n",
-                    (t6 - t5) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t6 - t5) * 1e-9));
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
-                    (t7 - t6) * 1e-6, Matrices.sizeOf(matrix1) / 1048576.0 / ((t7 - t6) * 1e-9));
         }
     }
 }
