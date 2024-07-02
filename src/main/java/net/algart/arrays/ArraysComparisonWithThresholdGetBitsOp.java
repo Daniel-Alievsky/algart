@@ -66,7 +66,6 @@ class ArraysComparisonWithThresholdGetBitsOp {
             x0 instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS :
             x0 instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS :
             null;
-        //TODO!! this.always1=..., this.always0=...
     }
 
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {

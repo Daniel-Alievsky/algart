@@ -638,9 +638,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         if (m == 0) {
             throw new AssertionError("This method must not be called for empty leftwardShifts array");
         }
-        subTask(0, 1, m).simpleDilationOrErosion(dest, src, leftwardShifts[leftwardShifts.length - 1],
-            null, //TODO!!
-            isMax);
+        subTask(0, 1, m)
+                .simpleDilationOrErosion(
+                        dest, src, leftwardShifts[leftwardShifts.length - 1], null, isMax);
         // - The correction shift, that usually cannot be performed "in place" by common algorithm
         // (because it is rightward), should be placed at the end of array by optimizeMinkowskiDecomposition method.
         if (m == 1) {
