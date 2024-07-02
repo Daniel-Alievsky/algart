@@ -346,7 +346,7 @@ public class ContinuedMorphology implements Morphology {
     }
 
     private <T extends PArray> Matrix<T> extend(Matrix<T> m, IRectangularArea aperture, boolean dest) {
-        if (m.size() == 0) {
+        if (m.isEmpty()) {
             return m; // don't try to extend empty matrix: it is even impossible for some continuation modes
         }
         if (!parent.isPseudoCyclic()) {
@@ -380,7 +380,7 @@ public class ContinuedMorphology implements Morphology {
     }
 
     private <T extends PArray> Matrix<T> reduce(Matrix<T> continued, IRectangularArea aperture) {
-        if (continued.size() == 0) {
+        if (continued.isEmpty()) {
             return continued;
         }
         if (!parent.isPseudoCyclic()) {

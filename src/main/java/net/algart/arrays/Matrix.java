@@ -736,6 +736,15 @@ public interface Matrix<T extends Array> extends Cloneable {
     }
 
     /**
+     * Equivalent to the call <code>{@link #size() size}() == 0</code>.
+     *
+     * @return <code>true</code> if the matrix is empty, i.e. at least one its dimensions is zero.
+     */
+    default boolean isEmpty() {
+        return array().isEmpty();
+    }
+
+    /**
      * Returns <code>{@link #array()}.{@link Array#type() type()}</code>.
      *
      * @return the canonical type of AlgART array of the same kind as the built-in one.

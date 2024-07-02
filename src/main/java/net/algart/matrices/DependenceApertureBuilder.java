@@ -532,7 +532,7 @@ public enum DependenceApertureBuilder {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
                     + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
         }
-        if (matrix.size() == 0) {
+        if (matrix.isEmpty()) {
             return matrix;
         }
         long[] from = new long[matrix.dimCount()];
@@ -579,7 +579,7 @@ public enum DependenceApertureBuilder {
             throw new IllegalArgumentException("Dimensions count mismatch: " + matrix.dimCount()
                     + "-dimensional matrix and " + aperture.coordCount() + "-dimensional aperture");
         }
-        if (matrix.size() == 0) {
+        if (matrix.isEmpty()) {
             return matrix;
         }
         long[] from = new long[matrix.dimCount()];

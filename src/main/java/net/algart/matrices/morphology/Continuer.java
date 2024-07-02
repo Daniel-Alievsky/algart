@@ -108,7 +108,7 @@ class Continuer {
         for (Matrix<? extends PArray> m : matrices) {
             long[] from = aperture.min().coordinates();
             long[] to = IPoint.valueOf(m.dimensions()).add(aperture.max()).coordinates();
-            continued.add(m.size() == 0 ? m : m.subMatrix(from, to, Matrix.ContinuationMode.ZERO_CONSTANT));
+            continued.add(m.isEmpty() ? m : m.subMatrix(from, to, Matrix.ContinuationMode.ZERO_CONSTANT));
             // outside values are not important
         }
         return continued;

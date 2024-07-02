@@ -285,7 +285,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         //       x' = x % (nu*nz*ny*nx)
         //
         --n;
-        if (size() == 0) {
+        if (isEmpty()) {
             // we must check it here, in other case the further assertions can be false:
             // production of some dimensions in an empty matrix can be greater than Long.MAX_VALUE
             return 0;

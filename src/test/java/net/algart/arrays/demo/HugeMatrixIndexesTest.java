@@ -101,7 +101,7 @@ public class HugeMatrixIndexesTest {
                 boolean showResults = shiftIndex < 10;
                 long[] shift = new long[cyclic.dimCount()];
                 for (int k = 0; k < shift.length; k++) {
-                    shift[k] = cyclic.size() == 0 ? rnd.nextInt(10) :
+                    shift[k] = cyclic.isEmpty() ? rnd.nextInt(10) :
                         showResults && k == shift.length - 1 ?
                             (cyclic.dim(k) + shiftIndex - 1) % cyclic.dim(k) :
                             Math.round(rnd.nextDouble() * (cyclic.dim(k) - 1));
@@ -118,7 +118,7 @@ public class HugeMatrixIndexesTest {
                 if (pseudoCyclicIndex != rPseudoCyclicIndex)
                     throw new AssertionError("Bug B detected: pseudo-cyclic index calculated incorrectly: "
                         + pseudoCyclicIndex + " instead of " + rPseudoCyclicIndex);
-                if (cyclic.size() == 0) {
+                if (cyclic.isEmpty()) {
                     continue; // cannot test internal indexes
                 }
                 long index = cyclic.index(p.coordinates());

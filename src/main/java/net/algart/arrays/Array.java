@@ -193,7 +193,6 @@ public interface Array {
         return length() == 0;
     }
 
-
     /**
      * Returns the capacity of this array: the number of elements
      * allocated for storing elements in this array.

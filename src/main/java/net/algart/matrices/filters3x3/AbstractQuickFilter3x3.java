@@ -83,7 +83,7 @@ public abstract class AbstractQuickFilter3x3 extends Abstract2DProcessor {
         Objects.requireNonNull(source, "Null source");
         checkCompatibility(result);
         checkCompatibility(source);
-        if (source.size() == 0) {
+        if (source.isEmpty()) {
             // nothing to do;
             // now we can be sure that dimX > 0 and dimY > 0
             return;

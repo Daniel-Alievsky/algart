@@ -107,7 +107,7 @@ class ArraysMatrixResizer {
             throw new IllegalArgumentException("Illegal number of scales[] elements: "
                 + scales.length + " instead of " + n);
         }
-        if (matrix.size() == 0) {
+        if (matrix.isEmpty()) {
             return Matrices.asCoordFuncMatrix(ConstantFunc.getInstance(0.0), matrix.type(PArray.class), newDim);
         }
         double[] diagonal = new double[n];
@@ -181,7 +181,7 @@ class ArraysMatrixResizer {
                 + "the source src is " + src + ", the result is " + result);
         }
         AbstractArray.checkCopyArguments(result.array(), src.array()); // before checking result.size()
-        if (result.size() == 0) {
+        if (result.isEmpty()) {
             return true; // nothing to do
         }
         if (result.dimEquals(src)) {

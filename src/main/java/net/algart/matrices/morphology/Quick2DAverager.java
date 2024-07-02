@@ -145,7 +145,7 @@ public abstract class Quick2DAverager extends Abstract2DProcessor {
                 throw new IllegalArgumentException("Too large rectangle boundaries " + rectangle
                         + " : they are outside 32-bit range -2^31..2^31-1");
         }
-        if (source.size() == 0) {
+        if (source.isEmpty()) {
             // nothing to do;
             // now we can be sure that dimX > 0 and dimY > 0
             return;
