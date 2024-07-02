@@ -219,41 +219,6 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Converts the color into a form, stored in the data buffer, returned by {@link #toDataBuffer(Matrix)}.
-     *
-     * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.
-     *
-     * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
-     * <code>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</code>,
-     * this method returns
-     * <pre>
-     * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
-     * </pre>
-     * <p>The good idea is to provide identical R, G, B color components in such cases
-     * (if this method is not overridden).
-     *
-     * @param interleavedMatrix the interleaved data.
-     * @param color             some color.
-     * @param bankIndex         index of the bank in terms of <code>java.awt.image.DataBuffer</code>.
-     * @return the corresponded component of this color or interleaved RGB-Alpha value,
-     * depending on the structure of the data buffer.
-     */
-    public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
-        final int bandCount = getBandCount(interleavedMatrix);
-        if (bandCount == 1) {
-            return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
-        }
-        Objects.requireNonNull(color, "Null color argument");
-        return switch (bankIndex) {
-            case 0 -> color.getRed();
-            case 1 -> color.getGreen();
-            case 2 -> color.getBlue();
-            case 3 -> color.getAlpha();
-            default -> 0;
-        };
-    }
-
-    /**
      * Returns <code>true</code> if the specified element type of AlgART arrays or matrices,
      * passed to the methods of this class, is supported.
      * If this method returns <code>false</code>, this class converts
@@ -438,11 +403,6 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
-        public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
-            return color.getRGB();
-        }
-
-        @Override
         public String toString() {
             return "InterleavedRGBToPacked (alwaysAddAlpha=" + alwaysAddAlpha + ")";
         }
@@ -535,10 +495,6 @@ public abstract class MatrixToBufferedImage {
     }
 
     public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
-        @Override
-        public long colorValue(Matrix<? extends PArray> interleavedMatrix, java.awt.Color color, int bankIndex) {
-            return color.getRGB();
-        }
 
         @Override
         public boolean elementTypeSupported(Class<?> elementType) {
@@ -696,11 +652,6 @@ public abstract class MatrixToBufferedImage {
                 double bc255 = baseColor255[k];
                 this.baseColor255[k] = (byte) (bc255 < 0.0 ? 0 : bc255 > 1.0 ? 255 : Math.round(bc255 * 255.0));
             }
-        }
-
-        @Override
-        public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
-            return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
 
         @Override
