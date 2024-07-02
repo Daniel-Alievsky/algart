@@ -236,44 +236,39 @@ public abstract class BufferedImageToMatrix {
                         final int correctedBandIndex = invertBandOrder && bandIndex < 3 ? 2 - bandIndex : bandIndex;
                         r.getSamples(0, y, dimX, m, correctedBandIndex, buffer);
                         switch (dataBufferType) {
-                            case DataBuffer.TYPE_BYTE: {
+                            case DataBuffer.TYPE_BYTE -> {
                                 assert resultJavaArray instanceof byte[];
                                 byte[] result = (byte[]) resultJavaArray;
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = (byte) (buffer[i] & 0xFF);
                                 }
-                                break;
                             }
-                            case DataBuffer.TYPE_USHORT: {
+                            case DataBuffer.TYPE_USHORT -> {
                                 assert resultJavaArray instanceof short[];
                                 short[] result = (short[]) resultJavaArray;
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = (short) (buffer[i] & 0xFFFF);
                                 }
-                                break;
                             }
-                            case DataBuffer.TYPE_INT: {
+                            case DataBuffer.TYPE_INT -> {
                                 assert resultJavaArray instanceof int[];
                                 int[] result = (int[]) resultJavaArray;
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = buffer[i];
                                 }
-                                break;
                             }
-                            default:
-                                throw new AssertionError("Unsupported type: illegal subclass implementation");
+                            default -> throw new AssertionError(
+                                    "Unsupported data buffer type " + dataBufferType);
+                            // can occur only in incorrect subclasses: it is checked in isSupportedStructure()
                         }
                     }
                 }
-                //                System.out.println("Quick loading");
                 return;
             }
             // Simplest algorithm: via BufferedImage.getGraphics
             // Note: sometimes, due to some internal optimizations, this branch work even faster
             // than the previous one. But usually the previous branch works in several times faster.
             assert resultJavaArray instanceof byte[];
-            //TODO!! support in future ushort/int via getResultElementType
-            //TODO!! and what if bandCount=3 and colorComponentsCount=4?
             final byte[] result = (byte[]) resultJavaArray;
             final boolean banded = USE_3_BANDS_FOR_NON_BANDED_GRAY ?
                     sampleModel instanceof BandedSampleModel :

@@ -33,7 +33,6 @@ import java.awt.image.*;
 import java.awt.image.DataBuffer;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 /**
  * Converter from AlgART 3D interleaved matrices into {@link BufferedImage}.
@@ -134,7 +133,8 @@ public abstract class MatrixToBufferedImage {
                     numberOfChannels, sampleOffsets, null);
         } else {
             final int[] indexes = bandedSamplesRGBABankIndexes(numberOfBanks);
-            final int[] offsets = IntStream.range(0, numberOfBanks).map(k -> 0).toArray();
+            final int[] offsets = new int[numberOfBanks];
+            // - zero-filled by Java
             wr = Raster.createBandedRaster(
                     dataBuffer, dimX, dimY, dimX,
                     indexes, offsets, null);
@@ -197,7 +197,7 @@ public abstract class MatrixToBufferedImage {
         checkMatrix(interleavedMatrix);
         long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
         PArray array = interleavedMatrix.array();
-        if (bytesRequired() && array.elementType() != byte.class) {
+        if (!elementTypeSupported(array.elementType())) {
             if (array instanceof IntArray ia && unsignedInt32) {
                 int[] ints = ia.ja();
                 byte[] bytes = new byte[ints.length];
@@ -254,16 +254,19 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Returns <code>true</code> if the AlgART array or matrix, passed to the methods of this class,
-     * must contain <code>byte</code> elements. In this case, this class converts
+     * Returns <code>true</code> if the specified element type of AlgART arrays or matrices,
+     * passed to the methods of this class, is supported.
+     * If this method returns <code>false</code>, this class converts
      * all other element types into <code>byte</code> (but the client may do this itself).
      *
-     * <p>The default implementation returns <code>true</code>.
-     * Please override this method if your implementation forms specific versions of
-     * <code>java.awt.image.DataBuffer</code> for non-byte element types.
+     * <p>The default implementation returns <code>elementType == byte.class</code>.
+     * Implementation in {@link InterleavedRGBToInterleaved} and {@link InterleavedBGRToInterleaved} classes
+     * returns <code>true</code> also for <code>short.class</code> (which is interpreted
+     * as <code>DataBuffer.TYPE_USHORT</code>);
+     * other classes in this package preserves default implementation.
      */
-    public boolean bytesRequired() {
-        return true;
+    public boolean elementTypeSupported(Class<?> elementType) {
+        return elementType == byte.class;
     }
 
     /**
@@ -325,7 +328,7 @@ public abstract class MatrixToBufferedImage {
      * @return the band offsets for storing bands of the single pixel.
      */
     protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
-        return IntStream.range(0, bandCount).toArray();
+        return increasedIndexes(bandCount);
     }
 
     /**
@@ -338,7 +341,7 @@ public abstract class MatrixToBufferedImage {
      * @return the bank indexes for each band.
      */
     protected int[] bandedSamplesRGBABankIndexes(int bankCount) {
-        return IntStream.range(0, bankCount).toArray();
+        return increasedIndexes(bankCount);
     }
 
     /**
@@ -367,6 +370,19 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
+    int checkArray(PArray interleavedArray, int bandCount) {
+        Objects.requireNonNull(interleavedArray, "Null source array");
+        if (!(elementTypeSupported(interleavedArray.elementType()))) {
+            throw new IllegalArgumentException("Unsupported element type: " + interleavedArray.elementType());
+        }
+        int len = interleavedArray.length32() / bandCount;
+        if ((long) len * (long) bandCount != interleavedArray.length()) {
+            throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
+                    " is not divided by band count = " + bandCount);
+        }
+        return len;
+    }
+
     private static ComponentColorModel getComponentColorModel(DataBuffer dataBuffer, int numberOfChannels) {
         ColorSpace cs = ColorSpace.getInstance(numberOfChannels == 1 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
         boolean hasAlpha = numberOfChannels > 3;
@@ -377,16 +393,21 @@ public abstract class MatrixToBufferedImage {
                 dataBuffer.getDataType());
     }
 
-    private static int checkArray(PArray interleavedArray, int bandCount) {
-        if (!(interleavedArray instanceof ByteArray)) {
-            throw new IllegalArgumentException("ByteArray required");
+    private static int[] increasedIndexes(int length) {
+        int[] result = new int[length];
+        for (int k = 0; k < result.length; k++) {
+            result[k] = k;
         }
-        int len = interleavedArray.length32() / bandCount;
-        if ((long) len * (long) bandCount != interleavedArray.length()) {
-            throw new IllegalArgumentException("Unaligned ByteArray: its length " + interleavedArray.length() +
-                    " is not divided by band count = " + bandCount);
+        return result;
+    }
+
+    private static int[] increasedIndexesFlipRB(int length) {
+        int[] result = increasedIndexes(length);
+        if (length == 3 || length == 4) {
+            result[0] = 2;
+            result[2] = 0;
         }
-        return len;
+        return result;
     }
 
     private void checkMatrix(Matrix<? extends PArray> interleavedMatrix) {
@@ -520,6 +541,11 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
+        public boolean elementTypeSupported(Class<?> elementType) {
+            return elementType == byte.class || elementType == short.class;
+        }
+
+        @Override
         public String toString() {
             return "InterleavedRGBToInterleaved";
         }
@@ -527,16 +553,25 @@ public abstract class MatrixToBufferedImage {
         @Override
         protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
             checkArray(interleavedArray, bandCount);
-            final byte[] result = Arrays.toByteJavaArray(interleavedArray);
-            // - not jaByte(): we must be sure that "result" is a newly created Java array
-            return new java.awt.image.DataBufferByte(result, result.length);
+            if (interleavedArray instanceof ByteArray a) {
+                final byte[] result = Arrays.toJavaArray(a);
+                // - not ja(): we must be sure that "result" is a newly created Java array
+                return new java.awt.image.DataBufferByte(result, result.length);
+            } else if (interleavedArray instanceof ShortArray a) {
+                final short[] result = Arrays.toJavaArray(a);
+                return new java.awt.image.DataBufferUShort(result, result.length);
+            } else {
+                throw new AssertionError("Unsupported element type: " + interleavedArray.elementType());
+                // can occur only in incorrect subclasses: it is checked in checkArray()
+
+            }
         }
     }
 
     public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
         @Override
         protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
-            return IntStream.range(0, bandCount).map(k -> bandCount - 1 - k).toArray();
+            return increasedIndexesFlipRB(bandCount);
         }
     }
 
@@ -625,7 +660,7 @@ public abstract class MatrixToBufferedImage {
     public static class InterleavedBGRToBanded extends InterleavedRGBToBanded {
         @Override
         protected int[] bandedSamplesRGBABankIndexes(int bankCount) {
-            return IntStream.range(0, bankCount).map(k -> bankCount - 1 - k).toArray();
+            return increasedIndexesFlipRB(bankCount);
         }
     }
 

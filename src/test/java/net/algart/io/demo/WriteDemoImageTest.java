@@ -36,6 +36,7 @@ import java.awt.image.SampleModel;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 public class WriteDemoImageTest {
@@ -112,7 +113,10 @@ public class WriteDemoImageTest {
     static Object makeSamples(Class<?> elementType, int bandCount, int dimX, int dimY) {
         final int matrixSize = dimX * dimY;
         if (elementType == byte.class) {
-            byte[] channels = new byte[matrixSize * bandCount];
+            byte[] channels = new byte[bandCount * matrixSize];
+            if (bandCount == 4) {
+                Arrays.fill(channels, 3 * matrixSize, 4 * matrixSize, (byte) 128);
+            }
             for (int y = 0; y < dimY; y++) {
                 int c1 = (y / 32) % (bandCount + 1) - 1;
                 int c2 = c1;
@@ -128,7 +132,10 @@ public class WriteDemoImageTest {
             }
             return channels;
         } else if (elementType == short.class) {
-            short[] channels = new short[matrixSize * bandCount];
+            short[] channels = new short[bandCount * matrixSize];
+            if (bandCount == 4) {
+                Arrays.fill(channels, 3 * matrixSize, 4 * matrixSize, (short) 32768);
+            }
             for (int y = 0; y < dimY; y++) {
                 int c1 = (y / 32) % (bandCount + 1) - 1;
                 int c2 = c1;
@@ -144,7 +151,10 @@ public class WriteDemoImageTest {
             }
             return channels;
         } else if (elementType == int.class) {
-            int[] channels = new int[matrixSize * bandCount];
+            int[] channels = new int[bandCount * matrixSize];
+            if (bandCount == 4) {
+                Arrays.fill(channels, 3 * matrixSize, 4 * matrixSize, Integer.MAX_VALUE);
+            }
             for (int y = 0, disp = 0; y < dimY; y++) {
                 final int c = (y / 32) % bandCount;
                 for (int x = 0; x < dimX; x++, disp++) {
@@ -153,7 +163,10 @@ public class WriteDemoImageTest {
             }
             return channels;
         } else if (elementType == float.class) {
-            float[] channels = new float[matrixSize * bandCount];
+            float[] channels = new float[bandCount * matrixSize];
+            if (bandCount == 4) {
+                Arrays.fill(channels, 3 * matrixSize, 4 * matrixSize, 0.5f);
+            }
             for (int y = 0, disp = 0; y < dimY; y++) {
                 final int c = (y / 32) % bandCount;
                 for (int x = 0; x < dimX; x++, disp++) {
@@ -163,7 +176,10 @@ public class WriteDemoImageTest {
             }
             return channels;
         } else if (elementType == double.class) {
-            double[] channels = new double[matrixSize * bandCount];
+            double[] channels = new double[bandCount * matrixSize];
+            if (bandCount == 4) {
+                Arrays.fill(channels, 3 * matrixSize, 4 * matrixSize, 0.5);
+            }
             for (int y = 0, disp = 0; y < dimY; y++) {
                 final int c = (y / 32) % bandCount;
                 for (int x = 0; x < dimX; x++, disp++) {
