@@ -188,7 +188,7 @@ public abstract class MatrixToBufferedImage {
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
      * <p>This method automatically converts the source data to byte (8-bit) array,
-     * if {@link #bytesRequired()} returns <code>true</code>.
+     * if {@link #elementTypeSupported(Class)} returns <code>false</code> for the element type.
      *
      * @param interleavedMatrix the interleaved data.
      * @return the newly allocated <code>DataBuffer</code> with the same data.

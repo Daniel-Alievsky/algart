@@ -50,21 +50,21 @@ import java.util.Objects;
  * <ol>
  * <li>direct transform is
  * <i>F<sub>k</sub></i> =
- * <big><big><big>&sum;</big></big></big><sub><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
  * <i>x<sub>n</sub></i><i>e</i><sup>&minus;2<i>kn</i>&pi;<b><i>i</i></b>/<i>N</i></sup>,
  * inverse transform is
  * <i>x<sub>n</sub></i> = <i>N</i><sup>&nbsp;&minus;1</sup>
- * <big><big><big>&sum;</big></big></big><sub><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
  * <i>F<sub>k</sub></i><i>e</i><sup>2<i>kn</i>&pi;<b><i>i</i></b>/<i>N</i></sup>.
  * </li>
  *
  * <li>direct transform is
  * <i>F<sub>k</sub></i> = <i>N</i><sup>&nbsp;&minus;1</sup>
- * <big><big><big>&sum;</big></big></big><sub><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
  * <i>x<sub>n</sub></i><i>e</i><sup>&minus;2<i>kn</i>&pi;<b><i>i</i></b>/<i>N</i></sup>,
  * inverse transform is
  * <i>x<sub>n</sub></i> =
- * <big><big><big>&sum;</big></big></big><sub><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
  * <i>F<sub>k</sub></i><i>e</i><sup>2<i>kn</i>&pi;<b><i>i</i></b>/<i>N</i></sup>;
  * </li>
  * </ol>
@@ -91,7 +91,7 @@ import java.util.Objects;
  *
  * <blockquote>
  * <i>c<sub>k</sub></i> =
- * <big><big><big>&sum;</big></big></big><sub><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
  * <i>p<sub>n</sub></i><i>q</i><sub>(<i>k</i>&minus;<i>n</i>)&nbsp;mod&nbsp;<i>N</i></sub>
  * </blockquote>
  *

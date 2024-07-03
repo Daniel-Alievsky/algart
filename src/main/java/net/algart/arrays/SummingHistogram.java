@@ -112,12 +112,12 @@ import java.util.Objects;
  * After this, we just define <i>s</i>(<i>v</i>) as <i>S</i>(<i>r</i>(<i>v</i>)).
  * <ol>
  * <li><i>S</i>(<i>r</i>) =
- * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i></sub>
+ * <span style="font-size:200%">&int;</span><sub>0&le;<i>x</i>&le;<i>r</i></sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>;
  * </li>
  *
  * <li><i>s</i>(<i>v</i>) = <i>S</i>(<i>r</i>(<i>v</i>)) =
- * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
+ * <span style="font-size:200%">&int;</span><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>.<br>
  * Note: according this definition,
  * <i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>0</i> when <i>v</i>&lt;<i>v</i>(0)
@@ -150,12 +150,12 @@ import java.util.Objects;
  *
  * <ol>
  * <li><i>S</i>(<i>r</i>) = <i>C</i> +
- * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i></sub>
+ * <span style="font-size:200%">&int;</span><sub>0&le;<i>x</i>&le;<i>r</i></sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>, where <i>C</i> is some constant, the value of which is undocumented;
  * </li>
  *
  * <li><i>s</i>(<i>v</i>) = <i>S</i>(<i>r</i>(<i>v</i>)) = <i>C</i> +
- * <big><big><big>&int;</big></big></big><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
+ * <span style="font-size:200%">&int;</span><sub>0&le;<i>x</i>&le;<i>r</i>(<i>v</i>)</sub>
  * <i>v</i>(<i>x</i>)&nbsp;<i>dx</i>.<br>
  * Note: according this definition,
  * <i>s</i>(<i>v</i>)=<i>S</i>(<i>0</i>)=<i>C</i> when <i>v</i>&lt;<i>v</i>(0)

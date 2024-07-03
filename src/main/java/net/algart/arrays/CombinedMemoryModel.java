@@ -125,7 +125,7 @@ import java.util.Objects;
  * the corresponding methods of the storage arrays (and their
  * {@link Array#subArray(long, long) subarrays}).</li>
  *
- * <li><a name="hashCodeEquals"></a>The {@link Array#equals(Object)} method,
+ * <li id="hashCodeEquals">The {@link Array#equals(Object)} method,
  * in a case when another array is combined and uses the same combiner,
  * is based on calls of the corresponding methods of the storage array (and their
  * {@link Array#subArray(long, long) subarrays});
