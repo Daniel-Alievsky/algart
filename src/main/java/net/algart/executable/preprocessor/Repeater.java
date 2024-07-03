@@ -366,6 +366,7 @@ public class Repeater implements Cloneable {
             String[] endMarker;
             String middleMarkerWarn;
             String p2Spaces = "";
+            final boolean oneLineComment = IS_ONE_LINE_COMMENT[passIndex];
             if (otherFileSection == null) {
                 p2 = s.indexOf(middleMarkerWarn = REPEAT_MIDDLE[passIndex], p1);
                 foundLen = middleMarkerWarn.length();
@@ -374,7 +375,7 @@ public class Repeater implements Cloneable {
                             + countLines(s.substring(0, p1)));
                 }
                 int p2Back = p2; // will be p2 without one empty line
-                if (IS_ONE_LINE_COMMENT[passIndex]) {
+                if (oneLineComment) {
                     boolean oneLineFound = false;
                     int p2LastSpace = p2;
                     for (; p2Back > p1; p2Back--) {
@@ -438,7 +439,7 @@ public class Repeater implements Cloneable {
                 if (k == n - 1) {
                     correctedText += p2Spaces;
                 } else {
-                    if (TRIMMING_CORRECTION_OF_REPEATED_TEXT) {
+                    if (TRIMMING_CORRECTION_OF_REPEATED_TEXT && !oneLineComment) {
                         correctedText = correctedText.stripTrailing();
                     }
                 }

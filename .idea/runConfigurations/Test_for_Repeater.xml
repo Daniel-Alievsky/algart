@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Repeater Test" type="Application" factoryName="Application">
+  <configuration default="false" name="Test for Repeater" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="net.algart.executable.preprocessor.Repeater" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="-trimTrailingWhitespace src/main/java/net/algart/executable/preprocessor/repeaterTest.txt" />
