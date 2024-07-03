@@ -491,7 +491,6 @@ public class Repeater implements Cloneable {
 
     String process() throws SyntaxException, IOException {
         String s = processedContent;
-        StringBuilder sb = new StringBuilder();
         for (int passIndex = 0; passIndex < REPEAT_START.length; passIndex++) {
             s = processPass(s, passIndex);
         }
