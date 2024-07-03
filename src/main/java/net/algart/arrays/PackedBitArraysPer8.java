@@ -3120,7 +3120,6 @@ public class PackedBitArraysPer8 {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * to newly created array <code>byte[count]</code> array returned as a result.
@@ -3312,7 +3311,6 @@ public class PackedBitArraysPer8 {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -3506,7 +3504,6 @@ public class PackedBitArraysPer8 {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * to newly created array <code>int[count]</code> array returned as a result.
@@ -3698,7 +3695,6 @@ public class PackedBitArraysPer8 {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -3892,7 +3888,6 @@ public class PackedBitArraysPer8 {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * to newly created array <code>float[count]</code> array returned as a result.
@@ -4084,7 +4079,6 @@ public class PackedBitArraysPer8 {
             dest[destPos] = (src[(int) (srcPos >>> 3)] & (1 << (7 - (srcPos & 7)))) != 0 ? bit1Value : bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,

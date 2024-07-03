@@ -345,7 +345,6 @@ public interface MemoryModel {
      */
     UpdatableCharArray newUnresizableCharArray(long length);
 
-
     /**
      * Equivalent to <code>(MutableByteArray){@link #newEmptyArray(Class) newEmptyArray}(byte.class)</code>.
      *
@@ -411,7 +410,6 @@ public interface MemoryModel {
      * @see ByteArray#newArray(long)
      */
     UpdatableByteArray newUnresizableByteArray(long length);
-
 
     /**
      * Equivalent to <code>(MutableShortArray){@link #newEmptyArray(Class) newEmptyArray}(short.class)</code>.
@@ -479,7 +477,6 @@ public interface MemoryModel {
      */
     UpdatableShortArray newUnresizableShortArray(long length);
 
-
     /**
      * Equivalent to <code>(MutableIntArray){@link #newEmptyArray(Class) newEmptyArray}(int.class)</code>.
      *
@@ -545,7 +542,6 @@ public interface MemoryModel {
      * @see IntArray#newArray(long)
      */
     UpdatableIntArray newUnresizableIntArray(long length);
-
 
     /**
      * Equivalent to <code>(MutableLongArray){@link #newEmptyArray(Class) newEmptyArray}(long.class)</code>.
@@ -613,7 +609,6 @@ public interface MemoryModel {
      */
     UpdatableLongArray newUnresizableLongArray(long length);
 
-
     /**
      * Equivalent to <code>(MutableFloatArray){@link #newEmptyArray(Class) newEmptyArray}(float.class)</code>.
      *
@@ -679,7 +674,6 @@ public interface MemoryModel {
      * @see FloatArray#newArray(long)
      */
     UpdatableFloatArray newUnresizableFloatArray(long length);
-
 
     /**
      * Equivalent to <code>(MutableDoubleArray){@link #newEmptyArray(Class) newEmptyArray}(double.class)</code>.
@@ -1100,7 +1094,6 @@ public interface MemoryModel {
      */
     Matrix<UpdatableCharArray> newCharMatrix(long... dim);
 
-
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
      * newMatrix}(UpdatableByteArray.class, byte.class, dim)</code>.
@@ -1126,7 +1119,6 @@ public interface MemoryModel {
      * @see Matrix
      */
     Matrix<UpdatableByteArray> newByteMatrix(long... dim);
-
 
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
@@ -1154,7 +1146,6 @@ public interface MemoryModel {
      */
     Matrix<UpdatableShortArray> newShortMatrix(long... dim);
 
-
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
      * newMatrix}(UpdatableIntArray.class, int.class, dim)</code>.
@@ -1180,7 +1171,6 @@ public interface MemoryModel {
      * @see Matrix
      */
     Matrix<UpdatableIntArray> newIntMatrix(long... dim);
-
 
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
@@ -1208,7 +1198,6 @@ public interface MemoryModel {
      */
     Matrix<UpdatableLongArray> newLongMatrix(long... dim);
 
-
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
      * newMatrix}(UpdatableFloatArray.class, float.class, dim)</code>.
@@ -1234,7 +1223,6 @@ public interface MemoryModel {
      * @see Matrix
      */
     Matrix<UpdatableFloatArray> newFloatMatrix(long... dim);
-
 
     /**
      * Equivalent to <code>{@link #newMatrix(Class, Class, long...)
@@ -1408,7 +1396,6 @@ public interface MemoryModel {
      */
     UpdatableCharArray valueOf(char[] array);
 
-
     /**
      * Equivalent to <code>(UpdatableByteArray){@link #valueOf(Object, int, int)
      * valueOf}((Object)array, offset, count)</code>.
@@ -1430,7 +1417,6 @@ public interface MemoryModel {
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableByteArray valueOf(byte[] array);
-
 
     /**
      * Equivalent to <code>(UpdatableShortArray){@link #valueOf(Object, int, int)
@@ -1454,7 +1440,6 @@ public interface MemoryModel {
      */
     UpdatableShortArray valueOf(short[] array);
 
-
     /**
      * Equivalent to <code>(UpdatableIntArray){@link #valueOf(Object, int, int)
      * valueOf}((Object)array, offset, count)</code>.
@@ -1476,7 +1461,6 @@ public interface MemoryModel {
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableIntArray valueOf(int[] array);
-
 
     /**
      * Equivalent to <code>(UpdatableLongArray){@link #valueOf(Object, int, int)
@@ -1500,7 +1484,6 @@ public interface MemoryModel {
      */
     UpdatableLongArray valueOf(long[] array);
 
-
     /**
      * Equivalent to <code>(UpdatableFloatArray){@link #valueOf(Object, int, int)
      * valueOf}((Object)array, offset, count)</code>.
@@ -1522,7 +1505,6 @@ public interface MemoryModel {
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     UpdatableFloatArray valueOf(float[] array);
-
 
     /**
      * Equivalent to <code>(UpdatableDoubleArray){@link #valueOf(Object, int, int)

@@ -1096,7 +1096,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
 
-
     /**
      * Equivalent to <code>(ByteArray){@link #asArray
      * asArray(filePath, byte.class, filePosition, fileAreaSize, byteOrder)}</code>.
@@ -1155,7 +1154,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         return (UpdatableByteArray) asUpdatableArray(filePath, byte.class,
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
-
 
     /**
      * Equivalent to <code>(ShortArray){@link #asArray
@@ -1216,7 +1214,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
 
-
     /**
      * Equivalent to <code>(IntArray){@link #asArray
      * asArray(filePath, int.class, filePosition, fileAreaSize, byteOrder)}</code>.
@@ -1275,7 +1272,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         return (UpdatableIntArray) asUpdatableArray(filePath, int.class,
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
-
 
     /**
      * Equivalent to <code>(LongArray){@link #asArray
@@ -1336,7 +1332,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
 
-
     /**
      * Equivalent to <code>(FloatArray){@link #asArray
      * asArray(filePath, float.class, filePosition, fileAreaSize, byteOrder)}</code>.
@@ -1395,7 +1390,6 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
         return (UpdatableFloatArray) asUpdatableArray(filePath, float.class,
                 filePosition, fileAreaSize, truncate, byteOrder);
     }
-
 
     /**
      * Equivalent to <code>(DoubleArray){@link #asArray

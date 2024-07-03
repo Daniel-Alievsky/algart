@@ -304,7 +304,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Copies <code>count</code> short elements from <code>src</code> buffer,
      * starting from <code>srcPos</code> index,
@@ -432,7 +431,6 @@ public class JBuffers {
             second.put(secondPos, v1);
         }
     }
-
 
     /**
      * Copies <code>count</code> int elements from <code>src</code> buffer,
@@ -562,7 +560,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Copies <code>count</code> long elements from <code>src</code> buffer,
      * starting from <code>srcPos</code> index,
@@ -691,7 +688,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Copies <code>count</code> float elements from <code>src</code> buffer,
      * starting from <code>srcPos</code> index,
@@ -819,7 +815,6 @@ public class JBuffers {
             second.put(secondPos, v1);
         }
     }
-
 
     /**
      * Copies <code>count</code> double elements from <code>src</code> buffer,
@@ -1033,7 +1028,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Fills <code>count</code> elements in the <code>dest</code> buffer,
      * starting from the element <code>#destPos</code>,
@@ -1072,7 +1066,6 @@ public class JBuffers {
                 dest.put(destPos + k, value);
         }
     }
-
 
     /**
      * Fills <code>count</code> elements in the <code>dest</code> buffer,
@@ -1113,7 +1106,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Fills <code>count</code> elements in the <code>dest</code> buffer,
      * starting from the element <code>#destPos</code>,
@@ -1153,7 +1145,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Fills <code>count</code> elements in the <code>dest</code> buffer,
      * starting from the element <code>#destPos</code>,
@@ -1192,7 +1183,6 @@ public class JBuffers {
                 dest.put(destPos + k, value);
         }
     }
-
 
     /**
      * Fills <code>count</code> elements in the <code>dest</code> buffer,
@@ -1383,7 +1373,6 @@ public class JBuffers {
         return -1;
     }
 
-
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
@@ -1455,7 +1444,6 @@ public class JBuffers {
         }
         return -1;
     }
-
 
     /**
      * Returns the minimal index <code>k</code>, so that
@@ -1529,7 +1517,6 @@ public class JBuffers {
         return -1;
     }
 
-
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
@@ -1602,7 +1589,6 @@ public class JBuffers {
         return -1;
     }
 
-
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,buffer.limit())</code>
@@ -1674,7 +1660,6 @@ public class JBuffers {
         }
         return -1;
     }
-
 
     /**
      * Returns the minimal index <code>k</code>, so that
@@ -1923,7 +1908,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -1973,7 +1957,6 @@ public class JBuffers {
                 dest[destPos] = v;
         }
     }
-
 
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
@@ -2025,7 +2008,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2075,7 +2057,6 @@ public class JBuffers {
                 dest[destPos] = v;
         }
     }
-
 
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
@@ -2265,7 +2246,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2332,7 +2312,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2396,7 +2375,6 @@ public class JBuffers {
             }
         }
     }
-
 
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
@@ -2462,7 +2440,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2526,7 +2503,6 @@ public class JBuffers {
             }
         }
     }
-
 
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
@@ -2677,7 +2653,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2807,7 +2782,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2902,7 +2876,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2934,7 +2907,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2965,7 +2937,6 @@ public class JBuffers {
         }
     }
 
-
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,
      * starting from the element <code>#destPos</code>,
@@ -2995,7 +2966,6 @@ public class JBuffers {
                     (v - dest[destPos]);
         }
     }
-
 
     /**
      * Replaces <code>count</code> elements in <code>dest</code> array,

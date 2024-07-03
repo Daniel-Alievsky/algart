@@ -178,7 +178,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForBytes extends InterleavingBandsUnpacker {
         private final byte[][] threadBandArray;
         private final byte[][] threadPackedArray;
@@ -217,7 +216,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForShorts extends InterleavingBandsUnpacker {
         private final short[][] threadBandArray;
         private final short[][] threadPackedArray;
@@ -256,7 +254,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForInts extends InterleavingBandsUnpacker {
         private final int[][] threadBandArray;
         private final int[][] threadPackedArray;
@@ -295,7 +292,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForLongs extends InterleavingBandsUnpacker {
         private final long[][] threadBandArray;
         private final long[][] threadPackedArray;
@@ -334,7 +330,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForFloats extends InterleavingBandsUnpacker {
         private final float[][] threadBandArray;
         private final float[][] threadPackedArray;
@@ -373,7 +368,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class ForDoubles extends InterleavingBandsUnpacker {
         private final double[][] threadBandArray;
         private final double[][] threadPackedArray;
@@ -675,7 +669,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class DirectForShorts extends InterleavingBandsUnpacker {
         final short[][] bandArrays;
         final int[] bandArraysOffsets;
@@ -804,7 +797,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class DirectForInts extends InterleavingBandsUnpacker {
         final int[][] bandArrays;
         final int[] bandArraysOffsets;
@@ -933,7 +925,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class DirectForLongs extends InterleavingBandsUnpacker {
         final long[][] bandArrays;
         final int[] bandArraysOffsets;
@@ -1062,7 +1053,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class DirectForFloats extends InterleavingBandsUnpacker {
         final float[][] bandArrays;
         final int[] bandArraysOffsets;
@@ -1191,7 +1181,6 @@ abstract class InterleavingBandsUnpacker extends AbstractInterleavingBandsOperat
             }
         }
     }
-
     static class DirectForDoubles extends InterleavingBandsUnpacker {
         final double[][] bandArrays;
         final int[] bandArraysOffsets;

@@ -230,7 +230,6 @@ public interface StitchingFunc {
                  double v0,
                  double v1);
 
-
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,
      * new double[] {v0,v1,v2})</code>.
@@ -297,7 +296,6 @@ public interface StitchingFunc {
                  double v0,
                  double v1,
                  double v2);
-
 
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,
@@ -373,7 +371,6 @@ public interface StitchingFunc {
                  double v1,
                  double v2,
                  double v3);
-
 
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,
@@ -457,7 +454,6 @@ public interface StitchingFunc {
                  double v2,
                  double v3,
                  double v4);
-
 
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,
@@ -549,7 +545,6 @@ public interface StitchingFunc {
                  double v3,
                  double v4,
                  double v5);
-
 
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,
@@ -649,7 +644,6 @@ public interface StitchingFunc {
                  double v4,
                  double v5,
                  double v6);
-
 
     /**
      * Equivalent to <code>{@link #get(double[], double[]) get}(coordinates,

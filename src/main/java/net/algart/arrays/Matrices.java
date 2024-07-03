@@ -4315,7 +4315,6 @@ public class Matrices {
         Arrays.packBitsLess(result.array(), intensities.array(), threshold);
     }
 
-
     /**
      * Equivalent to
      * <code>{@link Arrays#packBitsGreaterOrEqual(UpdatableBitArray, PArray, double)
@@ -4336,7 +4335,6 @@ public class Matrices {
         checkDimensionEquality(result, intensities);
         Arrays.packBitsGreaterOrEqual(result.array(), intensities.array(), threshold);
     }
-
 
     /**
      * Equivalent to

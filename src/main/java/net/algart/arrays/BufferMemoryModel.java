@@ -470,7 +470,6 @@ public class BufferMemoryModel extends AbstractMemoryModel {
         return (UpdatableByteArray) asUpdatableArray(byteBuffer, byte.class);
     }
 
-
     /**
      * Equivalent to
      * <code>(UpdatableShortArray){@link #asUpdatableArray asUpdatableArray}(byteBuffer, short.class)</code>.
@@ -482,7 +481,6 @@ public class BufferMemoryModel extends AbstractMemoryModel {
     public static UpdatableShortArray asUpdatableShortArray(ByteBuffer byteBuffer) {
         return (UpdatableShortArray) asUpdatableArray(byteBuffer, short.class);
     }
-
 
     /**
      * Equivalent to
@@ -496,7 +494,6 @@ public class BufferMemoryModel extends AbstractMemoryModel {
         return (UpdatableIntArray) asUpdatableArray(byteBuffer, int.class);
     }
 
-
     /**
      * Equivalent to
      * <code>(UpdatableLongArray){@link #asUpdatableArray asUpdatableArray}(byteBuffer, long.class)</code>.
@@ -509,7 +506,6 @@ public class BufferMemoryModel extends AbstractMemoryModel {
         return (UpdatableLongArray) asUpdatableArray(byteBuffer, long.class);
     }
 
-
     /**
      * Equivalent to
      * <code>(UpdatableFloatArray){@link #asUpdatableArray asUpdatableArray}(byteBuffer, float.class)</code>.
@@ -521,7 +517,6 @@ public class BufferMemoryModel extends AbstractMemoryModel {
     public static UpdatableFloatArray asUpdatableFloatArray(ByteBuffer byteBuffer) {
         return (UpdatableFloatArray) asUpdatableArray(byteBuffer, float.class);
     }
-
 
     /**
      * Equivalent to

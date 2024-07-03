@@ -647,7 +647,6 @@ public interface Matrix<T extends Array> extends Cloneable {
      */
     char[] jaChar();
 
-
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaShort() jaShort()}</code>.
      * However, if the built-in AlgART array is not {@link PArray}, in other words.
@@ -659,7 +658,6 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      */
     short[] jaShort();
-
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaInt() jaInt()}</code>.
@@ -673,7 +671,6 @@ public interface Matrix<T extends Array> extends Cloneable {
      */
     int[] jaInt();
 
-
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaLong() jaLong()}</code>.
      * However, if the built-in AlgART array is not {@link PArray}, in other words.
@@ -686,7 +683,6 @@ public interface Matrix<T extends Array> extends Cloneable {
      */
     long[] jaLong();
 
-
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaFloat() jaFloat()}</code>.
      * However, if the built-in AlgART array is not {@link PArray}, in other words.
@@ -698,7 +694,6 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      */
     float[] jaFloat();
-
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaDouble() jaDouble()}</code>.
@@ -2354,7 +2349,6 @@ public interface Matrix<T extends Array> extends Cloneable {
         return Arrays.SMM.newCharMatrix(dim);
     }
 
-
     /**
      * Equivalent to <code>{@link MemoryModel#newByteMatrix(long...) memoryModel.newByteMatrix(dim)}</code>.
      *
@@ -2392,7 +2386,6 @@ public interface Matrix<T extends Array> extends Cloneable {
     static Matrix<UpdatableByteArray> newByteMatrix(long... dim) {
         return Arrays.SMM.newByteMatrix(dim);
     }
-
 
     /**
      * Equivalent to <code>{@link MemoryModel#newShortMatrix(long...) memoryModel.newShortMatrix(dim)}</code>.
@@ -2432,7 +2425,6 @@ public interface Matrix<T extends Array> extends Cloneable {
         return Arrays.SMM.newShortMatrix(dim);
     }
 
-
     /**
      * Equivalent to <code>{@link MemoryModel#newIntMatrix(long...) memoryModel.newIntMatrix(dim)}</code>.
      *
@@ -2470,7 +2462,6 @@ public interface Matrix<T extends Array> extends Cloneable {
     static Matrix<UpdatableIntArray> newIntMatrix(long... dim) {
         return Arrays.SMM.newIntMatrix(dim);
     }
-
 
     /**
      * Equivalent to <code>{@link MemoryModel#newLongMatrix(long...) memoryModel.newLongMatrix(dim)}</code>.
@@ -2510,7 +2501,6 @@ public interface Matrix<T extends Array> extends Cloneable {
         return Arrays.SMM.newLongMatrix(dim);
     }
 
-
     /**
      * Equivalent to <code>{@link MemoryModel#newFloatMatrix(long...) memoryModel.newFloatMatrix(dim)}</code>.
      *
@@ -2548,7 +2538,6 @@ public interface Matrix<T extends Array> extends Cloneable {
     static Matrix<UpdatableFloatArray> newFloatMatrix(long... dim) {
         return Arrays.SMM.newFloatMatrix(dim);
     }
-
 
     /**
      * Equivalent to <code>{@link MemoryModel#newDoubleMatrix(long...) memoryModel.newDoubleMatrix(dim)}</code>.

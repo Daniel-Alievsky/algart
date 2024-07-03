@@ -2555,7 +2555,6 @@ public class PackedBitArrays {
 
     }
 
-
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
@@ -3092,7 +3091,6 @@ public class PackedBitArrays {
 
     }
 
-
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
@@ -3629,7 +3627,6 @@ public class PackedBitArrays {
 
     }
 
-
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
@@ -4166,7 +4163,6 @@ public class PackedBitArrays {
 
     }
 
-
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
      * to packed <code>dest</code> array, starting from the bit <code>#destPos</code>,
@@ -4702,7 +4698,6 @@ public class PackedBitArrays {
         }
 
     }
-
 
     /**
      * Packs <code>count</code> elements from <code>src</code> array, starting from the element <code>#srcPos</code>,
@@ -6407,7 +6402,6 @@ public class PackedBitArrays {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * into a newly created array <code>byte[count]</code> array returned as a result.
@@ -6901,7 +6895,6 @@ public class PackedBitArrays {
                 dest[destPos] = bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -7397,7 +7390,6 @@ public class PackedBitArrays {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * into a newly created array <code>int[count]</code> array returned as a result.
@@ -7891,7 +7883,6 @@ public class PackedBitArrays {
                 dest[destPos] = bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
@@ -8387,7 +8378,6 @@ public class PackedBitArrays {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * into a newly created array <code>float[count]</code> array returned as a result.
@@ -8882,7 +8872,6 @@ public class PackedBitArrays {
         }
     }
 
-
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
      * into a newly created array <code>double[count]</code> array returned as a result.
@@ -9376,7 +9365,6 @@ public class PackedBitArrays {
                 dest[destPos] = bit0Value;
         }
     }
-
 
     /**
      * Unpacks <code>count</code> bits, packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,

@@ -1691,7 +1691,6 @@ public abstract class Boundary2DScanner {
      */
     public abstract boolean isAllBoundariesScanner();
 
-
     /**
      * Returns <code>true</code> if and only if this scanner is a main boundaries scanner. More precisely,
      * it is <code>true</code> if and only if:

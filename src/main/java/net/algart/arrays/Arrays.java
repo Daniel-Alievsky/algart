@@ -2052,7 +2052,6 @@ public class Arrays {
         return new CopiesArraysImpl.CopiesCharArray(n, element);
     }
 
-
     /**
      * Constructs an immutable unresizable byte array consisting of <code>n</code> copies of the
      * specified <code>element</code>. The newly allocated data object is tiny
@@ -2078,7 +2077,6 @@ public class Arrays {
     public static ByteArray nByteCopies(long n, byte element) {
         return new CopiesArraysImpl.CopiesByteArray(n, element);
     }
-
 
     /**
      * Constructs an immutable unresizable short array consisting of <code>n</code> copies of the
@@ -2106,7 +2104,6 @@ public class Arrays {
         return new CopiesArraysImpl.CopiesShortArray(n, element);
     }
 
-
     /**
      * Constructs an immutable unresizable int array consisting of <code>n</code> copies of the
      * specified <code>element</code>. The newly allocated data object is tiny
@@ -2132,7 +2129,6 @@ public class Arrays {
     public static IntArray nIntCopies(long n, int element) {
         return new CopiesArraysImpl.CopiesIntArray(n, element);
     }
-
 
     /**
      * Constructs an immutable unresizable long array consisting of <code>n</code> copies of the
@@ -2160,7 +2156,6 @@ public class Arrays {
         return new CopiesArraysImpl.CopiesLongArray(n, element);
     }
 
-
     /**
      * Constructs an immutable unresizable float array consisting of <code>n</code> copies of the
      * specified <code>element</code>. The newly allocated data object is tiny
@@ -2186,7 +2181,6 @@ public class Arrays {
     public static FloatArray nFloatCopies(long n, float element) {
         return new CopiesArraysImpl.CopiesFloatArray(n, element);
     }
-
 
     /**
      * Constructs an immutable unresizable double array consisting of <code>n</code> copies of the
@@ -4881,7 +4875,6 @@ public class Arrays {
         return (byte[]) toJavaArray((Array) array);
     }
 
-
     /**
      * Equivalent to <code>(short[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
      *
@@ -4900,7 +4893,6 @@ public class Arrays {
     public static short[] toJavaArray(ShortArray array) {
         return (short[]) toJavaArray((Array) array);
     }
-
 
     /**
      * Equivalent to <code>(int[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
@@ -4921,7 +4913,6 @@ public class Arrays {
         return (int[]) toJavaArray((Array) array);
     }
 
-
     /**
      * Equivalent to <code>(long[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
      *
@@ -4941,7 +4932,6 @@ public class Arrays {
         return (long[]) toJavaArray((Array) array);
     }
 
-
     /**
      * Equivalent to <code>(float[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
      *
@@ -4960,7 +4950,6 @@ public class Arrays {
     public static float[] toJavaArray(FloatArray array) {
         return (float[]) toJavaArray((Array) array);
     }
-
 
     /**
      * Equivalent to <code>(double[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
@@ -6125,7 +6114,6 @@ public class Arrays {
         array.setChar(index, value);
     }
 
-
     /**
      * Inserts the specified <code>int</code> value at the specified position in the int array.
      * Shifts the element currently at that position (if any) and any subsequent
@@ -6163,7 +6151,6 @@ public class Arrays {
         array.setInt(index, value);
     }
 
-
     /**
      * Inserts the specified <code>long</code> value at the specified position in the long array.
      * Shifts the element currently at that position (if any) and any subsequent
@@ -6200,7 +6187,6 @@ public class Arrays {
         array.copy(index + 1, index, len - index);
         array.setLong(index, value);
     }
-
 
     /**
      * Inserts the specified <code>double</code> value at the specified position in the double array.
@@ -6810,7 +6796,6 @@ public class Arrays {
         return Math.min(Math.max(value, min), max);
     }
 
-
     /**
      * Returns <code>Math.min(Math.min(a, b), c)</code> &mdash; minimum from 3 values.
      *
@@ -6875,7 +6860,6 @@ public class Arrays {
     public static float truncate(float value, float min, float max) {
         return Math.min(Math.max(value, min), max);
     }
-
 
     /**
      * Returns <code>Math.min(Math.min(a, b), c)</code> &mdash; minimum from 3 values.
