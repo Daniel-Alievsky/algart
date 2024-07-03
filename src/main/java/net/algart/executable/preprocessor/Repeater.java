@@ -51,6 +51,7 @@ public class Repeater implements Cloneable {
         private static final long serialVersionUID = 1283256722407269023L;
     }
 
+    static final boolean TRIM_LEADING_OF_REPEATED_TEXT = false;
     static final String CHARSET = "UTF-8";
 
     static final String[] BEGIN_OF_COMMENTS = {"//<<", "//[[", "/*", "(*", "#[[", "#<<", "<!--"};
@@ -321,169 +322,178 @@ public class Repeater implements Cloneable {
         }
     }
 
+    String processPass(final String s, final int passIndex) throws SyntaxException, IOException {
+        StringBuilder sb = new StringBuilder();
+        int q = 0;
+        for (; ; ) {
+            int p = s.indexOf(REPEAT_START[passIndex], q);
+            if (p == -1) {
+                sb.append(s.substring(q));
+                break;
+                // the file is finished
+            }
+            int foundLen = REPEAT_START[passIndex].length();
+            sb.append(s, q, p);
+            currentPosition = p;
+
+            p += foundLen;
+            final String endOfComment = END_OF_COMMENTS[passIndex];
+            int p1 = s.indexOf(endOfComment, p);
+            if (p1 == -1) {
+                throw new SyntaxException(": comment not closed at line at line " + countLines());
+            }
+            String commands = s.substring(p, p1);
+            int pComment = commands.indexOf("!!");
+            String comment = "";
+            if (pComment != -1) {
+                while (pComment > 0 && commands.charAt(pComment - 1) <= ' ') {
+                    pComment--;
+                }
+                comment = commands.substring(pComment);
+                commands = commands.substring(0, pComment);
+            }
+            parseCommands(commands, s);
+            if (otherFileSection != null) {
+                if (!comment.contains(INCLUDE_WARNING)) {
+                    comment = " " + INCLUDE_WARNING + " ";
+                }
+            }
+            p1 += endOfComment.length();
+            sb.append(REPEAT_START[passIndex]).append(commands).append(comment).append(endOfComment);
+
+            int p2 = p1;
+            String repeatedText;
+            String[] endMarker;
+            String middleMarkerWarn;
+            String p2Spaces = "";
+            if (otherFileSection == null) {
+                p2 = s.indexOf(middleMarkerWarn = REPEAT_MIDDLE[passIndex], p1);
+                foundLen = middleMarkerWarn.length();
+                if (p2 == -1) {
+                    throw new SyntaxException(": no " + middleMarkerWarn + " section after line "
+                            + countLines(s.substring(0, p1)));
+                }
+                int p2Back = p2; // will be p2 without one empty line
+                if (IS_ONE_LINE_COMMENT[passIndex]) {
+                    boolean oneLineFound = false;
+                    int p2LastSpace = p2;
+                    for (; p2Back > p1; p2Back--) {
+                        char c = s.charAt(p2Back - 1);
+                        if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
+                            if (!oneLineFound && (c == ' ' || c == '\t')) {
+                                p2LastSpace = p2Back - 1;
+                            } if (c == '\r' || (c == '\n' && (p2Back <= 1 || s.charAt(p2Back - 2) != '\r'))) {
+                                if (oneLineFound) {
+                                    if (c == '\r' && s.charAt(p2Back) == '\n') {
+                                        p2Back++;
+                                    }
+                                    break;
+                                }
+                                oneLineFound = true;
+                            }
+                        } else {
+                            break;
+                        }
+                    }
+                    if (!oneLineFound) {
+                        p2Back = p2; // don't remove spaces if there are no empty lines
+                    } else {
+                        p2Spaces = s.substring(p2Back, p2);
+                    }
+                }
+                final String paddedRepeatedText = s.substring(p1, p2);
+                repeatedText = s.substring(p1, p2Back);
+                p2 += foundLen;
+                assert endOfComment.equals(END_OF_COMMENTS[passIndex]);
+                int p2Close = s.indexOf(endOfComment, p2);
+                if (p2Close == -1) {
+                    throw new SyntaxException(": comment not closed at line " + countLines(s.substring(0, p1)));
+                }
+                comment = s.substring(p2, p2Close);
+                if (!comment.contains(AUTO_GENERATION_WARNING)) {
+                    comment = " " + AUTO_GENERATION_WARNING + " ";
+                }
+                p2 = p2Close + endOfComment.length();
+                sb.append(paddedRepeatedText);
+                sb.append(REPEAT_MIDDLE[passIndex]).append(comment).append(endOfComment);
+                endMarker = REPEAT_END;
+            } else {
+                repeatedText = otherFileSection;
+                endMarker = REPEAT_INCLUDE_END;
+            }
+            String endMarkerWarn = endMarker[passIndex];
+            int p3 = s.indexOf(endMarkerWarn, p2);
+            foundLen = endMarkerWarn.length();
+            if (p3 == -1) {
+                throw new SyntaxException(": " + endMarkerWarn + " marker expected after line "
+                        + countLines(s.substring(0, p2)));
+            }
+            p3 += foundLen;
+            q = p3;
+
+            if (TRIM_LEADING_OF_REPEATED_TEXT) {
+                repeatedText = repeatedText.stripLeading();
+            }
+            repeatedText = compilePatternDotAll(ANY_REPEAT_RE).matcher(repeatedText).replaceAll("");
+            // - removing nested calls of Repeater inside the repeated text
+            for (int k = 0, n = replacements.length == 0 ? 1 : replacements[0].length; k < n; k++) {
+                String correctedText = repeatedText;
+                if (k == n - 1) {
+                    correctedText += p2Spaces;
+                }
+                for (int j = 0; j < replacements.length; j++) {
+                    String r = replacements[j][k];
+                    Matcher m = compilePatternDotAll("\\$INDEX\\(([\\w\\d\\,=\\s]*)\\)").matcher(r);
+                    StringBuilder rsb = new StringBuilder();
+                    while (m.find()) {
+                        int start = 0;
+                        int step = 1;
+                        String[] indexParams = m.group(1).split(",");
+                        try {
+                            for (String indexParamOriginal : indexParams) {
+                                String indexParam = indexParamOriginal.trim().toLowerCase();
+                                if (indexParam.isEmpty()) {
+                                    continue; // possible when the list is empty
+                                }
+                                if (indexParam.startsWith("start=")) {
+                                    start = Integer.parseInt(indexParam.substring("start=".length()).trim());
+                                } else if (indexParam.startsWith("step=")) {
+                                    step = Integer.parseInt(indexParam.substring("step=".length()).trim());
+                                } else {
+                                    throw new SyntaxException(": illegal param \"" + indexParam + "\" in $INDEX "
+                                            + "(correct example: \"$INDEX(start=0,step=3)\") at line "
+                                            + countLines());
+                                }
+                            }
+                        } catch (NumberFormatException ex) {
+                            throw new SyntaxException(": illegal $INDEX syntax "
+                                    + "(correct example: \"$INDEX(start=0,step=3)\") at line " + countLines());
+                        }
+                        m.appendReplacement(rsb, String.valueOf(start + k * step));
+                    }
+                    m.appendTail(rsb);
+                    r = rsb.toString();
+                    correctedText = compilePatternDotAll(regexps[j]).matcher(correctedText).replaceAll(r);
+                }
+                if (otherFileSection == null && shift) {
+                    String space = dup(' ', 48);
+                    correctedText = PATTERN_LINE_START.matcher(correctedText).replaceAll(space);
+                    if (correctedText.startsWith(space)) {
+                        correctedText = correctedText.substring(space.length());
+                    }
+                }
+                sb.append(correctedText);
+            }
+            sb.append(endMarker[passIndex]);
+        }
+        return sb.toString();
+    }
+
     String process() throws SyntaxException, IOException {
         String s = processedContent;
         StringBuilder sb = new StringBuilder();
         for (int passIndex = 0; passIndex < REPEAT_START.length; passIndex++) {
-            sb.setLength(0);
-            int q = 0;
-            for (; ; ) {
-                int p = s.indexOf(REPEAT_START[passIndex], q);
-                if (p == -1) {
-                    sb.append(s.substring(q));
-                    break; // all file processed
-                }
-                int foundLen = REPEAT_START[passIndex].length();
-                sb.append(s, q, p);
-                currentPosition = p;
-
-                p += foundLen;
-                String eoc = END_OF_COMMENTS[passIndex];
-                int p1 = s.indexOf(eoc, p);
-                if (p1 == -1) {
-                    throw new SyntaxException(": comment not closed at line at line " + countLines());
-                }
-                String commands = s.substring(p, p1);
-                int pComment = commands.indexOf("!!");
-                String comment = "";
-                if (pComment != -1) {
-                    while (pComment > 0 && commands.charAt(pComment - 1) <= ' ') {
-                        pComment--;
-                    }
-                    comment = commands.substring(pComment);
-                    commands = commands.substring(0, pComment);
-                }
-                parseCommands(commands, s);
-                if (otherFileSection != null) {
-                    if (!comment.contains(INCLUDE_WARNING)) {
-                        comment = " " + INCLUDE_WARNING + " ";
-                    }
-                }
-                p1 += eoc.length();
-                sb.append(REPEAT_START[passIndex]).append(commands).append(comment).append(eoc);
-
-                int p2 = p1;
-                String repeatedText;
-                String[] endMarker;
-                String middleMarkerWarn;
-                String p2Spaces = "";
-                if (otherFileSection == null) {
-                    p2 = s.indexOf(middleMarkerWarn = REPEAT_MIDDLE[passIndex], p1);
-                    foundLen = middleMarkerWarn.length();
-                    if (p2 == -1) {
-                        throw new SyntaxException(": no " + middleMarkerWarn + " section after line "
-                            + countLines(s.substring(0, p1)));
-                    }
-                    int p2Back = p2; // will be p2 without one empty line
-                    if (IS_ONE_LINE_COMMENT[passIndex]) {
-                        boolean oneLineFound = false;
-                        int p2LastSpace = p2;
-                        for (; p2Back > p1; p2Back--) {
-                            char c = s.charAt(p2Back - 1);
-                            if (c == ' ' || c == '\t' || c == '\n' || c == '\r') {
-                                if (!oneLineFound && (c == ' ' || c == '\t')) {
-                                    p2LastSpace = p2Back - 1;
-                                } if (c == '\r' || (c == '\n' && (p2Back <= 1 || s.charAt(p2Back - 2) != '\r'))) {
-                                    if (oneLineFound) {
-                                        if (c == '\r' && s.charAt(p2Back) == '\n') {
-                                            p2Back++;
-                                        }
-                                        break;
-                                    }
-                                    oneLineFound = true;
-                                }
-                            } else {
-                                break;
-                            }
-                        }
-                        if (!oneLineFound) {
-                            p2Back = p2; // don't remove spaces if there are no empty lines
-                        } else {
-                            p2Spaces = s.substring(p2Back, p2);
-                        }
-                    }
-                    String paddedRepeatedText = s.substring(p1, p2);
-                    repeatedText = s.substring(p1, p2Back);
-                    p2 += foundLen;
-                    eoc = END_OF_COMMENTS[passIndex];
-                    int p2Close = s.indexOf(eoc, p2);
-                    if (p2Close == -1) {
-                        throw new SyntaxException(": comment not closed at line " + countLines(s.substring(0, p1)));
-                    }
-                    comment = s.substring(p2, p2Close);
-                    if (!comment.contains(AUTO_GENERATION_WARNING)) {
-                        comment = " " + AUTO_GENERATION_WARNING + " ";
-                    }
-                    p2 = p2Close + eoc.length();
-                    sb.append(paddedRepeatedText);
-                    sb.append(REPEAT_MIDDLE[passIndex]).append(comment).append(eoc);
-                    endMarker = REPEAT_END;
-                } else {
-                    repeatedText = otherFileSection;
-                    endMarker = REPEAT_INCLUDE_END;
-                }
-                String endMarkerWarn = endMarker[passIndex];
-                int p3 = s.indexOf(endMarkerWarn, p2);
-                foundLen = endMarkerWarn.length();
-                if (p3 == -1) {
-                    throw new SyntaxException(": " + endMarkerWarn + " marker expected after line "
-                        + countLines(s.substring(0, p2)));
-                }
-                p3 += foundLen;
-                q = p3;
-
-                repeatedText = compilePatternDotAll(ANY_REPEAT_RE).matcher(repeatedText).replaceAll("");
-                for (int k = 0, n = replacements.length == 0 ? 1 : replacements[0].length; k < n; k++) {
-                    String correctedText = repeatedText;
-                    if (k == n - 1) {
-                        correctedText += p2Spaces;
-                    }
-                    for (int j = 0; j < replacements.length; j++) {
-                        String r = replacements[j][k];
-                        Matcher m = compilePatternDotAll("\\$INDEX\\(([\\w\\d\\,=\\s]*)\\)").matcher(r);
-                        StringBuilder rsb = new StringBuilder();
-                        while (m.find()) {
-                            int start = 0;
-                            int step = 1;
-                            String[] indexParams = m.group(1).split(",");
-                            try {
-                                for (String indexParamOriginal : indexParams) {
-                                    String indexParam = indexParamOriginal.trim().toLowerCase();
-                                    if (indexParam.isEmpty()) {
-                                        continue; // possible when the list is empty
-                                    }
-                                    if (indexParam.startsWith("start=")) {
-                                        start = Integer.parseInt(indexParam.substring("start=".length()).trim());
-                                    } else if (indexParam.startsWith("step=")) {
-                                        step = Integer.parseInt(indexParam.substring("step=".length()).trim());
-                                    } else {
-                                        throw new SyntaxException(": illegal param \"" + indexParam + "\" in $INDEX "
-                                            + "(correct example: \"$INDEX(start=0,step=3)\") at line "
-                                            + countLines());
-                                    }
-                                }
-                            } catch (NumberFormatException ex) {
-                                throw new SyntaxException(": illegal $INDEX syntax "
-                                    + "(correct example: \"$INDEX(start=0,step=3)\") at line " + countLines());
-                            }
-                            m.appendReplacement(rsb, String.valueOf(start + k * step));
-                        }
-                        m.appendTail(rsb);
-                        r = rsb.toString();
-                        correctedText = compilePatternDotAll(regexps[j]).matcher(correctedText).replaceAll(r);
-                    }
-                    if (otherFileSection == null && shift) {
-                        String space = dup(' ', 48);
-                        correctedText = PATTERN_LINE_START.matcher(correctedText).replaceAll(space);
-                        if (correctedText.startsWith(space)) {
-                            correctedText = correctedText.substring(space.length());
-                        }
-                    }
-                    sb.append(correctedText);
-                }
-                sb.append(endMarker[passIndex]);
-            }
-            s = sb.toString();
+            s = processPass(s, passIndex);
         }
         return s;
     }
