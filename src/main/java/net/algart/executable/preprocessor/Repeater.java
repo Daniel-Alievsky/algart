@@ -25,6 +25,7 @@
 package net.algart.executable.preprocessor;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,10 +56,12 @@ public class Repeater implements Cloneable {
     static final String[] BEGIN_OF_COMMENTS = {"//<<", "//[[", "/*", "(*", "#[[", "#<<", "<!--"};
     static final String[] END_OF_COMMENTS = {">>", "]]", "*/", "*)", "]]", ">>", "-->"};
     static final boolean[] IS_ONE_LINE_COMMENT = {true, true, false, false, true, true, false};
-    static final String[] appendByBraces(String s, boolean fromLeft, boolean fromRight) {
+
+    static String[] appendByBraces(String s, boolean fromLeft, boolean fromRight) {
         String[] result = new String[BEGIN_OF_COMMENTS.length];
-        for (int k = 0; k < result.length; k++)
+        for (int k = 0; k < result.length; k++) {
             result[k] = (fromLeft ? BEGIN_OF_COMMENTS[k] : "") + s + (fromRight ? END_OF_COMMENTS[k] : "");
+        }
         return result;
     }
 
@@ -133,16 +136,16 @@ public class Repeater implements Cloneable {
 
     static String dup(char c, int len) {
         char[] chars = new char[len];
-        for (int k = 0; k < len; k++)
-            chars[k] = c;
+        Arrays.fill(chars, c);
         return String.valueOf(chars);
     }
 
     static int countLines(String s) {
         int result = 1;
         Matcher m = Pattern.compile("\\r(?!\\n)|\\n|\\r\\n", Pattern.DOTALL).matcher(s);
-        while (m.find())
+        while (m.find()) {
             result++;
+        }
         return result;
     }
 
@@ -152,10 +155,11 @@ public class Repeater implements Cloneable {
 
     static String trimComments(String s) {
         s = s.trim();
-        if (s.startsWith("//"))
+        if (s.startsWith("//")) {
             s = s.substring(2).trim();
-        else if (s.startsWith("#"))
+        } else if (s.startsWith("#")) {
             s = s.substring(1).trim();
+        }
         return s;
     }
 
@@ -163,16 +167,13 @@ public class Repeater implements Cloneable {
         synchronized (lock) {
             InputStream inputStream = new FileInputStream(file);
             StringBuilder sb = new StringBuilder();
-            InputStreamReader reader = new InputStreamReader(inputStream, CHARSET);
-            try {
+            try (InputStreamReader reader = new InputStreamReader(inputStream, CHARSET)) {
                 char[] buf = new char[32768];
                 int len;
                 while ((len = reader.read(buf)) >= 0) {
                     sb.append(buf, 0, len);
                 }
                 return sb.toString();
-            } finally {
-                reader.close();
             }
         }
     }
@@ -184,11 +185,8 @@ public class Repeater implements Cloneable {
     static void write(File file, String data) throws IOException {
         synchronized (lock) {
             OutputStream outputStream = new FileOutputStream(file);
-            OutputStreamWriter writer = new OutputStreamWriter(outputStream, CHARSET);
-            try {
+            try (OutputStreamWriter writer = new OutputStreamWriter(outputStream, CHARSET)) {
                 writer.write(data);
-            } finally {
-                writer.close();
             }
         }
     }
@@ -204,17 +202,19 @@ public class Repeater implements Cloneable {
     String[][] replacements;
     void parseCommands(String commands, String currentContent) throws SyntaxException, IOException {
         int c1 = commands.indexOf(")");
-        if (c1 == -1)
+        if (c1 == -1) {
             throw new SyntaxException(": ) expected at line " + countLines());
+        }
         String[] arguments = commands.substring(0, c1).split(",");
         c1 += 1;
         otherFileSection = null;
         shift = false;
         if (arguments.length >= 1) {
             if (arguments[0].equals(INCLUDE_OPTION) || arguments[0].equals(INCLUDE_OPTION_ALT)) {
-                if (arguments.length != 3)
+                if (arguments.length != 3) {
                     throw new SyntaxException(": illegal number of arguments in (), correct arguments should be (\""
                         + INCLUDE_OPTION + "\",otherFileName,otherFileSectionName) at line " + countLines());
+                }
                 if (removeAllIncludes) {
                     otherFileSection = "/**REMOVED**/";
                 } else {
@@ -241,11 +241,12 @@ public class Repeater implements Cloneable {
                             break;
                         }
                     }
-                    if (otherFileSection == null)
+                    if (otherFileSection == null) {
                         throw new SyntaxException(": " + otherFileName + " file doesn't contain requested section "
                             + REPEAT_SECTION_START_RE.replaceAll("\\\\", "") + " " + arguments[2].trim() + " ..."
                             + REPEAT_SECTION_END_RE.replaceAll("\\\\", "") + " " + arguments[2].trim()
                             + " at line " + countLines());
+                    }
                 }
             } else if (arguments[0].equals(SHIFT_OPTION)) {
                 shift = true;
@@ -257,11 +258,13 @@ public class Repeater implements Cloneable {
         replacements = new String[lists.length][];
         for (int k = 0; k < lists.length; k++) {
             int r = lists[k].indexOf("==>");
-            if (r == -1)
+            if (r == -1) {
                 throw new SyntaxException(": ==> expected at line " + countLines());
+            }
             regexps[k] = trimComments(lists[k].substring(0, r));
-            if (regexps[k].isEmpty())
+            if (regexps[k].isEmpty()) {
                 throw new SyntaxException(": empty regexp before ==> at line " + countLines());
+            }
             r += "==>".length();
             String[] rep = (lists[k].substring(r) + " ").split(",,"); // +" " necessary to correctly process ",,;;"
             if (rep.length > 1) {
@@ -284,19 +287,21 @@ public class Repeater implements Cloneable {
                     repLen = Math.max(repLen, rep.length - 1);
                     String[] repNew = new String[repLen];
                     System.arraycopy(rep, 0, repNew, 0, rep.length - 1);
-                    for (int l = rep.length - 1; l < repLen; l++)
+                    for (int l = rep.length - 1; l < repLen; l++) {
                         repNew[l] = rep[rep.length - 2];
+                    }
                     rep = repNew;
                 }
             }
 
             replacements[k] = rep;
-            if (k > 0 && replacements[k].length != replacements[0].length)
+            if (k > 0 && replacements[k].length != replacements[0].length) {
                 throw new SyntaxException(": different lengths of the following replacement lists"
                     + " (list #" + k + " contains " + replacements[k].length + " elements,"
                     + " list #0 contains " + replacements[0].length + " elements)"
                     + String.format("%n") + commandsTail
                     + " at line " + countLines());
+            }
             for (int i = 0; i < replacements[k].length; i++) {
                 String s = trimComments(replacements[k][i]);
                 if (s.startsWith("\"") && s.endsWith("\"") && s.length() > 2) {
@@ -329,14 +334,15 @@ public class Repeater implements Cloneable {
                     break; // all file processed
                 }
                 int foundLen = REPEAT_START[passIndex].length();
-                sb.append(s.substring(q, p));
+                sb.append(s, q, p);
                 currentPosition = p;
 
                 p += foundLen;
                 String eoc = END_OF_COMMENTS[passIndex];
                 int p1 = s.indexOf(eoc, p);
-                if (p1 == -1)
+                if (p1 == -1) {
                     throw new SyntaxException(": comment not closed at line at line " + countLines());
+                }
                 String commands = s.substring(p, p1);
                 int pComment = commands.indexOf("!!");
                 String comment = "";
@@ -364,9 +370,10 @@ public class Repeater implements Cloneable {
                 if (otherFileSection == null) {
                     p2 = s.indexOf(middleMarkerWarn = REPEAT_MIDDLE[passIndex], p1);
                     foundLen = middleMarkerWarn.length();
-                    if (p2 == -1)
+                    if (p2 == -1) {
                         throw new SyntaxException(": no " + middleMarkerWarn + " section after line "
                             + countLines(s.substring(0, p1)));
+                    }
                     int p2Back = p2; // will be p2 without one empty line
                     if (IS_ONE_LINE_COMMENT[passIndex]) {
                         boolean oneLineFound = false;
@@ -400,8 +407,9 @@ public class Repeater implements Cloneable {
                     p2 += foundLen;
                     eoc = END_OF_COMMENTS[passIndex];
                     int p2Close = s.indexOf(eoc, p2);
-                    if (p2Close == -1)
+                    if (p2Close == -1) {
                         throw new SyntaxException(": comment not closed at line " + countLines(s.substring(0, p1)));
+                    }
                     comment = s.substring(p2, p2Close);
                     if (!comment.contains(AUTO_GENERATION_WARNING)) {
                         comment = " " + AUTO_GENERATION_WARNING + " ";
@@ -417,9 +425,10 @@ public class Repeater implements Cloneable {
                 String endMarkerWarn = endMarker[passIndex];
                 int p3 = s.indexOf(endMarkerWarn, p2);
                 foundLen = endMarkerWarn.length();
-                if (p3 == -1)
+                if (p3 == -1) {
                     throw new SyntaxException(": " + endMarkerWarn + " marker expected after line "
                         + countLines(s.substring(0, p2)));
+                }
                 p3 += foundLen;
                 q = p3;
 
@@ -440,8 +449,9 @@ public class Repeater implements Cloneable {
                             try {
                                 for (String indexParamOriginal : indexParams) {
                                     String indexParam = indexParamOriginal.trim().toLowerCase();
-                                    if (indexParam.isEmpty())
+                                    if (indexParam.isEmpty()) {
                                         continue; // possible when the list is empty
+                                    }
                                     if (indexParam.startsWith("start=")) {
                                         start = Integer.parseInt(indexParam.substring("start=".length()).trim());
                                     } else if (indexParam.startsWith("step=")) {
@@ -465,8 +475,9 @@ public class Repeater implements Cloneable {
                     if (otherFileSection == null && shift) {
                         String space = dup(' ', 48);
                         correctedText = PATTERN_LINE_START.matcher(correctedText).replaceAll(space);
-                        if (correctedText.startsWith(space))
+                        if (correctedText.startsWith(space)) {
                             correctedText = correctedText.substring(space.length());
+                        }
                     }
                     sb.append(correctedText);
                 }
@@ -490,8 +501,9 @@ public class Repeater implements Cloneable {
     }
 
     public void processFile() {
-        if (!processedFile.exists())
+        if (!processedFile.exists()) {
             return;
+        }
         String msg = "Processing " + processedFile + "... ";
         if (msg.length() > 80) {
             msg = "Processing (...)" + processedFile.toString().substring(msg.length() - 80) + "... ";
@@ -599,11 +611,12 @@ public class Repeater implements Cloneable {
                     return f.isDirectory() && !f.isHidden();
                 }
             });
-            if (subDirs != null)
+            if (subDirs != null) {
                 for (File subDir : subDirs) {
                     File newParent = new File(subDir, "**");
                     processFileMask(new File(newParent, mask).getPath());
                 }
+            }
         }
         File[] files;
         final String ext = mask.startsWith("*.") ? mask.substring("*.".length()) : null;
@@ -617,11 +630,12 @@ public class Repeater implements Cloneable {
                 }
             });
         }
-        if (files != null)
+        if (files != null) {
             for (File file : files) {
                 setProcessedFile(file);
                 submitTask();
             }
+        }
     }
 
     public static void main(String[] args) {
