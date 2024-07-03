@@ -62,8 +62,9 @@ public class MinFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
     private final int indexShift;
 
     private MinFromTwoSelectedNumbersFunc(int indexShift) {
-        if (indexShift < 0)
+        if (indexShift < 0) {
             throw new IllegalArgumentException("Negative index shift " + indexShift);
+        }
         this.indexShift = indexShift;
     }
 
@@ -71,20 +72,20 @@ public class MinFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
      * Returns an instance of this class for the given index shift.</p>
      *
      * @param indexShift the index shift (distance between compared numbers); must be non-negative.
-     * @return           an instance of this class
+     * @return an instance of this class
      * @throws IllegalArgumentException if <code>indexShift&lt;0</code>.
      */
     public static MinFromTwoSelectedNumbersFunc getInstance(int indexShift) {
         return new MinFromTwoSelectedNumbersFunc(indexShift);
     }
 
-    public double get(double ...x) {
-        int k1 = (int)x[0] + 1; // it is supposed that k1 < x.length
+    public double get(double... x) {
+        int k1 = (int) x[0] + 1; // it is supposed that k1 < x.length
         int k2 = k1 + indexShift;
         if (k2 >= x.length) {
             k2 -= x.length - 1;
         }
-        return x[k1] < x[k2] ? x[k1] : x[k2];
+        return Math.min(x[k1], x[k2]);
     }
 
 

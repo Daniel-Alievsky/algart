@@ -43,11 +43,11 @@ public abstract class ConstantFunc implements Func {
      * Returns an instance of this class that always returns the passed constant <code>c</code>.</p>
      *
      * @param c the constant returned by {@link #get(double...)} method.
-     * @return  an instance of this class.</p>
+     * @return an instance of this class.</p>
      */
     public static ConstantFunc getInstance(final double c) {
         return new ConstantFunc() {
-            public double get(double ...x) {
+            public double get(double... x) {
                 return c;
             }
 
@@ -73,7 +73,7 @@ public abstract class ConstantFunc implements Func {
         };
     }
 
-    public abstract double get(double ...x);
+    public abstract double get(double... x);
 
     public abstract double get();
 

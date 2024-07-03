@@ -48,13 +48,13 @@ public final class DividingFunc implements Func {
      * Returns an instance of this class.
      *
      * @param scale the scale: additional constant multiplier.
-     * @return      an instance of this class.
+     * @return an instance of this class.
      */
     public static DividingFunc getInstance(double scale) {
         return new DividingFunc(scale);
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return scale * x[0] / x[1];
     }
 

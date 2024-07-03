@@ -57,12 +57,12 @@ public abstract class LogFunc implements Func {
      * and <code>base=10.0</code>.
      *
      * @param b the base of the logarithm.
-     * @return  an instance of this class using <code>Math.log</code> method.
+     * @return an instance of this class using <code>Math.log</code> method.
      */
     public static LogFunc getInstance(double b) {
         if (b == Math.E) {
             return new LogFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return Math.log(x[0]);
                 }
 
@@ -84,7 +84,7 @@ public abstract class LogFunc implements Func {
             };
         } else if (b == 10.0) {
             return new LogFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return Math.log10(x[0]);
                 }
 
@@ -107,7 +107,7 @@ public abstract class LogFunc implements Func {
         } else {
             final double mult = 1.0 / Math.log(b);
             return new LogFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return Math.log(x[0]) * mult;
                 }
 
@@ -131,87 +131,87 @@ public abstract class LogFunc implements Func {
     }
 
     /**
-      * Returns an instance of this class for the given logarithm base <code>b</code>
-      * using <code>StrictMath.log</code> method.</p>
-      *
-      * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
-      * and <code>base=10.0</code>.
-      *
-      * @param b the base of the logarithm.
-      * @return  an instance of this class using <code>StrictMath.log</code> method.
-      */
-     public static LogFunc getStrictInstance(double b) {
-         if (b == Math.E) {
-             return new LogFunc(b) {
-                 public double get(double ...x) {
-                     return StrictMath.log(x[0]);
-                 }
+     * Returns an instance of this class for the given logarithm base <code>b</code>
+     * using <code>StrictMath.log</code> method.</p>
+     *
+     * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
+     * and <code>base=10.0</code>.
+     *
+     * @param b the base of the logarithm.
+     * @return an instance of this class using <code>StrictMath.log</code> method.
+     */
+    public static LogFunc getStrictInstance(double b) {
+        if (b == Math.E) {
+            return new LogFunc(b) {
+                public double get(double... x) {
+                    return StrictMath.log(x[0]);
+                }
 
-                 public double get(double x0) {
-                     return StrictMath.log(x0);
-                 }
+                public double get(double x0) {
+                    return StrictMath.log(x0);
+                }
 
-                 public double get(double x0, double x1) {
-                     return StrictMath.log(x0);
-                 }
+                public double get(double x0, double x1) {
+                    return StrictMath.log(x0);
+                }
 
-                 public double get(double x0, double x1, double x2) {
-                     return StrictMath.log(x0);
-                 }
+                public double get(double x0, double x1, double x2) {
+                    return StrictMath.log(x0);
+                }
 
-                 public double get(double x0, double x1, double x2, double x3) {
-                     return StrictMath.log(x0);
-                 }
-             };
-         } else if (b == 10.0) {
-             return new LogFunc(b) {
-                 public double get(double ...x) {
-                     return StrictMath.log10(x[0]);
-                 }
+                public double get(double x0, double x1, double x2, double x3) {
+                    return StrictMath.log(x0);
+                }
+            };
+        } else if (b == 10.0) {
+            return new LogFunc(b) {
+                public double get(double... x) {
+                    return StrictMath.log10(x[0]);
+                }
 
-                 public double get(double x0) {
-                     return StrictMath.log10(x0);
-                 }
+                public double get(double x0) {
+                    return StrictMath.log10(x0);
+                }
 
-                 public double get(double x0, double x1) {
-                     return StrictMath.log10(x0);
-                 }
+                public double get(double x0, double x1) {
+                    return StrictMath.log10(x0);
+                }
 
-                 public double get(double x0, double x1, double x2) {
-                     return StrictMath.log10(x0);
-                 }
+                public double get(double x0, double x1, double x2) {
+                    return StrictMath.log10(x0);
+                }
 
-                 public double get(double x0, double x1, double x2, double x3) {
-                     return StrictMath.log10(x0);
-                 }
-             };
-         } else {
-             final double mult = 1.0 / Math.log(b);
-             return new LogFunc(b) {
-                 public double get(double ...x) {
-                     return StrictMath.log(x[0]) * mult;
-                 }
+                public double get(double x0, double x1, double x2, double x3) {
+                    return StrictMath.log10(x0);
+                }
+            };
+        } else {
+            final double mult = 1.0 / Math.log(b);
+            return new LogFunc(b) {
+                public double get(double... x) {
+                    return StrictMath.log(x[0]) * mult;
+                }
 
-                 public double get(double x0) {
-                     return StrictMath.log(x0) * mult;
-                 }
+                public double get(double x0) {
+                    return StrictMath.log(x0) * mult;
+                }
 
-                 public double get(double x0, double x1) {
-                     return StrictMath.log(x0) * mult;
-                 }
+                public double get(double x0, double x1) {
+                    return StrictMath.log(x0) * mult;
+                }
 
-                 public double get(double x0, double x1, double x2) {
-                     return StrictMath.log(x0) * mult;
-                 }
+                public double get(double x0, double x1, double x2) {
+                    return StrictMath.log(x0) * mult;
+                }
 
-                 public double get(double x0, double x1, double x2, double x3) {
-                     return StrictMath.log(x0) * mult;
-                 }
-             };
-         }
-     }
+                public double get(double x0, double x1, double x2, double x3) {
+                    return StrictMath.log(x0) * mult;
+                }
+            };
+        }
+    }
 
-     public abstract double get(double ...x);
+    public abstract double get(double... x);
 
     public double get() {
         throw new IndexOutOfBoundsException("At least 1 argument required");

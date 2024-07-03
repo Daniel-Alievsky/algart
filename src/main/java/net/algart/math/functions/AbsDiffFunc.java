@@ -40,7 +40,7 @@ final class AbsDiffFunc implements Func {
     AbsDiffFunc() {
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return StrictMath.abs(x[0] - x[1]);
     }
 

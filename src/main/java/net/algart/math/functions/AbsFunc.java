@@ -28,7 +28,7 @@ final class AbsFunc implements Func {
     AbsFunc() {
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return StrictMath.abs(x[0]);
     }
 

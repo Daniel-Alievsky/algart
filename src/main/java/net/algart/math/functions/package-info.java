@@ -23,8 +23,8 @@
  */
 
 /**
- <p>Abstraction of any mathematical functions and operators and some their implementations.</p>
-
- @author Daniel Alievsky
+ * <p>Abstraction of any mathematical functions and operators and some their implementations.</p>
+ *
+ * @author Daniel Alievsky
  */
 package net.algart.math.functions;

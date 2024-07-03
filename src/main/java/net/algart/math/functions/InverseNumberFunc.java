@@ -59,7 +59,7 @@ public class InverseNumberFunc implements Func {
      * Returns an instance of this class for the given constant <code>c</code>.
      *
      * @param c the numerator of fraction.
-     * @return  an instance of this class.
+     * @return an instance of this class.
      */
     public static InverseNumberFunc getInstance(double c) {
         return new InverseNumberFunc(c);
@@ -75,7 +75,7 @@ public class InverseNumberFunc implements Func {
         return new InverseNumberFunc.Updatable(c);
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return c / x[0];
     }
 

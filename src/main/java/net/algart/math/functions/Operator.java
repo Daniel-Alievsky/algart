@@ -45,7 +45,7 @@ public interface Operator {
      * Returns the result of applying this operator to the given function.
      *
      * @param f some function.
-     * @return  new transformed function.
+     * @return new transformed function.
      */
     Func apply(Func f);
 }

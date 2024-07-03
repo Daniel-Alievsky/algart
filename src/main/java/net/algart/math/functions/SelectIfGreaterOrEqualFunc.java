@@ -28,7 +28,7 @@ class SelectIfGreaterOrEqualFunc implements Func {
     SelectIfGreaterOrEqualFunc() {
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return x[0] >= x[1] ? x[2] : x[3];
     }
 

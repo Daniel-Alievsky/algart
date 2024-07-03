@@ -97,38 +97,39 @@ public abstract class ContrastingFunc implements Func {
      *
      * @param m         the <i>M</i> constant: maximal value returned by this function.
      * @param threshold the <i>threshold</i> constant.
-     * @return          the contrasting function with the given parameters.
+     * @return the contrasting function with the given parameters.
      */
     public static ContrastingFunc getInstance(final double m, final double threshold) {
         return new ContrastingFunc() {
             @Override
             public double get(double... x) {
-                if (x.length < 3)
+                if (x.length < 3) {
                     throw new IndexOutOfBoundsException("At least 3 arguments required");
-                if (x.length == 3) {
-                    double w = x[0] < x[1] ? x[1] : x[0] > x[2] ? x[2] : x[0];
-                    return m * (w - x[1]) / (x[2] - x[1] < threshold ? threshold : x[2] - x[1]);
                 }
-                double w = x[1] < x[2] ? x[2] : x[1] > x[3] ? x[3] : x[1];
-                return m * x[0] * (w - x[2]) / ((x[3] - x[2] < threshold ? threshold : x[3] - x[2]) * x[1]);
+                if (x.length == 3) {
+                    double w = x[0] < x[1] ? x[1] : Math.min(x[0], x[2]);
+                    return m * (w - x[1]) / Math.max(x[2] - x[1], threshold);
+                }
+                double w = x[1] < x[2] ? x[2] : Math.min(x[1], x[3]);
+                return m * x[0] * (w - x[2]) / (Math.max(x[3] - x[2], threshold) * x[1]);
             }
 
             @Override
             public double get(double x0, double x1, double x2) {
-                double w = x0 < x1 ? x1 : x0 > x2 ? x2 : x0;
-                return m * (w - x1) / (x2 - x1 < threshold ? threshold : x2 - x1);
+                double w = x0 < x1 ? x1 : Math.min(x0, x2);
+                return m * (w - x1) / Math.max(x2 - x1, threshold);
             }
 
             @Override
             public double get(double x0, double x1, double x2, double x3) {
-                double w = x1 < x2 ? x2 : x1 > x3 ? x3 : x1;
-                return m * x0 * (w - x2) / ((x3 - x2 < threshold ? threshold : x3 - x2) * x1);
+                double w = x1 < x2 ? x2 : Math.min(x1, x3);
+                return m * x0 * (w - x2) / (Math.max(x3 - x2, threshold) * x1);
             }
 
             @Override
             public String toString() {
                 return "contrasting function f(x,y,a,b)=" + m + "*(x/y)*max(y'-a,"
-                    + threshold + ")/(b-a), y'=y<a?a:y>b?b:y";
+                        + threshold + ")/(b-a), y'=y<a?a:y>b?b:y";
             }
         };
     }
@@ -141,12 +142,13 @@ public abstract class ContrastingFunc implements Func {
      * and throws <code>IndexOutOfBoundsException</code>, if <code>x.length&lt;3</code>.
      *
      * @param x the function arguments.
-     * @return  the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException if the number of passed arguments is 0, 1 or 2.
      */
-    public double get(double ...x) {
-        if (x.length < 3)
+    public double get(double... x) {
+        if (x.length < 3) {
             throw new IndexOutOfBoundsException("At least 3 arguments required");
+        }
         if (x.length == 3) {
             return get(x[0], x[1], x[2]);
         }
@@ -176,7 +178,7 @@ public abstract class ContrastingFunc implements Func {
      * @param x1 the second function argument.
      * @param x2 the third function argument.
      * @param x3 the fourth function argument.
-     * @return   the function result.
+     * @return the function result.
      */
     public double get(double x0, double x1, double x2, double x3) {
         return x0 / x1 * get(x1, x2, x3);

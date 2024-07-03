@@ -109,8 +109,7 @@ public final class ApertureFilterOperator implements Operator {
             this.a = 1.0 / this.totalCount;
             this.b = 0.0;
             this.isNonweightedSum = true;
-        } else if (apertureFunc instanceof LinearFunc) {
-            LinearFunc lf = (LinearFunc) apertureFunc;
+        } else if (apertureFunc instanceof LinearFunc lf) {
             this.b = lf.b();
             if (lf.n() > this.totalCount) {
                 throw new IllegalArgumentException("Insufficient number of aperture points for the aperture function");

@@ -53,12 +53,12 @@ public abstract class ExpFunc implements Func {
      * using <code>Math.exp</code> and <code>Math.log</code> methods.</p>
      *
      * @param b the base of the logarithm.
-     * @return  an instance of this class using <code>Math.exp</code> and <code>Math.log</code> methods.
+     * @return an instance of this class using <code>Math.exp</code> and <code>Math.log</code> methods.
      */
     public static ExpFunc getInstance(double b) {
         if (b == Math.E) {
             return new ExpFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return Math.exp(x[0]);
                 }
 
@@ -81,7 +81,7 @@ public abstract class ExpFunc implements Func {
         } else {
             final double mult = Math.log(b);
             return new ExpFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return Math.exp(x[0] * mult);
                 }
 
@@ -109,12 +109,12 @@ public abstract class ExpFunc implements Func {
      * using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.</p>
      *
      * @param b the base of the exponent.
-     * @return  an instance of this class using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.
+     * @return an instance of this class using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.
      */
     public static ExpFunc getStrictInstance(double b) {
         if (b == Math.E) {
             return new ExpFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return StrictMath.exp(x[0]);
                 }
 
@@ -137,7 +137,7 @@ public abstract class ExpFunc implements Func {
         } else {
             final double mult = StrictMath.log(b);
             return new ExpFunc(b) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     return StrictMath.exp(x[0] * mult);
                 }
 
@@ -160,7 +160,7 @@ public abstract class ExpFunc implements Func {
         }
     }
 
-    public abstract double get(double ...x);
+    public abstract double get(double... x);
 
     public double get() {
         throw new IndexOutOfBoundsException("At least 1 argument required");

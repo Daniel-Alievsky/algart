@@ -28,8 +28,8 @@ final class PositiveDiffFunc implements Func {
     PositiveDiffFunc() {
     }
 
-    public double get(double ...x) {
-        return x[0] - x[1] > 0.0 ? x[0] - x[1] : 0;
+    public double get(double... x) {
+        return Math.max(x[0] - x[1], 0.0);
     }
 
     public double get() {

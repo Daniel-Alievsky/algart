@@ -46,7 +46,7 @@ class IdentityFunc implements Func {
     IdentityFunc() {
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return x[0];
     }
 

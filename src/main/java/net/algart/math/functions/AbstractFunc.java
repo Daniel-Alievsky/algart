@@ -42,13 +42,13 @@ package net.algart.math.functions;
 public abstract class AbstractFunc implements Func {
     private final double[] EMPTY = new double[0];
 
-    public abstract double get(double ...x);
+    public abstract double get(double... x);
 
     /**
      * This implementation calls <code>{@link #get(double[]) get}(EMPTY)</code>,
      * where <code>EMPTY</code> is a constant array <code>double[0]</code>.
      *
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 1 argument.
      */
     public double get() {
@@ -60,11 +60,11 @@ public abstract class AbstractFunc implements Func {
      * May be overridden to provide better performance.
      *
      * @param x0 the function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 2 arguments.
      */
     public double get(double x0) {
-        return get(new double[] {x0});
+        return get(new double[]{x0});
     }
 
     /**
@@ -73,11 +73,11 @@ public abstract class AbstractFunc implements Func {
      *
      * @param x0 the first function argument.
      * @param x1 the second function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 3 arguments.
      */
     public double get(double x0, double x1) {
-        return get(new double[] {x0, x1});
+        return get(new double[]{x0, x1});
     }
 
     /**
@@ -87,11 +87,11 @@ public abstract class AbstractFunc implements Func {
      * @param x0 the first function argument.
      * @param x1 the second function argument.
      * @param x2 the third function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 3 arguments.
      */
     public double get(double x0, double x1, double x2) {
-        return get(new double[] {x0, x1, x2});
+        return get(new double[]{x0, x1, x2});
     }
 
     /**
@@ -102,10 +102,10 @@ public abstract class AbstractFunc implements Func {
      * @param x1 the second function argument.
      * @param x2 the third function argument.
      * @param x3 the fourth function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 3 arguments.
      */
     public double get(double x0, double x1, double x2, double x3) {
-        return get(new double[] {x0, x1, x2, x3});
+        return get(new double[]{x0, x1, x2, x3});
     }
 }

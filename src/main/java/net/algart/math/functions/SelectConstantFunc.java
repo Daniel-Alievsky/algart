@@ -52,9 +52,9 @@ public final class SelectConstantFunc implements Func {
      * if necessary, the Java array is cloned.
      *
      * @param values the values, one of which is returned by {@link #get} method..
-     * @return       the selection function for the given array of constants.
+     * @return the selection function for the given array of constants.
      */
-    public static SelectConstantFunc getInstance(double ...values) {
+    public static SelectConstantFunc getInstance(double... values) {
         return new SelectConstantFunc(values);
     }
 
@@ -71,7 +71,7 @@ public final class SelectConstantFunc implements Func {
     }
 
     public double get(double... x) {
-        return values[(int)x[0]];
+        return values[(int) x[0]];
     }
 
     public double get() {
@@ -79,19 +79,19 @@ public final class SelectConstantFunc implements Func {
     }
 
     public double get(double x0) {
-        return values[(int)x0];
+        return values[(int) x0];
     }
 
     public double get(double x0, double x1) {
-        return values[(int)x0];
+        return values[(int) x0];
     }
 
     public double get(double x0, double x1, double x2) {
-        return values[(int)x0];
+        return values[(int) x0];
     }
 
     public double get(double x0, double x1, double x2, double x3) {
-        return values[(int)x0];
+        return values[(int) x0];
     }
 
     /**
@@ -102,8 +102,9 @@ public final class SelectConstantFunc implements Func {
     public String toString() {
         StringBuilder sb = new StringBuilder("selecting constant function f(x0,x1,...)=values[(int)x0], values={");
         for (int k = 0; k < values.length; k++) {
-            if (k > 0)
+            if (k > 0) {
                 sb.append(", ");
+            }
             if (k >= 2 && k < values.length - 2) {
                 sb.append("...");
                 k = values.length - 2;

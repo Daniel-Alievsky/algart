@@ -59,12 +59,13 @@ public abstract class LinearFunc implements Func {
      */
     public static class Updatable extends LinearFunc implements Func.Updatable {
         private final double aInv;
+
         private Updatable(double b, double a) {
-            super(b, new double[] {a});
+            super(b, new double[]{a});
             aInv = 1.0 / a;
         }
 
-        public double get(double ...x) {
+        public double get(double... x) {
             return this.b + this.a[0] * x[0];
         }
 
@@ -92,6 +93,7 @@ public abstract class LinearFunc implements Func {
             x[0] = (newResult - b) * aInv;
         }
     }
+
     final double b;
     final double[] a;
     final int n;
@@ -120,7 +122,7 @@ public abstract class LinearFunc implements Func {
         this.n = n;
         this.a0 = a;
         this.nonweighted = true;
-        this.a =  null;
+        this.a = null;
     }
 
     /**
@@ -133,9 +135,9 @@ public abstract class LinearFunc implements Func {
      *
      * @param b the <i>b</i> coefficient.
      * @param a the <i>a</i> coefficients.
-     * @return  the linear function with the given coefficients.
+     * @return the linear function with the given coefficients.
      */
-    public static LinearFunc getInstance(double b, double ...a) {
+    public static LinearFunc getInstance(double b, double... a) {
         if (a.length == 0) {
             return new LinearFunc(b, a) {
                 public double get(double... x) {
@@ -246,17 +248,20 @@ public abstract class LinearFunc implements Func {
             assert a.length >= 3;
             boolean eq = true;
             for (int k = 1; k < a.length; k++) {
-                if (a[k] != a[0])
+                if (a[k] != a[0]) {
                     eq = false;
+                    break;
+                }
             }
             if (eq) {
                 return getNonweightedInstance(b, a[0], a.length);
             }
             return new LinearFunc(b, a) {
-                public double get(double ...x) {
+                public double get(double... x) {
                     double result = this.b;
-                    for (int k = 0; k < this.n; k++)
+                    for (int k = 0; k < this.n; k++) {
                         result += this.a[k] * x[k];
+                    }
                     return result;
                 }
 
@@ -273,14 +278,16 @@ public abstract class LinearFunc implements Func {
                 }
 
                 public double get(double x0, double x1, double x2) {
-                    if (this.n > 3)
+                    if (this.n > 3) {
                         throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                    }
                     return this.b + this.a[0] * x0 + this.a[1] * x1 + this.a[2] * x2;
                 }
 
                 public double get(double x0, double x1, double x2, double x3) {
-                    if (this.n > 4)
+                    if (this.n > 4) {
                         throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                    }
                     return this.b + this.a[0] * x0 + this.a[1] * x1 + this.a[2] * x2 + this.a[3] * x3;
                 }
             };
@@ -296,54 +303,52 @@ public abstract class LinearFunc implements Func {
      * @param b the <i>b</i> coefficient.
      * @param a the common value of all <i>a</i><sub><i>i</i></sub> coefficients.
      * @param n the number of <i>a</i><sub><i>i</i></sub> coefficients.
-     * @return  the linear function with the given coefficients.
+     * @return the linear function with the given coefficients.
      */
     public static LinearFunc getNonweightedInstance(double b, double a, int n) {
-        if (n < 0)
+        if (n < 0) {
             throw new IllegalArgumentException("Negative n argument");
-        switch (n) {
-            case 0:
-                return getInstance(b);
-            case 1:
-                return getInstance(b, a);
-            case 2:
-                return getInstance(b, a, a);
-            default: {
-                assert n >= 3;
-                return new LinearFunc(b, a, n) {
-                    public double get(double ...x) {
-                        double sum = 0.0;
-                        for (int k = 0; k < this.n; k++)
-                            sum += x[k];
-                        return this.b + this.a0 * sum;
-                    }
-
-                    public double get() {
-                        throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
-                    }
-
-                    public double get(double x0) {
-                        throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
-                    }
-
-                    public double get(double x0, double x1) {
-                        throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
-                    }
-
-                    public double get(double x0, double x1, double x2) {
-                        if (this.n > 3)
-                            throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
-                        return this.b + this.a0 * (x0 + x1 + x2);
-                    }
-
-                    public double get(double x0, double x1, double x2, double x3) {
-                        if (this.n > 4)
-                            throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
-                        return this.b + this.a0 * (x0 + x1 + x2 + x3);
-                    }
-                };
-            }
         }
+        return switch (n) {
+            case 0 -> getInstance(b);
+            case 1 -> getInstance(b, a);
+            case 2 -> getInstance(b, a, a);
+            default -> new LinearFunc(b, a, n) {
+                public double get(double... x) {
+                    double sum = 0.0;
+                    for (int k = 0; k < this.n; k++) {
+                        sum += x[k];
+                    }
+                    return this.b + this.a0 * sum;
+                }
+
+                public double get() {
+                    throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                }
+
+                public double get(double x0) {
+                    throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                }
+
+                public double get(double x0, double x1) {
+                    throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                }
+
+                public double get(double x0, double x1, double x2) {
+                    if (this.n > 3) {
+                        throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                    }
+                    return this.b + this.a0 * (x0 + x1 + x2);
+                }
+
+                public double get(double x0, double x1, double x2, double x3) {
+                    if (this.n > 4) {
+                        throw new IndexOutOfBoundsException("At least " + this.n + " arguments required");
+                    }
+                    return this.b + this.a0 * (x0 + x1 + x2 + x3);
+                }
+            };
+        };
     }
 
     /**
@@ -351,7 +356,7 @@ public abstract class LinearFunc implements Func {
      * the average from <code>n</code> numbers.
      *
      * @param n the number of <i>a</i><sub><i>i</i></sub> coefficients.
-     * @return  the function calculating average from <code>n</code> numbers.
+     * @return the function calculating average from <code>n</code> numbers.
      */
     public static LinearFunc getAveragingInstance(int n) {
         return getNonweightedInstance(0.0, 1.0 / n, n);
@@ -371,7 +376,7 @@ public abstract class LinearFunc implements Func {
      *
      * @param destRange the destination range.
      * @param srcRange  the source range.
-     * @return          the linear function mapping the source range to the destination range.
+     * @return the linear function mapping the source range to the destination range.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static LinearFunc getInstance(Range destRange, Range srcRange) {
@@ -390,13 +395,13 @@ public abstract class LinearFunc implements Func {
      *
      * @param b the <i>b</i> coefficient.
      * @param a the <i>a</i> coefficient.
-     * @return               the updatable linear function with the given coefficients.
+     * @return the updatable linear function with the given coefficients.
      */
     public static Updatable getUpdatableInstance(double b, double a) {
         return new Updatable(b, a);
     }
 
-    public abstract double get(double ...x);
+    public abstract double get(double... x);
 
     public abstract double get();
 
@@ -410,7 +415,7 @@ public abstract class LinearFunc implements Func {
 
     /**
      * Returns the number of <i>a</i><sub><i>i</i></sub> coefficients.
-
+     *
      * @return the number of argument of this function.
      */
     public int n() {
@@ -430,15 +435,16 @@ public abstract class LinearFunc implements Func {
      * Returns <i>a</i><sub><i>i</i></sub> coefficient of this linear function.
      *
      * @param i the index of the coefficient.
-     * @return  <i>a</i><sub><i>i</i></sub> coefficient.
+     * @return <i>a</i><sub><i>i</i></sub> coefficient.
      * @throws IndexOutOfBoundsException if the given index is negative or &gt;={@link #n()}
      */
     public double a(int i) {
         if (a != null) {
-            return(a[i]);
+            return (a[i]);
         } else {
-            if (i < 0 || i >= n)
+            if (i < 0 || i >= n) {
                 throw new IndexOutOfBoundsException("Index (" + i + ") is out of bounds 0.." + (n - 1));
+            }
             return a0;
         }
     }
@@ -460,8 +466,9 @@ public abstract class LinearFunc implements Func {
         if (a != null) {
             System.arraycopy(a, 0, result, 0, n);
         } else {
-            for (int k = 0; k < n; k++)
+            for (int k = 0; k < n; k++) {
                 result[k] = a0;
+            }
         }
         return result;
     }
@@ -474,7 +481,7 @@ public abstract class LinearFunc implements Func {
      * +...+ <i>x</i><sub><i>n</i>-1</sub>).
      *
      * @return <code>true</code> if <code>{@link #n() n()}&lt;=1</code> or
-     *         if all <i>a</i><sub><i>i</i></sub> coefficients are equal.
+     * if all <i>a</i><sub><i>i</i></sub> coefficients are equal.
      */
     public boolean isNonweighted() {
         return nonweighted;
@@ -488,8 +495,9 @@ public abstract class LinearFunc implements Func {
     public String toString() {
         StringBuilder sb = new StringBuilder("linear function f(");
         for (int k = 0; k < n; k++) {
-            if (k > 0)
+            if (k > 0) {
                 sb.append(",");
+            }
             if (k >= 2 && k < n - 2) {
                 sb.append("...");
                 k = n - 2;
@@ -502,14 +510,16 @@ public abstract class LinearFunc implements Func {
             sb.append(goodFormat(a0)).append("*(x0+x1+...)");
         } else {
             for (int k = 0; k < a.length; k++) {
-                if (k > 0 && a[k] >= 0.0)
+                if (k > 0 && a[k] >= 0.0) {
                     sb.append("+");
+                }
                 sb.append(goodFormat(a[k])).append("*x").append(k);
             }
         }
         if (b != 0.0) {
-            if (b >= 0.0)
+            if (b >= 0.0) {
                 sb.append("+");
+            }
             sb.append(goodFormat(b));
         }
         return sb.toString();

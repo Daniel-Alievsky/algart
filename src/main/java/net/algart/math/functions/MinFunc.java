@@ -28,14 +28,16 @@ final class MinFunc implements Func {
     MinFunc() {
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         if (x.length == 0) {
             return Double.POSITIVE_INFINITY;
         }
         double result = x[0];
-        for (int k = 1; k < x.length; k++)
-            if (x[k] < result)
+        for (int k = 1; k < x.length; k++) {
+            if (x[k] < result) {
                 result = x[k];
+            }
+        }
         return result;
     }
 
@@ -48,18 +50,18 @@ final class MinFunc implements Func {
     }
 
     public double get(double x0, double x1) {
-        return x0 <= x1 ? x0 : x1;
+        return Math.min(x0, x1);
     }
 
     public double get(double x0, double x1, double x2) {
-        double x = x0 <= x1 ? x0 : x1;
-        return x <= x2 ? x : x2;
+        double x = Math.min(x0, x1);
+        return Math.min(x, x2);
     }
 
     public double get(double x0, double x1, double x2, double x3) {
-        double x = x0 <= x1 ? x0 : x1;
-        double y = x2 <= x3 ? x2 : x3;
-        return x <= y ? x : y;
+        double x = Math.min(x0, x1);
+        double y = Math.min(x2, x3);
+        return Math.min(x, y);
     }
 
 

@@ -56,7 +56,7 @@ public class ApertureFilteredFunc implements Func {
      *
      * @param parent   the parent function.
      * @param operator the operator, transforming this function.
-     * @return         new function.
+     * @return new function.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static ApertureFilteredFunc getInstance(Func parent, ApertureFilterOperator operator) {
@@ -65,7 +65,7 @@ public class ApertureFilteredFunc implements Func {
         if (OPTIMIZE_LITTLE_DIMENSIONS) {
             if (operator.apertureDim.length == 1) {
                 final double step0 = operator.apertureSteps[0];
-                final int n0 = (int)operator.apertureDim[0];
+                final int n0 = (int) operator.apertureDim[0];
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
@@ -109,9 +109,9 @@ public class ApertureFilteredFunc implements Func {
                 }
             } else if (operator.apertureDim.length == 2) {
                 final double step0 = operator.apertureSteps[0];
-                final int n0 = (int)operator.apertureDim[0];
+                final int n0 = (int) operator.apertureDim[0];
                 final double step1 = operator.apertureSteps[1];
-                final int n1 = (int)operator.apertureDim[1];
+                final int n1 = (int) operator.apertureDim[1];
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
@@ -164,11 +164,11 @@ public class ApertureFilteredFunc implements Func {
                 }
             } else if (operator.apertureDim.length == 3) {
                 final double step0 = operator.apertureSteps[0];
-                final int n0 = (int)operator.apertureDim[0];
+                final int n0 = (int) operator.apertureDim[0];
                 final double step1 = operator.apertureSteps[1];
-                final int n1 = (int)operator.apertureDim[1];
+                final int n1 = (int) operator.apertureDim[1];
                 final double step2 = operator.apertureSteps[2];
-                final int n2 = (int)operator.apertureDim[2];
+                final int n2 = (int) operator.apertureDim[2];
                 if (operator.isNonweightedSum) {
                     return new ApertureFilteredFunc(parent, operator) {
                         @Override
@@ -263,19 +263,19 @@ public class ApertureFilteredFunc implements Func {
     }
 
     public double get(double x0) {
-        return get(new double[] {x0});
+        return get(new double[]{x0});
     }
 
     public double get(double x0, double x1) {
-        return get(new double[] {x0, x1});
+        return get(new double[]{x0, x1});
     }
 
     public double get(double x0, double x1, double x2) {
-        return get(new double[] {x0, x1, x2});
+        return get(new double[]{x0, x1, x2});
     }
 
     public double get(double x0, double x1, double x2, double x3) {
-        return get(new double[] {x0, x1, x2, x3});
+        return get(new double[]{x0, x1, x2, x3});
     }
 
     /**
@@ -290,7 +290,7 @@ public class ApertureFilteredFunc implements Func {
     private int fillProbes(double[] x, double[] coordinates, double[] probes, int filledCount, int pointIndex) {
         assert coordinates.length == x.length;
         final double step = operator.apertureSteps[filledCount];
-        final int n = (int)operator.apertureDim[filledCount];
+        final int n = (int) operator.apertureDim[filledCount];
         if (filledCount < coordinates.length) {
             coordinates[filledCount] = x[filledCount] + operator.apertureFrom[filledCount];
             if (filledCount + 1 == operator.apertureDim.length) {

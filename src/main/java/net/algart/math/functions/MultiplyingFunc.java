@@ -48,16 +48,17 @@ public final class MultiplyingFunc implements Func {
      * Returns an instance of this class.
      *
      * @param scale the scale: additional constant multiplier.
-     * @return      an instance of this class.
+     * @return an instance of this class.
      */
     public static MultiplyingFunc getInstance(double scale) {
         return new MultiplyingFunc(scale);
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         double result = scale;
-        for (double v : x)
+        for (double v : x) {
             result *= v;
+        }
         return result;
     }
 

@@ -297,15 +297,15 @@ public interface Func {
      * <p>This instance is <b>immutable</b> and <b>thread-safe</b>: there are no ways to modify it.
      */
     List<IPoint> SHIFTS_ALONG_8_DIRECTIONS_2D = Collections.unmodifiableList(
-        java.util.Arrays.asList(
-            IPoint.valueOf(1, 0),
-            IPoint.valueOf(1, 1),
-            IPoint.valueOf(0, 1),
-            IPoint.valueOf(-1, 1),
-            IPoint.valueOf(-1, 0),
-            IPoint.valueOf(-1, -1),
-            IPoint.valueOf(0, -1),
-            IPoint.valueOf(1, -1)));
+            java.util.Arrays.asList(
+                    IPoint.valueOf(1, 0),
+                    IPoint.valueOf(1, 1),
+                    IPoint.valueOf(0, 1),
+                    IPoint.valueOf(-1, 1),
+                    IPoint.valueOf(-1, 0),
+                    IPoint.valueOf(-1, -1),
+                    IPoint.valueOf(0, -1),
+                    IPoint.valueOf(1, -1)));
 
     /**
      * <p>"Updatable" mathematical function: an extension of {@link Func} interface
@@ -348,17 +348,17 @@ public interface Func {
      * <p>This method must not change the values of <code>x</code> elements!
      *
      * @param x the function arguments.
-     * @return  the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown if the number of passed arguments is less
      *                                   than the required number of this function arguments.
      */
-    double get(double ...x);
+    double get(double... x);
 
     /**
      * Equivalent to <code>{@link #get(double...) get}(new double[0])</code>.
      * Provides better performance because it does not require Java array creation.
      *
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 1 argument.
      */
     double get();
@@ -368,7 +368,7 @@ public interface Func {
      * Provides better performance because it does not require Java array creation.
      *
      * @param x0 the function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 2 arguments.
      */
     double get(double x0);
@@ -379,7 +379,7 @@ public interface Func {
      *
      * @param x0 the first function argument.
      * @param x1 the second function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 3 arguments.
      */
     double get(double x0, double x1);
@@ -391,7 +391,7 @@ public interface Func {
      * @param x0 the first function argument.
      * @param x1 the second function argument.
      * @param x2 the third function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 4 arguments.
      */
     double get(double x0, double x1, double x2);
@@ -404,7 +404,7 @@ public interface Func {
      * @param x1 the second function argument.
      * @param x2 the third function argument.
      * @param x3 the fourth function argument.
-     * @return   the function result.
+     * @return the function result.
      * @throws IndexOutOfBoundsException may be thrown this function requires at least 5 arguments.
      */
     double get(double x0, double x1, double x2, double x3);
@@ -417,6 +417,7 @@ public interface Func {
      * <pre>
      *     (Func1) x0 -> predicate.test(x0) ? 1.0 : 0.0;
      * </pre>
+     *
      * @param predicate some predicate for double values.
      * @return equivalent AlgART function.
      * @throws NullPointerException if the argument is {@code null}.

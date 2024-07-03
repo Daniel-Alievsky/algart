@@ -49,8 +49,8 @@ import java.util.Objects;
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
  * there are no ways to modify settings of the created instance.</p>
  *
- * @see CoordinateTransformationOperator#apply(Func)
  * @author Daniel Alievsky
+ * @see CoordinateTransformationOperator#apply(Func)
  */
 public class CoordinateTransformedFunc implements Func {
     final Func parent;
@@ -74,12 +74,11 @@ public class CoordinateTransformedFunc implements Func {
      *
      * @param parent   the parent function.
      * @param operator the operator, transforming the arguments of this function before passing them to the parent one.
-     * @return         new function.
+     * @return new function.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static Func getInstance(Func parent, CoordinateTransformationOperator operator) {
-        if (operator instanceof LinearOperator) {
-            LinearOperator lo = (LinearOperator)operator;
+        if (operator instanceof LinearOperator lo) {
             if (lo.isShift() && lo.isZeroB()) {
                 return parent;
             }
@@ -160,8 +159,7 @@ public class CoordinateTransformedFunc implements Func {
                 }
             }
         }
-        if (operator instanceof ProjectiveOperator) {
-            ProjectiveOperator po = (ProjectiveOperator)operator;
+        if (operator instanceof ProjectiveOperator po) {
             int dimCount = po.n();
             if (po.isShift() && po.isZeroB()) {
                 throw new AssertionError("Identity operator must be " + LinearOperator.class);
@@ -170,7 +168,7 @@ public class CoordinateTransformedFunc implements Func {
             final double[] b = po.b();
             final double[] c = po.c();
             final double d = po.d();
-            assert po.n() ==  b.length && b.length == c.length && a.length == b.length * b.length;
+            assert po.n() == b.length && b.length == c.length && a.length == b.length * b.length;
             if (dimCount == 1) {
                 return new CoordinateTransformedFunc(parent, operator) {
                     @Override
@@ -235,19 +233,19 @@ public class CoordinateTransformedFunc implements Func {
     }
 
     public double get(double x0) {
-        return get(new double[] {x0});
+        return get(new double[]{x0});
     }
 
     public double get(double x0, double x1) {
-        return get(new double[] {x0, x1});
+        return get(new double[]{x0, x1});
     }
 
     public double get(double x0, double x1, double x2) {
-        return get(new double[] {x0, x1, x2});
+        return get(new double[]{x0, x1, x2});
     }
 
     public double get(double x0, double x1, double x2, double x3) {
-        return get(new double[] {x0, x1, x2, x3});
+        return get(new double[]{x0, x1, x2, x3});
     }
 
     /**

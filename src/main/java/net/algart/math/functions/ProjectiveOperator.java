@@ -50,7 +50,7 @@ import java.util.Arrays;
  * <td><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></td>
  * <td> = </td>
  * <td>
- *
+ * <p>
  *   (<b>A</b><sub>0</sub><b>x</b> + <i>b</i><sub>0</sub>) / (<b>cx</b> + <i>d</i>)<br>
  *   (<b>A</b><sub>1</sub><b>x</b> + <i>b</i><sub>1</sub>) / (<b>cx</b> + <i>d</i>)<br>
  *   ...<br>
@@ -59,7 +59,7 @@ import java.util.Arrays;
  * </td>
  * <td> = </td>
  * <td>
- *
+ * <p>
  *   (<i>a</i><sub>00</sub><i>x</i><sub>0</sub> + <i>a</i><sub>01</sub><i>x</i><sub>1</sub> + ...
  *     + <i>a</i><sub>0,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> + <i>b</i><sub>0</sub>) /
  *     (<i>c</i><sub>0</sub><i>x</i><sub>0</sub> + <i>c</i><sub>1</sub><i>x</i><sub>1</sub> + ...
@@ -269,7 +269,7 @@ public class ProjectiveOperator
      * </tr>
      * <tr>
      * <td>
-     *
+     * <p>
      *   (<b>A</b><sub>0</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>0</sub>) /
      *   (<b>cp</b><sub><i>k</i></sub> + 1)<br>
      *   (<b>A</b><sub>1</sub><b>p</b><sub><i>k</i></sub> + <i>b</i><sub>1</sub>) /

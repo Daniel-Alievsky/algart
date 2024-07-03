@@ -48,13 +48,13 @@ public final class WeightedMeanFunc implements Func {
      * Returns an instance of this class.
      *
      * @param scale the scale for the weight.
-     * @return      an instance of this class.
+     * @return an instance of this class.
      */
     public static WeightedMeanFunc getInstance(double scale) {
         return new WeightedMeanFunc(scale);
     }
 
-    public double get(double ...x) {
+    public double get(double... x) {
         return scale * x[0] * (x[1] - x[2]) + x[2];
     }
 

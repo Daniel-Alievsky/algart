@@ -62,8 +62,9 @@ public class MaxFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
     private final int indexShift;
 
     private MaxFromTwoSelectedNumbersFunc(int indexShift) {
-        if (indexShift < 0)
+        if (indexShift < 0) {
             throw new IllegalArgumentException("Negative index shift " + indexShift);
+        }
         this.indexShift = indexShift;
     }
 
@@ -84,7 +85,7 @@ public class MaxFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
         if (k2 >= x.length) {
             k2 -= x.length - 1;
         }
-        return x[k1] > x[k2] ? x[k1] : x[k2];
+        return Math.max(x[k1], x[k2]);
     }
 
 
