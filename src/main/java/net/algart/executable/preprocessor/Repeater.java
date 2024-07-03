@@ -51,7 +51,7 @@ public class Repeater implements Cloneable {
         private static final long serialVersionUID = 1283256722407269023L;
     }
 
-    static final boolean TRIMMING_CORRECTION_OF_REPEATED_TEXT = false;
+    static final boolean TRIMMING_CORRECTION_OF_REPEATED_TEXT = true;
     static final String CHARSET = "UTF-8";
 
     static final String[] BEGIN_OF_COMMENTS = {"//<<", "//[[", "/*", "(*", "#[[", "#<<", "<!--"};
@@ -431,15 +431,16 @@ public class Repeater implements Cloneable {
             p3 += foundLen;
             q = p3;
 
-            if (otherFileSection == null && TRIMMING_CORRECTION_OF_REPEATED_TEXT) {
-                repeatedText = repeatedText.stripTrailing();
-            }
             repeatedText = compilePatternDotAll(ANY_REPEAT_RE).matcher(repeatedText).replaceAll("");
             // - removing nested calls of Repeater inside the repeated text
             for (int k = 0, n = replacements.length == 0 ? 1 : replacements[0].length; k < n; k++) {
                 String correctedText = repeatedText;
                 if (k == n - 1) {
                     correctedText += p2Spaces;
+                } else {
+                    if (TRIMMING_CORRECTION_OF_REPEATED_TEXT) {
+                        correctedText = correctedText.stripTrailing();
+                    }
                 }
                 for (int j = 0; j < replacements.length; j++) {
                     String r = replacements[j][k];
