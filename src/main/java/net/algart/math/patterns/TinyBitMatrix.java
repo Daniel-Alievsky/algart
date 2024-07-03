@@ -82,6 +82,10 @@ class TinyBitMatrix {
         return n < this.dimensions.length ? this.dimensions[n] : 1;
     }
 
+    public boolean isEmpty() {
+        return this.length == 0;
+    }
+
     /*Repeat(INCLUDE_FROM_FILE, ../../arrays/AbstractMatrix.java, dimEquals)
       @Override\s+(public) ==> $1 ;;
       \(Matrix\b.*?\s(\w+)\) ==> (TinyBitMatrix $1)
@@ -121,7 +125,7 @@ class TinyBitMatrix {
         //       x' = x % (nu*nz*ny*nx)
         //
         --n;
-        if (this.length == 0) {
+        if (isEmpty()) {
             // we must check it here, in other case the further assertions can be false:
             // production of some dimensions in an empty matrix can be greater than Long.MAX_VALUE
             return 0;
