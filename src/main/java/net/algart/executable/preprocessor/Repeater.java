@@ -51,7 +51,7 @@ public class Repeater implements Cloneable {
         private static final long serialVersionUID = 1283256722407269023L;
     }
 
-    static final boolean TRIM_TRAILING_REPEATED_TEXT = false;
+    static final boolean TRIMMING_CORRECTION_OF_REPEATED_TEXT = false;
     static final String CHARSET = "UTF-8";
 
     static final String[] BEGIN_OF_COMMENTS = {"//<<", "//[[", "/*", "(*", "#[[", "#<<", "<!--"};
@@ -431,7 +431,7 @@ public class Repeater implements Cloneable {
             p3 += foundLen;
             q = p3;
 
-            if (TRIM_TRAILING_REPEATED_TEXT) {
+            if (otherFileSection == null && TRIMMING_CORRECTION_OF_REPEATED_TEXT) {
                 repeatedText = repeatedText.stripTrailing();
             }
             repeatedText = compilePatternDotAll(ANY_REPEAT_RE).matcher(repeatedText).replaceAll("");
