@@ -96,6 +96,15 @@ public abstract class BufferedImageToMatrix {
         return cm.hasAlpha() && enableAlpha ? 4 : gray ? 1 : 3;
     }
 
+    /**
+     * Returns the color channels order, in which they are written in the result color matrix.
+     * The result is {@link ColorMatrices.ChannelOrder#RGB} in {@link ToInterleavedRGB} class,
+     * and {@link ColorMatrices.ChannelOrder#BGR} in {@link ToInterleavedBGR} class.
+     *
+     * @return channel order: RGB or BGR.
+     */
+    public abstract ColorMatrices.ChannelOrder channelOrder();
+
     // must be primitive and not boolean
     public abstract Class<?> getResultElementType(BufferedImage bufferedImage);
 
@@ -144,6 +153,11 @@ public abstract class BufferedImageToMatrix {
         public ToInterleavedRGB setReadPixelValuesViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
             this.readPixelValuesViaGraphics2D = readPixelValuesViaGraphics2D;
             return this;
+        }
+
+        @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return bgrOrder ? ColorMatrices.ChannelOrder.BGR : ColorMatrices.ChannelOrder.RGB;
         }
 
         @Override

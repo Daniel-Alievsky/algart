@@ -25,6 +25,7 @@
 package net.algart.io.demo;
 
 import net.algart.arrays.ColorMatrices;
+import net.algart.arrays.ColorMatrices.ChannelOrder;
 import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
@@ -70,10 +71,22 @@ public class ReadWriteImageTest {
             };
         }
 
+        assert new BufferedImageToMatrix.ToInterleavedRGB().channelOrder() == ChannelOrder.RGB;
+        assert new BufferedImageToMatrix.ToInterleavedBGR().channelOrder() == ChannelOrder.BGR;
+        assert new MatrixToBufferedImage.InterleavedRGBToPacked().channelOrder() == ChannelOrder.RGB;
+        assert new MatrixToBufferedImage.InterleavedBGRToPacked().channelOrder() == ChannelOrder.BGR;
+        assert new MatrixToBufferedImage.InterleavedRGBToInterleaved().channelOrder() == ChannelOrder.RGB;
+        assert new MatrixToBufferedImage.InterleavedBGRToInterleaved().channelOrder() == ChannelOrder.BGR;
+        assert new MatrixToBufferedImage.InterleavedRGBToBanded().channelOrder() == ChannelOrder.RGB;
+        assert new MatrixToBufferedImage.InterleavedBGRToBanded().channelOrder() == ChannelOrder.BGR;
+
         for (int test = 1; test <= 10; test++) {
             System.out.printf("%nTest #%d%n", test);
-            var toMatrix = new BufferedImageToMatrix.ToInterleavedRGB();
             var toBufferedImage = matrixToBufferedImageClass.getConstructor().newInstance();
+            System.out.printf("Channel order: %s%n", toBufferedImage.channelOrder());
+            var toMatrix = toBufferedImage.channelOrder() == ChannelOrder.RGB ?
+                    new BufferedImageToMatrix.ToInterleavedRGB() :
+                    new BufferedImageToMatrix.ToInterleavedBGR();
             toMatrix.setEnableAlpha(true);
 
             System.out.println("Reading " + sourceFile + "...");

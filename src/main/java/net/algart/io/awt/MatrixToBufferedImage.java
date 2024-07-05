@@ -219,6 +219,18 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
+     * Returns the color channels order, in which they are written in the source color matrix.
+     * The result is {@link ColorMatrices.ChannelOrder#RGB}
+     * in {@link InterleavedRGBToPacked}, {@link InterleavedRGBToInterleaved},
+     * {@link InterleavedRGBToBanded} classes, and {@link ColorMatrices.ChannelOrder#BGR}
+     * in {@link InterleavedBGRToPacked}, {@link InterleavedBGRToInterleaved}, {@link InterleavedBGRToBanded}
+     * classes.
+     *
+     * @return channel order: RGB or BGR.
+     */
+    public abstract ColorMatrices.ChannelOrder channelOrder();
+
+    /**
      * Returns <code>true</code> if the specified element type of AlgART arrays or matrices,
      * passed to the methods of this class, is supported.
      * If this method returns <code>false</code>, this class converts
@@ -403,6 +415,11 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.RGB;
+        }
+
+        @Override
         public String toString() {
             return "InterleavedRGBToPacked (alwaysAddAlpha=" + alwaysAddAlpha + ")";
         }
@@ -477,6 +494,11 @@ public abstract class MatrixToBufferedImage {
 
     public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
         @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.BGR;
+        }
+
+        @Override
         protected int[] packedSamplesRGBAMasks(int bandCount) {
             if (bandCount == 4 || bandCount == 2) {
                 return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000};
@@ -495,10 +517,14 @@ public abstract class MatrixToBufferedImage {
     }
 
     public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
-
         @Override
         public boolean elementTypeSupported(Class<?> elementType) {
             return elementType == byte.class || elementType == short.class;
+        }
+
+        @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.RGB;
         }
 
         @Override
@@ -526,6 +552,11 @@ public abstract class MatrixToBufferedImage {
 
     public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
         @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.BGR;
+        }
+
+        @Override
         protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
             return increasedIndexesFlipRB(bandCount);
         }
@@ -541,6 +572,11 @@ public abstract class MatrixToBufferedImage {
         public InterleavedRGBToBanded setAlwaysAddAlpha(boolean alwaysAddAlpha) {
             this.alwaysAddAlpha = alwaysAddAlpha;
             return this;
+        }
+
+        @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.RGB;
         }
 
         @Override
@@ -614,6 +650,11 @@ public abstract class MatrixToBufferedImage {
     }
 
     public static class InterleavedBGRToBanded extends InterleavedRGBToBanded {
+        @Override
+        public ColorMatrices.ChannelOrder channelOrder() {
+            return ColorMatrices.ChannelOrder.BGR;
+        }
+
         @Override
         protected int[] bandedSamplesRGBABankIndexes(int bankCount) {
             return increasedIndexesFlipRB(bankCount);

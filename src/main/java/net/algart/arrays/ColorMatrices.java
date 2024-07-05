@@ -43,6 +43,16 @@ public class ColorMatrices {
     private ColorMatrices() {
     }
 
+    /**
+     * The order, in which the color components are represented in the matrix &mdash; inside one pixel in
+     * the case of an interleaved matrix,
+     * or in a sequence of bands in the case where the channels are stored separately.
+     */
+    public enum ChannelOrder {
+        RGB,
+        BGR
+    }
+
     public static final double INTENSITY_R_WEIGHT = 0.299;
     public static final double INTENSITY_B_WEIGHT = 0.114;
     public static final double INTENSITY_G_WEIGHT = 1.0 - (INTENSITY_R_WEIGHT + INTENSITY_B_WEIGHT); // ~0.587
