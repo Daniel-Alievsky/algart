@@ -263,7 +263,7 @@ public class ProjectiveOperator
      *
      * <blockquote>
      * <table>
-     * <caption></caption>
+     * <caption>&nbsp;</caption>
      * <tr>
      * <td><i>d</i> = 1.0;</td>
      * </tr>

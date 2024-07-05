@@ -694,7 +694,7 @@ public class RectangularArea {
      * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
      * <p>Equivalent to the following loop:
      * <pre>
-     * final List<RectangularArea> result = ... (some empty list);
+     * final List&lt;RectangularArea>gt; result = ... (some empty list);
      * for (RectangularArea area : areas) {
      *     RectangularArea intersection = {@link #intersection(RectangularArea) intersection}(area);
      *     if (intersection != null) {
@@ -1006,11 +1006,11 @@ public class RectangularArea {
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
      * <i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub>,
-     * <i>l<sub>i</i></sub> = {@link #min(int) min}(<i>i</i>),
-     * <i>r<sub>i</i></sub> = {@link #max(int) max}(<i>i</i>),
-     * <i>d<sub>i</i></sub> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
+     * <i>l<sub>i</sub></i> = {@link #min(int) min}(<i>i</i>),
+     * <i>r<sub>i</sub></i> = {@link #max(int) max}(<i>i</i>),
+     * <i>d<sub>i</sub></i> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
      * <i>p<sub>i</sub></i>&minus;<i>r<sub>i</sub></i>).
-     * Note that <i>d<sub>i</i></sub> is positive if <i>p<sub>i</sub></i>&lt;<i>l<sub>i</sub></i>
+     * Note that <i>d<sub>i</sub></i> is positive if <i>p<sub>i</sub></i>&lt;<i>l<sub>i</sub></i>
      * or <i>p<sub>i</sub></i>&gt;<i>r<sub>i</sub></i> and negative if <i>p<sub>i</sub></i>
      * is inside <i>l<sub>i</sub></i>..<i>r<sub>i</sub></i> range.
      * The <i>parallel distance</i> from the point <b>p</b> to this rectangular area

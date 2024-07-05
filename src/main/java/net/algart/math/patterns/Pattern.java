@@ -1296,7 +1296,7 @@ public interface Pattern {
      * and "+" means a vector sum of two points
      * (the result of "<i>a</i>.{@link Point#add(Point) add}(<i>b</i>)" call).
      * Please see details in
-     * <noindex><a href="http://en.wikipedia.org/wiki/Minkowski_addition">Wikipedia</a></noindex>.
+     * <a href="http://en.wikipedia.org/wiki/Minkowski_addition">Wikipedia</a>.
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
      * In these cases, this method can also throw {@link TooManyPointsInPatternError}
@@ -1351,7 +1351,7 @@ public interface Pattern {
      * (the result of "<i>p</i>.{@link Point#add(Point) add}(<i>b</i>)" call)
      * belongs to this pattern.
      * Please see more details in
-     * <noindex><a href="http://en.wikipedia.org/wiki/Erosion_%28morphology%29">Wikipedia</a></noindex> and
+     * <a href="http://en.wikipedia.org/wiki/Erosion_%28morphology%29">Wikipedia</a> and
      * Google about the "Erosion" and "Minkowski subtraction" terms.
      *
      * <p><b>Warning!</b> This method can work slowly for some forms of large patterns.
@@ -1400,7 +1400,7 @@ public interface Pattern {
      * of some <i>n</i> points
      * <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>,&nbsp;..., <b>p</b><sub><i>n</i>&minus;1</sub>,
      * where <b>p</b><sub><i>i</i></sub>&isin;P<sub><i>i</i></sub>.
-     * Please see <noindex><a href="http://en.wikipedia.org/wiki/Minkowski_addition">Wikipedia</a></noindex>
+     * Please see <a href="http://en.wikipedia.org/wiki/Minkowski_addition">Wikipedia</a>
      * about the "Minkowski sum" term.
      *
      * <p>This method tries to find the best decomposition, that means the list of patterns

@@ -555,7 +555,7 @@ public class IRectangularArea {
 
     /**
      * Returns <code>{@link IRange}.{@link IRange#valueOf(long, long)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))<code>.
+     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      *
      * @param coordIndex the index of the coordinate.
      * @return <code>{@link IRange}.{@link IRange#valueOf(long, long)
@@ -754,7 +754,7 @@ public class IRectangularArea {
      * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
      * <p>Equivalent to the following loop:
      * <pre>
-     * final List<IRectangularArea> result = ... (some empty list);
+     * final List&lt;IRectangularArea>gt; result = ... (some empty list);
      * for (IRectangularArea area : areas) {
      *     IRectangularArea intersection = {@link #intersection(IRectangularArea) intersection}(area);
      *     if (intersection != null) {
@@ -1066,11 +1066,11 @@ public class IRectangularArea {
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
      * <i>p</i><sub>0</sub>, <i>p</i><sub>1</sub>, ..., <i>p</i><sub><i>n</i>&minus;1</sub>,
-     * <i>l<sub>i</i></sub> = {@link #min(int) min}(<i>i</i>),
-     * <i>r<sub>i</i></sub> = {@link #max(int) max}(<i>i</i>),
-     * <i>d<sub>i</i></sub> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
+     * <i>l<sub>i</sub></i> = {@link #min(int) min}(<i>i</i>),
+     * <i>r<sub>i</sub></i> = {@link #max(int) max}(<i>i</i>),
+     * <i>d<sub>i</sub></i> = max(<i>l<sub>i</sub></i>&minus;<i>p<sub>i</sub></i>,
      * <i>p<sub>i</sub></i>&minus;<i>r<sub>i</sub></i>).
-     * Note that <i>d<sub>i</i></sub> is positive if <i>p<sub>i</sub></i>&lt;<i>l<sub>i</sub></i>
+     * Note that <i>d<sub>i</sub></i> is positive if <i>p<sub>i</sub></i>&lt;<i>l<sub>i</sub></i>
      * or <i>p<sub>i</sub></i>&gt;<i>r<sub>i</sub></i> and negative if <i>p<sub>i</sub></i>
      * is inside <i>l<sub>i</sub></i>..<i>r<sub>i</sub></i> range.
      * The <i>parallel distance</i> from the point <b>p</b> to this rectangular area
@@ -1387,13 +1387,13 @@ public class IRectangularArea {
      * and returns the list of dilated areas.
      * <p>If <code>straightOnly</code> argument is <code>false</code>, this method is equivalent to the following code:
      * <pre>
-     * final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
+     * final List&lt;IRectangularArea&gt; result = new ArrayList&lt;IRectangularArea&gt;();
      * for (IRectangularArea area : areas) {
      *     result.add(area.{@link #dilate(IPoint) dilate}(expansion));
      * }</pre>
      * <p>If <code>straightOnly</code> argument is <code>true</code>, this method is equivalent to the following code:
      * <pre>
-     * final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
+     * final List&lt;IRectangularArea&gt; result = new ArrayList&lt;IRectangularArea&gt;();
      * for (IRectangularArea area : areas) {
      *     area.{@link #dilateStraightOnly(List, IPoint) dilateStraightOnly}(result, expansion);
      * }</pre>

@@ -37,7 +37,7 @@ import net.algart.math.IPoint;  // for Javadoc only
  * <code>long</code>, <code>float</code>, <code>double</code>) and, so, represents an integer or a real number,
  * according to comments to {@link PFixedArray#getLong(long)} and {@link PArray#getDouble(long)} methods.
  * In 2-dimensional case, these operations can be used for processing grayscale digital images.
- * Please see <noindex><a href="http://en.wikipedia.org/wiki/Mathematical_morphology">Wikipedia</a></noindex>
+ * Please see <a href="http://en.wikipedia.org/wiki/Mathematical_morphology">Wikipedia</a>
  * about the "Mathematical morphology" concept.</p>
  *
  * <p>Basic operations, defined by this interface, are <i>{@link #dilation(Matrix, Pattern) dilation}</i>
@@ -251,7 +251,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * or only some region of the matrix may be processed, etc.
      *
      * <p>Please see
-     * <noindex><a href="http://en.wikipedia.org/wiki/Dilation_%28morphology%29">Wikipedia</a></noindex>
+     * <a href="http://en.wikipedia.org/wiki/Dilation_%28morphology%29">Wikipedia</a>
      * to know more about the dilation.
      *
      * @param src     the source matrix.
@@ -296,7 +296,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * or only some region of the matrix may be processed, etc.
      *
      * <p>Please see
-     * <noindex><a href="http://en.wikipedia.org/wiki/Erosion_%28morphology%29">Wikipedia</a></noindex>
+     * <a href="http://en.wikipedia.org/wiki/Erosion_%28morphology%29">Wikipedia</a>
      * to know more about the erosion.
      *
      * @param src     the source matrix.
@@ -560,7 +560,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * dilationErosion(src, pattern, pattern, subtractionMode)}.
      *
      * <p>Please see
-     * <noindex><a href="http://en.wikipedia.org/wiki/Closing_%28morphology%29">Wikipedia</a></noindex>
+     * <a href="http://en.wikipedia.org/wiki/Closing_%28morphology%29">Wikipedia</a>
      * to know more about the closing.
      *
      * @param src             the source matrix.
@@ -596,7 +596,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * erosionDilation(src, pattern, pattern, subtractionMode)}.
      *
      * <p>Please see
-     * <noindex><a href="http://en.wikipedia.org/wiki/Opening_%28morphology%29">Wikipedia</a></noindex>
+     * <a href="http://en.wikipedia.org/wiki/Opening_%28morphology%29">Wikipedia</a>
      * to know more about the opening.
      *
      * @param src             the source matrix.

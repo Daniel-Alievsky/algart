@@ -51,7 +51,7 @@ public abstract class LogFunc implements Func {
 
     /**
      * Returns an instance of this class for the given logarithm base <code>b</code>
-     * using <code>Math.log</code> method.</p>
+     * using <code>Math.log</code> method.
      *
      * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
      * and <code>base=10.0</code>.
@@ -132,7 +132,7 @@ public abstract class LogFunc implements Func {
 
     /**
      * Returns an instance of this class for the given logarithm base <code>b</code>
-     * using <code>StrictMath.log</code> method.</p>
+     * using <code>StrictMath.log</code> method.
      *
      * <p>This method returns special optimized versions of this class for <code>base=Math.E</code>
      * and <code>base=10.0</code>.

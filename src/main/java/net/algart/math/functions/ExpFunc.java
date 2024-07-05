@@ -50,7 +50,7 @@ public abstract class ExpFunc implements Func {
 
     /**
      * Returns an instance of this class for the given logarithm base <code>b</code>
-     * using <code>Math.exp</code> and <code>Math.log</code> methods.</p>
+     * using <code>Math.exp</code> and <code>Math.log</code> methods.
      *
      * @param b the base of the logarithm.
      * @return an instance of this class using <code>Math.exp</code> and <code>Math.log</code> methods.
@@ -106,7 +106,7 @@ public abstract class ExpFunc implements Func {
 
     /**
      * Returns an instance of this class for the given logarithm base <code>b</code>
-     * using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.</p>
+     * using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.
      *
      * @param b the base of the exponent.
      * @return an instance of this class using <code>StrictMath.exp</code> and <code>StrictMath.log</code> methods.

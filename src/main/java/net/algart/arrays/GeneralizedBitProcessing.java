@@ -260,7 +260,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
          * <code>destBits</code> bit array.
          * This method is called by
          * {@link GeneralizedBitProcessing#process(UpdatablePArray, PArray, Range, long)} method
-         * for every {@link GeneralizedBitProcessing bit slice}</a> of the source non-bit array.
+         * for every {@link GeneralizedBitProcessing bit slice} of the source non-bit array.
          * It is the main method, which you should implement to generalize some bit algorithm for non-bit case.
          *
          * <p>The <code>destBits</code> and <code>srcBits</code> arrays will be different bit arrays, allocated by
