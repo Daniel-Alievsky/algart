@@ -188,7 +188,7 @@ public final class LinearOperator extends ProjectiveOperator {
 
     /**
      * Returns the n-dimensional linear operator, that transforms (maps)
-     * the given <i></i>n+1 points <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ..., <b>p</b><sub><i>n</i></sub> to
+     * the given <i>n</i>+1 points <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ..., <b>p</b><sub><i>n</i></sub> to
      * the given another <i>n</i>+1 points <b>q</b><sub>0</sub>, <b>q</b><sub>1</sub>, ..., <b>q</b><sub><i>n</i></sub>
      * of the n-dimensional space.
      * In other words, the matrix <b>A</b> and the vector <b>b</b> in the returned operator

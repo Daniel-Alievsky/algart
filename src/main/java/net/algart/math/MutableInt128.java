@@ -528,12 +528,13 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Shifts all bits of the absolute value of this number rightwards by the specified number of bits.
      * As the result, this number <i>x</i> is changed to
-     * <pre>    <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)/2<sup>shift</sup> : <i>x</i>/2<sup>shift</sup>.</pre>
-     *
+     * <p><code>&nbsp;&nbsp;&nbsp;&nbsp;
+     * <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)/2<sup>shift</sup> : <i>x</i>/2<sup>shift</sup>.
+     * </code></p>
      * <p>If the argument <code>shift</code> is too large (&ge;128), the method sets this number to zero.
      *
      * <p>Shifting by 0 bits (<code>shift=0</code>) or shifting zero value with any <code>shift</code>
-     * does not change the number.</p>
+     * does not change the number.
      *
      * @param shift number of bits to shift.
      * @return a reference to this object.
@@ -564,7 +565,9 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Shifts all bits of the absolute value of this number leftwards by the specified number of bits.
      * As the result, this number <i>x</i> is changed to
-     * <pre>    <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)*2<sup>shift</sup> : <i>x</i>*2<sup>shift</sup>.</pre>
+     * <p><code>&nbsp;&nbsp;&nbsp;&nbsp;
+     * <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)*2<sup>shift</sup> : <i>x</i>*2<sup>shift</sup>.
+     * </code></p>
      *
      * <p>If the resulting absolute value cannot be represented by 128-bit number, in particular,
      * if current number is non-zero and shift&ge;128, the method throws <code>ArithmeticException</code>.
@@ -613,8 +616,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * 128-bit integer value. If two integer numbers are equally close to the result of division,
      * the result is the 128-bit integer value, which is even.
      * In other words, this number <i>x</i> is changed to
-     * <pre>    [<i>x</i>/2.0<sup>shift</sup>],</pre>
-     * where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
+     * <p><code>&nbsp;&nbsp;&nbsp;&nbsp; [<i>x</i>/2.0<sup>shift</sup>],</code>
+     * <p>where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
      * like in <code>Math.rint()</code> method.
      *
      * <p>If the argument <code>shift</code> is too large (&ge;128), the method sets this number to zero.
@@ -1284,8 +1287,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <code>long</code> value. If two integer numbers are equally close to the result of division,
      * the result is the <code>long</code> integer value, which is even.
      * In other words, this method returns
-     * <pre>    [value/2.0<sup>shift</sup>],</pre>
-     * where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
+     * <p><code>&nbsp;&nbsp;&nbsp;&nbsp; [value/2.0<sup>shift</sup>],</code>
+     * <p>where <code>[<i>w</i>]</code> means the mathematical integer, closest to <code><i>w</i></code>,
      * like in <code>Math.rint()</code> method.
      *
      * <p>If the argument <code>shift</code> is too large (&ge;64), the method returns 0.

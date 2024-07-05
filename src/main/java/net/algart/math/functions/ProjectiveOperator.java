@@ -253,7 +253,7 @@ public class ProjectiveOperator
 
     /**
      * Returns the n-dimensional projective operator, that transforms (maps)
-     * the given <i></i>n+2 points
+     * the given <i>n</i>+2 points
      * <b>p</b><sub>0</sub>, <b>p</b><sub>1</sub>, ..., <b>p</b><sub><i>n</i>+1</sub> to
      * the given another <i>n</i>+2 points
      * <b>q</b><sub>0</sub>, <b>q</b><sub>1</sub>, ..., <b>q</b><sub><i>n</i>+1</sub>

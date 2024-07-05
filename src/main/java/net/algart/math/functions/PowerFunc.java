@@ -92,10 +92,10 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of binary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>x<sub>1</sub></sup></i>, using <code>Math.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>x<sub>1</sub></sup></i>, using <code>Math.pow</code> method.
      *
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of binary function, using <code>Math.pow</code> method.</p>
+     * @return an instance of this class, a case of binary function, using <code>Math.pow</code> method.
      */
     public static PowerFunc getBinaryInstance(double scale) {
         return new PowerFunc(null, scale) {
@@ -127,10 +127,10 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of binary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>x<sub>1</sub></sup></i>, using <code>StrictMath.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>x<sub>1</sub></sup></i>, using <code>StrictMath.pow</code> method.
      *
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of binary function, using <code>StrictMath.pow</code> method.</p>
+     * @return an instance of this class, a case of binary function, using <code>StrictMath.pow</code> method.
      */
     public static PowerFunc getStrictBinaryInstance(double scale) {
         return new PowerFunc(null, scale) {
@@ -162,7 +162,7 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of unary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
@@ -170,7 +170,7 @@ public abstract class PowerFunc implements Func {
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.
      */
     public static PowerFunc getInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
@@ -508,11 +508,11 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of unary function
-     * <i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.</p>
+     * <i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.
      * Equivalent to <code>{@link #getInstance(double, double) getInstance}(c,1.0)</code>.
      *
      * @param c the constant <i>c</i>.
-     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.
      */
     public static PowerFunc getInstance(double c) {
         return getInstance(c, 1.0);
@@ -520,7 +520,7 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of unary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
@@ -528,7 +528,7 @@ public abstract class PowerFunc implements Func {
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.
      */
     public static PowerFunc getStrictInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
@@ -865,11 +865,11 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of this class, a case of unary function
-     * <i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.</p>
+     * <i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.
      * Equivalent to <code>{@link #getStrictInstance(double, double) getStrictInstance}(c,1.0)</code>.
      *
      * @param c the constant <i>c</i>.
-     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.
      */
     public static PowerFunc getStrictInstance(double c) {
         return getStrictInstance(c, 1.0);
@@ -877,7 +877,7 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of the updatable version of this class, a case of unary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
@@ -885,7 +885,7 @@ public abstract class PowerFunc implements Func {
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>Math.pow</code> method.
      */
     public static Updatable getUpdatableInstance(double c, double scale) {
         //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, getStrictUpdatableInstance)
@@ -1274,7 +1274,7 @@ public abstract class PowerFunc implements Func {
 
     /**
      * Returns an instance of the updatable version of this class, a case of unary function
-     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.</p>
+     * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of
      * <code>c</code>argument. In particular, there are optimized version
@@ -1282,7 +1282,7 @@ public abstract class PowerFunc implements Func {
      *
      * @param c     the constant <i>c</i>.
      * @param scale the constant <i>scale</i>.
-     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.</p>
+     * @return an instance of this class, a case of unary function, using <code>StrictMath.pow</code> method.
      */
     public static Updatable getUpdatableStrictInstance(double c, double scale) {
         //[[Repeat.SectionStart getStrictUpdatableInstance]]

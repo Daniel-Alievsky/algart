@@ -86,12 +86,12 @@ public class Matrices {
          * is fully defined by only the elements of the source matrix
          * with the coordinates <code>i<sub>0</sub></code>, <code>i<sub>1</sub></code>, ...,
          * lain in the ranges:
-         * <blockquote><pre>
+         * <p><code>&nbsp;&nbsp;&nbsp;&nbsp;
          * (long)<i>x</i><sub>0</sub> + min &lt;= i<sub>0</sub> &lt;= (long)<i>x</i><sub>0</sub> + max,
          * (long)<i>x</i><sub>1</sub> + min &lt;= i<sub>1</sub> &lt;= (long)<i>x</i><sub>1</sub> + max,
          * ...
-         * </pre></blockquote>
-         * This method allows to get the dependence range for this interpolation algorithm.
+         * </code></p>
+         * <p>This method allows to get the dependence range for this interpolation algorithm.
          * In particular, for the {@link #STEP_FUNCTION}, representing some matrix,
          * the returned range is always <code>0..0</code> ({@link IRange#valueOf(long, long) IRange.valueOf(0, 0)}).
          * For the case of {@link #POLYLINEAR_FUNCTION}, the range is little larger:
@@ -401,8 +401,8 @@ public class Matrices {
          * <code>coordRanges[1].{@link IRange#min() min()}</code> &le; <i>x</i><sub>1</sub> &le;
          * <code>coordRanges[1].{@link IRange#max() max()}</code>,<br>
          * ...,<br>
-         * <code>coordRanges[<i>n</i>-1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
-         * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()}</code>.
+         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
+         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()}</code>.
          * </blockquote>
          *
          * <p>The number <i>n</i> of dimensions of the created region is equal to <code>coordRanges.length</code>.
@@ -485,7 +485,7 @@ public class Matrices {
          * with <i>n</i>+1 vertices, where the vertex #<i>k</i> (<i>k</i>=0,1,...,<i>n</i>)
          * has the coordinates <code>vertices[<i>k</i>][0]</code>,
          * <code>vertices[<i>k</i>][1]</code>, ...,
-         * <code>vertices[<i>k</i>][<i>n</i>-1]</code>.
+         * <code>vertices[<i>k</i>][<i>n</i>&minus;1]</code>.
          *
          * <p>The number <i>n</i> of dimensions of the created region is equal to
          * <code>vertices[<i>k</i>].length</code>; this length must be same for all <i>k</i>.
@@ -536,8 +536,8 @@ public class Matrices {
          * The elements of the matrix <b>A</b> must be listed, row by row, in the <code>a</code> array:
          * <b>A</b>={<i>a</i><sub><i>ij</i></sub>},
          * <i>a</i><sub><i>ij</i></sub>=<code>a[<i>i</i>*<i>n</i>+<i>j</i>]</code>,
-         * <i>i</i> is the index of the row (0..<i>m</i>-1),
-         * <i>j</i> is the index of the column (0..<i>n</i>-1),
+         * <i>i</i> is the index of the row (0..<i>m</i>&minus;1),
+         * <i>j</i> is the index of the column (0..<i>n</i>&minus;1),
          * <i>m</i>=<code>b.length</code>.
          * The elements of the vector
          * <b>b</b>=(<i>b</i><sub>0</sub>,<i>b</i><sub>1</sub>,...,<i>b</i><sub><i>m</i>&minus;1</sub>)
@@ -827,8 +827,8 @@ public class Matrices {
      * <code>coordRanges[1].{@link IRange#min() min()}</code> &le; <i>x</i><sub>1</sub> &le;
      * <code>coordRanges[1].{@link IRange#max() max()}</code>,<br>
      * ...,<br>
-     * <code>coordRanges[<i>n</i>-1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
-     * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()}</code>,
+     * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
+     * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()}</code>,
      * </blockquote>
      *
      * <p>where <code>coordRanges</code> is the result of {@link #coordRanges()} method.</p>
@@ -889,9 +889,9 @@ public class Matrices {
          * <code>0 &le; coordRanges[1].{@link IRange#min() min()}</code>,&nbsp;&nbsp;&nbsp;
          * <code>coordRanges[1].{@link IRange#max() max()} &lt; matrix.{@link Matrix#dim(int) dim}(1)</code>,<br>
          * ...,<br>
-         * <code>0 &le; coordRanges[<i>n</i>-1].{@link IRange#min() min()}</code>,&nbsp;&nbsp;&nbsp;
-         * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()} &lt;
-         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</code>
+         * <code>0 &le; coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()}</code>,&nbsp;&nbsp;&nbsp;
+         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()} &lt;
+         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>&minus;1)</code>
          * </blockquote>
          *
          * <p>This method is equivalent to the following call:
@@ -926,10 +926,10 @@ public class Matrices {
          * <code>coordRanges[1].{@link IRange#max() max()} - <i>sh</i><sub>1</sub> &lt;
          * matrix.{@link Matrix#dim(int) dim}(1)</code>,<br>
          * ...,<br>
-         * <code>0 &le; coordRanges[<i>n</i>-1].{@link IRange#min() min()} -
-         * <i>sh</i><sub><i>n</i>-1</sub></code>,<br>
-         * <code>coordRanges[<i>n</i>-1].{@link IRange#max() max()} - <i>sh</i><sub><i>n</i>-1</sub> &lt;
-         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-1)</code>,
+         * <code>0 &le; coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()} -
+         * <i>sh</i><sub><i>n</i>&minus;1</sub></code>,<br>
+         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()} - <i>sh</i><sub><i>n</i>&minus;1</sub> &lt;
+         * matrix.{@link Matrix#dim(int) dim}(<i>n</i>&minus;1)</code>,
          * </blockquote>
          *
          * <p>where <code>sh<sub><i>k</i></sub> = k &lt; backShifts.length ? backShifts[k] : 0</code>
@@ -1164,8 +1164,8 @@ public class Matrices {
          * (see the {@link Matrices.ConvexHyperpolyhedron comments to this class}).
          * The elements of the matrix <b>A</b> will be listed in the returned array row by row:
          * <i>a</i><sub><i>ij</i></sub>=<code>a[<i>i</i>*<i>n</i>+<i>j</i>]</code>,
-         * <i>i</i> is the index of the row (0..<i>m</i>-1),
-         * <i>j</i> is the index of the column (0..<i>n</i>-1),
+         * <i>i</i> is the index of the row (0..<i>m</i>&minus;1),
+         * <i>j</i> is the index of the column (0..<i>n</i>&minus;1),
          * <code>a</code> is the result of this method with length <code>a.length=</code><i>nm</i>.
          *
          * <p>The returned array is a clone of the internal array stored in this object.
@@ -2466,15 +2466,15 @@ public class Matrices {
     /**
      * Returns a function of the coordinates represented by the given matrix
      * with the given interpolation method.
-     * It means: if <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>
+     * It means: if <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>
      * (<i>n</i>=<code>matrix.{@link Matrix#dimCount() dimCount()}</code>) are integers
      * inside the dimensions of the given matrix, then the returned function for such arguments returns
      *
-     * <pre>
+     * <p><code>
      * <i>f</i>(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>)=matrix.{@link
      * Matrix#array() array()}.{@link PArray#getDouble(long) getDouble}(matrix.{@link Matrix#index(long...)
-     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>))
-     * </pre>
+     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>))
+     * </code></p>
      *
      * <p>If the arguments of the returned function are not integer, the returned function uses
      * the specified interpolation algorithm. Namely:
@@ -2489,10 +2489,10 @@ public class Matrices {
      * </ul>
      *
      * <p>The real coordinates <i>x</i><sub><i>k</i></sub> must be inside the matrix:
-     * <pre>
+     * <p><code>
      * 0 &lt;= <i>x</i><sub><i>k</i></sub> &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)
-     * </pre>
-     * In other case the behavior of the returned function depends on <code>checkRanges</code> argument.
+     * </code></p>
+     * <p>In other case the behavior of the returned function depends on <code>checkRanges</code> argument.
      * If it is <code>true</code>, <code>IndexOutOfBoundsException</code> is thrown while calling
      * {@link Func#get(double...)} method, as while using {@link Matrix#index(long...)} method.
      * If <code>checkRanges</code> is <code>false</code>,
@@ -2964,11 +2964,11 @@ public class Matrices {
      * <pre>
      * result.{@link Matrix#array() array()}.{@link PArray#getDouble(long)
      * getDouble}(result.{@link Matrix#index(long...)
-     * index}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i>))
+     * index}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>))
      * </pre>
      * <p>is a result of the call
      * <code>f.{@link Func#get(double...)
-     * get}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n-1</sub></i>)</code>.
+     * get}(<i>i<sub>0</sub></i>,<i>i<sub>1</sub></i>,...,<i>i<sub>n&minus;1</sub></i>)</code>.
      * So, this method does not require any source matrices.
      *
      * <p>Matrices, created by this method, are called <i>functional</i> matrices.
@@ -4448,7 +4448,7 @@ public class Matrices {
      * + shifts[1] * matrix.{@link Matrix#dim(int) dim}(0) +
      * + shifts[2] * matrix.{@link Matrix#dim(int) dim}(0) * matrix.{@link Matrix#dim(int) dim}(1) +
      * + . . . +
-     * + shifts[<i>n</i>-1] * matrix.{@link Matrix#dim(int) dim}(0) * matrix.{@link Matrix#dim(int)
+     * + shifts[<i>n</i>&minus;1] * matrix.{@link Matrix#dim(int) dim}(0) * matrix.{@link Matrix#dim(int)
      * dim}(1) * ... * matrix.{@link Matrix#dim(int) dim}(<i>n</i>-2) (<i>n</i> = shifts.length)
      * </pre>
      *
@@ -4933,22 +4933,22 @@ public class Matrices {
      *
      * <pre>
      * for (all possible long coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub
-     * >, ..., <i>x</i><sub><i>n</i>-1</sub>
+     * >, ..., <i>x</i><sub><i>n</i>&minus;1</sub>
      * &#32;   in ranges destRegion.{@link Region#coordRange(int)
      * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),
-     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>-1))
+     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))
      * {
      * &#32;   if (destRegion.{@link Region#contains(long...)
-     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) {
+     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) {
      * &#32;       long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);
      * &#32;       long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);
      * &#32;       ...
-     * &#32;       long <i>x</i>'<sub><i>n</i>-1</sub> = <i>x</i><sub><i>n</i>-1</sub
-     * > - (shifts.length &gt; <i>n</i>-1 ? shifts[<i>n</i>-1] : 0);
+     * &#32;       long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub
+     * > - (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);
      * &#32;       long destIndex = dest.{@link Matrix#index(long...)
-     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>);
+     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);
      * &#32;       long srcIndex = src.{@link Matrix#index(long...)
-     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>-1</sub>);
+     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);
      * &#32;       Object element = src.array().{@link Array#getElement(long) getElement}(srcIndex);
      * &#32;       dest.array().{@link UpdatableArray#setElement(long, Object) setElement}(destIndex, element);
      * &#32;   }
@@ -5058,28 +5058,28 @@ public class Matrices {
      *
      * <pre>
      * for (all possible long coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub
-     * >, ..., <i>x</i><sub><i>n</i>-1</sub>
+     * >, ..., <i>x</i><sub><i>n</i>&minus;1</sub>
      * &#32;   in ranges destRegion.{@link Region#coordRange(int)
      * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),
-     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>-1))
+     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))
      * {
      * &#32;   if (dest.{@link Matrix#inside(long...)
-     * inside}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>) &amp;&amp;
+     * inside}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) &amp;&amp;
      * &#32;       destRegion.{@link Region#contains(long...)
-     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>)
+     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
      * &#32;   {
      * &#32;       long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);
      * &#32;       long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);
      * &#32;       ...
-     * &#32;       long <i>x</i>'<sub><i>n</i>-1</sub> = <i>x</i><sub><i>n</i>-1</sub
-     * > - (shifts.length &gt; <i>n</i>-1 ? shifts[<i>n</i>-1] : 0);
+     * &#32;       long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub
+     * > - (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);
      * &#32;       long destIndex = dest.{@link Matrix#index(long...)
-     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>-1</sub>);
+     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);
      * &#32;       Object element;
      * &#32;       if (src.{@link Matrix#inside(long...)
-     * inside}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>-1</sub>) {
+     * inside}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>) {
      * &#32;           long srcIndex = src.{@link Matrix#index(long...)
-     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>-1</sub>);
+     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);
      * &#32;           element = src.array().{@link Array#getElement(long) getElement}(srcIndex);
      * &#32;       } else {
      * &#32;           element = outsideValue, casted by the rules of the {@link

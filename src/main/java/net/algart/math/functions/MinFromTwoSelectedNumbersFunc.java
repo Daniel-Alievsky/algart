@@ -69,7 +69,7 @@ public class MinFromTwoSelectedNumbersFunc extends AbstractFunc implements Func 
     }
 
     /**
-     * Returns an instance of this class for the given index shift.</p>
+     * Returns an instance of this class for the given index shift.
      *
      * @param indexShift the index shift (distance between compared numbers); must be non-negative.
      * @return an instance of this class

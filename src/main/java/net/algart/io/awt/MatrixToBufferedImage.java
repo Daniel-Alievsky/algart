@@ -247,7 +247,7 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
-     * Returns the palette (<code></code>byte[4][256]</code>) if the indexed image is supposed.
+     * Returns the palette (<code>byte[4][256]</code>) if the indexed image is supposed.
      *
      * <p>The default implementation returns {@code null}, that means non-indexed image.
      *

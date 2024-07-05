@@ -695,7 +695,7 @@ public class PackedBitArraysPer8 {
      * <code>{@link #getBitInReverseOrder(byte[] src, long index)
      * getBitInReverseOrder}(src, srcPos+k)</code>,
      * will be returned in the bit <code>#(count-1-k)</code> (in direct order) of the returned
-     * <code>long</code> value <code>R</code>, i.e. it is equal to <code>(R&gt;&gt;(count-1-k))&amp;1</code></code>.
+     * <code>long</code> value <code>R</code>, i.e. it is equal to <code>(R&gt;&gt;(count-1-k))&amp;1</code>.
      * If <code>count=30</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop:</p>
