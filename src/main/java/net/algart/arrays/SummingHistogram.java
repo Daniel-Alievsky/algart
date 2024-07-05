@@ -52,12 +52,12 @@ import java.util.Objects;
  *
  * <ol start="3">
  * <li>to find the sum <i>Z</i>(<i>r</i>) =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>k</i>&lt;<i>r</i></sub><b>A</b>[<i>k</i>]
+ * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>k</i>&lt;<i>r</i></sub><b>A</b>[<i>k</i>]
  * of <i>r</i> first elements of the sorted source array <b>A</b>[<i>k</i>],
  * if we know the index <i>r</i> in this array;</li>
  * <li>to find the sum <i>z</i>(<i>v</i>) =
- * <big>&Sigma;</big>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>]
+ * <span style="font-size:200%">&sum;</span>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
+ * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>]
  * of all elements of the source array <b>A</b>, less then the given value <i>v</i>.</li>
  * </ol>
  *
@@ -133,7 +133,8 @@ import java.util.Objects;
  *
  * <blockquote>
  * <i>s</i>(<i>v</i><sub>0</sub>) =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
+ * <span style="font-size:200%">&sum;</span>&nbsp;
+ * <sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
  * <i>z</i>(<i>v</i><sub>0</sub>) + <i>r</i>(<i>v</i><sub>0</sub>)/2
  * </blockquote>
  * </dd>
@@ -208,7 +209,8 @@ import java.util.Objects;
  * <p>If you want to get the simple sum of elements of the source <b>A</b> array in integer terms,
  * you also can use {@link #currentSum()} method, which just returns
  * <i>z</i>(<i>v</i><sub>0</sub>) =
- * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><i>j</i>*<b>b</b>[<i>j</i>]
+ * <span style="font-size:200%">&sum;</span>&nbsp;
+ * <sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><i>j</i>*<b>b</b>[<i>j</i>]
  * for integer <i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}.</p>
  *
  * <p>You can create an instance of this class by the following methods:</p>
@@ -831,8 +833,8 @@ public abstract class SummingHistogram extends Histogram {
      * Returns the sum of all elements of the source array <b>A</b>, less than
      * <i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}:
      * <i>z</i>(<i>v</i><sub>0</sub>) =
-     * <big>&Sigma;</big>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
-     * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>].
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub><b>A</b>[<i>k</i>]&lt;<i>v</i></sub><b>A</b>[<i>k</i>] =
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i></sub><i>j</i>*<b>b</b>[<i>j</i>].
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>Note: if the current value is integer, for example, after
@@ -842,9 +844,11 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <blockquote>
      * <i>S<sup>S</sup></i> = <i>s</i>(<i>v</i><sub>0</sub>) =
-     * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>
+     * (<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
      * <i>z</i>(<i>v</i><sub>0</sub>) +
-     * 0.5 * <big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><b>b</b>[<i>j</i>] =
+     * 0.5 * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>
+     * <b>b</b>[<i>j</i>] =
      * <i>z</i>(<i>v</i><sub>0</sub>) + <i>r</i>(<i>v</i><sub>0</sub>)/2
      * </blockquote>
      *

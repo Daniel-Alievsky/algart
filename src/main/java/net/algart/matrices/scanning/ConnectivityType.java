@@ -45,7 +45,8 @@ public enum ConnectivityType {
      * are <i>neighbours</i> and, so, connected with each other
      * if one from the coordinates differs by 1, but all other coordinates are equal:</p>
      *
-     * <blockquote><big>&sum;&nbsp;</big>|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1
+     * <blockquote><span style="font-size:200%">&sum;</span>
+     * |<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1
      * </blockquote>
      *
      * <p>For 2D matrices, this connectivity kind is also known as "4-connectivity".

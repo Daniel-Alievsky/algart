@@ -112,7 +112,7 @@ public interface WeightedPattern extends Pattern {
      * the matrix <b>A</b> to another matrix <b>B</b> by the following rules:
      *
      * <blockquote>
-     * <b>B</b>[<b>i</b>] = <big>&sum;</big>
+     * <b>B</b>[<b>i</b>] = <span style="font-size:200%">&sum;</span>
      * <i>w</i><sub><i>k</i></sub><b>A</b>[<b>i</b>-<i>p</i><sub><i>k</i></sub>]
      * </blockquote>
      *

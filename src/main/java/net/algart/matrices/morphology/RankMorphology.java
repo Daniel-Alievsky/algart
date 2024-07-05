@@ -1454,7 +1454,8 @@ public interface RankMorphology extends Morphology {
      *
      * <blockquote>(<i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)) /
      *     ((<i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub>)*&sigma;) = <i>S</i>(<i>N</i>) / (<i>N</i>*&sigma;) =
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>
+     *     (<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
      *     / (<i>N</i>*&sigma;)
      * </blockquote>
      *
@@ -1465,7 +1466,9 @@ public interface RankMorphology extends Morphology {
      * and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     *     (<i>a<sub>i</sub></i>+0.5))
+     *     / (<i>NM</i>) =
      *     (<i>v'</i><sub>0</sub>+<i>v'</i><sub>1</sub>+...+<i>v'</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
      *     + 0.5 / <i>M</i> &asymp;
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
@@ -1480,7 +1483,8 @@ public interface RankMorphology extends Morphology {
      * we have <i>a<sub>i</sub></i> = <i>v<sub>i</sub></i>, and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     *     (<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
      *
@@ -1553,7 +1557,8 @@ public interface RankMorphology extends Morphology {
      *
      * <blockquote>(<i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)) /
      *     ((<i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub>)*&sigma;) = <i>S</i>(<i>N</i>) / (<i>N</i>*&sigma;) =
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>
+     *     (<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
      *     / (<i>N</i>*&sigma;)
      * </blockquote>
      *
@@ -1564,7 +1569,8 @@ public interface RankMorphology extends Morphology {
      * and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     *     (<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
      *     (<i>v'</i><sub>0</sub>+<i>v'</i><sub>1</sub>+...+<i>v'</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
      *     + 0.5 / <i>M</i> &asymp;
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
@@ -1579,7 +1585,8 @@ public interface RankMorphology extends Morphology {
      * we have <i>a<sub>i</sub></i> = <i>v<sub>i</sub></i>, and this expression is equal to
      *
      * <blockquote>
-     *     (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
+     *     (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     *     (<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
      *     (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
      *
@@ -1628,7 +1635,8 @@ public interface RankMorphology extends Morphology {
      *
      * <blockquote>(<i>S</i>(<i>r</i><sub>2</sub>)&minus;<i>S</i>(<i>r</i><sub>1</sub>)) /
      * ((<i>r</i><sub>2</sub>&minus;<i>r</i><sub>1</sub>)*&sigma;) = <i>S</i>(<i>N</i>) / (<i>N</i>*&sigma;) =
-     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
+     * (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>M</i></sub>
+     * (<i>j</i>+0.5)*<b>b</b>[<i>j</i>])
      * / (<i>N</i>*&sigma;)
      * </blockquote>
      *
@@ -1639,7 +1647,8 @@ public interface RankMorphology extends Morphology {
      * and this expression is equal to
      *
      * <blockquote>
-     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
+     * (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     * (<i>a<sub>i</sub></i>+0.5)) / (<i>NM</i>) =
      * (<i>v'</i><sub>0</sub>+<i>v'</i><sub>1</sub>+...+<i>v'</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
      * + 0.5 / <i>M</i> &asymp;
      * (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i>
@@ -1654,7 +1663,8 @@ public interface RankMorphology extends Morphology {
      * we have <i>a<sub>i</sub></i> = <i>v<sub>i</sub></i>, and this expression is equal to
      *
      * <blockquote>
-     * (<big>&Sigma;</big>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>(<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
+     * (<span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>i</i>&lt;<i>N</i></sub>
+     * (<i>v<sub>i</sub></i>+0.5)) / <i>N</i> =
      * (<i>v</i><sub>0</sub>+<i>v</i><sub>1</sub>+...+<i>v</i><sub><i>N</i>&minus;1</sub>) / <i>N</i> + 0.5
      * </blockquote>
      *

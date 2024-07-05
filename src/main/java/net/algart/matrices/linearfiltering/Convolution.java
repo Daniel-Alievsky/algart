@@ -130,7 +130,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * of all <i>m</i><sub><i>i</i></sub> matrices:</p>
      *
      * <blockquote>
-     * <big>&sum;</big> <i>w</i><sub><i>i</i></sub><i>m</i><sub><i>i</i></sub>
+     * <span style="font-size:200%">&sum;</span> <i>w</i><sub><i>i</i></sub><i>m</i><sub><i>i</i></sub>
      * </blockquote>
      * <p>
      * The {@link Matrix#elementType() element type}
