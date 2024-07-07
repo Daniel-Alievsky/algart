@@ -572,7 +572,7 @@ public abstract class ArraySorter {
                     //     i >= j,
                     // so
                     //     data[left+2..j] <= base.
-                    // It means that elements are reordered and we can assign K=j
+                    // It means that elements are reordered, and we can assign K=j
 
                     exchanger.swap(j, baseIndex);
                     // Now

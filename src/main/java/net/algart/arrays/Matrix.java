@@ -432,7 +432,7 @@ public interface Matrix<T extends Array> extends Cloneable {
 
         /**
          * Returns <code>true</code> if and only if this instance is a constant continuation mode,
-         * i&#46;e&#46; was created by {@link #getConstantMode(Object)} method or it is one
+         * i&#46;e&#46; was created by {@link #getConstantMode(Object)} method, or it is one
          * of the predefined constants {@link #ZERO_CONSTANT} and {@link #NULL_CONSTANT}.
          *
          * @return whether it is a constant continuation mode.
@@ -463,7 +463,7 @@ public interface Matrix<T extends Array> extends Cloneable {
         /**
          * Returns the continuation constant, used in this mode, if it is a
          * {@link #isConstant() constant continuation mode},
-         * or throws throws {@link NonConstantMatrixContinuationModeException},
+         * or throws {@link NonConstantMatrixContinuationModeException},
          * if it is not a constant continuation mode.
          *
          * <p>If this instance was created by {@link #getConstantMode(Object)} method,
@@ -1228,7 +1228,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>Note that all calculations are performed absolutely precisely, even in a case when
      * the direct calculation according the formulas above leads to overflow (because some
-     * of values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
+     * of the values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
      *
      * @param coordinates all coordinates.
      * @return the pseudo-cyclical linear index of the matrix element with specified coordinates,
@@ -1256,7 +1256,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <i>i<sub>k</sub></i> % <i>d<sub>k</sub></i> :
      * <i>i<sub>k</sub></i> % <i>d<sub>k</sub></i> + <i>d<sub>k</sub></i>
      * </blockquote>
-     * (as in {@link #cyclicIndex(long...)} and
+     * (as in {@link #cyclicIndex(long...)}) and
      * <blockquote>
      * <i>i''<sub>k</sub></i> = <i>d<sub>k</sub></i> == 0 ? 0 :
      * &lfloor;<i>i<sub>k</sub></i> / <i>d<sub>k</sub></i>&rfloor; % 2 == 0 ?
@@ -2198,7 +2198,7 @@ public interface Matrix<T extends Array> extends Cloneable {
 
     /**
      * Returns the hash code of this matrix. The result depends on all elements of the built-in array
-     * (as {@link Array#hashCode()} and all matrix dimensions.
+     * (as {@link Array#hashCode()}) and all matrix dimensions.
      *
      * @return the hash code of this matrix.
      */

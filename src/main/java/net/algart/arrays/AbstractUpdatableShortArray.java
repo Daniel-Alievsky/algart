@@ -64,7 +64,7 @@ public abstract class AbstractUpdatableShortArray extends AbstractShortArray imp
      *                                    AbstractArray#AbstractArray(long, long, Array...)}.
      * @throws NullPointerException     if <code>underlyingArrays</code> argument or some of
      *                                  <code>underlyingArrays[k]</code>
-     *                                  elements is {@code null}.
+     *                                  elements are {@code null}.
      * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
      * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,

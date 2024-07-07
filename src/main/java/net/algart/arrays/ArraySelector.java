@@ -181,7 +181,7 @@ public class ArraySelector {
      * @param comparator    comparator for checking order of elements.
      * @param exchanger     exchanger for exchanging reordered elements.
      * @throws NullPointerException     if <code>comparator</code> or <code>exchanger</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>, or
+     * @throws IllegalArgumentException if <code>from &gt; to</code> or <code>from &lt; 0</code>,
      *                                  or if <code>requiredIndex</code> is outside <code>from..to-1</code> range.
      * @throws ClassCastException       may be thrown while calling methods of <code>comparator</code> or
      *                                  <code>exchanger</code> during the sorting, if the types of the array elements

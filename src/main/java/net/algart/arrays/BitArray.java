@@ -339,7 +339,7 @@ public interface BitArray extends PFixedArray {
 
     /**
      * Returns a reference to the underlying packed bit array, if this AlgART array is its wrapper
-     * (see {@link #isPackedBitArrayWrapper()}, otherwise returns
+     * (see {@link #isPackedBitArrayWrapper()}), otherwise returns
      * <code>{@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)}</code>.
      *
      * <p>In other words, this method returns a packed bit array, identical to this AlgART array

@@ -827,9 +827,9 @@ public interface MemoryModel {
      * result.{@link UpdatableArray#copy(Array) copy}(array); // now the result is the copy of the source array
      * </pre>
      * <p>with the only difference that the copying, maybe, will not be performed immediately.
-     * If you will not modify the source <code>array</code>, the array, returned by this method,
+     * If you do not modify the source <code>array</code>, the array, returned by this method,
      * will work absolutely identically to the <code>result</code> array in the example, listed above.
-     * If you will modify the source <code>array</code> after calling this method,
+     * If you modify the source <code>array</code> after calling this method,
      * the precise content of the returned array will be unspecified.
      *
      * <p>Any changes, performed in the returned array, will never be reflected in the source <code>array</code>.

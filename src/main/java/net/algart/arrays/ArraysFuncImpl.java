@@ -830,7 +830,7 @@ class ArraysFuncImpl {
         boolean quickTableVersion = x.length == 1
             && (x[0] instanceof BitArray
             || x[0] instanceof ByteArray);
-//            || (x[0] instanceof ShortArray && x[0].length() > MIN_LENGTH_OF_SHORT_ARRAYS_FOR_TABLE_OPTIMIZATION));
+//            || (x[0] instanceof ShortArray && x[0].length() > MIN_LENGTH_OF_SHORT_ARRAYS_FOR_TABLE_OPTIMIZATION);
 // - It was a bug! Not a problem to allocate 10000 or 100000 instances of table functions and to "eat" all Java memory
 // Byte tables are more safe: it requires little more that a pure Java object
         if (f == Func.IDENTITY || f == Func.UPDATABLE_IDENTITY) {
