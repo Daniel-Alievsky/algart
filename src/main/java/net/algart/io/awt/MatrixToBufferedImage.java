@@ -220,15 +220,15 @@ public abstract class MatrixToBufferedImage {
 
     /**
      * Returns the color channels order, in which they are written in the source color matrix.
-     * The result is {@link ColorMatrices.ChannelOrder#RGB}
+     * The result is {@link ColorChannelOrder#RGB}
      * in {@link InterleavedRGBToPacked}, {@link InterleavedRGBToInterleaved},
-     * {@link InterleavedRGBToBanded} classes, and {@link ColorMatrices.ChannelOrder#BGR}
+     * {@link InterleavedRGBToBanded} classes, and {@link ColorChannelOrder#BGR}
      * in {@link InterleavedBGRToPacked}, {@link InterleavedBGRToInterleaved}, {@link InterleavedBGRToBanded}
      * classes.
      *
      * @return channel order: RGB or BGR.
      */
-    public abstract ColorMatrices.ChannelOrder channelOrder();
+    public abstract ColorChannelOrder channelOrder();
 
     /**
      * Returns <code>true</code> if the specified element type of AlgART arrays or matrices,
@@ -415,13 +415,13 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.RGB;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.RGB;
         }
 
         @Override
         public String toString() {
-            return "InterleavedRGBToPacked (alwaysAddAlpha=" + alwaysAddAlpha + ")";
+            return "InterleavedRGBToPacked" + (isAlwaysAddAlpha() ? " (always adding alpha)" : "");
         }
 
         @Override
@@ -494,8 +494,8 @@ public abstract class MatrixToBufferedImage {
 
     public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.BGR;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.BGR;
         }
 
         @Override
@@ -511,9 +511,8 @@ public abstract class MatrixToBufferedImage {
 
         @Override
         public String toString() {
-            return "InterleavedBGRToPacked (alwaysAddAlpha=" + isAlwaysAddAlpha() + ")";
+            return "InterleavedBGRToPacked" + (isAlwaysAddAlpha() ? " (always adding alpha)" : "");
         }
-
     }
 
     public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
@@ -523,8 +522,8 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.RGB;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.RGB;
         }
 
         @Override
@@ -552,8 +551,8 @@ public abstract class MatrixToBufferedImage {
 
     public static class InterleavedBGRToInterleaved extends InterleavedRGBToInterleaved {
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.BGR;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.BGR;
         }
 
         @Override
@@ -575,13 +574,13 @@ public abstract class MatrixToBufferedImage {
         }
 
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.RGB;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.RGB;
         }
 
         @Override
         public String toString() {
-            return "InterleavedToBandedRGB (alwaysAddAlpha=" + alwaysAddAlpha + ')';
+            return "InterleavedToBandedRGB" + (isAlwaysAddAlpha() ? " (always adding alpha)" : "");
         }
 
         @Override
@@ -651,8 +650,13 @@ public abstract class MatrixToBufferedImage {
 
     public static class InterleavedBGRToBanded extends InterleavedRGBToBanded {
         @Override
-        public ColorMatrices.ChannelOrder channelOrder() {
-            return ColorMatrices.ChannelOrder.BGR;
+        public ColorChannelOrder channelOrder() {
+            return ColorChannelOrder.BGR;
+        }
+
+        @Override
+        public String toString() {
+            return "InterleavedBGRToBanded" + (isAlwaysAddAlpha() ? " (always adding alpha)" : "");
         }
 
         @Override
@@ -710,12 +714,12 @@ public abstract class MatrixToBufferedImage {
 
         @Override
         public String toString() {
-            return "MonochromeToIndexed ("
+            return "MonochromeToIndexed: "
                     + "baseColor0=(" + JArrays.toString(
                     baseColor0, Locale.US, "0x%X", ",", 100)
-                    + "(, baseColor255=(" + JArrays.toString(
+                    + "), baseColor255=(" + JArrays.toString(
                     baseColor255, Locale.US, "0x%X", ",", 100)
-                    + "))";
+                    + ")";
         }
 
         @Override

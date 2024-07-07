@@ -62,7 +62,7 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         final Path fileName = file.getFileName();
         if (fileName == null) {
-            throw new IllegalArgumentException("Path without file name is not allowed: " + file);
+            throw new IllegalArgumentException("Path without file name is not allowed: \"" + file + "\"");
         }
         return extension(fileName.toString());
     }
@@ -81,7 +81,7 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         final Path fileName = file.getFileName();
         if (fileName == null) {
-            throw new IllegalArgumentException("Path without file name is not allowed: " + file);
+            throw new IllegalArgumentException("Path without file name is not allowed: \"" + file + "\"");
         }
         return extension(fileName.toString(), defaultExtension);
     }
@@ -126,7 +126,7 @@ public class MatrixIO {
     public static String extension(String fileName) {
         final String extension = extension(fileName, null);
         if (extension == null) {
-            throw new IllegalArgumentException("File name without extension is not allowed: " + fileName);
+            throw new IllegalArgumentException("File name without extension is not allowed: \"" + fileName + "\"");
         }
         return extension;
     }
