@@ -57,21 +57,21 @@ import java.util.Objects;
  * <ol>
  * <li>direct transform is
  * <i>H<sub>k</sub></i> =
- * <span style="font-size:200%">&sum;</span><sub><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub>
  * <i>x<sub>n</sub></i>&nbsp;cas(2<i>kn</i>&pi;/<i>N</i>),
  * inverse transform is
  * <i>x<sub>n</sub></i> = <i>N</i><sup>&nbsp;&minus;1</sup>
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub>
  * <i>H<sub>k</sub></i>&nbsp;cas(2<i>kn</i>&pi;/<i>N</i>).
  * </li>
  *
  * <li>direct transform is
  * <i>H<sub>k</sub></i> = <i>N</i><sup>&nbsp;&minus;1</sup>
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub>
  * <i>x<sub>n</sub></i>&nbsp;cas(2<i>kn</i>&pi;/<i>N</i>),
  * inverse transform is
  * <i>x<sub>n</sub></i> =
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>k</i>&lt;<i>N</i>)</sub>
  * <i>H<sub>k</sub></i>&nbsp;cas(2<i>kn</i>&pi;/<i>N</i>).
  * </li>
  * </ol>

@@ -208,7 +208,7 @@ import java.util.Objects;
  * </ul>
  *
  * <p>then you either must pass different buffer matrices in different threads,
- * or you must synchronize usage of this class and <b>all</b> accesses to these matrices from any threads.</p>
+ * or you must synchronize usage of this class and <b>all</b> accesses to these matrices from any threads.
  * In other case, the content of buffer matrices will be unspecified and behavior of the scanning algorithm
  * will be undefined.</p>
  *

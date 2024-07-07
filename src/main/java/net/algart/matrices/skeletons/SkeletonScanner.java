@@ -309,7 +309,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * <h2 id="example">Example of usage</h2>
  *
  * <p>Below is a complete example of code, using a remembering skeleton scanner <code>ss</code> for breadth-first
- * traversal of the nonoriented graph, formed by the skeleton.</p>
+ * traversal of the non-oriented graph, formed by the skeleton.</p>
  *
  * <pre>
  * while (ss.{@link #nextNodeOrBranch()}) {
@@ -336,7 +336,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  *     if (ss.{@link #isNodeOrFreeBranchEnd()} // necessary check: it is also possible an attached or illegal pixel
  *         &amp;&amp; !ss.{@link #pixelVisitRemembered()}) // for correct processing degenerated 0-pixel branches
  *     {
- *         Queue<Long> queue = new LinkedList<Long>();
+ *         Queue&lt;Long&gt; queue = new LinkedList&lt;Long&gt;();
  *         ss.{@link #visit()};
  *         queue.add(ss.{@link #currentIndexInArray()});
  *         while (!queue.isEmpty()) {

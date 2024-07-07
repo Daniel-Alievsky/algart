@@ -40,7 +40,7 @@ public abstract class ConstantFunc implements Func {
     }
 
     /**
-     * Returns an instance of this class that always returns the passed constant <code>c</code>.</p>
+     * Returns an instance of this class that always returns the passed constant <code>c</code>.
      *
      * @param c the constant returned by {@link #get(double...)} method.
      * @return an instance of this class.</p>

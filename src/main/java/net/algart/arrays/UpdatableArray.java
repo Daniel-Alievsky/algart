@@ -38,7 +38,7 @@ package net.algart.arrays;
  * {@link UpdatableByteArray}, {@link UpdatableShortArray},
  * {@link UpdatableIntArray}, {@link UpdatableLongArray},
  * {@link UpdatableFloatArray}, {@link UpdatableDoubleArray}
- * subinterfaces.</p>
+ * subinterfaces.
  * In other case, this array <b>must</b> implement {@link UpdatableObjectArray} subinterface.</p>
  *
  * <p>Updatable arrays, implementing this interface,

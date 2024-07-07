@@ -30,7 +30,7 @@ import java.util.Set;
 /**
  * Data file model: the factory allowing to create and remove some file-like objects
  * ("{@link DataFile data files}").
- * Used by the {@link LargeMemoryModel large memory model}.</p>
+ * Used by the {@link LargeMemoryModel large memory model}.
  *
  * <p>There are the following standard implementations of this interface:</p>
  *

@@ -43,7 +43,7 @@ public enum ConnectivityType {
      * <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub> and
      * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
      * are <i>neighbours</i> and, so, connected with each other
-     * if one from the coordinates differs by 1, but all other coordinates are equal:</p>
+     * if one from the coordinates differs by 1, but all other coordinates are equal:
      *
      * <blockquote><span style="font-size:200%">&sum;</span>
      * |<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1
@@ -64,7 +64,7 @@ public enum ConnectivityType {
      * <i>i</i><sub>0</sub>, <i>i</i><sub>1</sub>, ..., <i>i</i><sub><i>n</i>-1</sub> and
      * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
      * are <i>neighbours</i> and, so, connected with each other
-     * if several (at least one) from their coordinates differ by 1 and all other coordinates are equal:</p>
+     * if several (at least one) from their coordinates differ by 1 and all other coordinates are equal:
      *
      * <blockquote>max&nbsp;(|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|)=1</blockquote>
      *

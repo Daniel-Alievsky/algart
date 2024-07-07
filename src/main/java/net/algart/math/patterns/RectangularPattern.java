@@ -56,7 +56,7 @@ import net.algart.math.Point;
  * for all <i>j</i>=0,1,...,<i>n</i>&minus;1,
  * </blockquote>
  *
- * where <i>o<sub>j</sub></i> are coordinates of the {@link #originOfGrid() origin of the grid},
+ * <p>where <i>o<sub>j</sub></i> are coordinates of the {@link #originOfGrid() origin of the grid},
  * <i>d<sub>j</sub></i> are {@link #stepsOfGrid() steps of the grid},
  * and the integer numbers <i>min</i><sub><i>j</i></sub> / <i>max</i><sub><i>j</i></sub> are
  * coordinates of two integer points, specified while creating the pattern.

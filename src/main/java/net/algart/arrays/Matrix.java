@@ -116,7 +116,7 @@ import java.util.Objects;
  * <i>i<sub>1</sub>d<sub>0</sub></i> + <i>i<sub>0</sub></i>),
  * where <i>i<sub>0</sub></i>, <i>i<sub>2</sub></i>, ..., <i>i<sub>n-1</sub></i>
  * are the coordinates passed to the method, and <i>d<sub>k</sub></i> is the dimension <code>#<i>k</i></code>
- * or 1 if <code><i>k</i>&gt;={@link #dimCount()}</code>.</p>
+ * or 1 if <code><i>k</i>&gt;={@link #dimCount()}</code>.
  * In other words, it is supposed that all dimensions "after" the actual number of dimensions
  * are always equal to 1. For example, the one-dimensional matrix with <code>L</code> elements
  * can be interpreted as 2-dimensional <code>Lx1</code> matrix,

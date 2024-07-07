@@ -45,7 +45,7 @@ package net.algart.arrays;
  * {@link IterativeArrayProcessor}&lt;{@link UpdatablePArray}&gt; imp =
  * &#32;   <i>some_generation_method</i>({@link ArrayContext
  * <i>array_context</i>}, <i>processed_array</i>, <i>algorithm_settings)</i>;
- * {@link UpdatablePArray} result = imp.{@link #process()}</i>;
+ * {@link UpdatablePArray} result = imp.{@link #process()};
  * imp.{@link #freeResources(ArrayContext) freeResources}(null); // not necessary usually
  * </pre>
  *

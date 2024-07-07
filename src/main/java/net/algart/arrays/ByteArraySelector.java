@@ -145,12 +145,12 @@ public class ByteArraySelector {
      * <p>For example, <code>percentileLevels={0.0, 0.5, 1.0}</code> requests to find the minimum, median and maximum
      * and return them in <code>results[0]</code>, <code>results[1]</code>, <code>results[2]</code>.
      *
-     * <p>This method is equivalent to
+     * <p>This method is equivalent to</p>
      * <pre>
      *     {@link #select(byte[], int[], byte[], int)
      * select}(results, percentileIndexes, array, length)
      * </pre>
-     * call, where <code>percentileIndexes[k]={@link ArraySelector#percentileIndex(double, int)
+     * <p>call, where <code>percentileIndexes[k]={@link ArraySelector#percentileIndex(double, int)
      * ArraySelector.percentileIndex}(percentileLevels[k], length)</code>
      * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *

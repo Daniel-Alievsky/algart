@@ -37,7 +37,7 @@ import net.algart.math.*;
  * the origin of coordinates. However, please note that the number of points <i>is not limited
  * by any value</i>. In particular, it can be greater than <code>Long.MAX_VALUE</code>.
  * For example, it may occur for {@link Patterns#newRectangularUniformGridPattern(Point, double[], IRange...)
- * rectangular <i>n</i>-dimensional patterns</i>}.</p>
+ * rectangular <i>n</i>-dimensional patterns}.</p>
  *
  * <p>Patterns are the arguments of many image processing filters.
  * For example, a pattern may specify the form and sizes of the aperture for a linear filter.</p>
@@ -244,8 +244,8 @@ import net.algart.math.*;
  * However, such patterns can be used indirectly, usually via their decompositions into more simple patterns
  * by {@link #minkowskiDecomposition(int)} and {@link #unionDecomposition(int)} methods.
  * For example, it is possible to perform morphological dilation filter over an image
- * (see <noindex><a href="http://en.wikipedia.org/wiki/Dilation_%28morphology%29">"Dilation" article
- * in Wikipedia</a></noindex>)
+ * (see <a href="http://en.wikipedia.org/wiki/Dilation_%28morphology%29">"Dilation" article
+ * in Wikipedia</a>)
  * with a very large pattern, created by {@link Patterns#newMinkowskiSum(java.util.Collection)}
  * and consisting of millions or milliards points, via sequential dilations with the Minkowski summands
  * of such a pattern, extracted by {@link #minkowskiDecomposition(int)} call.</p>
@@ -301,8 +301,8 @@ import net.algart.math.*;
  * such mathematical point set also fulfils both restrictions 1 and 2.</p>
  *
  * <p>The proof of this is complex enough. The paper
- * <noindex><a href="http://algart.net/ru/numeric_algorithms/rounding_theorem.html"
- * >http://algart.net/ru/numeric_algorithms/rounding_theorem.html</a></noindex> (in Russian)
+ * <a href="http://algart.net/ru/numeric_algorithms/rounding_theorem.html"
+ * >http://algart.net/ru/numeric_algorithms/rounding_theorem.html</a> (in Russian)
  * contains such proof: see the theorem of rounding and the theorem of subtraction in this paper.</p>
  *
  * <p>It means that you can freely use {@link #round()} method for any pattern:
@@ -436,8 +436,8 @@ public interface Pattern {
      * <code>Math.abs(k)&lt;=2*{@link #MAX_COORDINATE}</code>, the following equality is true:
      * <code>(long)(double)k==k</code>.
      *
-     * <p>See also the paper <noindex><a href="http://algart.net/ru/numeric_algorithms/rounding_theorem.html"
-     * >http://algart.net/ru/numeric_algorithms/rounding_theorem.html</a></noindex> (in Russian)
+     * <p>See also the paper <a href="http://algart.net/ru/numeric_algorithms/rounding_theorem.html"
+     * >http://algart.net/ru/numeric_algorithms/rounding_theorem.html</a> (in Russian)
      * about rounding <code>double</code> values in range
      * <code>&minus;{@link #MAX_COORDINATE}&le;<i>x</i>&le;{@link #MAX_COORDINATE}</code>.
      */
