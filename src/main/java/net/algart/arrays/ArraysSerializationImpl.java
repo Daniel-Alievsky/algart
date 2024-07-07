@@ -53,8 +53,7 @@ class ArraysSerializationImpl {
         if (array instanceof ByteArray) {
             assert requiredLength == array.length();
             array.getData(0, bytes, 0, (int) requiredLength);
-        } else if (array instanceof BitArray) {
-            BitArray a = (BitArray) array;
+        } else if (array instanceof BitArray a) {
             final long packedLength = PackedBitArrays.packedLength(a.length());
             assert packedLength <= Integer.MAX_VALUE; // because requiredLength <= Integer.MAX_VALUE
             assert packedLength * 8 >= requiredLength;
@@ -216,8 +215,7 @@ class ArraysSerializationImpl {
         if (array instanceof UpdatableByteArray) {
             assert requiredLength == array.length();
             array.setData(0, bytes, 0, (int) requiredLength);
-        } else if (array instanceof UpdatableBitArray) {
-            UpdatableBitArray a = (UpdatableBitArray) array;
+        } else if (array instanceof UpdatableBitArray a) {
             final long packedLength = PackedBitArrays.packedLength(a.length());
             assert packedLength <= Integer.MAX_VALUE; // because requiredLength <= bytes.length <= Integer.MAX_VALUE
             assert packedLength * 8 >= requiredLength;

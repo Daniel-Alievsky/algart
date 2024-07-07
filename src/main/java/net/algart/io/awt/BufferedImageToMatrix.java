@@ -269,7 +269,7 @@ public abstract class BufferedImageToMatrix {
                 return;
             }
             // Default branch, used by this class without special settings.
-            // Bu7t in a case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
+            // But in a case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
             // or incompatibility of color components count and samples count (RGB, but indexed 1-band data),
             // or unsupported element type,
             // we don't use it and prefer more stable "simplest" algorithm below.
@@ -423,7 +423,6 @@ public abstract class BufferedImageToMatrix {
                 default:
                     throw new AssertionError("Illegal bandCount = " + bandCount);
             }
-            return;
         }
 
         private boolean isSupportedStructure(BufferedImage bufferedImage) {

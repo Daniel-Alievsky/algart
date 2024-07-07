@@ -283,10 +283,9 @@ public interface DataFile {
          *            contains the same starting position and length.
          */
         public boolean equals(Object obj) {
-            if (!(obj instanceof Range)) {
+            if (!(obj instanceof Range r)) {
                 return false;
             }
-            Range r = (Range)obj;
             return r.position == position && r.length == length;
         }
     }

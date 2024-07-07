@@ -744,10 +744,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
         @Override
         public boolean equals(Object o) {
-            if (!(o instanceof RangeWeakReference<?>)) {
+            if (!(o instanceof RangeWeakReference<?> rwr)) {
                 return false;
             }
-            RangeWeakReference<?> rwr = (RangeWeakReference<?>)o;
             return fileIndex == rwr.fileIndex && key.equals(rwr.key);
             // "==" here (instead of "equals") is not a bug:
             // different files always have different ranges, even for the same numeric value of fileIndex

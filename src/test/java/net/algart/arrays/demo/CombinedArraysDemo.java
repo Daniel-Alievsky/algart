@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.Locale;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+
 import net.algart.arrays.*;
 import net.algart.math.functions.LinearFunc;
 
@@ -43,6 +44,7 @@ public class CombinedArraysDemo {
         int x;
         int y;
         int r;
+
         Circle() {
         }
 
@@ -66,9 +68,9 @@ public class CombinedArraysDemo {
 
         // must be implemented for correct work of equals method in NCopies
         public boolean equals(Object obj) {
-            if (!(obj instanceof Circle))
+            if (!(obj instanceof Circle o)) {
                 return false;
-            Circle o = (Circle)obj;
+            }
             return o.x == x && o.y == y && o.r == r;
         }
     }
@@ -85,31 +87,31 @@ public class CombinedArraysDemo {
         }
 
         public void getInPlace(long index, Circle resultValue, Array[] storage) {
-            resultValue.x = ((IntArray)storage[0]).getInt(index);
-            resultValue.y = ((IntArray)storage[1]).getInt(index);
-            resultValue.r = ((IntArray)storage[2]).getInt(index);
+            resultValue.x = ((IntArray) storage[0]).getInt(index);
+            resultValue.y = ((IntArray) storage[1]).getInt(index);
+            resultValue.r = ((IntArray) storage[2]).getInt(index);
         }
 
         public Circle get(long index, Array[] storage) {
             Circle circ = new Circle();
-            circ.x = ((IntArray)storage[0]).getInt(index);
-            circ.y = ((IntArray)storage[1]).getInt(index);
-            circ.r = ((IntArray)storage[2]).getInt(index);
+            circ.x = ((IntArray) storage[0]).getInt(index);
+            circ.y = ((IntArray) storage[1]).getInt(index);
+            circ.r = ((IntArray) storage[2]).getInt(index);
             return circ;
         }
 
         public void set(long index, Circle value, UpdatableArray[] storage) {
             Circle circ = value == null ? new Circle() : value;
-            ((UpdatableIntArray)storage[0]).setInt(index, circ.x);
-            ((UpdatableIntArray)storage[1]).setInt(index, circ.y);
-            ((UpdatableIntArray)storage[2]).setInt(index, circ.r);
+            ((UpdatableIntArray) storage[0]).setInt(index, circ.x);
+            ((UpdatableIntArray) storage[1]).setInt(index, circ.y);
+            ((UpdatableIntArray) storage[2]).setInt(index, circ.r);
         }
 
         public UpdatableArray[] allocateStorage(long length, boolean unresizable) {
-            return new UpdatableArray[] {
-                unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length),
-                unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length),
-                unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length)
+            return new UpdatableArray[]{
+                    unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length),
+                    unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length),
+                    unresizable ? mm.newUnresizableIntArray(length) : mm.newIntArray(length)
             };
         }
 
@@ -130,29 +132,29 @@ public class CombinedArraysDemo {
         }
 
         public void getInPlace(long index, Circle resultValue, Array[] storage) {
-            resultValue.x = ((IntArray)storage[0]).getInt(3 * index);
-            resultValue.y = ((IntArray)storage[0]).getInt(3 * index + 1);
-            resultValue.r = ((IntArray)storage[0]).getInt(3 * index + 2);
+            resultValue.x = ((IntArray) storage[0]).getInt(3 * index);
+            resultValue.y = ((IntArray) storage[0]).getInt(3 * index + 1);
+            resultValue.r = ((IntArray) storage[0]).getInt(3 * index + 2);
         }
 
         public Circle get(long index, Array[] storage) {
             Circle circ = new Circle();
-            circ.x = ((IntArray)storage[0]).getInt(3 * index);
-            circ.y = ((IntArray)storage[0]).getInt(3 * index + 1);
-            circ.r = ((IntArray)storage[0]).getInt(3 * index + 2);
+            circ.x = ((IntArray) storage[0]).getInt(3 * index);
+            circ.y = ((IntArray) storage[0]).getInt(3 * index + 1);
+            circ.r = ((IntArray) storage[0]).getInt(3 * index + 2);
             return circ;
         }
 
-        public void set(long index, Circle  value, UpdatableArray[] storage) {
+        public void set(long index, Circle value, UpdatableArray[] storage) {
             Circle circ = value == null ? new Circle() : value;
-            ((UpdatableIntArray)storage[0]).setInt(3 * index, circ.x);
-            ((UpdatableIntArray)storage[0]).setInt(3 * index + 1, circ.y);
-            ((UpdatableIntArray)storage[0]).setInt(3 * index + 2, circ.r);
+            ((UpdatableIntArray) storage[0]).setInt(3 * index, circ.x);
+            ((UpdatableIntArray) storage[0]).setInt(3 * index + 1, circ.y);
+            ((UpdatableIntArray) storage[0]).setInt(3 * index + 2, circ.r);
         }
 
         public UpdatableArray[] allocateStorage(long length, boolean unresizable) {
-            return new UpdatableArray[] {
-                unresizable ? mm.newUnresizableIntArray(3 * length) : mm.newIntArray(3 * length)};
+            return new UpdatableArray[]{
+                    unresizable ? mm.newUnresizableIntArray(3 * length) : mm.newIntArray(3 * length)};
         }
 
         public int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage) {
@@ -166,11 +168,12 @@ public class CombinedArraysDemo {
         }
 
         public UpdatableArray[] allocateStorage(long length, boolean unresizable) {
-            if (!unresizable)
+            if (!unresizable) {
                 throw new UnsupportedOperationException("Packed combiner may be used with unresizable arrays only");
+            }
             return new UpdatableArray[]{
-                Arrays.asUpdatableFuncArray(true, LinearFunc.getUpdatableInstance(-1000, 1),
-                    UpdatableIntArray.class, mm.newUnresizableShortArray(3 * length))};
+                    Arrays.asUpdatableFuncArray(true, LinearFunc.getUpdatableInstance(-1000, 1),
+                            UpdatableIntArray.class, mm.newUnresizableShortArray(3 * length))};
         }
 
         public int numbersOfElementsPerOneCombinedElement(int indexOfArrayInStorage) {
@@ -187,8 +190,8 @@ public class CombinedArraysDemo {
 
         public MyCombinerBuffer(MemoryModel mm, boolean direct) {
             super(Circle.class,
-                direct ? ByteBuffer.allocateDirect(12) : ByteBuffer.allocate(12),
-                mm);
+                    direct ? ByteBuffer.allocateDirect(12) : ByteBuffer.allocate(12),
+                    mm);
             this.ib = workStorage.asIntBuffer();
         }
 
@@ -221,8 +224,8 @@ public class CombinedArraysDemo {
     public static void main(String[] args) {
         if (args.length < 2) {
             System.out.println("Usage: " + CombinedArraysDemo.class.getName()
-                + " ArrayList|CombinedMulti[AsList]|CombinedSingle[AsList]|CombinedPacked|CombinedByteBuffer[AsList]|JavaArray"
-                + " arrayLength [-useArrayGet] [-direct]");
+                    + " ArrayList|CombinedMulti[AsList]|CombinedSingle[AsList]|CombinedPacked|CombinedByteBuffer[AsList]|JavaArray"
+                    + " arrayLength [-useArrayGet] [-direct]");
             return;
         }
         DemoUtils.initializeClass();
@@ -247,18 +250,18 @@ public class CombinedArraysDemo {
             mode = 3;
         } else if (args[0].equalsIgnoreCase("CombinedByteBuffer")) {
             System.out.println("Points are stored in a combined array based on 1 ByteArray "
-                + "(via " + (direct ? "direct" : "heap") + " ByteBuffer)");
+                    + "(via " + (direct ? "direct" : "heap") + " ByteBuffer)");
             mode = 4;
         } else if (args[0].equalsIgnoreCase("CombinedMultiAsList")) {
             System.out.println("Points are stored in a list view of combined array based on 3 "
-                + "\"parallel\" IntArray");
+                    + "\"parallel\" IntArray");
             mode = 5;
         } else if (args[0].equalsIgnoreCase("CombinedSingleAsList")) {
             System.out.println("Points are stored in a list view of combined array based on 1 IntArray");
             mode = 6;
         } else if (args[0].equalsIgnoreCase("CombinedByteBufferAsList")) {
             System.out.println("Points are stored in a list view of combined array based on 1 ByteArray "
-                + "(via " + (direct ? "direct" : "heap") + " ByteBuffer)");
+                    + "(via " + (direct ? "direct" : "heap") + " ByteBuffer)");
             mode = 7;
         } else if (args[0].equalsIgnoreCase("JavaArray")) {
             System.out.println("Points are stored in Java int[] array (difficult Java-code)");
@@ -276,33 +279,34 @@ public class CombinedArraysDemo {
 
             long t1 = System.nanoTime();
             // Creation
-            switch(mode) {
+            switch (mode) {
                 case 0:
                     list = new ArrayList<Circle>(n);
-                    for (int k = 0; k < n; k++)
+                    for (int k = 0; k < n; k++) {
                         list.add(new Circle());
+                    }
                     break;
                 case 1:
                 case 5:
-                    a = (UpdatableObjectInPlaceArray<Circle>)CombinedMemoryModel.<Circle>getInstance(
-                        new MyCombinerMulti(Arrays.SystemSettings.globalMemoryModel()))
-                        .newUnresizableObjectArray(Circle.class, n);
+                    a = (UpdatableObjectInPlaceArray<Circle>) CombinedMemoryModel.<Circle>getInstance(
+                                    new MyCombinerMulti(Arrays.SystemSettings.globalMemoryModel()))
+                            .newUnresizableObjectArray(Circle.class, n);
                     break;
                 case 2:
                 case 6:
-                    a = (UpdatableObjectInPlaceArray<Circle>)CombinedMemoryModel.<Circle>getInstance(
-                        new MyCombinerSingle(Arrays.SystemSettings.globalMemoryModel()))
-                        .newUnresizableObjectArray(Circle.class, n);
+                    a = (UpdatableObjectInPlaceArray<Circle>) CombinedMemoryModel.<Circle>getInstance(
+                                    new MyCombinerSingle(Arrays.SystemSettings.globalMemoryModel()))
+                            .newUnresizableObjectArray(Circle.class, n);
                     break;
                 case 3:
-                    a = (UpdatableObjectInPlaceArray<Circle>)CombinedMemoryModel.<Circle>getInstance(
-                        new MyCombinerPacked(Arrays.SystemSettings.globalMemoryModel()))
-                        .newUnresizableObjectArray(Circle.class, n);
+                    a = (UpdatableObjectInPlaceArray<Circle>) CombinedMemoryModel.<Circle>getInstance(
+                                    new MyCombinerPacked(Arrays.SystemSettings.globalMemoryModel()))
+                            .newUnresizableObjectArray(Circle.class, n);
                     break;
                 case 4:
                 case 7:
-                    a = (UpdatableObjectInPlaceArray<Circle>)CombinedMemoryModel.<Circle>getInstance(
-                        new MyCombinerBuffer(direct)).newUnresizableObjectArray(Circle.class, n);
+                    a = (UpdatableObjectInPlaceArray<Circle>) CombinedMemoryModel.<Circle>getInstance(
+                            new MyCombinerBuffer(direct)).newUnresizableObjectArray(Circle.class, n);
                     break;
                 case 8:
                     ja = new int[3 * n];
@@ -320,8 +324,9 @@ public class CombinedArraysDemo {
                     circ.x = 2 * k;
                     circ.y = 2 * k;
                     circ.r = n - k;
-                    if (a != null)
+                    if (a != null) {
                         list.set(k, circ);
+                    }
                 }
             } else if (a != null) {
                 Circle circ = new Circle();
@@ -377,24 +382,24 @@ public class CombinedArraysDemo {
             } else {
                 final int[] arr = ja;
                 ArraySorter.getQuickSorter().sort(0, n,
-                    new ArrayComparator() {
-                        public boolean less(long i, long j) {
-                            return arr[3 * (int) i] < arr[3 * (int) j];
-                        }
-                    },
-                    new ArrayExchanger() {
-                        public void swap(long i, long j) {
-                            int temp = arr[3 * (int) i];
-                            arr[3 * (int) i] = arr[3 * (int) j];
-                            arr[3 * (int) j] = temp;
-                            temp = arr[3 * (int) i + 1];
-                            arr[3 * (int) i + 1] = arr[3 * (int) j + 1];
-                            arr[3 * (int) j + 1] = temp;
-                            temp = arr[3 * (int) i + 2];
-                            arr[3 * (int) i + 2] = arr[3 * (int) j + 2];
-                            arr[3 * (int) j + 2] = temp;
-                        }
-                    });
+                        new ArrayComparator() {
+                            public boolean less(long i, long j) {
+                                return arr[3 * (int) i] < arr[3 * (int) j];
+                            }
+                        },
+                        new ArrayExchanger() {
+                            public void swap(long i, long j) {
+                                int temp = arr[3 * (int) i];
+                                arr[3 * (int) i] = arr[3 * (int) j];
+                                arr[3 * (int) j] = temp;
+                                temp = arr[3 * (int) i + 1];
+                                arr[3 * (int) i + 1] = arr[3 * (int) j + 1];
+                                arr[3 * (int) j + 1] = temp;
+                                temp = arr[3 * (int) i + 2];
+                                arr[3 * (int) i + 2] = arr[3 * (int) j + 2];
+                                arr[3 * (int) j + 2] = temp;
+                            }
+                        });
             }
 
             long t5 = System.nanoTime();
@@ -407,8 +412,9 @@ public class CombinedArraysDemo {
             } else {
                 StringBuffer sb = new StringBuffer();
                 for (int k = 0, disp = 0, max = n / 10; k < max; k++) {
-                    if (k > 0)
+                    if (k > 0) {
                         sb.append("; ");
+                    }
                     sb.append(ja[disp++]).append(", ");
                     sb.append(ja[disp++]).append(", r=");
                     sb.append(ja[disp++]);
@@ -417,14 +423,15 @@ public class CombinedArraysDemo {
             }
 
             long t6 = System.nanoTime();
-            if (s.length() > 100)
+            if (s.length() > 100) {
                 s = s.substring(0, 100) + "...";
+            }
             if (a != null) {
                 System.out.println("Created combined array: " + a);
                 String[] stor = CombinedMemoryModel.getStorageToStrings(a);
                 System.out.printf(Locale.US, "Storage: %n    "
-                    + Arrays.toString(SimpleMemoryModel.asUpdatableArray(stor), "%n    ", 10000)
-                    + "%n");
+                        + Arrays.toString(SimpleMemoryModel.asUpdatableArray(stor), "%n    ", 10000)
+                        + "%n");
             }
             list = null;
             a = null;
@@ -433,19 +440,19 @@ public class CombinedArraysDemo {
             long t7 = System.nanoTime();
 
             System.out.printf(Locale.US, "Creating circles:             %.3f ms, %.3f ns/element%n",
-                (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / n);
+                    (t2 - t1) * 1e-6, (t2 - t1) * 1.0 / n);
             System.out.printf(Locale.US, "Filling by some circles:      %.3f ms, %.3f ns/element%n",
-                (t3 - t2) * 1e-6, (t3 - t2) * 1.0 / n);
+                    (t3 - t2) * 1e-6, (t3 - t2) * 1.0 / n);
             System.out.printf(Locale.US, "    (%.6f MB used, %.3f bytes/element)%n",
-                currentMemory / 1048576.0, currentMemory * 1.0 / n);
+                    currentMemory / 1048576.0, currentMemory * 1.0 / n);
             System.out.printf(Locale.US, "Loading all data:             %.3f ms, %.3f ns/element%n",
-                (t4 - t3) * 1e-6, (t4 - t3) * 1.0 / n);
+                    (t4 - t3) * 1e-6, (t4 - t3) * 1.0 / n);
             System.out.printf(Locale.US, "    (Calculated sum: " + sum
-                + (useGet ? "; get method was used" : "") + ")%n");
+                    + (useGet ? "; get method was used" : "") + ")%n");
             System.out.printf(Locale.US, "Sorting by decreasing r:      %.3f ms, %.3f ns/element%n",
-                (t5 - t4) * 1e-6, (t5 - t4) * 1.0 / n);
+                    (t5 - t4) * 1e-6, (t5 - t4) * 1.0 / n);
             System.out.printf(Locale.US, "Making string (1/10 of all):  %.3f ms, %.3f ns/element%n",
-                (t6 - t5) * 1e-6, (t6 - t6) * 1.0 / n);
+                    (t6 - t5) * 1e-6, (t6 - t6) * 1.0 / n);
             System.out.println("    " + s);
             System.out.printf(Locale.US, "System.gc():                  %.3f ms%n%n", (t7 - t6) * 1e-6);
         }

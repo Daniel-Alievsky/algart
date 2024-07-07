@@ -180,11 +180,13 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @throws UnsupportedOperationException if this instance is an array of non-primitive elements.
      */
     public boolean isZeroFilled() {
-        if (!(this instanceof PArray))
+        if (!(this instanceof PArray)) {
             throw new UnsupportedOperationException("isZeroFilled() must not be called for non-primitive arrays)");
+        }
         long n = length();
-        if (n == 0)
+        if (n == 0) {
             return true;
+        }
         Object ja = Arrays.javaArrayInternal(this);
         if (ja != null) {
             int offset = Arrays.javaArrayOffsetInternal(this);
@@ -194,8 +196,9 @@ public abstract class AbstractArray implements Array, Cloneable {
             try {
                 Arrays.enableCaching(buf);
                 for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                    if (!PackedBitArrays.areBitsZero(buf.data(), buf.fromIndex(), buf.count()))
+                    if (!PackedBitArrays.areBitsZero(buf.data(), buf.fromIndex(), buf.count())) {
                         return false;
+                    }
                 }
             } finally {
                 Arrays.dispose(buf);
@@ -206,8 +209,9 @@ public abstract class AbstractArray implements Array, Cloneable {
             try {
                 Arrays.enableCaching(buf);
                 for (buf.map(0); buf.hasData(); buf.mapNext()) {
-                    if (!JArrays.areElementsZero(buf.data(), buf.from(), buf.cnt()))
+                    if (!JArrays.areElementsZero(buf.data(), buf.from(), buf.cnt())) {
                         return false;
+                    }
                 }
             } finally {
                 Arrays.dispose(buf);
@@ -547,8 +551,9 @@ public abstract class AbstractArray implements Array, Cloneable {
      */
     public static int hashCode(Array array) {
         long n = array.length();
-        if (n == 0)
+        if (n == 0) {
             return 0;
+        }
         Object ja = Arrays.javaArrayInternal(array);
         if (ja != null) {
             int offset = Arrays.javaArrayOffsetInternal(array);
@@ -594,9 +599,9 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @return <code>true</code> if <code>obj2</code> is an array and the specified arrays are equal.
      */
     public static boolean equals(Array obj1, Object obj2) {
-        if (!(obj2 instanceof Array))
+        if (!(obj2 instanceof Array a)) {
             return false;
-        Array a = (Array) obj2;
+        }
         long n = obj1.length();
         if (a.length() != n) {
             return false;
@@ -629,8 +634,9 @@ public abstract class AbstractArray implements Array, Cloneable {
                 for (; buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
                     assert buf1.count() == buf2.count();
                     if (!PackedBitArrays.bitEquals(buf1.data(), buf1.fromIndex(),
-                            buf2.data(), buf2.fromIndex(), buf1.count()))
+                            buf2.data(), buf2.fromIndex(), buf1.count())) {
                         return false;
+                    }
                 }
             } finally {
                 Arrays.dispose(buf1);
@@ -649,8 +655,9 @@ public abstract class AbstractArray implements Array, Cloneable {
                 buf2.map(0);
                 for (; buf1.hasData(); buf1.mapNext(), buf2.mapNext()) {
                     assert buf1.count() == buf2.count();
-                    if (!JArrays.arrayEquals(buf1.data(), buf1.from(), buf2.data(), buf2.from(), buf1.cnt()))
+                    if (!JArrays.arrayEquals(buf1.data(), buf1.from(), buf2.data(), buf2.from(), buf1.cnt())) {
                         return false;
+                    }
                 }
             } finally {
                 Arrays.dispose(buf1);
@@ -712,9 +719,10 @@ public abstract class AbstractArray implements Array, Cloneable {
     public static void checkCopyArguments(UpdatableArray thisArray, Array src) {
         Objects.requireNonNull(thisArray, "Null thisArray argument");
         Objects.requireNonNull(src, "Null src argument");
-        if (!thisArray.elementType().isAssignableFrom(src.elementType()))
+        if (!thisArray.elementType().isAssignableFrom(src.elementType())) {
             throw new IllegalArgumentException("Element types mismatch ("
                     + thisArray.elementType() + " cannot be assigned from " + src.elementType() + ")");
+        }
     }
 
     /**
@@ -733,9 +741,10 @@ public abstract class AbstractArray implements Array, Cloneable {
     public static void checkSwapArguments(UpdatableArray thisArray, UpdatableArray another) {
         Objects.requireNonNull(thisArray, "Null thisArray argument");
         Objects.requireNonNull(another, "Null another argument");
-        if (thisArray.elementType() != another.elementType())
+        if (thisArray.elementType() != another.elementType()) {
             throw new IllegalArgumentException("Element types mismatch ("
                     + thisArray.elementType() + " and " + another.elementType() + ")");
+        }
     }
 
     /**
@@ -775,13 +784,16 @@ public abstract class AbstractArray implements Array, Cloneable {
      *                                   || fromIndex &gt; toIndex</code>).
      */
     protected final void checkSubArrayArguments(long fromIndex, long toIndex) {
-        if (fromIndex < 0)
+        if (fromIndex < 0) {
             throw rangeException(fromIndex, length(), getClass());
-        if (toIndex > length())
+        }
+        if (toIndex > length()) {
             throw rangeException(toIndex - 1, length(), getClass());
-        if (fromIndex > toIndex)
+        }
+        if (fromIndex > toIndex) {
             throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
                     + " > toIndex = " + toIndex + ") in " + getClass());
+        }
     }
 
     /**
@@ -795,13 +807,16 @@ public abstract class AbstractArray implements Array, Cloneable {
      *                                   || position + count &gt; {@link #length()}</code>).
      */
     protected final void checkSubArrArguments(long position, long count) {
-        if (position < 0)
+        if (position < 0) {
             throw rangeException(position, length(), getClass());
-        if (count < 0)
+        }
+        if (count < 0) {
             throw new IndexOutOfBoundsException("Negative number of elements (count = " + count
                     + ") in " + getClass());
-        if (position > length() - count)
+        }
+        if (position > length() - count) {
             throw rangeException(position + count - 1, length(), getClass());
+        }
     }
 
 
@@ -829,8 +844,9 @@ public abstract class AbstractArray implements Array, Cloneable {
      *                                       implement {@link UpdatableArray} interface.
      */
     protected final void setNewStatus(boolean value) {
-        if (!(this instanceof UpdatableArray))
+        if (!(this instanceof UpdatableArray)) {
             throw new UnsupportedOperationException("setNewStatus(boolean) can be called for updatable arrays only");
+        }
         assert this.newAndNewReadOnlyViewStatus < 2 : "new read-only view is impossible for UpdatableArray";
         this.newAndNewReadOnlyViewStatus = value ? (byte) 0x1 : 0;
     }
@@ -862,9 +878,10 @@ public abstract class AbstractArray implements Array, Cloneable {
      * @throws UnsupportedOperationException if this instance implements {@link UpdatableArray} interface.
      */
     protected final void setNewReadOnlyViewStatus() {
-        if (this instanceof UpdatableArray)
+        if (this instanceof UpdatableArray) {
             throw new UnsupportedOperationException("setNewReadOnlyViewStatus() "
                     + "must not be called for updatable arrays");
+        }
         assert (this.newAndNewReadOnlyViewStatus & 0x1) == 0 : "new status is possible only in UpdatableArray";
         this.newAndNewReadOnlyViewStatus = 0x2;
     }
@@ -954,8 +971,9 @@ public abstract class AbstractArray implements Array, Cloneable {
             Object buff1 = java.lang.reflect.Array.newInstance(thisArray.elementType(), buffLen);
             Object buff2 = java.lang.reflect.Array.newInstance(thisArray.elementType(), buffLen);
             for (long disp = 0; disp < len; disp += buffLen) {
-                if (buffLen > len - disp)
+                if (buffLen > len - disp) {
                     buffLen = (int) (len - disp);
+                }
                 thisArray.getData(disp, buff1, 0, buffLen);
                 another.getData(disp, buff2, 0, buffLen);
                 thisArray.setData(disp, buff2, 0, buffLen);

@@ -781,10 +781,9 @@ public abstract class MatrixInfo {
      * @return <code>true</code> if the specified object is a matrix information equal to this one.
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof MatrixInfo)) {
+        if (!(obj instanceof MatrixInfo mi)) {
             return false;
         }
-        MatrixInfo mi = (MatrixInfo) obj;
         return mi.elementType.equals(elementType)
             && mi.byteOrder == byteOrder
             && java.util.Arrays.equals(mi.dimensions, dimensions)

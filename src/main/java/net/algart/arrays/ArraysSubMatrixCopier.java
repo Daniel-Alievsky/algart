@@ -152,11 +152,10 @@ abstract class ArraysSubMatrixCopier {
         if (!ENABLE_THIS_OPTIMIZATION) {
             return false;
         }
-        if (dest instanceof ArraysSubMatrixImpl.SubMatrixArray) {
+        if (dest instanceof ArraysSubMatrixImpl.SubMatrixArray sma) {
             if (dest.length() < MIN_ARRAY_LENGTH_FOR_COPY_SUB_MATRIX || src.length() < dest.length()) {
                 return false;
             }
-            ArraysSubMatrixImpl.SubMatrixArray sma = (ArraysSubMatrixImpl.SubMatrixArray) dest;
             Matrix<? extends UpdatableArray> baseMatrix = sma.baseMatrix().cast(UpdatableArray.class);
             if (!baseMatrix.isTiled()) {
                 return false;
@@ -172,11 +171,10 @@ abstract class ArraysSubMatrixCopier {
                 sma.continuationMode(), Matrix.ContinuationMode.NONE,
                 destPosition, srcPosition, dimensions).copySubMatrix(context);
         }
-        if (src instanceof ArraysSubMatrixImpl.SubMatrixArray) {
+        if (src instanceof ArraysSubMatrixImpl.SubMatrixArray sma) {
             if (src.length() < MIN_ARRAY_LENGTH_FOR_COPY_SUB_MATRIX || dest.length() < src.length()) {
                 return false;
             }
-            ArraysSubMatrixImpl.SubMatrixArray sma = (ArraysSubMatrixImpl.SubMatrixArray) src;
             Matrix<? extends Array> baseMatrix = sma.baseMatrix();
             if (!baseMatrix.isTiled()) {
                 return false;

@@ -366,9 +366,8 @@ class BufferArraysImpl {
             if (!(this instanceof UpdatableArray))
                 throw new InternalError("Internal error in Buffer/LargeMemoryModel implementation "
                         + "(unallowed copy)");
-            if (src instanceof AbstractBufferArray) {
-                AbstractBufferArray a = (AbstractBufferArray) src;
-                long count = a.length < length ? a.length : length;
+            if (src instanceof AbstractBufferArray a) {
+                long count = Math.min(a.length, length);
                 if (a.storage.getClass() == storage.getClass()) {
                     checkCopyArguments((UpdatableArray) this, src);
                     if (isCopyOnNextWrite())

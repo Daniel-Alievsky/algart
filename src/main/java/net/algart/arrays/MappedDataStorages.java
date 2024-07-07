@@ -1113,10 +1113,9 @@ class MappedDataStorages {
             if (src == this && srcPos == destPos) {
                 return true;
             }
-            if (!(src instanceof MappedStorage)) {
+            if (!(src instanceof MappedStorage stor)) {
                 return false;
             }
-            MappedStorage stor = (MappedStorage)src;
             boolean useSecondBank = src == this;
             // it is better to avoid extra mappings when possible
             lock.lock();
@@ -1249,10 +1248,9 @@ class MappedDataStorages {
             if (another == this && anotherPos == thisPos) {
                 return true;
             }
-            if (!(another instanceof MappedStorage)) {
+            if (!(another instanceof MappedStorage stor)) {
                 return false;
             }
-            MappedStorage stor = (MappedStorage)another;
             boolean useSecondBank = another == this;
             // it is better to avoid extra mappings when possible
             lock.lock();
@@ -1917,12 +1915,11 @@ class MappedDataStorages {
                 }
                 dfp = ms.dataFileModel.getPath(df);
                 if (autoDeleted) {
-                    if (df instanceof DefaultDataFileModel.MappableFile
+                    if (df instanceof DefaultDataFileModel.MappableFile mdf
                         && !(df instanceof StandardIODataFileModel.StandardIOFile))
                     // there are no ways to override DefaultDataFileModel.MappableFile outside this package
                     {
                         boolean unmapped = false;
-                        DefaultDataFileModel.MappableFile mdf = (DefaultDataFileModel.MappableFile)df;
                         if ((caller == DisposeCaller.SHUTDOWN_HOOK ?
                             DefaultDataFileModel.UNSAFE_UNMAP_ON_EXIT :
                             DefaultDataFileModel.UNSAFE_UNMAP_ON_DISPOSE)

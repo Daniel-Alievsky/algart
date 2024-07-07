@@ -867,8 +867,7 @@ class ArraysFuncImpl {
                 return InternalUtils.<T>cast(asAbsDiffFuncArray(truncateOverflows, f, x));
             }
         }
-        if (f instanceof LinearFunc) {
-            LinearFunc lf = (LinearFunc)f;
+        if (f instanceof LinearFunc lf) {
             int n = lf.n();
             if (x.length < n) {
                 throw new IllegalArgumentException("Insufficient number of arrays for the linear function");
@@ -1779,8 +1778,7 @@ class ArraysFuncImpl {
             return asUpdatableIdentityFunc(truncateOverflows, requiredType, f, x[0]);
         }
 
-        if (f instanceof LinearFunc.Updatable) {
-            LinearFunc.Updatable ulf = (LinearFunc.Updatable)f;
+        if (f instanceof LinearFunc.Updatable ulf) {
             int n = ulf.n();
             if (x.length < n) {
                 throw new IllegalArgumentException("Insufficient number of arrays for the updatable linear function");

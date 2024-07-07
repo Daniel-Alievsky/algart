@@ -778,10 +778,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      */
     public static Array[] getStorage(Array combinedArray) {
         Objects.requireNonNull(combinedArray, "Null combinedArray argument");
-        if (!(combinedArray instanceof CombinedArray<?>)) {
+        if (!(combinedArray instanceof CombinedArray<?> cv)) {
             throw new IllegalArgumentException("The passed argument is not a combined array");
         }
-        CombinedArray<?> cv = (CombinedArray<?>) combinedArray;
         Array[] result = cv.storage.clone();
         for (int k = 0; k < result.length; k++) {
             result[k] = cv.storage[k].shallowClone();
@@ -830,10 +829,9 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      */
     public static String[] getStorageToStrings(Array combinedArray) {
         Objects.requireNonNull(combinedArray, "Null combinedArray argument");
-        if (!(combinedArray instanceof CombinedArray<?>)) {
+        if (!(combinedArray instanceof CombinedArray<?> cv)) {
             throw new IllegalArgumentException("The passed argument is not a combined array");
         }
-        CombinedArray<?> cv = (CombinedArray<?>) combinedArray;
         String[] result = new String[cv.storage.length];
         for (int k = 0; k < result.length; k++) {
             result[k] = cv.storage[k].toString();
@@ -1400,9 +1398,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public UpdatableArray copy(Array src) {
-            if (src instanceof CombinedArray<?> && ((CombinedArray<?>) src).combiner == this.combiner) {
+            if (src instanceof CombinedArray<?> a && a.combiner == this.combiner) {
                 AbstractArray.checkCopyArguments(this, src);
-                CombinedArray<?> a = (CombinedArray<?>) src;
                 for (int k = 0; k < storage.length; k++) {
                     ((UpdatableArray[]) storage)[k].copy(a.storage[k]);
                 }
@@ -1413,10 +1410,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public UpdatableArray swap(UpdatableArray another) {
-            if (another instanceof UpdatableCombinedArray<?>
-                    && ((UpdatableCombinedArray<?>) another).combiner == this.combiner) {
+            if (another instanceof UpdatableCombinedArray<?> a && a.combiner == this.combiner) {
                 AbstractArray.checkSwapArguments(this, another);
-                CombinedArray<?> a = (CombinedArray<?>) another;
                 for (int k = 0; k < storage.length; k++) {
                     ((UpdatableArray) storage[k]).swap((UpdatableArray) a.storage[k]);
                 }
