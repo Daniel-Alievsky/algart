@@ -56,7 +56,7 @@ import net.algart.arrays.*;
  * <li>we call a pixel "<i>{@link #TYPE_ILLEGAL illegal}</i>", if analysis of some close neighbourhood of this pixel
  * (usually 3x3 or 5x5) allows to conclude, that this pixel cannot belong to a skeleton of the concrete
  * analysed kind;</li>
- * <li><a name="groupAttachable"></a>in other cases, i.e. if a unit pixel has <i>k</i>&ge;3 neighbours
+ * <li id="groupAttachable">in other cases, i.e. if a unit pixel has <i>k</i>&ge;3 neighbours
  * and is not "illegal", we call it either <i>{@link #TYPE_USUAL_NODE node}</i>, or an
  * <i>{@link #isAttachableBranchEndPixelType(int) attachable branch end}</i>.
  * The concrete implementation of this abstract class defines, which of such pixels are considered to be nodes,
@@ -116,7 +116,7 @@ import net.algart.arrays.*;
  * <li>any branch is a connected series of 0, 1 or more unit pixels, connecting strictly 2 different
  * {@link #TYPE_USUAL_NODE nodes} or {@link #TYPE_FREE_BRANCH_END free branch ends} (playing the role
  * of graph nodes: ends of the corresponding graph edge).
- * For nondegenerate branches (containing at least 1 pixel between ending nodes or
+ * For non-degenerate branches (containing at least 1 pixel between ending nodes or
  * free branch ends), all their pixels belong to "{@link #TYPE_USUAL_BRANCH usual branch pixels}" type
  * (strictly 2 unit neighbours) or "{@link #isAttachableBranchEndPixelType(int) attachable branch end}" type
  * (having 3 or more unit neighbours), and only the first and the last among them can be attachable ends.
@@ -158,7 +158,7 @@ import net.algart.arrays.*;
  * of each matrix element and is necessary for interpretation of non-negative values, returned by
  * {@link #asPixelTypes asPixelTypes} method.</p>
  *
- * <h2><a name="connectivity"></a>Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
+ * <h2 id="connectivity">Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
  *
  * <p>Note that this class, as well as {@link SkeletonScanner}, supposes
  * the <i>straight-and-diagonal</i> connectivity kind: see

@@ -161,9 +161,10 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * More precisely, this interface should provide methods for storing and loading
      * all data of one object (an element of a combined array) in/from
      * several "parallel" AlgART arrays, named "storage".
-     * An element with given index should be stored in the following elements in storage:<pre>
+     * An element with given index should be stored in the following elements in storage:</p>
+     * <pre>
      * &nbsp;&nbsp;&nbsp;&nbsp;storage[k][d[k]*index...d[k]*(index+1)-1], k=0,1,...</pre>
-     * where <code>d</code> is an array returned by {@link #numbersOfElementsPerOneCombinedElement(int)}
+     * <p>where <code>d</code> is an array returned by {@link #numbersOfElementsPerOneCombinedElement(int)}
      * method.</p>
      *
      * <p>Important! The classes of objects stored or loaded by this combiner <b>should

@@ -53,7 +53,7 @@ import java.util.Objects;
  * It can be very convenient, if the called method solves only a part of the full task,
  * approximately <code>fromPart*100%..toPart*100%</code>.</p>
  *
- * <p><a name="specification"></a>More precisely,
+ * <p id="specification">More precisely,
  * let <code>sc</code> is the instance of this class and <code>parent</code> is its parent context,
  * and let <code>fromPart</code> and <code>toPart</code> are the constructor arguments.
  * Then:</p>

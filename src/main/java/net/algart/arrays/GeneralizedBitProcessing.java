@@ -47,7 +47,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <code>double</code>, etc.; in other words, for the common case of {@link PArray}.
  * This class allows to do this.</p>
  *
- * <p><a name="bitslice"></a>Namely, let we have the source array ({@link PArray}) <b>a</b>,
+ * <p id="bitslice">Namely, let we have the source array ({@link PArray}) <b>a</b>,
  * and let <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> be some numeric range,
  * <i>a<sub>min</sub></i>&le;<i>a<sub>max</sub></i>
  * usually (but not necessarily) from the minimal to the maximal value, stored in the source array

@@ -70,7 +70,7 @@
  <li><a href="#betterByStandard">Tasks that are better solved by standard Java collections</a></li>
  </ul>
 
- <h2><a name="features"></a>Main features of AlgART arrays</h2>
+ <h2 id="features">Main features of AlgART arrays</h2>
 
  <ol>
  <li>The addressing of array elements is <b>63-bit</b>. So, it's theoretically possible to
@@ -187,7 +187,7 @@
 
 
 
- <h2><a name="diagramOfInterfaces"></a>The diagram of interfaces and implementations</h2>
+ <h2 id="diagramOfInterfaces">The diagram of interfaces and implementations</h2>
 
  <p>The basic set of AlgART array interfaces and classes can be represented as 3-dimensional structure.
  The 1st dimension corresponds to the type of elements: there are separate interfaces and classes
@@ -434,7 +434,7 @@
 
  <p>There are the same hierarchies for updatable and mutable arrays, but not for stacks.</p>
 
- <h2><a name="maximalLength"></a>The maximal supported array length</h2>
+ <h2 id="maximalLength">The maximal supported array length</h2>
 
  <p>The maximal possible length of AlgART array depends on the
  {@link net.algart.arrays.MemoryModel memory model}, which has created this array.
@@ -609,7 +609,7 @@
 
 
 
- <h2><a name="protectionAgainstUnallowedChanges"></a>5 levels of protection against unallowed changes</h2>
+ <h2 id="protectionAgainstUnallowedChanges">5 levels of protection against unallowed changes</h2>
 
  <p>There is an often and important problem to protect some application data
  against unallowed changes, to avoid hard bugs connected with unexpected damage of application
@@ -816,7 +816,7 @@
  </ul>
 
 
- <h2><a name="multithreading"></a>Multithreading and synchronization</h2>
+ <h2 id="multithreading">Multithreading and synchronization</h2>
 
  <p>{@link net.algart.arrays.Array#asImmutable() Immutable} AlgART arrays are absolutely <b>thread-safe</b>
  and can be used simultaneously in several threads.
@@ -839,7 +839,7 @@
  (Please compare: the standard <code>java.util.BitSet</code> class does not provide such guarantees.)</p>
 
 
- <h2><a name="exceptions"></a>Runtime exceptions and errors</h2>
+ <h2 id="exceptions">Runtime exceptions and errors</h2>
 
  <p>The methods of classes implementing AlgART arrays, usually, can throw exceptions declared in
  the Javadoc comments to methods. In addition, there are following exception, that can be thrown by methods
@@ -904,7 +904,7 @@
  </ul>
 
 
- <h2><a name="systemProperties"></a>System properties used for customizing AlgART arrays</h2>
+ <h2 id="systemProperties">System properties used for customizing AlgART arrays</h2>
 
  <p>Behavior of AlgART arrays depends on some system properties, that allow to customize many important aspects.
  Below is the list of these properties.</p>
@@ -1124,7 +1124,7 @@
  used for internal goals. They are undocumented and should not be used in your applications.</p>
 
 
- <h2><a name="logging"></a>Built-in logging</h2>
+ <h2 id="logging">Built-in logging</h2>
 
  <p>Some classes implementing AlgART arrays logs some situations via standard <code>java.util.logging</code> tools.
  Now 3 loggers are used:</p>
@@ -1232,7 +1232,7 @@ net.algart.arrays.LargeMemoryModel}")</code></li>
  </li>
  </ul>
 
- <h2><a name="betterByStandard"></a>Tasks that are better solved by standard Java collections</h2>
+ <h2 id="betterByStandard">Tasks that are better solved by standard Java collections</h2>
 
  <p>The following tasks are not well solved in this architecture: please use
  standard Java libraries in these cases.

@@ -191,7 +191,7 @@ package net.algart.arrays;
  * that may be checked by {@link #hasData()} method.</li>
  * </ol>
  *
- * <h2><a name="directAndIndirect"></a>Direct and indirect data buffers</h2>
+ * <h2 id="directAndIndirect">Direct and indirect data buffers</h2>
  *
  * <p>The data buffers, provided by this package for AlgART arrays, are divided into 2 groups.</p>
  *
@@ -271,12 +271,12 @@ package net.algart.arrays;
  *
  * <p>You may determine, whether the buffer is direct or indirect, via {@link #isDirect()} method.</p>
  *
- * <h2><a name="invariants"></a>Invariants of the data buffers</h2>
+ * <h2 id="invariants">Invariants of the data buffers</h2>
  *
  * <p>For any kind of the data buffer, there are the following guarantees:</p>
  *
  * <ul>
- * <li>the <i>mapped position</i> is always inside the range
+ *  <li>the <i>mapped position</i> is always inside the range
  * <code>0 &lt;= <i>position</i> &lt;= <i>length</i></code>,
  * where <i>length</i> is the total number of elements in the data storage
  * ({@link Array#length()} in a case of AlgART arrays);
@@ -310,10 +310,8 @@ package net.algart.arrays;
  * </ul>
  * </li>
  * </ul>
- * </li>
- * </ul>
  *
- * <h2><a name="subInterface"></a>Specific subinterfaces</h2>
+ * <h2 id="subInterface">Specific subinterfaces</h2>
  *
  * <p>The {@link #data()} method, declared in this interface, returns <code>Object</code>
  * (the only existing superclass for all Java arrays), that is not too convenient.
@@ -328,7 +326,7 @@ package net.algart.arrays;
  * simplified versions) is overridden in specific AlgART arrays ({@link BitArray}, {@link CharArray}, etc.)
  * and returns one of the listed subinterfaces.</p>
  *
- * <h2><a name="sequentialMapping"></a>Sequential mapping all AlgART array</h2>
+ * <h2 id="sequentialMapping">Sequential mapping all AlgART array</h2>
  *
  * <p>This interface has no methods allowing to get the reference to the underlying AlgART array
  * or get its <i>length</i>. But you may check,
@@ -342,7 +340,7 @@ package net.algart.arrays;
  * But please remember that {@link #hasData()} returns <code>false</code> also before the first mapping
  * of a newly created data buffer.</p>
  *
- * <h2><a name="usageExamples"></a>Usage examples</h2>
+ * <h2 id="usageExamples">Usage examples</h2>
  *
  * <p>Below is a typical usage example:</p>
  *
@@ -392,7 +390,7 @@ package net.algart.arrays;
  * }
  * </pre>
  *
- * <h2><a name="problems"></a>Performance problem connected with a lot of data buffers</h2>
+ * <h2 id="problems">Performance problem connected with a lot of data buffers</h2>
  *
  * <p>There is a problem connected with creating and using a lot of <i>indirect</i> data buffers
  * (thousands and tens of thousands). In this situation, every data buffer allocates its own
@@ -408,7 +406,7 @@ package net.algart.arrays;
  * performance problem, you should check the newly created buffer, {@link #isDirect() is it direct},
  * and, if not, ignore it and use standard Java arrays with help of {@link JArrayPool}.</p>
  *
- * <h2><a name="notes"></a>Additional notes</h2>
+ * <h2 id="notes">Additional notes</h2>
  *
  * <p>The data buffers are allowed not to implement <code>hashCode</code> and <code>equals</code> method.
  * Usually, the default implementation of these methods from <code>Object</code> class are used.</p>

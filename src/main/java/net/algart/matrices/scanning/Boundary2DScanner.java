@@ -72,7 +72,7 @@ import java.util.Objects;
  * <p>We define the <i>main boundary</i> of the connected object as its boundary
  * containing whole this object inside it.</p>
  *
- * <p><a name="completion"></a>We define the <i>completion</i> of the connected object as the sets of all points
+ * <p id="completion">We define the <i>completion</i> of the connected object as the sets of all points
  * lying at or inside its main boundary. In other words, the completion is the object, where all internal
  * "holes" ("pores") are filled. If the connected object has no "holes", its completion is identical to it.</p>
  *
@@ -118,7 +118,7 @@ import java.util.Objects;
  * and then scan it by sequential calls of {@link #next()} method.
  * Instead of manual loop of {@link #next()} calls, you can use {@link #scanBoundary(ArrayContext)} method.</p>
  *
- * <p><a name="positions_order"></a>We suppose that all possible positions are <i>sorted</i>
+ * <p id="positions_order">We suppose that all possible positions are <i>sorted</i>
  * in the following "natural" order: the position
  * <i>x</i><sub>1</sub>,&nbsp;<i>y</i><sub>1</sub>,&nbsp;<i>side</i><sub>1</sub> is "less" than the position
  * <i>x</i><sub>2</sub>,&nbsp;<i>y</i><sub>2</sub>,&nbsp;<i>side</i><sub>2</sub>,</p>

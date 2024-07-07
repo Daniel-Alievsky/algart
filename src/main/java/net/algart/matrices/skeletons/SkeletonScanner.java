@@ -36,7 +36,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * This class works on the base of results of classifying skeleton pixels, performed by
  * {@link SkeletonPixelClassifier} class, and requires an object of that class for creating an instance.</p>
  *
- * <h2><a name="graph"></a>The nonoriented graph, formed by the skeleton</h2>
+ * <h2 id="graph">The nonoriented graph, formed by the skeleton</h2>
  *
  * <p>The base goal of this class is building and scanning the <b><i>skeleton nonoriented graph</i></b>,
  * formed by nodes and branches of the given <i>skeleton</i> (bit matrix).
@@ -286,7 +286,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * methods, which calls {@link #visitPreviousBranchPixel()} when their <code>withVisiting</code> argument
  * is <code>true</code>.</p>
  *
- * <h2><a name="connectivity"></a>Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
+ * <h2 id="connectivity">Connectivity model (straight-and-diagonal) and "neighbour" term</h2>
  *
  * <p>Note, that this class, as well as {@link SkeletonPixelClassifier}, supposes
  * the <i>straight-and-diagonal</i> connectivity kind: see
@@ -306,7 +306,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * are coordinates of the second pixel (a neighbour of the first one). In 2-dimensional case,
  * such connectivity kind is also called <i>8-connectivity</i>.</p>
  *
- * <h2><a name="example"></a>Example of usage</h2>
+ * <h2 id="example">Example of usage</h2>
  *
  * <p>Below is a complete example of code, using a remembering skeleton scanner <code>ss</code> for breadth-first
  * traversal of the nonoriented graph, formed by the skeleton.</p>
