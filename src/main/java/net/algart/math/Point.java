@@ -930,10 +930,9 @@ public class Point implements Comparable<Point> {
      * @return <code>true</code> if the specified object is a point equal to this one.
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof Point)) {
+        if (!(obj instanceof Point p)) {
             return false;
         }
-        Point p = (Point) obj;
         if (p.coordinates.length != coordinates.length) {
             return false;
         }
@@ -1124,7 +1123,7 @@ public class Point implements Comparable<Point> {
                             ra.parallelDistance(point))
                             + (ra.contains(point) ? " (inside)" : "")
                             + "; intersection with " + test + ": " + ra.intersection(test)
-                            + "; subtracted " + test + ": " + ra.difference(new ArrayList<RectangularArea>(), test)
+                            + "; subtracted " + test + ": " + ra.difference(new ArrayList<>(), test)
                             + "; hash: " + ra.hashCode());
                 } catch (Exception e) {
                     System.out.println("  Cannot create area with " + points[k] + " and " + points[k + 1] + ": " + e);
@@ -1156,7 +1155,7 @@ public class Point implements Comparable<Point> {
                             + (rounded.contains(point) ? " (inside)" : "")
                             + "; intersection with " + test + ": " + rounded.intersection(test)
                             + "; subtracted " + test + ": "
-                            + rounded.difference(new ArrayList<IRectangularArea>(), test)
+                            + rounded.difference(new ArrayList<>(), test)
                             + "; hash: " + rounded.hashCode()
                     );
                 } catch (Exception e) {

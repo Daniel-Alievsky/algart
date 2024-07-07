@@ -932,10 +932,9 @@ public class IPoint implements Comparable<IPoint> {
      * @return <code>true</code> if the specified object is a point equal to this one.
      */
     public boolean equals(Object obj) {
-        if (!(obj instanceof IPoint)) {
+        if (!(obj instanceof IPoint ip)) {
             return false;
         }
-        IPoint ip = (IPoint) obj;
         if (ip.coordinates.length != coordinates.length) {
             return false;
         }

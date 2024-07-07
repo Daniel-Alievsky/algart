@@ -696,10 +696,9 @@ public final class Orthonormal3DBasis {
      * representing the same right orthonormal basis as this object.
      */
     public boolean equals(Object o) {
-        if (!(o instanceof Orthonormal3DBasis)) {
+        if (!(o instanceof Orthonormal3DBasis that)) {
             return false;
         }
-        final Orthonormal3DBasis that = (Orthonormal3DBasis) o;
         return (Double.doubleToLongBits(that.ix) == Double.doubleToLongBits(ix)
                 && Double.doubleToLongBits(that.iy) == Double.doubleToLongBits(iy)
                 && Double.doubleToLongBits(that.iz) == Double.doubleToLongBits(iz)

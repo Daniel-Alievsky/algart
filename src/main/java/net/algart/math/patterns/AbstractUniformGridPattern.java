@@ -117,11 +117,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         this.gridIndexRanges = new IRange[dimCount]; //null-filled
         this.lowerSurface = new DirectPointSetUniformGridPattern[dimCount]; //null-filled
         this.upperSurface = new DirectPointSetUniformGridPattern[dimCount]; //null-filled
-        this.minkowskiDecompositions = Collections.synchronizedList(new ArrayList<List<Pattern>>(16));
+        this.minkowskiDecompositions = Collections.synchronizedList(new ArrayList<>(16));
         for (int k = 0; k < 16; k++) {
             this.minkowskiDecompositions.add(null);
         }
-        this.allUnionDecompositions = Collections.synchronizedList(new ArrayList<List<List<Pattern>>>(16));
+        this.allUnionDecompositions = Collections.synchronizedList(new ArrayList<>(16));
         for (int k = 0; k < 16; k++) {
             this.allUnionDecompositions.add(null);
         }
@@ -260,7 +260,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 shiftCoordinates[coordIndex] = -1;
                 IPoint shift = IPoint.valueOf(shiftCoordinates);
                 Set<IPoint> points = gridIndexes();
-                Set<IPoint> resultPoints = new HashSet<IPoint>();
+                Set<IPoint> resultPoints = new HashSet<>();
                 for (IPoint ip : points) {
                     if (ip.coord(coordIndex) == Long.MIN_VALUE // avoiding overflow in the next check
                         || !points.contains(ip.add(shift)))
@@ -282,7 +282,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 shiftCoordinates[coordIndex] = 1;
                 IPoint shift = IPoint.valueOf(shiftCoordinates);
                 Set<IPoint> points = gridIndexes();
-                Set<IPoint> resultPoints = new HashSet<IPoint>();
+                Set<IPoint> resultPoints = new HashSet<>();
                 for (IPoint ip : points) {
                     if (ip.coord(coordIndex) == Long.MIN_VALUE // avoiding overflow in the next check
                         || !points.contains(ip.add(shift)))
@@ -298,7 +298,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     public Pattern surface() {
         if (surface == null) {
-            Set<IPoint> resultPoints = new HashSet<IPoint>();
+            Set<IPoint> resultPoints = new HashSet<>();
             for (int k = 0; k < dimCount; k++) {
                 resultPoints.addAll(lowerSurface(k).gridIndexes());
                 resultPoints.addAll(upperSurface(k).gridIndexes());
@@ -313,7 +313,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
     @Override
     public Set<Point> points() {
-        Set<Point> result = new HashSet<Point>();
+        Set<Point> result = new HashSet<>();
         for (IPoint p : gridIndexes()) {
             result.add(p.scaleAndShift(stepsOfGrid, originOfGrid));
         }
@@ -350,7 +350,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         synchronized (minBound) {
             if (minBound[coordIndex] == null) {
                 Set<IPoint> points = gridIndexes();
-                Map<IPoint, IPoint> map = new HashMap<IPoint, IPoint>();
+                Map<IPoint, IPoint> map = new HashMap<>();
                 for (IPoint p : points) {
                     IPoint projection = p.projectionAlongAxis(coordIndex);
                     IPoint bound = map.get(projection);
@@ -370,7 +370,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         synchronized (maxBound) {
             if (maxBound[coordIndex] == null) {
                 Set<IPoint> points = gridIndexes();
-                Map<IPoint, IPoint> map = new HashMap<IPoint, IPoint>();
+                Map<IPoint, IPoint> map = new HashMap<>();
                 for (IPoint p : points) {
                     IPoint projection = p.projectionAlongAxis(coordIndex);
                     IPoint bound = map.get(projection);
@@ -404,7 +404,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 IRange[] r01 = Collections.nCopies(dimCount, IRange.valueOf(0, 1)).toArray(new IRange[dimCount]);
                 Set<IPoint> vertices01 = new BasicRectangularPattern(r01).roundedPoints();
                 // - all vertices of [0..1]^dimCount parallelepiped
-                Set<IPoint> resultPoints = new HashSet<IPoint>();
+                Set<IPoint> resultPoints = new HashSet<>();
                 for (IPoint vertex01 : vertices01) {
                     for (int k = 0; k < vertex.length; k++) {
                         long coord = vertex01.coord(k);
@@ -445,7 +445,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                         minPointCount = pointCount;
                     }
                     if (intersectionOfBoundaries == null) {
-                        intersectionOfBoundaries = new HashSet<IPoint>(boundaryForDirection);
+                        intersectionOfBoundaries = new HashSet<>(boundaryForDirection);
                     } else {
                         intersectionOfBoundaries.retainAll(boundaryForDirection);
                     }
@@ -685,10 +685,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         if (addedPointCount == 1) {
             return shift(added.coordMin());
         }
-        if (!(added instanceof UniformGridPattern)) {
+        if (!(added instanceof UniformGridPattern ugAdded)) {
             return super.minkowskiAdd(added);
         }
-        UniformGridPattern ugAdded = (UniformGridPattern) added;
         if (!stepsOfGridEqual(ugAdded)) {
             return super.minkowskiAdd(added);
         }
@@ -769,10 +768,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         if (subtractedPointCount == 1) {
             return shift(subtracted.coordMin().symmetric());
         }
-        if (!(subtracted instanceof UniformGridPattern)) {
+        if (!(subtracted instanceof UniformGridPattern ugSubtracted)) {
             return super.minkowskiSubtract(subtracted);
         }
-        UniformGridPattern ugSubtracted = (UniformGridPattern) subtracted;
         if (!stepsOfGridEqual(ugSubtracted)) {
             return super.minkowskiSubtract(subtracted);
         }
@@ -789,7 +787,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         assert minimal != null : "Empty subtracted.points()";
         boolean containsOrigin = minimal.isOrigin();
         Set<IPoint> points = gridIndexes();
-        Set<IPoint> resultPoints = new HashSet<IPoint>();
+        Set<IPoint> resultPoints = new HashSet<>();
         mainLoop:
         for (IPoint p : points) {
             // Formally, we need here a loop for infinity number of all points p in the space;
@@ -854,7 +852,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         // if <=4, then there is no sense to check shorter segments in the loop below:
         // in the best case, such a check will replace 2-point pattern (0, 1) with rectangular pattern (0..1)
         // or 3- or 4-point pattern (0,1,2[,3]) with a Minkowski sum of two patterns
-        List<Pattern> result = new ArrayList<Pattern>();
+        List<Pattern> result = new ArrayList<>();
         Point origin = Point.origin(dimCount);
         long[] shifts = new long[dimCount];
         double[] coordinates = new double[dimCount]; // zero-filled
@@ -937,12 +935,12 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 return result;
             }
         }
-        List<IPoint> points = new ArrayList<IPoint>(gridIndexes());
+        List<IPoint> points = new ArrayList<>(gridIndexes());
         if (points.size() < minimalPointCount) {
             return Collections.singletonList(Collections.<Pattern>singletonList(this));
         }
-        List<IPoint> retainedPoints = new ArrayList<IPoint>();
-        List<List<Pattern>> decompositions = new ArrayList<List<Pattern>>();
+        List<IPoint> retainedPoints = new ArrayList<>();
+        List<List<Pattern>> decompositions = new ArrayList<>();
         long[] totalComplexities = new long[dimCount];
         long bestTotalComplexity = Long.MAX_VALUE;
         for (int coordIndex = 0; coordIndex < dimCount; coordIndex++) {
@@ -967,17 +965,17 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             }
             long totalComplexity = StrictMath.round(totalCount);
             // in a very improbable case, when totalCount > Long.MAX_VALUE, we shall get here Long.MAX_VALUE
-            decompositions.add(new ArrayList<Pattern>(gridIndexes));
+            decompositions.add(new ArrayList<>(gridIndexes));
             totalComplexities[coordIndex] = totalComplexity;
             if (totalComplexity <= bestTotalComplexity) {
                 bestTotalComplexity = totalComplexity;
             }
         }
-        List<List<Pattern>> bestResults = new ArrayList<List<Pattern>>();
+        List<List<Pattern>> bestResults = new ArrayList<>();
         for (int dimIndex = 0; dimIndex < dimCount; dimIndex++) {
             if (totalComplexities[dimIndex] == bestTotalComplexity) {
                 List<Pattern> gridIndexes = decompositions.get(dimIndex);
-                List<Pattern> resultPatterns = new ArrayList<Pattern>();
+                List<Pattern> resultPatterns = new ArrayList<>();
                 for (Pattern pattern : gridIndexes) {
                     resultPatterns.add(pattern.scale(stepsOfGrid).shift(originOfGrid));
                 }
@@ -1068,7 +1066,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         if (!stepsOfGridEqual(added)) {
             throw new AssertionError("simpleMinkowskiAdd should be used with compatible grids only");
         }
-        Set<IPoint> resultIndexes = new HashSet<IPoint>();
+        Set<IPoint> resultIndexes = new HashSet<>();
         Set<IPoint> indexes = gridIndexes();
         Set<IPoint> addedIndexes = added.gridIndexes();
         for (IPoint p : indexes) {
@@ -1083,7 +1081,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     private static Set<IPoint> gridBoundaryForDirection(Set<IPoint> points, IPoint direction) {
-        Set<IPoint> result = new HashSet<IPoint>();
+        Set<IPoint> result = new HashSet<>();
         IPoint directionSymmetric = direction.symmetric();
         for (IPoint ip : points) {
             boolean overflow = false;
@@ -1122,11 +1120,11 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         List<IPoint> points, List<IPoint> retainedPoints,
         final int coordIndex, int minimalPointCount)
     {
-        List<UniformGridPattern> result = new ArrayList<UniformGridPattern>();
+        List<UniformGridPattern> result = new ArrayList<>();
         if (points.isEmpty()) { // to be on the safe side: never occurs for pattern's point set
             return result;
         }
-        Collections.sort(points, new Comparator<IPoint>() {
+        Collections.sort(points, new Comparator<>() {
             public int compare(IPoint o1, IPoint o2) {
                 return o1.compareTo(o2, coordIndex);
             }

@@ -72,7 +72,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      */
     public SimplePattern(Collection<Point> points) {
         super(getDimCountAndCheck(points));
-        HashSet<Point> pointSet = new HashSet<Point>(points);
+        HashSet<Point> pointSet = new HashSet<>(points);
         if (getDimCountAndCheck(pointSet) != dimCount) {
             throw new IllegalArgumentException("Points dimensions were changed in a parallel thread");
         }
@@ -120,7 +120,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                     + " is not equal to the number of pattern coordinates " + dimCount);
         }
-        Set<Point> resultPoints = new HashSet<Point>(points.size());
+        Set<Point> resultPoints = new HashSet<>(points.size());
         for (Point p : points) {
             resultPoints.add(p.add(shift));
         }
@@ -157,7 +157,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
                     + multipliers.length + " instead of " + dimCount);
         }
         multipliers = multipliers.clone(); // to be on the safe side
-        Set<Point> resultPoints = new HashSet<Point>(points.size());
+        Set<Point> resultPoints = new HashSet<>(points.size());
         for (Point p : points) {
             resultPoints.add(p.scale(multipliers));
         }
@@ -171,7 +171,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
         if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
         }
-        Set<Point> resultPoints = new HashSet<Point>(points.size());
+        Set<Point> resultPoints = new HashSet<>(points.size());
         for (Point p : points) {
             resultPoints.add(p.projectionAlongAxis(coordIndex));
         }

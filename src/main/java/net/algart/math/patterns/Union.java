@@ -37,7 +37,7 @@ final class Union extends AbstractPattern implements Pattern {
 
     Union(Pattern[] patterns) {
         super(MinkowskiSum.getDimCountAndCheck(patterns));
-        List<Pattern> allSubsets = new ArrayList<Pattern>();
+        List<Pattern> allSubsets = new ArrayList<>();
         for (Pattern ptn : patterns) {
             if (ptn instanceof Union) {
                 allSubsets.addAll(Arrays.asList(((Union) ptn).subsets));
@@ -80,13 +80,13 @@ final class Union extends AbstractPattern implements Pattern {
     public Set<Point> points() {
         Set<Point> resultPoints = points == null ? null : points.get();
         if (resultPoints == null) {
-            resultPoints = new HashSet<Point>();
+            resultPoints = new HashSet<>();
             // temporary "resultPoints" variable is necessary while accessing from several threads
             for (Pattern ptn : subsets) {
                 resultPoints.addAll(ptn.points());
             }
             resultPoints = Collections.unmodifiableSet(resultPoints);
-            points = new SoftReference<Set<Point>>(resultPoints);
+            points = new SoftReference<>(resultPoints);
         }
         return resultPoints;
     }
@@ -184,7 +184,7 @@ final class Union extends AbstractPattern implements Pattern {
         if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
         }
-        List<Pattern> result = new ArrayList<Pattern>(subsets.length);
+        List<Pattern> result = new ArrayList<>(subsets.length);
         for (Pattern subset : subsets) {
             result.addAll(subset.unionDecomposition(minimalPointCount));
         }

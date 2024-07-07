@@ -35,8 +35,8 @@ class HorizontalIBracketSet<H extends IRectanglesUnion.Side> {
     int horizontalIndex;
     H horizontal;
     long coord;
-    private final NavigableSet<IBracket> intersectingSides = new TreeSet<IBracket>();
-    private final List<IRectanglesUnion.FrameSide> sidesBuffer = new ArrayList<IRectanglesUnion.FrameSide>();
+    private final NavigableSet<IBracket> intersectingSides = new TreeSet<>();
+    private final List<IRectanglesUnion.FrameSide> sidesBuffer = new ArrayList<>();
 
     public HorizontalIBracketSet(List<H> allHorizontals, boolean onlyStrictIntersections) {
         assert allHorizontals != null;

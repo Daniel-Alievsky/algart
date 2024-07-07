@@ -631,7 +631,7 @@ public class IRectanglesUnion {
         if (whatToSubtract.coordCount() != 2) {
             throw new IllegalArgumentException("Only 2-dimensional rectangle can be subtracted");
         }
-        Queue<IRectangularArea> rectangles = new LinkedList<IRectangularArea>();
+        Queue<IRectangularArea> rectangles = new LinkedList<>();
         for (Frame frame : frames) {
             rectangles.add(frame.rectangle);
         }
@@ -686,7 +686,7 @@ public class IRectanglesUnion {
     public List<HorizontalBoundaryLink> allHorizontalBoundaryLinks() {
         synchronized (lock) {
             findBoundaries();
-            final List<HorizontalBoundaryLink> result = new ArrayList<HorizontalBoundaryLink>();
+            final List<HorizontalBoundaryLink> result = new ArrayList<>();
             for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
                 result.addAll(series.containedBoundaryLinks);
             }
@@ -697,7 +697,7 @@ public class IRectanglesUnion {
     public List<VerticalBoundaryLink> allVerticalBoundaryLinks() {
         synchronized (lock) {
             findBoundaries();
-            final List<VerticalBoundaryLink> result = new ArrayList<VerticalBoundaryLink>();
+            final List<VerticalBoundaryLink> result = new ArrayList<>();
             for (VerticalSideSeries series : verticalSideSeriesAtBoundary) {
                 result.addAll(series.containedBoundaryLinks);
             }
@@ -821,11 +821,11 @@ public class IRectanglesUnion {
             long t2 = System.nanoTime();
             final long hCount = doFindHorizontalBoundaries();
             long t3 = System.nanoTime();
-            this.horizontalSideSeriesAtBoundary = new ArrayList<HorizontalSideSeries>();
+            this.horizontalSideSeriesAtBoundary = new ArrayList<>();
             doExtractHorizontalSeriesAtBoundary();
             long t4 = System.nanoTime();
             final long vCount = doConvertHorizontalToVerticalLinks();
-            this.verticalSideSeriesAtBoundary = new ArrayList<VerticalSideSeries>();
+            this.verticalSideSeriesAtBoundary = new ArrayList<>();
             long t5 = System.nanoTime();
             doExtractVerticalSeriesAtBoundary();
             if (vCount != hCount) {
@@ -930,7 +930,7 @@ public class IRectanglesUnion {
                 t1 = System.nanoTime();
                 for (HorizontalSection section : horizontalSectionsByLowerSides) {
                     IRectangularArea r = section.equivalentRectangle();
-                    Queue<IRectangularArea> queue = new LinkedList<IRectangularArea>();
+                    Queue<IRectangularArea> queue = new LinkedList<>();
                     queue.add(r);
                     for (Frame frame : frames) {
                         IRectangularArea.subtractCollection(queue,
@@ -968,7 +968,7 @@ public class IRectanglesUnion {
 
     public static List<IPoint> boundaryVerticesPlusHalf(List<BoundaryLink> boundary) {
         Objects.requireNonNull(boundary, "Null boundary");
-        final List<IPoint> result = new ArrayList<IPoint>();
+        final List<IPoint> result = new ArrayList<>();
         BoundaryLink last = null;
         for (BoundaryLink link : boundary) {
             final long coord = link.coord();
@@ -988,7 +988,7 @@ public class IRectanglesUnion {
 
     public static List<IPoint> boundaryVerticesAtRectangles(List<BoundaryLink> boundary) {
         Objects.requireNonNull(boundary, "Null boundary");
-        final List<IPoint> result = new ArrayList<IPoint>();
+        final List<IPoint> result = new ArrayList<>();
         final int n = boundary.size();
         if (n == 0) {
             return result;
@@ -1038,8 +1038,8 @@ public class IRectanglesUnion {
             return;
         }
         long t1 = System.nanoTime();
-        final List<HorizontalSide> horizontalSides = new ArrayList<HorizontalSide>();
-        final List<VerticalSide> verticalSides = new ArrayList<VerticalSide>();
+        final List<HorizontalSide> horizontalSides = new ArrayList<>();
+        final List<VerticalSide> verticalSides = new ArrayList<>();
         for (Frame frame : frames) {
             horizontalSides.add(frame.lessHorizontalSide);
             horizontalSides.add(frame.higherHorizontalSide);
@@ -1058,7 +1058,7 @@ public class IRectanglesUnion {
     private long doFillConnectionLists(List<List<Frame>> connectionLists) {
         assert !frames.isEmpty();
         final HorizontalIBracketSet<HorizontalSide> bracketSet =
-            new HorizontalIBracketSet<HorizontalSide>(horizontalSides, false);
+                new HorizontalIBracketSet<>(horizontalSides, false);
         long count = 0;
         while (bracketSet.next()) {
             if (bracketSet.horizontal.first) {
@@ -1089,10 +1089,10 @@ public class IRectanglesUnion {
 
     private List<List<Frame>> doFindConnectedComponents(List<List<Frame>> connectionLists) {
         assert !frames.isEmpty();
-        final List<List<Frame>> result = new ArrayList<List<Frame>>();
+        final List<List<Frame>> result = new ArrayList<>();
         final boolean[] frameVisited = new boolean[frames.size()];
         // - filled by false by Java
-        final Queue<Frame> queue = new LinkedList<Frame>();
+        final Queue<Frame> queue = new LinkedList<>();
         int index = 0;
         for (; ; ) {
             while (index < frameVisited.length && frameVisited[index]) {
@@ -1101,7 +1101,7 @@ public class IRectanglesUnion {
             if (index >= frameVisited.length) {
                 break;
             }
-            final List<Frame> component = new ArrayList<Frame>();
+            final List<Frame> component = new ArrayList<>();
             // Breadth-first search:
             queue.add(frames.get(index));
             frameVisited[index] = true;
@@ -1128,7 +1128,7 @@ public class IRectanglesUnion {
     }
 
     private List<HorizontalSideSeries> createHorizontalSideSeriesLists() {
-        final List<HorizontalSideSeries> result = new ArrayList<HorizontalSideSeries>();
+        final List<HorizontalSideSeries> result = new ArrayList<>();
         HorizontalSideSeries last = null;
         for (HorizontalSide side : horizontalSides) {
             boolean expanded = last != null && last.expand(side);
@@ -1147,7 +1147,7 @@ public class IRectanglesUnion {
     }
 
     private List<VerticalSideSeries> createVerticalSideSeriesLists() {
-        final List<VerticalSideSeries> result = new ArrayList<VerticalSideSeries>();
+        final List<VerticalSideSeries> result = new ArrayList<>();
         VerticalSideSeries last = null;
         for (VerticalSide side : verticalSides) {
             boolean expanded = last != null && last.expand(side);
@@ -1182,7 +1182,7 @@ public class IRectanglesUnion {
     private long doFindHorizontalBoundaries() {
         assert !frames.isEmpty();
         final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
-            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, true);
+                new HorizontalIBracketSet<>(horizontalSideSeries, true);
         long count = 0;
         while (bracketSet.next()) {
             final Set<IBracket> brackets = bracketSet.currentIntersections();
@@ -1340,7 +1340,7 @@ public class IRectanglesUnion {
         final long maxCount = 10 * Math.min(numberOfHorizontalLinks, Integer.MAX_VALUE);
         // really the limit is 2 * numberOfHorizontalLinks;
         // Integer.MAX_VALUE is also the limit due to 31-bit result.size()
-        List<List<BoundaryLink>> result = new ArrayList<List<BoundaryLink>>();
+        List<List<BoundaryLink>> result = new ArrayList<>();
         for (HorizontalSideSeries series : horizontalSideSeriesAtBoundary) {
             for (HorizontalBoundaryLink link : series.containedBoundaryLinks) {
                 if (!link.joinedIntoAllBoundaries) {
@@ -1355,9 +1355,9 @@ public class IRectanglesUnion {
     // This method is saved for debugging needs
     private List<HorizontalSection> doFindHorizontalSectionsSlowly() {
         assert !frames.isEmpty();
-        final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
+        final List<HorizontalSection> result = new ArrayList<>();
         final HorizontalIBracketSet<HorizontalSideSeries> bracketSet =
-            new HorizontalIBracketSet<HorizontalSideSeries>(horizontalSideSeries, false);
+                new HorizontalIBracketSet<>(horizontalSideSeries, false);
         HorizontalSection lastSection = null;
         while (bracketSet.next()) {
             if (bracketSet.horizontal.first && bracketSet.horizontal.containsBoundary()) {
@@ -1388,9 +1388,9 @@ public class IRectanglesUnion {
 
     private List<HorizontalSection> doFindHorizontalSections() {
         assert !frames.isEmpty();
-        final List<HorizontalSection> result = new ArrayList<HorizontalSection>();
+        final List<HorizontalSection> result = new ArrayList<>();
         final HorizontalBoundaryIBracketSet<HorizontalBoundaryLink> bracketSet =
-            new HorizontalBoundaryIBracketSet<HorizontalBoundaryLink>(allHorizontalBoundaryLinks());
+                new HorizontalBoundaryIBracketSet<>(allHorizontalBoundaryLinks());
         HorizontalSection lastSection = null;
         while (bracketSet.next()) {
             if (bracketSet.horizontal.atFirstOfTwoParallelSides()) {
@@ -1519,7 +1519,7 @@ public class IRectanglesUnion {
     }
 
     private static List<BoundaryLink> scanBoundary(HorizontalBoundaryLink start, long maxCount) {
-        List<BoundaryLink> result = new ArrayList<BoundaryLink>();
+        List<BoundaryLink> result = new ArrayList<>();
         HorizontalBoundaryLink hLink = start;
         VerticalBoundaryLink vLink = start.linkTo;
         long count = 0;
@@ -1551,7 +1551,7 @@ public class IRectanglesUnion {
             }
         }
         long t1 = System.nanoTime();
-        List<Frame> result = new ArrayList<Frame>();
+        List<Frame> result = new ArrayList<>();
         int index = 0;
         for (IRectangularArea rectangle : rectangles) {
             result.add(new Frame(rectangle, index++));
@@ -1565,7 +1565,7 @@ public class IRectanglesUnion {
     private static List<Frame> cloneFrames(Collection<Frame> frames) {
         assert frames != null;
         long t1 = System.nanoTime();
-        List<Frame> result = new ArrayList<Frame>();
+        List<Frame> result = new ArrayList<>();
         int index = 0;
         for (Frame frame : frames) {
             result.add(new Frame(frame.rectangle, index++));
@@ -1581,9 +1581,9 @@ public class IRectanglesUnion {
     }
 
     private static <T> List<List<T>> createListOfLists(int n) {
-        final List<List<T>> result = new ArrayList<List<T>>();
+        final List<List<T>> result = new ArrayList<>();
         for (int k = 0; k < n; k++) {
-            result.add(new ArrayList<T>());
+            result.add(new ArrayList<>());
         }
         return result;
     }
@@ -1676,7 +1676,7 @@ public class IRectanglesUnion {
                 sideTo = followingSide.transversalFrameSideTo();
             }
             if (otherSides == null) {
-                otherSides = new ArrayList<FrameSide>();
+                otherSides = new ArrayList<>();
             }
             otherSides.add(followingSide);
             followingSide.parentSeries = this;
@@ -1700,7 +1700,7 @@ public class IRectanglesUnion {
 
         private void addLink(HorizontalBoundaryLink link) {
             if (containedBoundaryLinks == null) {
-                containedBoundaryLinks = new ArrayList<HorizontalBoundaryLink>();
+                containedBoundaryLinks = new ArrayList<>();
             }
             containedBoundaryLinks.add(link);
         }
@@ -1731,14 +1731,14 @@ public class IRectanglesUnion {
 
         private void addLink(VerticalBoundaryLink link) {
             if (containedBoundaryLinks == null) {
-                containedBoundaryLinks = new ArrayList<VerticalBoundaryLink>();
+                containedBoundaryLinks = new ArrayList<>();
             }
             containedBoundaryLinks.add(link);
         }
 
         private void addIntersectingLink(HorizontalBoundaryLink link) {
             if (intersectingBoundaryLinks == null) {
-                intersectingBoundaryLinks = new ArrayList<HorizontalBoundaryLink>();
+                intersectingBoundaryLinks = new ArrayList<>();
             }
             intersectingBoundaryLinks.add(link);
         }
@@ -1758,7 +1758,7 @@ public class IRectanglesUnion {
         private final long right;
         private final int leftNumberOfLessCoordinatesAtBoundary;
         private final int rightNumberOfLessCoordinatesAtBoundary;
-        private final List<HorizontalBoundaryLink> boundaryLinksAtSection = new ArrayList<HorizontalBoundaryLink>();
+        private final List<HorizontalBoundaryLink> boundaryLinksAtSection = new ArrayList<>();
         private IRectangularArea largestRectangle = null;
         // - can be accessed via reflection for debugging needs
 

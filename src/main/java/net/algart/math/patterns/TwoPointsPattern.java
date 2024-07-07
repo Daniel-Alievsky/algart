@@ -54,7 +54,7 @@ final class TwoPointsPattern extends AbstractPattern implements DirectPointSetPa
 
     @Override
     public Set<Point> points() {
-        Set<Point> resultPoints = new HashSet<Point>(2);
+        Set<Point> resultPoints = new HashSet<>(2);
         resultPoints.add(p1);
         resultPoints.add(p2);
         return Collections.unmodifiableSet(resultPoints);

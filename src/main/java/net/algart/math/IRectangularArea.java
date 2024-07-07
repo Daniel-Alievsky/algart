@@ -771,7 +771,7 @@ public class IRectangularArea {
      */
     public List<IRectangularArea> intersection(Collection<IRectangularArea> areas) {
         Objects.requireNonNull(areas, "Null areas argument");
-        final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
+        final List<IRectangularArea> result = new ArrayList<>();
         for (IRectangularArea area : areas) {
             IRectangularArea intersection = intersection(area);
             if (intersection != null) {
@@ -931,7 +931,7 @@ public class IRectangularArea {
      */
     public Queue<IRectangularArea> subtract(Collection<IRectangularArea> whatToSubtract) {
         Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
-        Queue<IRectangularArea> difference = new ArrayDeque<IRectangularArea>();
+        Queue<IRectangularArea> difference = new ArrayDeque<>();
         difference.add(this);
         IRectangularArea.subtractCollection(difference, whatToSubtract);
         return difference;
@@ -1419,7 +1419,7 @@ public class IRectangularArea {
             IPoint expansion,
             boolean straightOnly) {
         Objects.requireNonNull(areas, "Null areas");
-        final List<IRectangularArea> result = new ArrayList<IRectangularArea>();
+        final List<IRectangularArea> result = new ArrayList<>();
         for (IRectangularArea area : areas) {
             if (straightOnly) {
                 area.dilateStraightOnly(result, expansion);

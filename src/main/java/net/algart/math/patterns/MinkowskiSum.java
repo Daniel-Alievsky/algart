@@ -44,7 +44,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
 
     private MinkowskiSum(Pattern[] patterns, List<Pattern> optimizedSummands) {
         super(getDimCountAndCheck(patterns));
-        List<Pattern> allSummands = new ArrayList<Pattern>();
+        List<Pattern> allSummands = new ArrayList<>();
         for (Pattern ptn : patterns) {
             if (ptn instanceof MinkowskiSum) {
                 allSummands.addAll(Arrays.asList(((MinkowskiSum) ptn).summands));
@@ -97,7 +97,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
                 ptn = ptn.minkowskiAdd(optimizedSummands.get(k));
             }
             resultPoints = ptn.points(); // immutable set
-            points = new SoftReference<Set<Point>>(resultPoints);
+            points = new SoftReference<>(resultPoints);
         }
         return resultPoints;
     }
@@ -169,7 +169,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
         }
         Pattern[] newSummands = summands.clone();
         newSummands[0] = newSummands[0].shift(shift);
-        List<Pattern> newOptimizedSummands = new ArrayList<Pattern>(optimizedSummands);
+        List<Pattern> newOptimizedSummands = new ArrayList<>(optimizedSummands);
         newOptimizedSummands.set(0, newOptimizedSummands.get(0).shift(shift));
         return new MinkowskiSum(newSummands, newOptimizedSummands);
     }
@@ -199,7 +199,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
 
     @Override
     public List<Pattern> minkowskiDecomposition(int minimalPointCount) {
-        ArrayList<Pattern> result = new ArrayList<Pattern>();
+        ArrayList<Pattern> result = new ArrayList<>();
         for (Pattern summand : optimizedSummands) {
             result.addAll(summand.minkowskiDecomposition(minimalPointCount));
         }
@@ -260,8 +260,8 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
     }
 
     private static List<Pattern> optimizeMinkowskiSum(List<Pattern> patterns) {
-        Map<Pattern, Integer> numbersOfEquals = new HashMap<Pattern, Integer>();
-        Map<Point, UniformGridPattern> rectangularSummands = new HashMap<Point, UniformGridPattern>();
+        Map<Pattern, Integer> numbersOfEquals = new HashMap<>();
+        Map<Point, UniformGridPattern> rectangularSummands = new HashMap<>();
         Pattern onePointSummand = null;
         for (Pattern pattern : patterns) {
             if (pattern instanceof OnePointPattern) {
@@ -269,10 +269,9 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
                 if (!(onePointSummand instanceof OnePointPattern)) {
                     throw new AssertionError("Invalid OnePointPattern.minkowskiAdd implementation");
                 }
-            } else if (pattern instanceof UniformGridPattern
+            } else if (pattern instanceof UniformGridPattern ugPattern
                 && ((UniformGridPattern) pattern).isActuallyRectangular())
             {
-                UniformGridPattern ugPattern = (UniformGridPattern) pattern;
                 ugPattern = new BasicRectangularPattern(ugPattern.originOfGrid(), ugPattern.stepsOfGrid(),
                     ugPattern.gridIndexArea().ranges());
                 Point steps = Point.valueOf(ugPattern.stepsOfGrid());
@@ -292,17 +291,14 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
             }
         }
         List<Map.Entry<Pattern, Integer>> multiPatterns =
-            new ArrayList<Map.Entry<Pattern, Integer>>(numbersOfEquals.entrySet());
+                new ArrayList<>(numbersOfEquals.entrySet());
         // Sorting by decreasing number of points
-        Collections.sort(multiPatterns, new Comparator<Map.Entry<Pattern, Integer>>() {
-            public int compare(Map.Entry<Pattern, Integer> o1, Map.Entry<Pattern, Integer> o2) {
-                long pointCount1 = o1.getKey().pointCount();
-                long pointCount2 = o2.getKey().pointCount();
-                return pointCount1 < pointCount2 ? 1 : pointCount1 > pointCount2 ? -1 : 0;
-            }
+        multiPatterns.sort((o1, o2) -> {
+            long pointCount1 = o1.getKey().pointCount();
+            long pointCount2 = o2.getKey().pointCount();
+            return Long.compare(pointCount2, pointCount1);
         });
-        List<Pattern> result = new ArrayList<Pattern>();
-        result.addAll(rectangularSummands.values());
+        List<Pattern> result = new ArrayList<>(rectangularSummands.values());
         if (onePointSummand != null) {
             if (result.isEmpty()) {
                 result.add(onePointSummand);

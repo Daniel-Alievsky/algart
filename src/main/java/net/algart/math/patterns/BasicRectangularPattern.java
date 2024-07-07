@@ -82,9 +82,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         }
         Set<IPoint> resultIndexes = gridIndexesRef == null ? null : gridIndexesRef.get();
         if (resultIndexes == null) {
-            resultIndexes = new HashSet<IPoint>((int) pointCount);
+            resultIndexes = new HashSet<>((int) pointCount);
             addIPointsToParallelepiped(resultIndexes, new long[dimCount], 0); //new long[]: zero-filled
-            gridIndexesRef = new SoftReference<Set<IPoint>>(resultIndexes);
+            gridIndexesRef = new SoftReference<>(resultIndexes);
         }
         return Collections.unmodifiableSet(resultIndexes);
     }
@@ -205,9 +205,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         }
         Set<Point> resultIndexes = pointsRef == null ? null : pointsRef.get();
         if (resultIndexes == null) {
-            resultIndexes = new HashSet<Point>((int) pointCount);
+            resultIndexes = new HashSet<>((int) pointCount);
             addPointsToParallelepiped(resultIndexes, new long[dimCount], 0); //new long[]: zero-filled
-            pointsRef = new SoftReference<Set<Point>>(resultIndexes);
+            pointsRef = new SoftReference<>(resultIndexes);
         }
         return Collections.unmodifiableSet(resultIndexes);
     }
@@ -313,10 +313,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public Pattern minkowskiAdd(Pattern added) {
-        if (!(added instanceof BasicRectangularPattern) || added.dimCount() != this.dimCount) {
+        if (!(added instanceof BasicRectangularPattern ugAdded) || added.dimCount() != this.dimCount) {
             return super.minkowskiAdd(added);
         }
-        UniformGridPattern ugAdded = (UniformGridPattern) added;
         if (!stepsOfGridEqual(ugAdded)) {
             return super.minkowskiAdd(added);
         }
@@ -335,10 +334,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public Pattern minkowskiSubtract(Pattern subtracted) {
-        if (!(subtracted instanceof BasicRectangularPattern) || subtracted.dimCount() != this.dimCount) {
+        if (!(subtracted instanceof BasicRectangularPattern ugSubtracted) || subtracted.dimCount() != this.dimCount) {
             return super.minkowskiSubtract(subtracted);
         }
-        UniformGridPattern ugSubtracted = (UniformGridPattern) subtracted;
         if (!stepsOfGridEqual(ugSubtracted)) {
             return super.minkowskiAdd(subtracted);
         }
@@ -394,13 +392,12 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BasicRectangularPattern)) {
+        if (!(obj instanceof BasicRectangularPattern pattern)) {
             return false;
         }
         if (obj == this) {
             return true;
         }
-        BasicRectangularPattern pattern = (BasicRectangularPattern) obj;
         return Arrays.equals(gridIndexRanges, pattern.gridIndexRanges)
             && originOfGrid.equals(pattern.originOfGrid)
             && stepsVector.equals(pattern.stepsVector);

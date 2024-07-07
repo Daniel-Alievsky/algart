@@ -134,7 +134,7 @@ class BasicDirectPointSetUniformGridPattern
             throw new IllegalArgumentException("The number of shift coordinates " + shift.coordCount()
                 + " is not equal to the number of pattern coordinates " + dimCount);
         }
-        Set<IPoint> resultIndexes = new HashSet<IPoint>(gridIndexes.size());
+        Set<IPoint> resultIndexes = new HashSet<>(gridIndexes.size());
         for (IPoint p : gridIndexes) {
             resultIndexes.add(p.add(shift));
         }
@@ -198,7 +198,7 @@ class BasicDirectPointSetUniformGridPattern
                 positiveMultipliers[k] = multipliers[k] < 0.0 ? -multipliers[k] :
                     multipliers[k] == 0.0 ? 1.0 : multipliers[k];
             }
-            newIndexes = new HashSet<IPoint>(gridIndexes.size());
+            newIndexes = new HashSet<>(gridIndexes.size());
             long[] coordinates = new long[dimCount];
             for (IPoint p : gridIndexes) {
                 p.coordinates(coordinates);
@@ -225,7 +225,7 @@ class BasicDirectPointSetUniformGridPattern
         if (dimCount == 1) {
             throw new IllegalStateException("Cannot perform projection for 1-dimensional pattern");
         }
-        Set<IPoint> resultIndexes = new HashSet<IPoint>(gridIndexes.size());
+        Set<IPoint> resultIndexes = new HashSet<>(gridIndexes.size());
         for (IPoint p : gridIndexes) {
             resultIndexes.add(p.projectionAlongAxis(coordIndex));
         }

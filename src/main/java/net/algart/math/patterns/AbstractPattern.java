@@ -110,7 +110,7 @@ public abstract class AbstractPattern implements Pattern {
      *                                     (<code>OutOfMemoryError</code> can be also thrown in this case).
      */
     public Set<IPoint> roundedPoints() {
-        Set<IPoint> result = new HashSet<IPoint>();
+        Set<IPoint> result = new HashSet<>();
         for (Point p : points()) {
             result.add(p.toRoundedPoint());
         }
@@ -405,7 +405,7 @@ public abstract class AbstractPattern implements Pattern {
             return shift(added.coordMin());
         }
 
-        Set<Point> resultPoints = new HashSet<Point>();
+        Set<Point> resultPoints = new HashSet<>();
         Set<Point> points = points();
         Set<Point> addedPoints = added.points();
         for (Point p : points) {
@@ -456,7 +456,7 @@ public abstract class AbstractPattern implements Pattern {
         assert minimal != null : "Empty subtracted.points()";
         boolean containsOrigin = minimal.isOrigin();
         Set<Point> points = points();
-        Set<Point> resultPoints = new HashSet<Point>();
+        Set<Point> resultPoints = new HashSet<>();
         mainLoop:
         for (Point p : points) {
             // Formally, we need here a loop for infinity number of all points p in the space;
@@ -652,7 +652,7 @@ public abstract class AbstractPattern implements Pattern {
         synchronized (minBound) {
             if (minBound[coordIndex] == null) {
                 Set<Point> points = points();
-                Map<Point, Point> map = new HashMap<Point, Point>();
+                Map<Point, Point> map = new HashMap<>();
                 for (Point p : points) {
                     Point projection = p.projectionAlongAxis(coordIndex);
                     Point bound = map.get(projection);
@@ -673,7 +673,7 @@ public abstract class AbstractPattern implements Pattern {
         synchronized (maxBound) {
             if (maxBound[coordIndex] == null) {
                 Set<Point> points = points();
-                Map<Point, Point> map = new HashMap<Point, Point>();
+                Map<Point, Point> map = new HashMap<>();
                 for (Point p : points) {
                     Point projection = p.projectionAlongAxis(coordIndex);
                     Point bound = map.get(projection);

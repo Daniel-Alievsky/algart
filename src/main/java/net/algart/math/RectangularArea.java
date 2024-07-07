@@ -711,7 +711,7 @@ public class RectangularArea {
      */
     public List<RectangularArea> intersection(Collection<RectangularArea> areas) {
         Objects.requireNonNull(areas, "Null areas argument");
-        final List<RectangularArea> result = new ArrayList<RectangularArea>();
+        final List<RectangularArea> result = new ArrayList<>();
         for (RectangularArea area : areas) {
             RectangularArea intersection = intersection(area);
             if (intersection != null) {
@@ -871,7 +871,7 @@ public class RectangularArea {
      */
     public Queue<RectangularArea> subtract(Collection<RectangularArea> whatToSubtract) {
         Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
-        Queue<RectangularArea> difference = new ArrayDeque<RectangularArea>();
+        Queue<RectangularArea> difference = new ArrayDeque<>();
         difference.add(this);
         RectangularArea.subtractCollection(difference, whatToSubtract);
         return difference;
@@ -1342,7 +1342,7 @@ public class RectangularArea {
             Point expansion,
             boolean straightOnly) {
         Objects.requireNonNull(areas, "Null areas");
-        final List<RectangularArea> result = new ArrayList<RectangularArea>();
+        final List<RectangularArea> result = new ArrayList<>();
         for (RectangularArea area : areas) {
             if (straightOnly) {
                 area.dilateStraightOnly(result, expansion);

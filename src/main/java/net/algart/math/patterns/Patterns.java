@@ -293,7 +293,7 @@ public class Patterns {
         Objects.requireNonNull(surface, "Null surface argument");
         final int dimCount = projection.dimCount();
         final Set<Point> projectionPoints = projection.points();
-        Set<Point> resultPoints = new HashSet<Point>();
+        Set<Point> resultPoints = new HashSet<>();
         double[] coordinates = new double[dimCount];
         double[] resultPoint = new double[dimCount + 1];
         for (Point projectionPoint : projectionPoints) {
@@ -331,7 +331,7 @@ public class Patterns {
         double[] steps = new double[dimCount + 1];
         System.arraycopy(projectionSteps, 0, steps, 0, dimCount);
         steps[dimCount] = lastCoordinateStep;
-        Set<IPoint> resultIndexes = new HashSet<IPoint>();
+        Set<IPoint> resultIndexes = new HashSet<>();
         double[] coordinates = new double[dimCount];
         long[] resultIndex = new long[dimCount + 1];
         for (IPoint projectionIndex : projectionIndexes) {

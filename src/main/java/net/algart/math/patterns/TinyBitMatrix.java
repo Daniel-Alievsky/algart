@@ -172,13 +172,13 @@ class TinyBitMatrix {
     }
 
     public UniformGridPattern getIntegerPattern() {
-        Set<IPoint> points = new HashSet<IPoint>();
+        Set<IPoint> points = new HashSet<>();
         addPoints(points, new long[dimCount()], new boolean[dim(0)], 0, null);
         return Patterns.newIntegerPattern(points);
     }
 
     public UniformGridPattern getPattern(IPoint shift) {
-        Set<IPoint> points = new HashSet<IPoint>();
+        Set<IPoint> points = new HashSet<>();
         addPoints(points, new long[dimCount()], new boolean[dim(0)], 0, shift);
         return new BasicDirectPointSetUniformGridPattern(shift.coordCount(), points);
     }
