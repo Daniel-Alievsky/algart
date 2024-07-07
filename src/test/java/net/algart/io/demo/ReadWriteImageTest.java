@@ -155,7 +155,7 @@ public class ReadWriteImageTest {
             System.out.printf("writeBufferedImage: %.3f ms, %.3f MB/sec%n",
                 (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
 
-            toMatrix.setReadPixelValuesViaColorModel(true);
+            toMatrix.setReadPixelValuesViaGraphics2D(true);
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix3 = toMatrix.toMatrix(bi);
             t2 = System.nanoTime();

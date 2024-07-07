@@ -69,9 +69,10 @@ public abstract class BufferedImageToMatrix {
         }
         Object resultData = null;
         if (resultArray != null) {
-            if (resultArray.elementType() != elementType)
+            if (resultArray.elementType() != elementType) {
                 throw new IllegalArgumentException("Incompatible result array: element type should be "
                         + elementType);
+            }
             if (resultArray instanceof DirectAccessible && ((DirectAccessible) resultArray).hasJavaArray()
                     && ((DirectAccessible) resultArray).javaArrayOffset() == 0
                     && resultArray.length() >= size) {
@@ -85,7 +86,7 @@ public abstract class BufferedImageToMatrix {
         return SimpleMemoryModel.asMatrix(resultData, dimensions);
     }
 
-    public int getNumberOfChannels(BufferedImage bufferedImage) {
+    public final int getNumberOfChannels(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         ColorModel cm = bufferedImage.getColorModel();
         boolean gray = cm.getNumComponents() == 1;
@@ -117,7 +118,7 @@ public abstract class BufferedImageToMatrix {
 
     public abstract long[] getResultMatrixDimensions(int width, int height, int bandCount);
 
-    public static Class<?> getResultElementType(SampleModel sampleModel) {
+    public static Class<?> tryToDetectElementType(SampleModel sampleModel) {
         return switch (sampleModel.getDataType()) {
             case DataBuffer.TYPE_BYTE -> byte.class;
             case DataBuffer.TYPE_SHORT, DataBuffer.TYPE_USHORT -> short.class;
@@ -152,7 +153,7 @@ public abstract class BufferedImageToMatrix {
         return switch (sampleModel.getDataType()) {
             case DataBuffer.TYPE_BYTE,
                  DataBuffer.TYPE_USHORT,
-                 DataBuffer.TYPE_INT -> getResultElementType(sampleModel);
+                 DataBuffer.TYPE_INT -> tryToDetectElementType(sampleModel);
             default -> null;
         };
     }
@@ -214,18 +215,23 @@ public abstract class BufferedImageToMatrix {
 
         @Override
         protected void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage) {
-            final int dimX = bufferedImage.getWidth();
-            final int dimY = bufferedImage.getHeight();
-            final int bandCount = getNumberOfChannels(bufferedImage);
+            Objects.requireNonNull(resultJavaArray, "Null resultJavaArray");
+            Objects.requireNonNull(bufferedImage, "Null bufferedImage");
+            int dimX = bufferedImage.getWidth();
+            int dimY = bufferedImage.getHeight();
+            int bandCount = getNumberOfChannels(bufferedImage);
             assert bandCount <= 4;
-            assert java.lang.reflect.Array.getLength(resultJavaArray) >= dimX * dimY * bandCount;
-            final ColorModel colorModel = bufferedImage.getColorModel();
-            final SampleModel sampleModel = bufferedImage.getSampleModel();
+            if (java.lang.reflect.Array.getLength(resultJavaArray) < dimX * dimY * bandCount) {
+                throw new IllegalArgumentException("resultJavaArray too small for " +
+                        dimX + "x" + dimY + "x" + bandCount);
+            }
             final boolean gray = bandCount == 1;
             final boolean invertBandOrder = bgrOrder && (bandCount == 3 || bandCount == 4);
             if (readPixelValuesViaColorModel) {
-                assert resultJavaArray instanceof byte[];
-                byte[] result = (byte[]) resultJavaArray;
+                if (!(resultJavaArray instanceof byte[] result)) {
+                    throw new IllegalArgumentException("resultJavaArray must be byte[]");
+                }
+                final ColorModel colorModel = bufferedImage.getColorModel();
                 Raster r = bufferedImage.getRaster();
                 Object outData = null;
                 final int rIndex = bgrOrder ? 2 : 0;
@@ -275,7 +281,7 @@ public abstract class BufferedImageToMatrix {
                 // or unsupported element type,
                 // we don't use it and prefer more stable "simplest" algorithm below.
                 final Raster r = bufferedImage.getRaster();
-                final int dataBufferType = sampleModel.getDataType();
+                final int dataBufferType = r.getSampleModel().getDataType();
                 final int[] buffer = new int[dimX];
                 final int lineCount = buffer.length / dimX;
                 assert lineCount >= 1;
@@ -288,22 +294,25 @@ public abstract class BufferedImageToMatrix {
                         r.getSamples(0, y, dimX, m, correctedBandIndex, buffer);
                         switch (dataBufferType) {
                             case DataBuffer.TYPE_BYTE -> {
-                                assert resultJavaArray instanceof byte[];
-                                byte[] result = (byte[]) resultJavaArray;
+                                if (!(resultJavaArray instanceof byte[] result)) {
+                                    throw new IllegalArgumentException("resultJavaArray must be byte[]");
+                                }
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = (byte) (buffer[i] & 0xFF);
                                 }
                             }
                             case DataBuffer.TYPE_USHORT -> {
-                                assert resultJavaArray instanceof short[];
-                                short[] result = (short[]) resultJavaArray;
+                                if (!(resultJavaArray instanceof short[] result)) {
+                                    throw new IllegalArgumentException("resultJavaArray must be short[]");
+                                }
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = (short) (buffer[i] & 0xFFFF);
                                 }
                             }
                             case DataBuffer.TYPE_INT -> {
-                                assert resultJavaArray instanceof int[];
-                                int[] result = (int[]) resultJavaArray;
+                                if (!(resultJavaArray instanceof int[] result)) {
+                                    throw new IllegalArgumentException("resultJavaArray must be int[]");
+                                }
                                 for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
                                     result[j] = buffer[i];
                                 }
@@ -319,9 +328,10 @@ public abstract class BufferedImageToMatrix {
             // Simplest algorithm: via BufferedImage.getGraphics
             // Note: sometimes, due to some internal optimizations, this branch work even faster
             // than the previous one. But usually the previous branch works in several times faster.
-            assert resultJavaArray instanceof byte[];
-            final byte[] result = (byte[]) resultJavaArray;
-            final boolean banded = sampleModel instanceof BandedSampleModel;
+            if (!(resultJavaArray instanceof byte[] result)) {
+                throw new IllegalArgumentException("resultJavaArray must be byte[]");
+            }
+            final boolean banded = bufferedImage.getSampleModel() instanceof BandedSampleModel;
             final byte[][] rgbAlpha = new byte[gray && !banded ? 3 : 1][];
             // even if gray, but not banded, we make full RGB banded image:
             // if no, ColorSpace.CS_GRAY produces invalid values (too dark)
@@ -335,13 +345,15 @@ public abstract class BufferedImageToMatrix {
             final ColorModel cm;
             if (gray) {
                 int[] indexes = new int[rgbAlpha.length];
-                int[] offsets = new int[rgbAlpha.length]; // zero-filled by Java
+                int[] offsets = new int[rgbAlpha.length];
+                // zero-filled by Java
                 for (int k = 0; k < indexes.length; k++) {
                     indexes[k] = k;
                     offsets[k] = 0;
                 }
                 wr = Raster.createBandedRaster(db, dimX, dimY, dimX, indexes, offsets, null);
-                cm = new ComponentColorModel(cs, null, colorModel.hasAlpha(), false,
+                cm = new ComponentColorModel(cs, null,
+                        bufferedImage.getColorModel().hasAlpha(), false,
                         ColorModel.OPAQUE, db.getDataType());
             } else {
                 int[] offsets = new int[bandCount];

@@ -99,7 +99,7 @@ public class AWT2MatrixTest {
         return bi
                 + "; sample model: " + sm + " " +
                 sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands() +
-                " type " + sm.getDataType() + " (" + BufferedImageToMatrix.getResultElementType(sm) + ")" +
+                " type " + sm.getDataType() + " (" + BufferedImageToMatrix.tryToDetectElementType(sm) + ")" +
                 "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
     }
 }
