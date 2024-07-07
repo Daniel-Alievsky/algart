@@ -172,12 +172,7 @@ public class ReadWriteImageTest {
 
             if (!matrix1.equals(matrix3)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using ColorModel!");
-                final Path altFile = Paths.get(targetFile2 + ".alt_cm.png");
                 System.out.println("        " + matrix3);
-                BufferedImage biAlt = toBufferedImage.toBufferedImage(matrix3);
-                AWT2MatrixTest.drawTextOnImage(biAlt);
-                MatrixIO.writeBufferedImage(altFile, biAlt);
-                System.out.println("        saved in " + altFile);
             }
 
             // Testing toMatrix via Graphics2D
@@ -202,12 +197,7 @@ public class ReadWriteImageTest {
 
             if (!matrix1.equals(matrix4)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
-                final Path altFile = Paths.get(targetFile3 + ".alt_g.png");
                 System.out.println("        " + matrix4);
-                BufferedImage biAlt = toBufferedImage.toBufferedImage(matrix4);
-                AWT2MatrixTest.drawTextOnImage(biAlt);
-                MatrixIO.writeBufferedImage(altFile, biAlt);
-                System.out.println("        saved in " + altFile);
             }
         }
     }
