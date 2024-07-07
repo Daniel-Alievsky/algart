@@ -37,7 +37,6 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public abstract class BufferedImageToMatrix {
-    private static final boolean USE_3_BANDS_FOR_NON_BANDED_GRAY = true;
     // - must be true to avoid a problem with reading gray images via Graphics2D ("simplest" algorithm)
 
     private boolean enableAlpha = true;
@@ -61,7 +60,7 @@ public abstract class BufferedImageToMatrix {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         final int dimX = bufferedImage.getWidth();
         final int dimY = bufferedImage.getHeight();
-        final int bandCount = getBandCount(bufferedImage);
+        final int bandCount = getNumberOfChannels(bufferedImage);
         final long[] dimensions = getResultMatrixDimensions(dimX, dimY, bandCount);
         final Class<?> elementType = getResultElementType(bufferedImage);
         final long size = Arrays.longMul(dimensions);
@@ -86,13 +85,13 @@ public abstract class BufferedImageToMatrix {
         return SimpleMemoryModel.asMatrix(resultData, dimensions);
     }
 
-    public int getBandCount(BufferedImage bufferedImage) {
+    public int getNumberOfChannels(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         ColorModel cm = bufferedImage.getColorModel();
         boolean gray = cm.getNumComponents() == 1;
         // ...SampleModel sm = bufferedImage.getSampleModel();...
         // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
-        // In some TIF we have only 1 band, but RGB color model, because it uses palette; so, bandCount must be 3.
+        // In some TIFF we have only 1 band, but RGB color model, because it uses palette; so, result must be 3.
         return cm.hasAlpha() && enableAlpha ? 4 : gray ? 1 : 3;
     }
 
@@ -113,12 +112,50 @@ public abstract class BufferedImageToMatrix {
         return getResultMatrixDimensions(
                 bufferedImage.getWidth(),
                 bufferedImage.getHeight(),
-                getBandCount(bufferedImage));
+                getNumberOfChannels(bufferedImage));
     }
 
     public abstract long[] getResultMatrixDimensions(int width, int height, int bandCount);
 
+    public static Class<?> getResultElementType(SampleModel sampleModel) {
+        return switch (sampleModel.getDataType()) {
+            case DataBuffer.TYPE_BYTE -> byte.class;
+            case DataBuffer.TYPE_SHORT, DataBuffer.TYPE_USHORT -> short.class;
+            case DataBuffer.TYPE_INT -> int.class;
+            case DataBuffer.TYPE_FLOAT -> float.class;
+            case DataBuffer.TYPE_DOUBLE -> double.class;
+            default -> null;
+        };
+    }
+
     protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
+
+    Class<?> getResultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
+        final int numberOfChannels = getNumberOfChannels(bufferedImage);
+        final ColorModel colorModel = bufferedImage.getColorModel();
+        final SampleModel sampleModel = bufferedImage.getSampleModel();
+        final int colorComponentsCount = colorModel.getNumComponents();
+        if (numberOfChannels > colorComponentsCount || colorComponentsCount != sampleModel.getNumBands()) {
+            return null;
+            // - excluding images with palette (getNumberOfChannels will be 3, but only 1 band in getNumBands())
+            // but numberOfChannels=3 and colorComponentsCount=4 is allowed
+        }
+        if (!(colorModel instanceof ComponentColorModel && sampleModel instanceof ComponentSampleModel)) {
+            // - in this case, for example, for the result of
+            //      new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB)
+            // or
+            //      new BufferedImage(1000, 1000, BufferedImage.TYPE_USHORT_565_RGB)
+            // there is no simple way to detect correct element type:
+            // for example, DataBuffer.TYPE_INT can really mean packed 8-bit RGB values
+            return null;
+        }
+        return switch (sampleModel.getDataType()) {
+            case DataBuffer.TYPE_BYTE,
+                 DataBuffer.TYPE_USHORT,
+                 DataBuffer.TYPE_INT -> getResultElementType(sampleModel);
+            default -> null;
+        };
+    }
 
     public static class ToInterleavedRGB extends BufferedImageToMatrix {
         public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL = false;
@@ -179,7 +216,7 @@ public abstract class BufferedImageToMatrix {
         protected void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage) {
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
-            final int bandCount = getBandCount(bufferedImage);
+            final int bandCount = getNumberOfChannels(bufferedImage);
             assert bandCount <= 4;
             assert java.lang.reflect.Array.getLength(resultJavaArray) >= dimX * dimY * bandCount;
             final ColorModel colorModel = bufferedImage.getColorModel();
@@ -284,9 +321,7 @@ public abstract class BufferedImageToMatrix {
             // than the previous one. But usually the previous branch works in several times faster.
             assert resultJavaArray instanceof byte[];
             final byte[] result = (byte[]) resultJavaArray;
-            final boolean banded = USE_3_BANDS_FOR_NON_BANDED_GRAY ?
-                    sampleModel instanceof BandedSampleModel :
-                    true;
+            final boolean banded = sampleModel instanceof BandedSampleModel;
             final byte[][] rgbAlpha = new byte[gray && !banded ? 3 : 1][];
             // even if gray, but not banded, we make full RGB banded image:
             // if no, ColorSpace.CS_GRAY produces invalid values (too dark)
@@ -329,36 +364,6 @@ public abstract class BufferedImageToMatrix {
 
         private boolean isSupportedStructure(BufferedImage bufferedImage) {
             return getResultElementTypeOrNullForUnsupported(bufferedImage) != null;
-        }
-
-        private Class<?> getResultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
-            final int bandCount = getBandCount(bufferedImage);
-            final ColorModel colorModel = bufferedImage.getColorModel();
-            final SampleModel sampleModel = bufferedImage.getSampleModel();
-            final int colorComponentsCount = colorModel.getNumComponents();
-            if (bandCount <= colorComponentsCount // in particular, when bandCount=3 and colorComponentsCount=4
-                    && colorComponentsCount == sampleModel.getNumBands()
-                    && colorModel instanceof ComponentColorModel
-                    && sampleModel instanceof ComponentSampleModel) {
-                switch (sampleModel.getDataType()) {
-                    case DataBuffer.TYPE_BYTE:
-                    case DataBuffer.TYPE_USHORT:
-                    case DataBuffer.TYPE_INT:
-                        return getResultElementType(sampleModel);
-                }
-            }
-            return null;
-        }
-
-        private static Class<?> getResultElementType(SampleModel sampleModel) {
-            return switch (sampleModel.getDataType()) {
-                case DataBuffer.TYPE_BYTE -> byte.class;
-                case DataBuffer.TYPE_SHORT, DataBuffer.TYPE_USHORT -> short.class;
-                case DataBuffer.TYPE_INT -> int.class;
-                case DataBuffer.TYPE_FLOAT -> float.class;
-                case DataBuffer.TYPE_DOUBLE -> double.class;
-                default -> byte.class;
-            };
         }
     }
 

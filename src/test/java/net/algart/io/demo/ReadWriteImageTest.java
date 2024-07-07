@@ -102,6 +102,7 @@ public class ReadWriteImageTest {
                 t2 = System.nanoTime();
                 System.out.printf("Converted to monochrome in %.3f ms%n", (t2 - t1) * 1e-6);
             }
+            System.out.println("Source image: " + AWT2MatrixTest.toString(bi));
 
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi);
@@ -123,12 +124,24 @@ public class ReadWriteImageTest {
             if (!matrix1.equals(interleave)) {
                 throw new AssertionError("separate/interleave mismatch");
             }
+            System.out.println("Matrix 1: " + matrix1);
 
             t1 = System.nanoTime();
             final BufferedImage bi1 = toBufferedImage.toBufferedImage(interleave);
             t2 = System.nanoTime();
             System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
+            System.out.println("Converted 1: " + AWT2MatrixTest.toString(bi1));
+
+            t1 = System.nanoTime();
+            final Matrix<UpdatablePArray> matrix2 = toMatrix.toMatrix(bi1);
+            t2 = System.nanoTime();
+            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
+            if (!matrix1.equals(matrix2)) {
+                System.out.println("        Matrix 2: " + matrix2);
+                System.out.println("        Matrix has been changed after conversion to BufferedImage and back!");
+            }
 
             t1 = System.nanoTime();
             AWT2MatrixTest.drawTextOnImage(bi1);
@@ -142,32 +155,29 @@ public class ReadWriteImageTest {
             System.out.printf("writeBufferedImage: %.3f ms, %.3f MB/sec%n",
                 (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
 
-            toMatrix.setReadPixelValuesViaGraphics2D(true);
+            toMatrix.setReadPixelValuesViaColorModel(true);
             t1 = System.nanoTime();
-            final Matrix<UpdatablePArray> matrix2 = toMatrix.toMatrix(bi);
+            final Matrix<UpdatablePArray> matrix3 = toMatrix.toMatrix(bi);
             t2 = System.nanoTime();
             System.out.printf("BufferedImageToMatrix, Graphics2D: %.3f ms, %.3f MB/sec%n",
-                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix3) / ((t2 - t1) * 1e-9));
 
             t1 = System.nanoTime();
-            final BufferedImage bi2 = toBufferedImage.toBufferedImage(matrix2);
+            final BufferedImage bi2 = toBufferedImage.toBufferedImage(matrix3);
             t2 = System.nanoTime();
             System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
-                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix3) / ((t2 - t1) * 1e-9));
+            System.out.println("Converted 2: " + AWT2MatrixTest.toString(bi2));
 
             AWT2MatrixTest.drawTextOnImage(bi2);
             System.out.println("Writing " + targetFile2 + "...");
             MatrixIO.writeBufferedImage(targetFile2, bi2);
 
-            System.out.println("Source: " + WriteDemoImageTest.toString(bi));
-            System.out.println("Converted 1: " + WriteDemoImageTest.toString(bi1));
-            System.out.println("Converted 2: " + WriteDemoImageTest.toString(bi2));
-            System.out.println("Matrix: " + matrix1);
-            if (!matrix1.equals(matrix2)) {
+            if (!matrix1.equals(matrix3)) {
                 System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
                 Path altFile = Paths.get(targetFile2 + ".alt.png");
-                System.out.println("        " + matrix2);
-                BufferedImage biAlt = toBufferedImage.toBufferedImage(matrix2);
+                System.out.println("        " + matrix3);
+                BufferedImage biAlt = toBufferedImage.toBufferedImage(matrix3);
                 AWT2MatrixTest.drawTextOnImage(biAlt);
                 MatrixIO.writeBufferedImage(altFile, biAlt);
                 System.out.println("        saved in " + altFile);

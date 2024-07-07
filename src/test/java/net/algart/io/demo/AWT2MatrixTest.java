@@ -33,6 +33,8 @@ import net.algart.io.awt.MatrixToBufferedImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBuffer;
+import java.awt.image.SampleModel;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
@@ -89,5 +91,15 @@ public class AWT2MatrixTest {
         graphics.setFont(new Font("Monospaced", Font.BOLD, 60));
         graphics.setColor(new Color(0xFFFF80));
         graphics.drawString("Hello", 100, 100);
+    }
+
+    static String toString(BufferedImage bi) {
+        final SampleModel sm = bi.getSampleModel();
+        final DataBuffer db = bi.getData().getDataBuffer();
+        return bi
+                + "; sample model: " + sm + " " +
+                sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands() +
+                " type " + sm.getDataType() + " (" + BufferedImageToMatrix.getResultElementType(sm) + ")" +
+                "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
     }
 }

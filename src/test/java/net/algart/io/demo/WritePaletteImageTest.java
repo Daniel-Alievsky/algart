@@ -29,14 +29,11 @@ import net.algart.io.MatrixIO;
 import net.algart.io.awt.MatrixToBufferedImage;
 import net.algart.math.functions.Func2;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 public class WritePaletteImageTest {
     public static void main(String[] args) throws IOException {
@@ -52,7 +49,7 @@ public class WritePaletteImageTest {
                 (Func2) (x, y) -> (x + y) / 2, ByteArray.class, dimX, dimY).clone();
         final BufferedImage bi = new MatrixToBufferedImage.MonochromeToIndexed(Color.BLUE, Color.RED)
                 .toBufferedImage(m);
-        System.out.println(WriteDemoImageTest.toString(bi));
+        System.out.println(AWT2MatrixTest.toString(bi));
 
         System.out.println("Writing " + targetFile + "...");
         MatrixIO.writeBufferedImage(targetFile, bi);

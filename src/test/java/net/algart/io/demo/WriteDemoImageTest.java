@@ -31,8 +31,6 @@ import net.algart.io.awt.MatrixToBufferedImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBuffer;
-import java.awt.image.SampleModel;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -83,7 +81,7 @@ public class WriteDemoImageTest {
         final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
-        System.out.println(toString(bi));
+        System.out.println(AWT2MatrixTest.toString(bi));
         final String fileSuffix = MatrixIO.extension(targetFile);
         if (imageIOWrite) {
             System.out.println("Writing " + targetFile + " via ImageIO.write...");
@@ -192,12 +190,4 @@ public class WriteDemoImageTest {
         throw new UnsupportedOperationException("Unsupported elementType = " + elementType);
     }
 
-    static String toString(BufferedImage bi) {
-        final SampleModel sm = bi.getSampleModel();
-        final DataBuffer db = bi.getData().getDataBuffer();
-        return bi
-                + "; sample model: " + sm + " " + sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands()
-                + " type " + sm.getDataType()
-                + "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
-    }
 }

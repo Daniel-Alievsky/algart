@@ -43,15 +43,13 @@ public class AWTWriteImageTest {
         if (args.length < 1) {
             System.out.printf("Usage: " +
                             "%s target_image.jpg/png/bmp%n",
-                    WriteDemoImageTest.class);
+                    AWTWriteImageTest.class);
             return;
         }
         File targetFile = new File(args[0]);
 
         BufferedImage bi = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_BGR);
-        Graphics graphics = bi.getGraphics();
-        graphics.setFont(new Font("Monospaced", Font.PLAIN, 50));
-        graphics.drawString("Hello", 100, 100);
+        AWT2MatrixTest.drawTextOnImage(bi);
 
         final Iterator<ImageWriter> writers = ImageIO.getImageWritersBySuffix(MatrixIO.extension(targetFile));
         System.out.println("Writers:");
