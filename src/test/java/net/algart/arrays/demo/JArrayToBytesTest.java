@@ -26,10 +26,11 @@ package net.algart.arrays.demo;
 
 import net.algart.arrays.JArrays;
 
+import java.nio.ByteOrder;
 import java.util.Random;
 
 /**
- * <p>Basic test for {@link JArrays#charToByteArray(byte[], char[], int, boolean)} and similar methods.</p>
+ * <p>Basic test for {@link JArrays#copyCharArrayToBytes(byte[], char[], int, ByteOrder)} and similar methods.</p>
  *
  * @author Daniel Alievsky
  */
@@ -47,10 +48,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 2 + 1);
         char[] chars = rnd.nextBoolean() ? new char[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        chars = JArrays.byteToCharArray(chars, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        chars = JArrays.copyBytesToCharArray(chars, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[2 * count + 2] : null;
-        back = JArrays.charToByteArray(back, chars, count, littleEndian);
+        back = JArrays.copyCharArrayToBytes(back, chars, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToCharArray/charToByteArray");
         }
@@ -65,10 +66,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 2 + 1);
         short[] shorts = rnd.nextBoolean() ? new short[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        shorts = JArrays.byteToShortArray(shorts, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        shorts = JArrays.copyBytesToShortArray(shorts, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[2 * count + 2] : null;
-        back = JArrays.shortToByteArray(back, shorts, count, littleEndian);
+        back = JArrays.copyShortArrayToBytes(back, shorts, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToShortArray/shortToByteArray");
         }
@@ -81,10 +82,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 4 + 1);
         int[] ints = rnd.nextBoolean() ? new int[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        ints = JArrays.byteToIntArray(ints, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        ints = JArrays.copyBytesToIntArray(ints, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[4 * count + 2] : null;
-        back = JArrays.intToByteArray(back, ints, count, littleEndian);
+        back = JArrays.copyIntArrayToBytes(back, ints, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToIntArray/intToByteArray");
         }
@@ -97,10 +98,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 8 + 1);
         long[] longs = rnd.nextBoolean() ? new long[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        longs = JArrays.byteToLongArray(longs, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        longs = JArrays.copyBytesToLongArray(longs, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[8 * count + 2] : null;
-        back = JArrays.longToByteArray(back, longs, count, littleEndian);
+        back = JArrays.copyLongArrayToBytes(back, longs, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToLongArray/longToByteArray");
         }
@@ -113,10 +114,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 4 + 1);
         float[] floats = rnd.nextBoolean() ? new float[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        floats = JArrays.byteToFloatArray(floats, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        floats = JArrays.copyBytesToFloatArray(floats, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[4 * count + 2] : null;
-        back = JArrays.floatToByteArray(back, floats, count, littleEndian);
+        back = JArrays.copyFloatArrayToBytes(back, floats, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToFloatArray/floatToByteArray");
         }
@@ -129,10 +130,10 @@ public class JArrayToBytesTest {
         }
         int count = rnd.nextInt(len / 8 + 1);
         double[] doubles = rnd.nextBoolean() ? new double[count + 2] : null;
-        boolean littleEndian = rnd.nextBoolean();
-        doubles = JArrays.byteToDoubleArray(doubles, bytes, count, littleEndian);
+        ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+        doubles = JArrays.copyBytesToDoubleArray(doubles, bytes, count, order);
         byte[] back = rnd.nextBoolean() ? new byte[8 * count + 2] : null;
-        back = JArrays.doubleToByteArray(back, doubles, count, littleEndian);
+        back = JArrays.copyDoubleArrayToBytes(back, doubles, count, order);
         if (!JArrays.arrayEquals(back, 0, bytes, 0, count)) {
             throw new AssertionError("Bug in byteToDoubleArray/doubleToByteArray");
         }
