@@ -1569,6 +1569,7 @@ public class Arrays {
      * @see #sizeOf(Class, long)
      * @see #sizeOf(Class)
      * @see Matrices#sizeOf(Matrix)
+     * @see #sizeOfBytesForCopying(PArray)
      */
     public static long sizeOf(Array array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -4609,6 +4610,7 @@ public class Arrays {
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the result (required Java array length) is greater
      *                                than <code>Integer.MAX_VALUE</code> elements.
+     * @see #sizeOf(Array)
      */
     public static int sizeOfBytesForCopying(PArray array) {
         Objects.requireNonNull(array, "Null array");

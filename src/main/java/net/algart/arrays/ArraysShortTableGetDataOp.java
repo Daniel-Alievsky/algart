@@ -27,13 +27,15 @@ package net.algart.arrays;
 /*Repeat(INCLUDE_FROM_FILE, ArraysByteTableGetDataOp.java, main)
   Byte ==> Short ;;
   byte\[\]\s+data\s+= ==> short[] data = ;;
-  \(byte\[\]\)ArraysFuncImpl\.BYTE_BUFFERS ==> (short[])ArraysFuncImpl.SHORT_BUFFERS ;;
+  \(byte\[\]\)\s*ArraysFuncImpl\.BYTE_BUFFERS ==> (short[]) ArraysFuncImpl.SHORT_BUFFERS ;;
   BYTE_BUFFERS ==> SHORT_BUFFERS ;;
   (data\[\w+\]\s*&\s*)0xFF ==> $10xFFFF ;;
   256 ==> 65536
      !! Auto-generated: NOT EDIT !! */
+
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
+
 import net.algart.math.functions.Func;
 
 /**
@@ -58,9 +60,10 @@ class ArraysShortTableGetDataOp {
     float[] floatTable;
     double[] doubleTable;
     private final int destElementTypeCode;
+
     ArraysShortTableGetDataOp(boolean truncateOverflows, ShortArray x0, Func f, int destElementTypeCode) {
         this.x0 = x0;
-        this.dBuf = (DataShortBuffer)Arrays.bufferInternal(x0, DataBuffer.AccessMode.READ);
+        this.dBuf = (DataShortBuffer) Arrays.bufferInternal(x0, DataBuffer.AccessMode.READ);
         // - necessary not only for performance, but also for the guarantee
         // that direct buffer really returns the references to the internal Java array
         switch (destElementTypeCode) {
@@ -75,14 +78,14 @@ class ArraysShortTableGetDataOp {
                 charTable = new char[65536];
                 if (truncateOverflows) {
                     for (int k = 0; k < charTable.length; k++) {
-                        int v = (int)f.get(k);
+                        int v = (int) f.get(k);
                         charTable[k] = v < Character.MIN_VALUE ? Character.MIN_VALUE :
-                            v > Character.MAX_VALUE ? Character.MAX_VALUE :
-                            (char)v;
+                                v > Character.MAX_VALUE ? Character.MAX_VALUE :
+                                        (char) v;
                     }
                 } else {
                     for (int k = 0; k < charTable.length; k++) {
-                        charTable[k] = (char)(long)f.get(k);
+                        charTable[k] = (char) (long) f.get(k);
                     }
                 }
                 break;
@@ -92,12 +95,12 @@ class ArraysShortTableGetDataOp {
                 byteTable = new byte[65536];
                 if (truncateOverflows) {
                     for (int k = 0; k < byteTable.length; k++) {
-                        int v = (int)f.get(k);
-                        byteTable[k] = v < 0 ? (byte)0 : v > 0xFF ? (byte)0xFF : (byte)v;
+                        int v = (int) f.get(k);
+                        byteTable[k] = v < 0 ? (byte) 0 : v > 0xFF ? (byte) 0xFF : (byte) v;
                     }
                 } else {
                     for (int k = 0; k < byteTable.length; k++) {
-                        byteTable[k] = (byte)(long)f.get(k);
+                        byteTable[k] = (byte) (long) f.get(k);
                     }
                 }
                 break;
@@ -107,12 +110,12 @@ class ArraysShortTableGetDataOp {
                 shortTable = new short[65536];
                 if (truncateOverflows) {
                     for (int k = 0; k < shortTable.length; k++) {
-                        int v = (int)f.get(k);
-                        shortTable[k] = v < 0 ? (short)0 : v > 0xFFFF ? (short)0xFFFF : (short)v;
+                        int v = (int) f.get(k);
+                        shortTable[k] = v < 0 ? (short) 0 : v > 0xFFFF ? (short) 0xFFFF : (short) v;
                     }
                 } else {
                     for (int k = 0; k < shortTable.length; k++) {
-                        shortTable[k] = (short)(long)f.get(k);
+                        shortTable[k] = (short) (long) f.get(k);
                     }
                 }
                 break;
@@ -122,11 +125,11 @@ class ArraysShortTableGetDataOp {
                 intTable = new int[65536];
                 if (truncateOverflows) {
                     for (int k = 0; k < intTable.length; k++) {
-                        intTable[k] = (int)f.get(k);
+                        intTable[k] = (int) f.get(k);
                     }
                 } else {
                     for (int k = 0; k < intTable.length; k++) {
-                        intTable[k] = (int)(long)f.get(k);
+                        intTable[k] = (int) (long) f.get(k);
                     }
                 }
                 break;
@@ -135,7 +138,7 @@ class ArraysShortTableGetDataOp {
             case ArraysFuncImpl.LONG_TYPE_CODE: {
                 longTable = new long[65536];
                 for (int k = 0; k < longTable.length; k++) {
-                    longTable[k] = (long)f.get(k);
+                    longTable[k] = (long) f.get(k);
                 }
                 break;
             }
@@ -143,14 +146,14 @@ class ArraysShortTableGetDataOp {
             case ArraysFuncImpl.FLOAT_TYPE_CODE: {
                 floatTable = new float[65536];
                 for (int k = 0; k < floatTable.length; k++) {
-                    floatTable[k] = (float)f.get(k);
+                    floatTable[k] = (float) f.get(k);
                 }
                 break;
             }
             case ArraysFuncImpl.DOUBLE_TYPE_CODE: {
                 doubleTable = new double[65536];
                 for (int k = 0; k < doubleTable.length; k++) {
-                    doubleTable[k] = f.get(k);
+                    doubleTable[k] =  f.get(k);
                 }
                 break;
             }
@@ -178,7 +181,7 @@ class ArraysShortTableGetDataOp {
                 final int from, to;
                 usePool = !dBuf.isDirect();
                 if (usePool) {
-                    data = (short[])ArraysFuncImpl.SHORT_BUFFERS.requestArray();
+                    data = (short[]) ArraysFuncImpl.SHORT_BUFFERS.requestArray();
                     len = Math.min(count, data.length);
                     x0.getData(arrayPos, data, 0, len);
                     from = 0;
@@ -191,7 +194,7 @@ class ArraysShortTableGetDataOp {
                     try {
                         dBuf.map(arrayPos, count);
                         len = dBuf.cnt();
-                        assert len == dBuf.count():"too large buffer";
+                        assert len == dBuf.count() : "too large buffer";
                         data = dBuf.data();
                         from = dBuf.from();
                         to = dBuf.to();
@@ -203,56 +206,56 @@ class ArraysShortTableGetDataOp {
                 switch (destElementTypeCode) {
 
                     case ArraysFuncImpl.BIT_TYPE_CODE: {
-                        boolean[] dest = (boolean[])destArray;
+                        boolean[] dest = (boolean[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = booleanTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.CHAR_TYPE_CODE: {
-                        char[] dest = (char[])destArray;
+                        char[] dest = (char[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = charTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.BYTE_TYPE_CODE: {
-                        byte[] dest = (byte[])destArray;
+                        byte[] dest = (byte[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = byteTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.SHORT_TYPE_CODE: {
-                        short[] dest = (short[])destArray;
+                        short[] dest = (short[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = shortTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.INT_TYPE_CODE: {
-                        int[] dest = (int[])destArray;
+                        int[] dest = (int[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = intTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.LONG_TYPE_CODE: {
-                        long[] dest = (long[])destArray;
+                        long[] dest = (long[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = longTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.FLOAT_TYPE_CODE: {
-                        float[] dest = (float[])destArray;
+                        float[] dest = (float[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = floatTable[data[j] & 0xFFFF];
                         }
                         break;
                     }
                     case ArraysFuncImpl.DOUBLE_TYPE_CODE: {
-                        double[] dest = (double[])destArray;
+                        double[] dest = (double[]) destArray;
                         for (int j = from; j < to; j++, destArrayOffset++) {
                             dest[destArrayOffset] = doubleTable[data[j] & 0xFFFF];
                         }

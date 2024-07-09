@@ -46,9 +46,10 @@ class ArraysSerializationImpl {
         if (bytes == null) {
             bytes = new byte[(int) requiredLength];
         } else {
-            if (bytes.length < requiredLength)
+            if (bytes.length < requiredLength) {
                 throw new IndexOutOfBoundsException("Not enough space to copy the AlgART array into byte[] array: "
-                    + requiredLength + " bytes required, but only " + bytes.length + " available");
+                        + requiredLength + " bytes required, but only " + bytes.length + " available");
+            }
         }
         if (array instanceof ByteArray) {
             assert requiredLength == array.length();
@@ -199,8 +200,9 @@ class ArraysSerializationImpl {
                     bytes[disp + 7] = long0(v);
                 }
             }
-        } else
+        } else {
             throw new AssertionError("Unallowed type of passed array: " + array.getClass());
+        }
         return bytes;
     }
 
@@ -209,9 +211,10 @@ class ArraysSerializationImpl {
         Objects.requireNonNull(bytes, "Null bytes Java array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
-        if (bytes.length < requiredLength)
+        if (bytes.length < requiredLength) {
             throw new IndexOutOfBoundsException("byte[] array is too short to copy into all elements of "
-                + "the AlgART array: " + requiredLength + " bytes required, but only " + bytes.length + " available");
+                    + "the AlgART array: " + requiredLength + " bytes required, but only " + bytes.length + " available");
+        }
         if (array instanceof UpdatableByteArray) {
             assert requiredLength == array.length();
             array.setData(0, bytes, 0, (int) requiredLength);
@@ -223,14 +226,14 @@ class ArraysSerializationImpl {
             int disp = 0;
             for (int k = 0; k < data.length - 1; k++, disp += 8) {
                 data[k] = makeLong(
-                    bytes[disp],
-                    bytes[disp + 1],
-                    bytes[disp + 2],
-                    bytes[disp + 3],
-                    bytes[disp + 4],
-                    bytes[disp + 5],
-                    bytes[disp + 6],
-                    bytes[disp + 7]);
+                        bytes[disp],
+                        bytes[disp + 1],
+                        bytes[disp + 2],
+                        bytes[disp + 3],
+                        bytes[disp + 4],
+                        bytes[disp + 5],
+                        bytes[disp + 6],
+                        bytes[disp + 7]);
             }
             if (data.length > 0) {
                 long v = 0;
@@ -242,6 +245,7 @@ class ArraysSerializationImpl {
             a.setBits(0, data, 0, a.length());
         } else if (array instanceof UpdatableCharArray) {
             final char[] data = new char[(int) array.length()];
+//            JArrays.copyBytesToCharArray(data, bytes, data.length, byteOrder);
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 2) {
                     data[k] = makeChar(
@@ -261,14 +265,14 @@ class ArraysSerializationImpl {
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 2) {
                     data[k] = makeShort(
-                        bytes[disp],
-                        bytes[disp + 1]);
+                            bytes[disp],
+                            bytes[disp + 1]);
                 }
             } else {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 2) {
                     data[k] = makeShortBE(
-                        bytes[disp],
-                        bytes[disp + 1]);
+                            bytes[disp],
+                            bytes[disp + 1]);
                 }
             }
             array.setData(0, data, 0, data.length);
@@ -277,18 +281,18 @@ class ArraysSerializationImpl {
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 4) {
                     data[k] = makeInt(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3]);
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3]);
                 }
             } else {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 4) {
                     data[k] = makeIntBE(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3]);
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3]);
                 }
             }
             array.setData(0, data, 0, data.length);
@@ -297,26 +301,26 @@ class ArraysSerializationImpl {
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 8) {
                     data[k] = makeLong(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3],
-                        bytes[disp + 4],
-                        bytes[disp + 5],
-                        bytes[disp + 6],
-                        bytes[disp + 7]);
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3],
+                            bytes[disp + 4],
+                            bytes[disp + 5],
+                            bytes[disp + 6],
+                            bytes[disp + 7]);
                 }
             } else {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 8) {
                     data[k] = makeLongBE(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3],
-                        bytes[disp + 4],
-                        bytes[disp + 5],
-                        bytes[disp + 6],
-                        bytes[disp + 7]);
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3],
+                            bytes[disp + 4],
+                            bytes[disp + 5],
+                            bytes[disp + 6],
+                            bytes[disp + 7]);
                 }
             }
             array.setData(0, data, 0, data.length);
@@ -325,18 +329,18 @@ class ArraysSerializationImpl {
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 4) {
                     data[k] = Float.intBitsToFloat(makeInt(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3]));
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3]));
                 }
             } else {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 4) {
                     data[k] = Float.intBitsToFloat(makeIntBE(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3]));
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3]));
                 }
             }
             array.setData(0, data, 0, data.length);
@@ -345,31 +349,32 @@ class ArraysSerializationImpl {
             if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 8) {
                     data[k] = Double.longBitsToDouble(makeLong(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3],
-                        bytes[disp + 4],
-                        bytes[disp + 5],
-                        bytes[disp + 6],
-                        bytes[disp + 7]));
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3],
+                            bytes[disp + 4],
+                            bytes[disp + 5],
+                            bytes[disp + 6],
+                            bytes[disp + 7]));
                 }
             } else {
                 for (int k = 0, disp = 0; k < data.length; k++, disp += 8) {
                     data[k] = Double.longBitsToDouble(makeLongBE(
-                        bytes[disp],
-                        bytes[disp + 1],
-                        bytes[disp + 2],
-                        bytes[disp + 3],
-                        bytes[disp + 4],
-                        bytes[disp + 5],
-                        bytes[disp + 6],
-                        bytes[disp + 7]));
+                            bytes[disp],
+                            bytes[disp + 1],
+                            bytes[disp + 2],
+                            bytes[disp + 3],
+                            bytes[disp + 4],
+                            bytes[disp + 5],
+                            bytes[disp + 6],
+                            bytes[disp + 7]));
                 }
             }
             array.setData(0, data, 0, data.length);
-        } else
+        } else {
             throw new AssertionError("Unallowed type of passed array: " + array.getClass());
+        }
     }
 
     public static void write(OutputStream outputStream, PArray array, ByteOrder byteOrder) throws IOException {
@@ -404,7 +409,7 @@ class ArraysSerializationImpl {
 
         } else {
             DataBuffer buf = Arrays.bufferInternal(array, DataBuffer.AccessMode.READ,
-                AbstractArray.largeBufferCapacity(array), true);
+                    AbstractArray.largeBufferCapacity(array), true);
             Arrays.enableCaching(buf);
             try {
                 if (array instanceof ByteArray) {
@@ -481,8 +486,9 @@ class ArraysSerializationImpl {
                             outputStream.write(bytes, 0, numberOfBytes);
                         }
                         //[[Repeat.AutoGeneratedEnd]]
-                    } else
+                    } else {
                         throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
+                    }
                 }
             } finally {
                 Arrays.dispose(buf);
@@ -519,7 +525,7 @@ class ArraysSerializationImpl {
 
         } else {
             DataBuffer buf = Arrays.bufferInternal(array, DataBuffer.AccessMode.READ_WRITE,
-                AbstractArray.largeBufferCapacity(array), true);
+                    AbstractArray.largeBufferCapacity(array), true);
             Arrays.enableCaching(buf);
             try {
                 if (array instanceof ByteArray) {
@@ -603,8 +609,9 @@ class ArraysSerializationImpl {
                             buf.force();
                         }
                         //[[Repeat.AutoGeneratedEnd]]
-                    } else
+                    } else {
                         throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
+                    }
                 }
             } finally {
                 Arrays.dispose(buf);
@@ -622,23 +629,22 @@ class ArraysSerializationImpl {
 
     private static int makeInt(byte b0, byte b1, byte b2, byte b3) {
         return (((b3 & 0xff) << 24) |
-            ((b2 & 0xff) << 16) |
-            ((b1 & 0xff) << 8) |
-            (b0 & 0xff));
+                ((b2 & 0xff) << 16) |
+                ((b1 & 0xff) << 8) |
+                (b0 & 0xff));
     }
 
     private static long makeLong(
-        byte b0, byte b1, byte b2, byte b3,
-        byte b4, byte b5, byte b6, byte b7)
-    {
+            byte b0, byte b1, byte b2, byte b3,
+            byte b4, byte b5, byte b6, byte b7) {
         return ((((long) b7) << 56) |
-            (((long) b6 & 0xff) << 48) |
-            (((long) b5 & 0xff) << 40) |
-            (((long) b4 & 0xff) << 32) |
-            (((long) b3 & 0xff) << 24) |
-            (((long) b2 & 0xff) << 16) |
-            (((long) b1 & 0xff) << 8) |
-            (((long) b0 & 0xff)));
+                (((long) b6 & 0xff) << 48) |
+                (((long) b5 & 0xff) << 40) |
+                (((long) b4 & 0xff) << 32) |
+                (((long) b3 & 0xff) << 24) |
+                (((long) b2 & 0xff) << 16) |
+                (((long) b1 & 0xff) << 8) |
+                (((long) b0 & 0xff)));
     }
 
     private static char makeCharBE(byte b1, byte b0) {
@@ -651,23 +657,22 @@ class ArraysSerializationImpl {
 
     private static int makeIntBE(byte b3, byte b2, byte b1, byte b0) {
         return (((b3 & 0xff) << 24) |
-            ((b2 & 0xff) << 16) |
-            ((b1 & 0xff) << 8) |
-            (b0 & 0xff));
+                ((b2 & 0xff) << 16) |
+                ((b1 & 0xff) << 8) |
+                (b0 & 0xff));
     }
 
     private static long makeLongBE(
-        byte b7, byte b6, byte b5, byte b4,
-        byte b3, byte b2, byte b1, byte b0)
-    {
+            byte b7, byte b6, byte b5, byte b4,
+            byte b3, byte b2, byte b1, byte b0) {
         return ((((long) b7) << 56) |
-            (((long) b6 & 0xff) << 48) |
-            (((long) b5 & 0xff) << 40) |
-            (((long) b4 & 0xff) << 32) |
-            (((long) b3 & 0xff) << 24) |
-            (((long) b2 & 0xff) << 16) |
-            (((long) b1 & 0xff) << 8) |
-            (((long) b0 & 0xff)));
+                (((long) b6 & 0xff) << 48) |
+                (((long) b5 & 0xff) << 40) |
+                (((long) b4 & 0xff) << 32) |
+                (((long) b3 & 0xff) << 24) |
+                (((long) b2 & 0xff) << 16) |
+                (((long) b1 & 0xff) << 8) |
+                (((long) b0 & 0xff)));
     }
 
     private static byte char0(char x) {
