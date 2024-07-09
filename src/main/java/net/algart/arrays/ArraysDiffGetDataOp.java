@@ -53,11 +53,12 @@ class ArraysDiffGetDataOp {
     private final ArrayDiffOp ado;
     private final boolean isAbsDiff;
     private final boolean truncateOverflows;
-    ArraysDiffGetDataOp(PArray result, PArray x0, PArray x1, ArrayDiffOp ado,
-        boolean isAbsDiff, boolean truncateOverflows)
-    {
+
+    ArraysDiffGetDataOp(
+            PArray result, PArray x0, PArray x1, ArrayDiffOp ado,
+            boolean isAbsDiff, boolean truncateOverflows) {
         this.length = result.length();
-        this.x = new PArray[] {x0, x1};
+        this.x = new PArray[]{x0, x1};
         for (PArray xk : this.x) {
             if (xk.elementType() != result.elementType()) {
                 throw new AssertionError("Different x[] / result element types");
@@ -78,29 +79,29 @@ class ArraysDiffGetDataOp {
                 array = Arrays.getUnderlyingArrays(array)[0];
             }
             this.jaOrDStor[k] = isBit ?
-                Arrays.longJavaArrayInternal((BitArray)array) :
-                Arrays.javaArrayInternal(array);
+                    Arrays.longJavaArrayInternal((BitArray) array) :
+                    Arrays.javaArrayInternal(array);
             if (this.jaOrDStor[k] != null) {
                 this.subArrayOffset[k] = isBit ?
-                    Arrays.longJavaArrayOffsetInternal((BitArray)array) :
-                    Arrays.javaArrayOffsetInternal(array);
+                        Arrays.longJavaArrayOffsetInternal((BitArray) array) :
+                        Arrays.javaArrayOffsetInternal(array);
             }
             if (this.jaOrDStor[k] == null) {
                 if (array instanceof AbstractBufferArray) {
-                    this.jaOrDStor[k] = ((AbstractBufferArray)array).storage;
-                    this.subArrayOffset[k] = ((AbstractBufferArray)array).offset;
+                    this.jaOrDStor[k] = ((AbstractBufferArray) array).storage;
+                    this.subArrayOffset[k] = ((AbstractBufferArray) array).offset;
                 }
             }
         }
         this.bufferPool =
-            this.x[0] instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS :
-            this.x[0] instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS :
-            this.x[0] instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS :
-            this.x[0] instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS :
-            this.x[0] instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS :
-            this.x[0] instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS :
-            this.x[0] instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS :
-            null;
+                this.x[0] instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS
+                        : this.x[0] instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS
+                        : this.x[0] instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS
+                        : this.x[0] instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS
+                        : this.x[0] instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS
+                        : this.x[0] instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS
+                        : this.x[0] instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS
+                        : null;
         this.ado = ado;
         this.isAbsDiff = isAbsDiff;
         this.truncateOverflows = truncateOverflows;
@@ -121,12 +122,12 @@ class ArraysDiffGetDataOp {
             int len;
             if (isBit) {
                 len = Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
-                long[] buf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                long[] buf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
                 try {
-                    int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray)result, arrayPos,
-                        ArraysFuncImpl.BITS_GAP);
-                    ((BitArray)result).getBits(arrayPos, buf, gap, len);
-                    PackedBitArrays.unpackBits((boolean[])destArray, destArrayOffset, buf, gap, len);
+                    int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray) result, arrayPos,
+                            ArraysFuncImpl.BITS_GAP);
+                    ((BitArray) result).getBits(arrayPos, buf, gap, len);
+                    PackedBitArrays.unpackBits((boolean[]) destArray, destArrayOffset, buf, gap, len);
                 } finally {
                     ArraysFuncImpl.BIT_BUFFERS.releaseArray(buf);
                 }
@@ -135,9 +136,9 @@ class ArraysDiffGetDataOp {
                 try {
                     len = Math.min(count, bufferPool.arrayLength());
                     long analyzeResult = ArraysMinMaxGetDataOp.analyzeSourceArrays(
-                        jaOrDStor, saShift, subArrayOffset,
-                        arrayPos, length, len, destArray, destArrayOffset,
-                        ArraysMinMaxGetDataOp.ALL_OFFSETS, null);
+                            jaOrDStor, saShift, subArrayOffset,
+                            arrayPos, length, len, destArray, destArrayOffset,
+                            ArraysMinMaxGetDataOp.ALL_OFFSETS, null);
                     Object dest = destArray;
                     int destOffset = destArrayOffset;
                     if (analyzeResult == ArraysMinMaxGetDataOp.DANGEROUS) {
@@ -152,22 +153,22 @@ class ArraysDiffGetDataOp {
                     for (int k = 1; k < x.length; k++) { // 1 iteration always in this version
                         boolean optimizeJBuffer = false, optimizeJArray = false;
                         long jaOrDStorOffset = ArraysMinMaxGetDataOp.analyzeSourceArrays(
-                            jaOrDStor, saShift, subArrayOffset,
-                            arrayPos, length, len, destArray, destArrayOffset,
-                            k, null);
+                                jaOrDStor, saShift, subArrayOffset,
+                                arrayPos, length, len, destArray, destArrayOffset,
+                                k, null);
                         if (jaOrDStorOffset != -1) {
                             optimizeJBuffer = jaOrDStor[k] instanceof DataStorage;
                             optimizeJArray = !optimizeJBuffer;
                         }
                         if (OPTIMIZE_SUBTRACT_FOR_JBUFFERS && optimizeJBuffer) {
-                            DataStorage storage = (DataStorage)jaOrDStor[k];
+                            DataStorage storage = (DataStorage) jaOrDStor[k];
                             if (isAbsDiff) {
                                 storage.absDiffData(jaOrDStorOffset, dest, destOffset, len, truncateOverflows);
                             } else {
                                 storage.subtractData(jaOrDStorOffset, dest, destOffset, len, truncateOverflows);
                             }
                         } else if (OPTIMIZE_SUBTRACT_FOR_JARRAYS && optimizeJArray) {
-                            ado.process(dest, destOffset, jaOrDStor[k], (int)jaOrDStorOffset, len);
+                            ado.process(dest, destOffset, jaOrDStor[k], (int) jaOrDStorOffset, len);
                         } else {
                             Object buf = null;
                             try {
@@ -212,25 +213,25 @@ class ArraysDiffGetDataOp {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), getClass());
         }
         for (; count > 0; ) {
-            final int len = (int)Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
+            final int len = (int) Math.min(count, ArraysFuncImpl.BIT_BUFFER_LENGTH);
             long analyzeResult = ArraysMinMaxGetDataOp.analyzeSourceArrays(
-                jaOrDStor, saShift, subArrayOffset,
-                arrayPos, length, len, destArray, destArrayOffset,
-                ArraysMinMaxGetDataOp.ALL_OFFSETS, null);
+                    jaOrDStor, saShift, subArrayOffset,
+                    arrayPos, length, len, destArray, destArrayOffset,
+                    ArraysMinMaxGetDataOp.ALL_OFFSETS, null);
             long[] longBuf = null;
             long[] destLongBuf = null;
             try {
-                longBuf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                longBuf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
                 long[] dest = destArray;
                 long destOffset = destArrayOffset;
-                int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray)x[0], arrayPos, ArraysFuncImpl.BITS_GAP);
+                int gap = Arrays.goodStartOffsetInArrayOfLongs((BitArray) x[0], arrayPos, ArraysFuncImpl.BITS_GAP);
                 if (analyzeResult == ArraysMinMaxGetDataOp.DANGEROUS) {
-                    destLongBuf = (long[])ArraysFuncImpl.BIT_BUFFERS.requestArray();
+                    destLongBuf = (long[]) ArraysFuncImpl.BIT_BUFFERS.requestArray();
                     dest = destLongBuf;
                     destOffset = gap;
                 }
                 if (analyzeResult != ArraysMinMaxGetDataOp.SAFE_IN_PLACE_TO_ARRAY_0_WITH_SAME_OFFSET) {
-                    ((BitArray)x[0]).getBits(arrayPos, dest, destOffset, len);
+                    ((BitArray) x[0]).getBits(arrayPos, dest, destOffset, len);
                 }
                 for (int k = 1; k < x.length; k++) { // 1 iteration always in this version
                     processBits(k, arrayPos, dest, destOffset, len, gap, longBuf);
@@ -249,9 +250,9 @@ class ArraysDiffGetDataOp {
         }
     }
 
-    private void processBits(int xIndex, long arrayPos, long[] dest, long destOffset, int len,
-        int gap, long[] longBuf)
-    {
+    private void processBits(
+            int xIndex, long arrayPos, long[] dest, long destOffset, int len,
+            int gap, long[] longBuf) {
         long p = arrayPos;
         boolean optimizeJBuffer = jaOrDStor[xIndex] instanceof DataStorage;
         boolean optimizeJArray = !optimizeJBuffer && jaOrDStor[xIndex] != null;
@@ -265,7 +266,7 @@ class ArraysDiffGetDataOp {
             }
         }
         if (optimizeJBuffer) {
-            DataBitStorage storage = (DataBitStorage)jaOrDStor[xIndex];
+            DataBitStorage storage = (DataBitStorage) jaOrDStor[xIndex];
             if (isAbsDiff) {
                 storage.xorBits(p + subArrayOffset[xIndex], dest, destOffset, len);
             } else {
@@ -274,19 +275,19 @@ class ArraysDiffGetDataOp {
         } else if (optimizeJArray) {
             if (isAbsDiff) {
                 PackedBitArrays.xorBits(dest, destOffset,
-                    (long[])jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
+                        (long[]) jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
             } else {
                 PackedBitArrays.andNotBits(dest, destOffset,
-                    (long[])jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
+                        (long[]) jaOrDStor[xIndex], p + subArrayOffset[xIndex], len);
             }
         } else if (isAbsDiff && x[xIndex] instanceof CopiesArraysImpl.CopiesBitArray) {
             // this "thick" is often used for performing NOT operation via asFuncArray
-            if (((CopiesArraysImpl.CopiesBitArray)x[xIndex]).element) // if false, then nothing to do
+            if (((CopiesArraysImpl.CopiesBitArray) x[xIndex]).element) // if false, then nothing to do
             {
                 PackedBitArrays.notBits(dest, destOffset, dest, destOffset, len);
             }
         } else {
-            ((BitArray)x[xIndex]).getBits(arrayPos, longBuf, gap, len);
+            ((BitArray) x[xIndex]).getBits(arrayPos, longBuf, gap, len);
             if (isAbsDiff) {
                 PackedBitArrays.xorBits(dest, destOffset, longBuf, gap, len);
             } else {
@@ -305,7 +306,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getByteSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractByteArray((byte[])dest, destOffset, (byte[])src, srcOffset, len, truncateOverflows);
+                JArrays.subtractByteArray((byte[]) dest, destOffset, (byte[]) src, srcOffset, len, truncateOverflows);
             }
 
             public String toString() {
@@ -318,7 +319,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getCharSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractCharArray((char[])dest, destOffset, (char[])src, srcOffset, len, truncateOverflows);
+                JArrays.subtractCharArray((char[]) dest, destOffset, (char[]) src, srcOffset, len, truncateOverflows);
             }
 
             public String toString() {
@@ -330,7 +331,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getShortSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractShortArray((short[])dest, destOffset, (short[])src, srcOffset, len, truncateOverflows);
+                JArrays.subtractShortArray((short[]) dest, destOffset, (short[]) src, srcOffset, len, truncateOverflows);
             }
 
             public String toString() {
@@ -342,7 +343,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getIntSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractIntArray((int[])dest, destOffset, (int[])src, srcOffset, len, truncateOverflows);
+                JArrays.subtractIntArray((int[]) dest, destOffset, (int[]) src, srcOffset, len, truncateOverflows);
             }
 
             public String toString() {
@@ -354,7 +355,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getLongSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractLongArray((long[])dest, destOffset, (long[])src, srcOffset, len);
+                JArrays.subtractLongArray((long[]) dest, destOffset, (long[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -366,7 +367,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getFloatSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractFloatArray((float[])dest, destOffset, (float[])src, srcOffset, len);
+                JArrays.subtractFloatArray((float[]) dest, destOffset, (float[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -378,7 +379,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getDoubleSubtractOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.subtractDoubleArray((double[])dest, destOffset, (double[])src, srcOffset, len);
+                JArrays.subtractDoubleArray((double[]) dest, destOffset, (double[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -394,7 +395,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getByteAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfByteArray((byte[])dest, destOffset, (byte[])src, srcOffset, len);
+                JArrays.absDiffOfByteArray((byte[]) dest, destOffset, (byte[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -407,7 +408,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getCharAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfCharArray((char[])dest, destOffset, (char[])src, srcOffset, len);
+                JArrays.absDiffOfCharArray((char[]) dest, destOffset, (char[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -419,7 +420,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getShortAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfShortArray((short[])dest, destOffset, (short[])src, srcOffset, len);
+                JArrays.absDiffOfShortArray((short[]) dest, destOffset, (short[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -431,7 +432,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getLongAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfLongArray((long[])dest, destOffset, (long[])src, srcOffset, len);
+                JArrays.absDiffOfLongArray((long[]) dest, destOffset, (long[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -443,7 +444,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getFloatAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfFloatArray((float[])dest, destOffset, (float[])src, srcOffset, len);
+                JArrays.absDiffOfFloatArray((float[]) dest, destOffset, (float[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -455,7 +456,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getDoubleAbsDiffOp() {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfDoubleArray((double[])dest, destOffset, (double[])src, srcOffset, len);
+                JArrays.absDiffOfDoubleArray((double[]) dest, destOffset, (double[]) src, srcOffset, len);
             }
 
             public String toString() {
@@ -469,7 +470,7 @@ class ArraysDiffGetDataOp {
     static ArrayDiffOp getIntAbsDiffOp(final boolean truncateOverflows) {
         return new ArrayDiffOp() {
             public void process(Object dest, int destOffset, Object src, int srcOffset, int len) {
-                JArrays.absDiffOfIntArray((int[])dest, destOffset, (int[])src, srcOffset, len, truncateOverflows);
+                JArrays.absDiffOfIntArray((int[]) dest, destOffset, (int[]) src, srcOffset, len, truncateOverflows);
             }
 
             public String toString() {

@@ -58,14 +58,14 @@ class ArraysComparisonWithThresholdGetBitsOp {
         this.greater = greater;
         this.inclusive = inclusive;
         this.bufferPool =
-            x0 instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS :
-            x0 instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS :
-            x0 instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS :
-            x0 instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS :
-            x0 instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS :
-            x0 instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS :
-            x0 instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS :
-            null;
+                x0 instanceof CharArray ? ArraysFuncImpl.CHAR_BUFFERS
+                        : x0 instanceof ByteArray ? ArraysFuncImpl.BYTE_BUFFERS
+                        : x0 instanceof ShortArray ? ArraysFuncImpl.SHORT_BUFFERS
+                        : x0 instanceof IntArray ? ArraysFuncImpl.INT_BUFFERS
+                        : x0 instanceof LongArray ? ArraysFuncImpl.LONG_BUFFERS
+                        : x0 instanceof FloatArray ? ArraysFuncImpl.FLOAT_BUFFERS
+                        : x0 instanceof DoubleArray ? ArraysFuncImpl.DOUBLE_BUFFERS
+                        : null;
     }
 
     public void getBits(long arrayPos, long[] destArray, long destArrayOffset, long count) {
@@ -88,11 +88,11 @@ class ArraysComparisonWithThresholdGetBitsOp {
                 usePool = !dbuf.isDirect();
                 if (usePool) {
                     if (isBit) { // a loop is not necessary here
-                        ((BitArray)x0).getBits(arrayPos, destArray, destArrayOffset, count);
+                        ((BitArray) x0).getBits(arrayPos, destArray, destArrayOffset, count);
                         break;
                     } else {
                         data = bufferPool.requestArray();
-                        len = (int)Math.min(count, bufferPool.arrayLength());
+                        len = (int) Math.min(count, bufferPool.arrayLength());
                         x0.getData(arrayPos, data, 0, len);
                         from = 0;
                         to = len;
@@ -105,7 +105,7 @@ class ArraysComparisonWithThresholdGetBitsOp {
                     try {
                         dbuf.map(arrayPos, count);
                         len = dbuf.cnt();
-                        assert len == dbuf.count():"too large buffer";
+                        assert len == dbuf.count() : "too large buffer";
                         data = dbuf.data();
                         from = dbuf.from();
                         to = dbuf.to();
