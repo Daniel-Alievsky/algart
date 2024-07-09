@@ -1336,7 +1336,7 @@ public class PackedBitArraysPer8Test {
                 int count = rnd.nextInt(len + 1);
                 final int numberOfBytes = PackedBitArraysPer8.packedLength(count);
                 final int numberOfLongs = PackedBitArrays.packedLength(count);
-                long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, numberOfBytes));
+                long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, numberOfBytes), count);
                 if (longs1.length != PackedBitArrays.packedLength(count)) {
                     throw new AssertionError("The bug in toLongArray() length");
                 }

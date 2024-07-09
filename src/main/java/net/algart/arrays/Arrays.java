@@ -1577,7 +1577,8 @@ public class Arrays {
             return PackedBitArrays.packedLength(array.length()) << 3;
         } else if (array instanceof PArray) {
             long len = array.length();
-            long bytesPerElementLog = 31 - Integer.numberOfLeadingZeros((int) ((PArray) array).bitsPerElement() >>> 3);
+            long bytesPerElementLog = 31 - Integer.numberOfLeadingZeros(
+                    (int) ((PArray) array).bitsPerElement() >>> 3);
             if (len > Long.MAX_VALUE >> bytesPerElementLog) {
                 return Long.MAX_VALUE;
             }
@@ -4544,7 +4545,47 @@ public class Arrays {
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
      */
     public static byte[] copyArrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
-        return ArraysSerializationImpl.copyArrayToBytes(bytes, array, byteOrder);
+        Objects.requireNonNull(array, "Null array");
+        Objects.requireNonNull(byteOrder, "Null byteOrder");
+        final long requiredLength = Arrays.sizeOfBytesForCopying(array);
+        assert requiredLength == (int) requiredLength;
+        if (bytes == null) {
+            bytes = new byte[(int) requiredLength];
+        } else {
+            if (bytes.length < requiredLength) {
+                throw new IndexOutOfBoundsException("Not enough space to copy the AlgART array into byte[] array: "
+                        + requiredLength + " bytes required, but only " + bytes.length + " available");
+            }
+        }
+        if (array instanceof ByteArray) {
+            assert requiredLength == array.length();
+            array.getData(0, bytes, 0, (int) requiredLength);
+        } else if (array instanceof BitArray a) {
+            final long[] data = a.jaBit();
+            assert (long) data.length * 8L >= requiredLength;
+            PackedBitArraysPer8.toByteArray(bytes, data, array.length());
+        } else if (array instanceof CharArray a) {
+            final char[] data = a.ja();
+            JArrays.copyCharArrayToBytes(bytes, data, data.length, byteOrder);
+        } else if (array instanceof ShortArray a) {
+            final short[] data = a.ja();
+            JArrays.copyShortArrayToBytes(bytes, data, data.length, byteOrder);
+        } else if (array instanceof IntArray a) {
+            final int[] data = a.ja();
+            JArrays.copyIntArrayToBytes(bytes, data, data.length, byteOrder);
+        } else if (array instanceof LongArray a) {
+            final long[] data = a.ja();
+            JArrays.copyLongArrayToBytes(bytes, data, data.length, byteOrder);
+        } else if (array instanceof FloatArray a) {
+            final float[] data = a.ja();
+            JArrays.copyFloatArrayToBytes(bytes, data, data.length, byteOrder);
+        } else if (array instanceof DoubleArray a) {
+            final double[] data = a.ja();
+            JArrays.copyDoubleArrayToBytes(bytes, data, data.length, byteOrder);
+        } else {
+            throw new AssertionError("Unallowed type of passed array: " + array.getClass());
+        }
+        return bytes;
     }
 
     /**
@@ -4594,7 +4635,45 @@ public class Arrays {
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
      */
     public static void copyBytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
-        ArraysSerializationImpl.copyBytesToArray(array, bytes, byteOrder);
+        Objects.requireNonNull(array, "Null array");
+        Objects.requireNonNull(bytes, "Null bytes Java array");
+        Objects.requireNonNull(byteOrder, "Null byteOrder");
+        final long requiredLength = Arrays.sizeOfBytesForCopying(array);
+        if (bytes.length < requiredLength) {
+            throw new IndexOutOfBoundsException("byte[] array is too short to copy into all elements of "
+                    + "the AlgART array: " + requiredLength + " bytes required, but only " + bytes.length + " available");
+        }
+        if (array instanceof UpdatableByteArray) {
+            assert requiredLength == array.length();
+            array.setData(0, bytes, 0, (int) requiredLength);
+        } else if (array instanceof UpdatableBitArray a) {
+            final long packedLength = PackedBitArrays.packedLength(a.length());
+            assert packedLength <= Integer.MAX_VALUE; // because requiredLength <= bytes.length <= Integer.MAX_VALUE
+            assert packedLength * 8L >= requiredLength;
+            final long[] data = PackedBitArraysPer8.toLongArray(bytes, a.length());
+            a.setBits(0, data, 0, a.length());
+        } else if (array instanceof UpdatableCharArray) {
+            final char[] data = JArrays.copyBytesToCharArray(bytes, array.length32(), byteOrder);
+            // note that length32() cannot lead to exception (here and below): requiredLength <= bytes.length
+            array.setData(0, data, 0, data.length);
+        } else if (array instanceof UpdatableShortArray) {
+            final short[] data = JArrays.copyBytesToShortArray(bytes, array.length32(), byteOrder);
+            array.setData(0, data, 0, data.length);
+        } else if (array instanceof UpdatableIntArray) {
+            final int[] data = JArrays.copyBytesToIntArray(bytes, array.length32(), byteOrder);
+            array.setData(0, data, 0, data.length);
+        } else if (array instanceof UpdatableLongArray) {
+            final long[] data = JArrays.copyBytesToLongArray(bytes, array.length32(), byteOrder);
+            array.setData(0, data, 0, data.length);
+        } else if (array instanceof UpdatableFloatArray) {
+            final float[] data = JArrays.copyBytesToFloatArray(bytes, array.length32(), byteOrder);
+            array.setData(0, data, 0, data.length);
+        } else if (array instanceof UpdatableDoubleArray) {
+            final double[] data = JArrays.copyBytesToDoubleArray(bytes, array.length32(), byteOrder);
+            array.setData(0, data, 0, data.length);
+        } else {
+            throw new AssertionError("Unallowed type of passed array: " + array.getClass());
+        }
     }
 
     /**

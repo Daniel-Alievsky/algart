@@ -1168,6 +1168,7 @@ public interface Array {
      * this method provides the simplest way to receive an identical Java array maximally quickly.
      *
      * @return Java array, equivalent to this AlgART array.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see DirectAccessible
      * @see #isJavaArrayWrapper()
      * @see PArray#jaByte()

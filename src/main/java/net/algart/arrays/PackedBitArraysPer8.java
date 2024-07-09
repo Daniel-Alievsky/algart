@@ -135,6 +135,21 @@ public class PackedBitArraysPer8 {
     }
 
     /**
+     * Equivalent to {@link #toLongArray(long[], byte[], long)
+     * toLongArray(null, byteArray, packedBitArrayLength)}.
+     *
+     * @param byteArray byte array, supposedly storing packed bits according the rules of this class.
+     * @param packedBitArrayLength the number of packed bits.
+     * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
+     * @throws NullPointerException if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     *                                  greater than <code>byteArray.length*8</code>.
+     */
+    public static long[] toLongArray(byte[] byteArray, long packedBitArrayLength) {
+        return toLongArray(null, byteArray, packedBitArrayLength);
+    }
+
+    /**
      * Packs <code>byte[]</code> array <code>byteArray</code> to the result <code>long[]</code> array,
      * so that the bits, stored in the result array according the rules
      * of {@link PackedBitArrays} class, will be identical to bits stored in the source <code>byteArray</code>
@@ -213,6 +228,21 @@ public class PackedBitArraysPer8 {
     public static long[] toLongArray(ByteBuffer byteBuffer) {
         Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
         return toLongArray(null, byteBuffer, 8L * (long) byteBuffer.limit());
+    }
+
+    /**
+     * Equivalent to {@link #toLongArray(long[], ByteBuffer, long)
+     * toLongArray(null, byteBuffer, packedBitArrayLength)}.
+     *
+     * @param byteBuffer bytes, supposedly storing packed bits according the rules of this class.
+     * @param packedBitArrayLength the number of packed bits.
+     * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
+     * @throws NullPointerException if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     *                                  greater than <code>byteBuffer.limit()*8</code>.
+     */
+    public static long[] toLongArray(ByteBuffer byteBuffer, long packedBitArrayLength) {
+        return toLongArray(null, byteBuffer, packedBitArrayLength);
     }
 
     /**
