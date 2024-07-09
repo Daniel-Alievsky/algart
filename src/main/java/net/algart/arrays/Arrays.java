@@ -3247,8 +3247,8 @@ public class Arrays {
      * Equivalent to <code>{@link #copy(ArrayContext, UpdatableArray, Array)
      * copy}(ArrayContext.{@link ArrayContext#DEFAULT_SINGLE_THREAD DEFAULT_SINGLE_THREAD}, dest, src)</code>.
      *
-     * @param dest    the destination array.
-     * @param src     the source array.
+     * @param dest the destination array.
+     * @param src  the source array.
      * @return the information about copying.
      * @throws NullPointerException     if <code>src</code> or <code>dest</code> argument is {@code null}.
      * @throws IllegalArgumentException if the source and destination element types do not match.
@@ -3474,7 +3474,7 @@ public class Arrays {
      * It performs cloning with maximal speed via multithreading optimization. We recommend to call
      * it after lazy calculations.</p>
      *
-     * @param array      the array to be cloned.
+     * @param array the array to be cloned.
      * @return exact updatable clone of the passed matrix.
      * @throws NullPointerException if the argument is {@code null}.
      */
@@ -3494,7 +3494,7 @@ public class Arrays {
      * </pre>
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
-     * @param array      the array to be cloned.
+     * @param array       the array to be cloned.
      * @return exact updatable clone of the passed matrix.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
@@ -3514,7 +3514,7 @@ public class Arrays {
      * </pre>
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
-     * @param array      the array to be cloned.
+     * @param array       the array to be cloned.
      * @return exact updatable clone of the passed array.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
@@ -4376,8 +4376,8 @@ public class Arrays {
      * Equivalent to {@link #applyPrecision(ArrayContext, UpdatablePArray, PArray)
      * applyPrecision(null, result, array)}.
      *
-     * @param result  the destination array.
-     * @param array   the source array.
+     * @param result the destination array.
+     * @param array  the source array.
      * @throws NullPointerException  if <code>result</code> or <code>array</code> is {@code null}.
      * @throws SizeMismatchException if passed arrays have different lengths.
      */
@@ -4510,12 +4510,11 @@ public class Arrays {
      * <p>This method can be used for serialization of AlgART arrays into a form, suitable for writing into
      * <code>OutputStream</code>, for example, for storing on external devices or passing through the network.
      *
-     * <p>Note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
-     * this method specifies the storage scheme absolutely strictly and does not depend on <code>ByteBuffer</code>
-     * implementation. On the other hand, serialization via this method can work little slower than
-     * {@link #write(OutputStream, PArray, ByteOrder) write} method.
+     * <p>This conversion is performed according the specified byte order, like in
+     * <code>ByteBuffer.asXxxBuffer</code> methods (after <code>byteBuffer.order(byteOrder)</code> call),
+     * excepting the case of {@link BitArray}, when <code>ByteOrder.LITTLE_ENDIAN</code> order is used always.
      *
-     * <p>Also note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
+     * <p>Note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
      * for {@link BitArray} case this method requires little less bytes:
      * {@link #sizeOfBytesForCopying(PArray) sizeOfBytesForCopying(array)} instead of
      * {@link #sizeOf(Array) sizeOf(array)}. If you are interested in compatibility with
@@ -4614,10 +4613,9 @@ public class Arrays {
      * {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method and loaded from
      * <code>InputStream</code>, for example, after reading from external devices or passing through the network.
      *
-     * <p>Note: unlike {@link #read(InputStream, UpdatablePArray, ByteOrder)} method,
-     * this method specify that storage algorithms absolutely strictly and does not depend on <code>ByteBuffer</code>
-     * implementation. On the other hand, deserialization via this method can work little slower than
-     * {@link #read(InputStream, UpdatablePArray, ByteOrder) read} method.
+     * <p>This conversion is performed according the specified byte order, like in
+     * <code>ByteBuffer.asXxxBuffer</code> methods (after <code>byteBuffer.order(byteOrder)</code> call),
+     * excepting the case of {@link BitArray}, when <code>ByteOrder.LITTLE_ENDIAN</code> order is used always.
      *
      * <p>We recommend calling this method for relatively small arrays only, up to several megabytes,
      * to avoid extra usage of RAM. If you need to deserialize a large AlgART array,

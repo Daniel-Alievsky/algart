@@ -53,7 +53,7 @@ class ArraysSerializationImpl {
                 byte[] bytes = byteBuffer.array();
                 LongBuffer longBuffer = byteBuffer.asLongBuffer();
                 for (long p = 0; p < n; ) {
-                    int len = (int) Math.min(n - p, bits.length * 64);
+                    int len = (int) Math.min(n - p, (long) bits.length * 64L);
                     int packedLen = (len + 63) >>> 6;
                     bitArray.getBits(p, bits, 0, len);
                     if ((len & 63) != 0) {
@@ -173,7 +173,7 @@ class ArraysSerializationImpl {
                 byte[] bytes = byteBuffer.array();
                 LongBuffer longBuffer = byteBuffer.asLongBuffer();
                 for (long p = 0; p < n; ) {
-                    int len = (int) Math.min(n - p, bits.length * 64);
+                    int len = (int) Math.min(n - p, (long) bits.length * 64L);
                     int packedLen = (len + 63) >>> 6;
                     dataInputStream.readFully(bytes, 0, packedLen * 8);
                     longBuffer.rewind();
