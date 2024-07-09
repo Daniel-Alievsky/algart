@@ -93,7 +93,8 @@ public class ReadWritePArrayByIOStreamsTest {
         } else {
             System.out.printf("Reading %s as %s[]...%n", fSrc, elementType);
             if (arrayLen > fSrc.length()) {
-                throw new EOFException("Too small file to read " + arrayLen + " elements");
+                throw new EOFException("Too small file to read " + arrayLen + " elements: only " +
+                        fSrc.length() + " bytes");
             }
             array = (UpdatablePArray) mm.newUnresizableArray(elementType, arrayLen);
             InputStream inputStream = new FileInputStream(fSrc);
