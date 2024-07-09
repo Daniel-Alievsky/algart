@@ -43,6 +43,7 @@ class ArraysSerializationImpl {
         Objects.requireNonNull(array, "Null array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
+        assert requiredLength == (int) requiredLength;
         if (bytes == null) {
             bytes = new byte[(int) requiredLength];
         } else {
@@ -55,11 +56,8 @@ class ArraysSerializationImpl {
             assert requiredLength == array.length();
             array.getData(0, bytes, 0, (int) requiredLength);
         } else if (array instanceof BitArray a) {
-            final long packedLength = PackedBitArrays.packedLength(a.length());
-            assert packedLength <= Integer.MAX_VALUE; // because requiredLength <= Integer.MAX_VALUE
-            assert packedLength * 8 >= requiredLength;
-            final long[] data = new long[(int) packedLength];
-            a.getBits(0, data, 0, a.length());
+            final long[] data = a.jaBit();
+            assert (long) data.length * 8L >= requiredLength;
             int disp = 0;
             for (int k = 0; k < data.length - 1; k++, disp += 8) {
                 long v = data[k];
@@ -221,7 +219,7 @@ class ArraysSerializationImpl {
         } else if (array instanceof UpdatableBitArray a) {
             final long packedLength = PackedBitArrays.packedLength(a.length());
             assert packedLength <= Integer.MAX_VALUE; // because requiredLength <= bytes.length <= Integer.MAX_VALUE
-            assert packedLength * 8 >= requiredLength;
+            assert packedLength * 8L >= requiredLength;
             final long[] data = new long[(int) packedLength];
             int disp = 0;
             for (int k = 0; k < data.length - 1; k++, disp += 8) {

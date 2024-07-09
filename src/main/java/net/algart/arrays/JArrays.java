@@ -1173,34 +1173,34 @@ public class JArrays {
         return copyCharArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyCharArrayToBytes(char[] src, int count, ByteOrder byteOrder) {
-        return copyCharArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyCharArrayToBytes(char[] src, int numberOfChars, ByteOrder byteOrder) {
+        return copyCharArrayToBytes(null, src, numberOfChars, byteOrder);
     }
 
-    public static byte[] copyCharArrayToBytes(byte[] dest, char[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyCharArrayToBytes(byte[] dest, char[] src, int numberOfChars, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfChars < 0) {
+            throw new IllegalArgumentException("Negative numberOfChars = " + numberOfChars);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array char[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfChars > src.length) {
+            throw new IllegalArgumentException("Too short source array char[" + src.length +
+                    "]: it must contain at least " + numberOfChars + " elements");
         }
-        if (2 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (2 * (long) numberOfChars > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfChars +
                     ": it must be less than 2^31 / 2 = " + (Integer.MAX_VALUE / 2 + 1));
         }
-        final int numberOfBytes = 2 * count;
+        final int numberOfBytes = 2 * numberOfChars;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 2 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 2 * " + numberOfChars + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asCharBuffer().put(src, 0, count);
+        bb.asCharBuffer().put(src, 0, numberOfChars);
         return dest;
     }
 
@@ -1209,29 +1209,29 @@ public class JArrays {
         return copyBytesToCharArray(src, src.length / 2, byteOrder);
     }
 
-    public static char[] copyBytesToCharArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToCharArray(null, src, count, byteOrder);
+    public static char[] copyBytesToCharArray(byte[] src, int numberOfChars, ByteOrder byteOrder) {
+        return copyBytesToCharArray(null, src, numberOfChars, byteOrder);
     }
 
-    public static char[] copyBytesToCharArray(char[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static char[] copyBytesToCharArray(char[] dest, byte[] src, int numberOfChars, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfChars < 0) {
+            throw new IllegalArgumentException("Negative numberOfChars = " + numberOfChars);
         }
-        if (2 * (long) count > src.length) {
+        if (2 * (long) numberOfChars > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfChars + " elements");
         }
         if (dest == null) {
-            dest = new char[count];
-        } else if (count > dest.length) {
+            dest = new char[numberOfChars];
+        } else if (numberOfChars > dest.length) {
             throw new IllegalArgumentException("Too short destination array char[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfChars + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asCharBuffer().get(dest, 0, count);
+        bb.asCharBuffer().get(dest, 0, numberOfChars);
         return dest;
     }
 
@@ -1241,34 +1241,34 @@ public class JArrays {
         return copyShortArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyShortArrayToBytes(short[] src, int count, ByteOrder byteOrder) {
-        return copyShortArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyShortArrayToBytes(short[] src, int numberOfShorts, ByteOrder byteOrder) {
+        return copyShortArrayToBytes(null, src, numberOfShorts, byteOrder);
     }
 
-    public static byte[] copyShortArrayToBytes(byte[] dest, short[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyShortArrayToBytes(byte[] dest, short[] src, int numberOfShorts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfShorts < 0) {
+            throw new IllegalArgumentException("Negative numberOfShorts = " + numberOfShorts);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array short[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfShorts > src.length) {
+            throw new IllegalArgumentException("Too short source array short[" + src.length +
+                    "]: it must contain at least " + numberOfShorts + " elements");
         }
-        if (2 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (2 * (long) numberOfShorts > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfShorts +
                     ": it must be less than 2^31 / 2 = " + (Integer.MAX_VALUE / 2 + 1));
         }
-        final int numberOfBytes = 2 * count;
+        final int numberOfBytes = 2 * numberOfShorts;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 2 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 2 * " + numberOfShorts + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asShortBuffer().put(src, 0, count);
+        bb.asShortBuffer().put(src, 0, numberOfShorts);
         return dest;
     }
 
@@ -1277,29 +1277,29 @@ public class JArrays {
         return copyBytesToShortArray(src, src.length / 2, byteOrder);
     }
 
-    public static short[] copyBytesToShortArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToShortArray(null, src, count, byteOrder);
+    public static short[] copyBytesToShortArray(byte[] src, int numberOfShorts, ByteOrder byteOrder) {
+        return copyBytesToShortArray(null, src, numberOfShorts, byteOrder);
     }
 
-    public static short[] copyBytesToShortArray(short[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static short[] copyBytesToShortArray(short[] dest, byte[] src, int numberOfShorts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfShorts < 0) {
+            throw new IllegalArgumentException("Negative numberOfShorts = " + numberOfShorts);
         }
-        if (2 * (long) count > src.length) {
+        if (2 * (long) numberOfShorts > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfShorts + " elements");
         }
         if (dest == null) {
-            dest = new short[count];
-        } else if (count > dest.length) {
+            dest = new short[numberOfShorts];
+        } else if (numberOfShorts > dest.length) {
             throw new IllegalArgumentException("Too short destination array short[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfShorts + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asShortBuffer().get(dest, 0, count);
+        bb.asShortBuffer().get(dest, 0, numberOfShorts);
         return dest;
     }
     public static byte[] copyIntArrayToBytes(int[] src, ByteOrder byteOrder) {
@@ -1307,34 +1307,34 @@ public class JArrays {
         return copyIntArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyIntArrayToBytes(int[] src, int count, ByteOrder byteOrder) {
-        return copyIntArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyIntArrayToBytes(int[] src, int numberOfInts, ByteOrder byteOrder) {
+        return copyIntArrayToBytes(null, src, numberOfInts, byteOrder);
     }
 
-    public static byte[] copyIntArrayToBytes(byte[] dest, int[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyIntArrayToBytes(byte[] dest, int[] src, int numberOfInts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfInts < 0) {
+            throw new IllegalArgumentException("Negative numberOfInts = " + numberOfInts);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array int[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfInts > src.length) {
+            throw new IllegalArgumentException("Too short source array int[" + src.length +
+                    "]: it must contain at least " + numberOfInts + " elements");
         }
-        if (4 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (4 * (long) numberOfInts > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfInts +
                     ": it must be less than 2^31 / 4 = " + (Integer.MAX_VALUE / 4 + 1));
         }
-        final int numberOfBytes = 4 * count;
+        final int numberOfBytes = 4 * numberOfInts;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 4 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 4 * " + numberOfInts + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asIntBuffer().put(src, 0, count);
+        bb.asIntBuffer().put(src, 0, numberOfInts);
         return dest;
     }
 
@@ -1343,29 +1343,29 @@ public class JArrays {
         return copyBytesToIntArray(src, src.length / 4, byteOrder);
     }
 
-    public static int[] copyBytesToIntArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToIntArray(null, src, count, byteOrder);
+    public static int[] copyBytesToIntArray(byte[] src, int numberOfInts, ByteOrder byteOrder) {
+        return copyBytesToIntArray(null, src, numberOfInts, byteOrder);
     }
 
-    public static int[] copyBytesToIntArray(int[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static int[] copyBytesToIntArray(int[] dest, byte[] src, int numberOfInts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfInts < 0) {
+            throw new IllegalArgumentException("Negative numberOfInts = " + numberOfInts);
         }
-        if (4 * (long) count > src.length) {
+        if (4 * (long) numberOfInts > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfInts + " elements");
         }
         if (dest == null) {
-            dest = new int[count];
-        } else if (count > dest.length) {
+            dest = new int[numberOfInts];
+        } else if (numberOfInts > dest.length) {
             throw new IllegalArgumentException("Too short destination array int[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfInts + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asIntBuffer().get(dest, 0, count);
+        bb.asIntBuffer().get(dest, 0, numberOfInts);
         return dest;
     }
     public static byte[] copyLongArrayToBytes(long[] src, ByteOrder byteOrder) {
@@ -1373,34 +1373,34 @@ public class JArrays {
         return copyLongArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyLongArrayToBytes(long[] src, int count, ByteOrder byteOrder) {
-        return copyLongArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyLongArrayToBytes(long[] src, int numberOfLongs, ByteOrder byteOrder) {
+        return copyLongArrayToBytes(null, src, numberOfLongs, byteOrder);
     }
 
-    public static byte[] copyLongArrayToBytes(byte[] dest, long[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyLongArrayToBytes(byte[] dest, long[] src, int numberOfLongs, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfLongs < 0) {
+            throw new IllegalArgumentException("Negative numberOfLongs = " + numberOfLongs);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array long[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfLongs > src.length) {
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
+                    "]: it must contain at least " + numberOfLongs + " elements");
         }
-        if (8 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (8 * (long) numberOfLongs > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfLongs +
                     ": it must be less than 2^31 / 8 = " + (Integer.MAX_VALUE / 8 + 1));
         }
-        final int numberOfBytes = 8 * count;
+        final int numberOfBytes = 8 * numberOfLongs;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 8 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 8 * " + numberOfLongs + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asLongBuffer().put(src, 0, count);
+        bb.asLongBuffer().put(src, 0, numberOfLongs);
         return dest;
     }
 
@@ -1409,29 +1409,29 @@ public class JArrays {
         return copyBytesToLongArray(src, src.length / 8, byteOrder);
     }
 
-    public static long[] copyBytesToLongArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToLongArray(null, src, count, byteOrder);
+    public static long[] copyBytesToLongArray(byte[] src, int numberOfLongs, ByteOrder byteOrder) {
+        return copyBytesToLongArray(null, src, numberOfLongs, byteOrder);
     }
 
-    public static long[] copyBytesToLongArray(long[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static long[] copyBytesToLongArray(long[] dest, byte[] src, int numberOfLongs, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfLongs < 0) {
+            throw new IllegalArgumentException("Negative numberOfLongs = " + numberOfLongs);
         }
-        if (8 * (long) count > src.length) {
+        if (8 * (long) numberOfLongs > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfLongs + " elements");
         }
         if (dest == null) {
-            dest = new long[count];
-        } else if (count > dest.length) {
+            dest = new long[numberOfLongs];
+        } else if (numberOfLongs > dest.length) {
             throw new IllegalArgumentException("Too short destination array long[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfLongs + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asLongBuffer().get(dest, 0, count);
+        bb.asLongBuffer().get(dest, 0, numberOfLongs);
         return dest;
     }
     public static byte[] copyFloatArrayToBytes(float[] src, ByteOrder byteOrder) {
@@ -1439,34 +1439,34 @@ public class JArrays {
         return copyFloatArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyFloatArrayToBytes(float[] src, int count, ByteOrder byteOrder) {
-        return copyFloatArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyFloatArrayToBytes(float[] src, int numberOfFloats, ByteOrder byteOrder) {
+        return copyFloatArrayToBytes(null, src, numberOfFloats, byteOrder);
     }
 
-    public static byte[] copyFloatArrayToBytes(byte[] dest, float[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyFloatArrayToBytes(byte[] dest, float[] src, int numberOfFloats, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfFloats < 0) {
+            throw new IllegalArgumentException("Negative numberOfFloats = " + numberOfFloats);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array float[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfFloats > src.length) {
+            throw new IllegalArgumentException("Too short source array float[" + src.length +
+                    "]: it must contain at least " + numberOfFloats + " elements");
         }
-        if (4 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (4 * (long) numberOfFloats > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfFloats +
                     ": it must be less than 2^31 / 4 = " + (Integer.MAX_VALUE / 4 + 1));
         }
-        final int numberOfBytes = 4 * count;
+        final int numberOfBytes = 4 * numberOfFloats;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 4 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 4 * " + numberOfFloats + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asFloatBuffer().put(src, 0, count);
+        bb.asFloatBuffer().put(src, 0, numberOfFloats);
         return dest;
     }
 
@@ -1475,29 +1475,29 @@ public class JArrays {
         return copyBytesToFloatArray(src, src.length / 4, byteOrder);
     }
 
-    public static float[] copyBytesToFloatArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToFloatArray(null, src, count, byteOrder);
+    public static float[] copyBytesToFloatArray(byte[] src, int numberOfFloats, ByteOrder byteOrder) {
+        return copyBytesToFloatArray(null, src, numberOfFloats, byteOrder);
     }
 
-    public static float[] copyBytesToFloatArray(float[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static float[] copyBytesToFloatArray(float[] dest, byte[] src, int numberOfFloats, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfFloats < 0) {
+            throw new IllegalArgumentException("Negative numberOfFloats = " + numberOfFloats);
         }
-        if (4 * (long) count > src.length) {
+        if (4 * (long) numberOfFloats > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfFloats + " elements");
         }
         if (dest == null) {
-            dest = new float[count];
-        } else if (count > dest.length) {
+            dest = new float[numberOfFloats];
+        } else if (numberOfFloats > dest.length) {
             throw new IllegalArgumentException("Too short destination array float[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfFloats + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asFloatBuffer().get(dest, 0, count);
+        bb.asFloatBuffer().get(dest, 0, numberOfFloats);
         return dest;
     }
     public static byte[] copyDoubleArrayToBytes(double[] src, ByteOrder byteOrder) {
@@ -1505,34 +1505,34 @@ public class JArrays {
         return copyDoubleArrayToBytes(src, src.length, byteOrder);
     }
 
-    public static byte[] copyDoubleArrayToBytes(double[] src, int count, ByteOrder byteOrder) {
-        return copyDoubleArrayToBytes(null, src, count, byteOrder);
+    public static byte[] copyDoubleArrayToBytes(double[] src, int numberOfDoubles, ByteOrder byteOrder) {
+        return copyDoubleArrayToBytes(null, src, numberOfDoubles, byteOrder);
     }
 
-    public static byte[] copyDoubleArrayToBytes(byte[] dest, double[] src, int count, ByteOrder byteOrder) {
+    public static byte[] copyDoubleArrayToBytes(byte[] dest, double[] src, int numberOfDoubles, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfDoubles < 0) {
+            throw new IllegalArgumentException("Negative numberOfDoubles = " + numberOfDoubles);
         }
-        if (count > src.length) {
-            throw new IllegalArgumentException("Too short source array double[ " + src.length +
-                    "]: it must contain at least " + count + " elements");
+        if (numberOfDoubles > src.length) {
+            throw new IllegalArgumentException("Too short source array double[" + src.length +
+                    "]: it must contain at least " + numberOfDoubles + " elements");
         }
-        if (8 * (long) count > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + count +
+        if (8 * (long) numberOfDoubles > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + numberOfDoubles +
                     ": it must be less than 2^31 / 8 = " + (Integer.MAX_VALUE / 8 + 1));
         }
-        final int numberOfBytes = 8 * count;
+        final int numberOfBytes = 8 * numberOfDoubles;
         if (dest == null) {
             dest = new byte[numberOfBytes];
         } else if (numberOfBytes > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least 8 * " + count + " = " + numberOfBytes + " elements");
+                    "]: it must contain at least 8 * " + numberOfDoubles + " = " + numberOfBytes + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(dest);
         bb.order(byteOrder);
-        bb.asDoubleBuffer().put(src, 0, count);
+        bb.asDoubleBuffer().put(src, 0, numberOfDoubles);
         return dest;
     }
 
@@ -1541,29 +1541,29 @@ public class JArrays {
         return copyBytesToDoubleArray(src, src.length / 8, byteOrder);
     }
 
-    public static double[] copyBytesToDoubleArray(byte[] src, int count, ByteOrder byteOrder) {
-        return copyBytesToDoubleArray(null, src, count, byteOrder);
+    public static double[] copyBytesToDoubleArray(byte[] src, int numberOfDoubles, ByteOrder byteOrder) {
+        return copyBytesToDoubleArray(null, src, numberOfDoubles, byteOrder);
     }
 
-    public static double[] copyBytesToDoubleArray(double[] dest, byte[] src, int count, ByteOrder byteOrder) {
+    public static double[] copyBytesToDoubleArray(double[] dest, byte[] src, int numberOfDoubles, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (count < 0) {
-            throw new IllegalArgumentException("Negative count = " + count);
+        if (numberOfDoubles < 0) {
+            throw new IllegalArgumentException("Negative numberOfDoubles = " + numberOfDoubles);
         }
-        if (8 * (long) count > src.length) {
+        if (8 * (long) numberOfDoubles > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfDoubles + " elements");
         }
         if (dest == null) {
-            dest = new double[count];
-        } else if (count > dest.length) {
+            dest = new double[numberOfDoubles];
+        } else if (numberOfDoubles > dest.length) {
             throw new IllegalArgumentException("Too short destination array double[" + dest.length +
-                    "]: it must contain at least " + count + " elements");
+                    "]: it must contain at least " + numberOfDoubles + " elements");
         }
         final ByteBuffer bb = ByteBuffer.wrap(src);
         bb.order(byteOrder);
-        bb.asDoubleBuffer().get(dest, 0, count);
+        bb.asDoubleBuffer().get(dest, 0, numberOfDoubles);
         return dest;
     }
 

@@ -1334,26 +1334,55 @@ public class PackedBitArraysPer8Test {
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 int count = rnd.nextInt(len + 1);
-                final int n = PackedBitArraysPer8.packedLength(count);
-                long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, n));
+                final int numberOfBytes = PackedBitArraysPer8.packedLength(count);
+                final int numberOfLongs = PackedBitArrays.packedLength(count);
+                long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, numberOfBytes));
                 if (longs1.length != PackedBitArrays.packedLength(count)) {
                     throw new AssertionError("The bug in toLongArray() length");
                 }
                 for (int k = 0; k < count; k++) {
-                    if (PackedBitArraysPer8.getBit(pDest, k) != PackedBitArrays.getBit(longs1, k)) {
+                    if (PackedBitArrays.getBit(longs1, k) != PackedBitArraysPer8.getBit(pDest, k)) {
                         throw new AssertionError("The bug A in toLongArray found in test #" + testCount + ": "
                                 + "count = " + count + ", error found at " + k);
                     }
                 }
-                long[] longs2 = PackedBitArraysPer8.toLongArray(ByteBuffer.wrap(Arrays.copyOf(pDestWork1, n)));
-                if (!java.util.Arrays.equals(longs1, longs2)) {
-                    throw new AssertionError("The bug B in toLongArray found in test #" + testCount + ": "
+                Arrays.fill(longs1, 157);
+                PackedBitArraysPer8.toLongArray(longs1, pDestWork1, count);
+                for (int k = 0; k < count; k++) {
+                    if (PackedBitArrays.getBit(longs1, k) != PackedBitArraysPer8.getBit(pDest, k)) {
+                        throw new AssertionError("The bug B in toLongArray found in test #" + testCount +
+                                ": count = " + count + ", error found at " + k);
+                    }
+                }
+                for (int k = count; k < 64 * numberOfLongs; k++) {
+                    if (PackedBitArrays.getBit(longs1, k)) {
+                        throw new AssertionError("The bug C in toLongArray found in test #" + testCount +
+                                ": count = " + count + ", error found at " + k);
+                    }
+                }
+
+                long[] longs2 = new long[longs1.length + 2];
+                PackedBitArraysPer8.toLongArray(longs2, ByteBuffer.wrap(pDestWork1), count);
+                if (!Arrays.equals(longs1, Arrays.copyOf(longs2, longs1.length))) {
+                    throw new AssertionError("The bug D in toLongArray found in test #" + testCount + ": "
                             + "count = " + count);
                 }
-                byte[] bytes = PackedBitArraysPer8.toByteArray(longs1, count);
-                if (!java.util.Arrays.equals(bytes, Arrays.copyOf(pDestWork1, n))) {
-                    throw new AssertionError("The bug C in toByteArray found in test #" + testCount + ": "
-                            + "count = " + count);
+                byte[] bytes = new byte[numberOfBytes + 14];
+                Arrays.fill(bytes, (byte) -1);
+                longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, numberOfBytes));
+                // - provide random bits in the last used byte of the last long
+                PackedBitArraysPer8.toByteArray(bytes, longs1, count);
+                for (int k = 0; k < count; k++) {
+                    if (PackedBitArraysPer8.getBit(bytes, k) != PackedBitArraysPer8.getBit(pDest, k)) {
+                        throw new AssertionError("The bug E in toByteArray found in test #" + testCount +
+                                ": count = " + count + ", error found at " + k);
+                    }
+                }
+                for (int k = count; k < 8 * numberOfBytes; k++) {
+                    if (PackedBitArraysPer8.getBit(bytes, k)) {
+                        throw new AssertionError("The bug F in toByteArray found in test #" + testCount +
+                                ": count = " + count + ", error found at " + k);
+                    }
                 }
                 showProgress(testCount);
             }

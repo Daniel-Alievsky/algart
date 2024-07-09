@@ -47,24 +47,24 @@ public class PackedBitLongsAndBytesTest {
     }
 
     public static void main(String[] args) {
-        final int length = 3 * 64 + 13;
-        final byte[] bytes = new byte[(length + 7) / 8];
+        final int numberOfBits = 3 * 64 + 13;
+        final byte[] bytes = new byte[(numberOfBits + 7) / 8];
         for (int k = 0; k < bytes.length; k++) {
             bytes[k] = (byte) k;
         }
-        boolean[] bits1 = showBits(bytes, length);
+        boolean[] bits1 = showBits(bytes, numberOfBits);
         final long[] longs = PackedBitArraysPer8.toLongArray(bytes);
-        boolean[] bits2 = showBits(longs, length);
+        boolean[] bits2 = showBits(longs, numberOfBits);
         if (!Arrays.equals(bits1, bits2)) {
             throw new AssertionError("Bug A");
         }
         final long[] longsFromBuffer = PackedBitArraysPer8.toLongArray(ByteBuffer.wrap(bytes));
-        boolean[] bits3 = showBits(longsFromBuffer, length);
+        boolean[] bits3 = showBits(longsFromBuffer, numberOfBits);
         if (!Arrays.equals(bits1, bits3)) {
             throw new AssertionError("Bug B");
         }
 
-        final byte[] resultBytes = PackedBitArraysPer8.toByteArray(longs, length);
+        final byte[] resultBytes = PackedBitArraysPer8.toByteArray(longs, numberOfBits);
         if (!Arrays.equals(bytes, resultBytes)) {
             throw new AssertionError("Bug C");
         }
