@@ -81,7 +81,9 @@ class ArraysSerializationImpl {
                 } else {
                     int sizeOfElement = (int) array.bitsPerElement() >>> 3;
                     byte[] bytes = new byte[sizeOfElement * (int) Math.min(buf.capacity(), n)];
-                    ByteBuffer byteBuffer = ByteBuffer.allocateDirect(bytes.length);
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length);
+                    // - in old Java versions we used allocateDirect for maximal performance;
+                    // but in new versions put() method for asXxxBuffer works quickly also for non-direct buffers
                     byteBuffer.order(byteOrder);
                     //[[Repeat() Char ==> Short,,Int,,Long,,Float,,Double;;
                     //           char ==> short,,int,,long,,float,,double;;
@@ -198,7 +200,9 @@ class ArraysSerializationImpl {
                 } else {
                     int sizeOfElement = (int) array.bitsPerElement() >>> 3;
                     byte[] bytes = new byte[sizeOfElement * (int) Math.min(buf.capacity(), n)];
-                    ByteBuffer byteBuffer = ByteBuffer.allocateDirect(bytes.length);
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(bytes.length);
+                    // - in old Java versions we used allocateDirect for maximal performance;
+                    // but in new versions get() method for asXxxBuffer works quickly also for non-direct buffers
                     byteBuffer.order(byteOrder);
                     //[[Repeat() Char ==> Short,,Int,,Long,,Float,,Double;;
                     //           char ==> short,,int,,long,,float,,double;;
