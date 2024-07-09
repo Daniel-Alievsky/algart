@@ -131,7 +131,7 @@ class ArraysByteTableGetDataOp {
             }
             //[[Repeat() long ==> float,,double;;
             //           LONG ==> FLOAT,,DOUBLE;;
-            //           \(double\)  ==> ,, ]]
+            //           \(double\)\s+  ==> ,, ]]
             case ArraysFuncImpl.LONG_TYPE_CODE: {
                 longTable = new long[256];
                 for (int k = 0; k < longTable.length; k++) {
@@ -150,7 +150,7 @@ class ArraysByteTableGetDataOp {
             case ArraysFuncImpl.DOUBLE_TYPE_CODE: {
                 doubleTable = new double[256];
                 for (int k = 0; k < doubleTable.length; k++) {
-                    doubleTable[k] =  f.get(k);
+                    doubleTable[k] = f.get(k);
                 }
                 break;
             }

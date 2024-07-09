@@ -153,7 +153,7 @@ class ArraysShortTableGetDataOp {
             case ArraysFuncImpl.DOUBLE_TYPE_CODE: {
                 doubleTable = new double[65536];
                 for (int k = 0; k < doubleTable.length; k++) {
-                    doubleTable[k] =  f.get(k);
+                    doubleTable[k] = f.get(k);
                 }
                 break;
             }
