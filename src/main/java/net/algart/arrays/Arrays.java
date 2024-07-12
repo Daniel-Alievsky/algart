@@ -4539,11 +4539,11 @@ public class Arrays {
      *                                   than <code>Integer.MAX_VALUE</code> elements.
      * @throws IndexOutOfBoundsException if <code>bytes!=null</code> and the length of <code>bytes</code> array
      *                                   is not enough for storing all elements of the source AlgART array.
-     * @see #copyBytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see #bytesToArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
      */
-    public static byte[] copyArrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
+    public static byte[] arrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
@@ -4565,22 +4565,22 @@ public class Arrays {
             PackedBitArraysPer8.toByteArray(bytes, data, array.length());
         } else if (array instanceof CharArray a) {
             final char[] data = a.ja();
-            JArrays.copyCharArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.charArrayToBytes(bytes, data, data.length, byteOrder);
         } else if (array instanceof ShortArray a) {
             final short[] data = a.ja();
-            JArrays.copyShortArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.shortArrayToBytes(bytes, data, data.length, byteOrder);
         } else if (array instanceof IntArray a) {
             final int[] data = a.ja();
-            JArrays.copyIntArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.intArrayToBytes(bytes, data, data.length, byteOrder);
         } else if (array instanceof LongArray a) {
             final long[] data = a.ja();
-            JArrays.copyLongArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.longArrayToBytes(bytes, data, data.length, byteOrder);
         } else if (array instanceof FloatArray a) {
             final float[] data = a.ja();
-            JArrays.copyFloatArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.floatArrayToBytes(bytes, data, data.length, byteOrder);
         } else if (array instanceof DoubleArray a) {
             final double[] data = a.ja();
-            JArrays.copyDoubleArrayToBytes(bytes, data, data.length, byteOrder);
+            JArrays.doubleArrayToBytes(bytes, data, data.length, byteOrder);
         } else {
             throw new AssertionError("Unallowed type of passed array: " + array.getClass());
         }
@@ -4589,10 +4589,10 @@ public class Arrays {
 
     /**
      * Copies the elements, stored in the <code>bytes</code> Java array (2nd argument)
-     * by previous {@link #copyArrayToBytes(byte[], PArray, ByteOrder)}
+     * by previous {@link #arrayToBytes(byte[], PArray, ByteOrder)}
      * call, back into the given AlgART array (1st argument).
      *
-     * <p>As in {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method,
+     * <p>As in {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method,
      * the length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <code>bytes.length</code> must be
      * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
@@ -4604,13 +4604,13 @@ public class Arrays {
      *
      * <p>The array element #<i>k</i> (<code>array.{@link Array#getElement(long) getElement}(<i>k</i>))</code>
      * is retrieved from the same position in the <code>bytes</code> Java array, where it is stored by
-     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method (see comments to it).
+     * {@link #arrayToBytes(byte[], PArray, ByteOrder)} method (see comments to it).
      * The elements <code>float</code>
      * and <code>double</code> are retrieved from the corresponding byte sequences via
      * <code>Float.intBitsToFloat</code> and <code>Double.longBitsToDouble</code> methods.
      *
      * <p>This method can be used for deserialization of AlgART arrays from a form, created by
-     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method and loaded from
+     * {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method and loaded from
      * <code>InputStream</code>, for example, after reading from external devices or passing through the network.
      *
      * <p>This conversion is performed according the specified byte order, like in
@@ -4623,7 +4623,7 @@ public class Arrays {
      *
      * @param array     the target AlgART array, all elements of which should be copied from the Java array.
      * @param bytes     the source Java array, filled according the specification of
-     *                  {@link #copyArrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method.
+     *                  {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method.
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException      if any of the arguments is {@code null}.
@@ -4632,7 +4632,7 @@ public class Arrays {
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
      */
-    public static void copyBytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
+    public static void bytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
         Objects.requireNonNull(bytes, "Null bytes Java array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -4651,23 +4651,23 @@ public class Arrays {
             final long[] data = PackedBitArraysPer8.toLongArray(bytes, a.length());
             a.setBits(0, data, 0, a.length());
         } else if (array instanceof UpdatableCharArray) {
-            final char[] data = JArrays.copyBytesToCharArray(bytes, array.length32(), byteOrder);
+            final char[] data = JArrays.bytesToCharArray(bytes, array.length32(), byteOrder);
             // note that length32() cannot lead to exception (here and below): requiredLength <= bytes.length
             array.setData(0, data, 0, data.length);
         } else if (array instanceof UpdatableShortArray) {
-            final short[] data = JArrays.copyBytesToShortArray(bytes, array.length32(), byteOrder);
+            final short[] data = JArrays.bytesToShortArray(bytes, array.length32(), byteOrder);
             array.setData(0, data, 0, data.length);
         } else if (array instanceof UpdatableIntArray) {
-            final int[] data = JArrays.copyBytesToIntArray(bytes, array.length32(), byteOrder);
+            final int[] data = JArrays.bytesToIntArray(bytes, array.length32(), byteOrder);
             array.setData(0, data, 0, data.length);
         } else if (array instanceof UpdatableLongArray) {
-            final long[] data = JArrays.copyBytesToLongArray(bytes, array.length32(), byteOrder);
+            final long[] data = JArrays.bytesToLongArray(bytes, array.length32(), byteOrder);
             array.setData(0, data, 0, data.length);
         } else if (array instanceof UpdatableFloatArray) {
-            final float[] data = JArrays.copyBytesToFloatArray(bytes, array.length32(), byteOrder);
+            final float[] data = JArrays.bytesToFloatArray(bytes, array.length32(), byteOrder);
             array.setData(0, data, 0, data.length);
         } else if (array instanceof UpdatableDoubleArray) {
-            final double[] data = JArrays.copyBytesToDoubleArray(bytes, array.length32(), byteOrder);
+            final double[] data = JArrays.bytesToDoubleArray(bytes, array.length32(), byteOrder);
             array.setData(0, data, 0, data.length);
         } else {
             throw new AssertionError("Unallowed type of passed array: " + array.getClass());
@@ -4676,14 +4676,14 @@ public class Arrays {
 
     /**
      * Returns the minimal size of <code>byte[]</code> array, enough for copying there the given AlgART array
-     * by {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
+     * by {@link #arrayToBytes(byte[], PArray, ByteOrder)} method.
      * More precisely, returns
      * <code>array.{@link Array#length() length()}+7/8</code> for {@link BitArray}
      * or <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> for other primitive types.
      *
      * @param array the source AlgART array.
      * @return the minimal size of <code>byte[]</code> array, enough for calling
-     * {@link #copyArrayToBytes(byte[], PArray, ByteOrder)} method.
+     * {@link #arrayToBytes(byte[], PArray, ByteOrder)} method.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the result (required Java array length) is greater
      *                                than <code>Integer.MAX_VALUE</code> elements.
@@ -4745,7 +4745,7 @@ public class Arrays {
      * @throws NullPointerException if <code>outputStream</code>, <code>array</code> or <code>byteOrder</code>
      *                              argument is {@code null}.
      * @throws IOException          in the same situations as in the standard <code>OutputStream.write</code> method.
-     * @see #copyArrayToBytes(byte[], PArray, ByteOrder)
+     * @see #arrayToBytes(byte[], PArray, ByteOrder)
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      */
     public static void write(OutputStream outputStream, PArray array, ByteOrder byteOrder) throws IOException {
@@ -4794,7 +4794,7 @@ public class Arrays {
      *                              argument is {@code null}.
      * @throws IOException          in the same situations as in the standard
      *                              <code>DataInputStream.readFully</code> method.
-     * @see #copyBytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see #bytesToArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      */
     public static void read(InputStream inputStream, UpdatablePArray array, ByteOrder byteOrder) throws IOException {

@@ -1810,7 +1810,7 @@ public class MainOperationsTest implements Cloneable {
                     new byte[(int) (a instanceof BitArray ? (srcPArray.length() + 7) / 8 : Arrays.sizeOf(srcPArray))] :
                     null;
             ByteOrder byteOrder = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
-            bytes = Arrays.copyArrayToBytes(bytes, srcPArray, byteOrder);
+            bytes = Arrays.arrayToBytes(bytes, srcPArray, byteOrder);
             for (int k = 0; k < count; k++) {
                 boolean equal;
                 if (srcPArray instanceof BitArray) {
@@ -1897,7 +1897,7 @@ public class MainOperationsTest implements Cloneable {
                             + ", error found at " + k + ": " + srcPArray.getDouble(k));
                 }
             }
-            Arrays.copyBytesToArray(destPArray, bytes, byteOrder);
+            Arrays.bytesToArray(destPArray, bytes, byteOrder);
             if (!srcPArray.equals(destPArray)) {
                 throw new AssertionError("The bug in copyBytesToArray found in test #" + testCount +
                         ": " + "byteOrder = " + byteOrder + ", srcPos = " + srcPos + ", destPos = " + destPos +

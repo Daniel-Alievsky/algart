@@ -136,17 +136,17 @@ public class PackedBitArraysPer8 {
 
     /**
      * Equivalent to {@link #toLongArray(long[], byte[], long)
-     * toLongArray(null, byteArray, packedBitArrayLength)}.
+     * toLongArray(null, byteArray, numberOfBits)}.
      *
-     * @param byteArray byte array, supposedly storing packed bits according the rules of this class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param byteArray    byte array, supposedly storing packed bits according the rules of this class.
+     * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
-     * @throws NullPointerException if the argument is {@code null}.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>byteArray.length*8</code>.
      */
-    public static long[] toLongArray(byte[] byteArray, long packedBitArrayLength) {
-        return toLongArray(null, byteArray, packedBitArrayLength);
+    public static long[] toLongArray(byte[] byteArray, long numberOfBits) {
+        return toLongArray(null, byteArray, numberOfBits);
     }
 
     /**
@@ -156,45 +156,45 @@ public class PackedBitArraysPer8 {
      * according the rules of this class.
      *
      * <p>The length of the result array must be not less than
-     * <code>n = {@link PackedBitArrays#packedLength PackedBitArrays.packedLength}(packedBitArrayLength)</code>.
+     * <code>n = {@link PackedBitArrays#packedLength PackedBitArrays.packedLength}(numberOfBits)</code>.
      * The result array may be <code>null</code>, than it will be created automatically as
      * <code>new&nbsp;long[n]</code>.
      * The bytes of the result <code>long</code> values are just the bytes of the source array,
      * packed in little-endian order.
-     * If <code>packedBitArrayLength</code> is not divisible by 64, the unused high bits of the last <code>long</code>
+     * If <code>numberOfBits</code> is not divisible by 64, the unused high bits of the last <code>long</code>
      * element will be set to zero (even the corresponding unused bits in the last byte of the source
      * <code>byteArray</code> were non-zero).
      * The result array (the <code>result</code> argument or a newly created <code>long[]</code> array)
      * is returned in the result of this method.
      *
-     * @param result               the result array; can be <code>null</code>, then it will be created automatically.
-     * @param byteArray            byte array, supposedly storing packed bits according the rules of this class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param byteArray    byte array, supposedly storing packed bits according the rules of this class.
+     * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
      * @throws NullPointerException     if <code>byteArray</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>byteArray.length*8</code>,
      *                                  or greater than <code>result.length*64</code>
      *                                  (when <code>result!=null</code>).
      */
-    public static long[] toLongArray(long[] result, byte[] byteArray, long packedBitArrayLength) {
+    public static long[] toLongArray(long[] result, byte[] byteArray, long numberOfBits) {
         Objects.requireNonNull(byteArray, "Null byte[] array");
-        if (packedBitArrayLength < 0) {
-            throw new IllegalArgumentException("Negative packedBitArrayLength");
+        if (numberOfBits < 0) {
+            throw new IllegalArgumentException("Negative numberOfBits = " + numberOfBits);
         }
-        final long numberOfBytes = packedLength(packedBitArrayLength);
+        final long numberOfBytes = packedLength(numberOfBits);
         if (numberOfBytes > byteArray.length) {
             throw new IllegalArgumentException("Too short byte[" + byteArray.length +
                     "] array (packed bits): it must contain at least " + numberOfBytes +
-                    " byte elements to contain " + packedBitArrayLength + " bits");
+                    " byte elements to contain " + numberOfBits + " bits");
         }
-        final int numberOfLongs = (int) PackedBitArrays.packedLength(packedBitArrayLength);
+        final int numberOfLongs = (int) PackedBitArrays.packedLength(numberOfBits);
         if (result == null) {
             result = new long[numberOfLongs];
         } else if (numberOfLongs > result.length) {
             throw new IllegalArgumentException("Too short result array long[" + result.length +
                     "]: it must contain at least " + numberOfLongs + " elements to store " +
-                    packedBitArrayLength + " bits");
+                    numberOfBits + " bits");
         }
         final int numberOfWholeLongs = (int) (numberOfBytes >>> 3);
         final int alignedLength = numberOfWholeLongs << 3;
@@ -210,9 +210,9 @@ public class PackedBitArraysPer8 {
             }
             result[numberOfWholeLongs] = v;
         }
-        final int cntFinish = (int) (packedBitArrayLength & 63);
+        final int cntFinish = (int) (numberOfBits & 63);
         if (cntFinish > 0) {
-            result[numberOfLongs - 1] &=  (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+            result[numberOfLongs - 1] &= (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
         }
         return result;
     }
@@ -232,17 +232,17 @@ public class PackedBitArraysPer8 {
 
     /**
      * Equivalent to {@link #toLongArray(long[], ByteBuffer, long)
-     * toLongArray(null, byteBuffer, packedBitArrayLength)}.
+     * toLongArray(null, byteBuffer, numberOfBits)}.
      *
-     * @param byteBuffer bytes, supposedly storing packed bits according the rules of this class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param byteBuffer   bytes, supposedly storing packed bits according the rules of this class.
+     * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
-     * @throws NullPointerException if the argument is {@code null}.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws NullPointerException     if the argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>byteBuffer.limit()*8</code>.
      */
-    public static long[] toLongArray(ByteBuffer byteBuffer, long packedBitArrayLength) {
-        return toLongArray(null, byteBuffer, packedBitArrayLength);
+    public static long[] toLongArray(ByteBuffer byteBuffer, long numberOfBits) {
+        return toLongArray(null, byteBuffer, numberOfBits);
     }
 
     /**
@@ -251,43 +251,43 @@ public class PackedBitArraysPer8 {
      * instead of <code>byte[]</code> array. If <code>b</code> is some <code>byte[]</code> array,
      * then the following calls are equivalent:
      * <pre>
-     *     {@link #toLongArray(long[], ByteBuffer, long) toLongArray}(result, ByteBuffer.wrap(b), packedBitArrayLength)
-     *     {@link #toLongArray(long[], byte[], long) toLongArray}(result, b, packedBitArrayLength)
+     *     {@link #toLongArray(long[], ByteBuffer, long) toLongArray}(result, ByteBuffer.wrap(b), numberOfBits)
+     *     {@link #toLongArray(long[], byte[], long) toLongArray}(result, b, numberOfBits)
      * </pre>
      *
      * <p>This method works with a duplicate of the specified <code>ByteBuffer</code> and, so, does not modify
      * its settings like position and limit. Note that the byte order in the passes <code>ByteBuffer</code> is ignored:
      * the bytes are always packed into <code>long</code> values in little-endian order.</p>
      *
-     * @param result               the result array; can be <code>null</code>, then it will be created automatically.
-     * @param byteBuffer           bytes, supposedly storing packed bits according the rules of this class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param byteBuffer   bytes, supposedly storing packed bits according the rules of this class.
+     * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
      * @throws NullPointerException     if <code>byteBuffer</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>byteBuffer.limit()*8</code>,
      *                                  or greater than <code>result.length*64</code>
      *                                  (when <code>result!=null</code>).
      */
-    public static long[] toLongArray(long[] result, ByteBuffer byteBuffer, long packedBitArrayLength) {
+    public static long[] toLongArray(long[] result, ByteBuffer byteBuffer, long numberOfBits) {
         Objects.requireNonNull(byteBuffer, "Null ByteBuffer");
-        if (packedBitArrayLength < 0) {
-            throw new IllegalArgumentException("Negative packedBitArrayLength");
+        if (numberOfBits < 0) {
+            throw new IllegalArgumentException("Negative numberOfBits = " + numberOfBits);
         }
         ByteBuffer bb = byteBuffer.duplicate();
-        final long numberOfBytes = packedLength(packedBitArrayLength);
+        final long numberOfBytes = packedLength(numberOfBits);
         if (numberOfBytes > bb.limit()) {
             throw new IllegalArgumentException("Too short ByteBuffer, " + bb.limit() +
                     " bytes (packed bits): it must contain at least " + numberOfBytes +
-                    " byte elements to contain " + packedBitArrayLength + " bits");
+                    " byte elements to contain " + numberOfBits + " bits");
         }
-        final int numberOfLongs = (int) PackedBitArrays.packedLength(packedBitArrayLength);
+        final int numberOfLongs = (int) PackedBitArrays.packedLength(numberOfBits);
         if (result == null) {
             result = new long[numberOfLongs];
         } else if (numberOfLongs > result.length) {
             throw new IllegalArgumentException("Too short result array long[" + result.length +
                     "]: it must contain at least " + numberOfLongs + " elements to store " +
-                    packedBitArrayLength + " bits");
+                    numberOfBits + " bits");
         }
         final int numberOfWholeLongs = (int) (numberOfBytes >>> 3);
         final int alignedLength = numberOfWholeLongs << 3;
@@ -304,28 +304,28 @@ public class PackedBitArraysPer8 {
             }
             result[numberOfWholeLongs] = v;
         }
-        final int cntFinish = (int) (packedBitArrayLength & 63);
+        final int cntFinish = (int) (numberOfBits & 63);
         if (cntFinish > 0) {
-            result[numberOfLongs - 1] &=  (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
+            result[numberOfLongs - 1] &= (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
         }
         return result;
     }
 
     /**
      * Equivalent to {@link #toByteArray(byte[], long[], long)
-     * toByteArray(null, packedBitArray, packedBitArrayLength)}.
+     * toByteArray(null, packedBitArray, numberOfBits)}.
      *
-     * @param packedBitArray       <code>long</code> array, supposedly storing packed bits according the rules
-     *                             of {@link PackedBitArrays} class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param packedBitArray <code>long</code> array, supposedly storing packed bits according the rules
+     *                       of {@link PackedBitArrays} class.
+     * @param numberOfBits   the number of packed bits.
      * @return <code>byte[]</code> array, storing the same packed bits according the rules of this class.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>packedBitArray.length*64</code> or <code>2^34&minus;1</code>
      *                                  (in the latter case, the required length of the returned array
      *                                  exceeds Java limit 2^31).
      */
-    public static byte[] toByteArray(long[] packedBitArray, long packedBitArrayLength) {
-        return toByteArray(null, packedBitArray, packedBitArrayLength);
+    public static byte[] toByteArray(long[] packedBitArray, long numberOfBits) {
+        return toByteArray(null, packedBitArray, numberOfBits);
     }
 
     /**
@@ -333,44 +333,44 @@ public class PackedBitArraysPer8 {
      * so that the bits, stored in the result array according
      * the rules of this class, will be identical to bits stored in the source <code>longArray</code>
      * according the rules of {@link PackedBitArrays}. The actual length of the passed bit array should be specified
-     * in <code>packedBitArrayLength</code> argument.
+     * in <code>numberOfBits</code> argument.
      *
      * <p>The length of the result array must be not less than
-     * <code>n = {@link #packedLength PackedBitArraysPer8.packedLength}(packedBitArrayLength)</code>.
+     * <code>n = {@link #packedLength PackedBitArraysPer8.packedLength}(numberOfBits)</code>.
      * The result array may be <code>null</code>, than it will be created automatically as
      * <code>new&nbsp;byte[n]</code>.
      * The bytes of the result array
      * are just the bytes of the source <code>long</code> values, packed in little-endian order.
-     * If <code>packedBitArrayLength</code> is not divisible by 8, the unused high bits of the last <code>byte</code>
+     * If <code>numberOfBits</code> is not divisible by 8, the unused high bits of the last <code>byte</code>
      * element will be set to zero (even the corresponding unused bits in the last <code>long</code> element
      * of the source <code>longArray</code> were non-zero).
      * The result array (the <code>result</code> argument or a newly created <code>byte[]</code> array)
      * is returned in the result of this method.
      *
-     * @param result               the result array; can be <code>null</code>, then it will be created automatically.
-     * @param longArray            <code>long</code> array, supposedly storing packed bits according the rules
-     *                             of {@link PackedBitArrays} class.
-     * @param packedBitArrayLength the number of packed bits.
+     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param longArray    <code>long</code> array, supposedly storing packed bits according the rules
+     *                     of {@link PackedBitArrays} class.
+     * @param numberOfBits the number of packed bits.
      * @return <code>byte[]</code> array, storing the same packed bits according the rules of this class.
-     * @throws IllegalArgumentException if <code>packedBitArrayLength</code> is negative or too large:
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
      *                                  greater than <code>longArray.length*64</code> or <code>2^34&minus;1</code>
      *                                  (in the latter case, the required length of the returned array
      *                                  exceeds Java limit 2^31).
      */
-    public static byte[] toByteArray(byte[] result, long[] longArray, long packedBitArrayLength) {
+    public static byte[] toByteArray(byte[] result, long[] longArray, long numberOfBits) {
         Objects.requireNonNull(longArray, "Null long[] array (packed bits)");
-        if (packedBitArrayLength < 0) {
-            throw new IllegalArgumentException("Negative packedBitArrayLength");
+        if (numberOfBits < 0) {
+            throw new IllegalArgumentException("Negative numberOfBits = " + numberOfBits);
         }
-        final long numberOfLongs = PackedBitArrays.packedLength(packedBitArrayLength);
+        final long numberOfLongs = PackedBitArrays.packedLength(numberOfBits);
         if (numberOfLongs > longArray.length) {
             throw new IllegalArgumentException("Too short long[" + longArray.length +
                     "] array (packed bits): it must contain at least " + numberOfLongs +
-                    " long elements to contain " + packedBitArrayLength + " bits");
+                    " long elements to contain " + numberOfBits + " bits");
         }
-        final long numberOfBytes = packedLength(packedBitArrayLength);
+        final long numberOfBytes = packedLength(numberOfBits);
         if (numberOfBytes > Integer.MAX_VALUE) {
-            throw new TooLargeArrayException("Too large number of bits " + packedBitArrayLength +
+            throw new TooLargeArrayException("Too large number of bits " + numberOfBits +
                     " > 2^34-1: cannot pack such a large bit array in byte[] array");
         }
         if (result == null) {
@@ -378,7 +378,7 @@ public class PackedBitArraysPer8 {
         } else if (numberOfBytes > result.length) {
             throw new IllegalArgumentException("Too short result array byte[" + result.length +
                     "]: it must contain at least " + numberOfBytes + " elements to store " +
-                    packedBitArrayLength + " bits");
+                    numberOfBits + " bits");
         }
         final int numberOfWholeLongs = (int) (numberOfBytes >>> 3);
         final int alignedLength = numberOfWholeLongs << 3;
@@ -392,30 +392,30 @@ public class PackedBitArraysPer8 {
                 result[k] = (byte) (v >>> shift);
             }
         }
-        final int cntFinish = (int) (packedBitArrayLength & 7);
+        final int cntFinish = (int) (numberOfBits & 7);
         if (cntFinish > 0) {
-            result[(int) numberOfBytes - 1] &=  (byte) ((1 << cntFinish) - 1); // cntFinish times 1 (from the left)
+            result[(int) numberOfBytes - 1] &= (byte) ((1 << cntFinish) - 1); // cntFinish times 1 (from the left)
         }
         return result;
     }
 
     /**
-     * Returns <code>packedLength &lt;&lt; 3</code>: the maximal number of bits that
+     * Returns <code>numberOfBytes &lt;&lt; 3</code>: the maximal number of bits that
      * can be stored in the specified number of bytes.
      *
-     * @param packedLength number of packed bytes.
-     * @return <code>8 * packedLength</code>
+     * @param numberOfBytes number of packed bytes.
+     * @return <code>8 * numberOfBytes</code>
      * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>60</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static long unpackedLength(long packedLength) {
-        if (packedLength < 0) {
+    public static long unpackedLength(long numberOfBytes) {
+        if (numberOfBytes < 0) {
             throw new IllegalArgumentException("Negative packed length");
         }
-        if (packedLength >= 1L << 60) {
+        if (numberOfBytes >= 1L << 60) {
             throw new TooLargeArrayException("Too large packed length: number of unpacked bits >= 2^60");
         }
-        return packedLength << 3;
+        return numberOfBytes << 3;
     }
 
 
@@ -432,35 +432,35 @@ public class PackedBitArraysPer8 {
     }
 
     /**
-     * Returns <code>(unpackedLength + 7) &gt;&gt;&gt; 3</code>: the minimal number of <code>byte</code> values
-     * allowing to store <code>unpackedLength</code> bits.
+     * Returns <code>(numberOfBits + 7) &gt;&gt;&gt; 3</code>: the minimal number of <code>byte</code> values
+     * allowing to store the specified number of bits.
      *
-     * @param unpackedLength the number of bits (the length of bit array).
-     * @return <code>(unpackedLength + 7) &gt;&gt;&gt; 3</code> (the length of corresponding <code>byte[]</code> array).
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 7) &gt;&gt;&gt; 3</code> (the length of corresponding <code>byte[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static long packedLength(long unpackedLength) {
-        if (unpackedLength < 0) {
+    public static long packedLength(long numberOfBits) {
+        if (numberOfBits < 0) {
             throw new IllegalArgumentException("Negative unpacked length");
         }
-        return (unpackedLength + 7) >>> 3;
-        // here >>> must be used instead of >>, because unpackedLength+7 may be >Long.MAX_VALUE
+        return (numberOfBits + 7) >>> 3;
+        // here >>> must be used instead of >>, because numberOfBits+7 may be >Long.MAX_VALUE
     }
 
     /**
      * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
      *
-     * @param unpackedLength the number of bits (the length of bit array).
-     * @return <code>(unpackedLength + 7) &gt;&gt;&gt; 3</code>
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 7) &gt;&gt;&gt; 3</code>
      * (the length of corresponding <code>byte[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static int packedLength(int unpackedLength) {
-        if (unpackedLength < 0) {
+    public static int packedLength(int numberOfBits) {
+        if (numberOfBits < 0) {
             throw new IllegalArgumentException("Negative unpacked length");
         }
-        return (unpackedLength + 7) >>> 3;
-        // here >>> must be used instead of >>, because unpackedLength+63 may be >Integer.MAX_VALUE
+        return (numberOfBits + 7) >>> 3;
+        // here >>> must be used instead of >>, because numberOfBits+63 may be >Integer.MAX_VALUE
     }
 
     /**
@@ -862,7 +862,8 @@ public class PackedBitArraysPer8 {
      * <p>But this function works significantly faster, if <code>count</code> is greater than 1.</p>
      *
      * <p>Note: unlike the loop listed above, this function does not throw exception for too large indexes of bits
-     * after the end of the array (<code>&ge;8*src.length</code>); instead, all bits outside the array are considered zero.
+     * after the end of the array (<code>&ge;8*src.length</code>); instead, all bits outside the array are considered
+     * zero.
      * (But negative indexes are not allowed.)</p>
      *
      * <p>This bit order is used, for example, in TIFF format when storing binary images or
@@ -4928,7 +4929,8 @@ public class PackedBitArraysPer8 {
             if (cntFinish > 0) {
                 int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                 synchronized (dest) {
-                    dest[dPos] = (byte) (((dest[dPos] & ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
+                    dest[dPos] =
+                            (byte) (((dest[dPos] & ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
                 }
             }
         } else {
@@ -5036,7 +5038,8 @@ public class PackedBitArraysPer8 {
             if (cntFinish > 0) {
                 int maskFinish = (1 << cntFinish) - 1; // cntFinish times 1 (from the left)
                 synchronized (dest) {
-                    dest[dPos] = (byte) (((dest[dPos] | ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
+                    dest[dPos] =
+                            (byte) (((dest[dPos] | ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
                 }
             }
         } else {

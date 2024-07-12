@@ -693,7 +693,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see #asLongArray(Object, long, long, ByteOrder)
      * @see #asFloatArray(Object, long, long, ByteOrder)
      * @see #asDoubleArray(Object, long, long, ByteOrder)
-     * @see Arrays#copyBytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see Arrays#bytesToArray(UpdatablePArray, byte[], ByteOrder)
      * @see Arrays#read(java.io.InputStream, UpdatablePArray, ByteOrder)
      */
     public PArray asArray(
@@ -880,7 +880,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * @see #asUpdatableLongArray(Object, long, long, boolean, ByteOrder)
      * @see #asUpdatableFloatArray(Object, long, long, boolean, ByteOrder)
      * @see #asUpdatableDoubleArray(Object, long, long, boolean, ByteOrder)
-     * @see Arrays#copyArrayToBytes(byte[], PArray, ByteOrder)
+     * @see Arrays#arrayToBytes(byte[], PArray, ByteOrder)
      * @see Arrays#write(java.io.OutputStream, PArray, ByteOrder)
      */
     public UpdatablePArray asUpdatableArray(

@@ -53,7 +53,7 @@ public class PackedBitLongsAndBytesTest {
             bytes[k] = (byte) k;
         }
         boolean[] bits1 = showBits(bytes, numberOfBits);
-        final long[] longs = PackedBitArraysPer8.toLongArray(bytes);
+        final long[] longs = PackedBitArraysPer8.toLongArray(bytes, numberOfBits);
         boolean[] bits2 = showBits(longs, numberOfBits);
         if (!Arrays.equals(bits1, bits2)) {
             throw new AssertionError("Bug A");

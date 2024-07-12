@@ -87,16 +87,16 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns <code>packedLength &lt;&lt; 6</code>: the maximal number of bits that
+     * Returns <code>numberOfLongs &lt;&lt; 6</code>: the maximal number of bits that
      * can be stored in the specified number of <code>long</code> values.
      *
-     * @param packedLength number of packed <code>long[]</code> values.
-     * @return <code>64 * packedLength</code>
+     * @param numberOfLongs number of packed <code>long[]</code> values.
+     * @return <code>64 * numberOfLongs</code>
      * @throws TooLargeArrayException   if the argument is too large: &ge; 2<sup>57</sup>.
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static long unpackedLength(long packedLength) {
-        return PackedBitArrays.unpackedLength(packedLength);
+    public static long unpackedLength(long numberOfLongs) {
+        return PackedBitArrays.unpackedLength(numberOfLongs);
     }
 
     /**
@@ -112,26 +112,26 @@ public class PackedBitBuffers {
     }
 
     /**
-     * Returns <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>: the minimal number of <code>long</code> values
-     * allowing to store <code>unpackedLength</code> bits.
+     * Returns <code>(numberOfButs + 63) &gt;&gt;&gt; 6</code>: the minimal number of <code>long</code> values
+     * allowing to store the specified number of bits.
      *
-     * @param unpackedLength the number of bits (the length of bit array).
-     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * @param numberOfButs the number of bits (the length of bit array).
+     * @return <code>(numberOfButs + 63) &gt;&gt;&gt; 6</code>
      * (the length of corresponding <code>long[]</code> array).
      */
-    public static long packedLength(long unpackedLength) {
-        return PackedBitArrays.packedLength(unpackedLength);
+    public static long packedLength(long numberOfButs) {
+        return PackedBitArrays.packedLength(numberOfButs);
     }
 
     /**
      * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
      *
-     * @param unpackedLength the number of bits (the length of bit array).
-     * @return <code>(unpackedLength + 63) &gt;&gt;&gt; 6</code>
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 63) &gt;&gt;&gt; 6</code>
      * (the length of corresponding <code>long[]</code> array).
      */
-    public static int packedLength(int unpackedLength) {
-        return PackedBitArrays.packedLength(unpackedLength);
+    public static int packedLength(int numberOfBits) {
+        return PackedBitArrays.packedLength(numberOfBits);
     }
 
     /**

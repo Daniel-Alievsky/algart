@@ -32,8 +32,8 @@ import java.nio.*;
 import java.util.Objects;
 
 /**
- * <p>Implementations of {@link Arrays#copyArrayToBytes(byte[], PArray, ByteOrder)} and
- * {@link Arrays#copyBytesToArray(UpdatablePArray, byte[], ByteOrder)} methods.</p>
+ * <p>Implementations of {@link Arrays#arrayToBytes(byte[], PArray, ByteOrder)} and
+ * {@link Arrays#bytesToArray(UpdatablePArray, byte[], ByteOrder)} methods.</p>
  *
  * @author Daniel Alievsky
  */
