@@ -315,19 +315,20 @@ public class PackedBitArraysPer8 {
 
     /**
      * Equivalent to {@link #toByteArray(byte[], long[], long)
-     * toByteArray(null, packedBitArray, numberOfBits)}.
+     * toByteArray(null, longArray, numberOfBits)}.
      *
-     * @param packedBitArray <code>long</code> array, supposedly storing packed bits according the rules
+     * @param longArray <code>long</code> array, supposedly storing packed bits according the rules
      *                       of {@link PackedBitArrays} class.
      * @param numberOfBits   the number of packed bits.
      * @return <code>byte[]</code> array, storing the same packed bits according the rules of this class.
-     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
-     *                                  greater than <code>packedBitArray.length*64</code> or <code>2^34&minus;1</code>
-     *                                  (in the latter case, the required length of the returned array
+     * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or
+     *                                  greater than <code>longArray.length*64</code>.
+     * @throws TooLargeArrayException   if <code>numberOfBits</code> is greater than <code>2^34&minus;1</code>
+     *                                  (then the required length of the returned array
      *                                  exceeds Java limit 2^31).
      */
-    public static byte[] toByteArray(long[] packedBitArray, long numberOfBits) {
-        return toByteArray(null, packedBitArray, numberOfBits);
+    public static byte[] toByteArray(long[] longArray, long numberOfBits) {
+        return toByteArray(null, longArray, numberOfBits);
     }
 
     /**
@@ -355,8 +356,11 @@ public class PackedBitArraysPer8 {
      * @param numberOfBits the number of packed bits.
      * @return <code>byte[]</code> array, storing the same packed bits according the rules of this class.
      * @throws IllegalArgumentException if <code>numberOfBits</code> is negative or too large:
-     *                                  greater than <code>longArray.length*64</code> or <code>2^34&minus;1</code>
-     *                                  (in the latter case, the required length of the returned array
+     *                                  greater than <code>longArray.length*64</code>
+     *                                  or greater than <code>result.length*8</code>
+     *                                  (when <code>result!=null</code>).
+     * @throws TooLargeArrayException   if <code>numberOfBits</code> is greater than <code>2^34&minus;1</code>
+     *                                  (then the required length of the returned array
      *                                  exceeds Java limit 2^31).
      */
     public static byte[] toByteArray(byte[] result, long[] longArray, long numberOfBits) {

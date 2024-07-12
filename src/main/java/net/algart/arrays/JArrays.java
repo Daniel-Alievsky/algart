@@ -1165,9 +1165,10 @@ public class JArrays {
 
     /*Repeat() char ==> short,,int,,long,,float,,double;;
                Char ==> Short,,Int,,Long,,Float,,Double;;
-               2(\s*\*) ==> 2$1,,4$1,,8$1,,4$1,,8$1;;
+               2(\s*\*|\s+bytes) ==> 2$1,,4$1,,8$1,,4$1,,8$1;;
                (\/\s*)2 ==> / 2,,/ 4,,/ 8,,/ 4,,/ 8
      */
+
     public static byte[] charArrayToBytes(char[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return charArrayToBytes(src, src.length, byteOrder);
@@ -1177,6 +1178,42 @@ public class JArrays {
         return charArrayToBytes(null, src, numberOfChars, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>char[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>2 * numberOfChars</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>2 * numberOfChars</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>2 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 2 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asCharBuffer().put(src, 0, numberOfChars);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>char[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfChars</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>2 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] charArrayToBytes(byte[] dest, char[] src, int numberOfChars, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1188,7 +1225,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfChars + " elements");
         }
         if (2 * (long) numberOfChars > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfChars +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfChars +
                     ": it must be less than 2^31 / 2 = " + (Integer.MAX_VALUE / 2 + 1));
         }
         final int numberOfBytes = 2 * numberOfChars;
@@ -1213,6 +1250,39 @@ public class JArrays {
         return bytesToCharArray(null, src, numberOfChars, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>char</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #charArrayToBytes(byte[], char[], int, ByteOrder)}
+     * call, back into the given <code>char[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>2 * numberOfChars</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>char[]</code> array with the length <code>numberOfChars</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>2 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 2 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asCharBuffer().get(dest, 0, numberOfChars);
+     * </pre>
+     *
+     * @param dest      the result <code>char[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfChars</code> is negative or too large:
+     *                                  greater than <code>2 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static char[] bytesToCharArray(char[] dest, byte[] src, int numberOfChars, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1236,6 +1306,7 @@ public class JArrays {
     }
 
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
     public static byte[] shortArrayToBytes(short[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return shortArrayToBytes(src, src.length, byteOrder);
@@ -1245,6 +1316,42 @@ public class JArrays {
         return shortArrayToBytes(null, src, numberOfShorts, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>short[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>2 * numberOfShorts</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>2 * numberOfShorts</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>2 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 2 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asShortBuffer().put(src, 0, numberOfShorts);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>short[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfShorts</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>2 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] shortArrayToBytes(byte[] dest, short[] src, int numberOfShorts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1256,7 +1363,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfShorts + " elements");
         }
         if (2 * (long) numberOfShorts > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfShorts +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfShorts +
                     ": it must be less than 2^31 / 2 = " + (Integer.MAX_VALUE / 2 + 1));
         }
         final int numberOfBytes = 2 * numberOfShorts;
@@ -1281,6 +1388,39 @@ public class JArrays {
         return bytesToShortArray(null, src, numberOfShorts, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>short</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #shortArrayToBytes(byte[], short[], int, ByteOrder)}
+     * call, back into the given <code>short[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>2 * numberOfShorts</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>short[]</code> array with the length <code>numberOfShorts</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>2 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 2 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asShortBuffer().get(dest, 0, numberOfShorts);
+     * </pre>
+     *
+     * @param dest      the result <code>short[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfShorts</code> is negative or too large:
+     *                                  greater than <code>2 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static short[] bytesToShortArray(short[] dest, byte[] src, int numberOfShorts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1302,6 +1442,7 @@ public class JArrays {
         bb.asShortBuffer().get(dest, 0, numberOfShorts);
         return dest;
     }
+
     public static byte[] intArrayToBytes(int[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return intArrayToBytes(src, src.length, byteOrder);
@@ -1311,6 +1452,42 @@ public class JArrays {
         return intArrayToBytes(null, src, numberOfInts, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>int[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>4 * numberOfInts</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>4 * numberOfInts</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>4 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 4 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asIntBuffer().put(src, 0, numberOfInts);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>int[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfInts</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>4 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] intArrayToBytes(byte[] dest, int[] src, int numberOfInts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1322,7 +1499,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfInts + " elements");
         }
         if (4 * (long) numberOfInts > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfInts +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfInts +
                     ": it must be less than 2^31 / 4 = " + (Integer.MAX_VALUE / 4 + 1));
         }
         final int numberOfBytes = 4 * numberOfInts;
@@ -1347,6 +1524,39 @@ public class JArrays {
         return bytesToIntArray(null, src, numberOfInts, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>int</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #intArrayToBytes(byte[], int[], int, ByteOrder)}
+     * call, back into the given <code>int[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>4 * numberOfInts</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>int[]</code> array with the length <code>numberOfInts</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>4 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 4 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asIntBuffer().get(dest, 0, numberOfInts);
+     * </pre>
+     *
+     * @param dest      the result <code>int[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfInts</code> is negative or too large:
+     *                                  greater than <code>4 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static int[] bytesToIntArray(int[] dest, byte[] src, int numberOfInts, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1368,6 +1578,7 @@ public class JArrays {
         bb.asIntBuffer().get(dest, 0, numberOfInts);
         return dest;
     }
+
     public static byte[] longArrayToBytes(long[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return longArrayToBytes(src, src.length, byteOrder);
@@ -1377,6 +1588,42 @@ public class JArrays {
         return longArrayToBytes(null, src, numberOfLongs, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>long[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>8 * numberOfLongs</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>8 * numberOfLongs</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>8 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 8 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asLongBuffer().put(src, 0, numberOfLongs);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>long[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfLongs</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>8 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] longArrayToBytes(byte[] dest, long[] src, int numberOfLongs, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1388,7 +1635,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfLongs + " elements");
         }
         if (8 * (long) numberOfLongs > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfLongs +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfLongs +
                     ": it must be less than 2^31 / 8 = " + (Integer.MAX_VALUE / 8 + 1));
         }
         final int numberOfBytes = 8 * numberOfLongs;
@@ -1413,6 +1660,39 @@ public class JArrays {
         return bytesToLongArray(null, src, numberOfLongs, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>long</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #longArrayToBytes(byte[], long[], int, ByteOrder)}
+     * call, back into the given <code>long[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>8 * numberOfLongs</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>long[]</code> array with the length <code>numberOfLongs</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>8 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 8 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asLongBuffer().get(dest, 0, numberOfLongs);
+     * </pre>
+     *
+     * @param dest      the result <code>long[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfLongs</code> is negative or too large:
+     *                                  greater than <code>8 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static long[] bytesToLongArray(long[] dest, byte[] src, int numberOfLongs, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1434,6 +1714,7 @@ public class JArrays {
         bb.asLongBuffer().get(dest, 0, numberOfLongs);
         return dest;
     }
+
     public static byte[] floatArrayToBytes(float[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return floatArrayToBytes(src, src.length, byteOrder);
@@ -1443,6 +1724,42 @@ public class JArrays {
         return floatArrayToBytes(null, src, numberOfFloats, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>float[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>4 * numberOfFloats</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>4 * numberOfFloats</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>4 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 4 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asFloatBuffer().put(src, 0, numberOfFloats);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>float[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfFloats</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>4 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] floatArrayToBytes(byte[] dest, float[] src, int numberOfFloats, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1454,7 +1771,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfFloats + " elements");
         }
         if (4 * (long) numberOfFloats > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfFloats +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfFloats +
                     ": it must be less than 2^31 / 4 = " + (Integer.MAX_VALUE / 4 + 1));
         }
         final int numberOfBytes = 4 * numberOfFloats;
@@ -1479,6 +1796,39 @@ public class JArrays {
         return bytesToFloatArray(null, src, numberOfFloats, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>float</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #floatArrayToBytes(byte[], float[], int, ByteOrder)}
+     * call, back into the given <code>float[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>4 * numberOfFloats</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>float[]</code> array with the length <code>numberOfFloats</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>4 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 4 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asFloatBuffer().get(dest, 0, numberOfFloats);
+     * </pre>
+     *
+     * @param dest      the result <code>float[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfFloats</code> is negative or too large:
+     *                                  greater than <code>4 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static float[] bytesToFloatArray(float[] dest, byte[] src, int numberOfFloats, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1500,6 +1850,7 @@ public class JArrays {
         bb.asFloatBuffer().get(dest, 0, numberOfFloats);
         return dest;
     }
+
     public static byte[] doubleArrayToBytes(double[] src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         return doubleArrayToBytes(src, src.length, byteOrder);
@@ -1509,6 +1860,42 @@ public class JArrays {
         return doubleArrayToBytes(null, src, numberOfDoubles, byteOrder);
     }
 
+    /**
+     * Copies the specified number of elements of the given <code>double[]</code> array (2nd argument)
+     * into the <code>bytes</code> Java array (1st argument,
+     * or into a newly created <code>byte[]</code> array if <code>dest==null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>8 * numberOfDoubles</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>8 * numberOfDoubles</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>The source element #<i>k</i> (<code>src[k]</code>
+     * is stored at the position <code>8 * k</code> in the <code>dest</code> Java array
+     * as a sequences of 8 bytes. The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(dest);
+     *     bb.order(byteOrder);
+     *     bb.asDoubleBuffer().put(src, 0, numberOfDoubles);
+     * </pre>
+     *
+     * @param dest      the result <code>byte[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>double[]</code> array.
+     * @param byteOrder the byte order.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfDoubles</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>8 * dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
+     */
     public static byte[] doubleArrayToBytes(byte[] dest, double[] src, int numberOfDoubles, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
@@ -1520,7 +1907,7 @@ public class JArrays {
                     "]: it must contain at least " + numberOfDoubles + " elements");
         }
         if (8 * (long) numberOfDoubles > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("Too large number of elements " + numberOfDoubles +
+            throw new TooLargeArrayException("Too large number of elements " + numberOfDoubles +
                     ": it must be less than 2^31 / 8 = " + (Integer.MAX_VALUE / 8 + 1));
         }
         final int numberOfBytes = 8 * numberOfDoubles;
@@ -1545,6 +1932,39 @@ public class JArrays {
         return bytesToDoubleArray(null, src, numberOfDoubles, byteOrder);
     }
 
+    /**
+     * Copies the specified number of <code>double</code> elements,
+     * stored in the <code>src</code> Java array (2nd argument)
+     * by previous {@link #doubleArrayToBytes(byte[], double[], int, ByteOrder)}
+     * call, back into the given <code>double[]</code> array (1st argument).
+     *
+     * <p>The length of <code>dest</code> array must be not less than <code>8 * numberOfDoubles</code>.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>double[]</code> array with the length <code>numberOfDoubles</code>  and copies the data into
+     * the newly created array.
+     *
+     * <p>The result array element #<i>k</i> (<code>dest[k])</code>
+     * is retrieved from the position <code>8 * k</code> in the <code>src</code> Java array,
+     * where it is stored as a sequences of 8 bytes.
+     * The conversion is performed with help of the following code:</p>
+     *
+     * <pre>
+     *     final ByteBuffer bb = ByteBuffer.wrap(src);
+     *     bb.order(byteOrder);
+     *     bb.asDoubleBuffer().get(dest, 0, numberOfDoubles);
+     * </pre>
+     *
+     * @param dest      the result <code>double[]</code> array;
+     *                  can be {@code null}, then it will be allocated automatically.
+     * @param src       the source <code>byte[]</code> array.
+     * @param byteOrder the byte order.
+     * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>numberOfDoubles</code> is negative or too large:
+     *                                  greater than <code>8 * src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest!=null</code>).
+     */
     public static double[] bytesToDoubleArray(double[] dest, byte[] src, int numberOfDoubles, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");

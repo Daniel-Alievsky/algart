@@ -182,7 +182,8 @@ public class Arrays {
 //         * methods by {@link Arrays.ParallelExecutor} class.
 //         * That class tries to estimate the calculation speed and choose the number of elements,
 //         * processed in a single loop iteration, little enough to provide calling
-//         * {@link ArrayContext#checkInterruption()} and {@link ArrayContext#updateProgress ArrayContext.updateProgress}
+//         * {@link ArrayContext#checkInterruption()} and {@link ArrayContext#updateProgress ArrayContext
+//         .updateProgress}
 //         * not less frequently than every <code>MAX_TIME_OF_NON_INTERRUPTIBLE_PROCESSING</code> milliseconds.
 //         * It is useful for slow algorithms, when the default buffer size (tens of thousands elements)
 //         * is processed during many seconds or even hours: in this case, the buffer size is automatically reduced
@@ -223,7 +224,8 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_COORDINATE_TRANSFORMATION =
-                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForCoordinateTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForCoordinateTransformation",
+                        true);
 
         /**
          * <i>(Internal)</i>
@@ -268,7 +270,8 @@ public class Arrays {
          * <p>Please do not use this constant in your code: it may be deleted or renamed in future versions.
          */
         public static final boolean BLOCK_OPTIMIZATION_FOR_PROJECTIVE_TRANSFORMATION =
-                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForProjectiveTransformation", true);
+                InternalUtils.getBooleanProperty("net.algart.arrays.blockOptimizationForProjectiveTransformation",
+                        true);
 
         /**
          * <i>(Internal)</i>
@@ -788,7 +791,8 @@ public class Arrays {
          * <p>This method is convenient while analysing some system properties or another settings,
          * usually describing amounts of memory.
          *
-         * @param s a string containing the <code>long</code> representation to be parsed, maybe with K, M, G, T suffixes.
+         * @param s a string containing the <code>long</code> representation to be parsed, maybe with K, M, G, T
+         *          suffixes.
          * @return the long integer value represented by the argument in decimal.
          * @throws NumberFormatException if the string does not contain a parsable integer.
          */
@@ -1624,7 +1628,8 @@ public class Arrays {
      * <p>There are two exceptions from these rules:</p>
      * <ol>
      * <li>in a case of calculation overflow, this method returns <code>Long.MAX_VALUE</code> always;</li>
-     * <li>in a case of negative argument (<code>arrayLength&lt;0</code>), this method returns <code>-1</code> always.</li>
+     * <li>in a case of negative argument (<code>arrayLength&lt;0</code>), this method
+     * returns <code>-1</code> always.</li>
      * </ol>
      *
      * <p>This method never throws exceptions.
@@ -4529,16 +4534,16 @@ public class Arrays {
      *
      * @param array     the source AlgART array.
      * @param bytes     Java array, to which the content of the source array will be copied;
-     *                  can be {@code null}, then it will be allocated automatically
+     *                  can be {@code null}, then it will be allocated automatically.
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @return Java array with resulting data;
      * if <code>bytes</code> argument is not {@code null}, a reference to this argument is returned.
-     * @throws NullPointerException      if <code>array</code> or <code>byteOrder</code> argument is {@code null}.
-     * @throws TooLargeArrayException    if the required Java array length is greater
-     *                                   than <code>Integer.MAX_VALUE</code> elements.
-     * @throws IndexOutOfBoundsException if <code>bytes!=null</code> and the length of <code>bytes</code> array
-     *                                   is not enough for storing all elements of the source AlgART array.
+     * @throws NullPointerException     if <code>array</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>bytes!=null</code> and the length of <code>bytes</code> array
+     *                                  is not enough for storing all elements of the source AlgART array.
+     * @throws TooLargeArrayException   if the required result array length is greater
+     *                                  than <code>Integer.MAX_VALUE</code> bytes.
      * @see #bytesToArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
@@ -4552,7 +4557,7 @@ public class Arrays {
             bytes = new byte[(int) requiredLength];
         } else {
             if (bytes.length < requiredLength) {
-                throw new IndexOutOfBoundsException("Not enough space to copy the AlgART array into byte[] array: "
+                throw new IllegalArgumentException("Not enough space to copy the AlgART array into byte[] array: "
                         + requiredLength + " bytes required, but only " + bytes.length + " available");
             }
         }
@@ -4592,7 +4597,7 @@ public class Arrays {
      * by previous {@link #arrayToBytes(byte[], PArray, ByteOrder)}
      * call, back into the given AlgART array (1st argument).
      *
-     * <p>As in {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method,
+     * <p>As in {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method,
      * the length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <code>bytes.length</code> must be
      * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
@@ -4610,7 +4615,7 @@ public class Arrays {
      * <code>Float.intBitsToFloat</code> and <code>Double.longBitsToDouble</code> methods.
      *
      * <p>This method can be used for deserialization of AlgART arrays from a form, created by
-     * {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method and loaded from
+     * {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method and loaded from
      * <code>InputStream</code>, for example, after reading from external devices or passing through the network.
      *
      * <p>This conversion is performed according the specified byte order, like in
@@ -4623,12 +4628,12 @@ public class Arrays {
      *
      * @param array     the target AlgART array, all elements of which should be copied from the Java array.
      * @param bytes     the source Java array, filled according the specification of
-     *                  {@link #arrayToBytes(byte[], PArray, ByteOrder) copyArrayToBytes} method.
+     *                  {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method.
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
-     * @throws NullPointerException      if any of the arguments is {@code null}.
-     * @throws IndexOutOfBoundsException if the length of <code>bytes</code> array
-     *                                   is not enough for storing all elements of the target AlgART array.
+     * @throws NullPointerException     if any of the arguments is {@code null}.
+     * @throws IllegalArgumentException if the length of <code>bytes</code> array
+     *                                  is not enough for storing all elements of the target AlgART array.
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
      */
@@ -4638,8 +4643,9 @@ public class Arrays {
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         final long requiredLength = Arrays.sizeOfBytesForCopying(array);
         if (bytes.length < requiredLength) {
-            throw new IndexOutOfBoundsException("byte[] array is too short to copy into all elements of "
-                    + "the AlgART array: " + requiredLength + " bytes required, but only " + bytes.length + " available");
+            throw new IllegalArgumentException("byte[] array is too short to copy into all elements of "
+                    + "the AlgART array: " + requiredLength + " bytes required, but only " +
+                    bytes.length + " available");
         }
         if (array instanceof UpdatableByteArray) {
             assert requiredLength == array.length();
@@ -6636,7 +6642,8 @@ public class Arrays {
      * <li>{@link #asFuncArray(Func, Class, PArray...)},</li>
      * <li>{@link #asFuncArray(boolean, Func, Class, PArray...)},</li>
      * <li>{@link #asUpdatableFuncArray(net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)},</li>
-     * <li>{@link #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable, Class, UpdatablePArray...)},</li>
+     * <li>{@link #asUpdatableFuncArray(boolean, net.algart.math.functions.Func.Updatable,
+     * Class, UpdatablePArray...)},</li>
      * <li>{@link #asShifted(Array, long)} or</li>
      * <li>{@link #asConcatenation(Array...)}</li>
      * </ul>method, if the <code>array</code> argument was constructed by one of those methods;</li>
@@ -7139,7 +7146,8 @@ public class Arrays {
      * @throws IllegalArgumentException if <code>timeoutInMilliseconds &lt;= 0</code>.
      * @throws InterruptedException     if another thread interrupted the current thread
      *                                  before or while the current thread was waiting for a notification.
-     *                                  The <i>interrupted status</i> of the current thread is cleared when this exception is thrown.
+     *                                  The <i>interrupted status</i> of the current thread is cleared when this
+     *                                  exception is thrown.
      */
     public static boolean gcAndAwaitFinalization(int timeoutInMilliseconds) throws InterruptedException {
         if (timeoutInMilliseconds <= 0) {
@@ -7554,7 +7562,8 @@ public class Arrays {
          * that is if it was passed to {@link Arrays#rangeOf(PArray, MinMaxInfo)} method at least once
          * and this method was successfully finished.
          * If the object is not initialized, then all its methods, excepting
-         * this one and methods of the basic <code>Object</code> class (<code>toString</code>, <code>equals</code>, etc.)
+         * this one and methods of the basic <code>Object</code> class (<code>toString</code>, <code>equals</code>,
+         * etc.)
          * throw <code>IllegalStateException</code>.
          *
          * @return whether this object is <i>initialized</i>.
@@ -8216,7 +8225,8 @@ public class Arrays {
                     long summaryLen = 0;
                     if (numberOfRanges > MAX_NUMBER_OF_RANGES_FOR_PRECISE_LENGTH_PER_TASK_ESTIMATION) {
                         summaryLen = length / numberOfTasks;
-                        // skipping the following loop: it can spend a lot of time, but useful only for updating progress
+                        // skipping the following loop: it can spend a lot of time, but useful only for updating
+                        // progress
                     } else {
                         for (long rangeIndex = ti; rangeIndex < numberOfRanges; rangeIndex += numberOfTasks) {
                             summaryLen += rangeLength(rangeIndex);
@@ -8996,7 +9006,8 @@ public class Arrays {
      * without any additional operation.
      *
      * @param array   the checked AlgART array.
-     * @param trusted if <code>true</code>, returns a reference to the internal Java array without additional operations.
+     * @param trusted if <code>true</code>, returns a reference to the internal Java array without additional
+     *                operations.
      * @return Java array of underlying arrays.
      * @throws NullPointerException if the passed argument is {@code null}.
      */
