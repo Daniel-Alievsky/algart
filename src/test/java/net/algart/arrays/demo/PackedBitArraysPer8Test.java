@@ -1361,6 +1361,117 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
 
+            System.out.println("Testing \"andBitsInReverseOrder\" method, two different arrays...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bSrcWork, 0, pSrc, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork2, 0, pDest, 0, len);
+                for (int k = 0; k < count; k++) {
+                    bDestWork2[destPos + k] &= bSrcWork[srcPos + k];
+                }
+                PackedBitArraysPer8.andBitsInReverseOrder(
+                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
+                for (int k = 0; k < len; k++) {
+                    boolean inRange = k >= destPos && k < destPos + count;
+                    boolean d = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            (!inRange ?
+                                    d :
+                                    d & PackedBitArraysPer8.getBitInReverseOrder(pSrc, k - destPos + srcPos))) {
+                        throw new AssertionError("The bug A in andBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", in-range = " + inRange + ", error found at " + k);
+
+                    }
+                    if (bDestWork1[k] != bDestWork2[k]) {
+                        throw new AssertionError("The bug B in andBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count  +
+                                ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"orBitsInReverseOrder\" method, two different arrays...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bSrcWork, 0, pSrc, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork2, 0, pDest, 0, len);
+                for (int k = 0; k < count; k++) {
+                    bDestWork2[destPos + k] |= bSrcWork[srcPos + k];
+                }
+                PackedBitArraysPer8.orBitsInReverseOrder(
+                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
+                for (int k = 0; k < len; k++) {
+                    boolean inRange = k >= destPos && k < destPos + count;
+                    boolean d = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            (!inRange ?
+                                    d :
+                                    d | PackedBitArraysPer8.getBitInReverseOrder(pSrc, k - destPos + srcPos))) {
+                        throw new AssertionError("The bug A in orBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", in-range = " + inRange + ", error found at " + k);
+
+                    }
+                    if (bDestWork1[k] != bDestWork2[k]) {
+                        throw new AssertionError("The bug B in orBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count  +
+                                ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
+            System.out.println("Testing \"xorBitsInReverseOrder\" method, two different arrays...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bSrcWork, 0, pSrc, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork2, 0, pDest, 0, len);
+                for (int k = 0; k < count; k++) {
+                    bDestWork2[destPos + k] ^= bSrcWork[srcPos + k];
+                }
+                PackedBitArraysPer8.xorBitsInReverseOrder(
+                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
+                for (int k = 0; k < len; k++) {
+                    boolean inRange = k >= destPos && k < destPos + count;
+                    boolean d = PackedBitArraysPer8.getBitInReverseOrder(pDest, k);
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            (!inRange ?
+                                    d :
+                                    d ^ PackedBitArraysPer8.getBitInReverseOrder(pSrc, k - destPos + srcPos))) {
+                        throw new AssertionError("The bug A in xorBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", in-range = " + inRange + ", error found at " + k);
+
+                    }
+                    if (bDestWork1[k] != bDestWork2[k]) {
+                        throw new AssertionError("The bug B in xorBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count  +
+                                ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
+
             System.out.println("Testing \"cardinality\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 int pos = rnd.nextInt(len + 1);
