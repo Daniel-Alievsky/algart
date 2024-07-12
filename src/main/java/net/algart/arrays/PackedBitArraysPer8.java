@@ -5305,6 +5305,12 @@ public class PackedBitArraysPer8 {
         }
     }
 
+    /*Repeat() andNotBits ==> orNotBits;;
+               AND ==> OR;;
+               it clears all specified bits ==> it sets all specified bits to 1;;
+               \&=(\s*\(byte\)) ==> |=$1;;
+               \&\s+\~(?!mask) ==> | ~ */
+
     /**
      * Replaces <code>count</code> bits,
      * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
@@ -5414,6 +5420,115 @@ public class PackedBitArraysPer8 {
     /**
      * Replaces <code>count</code> bits,
      * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical AND of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * for a case, when the bits are packed in both arrays in the reverse order.
+     *
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
+     * in this case it clears all specified bits.
+     *
+     * @param dest    the destination array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public static void andNotBitsInReverseOrder(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 3);
+        int dPos = (int) (destPos >>> 3);
+        int sPosRem = (int) (srcPos & 7);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + count)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] & ~(src[sPos] & 0xFF)) & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] &= (byte) (~(src[sPos] & 0xFF));
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                synchronized (dest) {
+                    dest[dPos] =
+                            (byte) (((dest[dPos] & ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            int sNext;
+            if (cntStart > 0) {
+                int v;
+                if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = (src[sPos] & 0xFF)) >>> shift;
+                    else
+                        v = (sNext = (src[sPos] & 0xFF)) << -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = ((src[sPos] & 0xFF) << -shift) | ((sNext = (src[sPos + 1] & 0xFF)) >>> (8 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 7;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] & ~v) & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
+                }
+                sNext = (src[sPos] & 0xFF);
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+            final int sPosRem8 = 8 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] &= (byte) (~((sNext << sPosRem) | ((sNext = (src[sPos] & 0xFF)) >>> sPosRem8)));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                int v;
+                if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                    v = sNext << sPosRem;
+                } else {
+                    v = (sNext << sPosRem) | ((src[sPos + 1] & 0xFF) >>> sPosRem8);
+                }
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] & ~v) & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        }
+    }
+
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
      * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
      * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>.
      *
@@ -5431,7 +5546,6 @@ public class PackedBitArraysPer8 {
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void orNotBits(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
-
         Objects.requireNonNull(dest, "Null dest");
         Objects.requireNonNull(src, "Null src");
         int sPos = (int) (srcPos >>> 3);
@@ -5444,7 +5558,6 @@ public class PackedBitArraysPer8 {
             cntStart = (int) count;
             maskStart &= (1 << (dPosRem + cntStart)) - 1; // &= dPosRem+cntStart times 1 (from the left)
         }
-//      System.out.println((sPosRem == dPosRem ? "AORGOOD " : "AORBAD  ") + sPosRem + "," + dPosRem);
         if (sPosRem == dPosRem) {
             if (cntStart > 0) {
                 synchronized (dest) {
@@ -5518,6 +5631,115 @@ public class PackedBitArraysPer8 {
             }
         }
     }
+
+    /**
+     * Replaces <code>count</code> bits,
+     * packed in <code>dest</code> array, starting from the bit <code>#destPos</code>,
+     * with the logical OR of them and <i>inverted</i> corresponding <code>count</code> bits,
+     * packed in <code>src</code> array, starting from the bit <code>#srcPos</code>,
+     * for a case, when the bits are packed in both arrays in the reverse order.
+     *
+     * <p>This method works correctly even if <code>src&nbsp;==&nbsp;dest</code>
+     * and <code>srcPos&nbsp;==&nbsp;destPos</code>:
+     * in this case it sets all specified bits to 1.
+     *
+     * @param dest    the destination array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param destPos position of the first bit written in the destination array.
+     * @param src     the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
+     * @param srcPos  position of the first bit read in the source array.
+     * @param count   the number of bits to be replaced (must be &gt;=0).
+     * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
+     * @throws IndexOutOfBoundsException if accessing bits would cause access of data outside array bounds.
+     */
+    @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
+    public static void orNotBitsInReverseOrder(byte[] dest, long destPos, byte[] src, long srcPos, long count) {
+        Objects.requireNonNull(dest, "Null dest");
+        Objects.requireNonNull(src, "Null src");
+        int sPos = (int) (srcPos >>> 3);
+        int dPos = (int) (destPos >>> 3);
+        int sPosRem = (int) (srcPos & 7);
+        int dPosRem = (int) (destPos & 7);
+        int cntStart = (-dPosRem) & 7;
+        int maskStart = 0xFF >>> dPosRem; // dPosRem times 0, then 1 (from the highest bit)
+        if (cntStart > count) {
+            cntStart = (int) count;
+            maskStart &= (0xFF00 >>> (dPosRem + count)); // &= dPosRem+cntStart times 1 (from the highest bit)
+        }
+        if (sPosRem == dPosRem) {
+            if (cntStart > 0) {
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] | ~(src[sPos] & 0xFF)) & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                dPos++;
+                sPos++;
+            }
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; dPos++, sPos++) {
+                dest[dPos] |= (byte) (~(src[sPos] & 0xFF));
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                synchronized (dest) {
+                    dest[dPos] =
+                            (byte) (((dest[dPos] | ~(src[sPos] & 0xFF)) & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        } else {
+            final int shift = dPosRem - sPosRem;
+            int sNext;
+            if (cntStart > 0) {
+                int v;
+                if (sPosRem + cntStart <= 8) { // cntStart bits are in a single src element
+                    if (shift > 0)
+                        v = (sNext = (src[sPos] & 0xFF)) >>> shift;
+                    else
+                        v = (sNext = (src[sPos] & 0xFF)) << -shift;
+                    sPosRem += cntStart;
+                } else {
+                    v = ((src[sPos] & 0xFF) << -shift) | ((sNext = (src[sPos + 1] & 0xFF)) >>> (8 + shift));
+                    sPos++;
+                    sPosRem = (sPosRem + cntStart) & 7;
+                }
+                // let's suppose dPosRem = 0 now; don't perform it, because we'll not use dPosRem more
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] | ~v) & maskStart) | (dest[dPos] & ~maskStart));
+                }
+                count -= cntStart;
+                if (count == 0) {
+                    return; // little optimization
+                }
+                dPos++;
+            } else {
+                if (count == 0) {
+                    return; // necessary check to avoid IndexOutOfBoundException while accessing (src[sPos] & 0xFF)
+                }
+                sNext = (src[sPos] & 0xFF);
+            }
+            // Now the bit #0 of dest[dPos] corresponds to the bit #sPosRem of (src[sPos] & 0xFF)
+            final int sPosRem8 = 8 - sPosRem;
+            for (int dPosMax = dPos + (int) (count >>> 3); dPos < dPosMax; ) {
+                sPos++;
+                dest[dPos] |= (byte) (~((sNext << sPosRem) | ((sNext = (src[sPos] & 0xFF)) >>> sPosRem8)));
+                dPos++;
+            }
+            int cntFinish = (int) (count & 7);
+            if (cntFinish > 0) {
+                int maskFinish = 0xFF00 >>> cntFinish; // cntFinish times 1 (from the highest bit)
+                int v;
+                if (sPosRem + cntFinish <= 8) { // cntFinish bits are in a single src element
+                    v = sNext << sPosRem;
+                } else {
+                    v = (sNext << sPosRem) | ((src[sPos + 1] & 0xFF) >>> sPosRem8);
+                }
+                synchronized (dest) {
+                    dest[dPos] = (byte) (((dest[dPos] | ~v) & maskFinish) | (dest[dPos] & ~maskFinish));
+                }
+            }
+        }
+    }
+
+    /*Repeat.AutoGeneratedEnd*/
 
     /*Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, fillBits)
         long\[\] ==> byte[] ;;
