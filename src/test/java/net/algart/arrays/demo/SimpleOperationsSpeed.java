@@ -452,16 +452,6 @@ public final class SimpleOperationsSpeed {
             time("sum += Math.multiplyHigh(v, v), long v = 2^63 - k", t1, t2);
 
             t1 = System.nanoTime();
-            longSum = 0;
-            for (int k = 0; k < n; k++) {
-                long v = Long.MAX_VALUE - k;
-                longSum += Math.unsignedMultiplyHigh(v, v);
-            }
-            t2 = System.nanoTime();
-            someInfo += intSum;
-            time("sum += Math.unsignedMultiplyHigh(v, v), long v = 2^63 - k", t1, t2);
-
-            t1 = System.nanoTime();
             intSum = 0;
             for (int k = 0; k < n; k++) {
                 intSum += k / 9;

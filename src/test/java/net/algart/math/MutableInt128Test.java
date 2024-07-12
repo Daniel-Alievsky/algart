@@ -591,7 +591,7 @@ public class MutableInt128Test {
                 long b = randomLong(rnd);
                 long product = 0;
                 for (int i = 0; i < n2; i++) {
-                    product += Math.unsignedMultiplyHigh(a, b);
+                    product += Math.multiplyHigh(a, b);
                 }
                 sum += (double) product;
             }
@@ -612,7 +612,7 @@ public class MutableInt128Test {
             System.out.printf("    MutableInt128 = 63bit*63bit in new MutableInt128(): %.5f ns%n",
                     (t12 - t11) / (double) (n1 * n2));
             System.out.printf("    Usual long += 63bit*63bit: %.5f ns%n", (t13 - t12) / (double) (n1 * n2));
-            System.out.printf("    long += Math.unsignedMultiplyHigh(64bit, 64bit): %.5f ns%n", (t14 - t13) /
+            System.out.printf("    long += Math.multiplyHigh(64bit, 64bit): %.5f ns%n", (t14 - t13) /
                     (double) (n1 * n2));
         }
 
