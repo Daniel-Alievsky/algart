@@ -583,9 +583,19 @@ public class MutableInt128Test {
                 for (int i = 0; i < n2; i++) {
                     product += a * b;
                 }
-                sum += product;
+                sum += (double) product;
             }
             long t13 = System.nanoTime();
+            for (int k = 0; k < n1; k++) {
+                long a = randomLong(rnd);
+                long b = randomLong(rnd);
+                long product = 0;
+                for (int i = 0; i < n2; i++) {
+                    product += Math.unsignedMultiplyHigh(a, b);
+                }
+                sum += (double) product;
+            }
+            long t14 = System.nanoTime();
             System.out.printf("Timing test #%d (total sum %f)%n", test, sum);
             System.out.printf("    BigInteger = 63bit*63bit: %.5f ns%n", (t2 - t1) / (double) (n1 * n2));
             System.out.printf("    BigInteger = 63bit*31bit: %.5f ns%n", (t3 - t2) / (double) (n1 * n2));
@@ -602,6 +612,8 @@ public class MutableInt128Test {
             System.out.printf("    MutableInt128 = 63bit*63bit in new MutableInt128(): %.5f ns%n",
                     (t12 - t11) / (double) (n1 * n2));
             System.out.printf("    Usual long += 63bit*63bit: %.5f ns%n", (t13 - t12) / (double) (n1 * n2));
+            System.out.printf("    long += Math.unsignedMultiplyHigh(64bit, 64bit): %.5f ns%n", (t14 - t13) /
+                    (double) (n1 * n2));
         }
 
         for (int k = 1; k <= n1 * n2; k++) {

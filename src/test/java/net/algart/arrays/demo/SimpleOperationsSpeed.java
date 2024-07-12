@@ -36,7 +36,7 @@ public final class SimpleOperationsSpeed {
     private static final int n = 2048 * 2048;
 
     private static void time(String name, long t1, long t2) {
-        System.out.printf("%-42s %.6f ms, %.6f ns/element, %.3f Giga-element/second %n",
+        System.out.printf("%-62s %.6f ms, %.6f ns/element, %.3f Giga-element/second %n",
                 name + ":", (t2 - t1) * 1e-6, (t2 - t1) / (double) n, (double) n / (t2 - t1));
     }
 
@@ -430,6 +430,36 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             someInfo += intSum;
             time("sum += k (int)", t1, t2);
+
+            t1 = System.nanoTime();
+            longSum = 0;
+            for (int k = 0; k < n; k++) {
+                long v = Long.MAX_VALUE - k;
+                longSum += v * v;
+            }
+            t2 = System.nanoTime();
+            someInfo += intSum;
+            time("sum += v * v, long v = 2^63 - k", t1, t2);
+
+            t1 = System.nanoTime();
+            longSum = 0;
+            for (int k = 0; k < n; k++) {
+                long v = Long.MAX_VALUE - k;
+                longSum += Math.multiplyHigh(v, v);
+            }
+            t2 = System.nanoTime();
+            someInfo += intSum;
+            time("sum += Math.multiplyHigh(v, v), long v = 2^63 - k", t1, t2);
+
+            t1 = System.nanoTime();
+            longSum = 0;
+            for (int k = 0; k < n; k++) {
+                long v = Long.MAX_VALUE - k;
+                longSum += Math.unsignedMultiplyHigh(v, v);
+            }
+            t2 = System.nanoTime();
+            someInfo += intSum;
+            time("sum += Math.unsignedMultiplyHigh(v, v), long v = 2^63 - k", t1, t2);
 
             t1 = System.nanoTime();
             intSum = 0;
