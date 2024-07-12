@@ -193,23 +193,28 @@ public class MainOperationsTest implements Cloneable {
 
     MainOperationsTest(String[] args) throws UsageException {
         int startArgIndex = 0;
-        if (noGc = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-noGc")) {
+        if (noGc = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-noGc")) {
             startArgIndex++;
         }
-        if (noSlowTests = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-noSlowTests")) {
+        if (noSlowTests = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-noSlowTests")) {
             startArgIndex++;
         }
-        if (noShuffle = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-noShuffle")) {
+        if (noShuffle = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-noShuffle")) {
             startArgIndex++;
         }
-        if (noCheckStability = startArgIndex < args.length && args[startArgIndex]
-                .equalsIgnoreCase("-noCheckStability")) {
+        if (noCheckStability = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-noCheckStability")) {
             startArgIndex++;
         }
-        if (funcOnly = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-funcOnly")) {
+        if (funcOnly = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-funcOnly")) {
             startArgIndex++;
         }
-        if (multithreading = startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-multithreading")) {
+        if (multithreading = startArgIndex < args.length &&
+                args[startArgIndex].equalsIgnoreCase("-multithreading")) {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 3) {
@@ -534,7 +539,8 @@ public class MainOperationsTest implements Cloneable {
         if (funcOnly || workStdIO == null) {
             return;
         }
-        if (!title(ti, "Testing \"copy(Array src)\", two different unresizable arrays, alternative src model...")) {
+        if (!title(ti, "Testing \"copy(Array src)\", " +
+                "two different unresizable arrays, alternative src model...")) {
             return;
         }
         workStdIO.copy(a);
@@ -1863,7 +1869,7 @@ public class MainOperationsTest implements Cloneable {
                                             + ((bytes[4 * k + 1] & 0xFF) << 16)
                                             + ((bytes[4 * k] & 0xFF) << 24));
                 } else if (srcPArray instanceof DoubleArray) {
-                    equal = Double.doubleToRawLongBits(((DoubleArray) srcPArray).getDouble(k)) ==
+                    equal = Double.doubleToRawLongBits(srcPArray.getDouble(k)) ==
                             (byteOrder == ByteOrder.LITTLE_ENDIAN ?
                                     ((long) bytes[8 * k] & 0xFF)
                                             + (((long) bytes[8 * k + 1] & 0xFF) << 8)
@@ -1893,10 +1899,10 @@ public class MainOperationsTest implements Cloneable {
             }
             Arrays.copyBytesToArray(destPArray, bytes, byteOrder);
             if (!srcPArray.equals(destPArray)) {
-                throw new AssertionError("The bug in copyBytesToArray found in test #" + testCount + ": "
-                        + "byteOrder = " + byteOrder
-                        + ", srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count + " ("
-                        + Arrays.toString(srcPArray, ", ", 200) + " and " + Arrays.toString(destPArray, ", ", 200) + ")");
+                throw new AssertionError("The bug in copyBytesToArray found in test #" + testCount +
+                        ": " + "byteOrder = " + byteOrder + ", srcPos = " + srcPos + ", destPos = " + destPos +
+                        ", count = " + count + " (" + Arrays.toString(srcPArray, ", ", 200) +
+                        " and " + Arrays.toString(destPArray, ", ", 200) + ")");
             }
             showProgress(testCount, numberOfTests);
         }
@@ -2043,19 +2049,20 @@ public class MainOperationsTest implements Cloneable {
             }
             for (int k = 0; k < histogram1.length; k++) {
                 if (histogram1[k] != histogram2[k]) {
-                    throw new AssertionError("The bug A in histogramOf found in test #" + testCount + ": "
-                            + "srcPos = " + srcPos + ", count = " + count
-                            + ", from = " + from + ", to = " + to + ", histogram.length = " + histogram1.length
-                            + ", range = " + range + ", multiplier = " + mult + ", 0*multiplier => " + (int) (0.0 * mult)
-                            + ": histogram[" + k + "] = " + histogram1[k] + " instead of " + histogram2[k]);
+                    throw new AssertionError("The bug A in histogramOf found in test #" + testCount +
+                            ": srcPos = " + srcPos + ", count = " + count + ", from = " + from +
+                            ", to = " + to + ", histogram.length = " + histogram1.length +
+                            ", range = " + range + ", multiplier = " + mult + ", 0*multiplier => " +
+                            (int) (0.0 * mult) + ": histogram[" + k + "] = " + histogram1[k] +
+                            " instead of " + histogram2[k]);
                 }
             }
             if (allInside1 != allInside2) {
-                throw new AssertionError("The bug B in histogramOf found in test #" + testCount + ": "
-                        + "srcPos = " + srcPos + ", count = " + count
-                        + ", from = " + from + ", to = " + to + ", histogram.length = " + histogram1.length
-                        + ", range = " + range + ", multiplier = " + mult + ", 0*multiplier => " + (int) (0.0 * mult)
-                        + ": " + allInside1 + " instead of " + allInside2);
+                throw new AssertionError("The bug B in histogramOf found in test #" + testCount +
+                        ": srcPos = " + srcPos + ", count = " + count +
+                        ", from = " + from + ", to = " + to + ", histogram.length = " + histogram1.length +
+                        ", range = " + range + ", multiplier = " + mult + ", 0*multiplier => " + (int) (0.0 * mult) +
+                        ": " + allInside1 + " instead of " + allInside2);
             }
             showProgress(testCount, numberOfTests);
         }
@@ -2219,7 +2226,8 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                dim[i] = (rnd.nextInt(3) > 0 && lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
+                dim[i] = (rnd.nextInt(3) > 0 &&
+                        lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= dim[i];
                 assert product <= len;
@@ -2362,8 +2370,10 @@ public class MainOperationsTest implements Cloneable {
                         + ", non-tiled array length = " + cnt + ", " + tileMatr
                         + ", copying method " + status
                         + ", " + tileMatr
-                        + ", " + Arrays.toString(tileMatr.array().subArr(0, minLen), ",", 200)
-                        + " instead of " + Arrays.toString(a.subArr(0, minLen), ",", 200));
+                        + ", " + Arrays.toString(tileMatr.array().subArr(0, minLen),
+                        ",", 200)
+                        + " instead of " + Arrays.toString(a.subArr(0, minLen),
+                        ",", 200));
             }
             work2.copy(work1); // filling work2 by shuffled values
             status = Arrays.copy(null, work2.subArr(0, cnt), tileMatr.array()); // untiling
@@ -2375,7 +2385,8 @@ public class MainOperationsTest implements Cloneable {
                         + ", copying method " + status
                         + ", " + tileMatr
                         + ", " + Arrays.toString(work2.subArr(0, minLen), ",", 200)
-                        + " instead of " + Arrays.toString(tileMatr.array().subArr(0, minLen), ",", 200));
+                        + " instead of " + Arrays.toString(tileMatr.array()
+                        .subArr(0, minLen), ",", 200));
             }
             cnt = (int) tileMatr.array().length();
             tileMatr.array().copy(a);
@@ -2503,8 +2514,8 @@ public class MainOperationsTest implements Cloneable {
                 e1 = matr.array().getElement(k);
                 e2 = separated.get(channel).array().getElement(channel0.index(separatedCoords));
                 if (!objectEquals(e1, e2)) {
-                    throw new AssertionError("The bug A in Matrices.separate found in test #" + testCount + ": "
-                            + "dim = " + JArrays.toString(dim, ";", 100)
+                    throw new AssertionError("The bug A in Matrices.separate found in test #" +
+                            testCount + ": dim = " + JArrays.toString(dim, ";", 100)
                             + ", k = " + k
                             + ", coords = " + JArrays.toString(coords, ";", 100)
                             + ", " + matr + ", " + separated
@@ -2513,19 +2524,22 @@ public class MainOperationsTest implements Cloneable {
             }
             Matrix<PArray> interleaved = Matrices.interleave(ac, separated);
             if (!interleaved.equals(matr)) {
-                throw new AssertionError("The bug B in Matrices.interleave found in test #" + testCount + ": "
+                throw new AssertionError("The bug B in Matrices.interleave found in test #" +
+                        testCount + ": "
                         + "dim = " + JArrays.toString(dim, ";", 100)
                         + ", " + matr + ", " + separated);
             }
             Matrices.interleave(ac, matrix2, separated);
             if (!matrix2.equals(matr)) {
-                throw new AssertionError("The bug C in Matrices.interleave found in test #" + testCount + ": "
+                throw new AssertionError("The bug C in Matrices.interleave found in test #" +
+                        testCount + ": "
                         + "dim = " + JArrays.toString(dim, ";", 100)
                         + ", " + matr + ", " + separated);
             }
             for (int i = 0; i < separated2.size(); i++) {
                 if (!separated.get(i).equals(separated2.get(i))) {
-                    throw new AssertionError("The bug D in Matrices.separate found in test #" + testCount + ": "
+                    throw new AssertionError("The bug D in Matrices.separate found in test #" +
+                            testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", " + matr + ", " + separated);
                 }
@@ -2560,7 +2574,8 @@ public class MainOperationsTest implements Cloneable {
         assert Matrix.ContinuationMode.getConstantMode(Double.NaN) == Matrix.ContinuationMode.NAN_CONSTANT :
                 "bad implementation of getConstantMode(Double.NaN)";
         assert Matrix.ContinuationMode.getConstantMode(Double.NaN)
-                == Matrix.ContinuationMode.NAN_CONSTANT : "bad implementation of getConstantMode(new Double(Double.NaN))";
+                == Matrix.ContinuationMode.NAN_CONSTANT :
+                "bad implementation of getConstantMode(new Double(Double.NaN))";
         if (!title(ti, "Testing \"Matrix.subMatr\" method, " + continuationMode + "...")) {
             return;
         }
@@ -2572,7 +2587,8 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                dim[i] = (rnd.nextInt(3) > 0 && lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
+                dim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                        lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= dim[i];
                 assert product <= len;
@@ -2597,7 +2613,8 @@ public class MainOperationsTest implements Cloneable {
                 int max = fullyInside ? (int) dim[i] : (int) (3 * dim[i] / 2);
                 srcPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
                 destPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
-                count[i] = rnd.nextInt((int) (fullyInside ? dim[i] - Math.max(srcPos[i], destPos[i]) : dim[i]) + 1)
+                count[i] = rnd.nextInt((int)
+                        (fullyInside ? dim[i] - Math.max(srcPos[i], destPos[i]) : dim[i]) + 1)
                         / blockSize * blockSize;
             }
             if (rnd.nextInt(4) == 0 && !fullyInside) {
@@ -2649,16 +2666,20 @@ public class MainOperationsTest implements Cloneable {
                         }
                     }
                 }
-                if (srcMatr.cyclicIndex(coords2) != IPoint.valueOf(coordsCyclic).toOneDimensional(dim, false)) {
-                    throw new AssertionError("The indexing bug 1 in IPoint/Matrix found in test #" + testCount + ": "
+                if (srcMatr.cyclicIndex(coords2) != IPoint.valueOf(coordsCyclic)
+                        .toOneDimensional(dim, false)) {
+                    throw new AssertionError("The indexing bug 1 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", cyclicIndex = " + srcMatr.cyclicIndex(coords2)
                             + " instead of " + IPoint.valueOf(coordsCyclic).toOneDimensional(dim, false));
                 }
-                if (srcMatr.pseudoCyclicIndex(coords2) != IPoint.valueOf(coords2).toOneDimensional(dim, true)) {
-                    throw new AssertionError("The indexing bug 2 in IPoint/Matrix found in test #" + testCount + ": "
+                if (srcMatr.pseudoCyclicIndex(coords2) != IPoint.valueOf(coords2)
+                        .toOneDimensional(dim, true)) {
+                    throw new AssertionError("The indexing bug 2 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
@@ -2668,12 +2689,14 @@ public class MainOperationsTest implements Cloneable {
                 }
                 if (srcMatr.mirrorCyclicIndex(coords2) !=
                         IPoint.valueOf(coordsMirrorCyclic).toOneDimensional(dim, false)) {
-                    throw new AssertionError("The indexing bug 3 in IPoint/Matrix found in test #" + testCount + ": "
+                    throw new AssertionError("The indexing bug 3 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", mirrorCyclicIndex = " + srcMatr.mirrorCyclicIndex(coords2)
-                            + " instead of " + IPoint.valueOf(coordsMirrorCyclic).toOneDimensional(dim, false));
+                            + " instead of " + IPoint.valueOf(coordsMirrorCyclic)
+                            .toOneDimensional(dim, false));
                 }
             } // checking indexing only
             for (int k = 0, n = (int) srcSubMatr.size(); k < n; k++) {
@@ -2681,7 +2704,8 @@ public class MainOperationsTest implements Cloneable {
                 srcSubMatr.coordinates(k, coords1);
                 destSubMatr.coordinates(k, coords2);
                 if (!java.util.Arrays.equals(coords1, coords2)) {
-                    throw new AssertionError("The indexing bug 4 in subMatr found in test #" + testCount + ": "
+                    throw new AssertionError("The indexing bug 4 in subMatr found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", destPos = " + JArrays.toString(destPos, ";", 100)
@@ -2706,7 +2730,8 @@ public class MainOperationsTest implements Cloneable {
                 boolean inside = srcMatr.inside(coords2);
                 long cyclicIndex = srcMatr.cyclicIndex(coords2);
                 if (cyclicIndex != srcMatr.index(coordsCyclic)) {
-                    throw new AssertionError("The indexing bug 5 in IPoint/Matrix found in test #" + testCount + ": "
+                    throw new AssertionError("The indexing bug 5 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
@@ -2715,7 +2740,8 @@ public class MainOperationsTest implements Cloneable {
                 }
                 long pseudoCyclicIndex = srcMatr.pseudoCyclicIndex(coords2);
                 if (pseudoCyclicIndex != IPoint.valueOf(coords2).toOneDimensional(dim, true)) {
-                    throw new AssertionError("The indexing bug 6 in IPoint/Matrix found in test #" + testCount + ": "
+                    throw new AssertionError("The indexing bug 6 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
@@ -2725,7 +2751,8 @@ public class MainOperationsTest implements Cloneable {
                 }
                 long mirrorCyclicIndex = srcMatr.mirrorCyclicIndex(coords2);
                 if (mirrorCyclicIndex != srcMatr.index(coordsMirrorCyclic)) {
-                    throw new AssertionError("The indexing bug 7 in IPoint/Matrix found in test #" + testCount + ": "
+                    throw new AssertionError("The indexing bug 7 in IPoint/Matrix found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
@@ -2755,8 +2782,8 @@ public class MainOperationsTest implements Cloneable {
                                 + ", destPos = " + JArrays.toString(destPos, ";", 100)
                                 + ", count = " + JArrays.toString(count, ";", 100)
                                 + ", dimensions = " + JArrays.toString(dim, ";", 100)
-                                + ", error found at " + JArrays.toString(coords1, ";", 100) + ": "
-                                + v1 + " instead of " + v2);
+                                + ", error found at " + JArrays.toString(coords1, ";", 100) +
+                                ": " + v1 + " instead of " + v2);
                     }
                 } else {
                     if (!objectEquals(e1, e2)) {
@@ -2765,8 +2792,8 @@ public class MainOperationsTest implements Cloneable {
                                 + ", destPos = " + JArrays.toString(destPos, ";", 100)
                                 + ", count = " + JArrays.toString(count, ";", 100)
                                 + ", dimensions = " + JArrays.toString(dim, ";", 100)
-                                + ", error found at " + JArrays.toString(coords1, ";", 100) + ": " + e1
-                                + " instead of " + e2);
+                                + ", error found at " + JArrays.toString(coords1, ";", 100) +
+                                ": " + e1 + " instead of " + e2);
                     }
                 }
                 destSubMatr.array().setElement(k, e1);
@@ -2845,11 +2872,13 @@ public class MainOperationsTest implements Cloneable {
             long index, requiredIndex, lastIndex, requiredLastIndex;
             if (a instanceof PArray) {
                 double value = ((PArray) work3).getDouble(rnd.nextInt(Math.max(checkedLen, 1)));
-                index = ((PArray) srcSubMatr.array().subArr(0, checkedLen)).indexOf(lowIndex, highIndex, value);
+                index = ((PArray) srcSubMatr.array().subArr(0, checkedLen))
+                        .indexOf(lowIndex, highIndex, value);
                 lastIndex = ((PArray) srcSubMatr.array().subArr(0, checkedLen)).lastIndexOf(
                         lowIndex, highIndex, value);
                 requiredIndex = ((PArray) work3.subArr(0, checkedLen)).indexOf(lowIndex, highIndex, value);
-                requiredLastIndex = ((PArray) work3.subArr(0, checkedLen)).lastIndexOf(lowIndex, highIndex, value);
+                requiredLastIndex = ((PArray) work3.subArr(0, checkedLen))
+                        .lastIndexOf(lowIndex, highIndex, value);
             } else {
                 Object value = work3.getElement(rnd.nextInt(Math.max(checkedLen, 1)));
                 if (value instanceof String) {
@@ -2918,7 +2947,8 @@ public class MainOperationsTest implements Cloneable {
                 ((UpdatableObjectArray<?>) work3).cast(Object.class).fill(value);
                 testSubMatr.array().subArr(pos, cnt).copy(work3);
             }
-            if (!testSubMatr.array().subArr(0, checkedLen).equals(destSubMatr.array().subArr(0, checkedLen))) {
+            if (!testSubMatr.array().subArr(0, checkedLen).equals(
+                    destSubMatr.array().subArr(0, checkedLen))) {
                 throw new AssertionError("The bug H in subMatr found in test #" + testCount + ": "
                         + "destPos = " + JArrays.toString(destPos, ";", 100)
                         + ", count = " + JArrays.toString(count, ";", 100)
@@ -2942,7 +2972,8 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                srcDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
+                srcDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                        lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= srcDim[i];
                 assert product <= len;
@@ -2956,7 +2987,8 @@ public class MainOperationsTest implements Cloneable {
                     // - at least one zero dimension should lead to trivial results
                     lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                             rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                    destDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
+                    destDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                            lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                             / blockSize * blockSize;
                     product *= destDim[i];
                     assert product <= len;
@@ -3077,7 +3109,8 @@ public class MainOperationsTest implements Cloneable {
                     }
                 }
                 if (illegalRegion != (srcSubMatr == null || destSubMatr == null)) {
-                    throw new AssertionError("The bug A in copyRegion/subMatr found in test #" + testCount + ": "
+                    throw new AssertionError("The bug A in copyRegion/subMatr found in test #" +
+                            testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", destPos = " + JArrays.toString(destPos, ";", 100)
                             + ", count = " + JArrays.toString(count, ";", 100)
@@ -3088,7 +3121,8 @@ public class MainOperationsTest implements Cloneable {
                 if (!illegalRegion && !CombinedMemoryModel.isCombinedArray(a)) {
                     // else a bug (null != "empty element")
                     if (!work1.equals(work2)) {
-                        throw new AssertionError("The bug B in copyRegion/subMatr found in test #" + testCount + ": "
+                        throw new AssertionError("The bug B in copyRegion/subMatr found in test #" +
+                                testCount + ": "
                                 + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                                 + ", destPos = " + JArrays.toString(destPos, ";", 100)
                                 + ", count = " + JArrays.toString(count, ";", 100)
@@ -3184,7 +3218,8 @@ public class MainOperationsTest implements Cloneable {
                         illegalRegion = true;
                     }
                     if (illegalRegion != (srcSubMatr == null || destSubMatr == null)) {
-                        throw new AssertionError("The bug C in copyRegion/subMatr found in test #" + testCount + ": "
+                        throw new AssertionError("The bug C in copyRegion/subMatr found in test #" +
+                                testCount + ": "
                                 + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                                 + ", destPos = " + JArrays.toString(destPos, ";", 100)
                                 + ", count = " + JArrays.toString(count, ";", 100)
@@ -3202,7 +3237,8 @@ public class MainOperationsTest implements Cloneable {
                                     + ", count = " + JArrays.toString(count, ";", 100)
                                     + ", regions = " + JArrays.toString(regions, "; ", 1000)
                                     + ", srcSubMatr = " + srcSubMatr + ", destSubMatr = " + destSubMatr
-                                    + ", copyRegion performed with" + (nonOptimizedCopy ? "out" : "") + " optimization");
+                                    + ", copyRegion performed with" + (nonOptimizedCopy ? "out" : "") + " " +
+                                    "optimization");
                         }
                     }
                 }
