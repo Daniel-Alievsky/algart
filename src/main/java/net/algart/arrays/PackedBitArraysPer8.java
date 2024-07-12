@@ -45,7 +45,7 @@ import java.util.Objects;
  * <p>The maximal length of bit arrays supported by this class is <code>2<sup>34</sup>-8</code>.
  * All indexes and lengths passed to methods of this class must not exceed this value.
  *
- * <p>In most methods of this class, it's supposed that the bit <code>#k</code> in a packed <code>byte[] array</code>
+ * <p>In some methods of this class, it's supposed that the bit <code>#k</code> in a packed <code>byte[] array</code>
  * is the bit <code>#(k%8)</code> in the byte element <code>array[k/8]</code>. In other words, the bit <code>#k</code>
  * (<code>false</code> or <code>true</code> value) can be extracted by the following operator:</p>
  *
@@ -66,9 +66,11 @@ import java.util.Objects;
  * the equivalent code.</p>
  *
  * <p>The order of bits within a byte, that corresponds to the above specification, is what we call
- * the <b>normal</b> order. Some methods of this class also support the <b>reverse</b> bit order:
- * see {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}
- * methods.</p>
+ * the <b>normal</b> order.</p>
+ *
+ * <p>Other methods of this class support the <b>reverse</b> bit order:
+ * see comments to {@link #getBitInReverseOrder(byte[], long)} and {@link #setBitInReverseOrder(byte[], long, boolean)}
+ * methods. Such methods contain the word "reverse" inside their names.</p>
  *
  * <p>If any method of this class modifies some portion of an element of a packed <code>byte[]</code> Java array,
  * i.e. modifies less than all 8 its bits, then all accesses to this <code>byte</code> element are performed
