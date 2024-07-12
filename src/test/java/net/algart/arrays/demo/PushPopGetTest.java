@@ -194,7 +194,7 @@ public class PushPopGetTest {
                 addedLong.addLong(v);
                 addedDouble.addDouble(v);
                 if (((PFixedArray) addedInt).getInt(k) != (int) v) throw new AssertionError();
-                if (((PFixedArray) addedLong).getInt(k) != truncateLongToInt(v)) throw new AssertionError(v);
+                if (((PFixedArray) addedLong).getInt(k) != clampLongToInt(v)) throw new AssertionError(v);
                 if (((PFixedArray) addedLong).getLong(k) != v) throw new AssertionError(v);
                 if (addedDouble.getDouble(k) != v) throw new AssertionError(v);
                 addedInt.removeTop();
@@ -272,7 +272,7 @@ public class PushPopGetTest {
             } else if (array instanceof LongStack a) {
                 long v = longs[k];
                 if (a.popLong() != v) throw new AssertionError(v);
-                if (((MutablePFixedArray) addedInt).popInt() != truncateLongToInt(v)) throw new AssertionError(v);
+                if (((MutablePFixedArray) addedInt).popInt() != clampLongToInt(v)) throw new AssertionError(v);
                 if (((MutablePFixedArray) addedLong).popLong() != v) throw new AssertionError(v);
                 if (addedDouble.popDouble() != v) throw new AssertionError(v);
             } else if (array instanceof FloatStack a) {
@@ -291,8 +291,8 @@ public class PushPopGetTest {
         }
     }
 
-    private static long truncateLongToInt(long v) {
-        return Arrays.truncate(v, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    private static long clampLongToInt(long v) {
+        return NCopiesGetTest.clamp(v, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
     public static void main(String[] args) {

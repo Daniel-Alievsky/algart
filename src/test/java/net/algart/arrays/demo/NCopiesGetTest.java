@@ -75,7 +75,7 @@ public class NCopiesGetTest {
             if (a.getDouble(0) != v) throw new AssertionError(v);
         } else if (array instanceof LongArray a) {
             long v = a.getLong(0);
-            if (a.getInt(0) != Arrays.truncate(v, Integer.MIN_VALUE, Integer.MAX_VALUE))
+            if (a.getInt(0) != clamp(v, Integer.MIN_VALUE, Integer.MAX_VALUE))
                 throw new AssertionError(v);
             if (a.getDouble(0) != (double) v) throw new AssertionError(v);
         } else if (array instanceof FloatArray a) {
@@ -89,6 +89,14 @@ public class NCopiesGetTest {
                 : rnd.nextBoolean() ? rnd.nextInt() + rnd.nextDouble()
                 : rnd.nextBoolean() ? rnd.nextLong() + rnd.nextDouble()
                 : 100000000 * (rnd.nextDouble() - 0.5);
+    }
+
+    // This function is added in Math only in Java 21
+    static long clamp(long value, long min, long max) {
+        if (min > max) {
+            throw new IllegalArgumentException(min + " > " + max);
+        }
+        return Math.min(Math.max(value, min), max);
     }
 
     public static void main(String[] args) {
