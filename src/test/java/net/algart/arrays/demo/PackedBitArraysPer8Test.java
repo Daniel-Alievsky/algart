@@ -175,6 +175,7 @@ public class PackedBitArraysPer8Test {
             for (int k = 0; k < bDest.length; k++) {
                 fDest[k] = rnd.nextFloat();
             }
+            boolean[] bSrcWork = new boolean[len];
             boolean[] bDestWork1 = bDest.clone();
             boolean[] bDestWork2 = bDest.clone();
             float[] fDestWork = fDest.clone();
@@ -260,7 +261,7 @@ public class PackedBitArraysPer8Test {
                 for (int k = 0; k < count; k++) {
                     byte value = pSrc[srcPos + k];
                     byte reverse = PackedBitArraysPer8.reverseBitOrder(value);
-                    if (reverse !=  (byte) (Integer.reverse(value) >>> 24)) {
+                    if (reverse != (byte) (Integer.reverse(value) >>> 24)) {
                         throw new AssertionError("Bug in A in reverseBitOrder for byte " + value);
                     }
                     if (pDestWork1[destPos + k] != reverse) {
@@ -353,7 +354,7 @@ public class PackedBitArraysPer8Test {
                 } else {
                     PackedBitArraysPer8.setBits64NoSync(pDestWork2, destPos, v, count);
                 }
-                long vTest = getBits64Simple(pDestWork2,destPos, count);
+                long vTest = getBits64Simple(pDestWork2, destPos, count);
                 if (destPos + count <= len && vTest != v) {
                     throw new AssertionError("The bug A in setBits64 found in test #" + testCount +
                             ": destPos = " + destPos + ", count = " + count + ", " +
@@ -426,7 +427,7 @@ public class PackedBitArraysPer8Test {
                 } else {
                     PackedBitArraysPer8.setBits64InReverseOrderNoSync(pDestWork2, destPos, v, count);
                 }
-                long vTest = getBits64InReverseOrderSimple(pDestWork2,destPos, count);
+                long vTest = getBits64InReverseOrderSimple(pDestWork2, destPos, count);
                 if (destPos + count <= len && vTest != v) {
                     throw new AssertionError("The bug A in setBits64InReverseOrder found in test #" +
                             testCount +
@@ -823,7 +824,7 @@ public class PackedBitArraysPer8Test {
                             "found in test #" + testCount);
                 }
                 System.arraycopy(pDest, 0, pDestWork2, 0, pDest.length);
-                byte[] copy =  PackedBitArraysPer8.reverseBitOrder(pSrc);
+                byte[] copy = PackedBitArraysPer8.reverseBitOrder(pSrc);
                 PackedBitArraysPer8.copyBits(pDestWork2, destPos, copy, srcPos, count);
                 for (int k = 0; k < pDest.length; k++) {
                     if (pDestWork2[k] != pDestWork1[k]) {
@@ -1311,6 +1312,54 @@ public class PackedBitArraysPer8Test {
                 showProgress(testCount);
             }
             //[[Repeat.IncludeEnd]]
+
+            System.out.println("Testing \"notBitsInReverseOrder\" method...");
+            for (int testCount = 0; testCount < numberOfTests; testCount++) {
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                System.arraycopy(bDest, 0, bDestWork1, 0, bDest.length);
+                System.arraycopy(bDest, 0, bDestWork2, 0, bDest.length);
+                int srcPos = rnd.nextInt(len + 1);
+                int destPos = rnd.nextInt(len + 1);
+                int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bSrcWork, 0, pSrc, 0, len);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork2, 0, pDest, 0, len);
+                for (int k = 0; k < count; k++) {
+                    bDestWork2[destPos + k] = !bSrcWork[srcPos + k];
+                }
+                PackedBitArraysPer8.notBitsInReverseOrder(
+                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
+                for (int k = 0; k < len; k++) {
+                    boolean inRange = k >= destPos && k < destPos + count;
+                    if (PackedBitArraysPer8.getBitInReverseOrder(pDestWork1, k) !=
+                            (!inRange ?
+                                    PackedBitArraysPer8.getBitInReverseOrder(pDest, k) :
+                                    !PackedBitArraysPer8.getBitInReverseOrder(pSrc, k - destPos + srcPos))) {
+                        throw new AssertionError("The bug A in notBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", in-range = " + inRange + ", error found at " + k);
+
+                    }
+                    if (bDestWork1[k] != bDestWork2[k]) {
+                        throw new AssertionError("The bug B in notBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
+                PackedBitArraysPer8.copyBitsInReverseOrder(
+                        pDestWork1, destPos, pSrc, srcPos, count);
+                PackedBitArraysPer8.notBitsInReverseOrder(pDestWork1, destPos, count);
+                PackedBitArraysPer8.unpackBitsInReverseOrder(bDestWork1, 0, pDestWork1, 0, len);
+                for (int k = 0; k < len; k++) {
+                    if (bDestWork1[k] != bDestWork2[k]) {
+                        throw new AssertionError("The bug C in notBitsInReverseOrder found in test #" +
+                                testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
+                                ", error found at " + k);
+                    }
+                }
+                showProgress(testCount);
+            }
 
             System.out.println("Testing \"cardinality\" method...");
             for (int testCount = 0; testCount < numberOfTests; testCount++) {

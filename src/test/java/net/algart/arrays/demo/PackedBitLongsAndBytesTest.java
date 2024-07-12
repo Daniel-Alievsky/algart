@@ -47,7 +47,7 @@ public class PackedBitLongsAndBytesTest {
     }
 
     public static void main(String[] args) {
-        final int numberOfBits = 3 * 64 + 13;
+        final int numberOfBits = 2 * 64 + 13;
         final byte[] bytes = new byte[(numberOfBits + 7) / 8];
         for (int k = 0; k < bytes.length; k++) {
             bytes[k] = (byte) k;
@@ -58,7 +58,7 @@ public class PackedBitLongsAndBytesTest {
         if (!Arrays.equals(bits1, bits2)) {
             throw new AssertionError("Bug A");
         }
-        final long[] longsFromBuffer = PackedBitArraysPer8.toLongArray(ByteBuffer.wrap(bytes));
+        final long[] longsFromBuffer = PackedBitArraysPer8.toLongArray(ByteBuffer.wrap(bytes), numberOfBits);
         boolean[] bits3 = showBits(longsFromBuffer, numberOfBits);
         if (!Arrays.equals(bits1, bits3)) {
             throw new AssertionError("Bug B");
