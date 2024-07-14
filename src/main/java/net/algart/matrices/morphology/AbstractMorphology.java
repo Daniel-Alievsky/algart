@@ -87,7 +87,8 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
             SubtractionMode subtractionMode) {
         Objects.requireNonNull(subtractionMode, "Null subtractionMode");
         Matrix<? extends UpdatablePArray> dilation =
-                (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).dilation(src, pattern);
+                (subtractionMode == SubtractionMode.NONE ? this : context(contextPart(0.0, 0.9))).dilation(src,
+                        pattern);
         subtractionMode.subtract(contextPart(0.9, 1.0), dilation, src);
         return dilation;
     }
@@ -271,7 +272,8 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * {@link #dilation(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)},
      * {@link #erosion(Matrix dest, Matrix src, Pattern pattern, boolean disableMemoryAllocation)} methods,
      * provided by this class, just call this method
-     * with corresponding <code>isDilation</code> argument and with <code>dest==null</code> in a case of first two methods.
+     * with corresponding <code>isDilation</code> argument and with <code>dest==null</code> in a case of first two
+     * methods.
      *
      * <p>The implementation of this method, provided by {@link AbstractMorphology} class, just copies the result
      * of {@link #asDilationOrErosion(Matrix, Pattern, boolean)}  asDilationOrErosion} method to
@@ -305,7 +307,8 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      * @return the reference to <code>dest</code> argument if it is not {@code null},
      * newly allocated resulting matrix in other case.
      * @throws NullPointerException     if <code>src</code> or <code>pattern</code> argument is {@code null}.
-     * @throws SizeMismatchException    if <code>dest!=null</code> and the passed matrices have different dimensions.
+     * @throws SizeMismatchException    if <code>dest&nbsp;!=&nbsp;null</code>
+     *                                  and the passed matrices have different dimensions.
      * @throws IllegalArgumentException if the number of the pattern dimensions
      *                                  <code>pattern.{@link Pattern#dimCount() dimCount()}</code> is not equal
      *                                  to <code>src.{@link Matrix#dimCount() dimCount()}</code>.

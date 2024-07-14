@@ -1796,7 +1796,7 @@ public class MainOperationsTest implements Cloneable {
         if (!(a instanceof PArray)) {
             return;
         }
-        if (!title(ti, "Testing \"Arrays.arrayToBytes/bytesToArray\" methods...")) {
+        if (!title(ti, "Testing \"Arrays.toBytes/toArray\" methods...")) {
             return;
         }
         for (int testCount = 0; testCount < numberOfTests; testCount++) {
@@ -1810,7 +1810,7 @@ public class MainOperationsTest implements Cloneable {
                     new byte[(int) (a instanceof BitArray ? (srcPArray.length() + 7) / 8 : Arrays.sizeOf(srcPArray))] :
                     null;
             ByteOrder byteOrder = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
-            bytes = Arrays.arrayToBytes(bytes, srcPArray, byteOrder);
+            bytes = Arrays.toBytes(bytes, srcPArray, byteOrder);
             for (int k = 0; k < count; k++) {
                 boolean equal;
                 if (srcPArray instanceof BitArray) {
@@ -1891,15 +1891,15 @@ public class MainOperationsTest implements Cloneable {
                     throw new AssertionError("Illegal type");
                 }
                 if (!equal) {
-                    throw new AssertionError("The bug in arrayToBytes found in test #" + testCount +
+                    throw new AssertionError("The bug in toBytes found in test #" + testCount +
                             ": byteOrder = " + byteOrder
                             + ", srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + srcPArray.getDouble(k));
                 }
             }
-            Arrays.bytesToArray(destPArray, bytes, byteOrder);
+            Arrays.toArray(destPArray, bytes, byteOrder);
             if (!srcPArray.equals(destPArray)) {
-                throw new AssertionError("The bug in bytesToArray found in test #" + testCount +
+                throw new AssertionError("The bug in toArray found in test #" + testCount +
                         ": " + "byteOrder = " + byteOrder + ", srcPos = " + srcPos + ", destPos = " + destPos +
                         ", count = " + count + " (" + Arrays.toString(srcPArray, ", ", 200) +
                         " and " + Arrays.toString(destPArray, ", ", 200) + ")");

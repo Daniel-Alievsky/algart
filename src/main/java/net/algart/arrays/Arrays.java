@@ -1573,7 +1573,7 @@ public class Arrays {
      * @see #sizeOf(Class, long)
      * @see #sizeOf(Class)
      * @see Matrices#sizeOf(Matrix)
-     * @see #sizeOfBytesForCopying(PArray)
+     * @see #sizeOfBytes(PArray)
      */
     public static long sizeOf(Array array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -1664,11 +1664,57 @@ public class Arrays {
     }
 
     /**
-     * Returns the size in bytes, required for each element of an array with the given primitive element type.
+     * Returns the exact size in bytes,
+     * required to store each element of an array with the specified primitive element type.
      *
      * <p>More precisely:
      * <ul>
-     * <li>for <code>boolean.class</code>, returns <code>0.125</code> (<sup>1</sup>/<sub>8</sub>);
+     * <li>for <code>boolean.class</code>, returns <code>0.125</code> (<sup>1</sup>/<sub>8</sub>);</li>
+     * <li>for <code>char.class</code>, returns <code>2.0</code>;</li>
+     * <li>for <code>byte.class</code>, returns <code>1.0</code>;</li>
+     * <li>for <code>short.class</code>, returns <code>2.0</code>;</li>
+     * <li>for <code>int.class</code>, returns <code>4.0</code>;</li>
+     * <li>for <code>long.class</code>, returns <code>8.0</code>;</li>
+     * <li>for <code>float.class</code>, returns <code>4.0</code>;</li>
+     * <li>for <code>double.class</code>, returns <code>8.0</code>;</li>
+     * <li>for all other cases, returns <code>-1.0</code> ("unknown size").</li>
+     * </ul>
+     *
+     * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
+     * @return the exact size of each element of the AlgART array in bytes or &minus;1 for non-primitive types.
+     * @see #sizeOf(Array)
+     * @see #bytesPerElement(Class)
+     * @see #bitsPerElement(Class)
+     */
+    public static double sizeOf(Class<?> elementType) {
+        if (elementType == boolean.class) {
+            return 0.125;
+        } else if (elementType == char.class) {
+            return 2.0;
+        } else if (elementType == byte.class) {
+            return 1.0;
+        } else if (elementType == short.class) {
+            return 2.0;
+        } else if (elementType == int.class) {
+            return 4.0;
+        } else if (elementType == long.class) {
+            return 8.0;
+        } else if (elementType == float.class) {
+            return 4.0;
+        } else if (elementType == double.class) {
+            return 8.0;
+        } else {
+            return -1.0;
+        }
+    }
+
+    /**
+     * Returns the minimal integer number of bytes,
+     * required to store each element of an array with the specified primitive element type.
+     *
+     * <p>More precisely:
+     * <ul>
+     * <li>for <code>boolean.class</code>, returns <code>1</code>;</li>
      * <li>for <code>char.class</code>, returns <code>2</code>;</li>
      * <li>for <code>byte.class</code>, returns <code>1</code>;</li>
      * <li>for <code>short.class</code>, returns <code>2</code>;</li>
@@ -1680,12 +1726,12 @@ public class Arrays {
      * </ul>
      *
      * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
-     * @return the size of each element of the AlgART array in bytes or &minus;1 if it is unknown.
-     * @see #sizeOf(Array)
+     * @return the integer number of bytes, necessary to store such elements, or &minus;1 for non-primitive types.
+     * @see #sizeOf(Class)
      */
-    public static double sizeOf(Class<?> elementType) {
+    public static int bytesPerElement(Class<?> elementType) {
         if (elementType == boolean.class) {
-            return 0.125;
+            return 1;
         } else if (elementType == char.class) {
             return 2;
         } else if (elementType == byte.class) {
@@ -1723,7 +1769,7 @@ public class Arrays {
      *
      * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
      * @return the size of each element of the AlgART array in bits or &minus;1 if it is unknown.
-     * @see #sizeOf(Array)
+     * @see #sizeOf(Class)
      * @see PArray#bitsPerElement()
      */
     public static long bitsPerElement(Class<?> elementType) {
@@ -4470,13 +4516,13 @@ public class Arrays {
      *
      * <p>The length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array (but may be greater than necessary). More precisely, <code>bytes.length</code> must be
-     * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * <code>&ge;Arrays.{@link #sizeOfBytes(PArray)
      * sizeOfBytesForCopying}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      *
      * <p>The <code>bytes</code> argument can be {@code null}; in this case, this method automatically allocates
-     * <code>byte[]</code> array with minimal necessary length <code>Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * <code>byte[]</code> array with minimal necessary length <code>Arrays.{@link #sizeOfBytes(PArray)
      * sizeOfBytesForCopying}(array)</code>, copies all elements of the AlgART array
      * into it and returns it.
      *
@@ -4521,12 +4567,12 @@ public class Arrays {
      *
      * <p>Note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
      * for {@link BitArray} case this method requires little less bytes:
-     * {@link #sizeOfBytesForCopying(PArray) sizeOfBytesForCopying(array)} instead of
+     * {@link #sizeOfBytes(PArray) sizeOfBytesForCopying(array)} instead of
      * {@link #sizeOf(Array) sizeOf(array)}. If you are interested in compatibility with
      * {@link #write(OutputStream, PArray, ByteOrder) write} /
      * {@link #read(InputStream, UpdatablePArray, ByteOrder) read} methods, you should allocate
      * and serialize <code>(int)Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> bytes instead of
-     * <code>Arrays.{@link #sizeOfBytesForCopying(PArray) sizeOfBytesForCopying}(array)</code>.
+     * <code>Arrays.{@link #sizeOfBytes(PArray) sizeOfBytesForCopying}(array)</code>.
      *
      * <p>We recommend calling this method for relatively small arrays only, up to several megabytes,
      * to avoid extra usage of RAM. If you need to serialize a large AlgART array,
@@ -4544,14 +4590,14 @@ public class Arrays {
      *                                  is not enough for storing all elements of the source AlgART array.
      * @throws TooLargeArrayException   if the required result array length is greater
      *                                  than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #bytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see #toArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
      */
-    public static byte[] arrayToBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
+    public static byte[] toBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        final long requiredLength = Arrays.sizeOfBytesForCopying(array);
+        final long requiredLength = Arrays.sizeOfBytes(array);
         assert requiredLength == (int) requiredLength;
         if (bytes == null) {
             bytes = new byte[(int) requiredLength];
@@ -4594,13 +4640,13 @@ public class Arrays {
 
     /**
      * Copies the elements, stored in the <code>bytes</code> Java array (2nd argument)
-     * by previous {@link #arrayToBytes(byte[], PArray, ByteOrder)}
+     * by previous {@link #toBytes(byte[], PArray, ByteOrder)}
      * call, back into the given AlgART array (1st argument).
      *
-     * <p>As in {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method,
+     * <p>As in {@link #toBytes(byte[], PArray, ByteOrder) toBytes} method,
      * the length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <code>bytes.length</code> must be
-     * <code>&ge;Arrays.{@link #sizeOfBytesForCopying(PArray)
+     * <code>&ge;Arrays.{@link #sizeOfBytes(PArray)
      * sizeOfBytesForCopying}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
@@ -4609,13 +4655,13 @@ public class Arrays {
      *
      * <p>The array element #<i>k</i> (<code>array.{@link Array#getElement(long) getElement}(<i>k</i>))</code>
      * is retrieved from the same position in the <code>bytes</code> Java array, where it is stored by
-     * {@link #arrayToBytes(byte[], PArray, ByteOrder)} method (see comments to it).
+     * {@link #toBytes(byte[], PArray, ByteOrder)} method (see comments to it).
      * The elements <code>float</code>
      * and <code>double</code> are retrieved from the corresponding byte sequences via
      * <code>Float.intBitsToFloat</code> and <code>Double.longBitsToDouble</code> methods.
      *
      * <p>This method can be used for deserialization of AlgART arrays from a form, created by
-     * {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method and loaded from
+     * {@link #toBytes(byte[], PArray, ByteOrder) toBytes} method and loaded from
      * <code>InputStream</code>, for example, after reading from external devices or passing through the network.
      *
      * <p>This conversion is performed according the specified byte order, like in
@@ -4628,7 +4674,7 @@ public class Arrays {
      *
      * @param array     the target AlgART array, all elements of which should be copied from the Java array.
      * @param bytes     the source Java array, filled according the specification of
-     *                  {@link #arrayToBytes(byte[], PArray, ByteOrder) arrayToBytes} method.
+     *                  {@link #toBytes(byte[], PArray, ByteOrder) toBytes} method.
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @throws NullPointerException     if any of the arguments is {@code null}.
@@ -4637,11 +4683,11 @@ public class Arrays {
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
      */
-    public static void bytesToArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
+    public static void toArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
         Objects.requireNonNull(bytes, "Null bytes Java array");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        final long requiredLength = Arrays.sizeOfBytesForCopying(array);
+        final long requiredLength = Arrays.sizeOfBytes(array);
         if (bytes.length < requiredLength) {
             throw new IllegalArgumentException("byte[] array is too short to copy into all elements of "
                     + "the AlgART array: " + requiredLength + " bytes required, but only " +
@@ -4682,20 +4728,20 @@ public class Arrays {
 
     /**
      * Returns the minimal size of <code>byte[]</code> array, enough for copying there the given AlgART array
-     * by {@link #arrayToBytes(byte[], PArray, ByteOrder)} method.
+     * by {@link #toBytes(byte[], PArray, ByteOrder)} method.
      * More precisely, returns
      * <code>array.{@link Array#length() length()}+7/8</code> for {@link BitArray}
      * or <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> for other primitive types.
      *
      * @param array the source AlgART array.
      * @return the minimal size of <code>byte[]</code> array, enough for calling
-     * {@link #arrayToBytes(byte[], PArray, ByteOrder)} method.
+     * {@link #toBytes(byte[], PArray, ByteOrder)} method.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the result (required Java array length) is greater
      *                                than <code>Integer.MAX_VALUE</code> elements.
      * @see #sizeOf(Array)
      */
-    public static int sizeOfBytesForCopying(PArray array) {
+    public static int sizeOfBytes(PArray array) {
         Objects.requireNonNull(array, "Null array");
         final long requiredLength = array instanceof BitArray ? (array.length() + 7) >>> 3 : Arrays.sizeOf(array);
         if (requiredLength > Integer.MAX_VALUE) {
@@ -4751,7 +4797,7 @@ public class Arrays {
      * @throws NullPointerException if <code>outputStream</code>, <code>array</code> or <code>byteOrder</code>
      *                              argument is {@code null}.
      * @throws IOException          in the same situations as in the standard <code>OutputStream.write</code> method.
-     * @see #arrayToBytes(byte[], PArray, ByteOrder)
+     * @see #toBytes(byte[], PArray, ByteOrder)
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      */
     public static void write(OutputStream outputStream, PArray array, ByteOrder byteOrder) throws IOException {
@@ -4800,7 +4846,7 @@ public class Arrays {
      *                              argument is {@code null}.
      * @throws IOException          in the same situations as in the standard
      *                              <code>DataInputStream.readFully</code> method.
-     * @see #bytesToArray(UpdatablePArray, byte[], ByteOrder)
+     * @see #toArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      */
     public static void read(InputStream inputStream, UpdatablePArray array, ByteOrder byteOrder) throws IOException {
@@ -7899,7 +7945,8 @@ public class Arrays {
          * @throws IllegalArgumentException if <code>blockSize &lt;= 0</code>,
          *                                  or if <code>numberOfTasks &lt; 0</code>,
          *                                  or if <code>numberOfRanges &lt; 0</code>.
-         * @throws SizeMismatchException    if <code>dest!=null</code> and <code>dest.length()!=src.length()</code>.
+         * @throws SizeMismatchException    if <code>dest&nbsp;!=&nbsp;null</code> and
+         *                                  <code>dest.length()&nbsp;!=&nbsp;src.length()</code>.
          * @see #correctNumberOfRanges(long, int)
          */
         protected ParallelExecutor(

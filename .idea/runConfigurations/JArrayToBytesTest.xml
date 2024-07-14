@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="JArrayToBytesTest" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.JArrayToBytesTest" />
+    <module name="algart" />
+    <option name="PROGRAM_PARAMETERS" value="1000 100000" />
+    <option name="VM_PARAMETERS" value="-ea -esa" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="net.algart.arrays.demo.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
