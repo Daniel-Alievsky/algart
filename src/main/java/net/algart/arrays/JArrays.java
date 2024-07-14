@@ -1233,7 +1233,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>src</code> array, containing elements
+     * Copies the specified number of elements of the specified <code>src</code> array, containing elements
      * of some primitive type (2nd argument),
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
@@ -1528,7 +1528,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>char[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>char[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1727,7 +1727,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>short[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>short[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1924,7 +1924,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>int[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>int[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2121,7 +2121,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>long[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>long[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2318,7 +2318,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>float[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>float[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2515,7 +2515,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>double[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>double[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2707,7 +2707,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the given <code>boolean[]</code> array (2nd argument)
+     * Copies the specified number of elements of the specified <code>boolean[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2846,7 +2846,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of bytes of the given <code>src</code> <code>byte[]</code> array
+     * Copies the specified number of bytes of the <code>src</code> <code>byte[]</code> array
      * into the <code>dest</code> <code>byte[]</code> array
      * (or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
