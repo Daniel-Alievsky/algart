@@ -980,11 +980,11 @@ public final class Contours {
         return findSomePointInside(result, points, offset, length, surelyUnpacked);
     }
 
-    public double strictPerimeter(int contourIndex) {
+    public double perimeter(int contourIndex) {
         final long lengthAndOffset = getContourLengthAndOffset(contourIndex);
         final int offset = extractOffset(lengthAndOffset);
         final int length = extractLength(lengthAndOffset);
-        return strictPerimeter(points, offset, length);
+        return perimeter(points, offset, length);
     }
 
     public double segmentCentersPerimeter(int contourIndex) {
@@ -994,11 +994,11 @@ public final class Contours {
         return segmentCentersPerimeter(points, offset, length);
     }
 
-    public double strictArea(int contourIndex) {
+    public double area(int contourIndex) {
         final long lengthAndOffset = getContourLengthAndOffset(contourIndex);
         final int offset = extractOffset(lengthAndOffset);
         final int length = extractLength(lengthAndOffset);
-        return strictArea(points, offset, length);
+        return area(points, offset, length);
     }
 
     public double segmentCentersArea(int contourIndex) {
@@ -1684,7 +1684,7 @@ public final class Contours {
         return false;
     }
 
-    public static double strictPerimeter(IntArray contour) {
+    public static double perimeter(IntArray contour) {
         checkContourLength(contour);
         final long n = contour.length();
         int lastX = contour.getInt(n - 2);
@@ -1704,7 +1704,7 @@ public final class Contours {
         return perimeter;
     }
 
-    public static double strictPerimeter(int[] contour, int offset, int n) {
+    public static double perimeter(int[] contour, int offset, int n) {
         checkContourLengthAndOffset(contour, offset, n);
         int lastX = contour[offset + n - 2];
         int lastY = contour[offset + n - 1];
@@ -1778,7 +1778,7 @@ public final class Contours {
         return perimeter;
     }
 
-    public static double strictArea(IntArray contour) {
+    public static double area(IntArray contour) {
         checkContourLength(contour);
         final long n = contour.length();
         int lastX = contour.getInt(n - 2);
@@ -1794,7 +1794,7 @@ public final class Contours {
         return 0.5 * area;
     }
 
-    public static double strictArea(int[] contour, int offset, int n) {
+    public static double area(int[] contour, int offset, int n) {
         checkContourLengthAndOffset(contour, offset, n);
         int lastX = contour[offset + n - 2];
         int lastY = contour[offset + n - 1];
