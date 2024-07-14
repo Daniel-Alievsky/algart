@@ -41,7 +41,7 @@ package net.algart.math.functions;
  * for the instance returned by {@link #getStrictBinaryInstance(double scale)} or
  * {@link #getStrictInstance(double c, double scale)} methods.</li>
  * </ul>
- * The {@link #get} method of the instance of this class requires at least 2 or 1 arguments
+ * <p>The {@link #get} method of the instance of this class requires at least 2 or 1 arguments
  * (for the cases <i>x</i><sub>0</sub><i><sup>x<sub>1</sub></sup></i> and
  * <i>x</i><sub>0</sub><sup>c</sup> correspondingly)
  * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is less.

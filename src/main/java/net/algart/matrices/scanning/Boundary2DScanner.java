@@ -1596,9 +1596,9 @@ public abstract class Boundary2DScanner {
 
     /**
      * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
-     * in the newly created matrix. Equivalent to the following code:</p>
+     * in the newly created matrix. Equivalent to the following code:
      * <pre>
-     *      Matrix<UpdatableBitArray> result = memoryModel.{@link MemoryModel#newBitMatrix(long...)
+     *      Matrix&lt;UpdatableBitArray&gt; result = memoryModel.{@link MemoryModel#newBitMatrix(long...)
      *      newBitMatrix}(source.dimensions());
      *      {@link #fillHoles(Matrix, Matrix, ConnectivityType) fillHoles}(result, source, connectivityType);
      * </pre>
@@ -1627,7 +1627,7 @@ public abstract class Boundary2DScanner {
     /**
      * Makes <a href="Boundary2DScanner.html#completion">completion</a> of the source binary matrix and returns it
      * in the result matrix. Compared to the source matrix, all the "holes" ("pores") in the resulting matrix
-     * are filled.</p>
+     * are filled.
      *
      * <p>This method is equivalent to the following code:</p>
      * <pre>

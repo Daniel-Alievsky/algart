@@ -4510,20 +4510,20 @@ public class Arrays {
     }
 
     /**
-     * Copies all elements of the given AlgART array (2nd argument) into the <code>bytes</code> Java array
+     * Copies all elements of the specified AlgART array (2nd argument) into the <code>bytes</code> Java array
      * (1st argument, or into a newly created <code>byte[]</code> array if <code>bytes==null</code>), and returns
      * the resulting <code>byte[]</code> array.
      *
      * <p>The length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array (but may be greater than necessary). More precisely, <code>bytes.length</code> must be
      * <code>&ge;Arrays.{@link #sizeOfBytes(PArray)
-     * sizeOfBytesForCopying}(array)</code>.
+     * sizeOfBytes}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      *
      * <p>The <code>bytes</code> argument can be {@code null}; in this case, this method automatically allocates
      * <code>byte[]</code> array with minimal necessary length <code>Arrays.{@link #sizeOfBytes(PArray)
-     * sizeOfBytesForCopying}(array)</code>, copies all elements of the AlgART array
+     * sizeOfBytes}(array)</code>, copies all elements of the AlgART array
      * into it and returns it.
      *
      * <p>The array element #<i>k</i> (<code>array.{@link Array#getElement(long) getElement}(<i>k</i>))</code>
@@ -4567,12 +4567,12 @@ public class Arrays {
      *
      * <p>Note: unlike {@link #write(OutputStream, PArray, ByteOrder)} method,
      * for {@link BitArray} case this method requires little less bytes:
-     * {@link #sizeOfBytes(PArray) sizeOfBytesForCopying(array)} instead of
+     * {@link #sizeOfBytes(PArray) sizeOfBytes(array)} instead of
      * {@link #sizeOf(Array) sizeOf(array)}. If you are interested in compatibility with
      * {@link #write(OutputStream, PArray, ByteOrder) write} /
      * {@link #read(InputStream, UpdatablePArray, ByteOrder) read} methods, you should allocate
      * and serialize <code>(int)Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> bytes instead of
-     * <code>Arrays.{@link #sizeOfBytes(PArray) sizeOfBytesForCopying}(array)</code>.
+     * <code>Arrays.{@link #sizeOfBytes(PArray) sizeOfBytes}(array)</code>.
      *
      * <p>We recommend calling this method for relatively small arrays only, up to several megabytes,
      * to avoid extra usage of RAM. If you need to serialize a large AlgART array,
@@ -4593,6 +4593,7 @@ public class Arrays {
      * @see #toArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
+     * @see JArrays#arrayToBytes(byte[], Object, int, ByteOrder)
      */
     public static byte[] toBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
@@ -4641,13 +4642,13 @@ public class Arrays {
     /**
      * Copies the elements, stored in the <code>bytes</code> Java array (2nd argument)
      * by previous {@link #toBytes(byte[], PArray, ByteOrder)}
-     * call, back into the given AlgART array (1st argument).
+     * call, back into the specified AlgART array (1st argument).
      *
      * <p>As in {@link #toBytes(byte[], PArray, ByteOrder) toBytes} method,
      * the length of <code>bytes</code> array must be enough for storing all elements of the given AlgART
      * array. More precisely, <code>bytes.length</code> must be
      * <code>&ge;Arrays.{@link #sizeOfBytes(PArray)
-     * sizeOfBytesForCopying}(array)</code>.
+     * sizeOfBytes}(array)</code>.
      * Note that <code>Arrays.{@link #sizeOf(Array) sizeOf}(array)</code> is a suitable length
      * for all types (though for {@link BitArray} it can be little greater than necessary).
      * This method always copies all <code>array.{@link Array#length() length()}</code>
@@ -4682,6 +4683,7 @@ public class Arrays {
      *                                  is not enough for storing all elements of the target AlgART array.
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
+     * @see JArrays#bytesToArray(Object, byte[], int, Class, ByteOrder)
      */
     public static void toArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");

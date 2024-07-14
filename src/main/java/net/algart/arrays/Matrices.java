@@ -401,7 +401,8 @@ public class Matrices {
          * <code>coordRanges[1].{@link IRange#min() min()}</code> &le; <i>x</i><sub>1</sub> &le;
          * <code>coordRanges[1].{@link IRange#max() max()}</code>,<br>
          * ...,<br>
-         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
+         * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min()
+         * min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
          * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()}</code>.
          * </blockquote>
          *
@@ -827,7 +828,8 @@ public class Matrices {
      * <code>coordRanges[1].{@link IRange#min() min()}</code> &le; <i>x</i><sub>1</sub> &le;
      * <code>coordRanges[1].{@link IRange#max() max()}</code>,<br>
      * ...,<br>
-     * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min() min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
+     * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#min()
+     * min()}</code> &le; <i>x</i><sub><i>n</i>&minus;1</sub> &le;
      * <code>coordRanges[<i>n</i>&minus;1].{@link IRange#max() max()}</code>,
      * </blockquote>
      *
@@ -880,8 +882,8 @@ public class Matrices {
          * <p>Note: the number of matrix dimensions can differ from the number of dimensions of this region.
          * (All matrix dimensions after the first {@link #n()}, as usual, are supposed to be 1.)
          *
-         * <p>More precisely, this method returns <code>true</code> if and only if the following 2*{@link #n()} conditions
-         * are fulfilled:
+         * <p>More precisely, this method returns <code>true</code> if and only if the following 2*{@link #n()}
+         * conditions are fulfilled:
          *
          * <blockquote>
          * <code>0 &le; coordRanges[0].{@link IRange#min() min()}</code>,&nbsp;&nbsp;&nbsp;
@@ -915,8 +917,8 @@ public class Matrices {
          * The number of elements of <code>backShifts</code> also can differ from the number of dimensions.
          * All missing elements of <code>backShifts</code> array are supposed to be zero.
          *
-         * <p>More precisely, this method returns <code>true</code> if and only if the following 2*{@link #n()} conditions
-         * are fulfilled:
+         * <p>More precisely, this method returns <code>true</code> if and only if the following 2*{@link #n()}
+         * conditions are fulfilled:
          *
          * <blockquote>
          * <code>0 &le; coordRanges[0].{@link IRange#min() min()} - <i>sh</i><sub>0</sub></code>,<br>
@@ -2731,7 +2733,8 @@ public class Matrices {
             }
             case POLYLINEAR_FUNCTION: {
                 if (Arrays.javaArrayInternal(a) != null && a.length() < Integer.MAX_VALUE) {
-                    // length check is necessary to be sure that (int)x > dimX if x > dimX, (int)y > dimY if y > dimY, ...
+                    // length check is necessary to be sure that
+                    // (int)x > dimX if x > dimX, (int)y > dimY if y > dimY, ...
                     //[[Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                     //           Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
                     //           if(?=\s+\(a\s+instanceof\s+) ==> } else if,,...]]
@@ -3785,7 +3788,7 @@ public class Matrices {
      * <p>More precisely, if <code>newElementType==matrix.elementType()</code>, this function just returns
      * the <code>matrix</code> argument without changes, in other case it is equivalent to the following operators:
      * <pre>
-     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+     *     final Class&lt;PArray&gt; newType = Arrays.type(PArray.class, newElementType);
      *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
      *     Arrays.maxPossibleValue}(newType));
      *     final Range srcRange = Range.valueOf(0.0, matrix.{@link Matrix#maxPossibleValue()
@@ -4735,7 +4738,7 @@ public class Matrices {
      * Returns an exact updatable clone of the given matrix, created in the given memory model.
      * Equivalent to the following operators:
      * <pre>
-     *     final Matrix<UpdatablePArray> result = memoryModel.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     final Matrix&lt;UpdatablePArray&gt; result = memoryModel.{@link MemoryModel#newMatrix(Class, Matrix)
      *     newMatrix}(UpdatablePArray.class, matrix);
      *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
      *     Matrices.copy}(null, result, matrix); // - maximally fast multithreading copying
@@ -4931,29 +4934,36 @@ public class Matrices {
      *
      * <p>More precisely, this method is 3 the following loop (and, of course, works faster):
      *
-     * <pre>
-     * for (all possible long coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub
-     * >, ..., <i>x</i><sub><i>n</i>&minus;1</sub>
+     * <p><code>
+     * for (all coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub><br>
      * &#32;   in ranges destRegion.{@link Region#coordRange(int)
-     * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),
-     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))
-     * {
+     * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),<br>
+     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))<br>
+     * {<br>
      * &#32;   if (destRegion.{@link Region#contains(long...)
-     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) {
-     * &#32;       long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);
-     * &#32;       long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);
-     * &#32;       ...
-     * &#32;       long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub
-     * > - (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);
-     * &#32;       long destIndex = dest.{@link Matrix#index(long...)
-     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);
-     * &#32;       long srcIndex = src.{@link Matrix#index(long...)
-     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);
-     * &#32;       Object element = src.array().{@link Array#getElement(long) getElement}(srcIndex);
-     * &#32;       dest.array().{@link UpdatableArray#setElement(long, Object) setElement}(destIndex, element);
-     * &#32;   }
+     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) {<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * ...<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub> -
+     * (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long destIndex = dest.{@link Matrix#index(long...)
+     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long srcIndex = src.{@link Matrix#index(long...)
+     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * Object element = src.array().{@link Array#getElement(long) getElement}(srcIndex);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * dest.array().{@link UpdatableArray#setElement(long, Object) setElement}(destIndex, element);<br>
+     * &#32;   }<br>
      * }
-     * </pre>
+     * </code></p>
      *
      * <p>Here <i>n</i><code>=destRegion.{@link Region#n() n()}</code> is the number of dimensions.
      * Please note that the number of dimensions of the matrices
@@ -5056,39 +5066,49 @@ public class Matrices {
      *
      * <p>More precisely, this method is equivalent to the following loop (and, of course, works faster):
      *
-     * <pre>
-     * for (all possible long coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub
-     * >, ..., <i>x</i><sub><i>n</i>&minus;1</sub>
+     * <p><code>
+     * for (all coordinates <i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub><br>
      * &#32;   in ranges destRegion.{@link Region#coordRange(int)
-     * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),
-     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))
-     * {
+     * coordRange}(0), destRegion.{@link Region#coordRange(int) coordRange}(1),<br>
+     * &#32;   ..., destRegion.{@link Region#coordRange(int) coordRange}(<i>n</i>&minus;1))<br>
+     * {<br>
      * &#32;   if (dest.{@link Matrix#inside(long...)
-     * inside}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) &amp;&amp;
+     * inside}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>) &amp;&amp;<br>
      * &#32;       destRegion.{@link Region#contains(long...)
-     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)
-     * &#32;   {
-     * &#32;       long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);
-     * &#32;       long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);
-     * &#32;       ...
-     * &#32;       long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub
-     * > - (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);
-     * &#32;       long destIndex = dest.{@link Matrix#index(long...)
-     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);
-     * &#32;       Object element;
-     * &#32;       if (src.{@link Matrix#inside(long...)
-     * inside}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>) {
-     * &#32;           long srcIndex = src.{@link Matrix#index(long...)
-     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);
-     * &#32;           element = src.array().{@link Array#getElement(long) getElement}(srcIndex);
-     * &#32;       } else {
-     * &#32;           element = outsideValue, casted by the rules of the {@link
-     * Matrix.ContinuationMode#getConstantMode(Object) constant submatrix continuation mode};
-     * &#32;       }
-     * &#32;       dest.array().{@link UpdatableArray#setElement(long, Object) setElement}(destIndex, element);
-     * &#32;   }
+     * contains}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>)<br>
+     * &#32;   {<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub>0</sub> = <i>x</i><sub>0</sub> - (shifts.length &gt; 0 ? shifts[0] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub>1</sub> = <i>x</i><sub>1</sub> - (shifts.length &gt; 1 ? shifts[1] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * ...<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long <i>x</i>'<sub><i>n</i>&minus;1</sub> = <i>x</i><sub><i>n</i>&minus;1</sub> -
+     * (shifts.length &gt; <i>n</i>&minus;1 ? shifts[<i>n</i>&minus;1] : 0);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * long destIndex = dest.{@link Matrix#index(long...)
+     * index}(<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * Object element;<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * if (src.{@link Matrix#inside(long...)
+     * inside}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>) {<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * long srcIndex = src.{@link Matrix#index(long...)
+     * index}(<i>x</i>'<sub>0</sub>, <i>x</i>'<sub>1</sub>, ..., <i>x</i>'<sub><i>n</i>&minus;1</sub>);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * element = src.array().{@link Array#getElement(long) getElement}(srcIndex);<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;    } else {<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     * element = outsideValue, casted by the rules of the {@link
+     * Matrix.ContinuationMode#getConstantMode(Object) constant submatrix continuation mode};<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
+     * &#32;   &nbsp;&nbsp;&nbsp;&nbsp;
+     * dest.array().{@link UpdatableArray#setElement(long, Object) setElement}(destIndex, element);<br>
+     * &#32;   }<br>
      * }
-     * </pre>
+     * </code></p>
      *
      * @param context      the context of copying; can be {@code null}.
      * @param dest         the destination matrix.
@@ -5437,7 +5457,8 @@ public class Matrices {
             }
             if (vertices[k].length != vertices[0].length) {
                 throw new IllegalArgumentException("Different number of dimensions in the vertex #" + k + " ("
-                        + vertices[k].length + "-dimensional) and the vertex #0 (" + vertices[0].length + "-dimensional");
+                        + vertices[k].length + "-dimensional) and the vertex #0 (" + vertices[0].length +
+                        "-dimensional");
             }
         }
         IRange[] result = new IRange[vertices[0].length];

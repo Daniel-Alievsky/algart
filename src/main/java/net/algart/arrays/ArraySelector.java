@@ -62,7 +62,7 @@ public class ArraySelector {
      * every element, having index <code>m=percentileIndexes[k]</code> in increasing order,
      * will be placed at the position <code>array[m]</code> (<code>m=0..numberOfElements-1</code>),
      * all previous elements (in increasing order) will be placed before it, and all further elements
-     * will be placed after it.</p>
+     * will be placed after it.
      *
      * <p>Аfter this reordering we have a guarantee, that for any <code>m=percentileIndexes[...]</code> and
      * for any <code>i, j</code>, that <code>0 &le; i &lt; m</code>, <code>m &lt; j &lt; numberOfElements</code>,
@@ -118,7 +118,7 @@ public class ArraySelector {
      *     {@link #select(long, long[], ArrayComparator, ArrayExchanger)
      * select}(numberOfElements, percentileIndexes, comparator, exchanger)
      * </pre>
-     * call, where <code>percentileIndexes[k]={@link #percentileIndex(double, long)
+     * <p>call, where <code>percentileIndexes[k]={@link #percentileIndex(double, long)
      * percentileIndex}(percentileLevels[k], numberOfElements)</code>
      * for every <code>k=0,...,percentileLevels.length-1</code>.</p>
      *
@@ -324,7 +324,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>byte[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>byte[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -357,7 +357,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>byte[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>byte[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -389,7 +389,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>byte[]</code> array.</p>
+     * the element from <code>byte[]</code> array.
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
      * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
@@ -613,7 +613,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>char[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>char[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -642,7 +642,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>char[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>char[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -670,7 +670,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>char[]</code> array.</p>
+     * the element from <code>char[]</code> array.
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -889,7 +889,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>short[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>short[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -922,7 +922,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>short[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>short[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -954,7 +954,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>short[]</code> array.</p>
+     * the element from <code>short[]</code> array.
      *
      * <p>Note that the elements of this array are supposed to be <b>unsigned</b>:
      * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
@@ -1177,7 +1177,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>int[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>int[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -1206,7 +1206,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>int[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>int[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -1234,7 +1234,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>int[]</code> array.</p>
+     * the element from <code>int[]</code> array.
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -1453,7 +1453,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>long[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>long[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -1482,7 +1482,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>long[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>long[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -1510,7 +1510,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>long[]</code> array.</p>
+     * the element from <code>long[]</code> array.
      *
      * @param from          index of the first analysed element of some data array, inclusive.
      * @param to            index of the last analysed element of some data array, exclusive.
@@ -1729,7 +1729,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>float[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>float[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -1764,7 +1764,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>float[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>float[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -1798,7 +1798,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>float[]</code> array.</p>
+     * the element from <code>float[]</code> array.
      *
      * <p>Note that elements of <code>float[]</code> array are compared by
      * <code>Float.compare(float, float)</code>
@@ -2023,7 +2023,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>double[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>double[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, long[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileIndexes</code>, that they are correct and correctly sorted.
@@ -2058,7 +2058,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from first <code>length</code> elements of <code>double[]</code> array.</p>
+     * the element from first <code>length</code> elements of <code>double[]</code> array.
      *
      * <p>Note: unlike {@link #select(long, double[], ArrayComparator, ArrayExchanger)}, this method
      * does not check elements of <code>percentileLevels</code>, that they are correct and correctly sorted.
@@ -2092,7 +2092,7 @@ public class ArraySelector {
 
     /**
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
-     * the element from <code>double[]</code> array.</p>
+     * the element from <code>double[]</code> array.
      *
      * <p>Note that elements of <code>double[]</code> array are compared by
      * <code>Double.compare(double, double)</code>
