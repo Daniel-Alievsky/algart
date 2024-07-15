@@ -1169,15 +1169,19 @@ public class JArrays {
      * arrayToBytes(null, src, N, byteOrder)},
      * where <code>N</code> is the length of <code>src</code> Java array.
      *
+     * <p>Note: if <code>src</code> array is <code>byte[]</code>, this method is also equivalent to
+     * <code>((byte[]) src).clone()</code>.
+     *
      * @param src       the source array, containing elements of some primitive type.
      * @param byteOrder the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>src</code> argument if not an array or
      *                                  contains non-primitive elements (<code>Object[]</code> array).
      * @throws TooLargeArrayException   if the required result array length
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToArray(byte[], Class, ByteOrder)
      */
     public static byte[] arrayToBytes(Object src, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
@@ -1213,7 +1217,7 @@ public class JArrays {
      * @param src       the source array, containing elements of some primitive type.
      * @param n         number of elements of <code>src</code> array to be copied.
      * @param byteOrder the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -1244,7 +1248,8 @@ public class JArrays {
      * must be not less than <code>M&nbsp;*&nbsp;n</code>,
      * where <code>M</code> is number of bytes in each <code>src</code> element
      * returned by {@link Arrays#bytesPerElement(Class)}.
-     * Note: though the <code>n</code> is <code>long</code>, it cannot be greater
+     *
+     * <p>Note: though the argument <code>n</code> is <code>long</code>, it cannot be greater
      * than <code>Integer.MAX_VALUE</code>; otherwise, {@link IllegalArgumentException} will be thrown
      * because <code>n</code> will be greater than the length of <code>src</code> array.</p>
      *
@@ -1274,7 +1279,7 @@ public class JArrays {
      * @param src       the source Java array, containing elements of some primitive type.
      * @param n         number of elements of <code>src</code> array to be copied.
      * @param byteOrder the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -1286,9 +1291,10 @@ public class JArrays {
      *                                  or if <code>src</code> argument if not an array or
      *                                  contains non-primitive elements (<code>Object[]</code> array).
      * @throws TooLargeArrayException   if the required result array length
-     *                                  <code>M&nbsp;*&nbsp;(long)&nbsp;n</code>,
+     *                                  <code>M&nbsp;*&nbsp;n</code>,
      *                                  where <code>M</code> is number of bytes in each <code>src</code> element,
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] arrayToBytes(byte[] dest, Object src, long n, ByteOrder byteOrder) {
@@ -1328,14 +1334,16 @@ public class JArrays {
     /**
      * Equivalent to {@link #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * bytesToArray(null, src, N, elementType, byteOrder)},
-     * where <code>N</code> is the length of <code>src</code> Java array,
+     * where <code>N</code> is the length of <code>src</code> array,
      * divided by {@link Arrays#bytesPerElement(Class) Arrays.bytesPerElement(elementType)}.
      *
      * @param src         the source <code>byte[]</code> array.
      * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @param elementType the element type of the result array.
+     * @return Java array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>elementType</code> is not a primitive type.
+     * @see #arrayToBytes(Object, ByteOrder)
      */
     public static Object bytesToArray(byte[] src, Class<?> elementType, ByteOrder byteOrder) {
         Objects.requireNonNull(elementType, "Null elementType");
@@ -1379,6 +1387,7 @@ public class JArrays {
      * @param n           number of elements of <code>dest</code> array to be copied.
      * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @param elementType the element type of the result array.
+     * @return Java array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;M</code>,
@@ -1405,14 +1414,15 @@ public class JArrays {
      * element type.
      *
      * <p>The length of the <code>src</code> array must be not less than
-     * <code>M&nbsp;*&nbsp;&nbsp;n</code>,
+     * <code>M&nbsp;*&nbsp;n</code>,
      * where <code>M</code> is number of bytes in each <code>src</code> element
      * returned by {@link Arrays#bytesPerElement(Class) Arrays.bytesPerElement(elementType)}.
      * The length of <code>dest</code> array (when it is not <code>null</code>)
      * must be not less than <code>n</code>.
-     * Note: though the <code>n</code> is <code>long</code>, it cannot be greater
+     *
+     * <p>Note: though the argument <code>n</code> is <code>long</code>, it cannot be greater
      * than <code>Integer.MAX_VALUE</code>; otherwise, {@link IllegalArgumentException} will be thrown
-     * because <code>M&nbsp;*&nbsp;&nbsp;n</code> will be greater than <code>src.length</code>.</p>
+     * because <code>M&nbsp;*&nbsp;n</code> will be greater than <code>src.length</code>.</p>
      *
      * <p>Depending on the <code>elementType</code>, this method is equivalent to:
      * <ul>
@@ -1441,6 +1451,8 @@ public class JArrays {
      * @param n           number of elements of <code>dest</code> array to be copied.
      * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @param elementType the element type of the result array.
+     * @return Java array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;M</code>,
@@ -1453,6 +1465,7 @@ public class JArrays {
      *                                  or if it does not equal to the actual element type of <code>dest</code>
      *                                  array (when <code>dest&nbsp;!=&nbsp;null</code>,
      *                                  and also if it is not an array).
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static Object bytesToArray(Object dest, byte[] src, long n, Class<?> elementType, ByteOrder byteOrder) {
@@ -1519,7 +1532,7 @@ public class JArrays {
      *
      * @param src       the source <code>char[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -1536,7 +1549,7 @@ public class JArrays {
      * @param src       the source <code>char[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -1549,7 +1562,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>char[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>char[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1564,7 +1578,7 @@ public class JArrays {
      * <code>2&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>2&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>2&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 2 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -1578,7 +1592,7 @@ public class JArrays {
      * @param src       the source <code>char[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -1588,6 +1602,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>2&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToCharArray(char[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -1624,6 +1639,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static char[] bytesToCharArray(byte[] src, ByteOrder byteOrder) {
@@ -1638,6 +1654,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 2</code>.
@@ -1647,7 +1664,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>char</code> elements,
+     * Copies the specified number of <code>char</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #charArrayToBytes(byte[], char[], int, ByteOrder)}
      * call, back into the given <code>char[]</code> array (1st argument,
@@ -1664,7 +1681,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>2&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>2&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 2 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -1679,11 +1696,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;2</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #charArrayToBytes(byte[], char[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -1718,7 +1738,7 @@ public class JArrays {
      *
      * @param src       the source <code>short[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -1735,7 +1755,7 @@ public class JArrays {
      * @param src       the source <code>short[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -1748,7 +1768,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>short[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>short[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1763,7 +1784,7 @@ public class JArrays {
      * <code>2&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>2&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>2&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 2 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -1777,7 +1798,7 @@ public class JArrays {
      * @param src       the source <code>short[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -1787,6 +1808,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>2&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToShortArray(short[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -1823,6 +1845,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static short[] bytesToShortArray(byte[] src, ByteOrder byteOrder) {
@@ -1837,6 +1860,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 2</code>.
@@ -1846,7 +1870,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>short</code> elements,
+     * Copies the specified number of <code>short</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #shortArrayToBytes(byte[], short[], int, ByteOrder)}
      * call, back into the given <code>short[]</code> array (1st argument,
@@ -1863,7 +1887,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>2&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>2&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 2 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -1878,11 +1902,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;2</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #shortArrayToBytes(byte[], short[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -1915,7 +1942,7 @@ public class JArrays {
      *
      * @param src       the source <code>int[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -1932,7 +1959,7 @@ public class JArrays {
      * @param src       the source <code>int[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -1945,7 +1972,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>int[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>int[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1960,7 +1988,7 @@ public class JArrays {
      * <code>4&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>4&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>4&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 4 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -1974,7 +2002,7 @@ public class JArrays {
      * @param src       the source <code>int[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -1984,6 +2012,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>4&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToIntArray(int[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -2020,6 +2049,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static int[] bytesToIntArray(byte[] src, ByteOrder byteOrder) {
@@ -2034,6 +2064,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 4</code>.
@@ -2043,7 +2074,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>int</code> elements,
+     * Copies the specified number of <code>int</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #intArrayToBytes(byte[], int[], int, ByteOrder)}
      * call, back into the given <code>int[]</code> array (1st argument,
@@ -2060,7 +2091,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>4&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>4&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 4 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -2075,11 +2106,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;4</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #intArrayToBytes(byte[], int[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -2112,7 +2146,7 @@ public class JArrays {
      *
      * @param src       the source <code>long[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -2129,7 +2163,7 @@ public class JArrays {
      * @param src       the source <code>long[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -2142,7 +2176,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>long[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>long[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2157,7 +2192,7 @@ public class JArrays {
      * <code>8&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>8&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>8&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 8 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -2171,7 +2206,7 @@ public class JArrays {
      * @param src       the source <code>long[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -2181,6 +2216,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>8&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToLongArray(long[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -2217,6 +2253,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static long[] bytesToLongArray(byte[] src, ByteOrder byteOrder) {
@@ -2231,6 +2268,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 8</code>.
@@ -2240,7 +2278,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>long</code> elements,
+     * Copies the specified number of <code>long</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #longArrayToBytes(byte[], long[], int, ByteOrder)}
      * call, back into the given <code>long[]</code> array (1st argument,
@@ -2257,7 +2295,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>8&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>8&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 8 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -2272,11 +2310,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;8</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #longArrayToBytes(byte[], long[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -2309,7 +2350,7 @@ public class JArrays {
      *
      * @param src       the source <code>float[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -2326,7 +2367,7 @@ public class JArrays {
      * @param src       the source <code>float[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -2339,7 +2380,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>float[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>float[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2354,7 +2396,7 @@ public class JArrays {
      * <code>4&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>4&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>4&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 4 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -2368,7 +2410,7 @@ public class JArrays {
      * @param src       the source <code>float[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -2378,6 +2420,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>4&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToFloatArray(float[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -2414,6 +2457,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static float[] bytesToFloatArray(byte[] src, ByteOrder byteOrder) {
@@ -2428,6 +2472,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 4</code>.
@@ -2437,7 +2482,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>float</code> elements,
+     * Copies the specified number of <code>float</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #floatArrayToBytes(byte[], float[], int, ByteOrder)}
      * call, back into the given <code>float[]</code> array (1st argument,
@@ -2454,7 +2499,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>4&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>4&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 4 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -2469,11 +2514,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;4</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #floatArrayToBytes(byte[], float[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -2506,7 +2554,7 @@ public class JArrays {
      *
      * @param src       the source <code>double[]</code> array.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException   if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws TooLargeArrayException if the required result array length is greater
      *                                than <code>Integer.MAX_VALUE</code> bytes.
@@ -2523,7 +2571,7 @@ public class JArrays {
      * @param src       the source <code>double[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -2536,7 +2584,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>double[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>double[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2551,7 +2600,7 @@ public class JArrays {
      * <code>8&nbsp;*&nbsp;n</code>.
      *
      * <p>The source element #<i>k</i> (<code>src[k]</code>
-     * is stored at the position <code>8&nbsp;*&nbsp;k</code> in the <code>dest</code> Java array
+     * is stored at the position <code>8&nbsp;*&nbsp;k</code> in the <code>dest</code> array
      * as a sequences of 8 bytes. The conversion is performed with help of the following code:</p>
      *
      * <pre>
@@ -2565,7 +2614,7 @@ public class JArrays {
      * @param src       the source <code>double[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
@@ -2575,6 +2624,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>8&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
+     * @see #bytesToDoubleArray(double[], byte[], int, ByteOrder)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -2611,6 +2661,7 @@ public class JArrays {
      *
      * @param src       the source <code>byte[]</code> array.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      */
     public static double[] bytesToDoubleArray(byte[] src, ByteOrder byteOrder) {
@@ -2625,6 +2676,7 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length / 8</code>.
@@ -2634,7 +2686,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>double</code> elements,
+     * Copies the specified number of <code>double</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #doubleArrayToBytes(byte[], double[], int, ByteOrder)}
      * call, back into the given <code>double[]</code> array (1st argument,
@@ -2651,7 +2703,7 @@ public class JArrays {
      * must be not less than <code>n</code>.
      *
      * <p>The result array element #<i>k</i> (<code>dest[k])</code>
-     * is retrieved from the position <code>8&nbsp;*&nbsp;k</code> in the <code>src</code> Java array,
+     * is retrieved from the position <code>8&nbsp;*&nbsp;k</code> in the <code>src</code> array,
      * where it is stored as a sequences of 8 bytes.
      * The conversion is performed with help of the following code:</p>
      *
@@ -2666,11 +2718,14 @@ public class JArrays {
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;8</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #doubleArrayToBytes(byte[], double[], int, ByteOrder)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
@@ -2704,7 +2759,7 @@ public class JArrays {
      * booleanArrayToBytes(null, src, src.length)}.
      *
      * @param src the source <code>boolean[]</code> array.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException if <code>src</code> argument is {@code null}.
      */
     public static byte[] booleanArrayToBytes(boolean[] src) {
@@ -2718,7 +2773,7 @@ public class JArrays {
      *
      * @param src the source <code>boolean[]</code> array.
      * @param n   number of <code>boolean</code> elements to be copied.
-     * @return Java array with resulting data.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -2728,7 +2783,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>boolean[]</code> array (2nd argument)
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>boolean[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2754,13 +2810,14 @@ public class JArrays {
      *             can be {@code null}, then it will be allocated automatically.
      * @param src  the source <code>boolean[]</code> array.
      * @param n    number of <code>boolean</code> elements to be copied.
-     * @return Java array with resulting data;
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #bytesToBooleanArray(boolean[], byte[], int)
      * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      */
     public static byte[] booleanArrayToBytes(byte[] dest, boolean[] src, int n) {
@@ -2789,6 +2846,7 @@ public class JArrays {
      * bytesToBooleanArray(null, src, src.length)}.
      *
      * @param src the source <code>byte[]</code> array.
+     * @return array with resulting data.
      * @throws NullPointerException if <code>src</code> argument is {@code null}.
      */
     public static boolean[] bytesToBooleanArray(byte[] src) {
@@ -2802,6 +2860,7 @@ public class JArrays {
      *
      * @param src the source <code>byte[]</code> array.
      * @param n   number of <code>boolean</code> elements to be copied.
+     * @return array with resulting data.
      * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>.
@@ -2811,7 +2870,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>boolean</code> elements,
+     * Copies the specified number of <code>boolean</code> elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument),
      * into the given <code>boolean[]</code> array (1st argument,
      * or into a newly created <code>boolean[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
@@ -2834,15 +2893,18 @@ public class JArrays {
      *     }
      * </pre>
      *
-     * @param dest the result <code>char[]</code> array;
+     * @param dest the result <code>boolean[]</code> array;
      *             can be {@code null}, then it will be allocated automatically.
      * @param src  the source <code>byte[]</code> array.
-     * @param n    number of <code>char</code> elements to be copied.
+     * @param n    number of <code>boolean</code> elements to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #booleanArrayToBytes(byte[], boolean[], int)
      * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      */
     public static boolean[] bytesToBooleanArray(boolean[] dest, byte[] src, int n) {
@@ -2867,52 +2929,57 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of bytes of the <code>src</code> <code>byte[]</code> array
+     * Copies the specified number of bytes <code>n</code> of the <code>src</code> <code>byte[]</code> array
      * into the <code>dest</code> <code>byte[]</code> array
      * (or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
      *
      * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
-     * <code>byte[]</code> array with the length <code>numberOfBytes</code> and copies the data into
+     * <code>byte[]</code> array with the length <code>n</code> and copies the data into
      * the newly created array.
      *
      * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
-     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>numberOfBytes</code>.
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
      *
      * <p>The copying is performed with the following call:</p>
      *
      * <pre>
-     *     System.arraycopy(dest, 0, src, 0, numberOfBytes);
+     *     System.arraycopy(dest, 0, src, 0, n);
      * </pre>
      *
-     * @param dest          the result <code>byte[]</code> array;
-     *                      can be {@code null}, then it will be allocated automatically.
-     * @param src           the source <code>byte[]</code> array.
-     * @param numberOfBytes number of bytes to be copied.
-     * @return Java array with resulting data;
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>byte[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>byte[]</code> array.
+     * @param n    number of bytes to be copied.
+     * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
      * @throws NullPointerException     if <code>src</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>numberOfBytes</code> is negative or too large:
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      */
-    public static byte[] copyBytes(byte[] dest, byte[] src, int numberOfBytes) {
+    public static byte[] copyBytes(byte[] dest, byte[] src, int n) {
         Objects.requireNonNull(src, "Null src argument");
-        if (numberOfBytes < 0) {
-            throw new IllegalArgumentException("Negative numberOfBytes = " + numberOfBytes);
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
         }
-        if (numberOfBytes > src.length) {
+        if (n > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + numberOfBytes + " elements");
+                    "]: it must contain at least " + n + " elements");
         }
         if (dest == null) {
-            dest = new byte[numberOfBytes];
-        } else if (numberOfBytes > dest.length) {
+            dest = new byte[n];
+        } else if (n > dest.length) {
             throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least " + numberOfBytes + " elements");
+                    "]: it must contain at least " + n + " elements");
         }
-        System.arraycopy(src, 0, dest, 0, numberOfBytes);
+        System.arraycopy(src, 0, dest, 0, n);
         return dest;
     }
 
@@ -2928,6 +2995,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillBooleanArray(boolean[] dest, boolean value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -2949,6 +3017,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillBooleanArray(boolean[] dest, int destPos, int count, boolean value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -2964,6 +3033,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillByteArray(byte[] dest, byte value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -2985,6 +3055,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillByteArray(byte[] dest, int destPos, int count, byte value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -2999,6 +3070,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillCharArray(char[] dest, char value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3020,6 +3092,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillCharArray(char[] dest, int destPos, int count, char value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3034,6 +3107,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillShortArray(short[] dest, short value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3055,6 +3129,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillShortArray(short[] dest, int destPos, int count, short value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3069,6 +3144,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillIntArray(int[] dest, int value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3090,6 +3166,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillIntArray(int[] dest, int destPos, int count, int value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3104,6 +3181,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillLongArray(long[] dest, long value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3125,6 +3203,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillLongArray(long[] dest, int destPos, int count, long value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3139,6 +3218,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillFloatArray(float[] dest, float value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3160,6 +3240,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillFloatArray(float[] dest, int destPos, int count, float value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3174,6 +3255,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillDoubleArray(double[] dest, double value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3195,6 +3277,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillDoubleArray(double[] dest, int destPos, int count, double value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3209,6 +3292,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void fillObjectArray(Object[] dest, Object value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = value;
         }
@@ -3230,6 +3314,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillObjectArray(Object[] dest, int destPos, int count, Object value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = value;
@@ -3260,6 +3345,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if filling would cause access of data outside the array.
      */
     public static void fillIntProgression(int[] dest, int destPos, int count, int start, int increment) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int i = destPos, toIndex = destPos + count; i < toIndex; i++) {
             dest[i] = start;
@@ -3284,6 +3370,7 @@ public class JArrays {
      * @param increment step of the progression.
      */
     public static void fillIntProgression(int[] dest, int start, int increment) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int i = 0, len = dest.length; i < len; i++) {
             dest[i] = start;
             start += increment;
@@ -3805,6 +3892,7 @@ public class JArrays {
      * @see #lastIndexOfBoolean(boolean[], int, int, boolean)
      */
     public static int indexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -3842,6 +3930,7 @@ public class JArrays {
      * @see #indexOfBoolean(boolean[], int, int, boolean)
      */
     public static int lastIndexOfBoolean(boolean[] array, int lowIndex, int highIndex, boolean value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -3875,6 +3964,7 @@ public class JArrays {
      * @see #lastIndexOfByte(byte[], int, int, byte)
      */
     public static int indexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -3912,6 +4002,7 @@ public class JArrays {
      * @see #indexOfByte(byte[], int, int, byte)
      */
     public static int lastIndexOfByte(byte[] array, int lowIndex, int highIndex, byte value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -3944,6 +4035,7 @@ public class JArrays {
      * @see #lastIndexOfChar(char[], int, int, char)
      */
     public static int indexOfChar(char[] array, int lowIndex, int highIndex, char value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -3981,6 +4073,7 @@ public class JArrays {
      * @see #indexOfChar(char[], int, int, char)
      */
     public static int lastIndexOfChar(char[] array, int lowIndex, int highIndex, char value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4013,6 +4106,7 @@ public class JArrays {
      * @see #lastIndexOfShort(short[], int, int, short)
      */
     public static int indexOfShort(short[] array, int lowIndex, int highIndex, short value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4050,6 +4144,7 @@ public class JArrays {
      * @see #indexOfShort(short[], int, int, short)
      */
     public static int lastIndexOfShort(short[] array, int lowIndex, int highIndex, short value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4082,6 +4177,7 @@ public class JArrays {
      * @see #lastIndexOfInt(int[], int, int, int)
      */
     public static int indexOfInt(int[] array, int lowIndex, int highIndex, int value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4119,6 +4215,7 @@ public class JArrays {
      * @see #indexOfInt(int[], int, int, int)
      */
     public static int lastIndexOfInt(int[] array, int lowIndex, int highIndex, int value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4151,6 +4248,7 @@ public class JArrays {
      * @see #lastIndexOfLong(long[], int, int, long)
      */
     public static int indexOfLong(long[] array, int lowIndex, int highIndex, long value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4188,6 +4286,7 @@ public class JArrays {
      * @see #indexOfLong(long[], int, int, long)
      */
     public static int lastIndexOfLong(long[] array, int lowIndex, int highIndex, long value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4220,6 +4319,7 @@ public class JArrays {
      * @see #lastIndexOfFloat(float[], int, int, float)
      */
     public static int indexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4257,6 +4357,7 @@ public class JArrays {
      * @see #indexOfFloat(float[], int, int, float)
      */
     public static int lastIndexOfFloat(float[] array, int lowIndex, int highIndex, float value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4289,6 +4390,7 @@ public class JArrays {
      * @see #lastIndexOfDouble(double[], int, int, double)
      */
     public static int indexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4326,6 +4428,7 @@ public class JArrays {
      * @see #indexOfDouble(double[], int, int, double)
      */
     public static int lastIndexOfDouble(double[] array, int lowIndex, int highIndex, double value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4360,6 +4463,7 @@ public class JArrays {
      * @see #lastIndexOfObject(Object[], int, int, Object)
      */
     public static int indexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -4407,6 +4511,7 @@ public class JArrays {
      * @see #indexOfObject(Object[], int, int, Object)
      */
     public static int lastIndexOfObject(Object[] array, int lowIndex, int highIndex, Object value) {
+        Objects.requireNonNull(array, "Null array argument");
         if (highIndex > array.length) {
             highIndex = array.length;
         }
@@ -4445,6 +4550,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -4477,6 +4584,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -4516,6 +4625,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos] & 0xFFFF;
@@ -4541,6 +4652,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos] & 0xFFFF;
@@ -4566,6 +4679,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos];
@@ -4590,6 +4705,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos];
@@ -4614,6 +4731,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos];
@@ -4638,6 +4757,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final int a = src[srcPos];
@@ -4662,6 +4783,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final long a = src[srcPos];
@@ -4686,6 +4809,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final long a = src[srcPos];
@@ -4710,6 +4835,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final float a = src[srcPos];
@@ -4734,6 +4861,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final float a = src[srcPos];
@@ -4758,6 +4887,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void minDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final double a = src[srcPos];
@@ -4782,6 +4913,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void maxDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             final double a = src[srcPos];
@@ -4815,6 +4948,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addByteArray(int[] dest, int destPos, byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += (int) src[srcPos] & 0xFF;
@@ -4841,6 +4976,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addByteArray(double[] dest, int destPos, byte[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -4878,6 +5015,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addCharArray(int[] dest, int destPos, char[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src[srcPos];
@@ -4903,6 +5042,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addCharArray(double[] dest, int destPos, char[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -4940,6 +5081,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addShortArray(int[] dest, int destPos, short[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += (int) src[srcPos] & 0xFFFF;
@@ -4966,6 +5109,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addShortArray(double[] dest, int destPos, short[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -5002,6 +5147,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src[srcPos];
@@ -5027,6 +5174,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addIntArray(double[] dest, int destPos, int[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -5063,6 +5212,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addLongArray(int[] dest, int destPos, long[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += (int) src[srcPos];
@@ -5088,6 +5239,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addLongArray(double[] dest, int destPos, long[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -5124,6 +5277,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addFloatArray(int[] dest, int destPos, float[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += (int) src[srcPos];
@@ -5149,6 +5304,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addFloatArray(double[] dest, int destPos, float[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -5185,6 +5342,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addDoubleArray(int[] dest, int destPos, double[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += (int) src[srcPos];
@@ -5210,6 +5369,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void addDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count, double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (mult == 0.0) {
             return;
@@ -5262,6 +5423,8 @@ public class JArrays {
     public static void subtractByteArray(
             byte[] dest, int destPos, byte[] src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -5298,6 +5461,8 @@ public class JArrays {
     public static void subtractCharArray(
             char[] dest, int destPos, char[] src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -5334,6 +5499,8 @@ public class JArrays {
     public static void subtractShortArray(
             short[] dest, int destPos, short[] src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -5371,6 +5538,8 @@ public class JArrays {
     public static void subtractIntArray(
             int[] dest, int destPos, int[] src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -5406,6 +5575,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void subtractLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src[srcPos];
@@ -5430,6 +5601,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void subtractFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src[srcPos];
@@ -5453,6 +5626,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void subtractDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src[srcPos];
@@ -5485,6 +5660,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfByteArray(byte[] dest, int destPos, byte[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos] & 0xFF) >= (src[srcPos] & 0xFF) ?
@@ -5512,6 +5689,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfCharArray(char[] dest, int destPos, char[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
@@ -5539,6 +5718,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfShortArray(short[] dest, int destPos, short[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos] & 0xFFFF) >= (src[srcPos] & 0xFFFF) ?
@@ -5565,6 +5746,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfLongArray(long[] dest, int destPos, long[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
@@ -5591,6 +5774,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfFloatArray(float[] dest, int destPos, float[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
@@ -5617,6 +5802,8 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void absDiffOfDoubleArray(double[] dest, int destPos, double[] src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] = (dest[destPos]) >= (src[srcPos]) ?
@@ -5650,6 +5837,8 @@ public class JArrays {
     public static void absDiffOfIntArray(
             int[] dest, int destPos, int[] src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -5682,6 +5871,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeByteArray(byte[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = (byte) -dest[destPos];
         }
@@ -5701,6 +5891,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeByteArray(byte[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = (byte) -dest[destPos];
@@ -5717,6 +5908,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeShortArray(short[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = (short) -dest[destPos];
         }
@@ -5736,6 +5928,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeShortArray(short[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = (short) -dest[destPos];
@@ -5751,6 +5944,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeIntArray(int[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = -dest[destPos];
         }
@@ -5770,6 +5964,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeIntArray(int[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = -dest[destPos];
@@ -5785,6 +5980,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeLongArray(long[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = -dest[destPos];
         }
@@ -5804,6 +6000,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeLongArray(long[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = -dest[destPos];
@@ -5819,6 +6016,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeFloatArray(float[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = -dest[destPos];
         }
@@ -5838,6 +6036,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeFloatArray(float[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = -dest[destPos];
@@ -5853,6 +6052,7 @@ public class JArrays {
      * @throws NullPointerException if <code>dest</code> is {@code null}.
      */
     public static void oppositeDoubleArray(double[] dest) {
+        Objects.requireNonNull(dest, "Null dest argument");
         for (int destPos = 0; destPos < dest.length; destPos++) {
             dest[destPos] = -dest[destPos];
         }
@@ -5872,6 +6072,7 @@ public class JArrays {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds.
      */
     public static void oppositeDoubleArray(double[] dest, int destPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
         rangeCheck(dest.length, destPos, count);
         for (int destPosMax = destPos + count; destPos < destPosMax; destPos++) {
             dest[destPos] = -dest[destPos];
@@ -6242,7 +6443,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(byte[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            byte[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
@@ -6284,7 +6490,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(short[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            short[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
@@ -6325,7 +6536,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(int[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            int[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
@@ -6366,7 +6582,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(long[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            long[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
@@ -6407,7 +6628,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(float[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            float[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
@@ -6448,7 +6674,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      */
-    public static String toString(double[] array, Locale locale, String format, String separator, int maxStringLength) {
+    public static String toString(
+            double[] array,
+            Locale locale,
+            String format,
+            String separator,
+            int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {

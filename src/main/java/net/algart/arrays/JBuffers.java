@@ -25,6 +25,7 @@
 package net.algart.arrays;
 
 import java.nio.*;
+import java.util.Objects;
 
 /**
  * <p>Some operations for Java NIO buffers manipulation in the same manner as array operations from
@@ -75,7 +76,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyByteBuffer(ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyByteBuffer(dest, destPos, src, srcPos, count,
@@ -130,6 +133,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -177,6 +182,8 @@ public class JBuffers {
             ByteBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             byte v1 = first.get(firstPos);
@@ -215,7 +222,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyCharBuffer(CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyCharBuffer(dest, destPos, src, srcPos, count,
@@ -270,6 +279,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -317,6 +328,8 @@ public class JBuffers {
             CharBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             char v1 = first.get(firstPos);
@@ -354,7 +367,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyShortBuffer(ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyShortBuffer(dest, destPos, src, srcPos, count,
@@ -409,6 +424,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -456,6 +473,8 @@ public class JBuffers {
             ShortBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             short v1 = first.get(firstPos);
@@ -493,7 +512,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyIntBuffer(IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyIntBuffer(dest, destPos, src, srcPos, count,
@@ -548,6 +569,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -595,6 +618,8 @@ public class JBuffers {
             IntBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             int v1 = first.get(firstPos);
@@ -632,7 +657,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyLongBuffer(LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyLongBuffer(dest, destPos, src, srcPos, count,
@@ -687,6 +714,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -734,6 +763,8 @@ public class JBuffers {
             LongBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             long v1 = first.get(firstPos);
@@ -771,7 +802,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyFloatBuffer(FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyFloatBuffer(dest, destPos, src, srcPos, count,
@@ -826,6 +859,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -873,6 +908,8 @@ public class JBuffers {
             FloatBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             float v1 = first.get(firstPos);
@@ -910,7 +947,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyDoubleBuffer(DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
+        if (src == dest && srcPos == destPos) {
             return;
         }
         copyDoubleBuffer(dest, destPos, src, srcPos, count,
@@ -965,6 +1004,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean reverseOrder) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
@@ -1012,6 +1053,8 @@ public class JBuffers {
             DoubleBuffer second,
             int secondPos,
             int count) {
+        Objects.requireNonNull(first, "Null first argument");
+        Objects.requireNonNull(second, "Null second argument");
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             double v1 = first.get(firstPos);
@@ -1045,6 +1088,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillByteBuffer(ByteBuffer dest, int destPos, int count, byte value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             byte[] arr;
@@ -1087,6 +1131,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillCharBuffer(CharBuffer dest, int destPos, int count, char value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             char[] arr;
@@ -1128,6 +1173,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillShortBuffer(ShortBuffer dest, int destPos, int count, short value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             short[] arr;
@@ -1169,6 +1215,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillIntBuffer(IntBuffer dest, int destPos, int count, int value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             int[] arr;
@@ -1210,6 +1257,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillLongBuffer(LongBuffer dest, int destPos, int count, long value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             long[] arr;
@@ -1251,6 +1299,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillFloatBuffer(FloatBuffer dest, int destPos, int count, float value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             float[] arr;
@@ -1292,6 +1341,7 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limit.
      */
     public static void fillDoubleBuffer(DoubleBuffer dest, int destPos, int count, double value) {
+        Objects.requireNonNull(dest, "Null dest argument");
         JArrays.rangeCheck(dest.limit(), destPos, count);
         if (count >= FILL_NON_BLOCKED_LEN) {
             double[] arr;
@@ -1341,6 +1391,7 @@ public class JBuffers {
      * @see #lastIndexOfByte(ByteBuffer, int, int, byte)
      */
     public static int indexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1379,6 +1430,7 @@ public class JBuffers {
      * @see #indexOfByte(ByteBuffer, int, int, byte)
      */
     public static int lastIndexOfByte(ByteBuffer buffer, int lowIndex, int highIndex, byte value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1414,6 +1466,7 @@ public class JBuffers {
      * @see #lastIndexOfChar(CharBuffer, int, int, char)
      */
     public static int indexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1452,6 +1505,7 @@ public class JBuffers {
      * @see #indexOfChar(CharBuffer, int, int, char)
      */
     public static int lastIndexOfChar(CharBuffer buffer, int lowIndex, int highIndex, char value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1486,6 +1540,7 @@ public class JBuffers {
      * @see #lastIndexOfShort(ShortBuffer, int, int, short)
      */
     public static int indexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1524,6 +1579,7 @@ public class JBuffers {
      * @see #indexOfShort(ShortBuffer, int, int, short)
      */
     public static int lastIndexOfShort(ShortBuffer buffer, int lowIndex, int highIndex, short value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1558,6 +1614,7 @@ public class JBuffers {
      * @see #lastIndexOfInt(IntBuffer, int, int, int)
      */
     public static int indexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1596,6 +1653,7 @@ public class JBuffers {
      * @see #indexOfInt(IntBuffer, int, int, int)
      */
     public static int lastIndexOfInt(IntBuffer buffer, int lowIndex, int highIndex, int value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1630,6 +1688,7 @@ public class JBuffers {
      * @see #lastIndexOfLong(LongBuffer, int, int, long)
      */
     public static int indexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1668,6 +1727,7 @@ public class JBuffers {
      * @see #indexOfLong(LongBuffer, int, int, long)
      */
     public static int lastIndexOfLong(LongBuffer buffer, int lowIndex, int highIndex, long value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1702,6 +1762,7 @@ public class JBuffers {
      * @see #lastIndexOfFloat(FloatBuffer, int, int, float)
      */
     public static int indexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1740,6 +1801,7 @@ public class JBuffers {
      * @see #indexOfFloat(FloatBuffer, int, int, float)
      */
     public static int lastIndexOfFloat(FloatBuffer buffer, int lowIndex, int highIndex, float value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1774,6 +1836,7 @@ public class JBuffers {
      * @see #lastIndexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int indexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (lowIndex < 0) {
             lowIndex = 0;
         }
@@ -1812,6 +1875,7 @@ public class JBuffers {
      * @see #indexOfDouble(DoubleBuffer, int, int, double)
      */
     public static int lastIndexOfDouble(DoubleBuffer buffer, int lowIndex, int highIndex, double value) {
+        Objects.requireNonNull(buffer, "Null buffer argument");
         if (highIndex > buffer.limit()) {
             highIndex = buffer.limit();
         }
@@ -1843,6 +1907,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minByteArrayAndBuffer(byte[] dest, int destPos, ByteBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -1877,6 +1943,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxByteArrayAndBuffer(byte[] dest, int destPos, ByteBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (OPTIMIZE_BYTE_MIN_MAX_BY_TABLES) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -1916,6 +1984,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minShortArrayAndBuffer(short[] dest, int destPos, ShortBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
@@ -1943,6 +2013,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxShortArrayAndBuffer(short[] dest, int destPos, ShortBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
@@ -1970,6 +2042,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minCharArrayAndBuffer(char[] dest, int destPos, CharBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
@@ -1996,6 +2070,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxCharArrayAndBuffer(char[] dest, int destPos, CharBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
@@ -2022,6 +2098,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minIntArrayAndBuffer(int[] dest, int destPos, IntBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             int v = src.get(srcPos);
@@ -2048,6 +2126,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxIntArrayAndBuffer(int[] dest, int destPos, IntBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             int v = src.get(srcPos);
@@ -2074,6 +2154,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minLongArrayAndBuffer(long[] dest, int destPos, LongBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
@@ -2100,6 +2182,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxLongArrayAndBuffer(long[] dest, int destPos, LongBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
@@ -2126,6 +2210,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minFloatArrayAndBuffer(float[] dest, int destPos, FloatBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
@@ -2152,6 +2238,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxFloatArrayAndBuffer(float[] dest, int destPos, FloatBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
@@ -2178,6 +2266,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void minDoubleArrayAndBuffer(double[] dest, int destPos, DoubleBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
@@ -2204,6 +2294,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void maxDoubleArrayAndBuffer(double[] dest, int destPos, DoubleBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
@@ -2239,6 +2331,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addByteBufferToArray(int[] dest, int destPos, ByteBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos) & 0xFF;
@@ -2272,6 +2366,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2310,6 +2406,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addCharBufferToArray(int[] dest, int destPos, CharBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos);
@@ -2342,6 +2440,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2380,6 +2480,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addShortBufferToArray(int[] dest, int destPos, ShortBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos) & 0xFFFF;
@@ -2413,6 +2515,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2450,6 +2554,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addIntBufferToArray(int[] dest, int destPos, IntBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos);
@@ -2482,6 +2588,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2519,6 +2627,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addLongBufferToArray(int[] dest, int destPos, LongBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos);
@@ -2551,6 +2661,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2588,6 +2700,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addFloatBufferToArray(int[] dest, int destPos, FloatBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos);
@@ -2620,6 +2734,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2657,6 +2773,8 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addDoubleBufferToArray(int[] dest, int destPos, DoubleBuffer src, int srcPos, int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] += src.get(srcPos);
@@ -2689,6 +2807,8 @@ public class JBuffers {
             int srcPos,
             int count,
             double mult) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
             return;
@@ -2747,6 +2867,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2788,6 +2910,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2829,6 +2953,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2867,6 +2993,8 @@ public class JBuffers {
     public static void subtractIntBufferFromArray(
             int[] dest, int destPos, IntBuffer src, int srcPos, int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2908,6 +3036,8 @@ public class JBuffers {
             LongBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -2938,6 +3068,8 @@ public class JBuffers {
             FloatBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -2967,6 +3099,8 @@ public class JBuffers {
             DoubleBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -3006,6 +3140,8 @@ public class JBuffers {
             ByteBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             byte v = src.get(srcPos);
@@ -3040,6 +3176,8 @@ public class JBuffers {
             CharBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
@@ -3074,6 +3212,8 @@ public class JBuffers {
             ShortBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
@@ -3107,6 +3247,8 @@ public class JBuffers {
             LongBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
@@ -3140,6 +3282,8 @@ public class JBuffers {
             FloatBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
@@ -3173,6 +3317,8 @@ public class JBuffers {
             DoubleBuffer src,
             int srcPos,
             int count) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
@@ -3212,6 +3358,8 @@ public class JBuffers {
             int srcPos,
             int count,
             boolean truncateOverflows) {
+        Objects.requireNonNull(dest, "Null dest argument");
+        Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
