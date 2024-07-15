@@ -2308,6 +2308,7 @@ public class JBuffers {
 
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
+               (\(int\)\s*)(src) ==> $2,,$1$2,,$2,,$1$2,,$1$2,,$1$2;;
                (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF,, ,,...;;
                (The\s+\w+\s+elements.*?\.\s*\*) ==> ,,$1,, ,,...
      */
@@ -2335,7 +2336,7 @@ public class JBuffers {
         Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src.get(srcPos) & 0xFF;
+            dest[destPos] += (int) src.get(srcPos) & 0xFF;
         }
     }
 
@@ -2484,7 +2485,7 @@ public class JBuffers {
         Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src.get(srcPos) & 0xFFFF;
+            dest[destPos] += (int) src.get(srcPos) & 0xFFFF;
         }
     }
 
@@ -2631,7 +2632,7 @@ public class JBuffers {
         Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src.get(srcPos);
+            dest[destPos] += (int) src.get(srcPos);
         }
     }
 
@@ -2704,7 +2705,7 @@ public class JBuffers {
         Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src.get(srcPos);
+            dest[destPos] += (int) src.get(srcPos);
         }
     }
 
@@ -2777,7 +2778,7 @@ public class JBuffers {
         Objects.requireNonNull(src, "Null src argument");
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src.get(srcPos);
+            dest[destPos] += (int) src.get(srcPos);
         }
     }
 
