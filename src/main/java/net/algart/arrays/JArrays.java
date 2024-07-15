@@ -95,13 +95,15 @@ public class JArrays {
                (\s+)\& 0xFF ==> ,,$1& 0xFFFF,, ,,...;;
                (\(array\[\(int\)\s*firstIndex\]\)) < (\(array\[\(int\)\s*secondIndex\]\)) ==>
                    $1 < $2,,$1 < $2,,$1 < $2,,$1 < $2,,Float.compare($1, $2) < 0,,Double.compare($1, $2) < 0;;
-               (\*\s*<p>Note that.*?\<\/p\>\s*) ==> ,,$1,, ,, ,,
-               * <p>Note: elements of <code>float[]</code> are compared by <code>Float.compare(float, float)</code>
+               (\*\s*\*\s*<p>Note that.*?\<\/p\>\s*) ==> ,,$1,, ,, ,,
+               *
+     * <p>Note: elements of <code>float[]</code> are compared by <code>Float.compare(float, float)</code>
      * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
      * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
      * be greater than <code>-0.0</code>.</p>
      * ,,
-               * <p>Note: elements of <code>double[]</code> are compared by <code>Double.compare(double, double)</code>
+               *
+     * <p>Note: elements of <code>double[]</code> are compared by <code>Double.compare(double, double)</code>
      * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double alues
      * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
      * be greater than <code>-0.0</code>.</p>
@@ -222,7 +224,6 @@ public class JArrays {
 
     /**
      * Simple implementation of {@link ArrayComparator}, comparing elements of <code>char[]</code> array.
-     *
      */
     public static class CharArrayComparator implements ArrayComparator32 {
         private final char[] array;
@@ -441,7 +442,6 @@ public class JArrays {
 
     /**
      * Simple implementation of {@link ArrayComparator}, comparing elements of <code>int[]</code> array.
-     *
      */
     public static class IntArrayComparator implements ArrayComparator32 {
         private final int[] array;
@@ -549,7 +549,6 @@ public class JArrays {
 
     /**
      * Simple implementation of {@link ArrayComparator}, comparing elements of <code>long[]</code> array.
-     *
      */
     public static class LongArrayComparator implements ArrayComparator32 {
         private final long[] array;
@@ -1201,9 +1200,10 @@ public class JArrays {
         } else if (src instanceof double[] a) {
             return doubleArrayToBytes(a, byteOrder);
         } else if (src instanceof Object[]) {
-            throw new IllegalArgumentException("Object[] array cannot be copied into byte[]");
+            throw new IllegalArgumentException("Array of objects cannot be copied into byte[]");
         } else {
-            throw new IllegalArgumentException("The src argument is not a Java array (" + src.getClass() + ")");
+            throw new IllegalArgumentException("The src argument is not a Java array (" +
+                    src.getClass().getCanonicalName() + ")");
         }
     }
 
@@ -1220,7 +1220,7 @@ public class JArrays {
      * @throws IllegalArgumentException if <code>numberOfElements</code> is negative or too large:
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length&nbsp;/&nbsp;M</code>,
-     *                                  where <code>M</code> is number of bytes in every <code>src</code> element
+     *                                  where <code>M</code> is number of bytes in each <code>src</code> element
      *                                  returned by {@link Arrays#bytesPerElement(Class)}
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>),
      *                                  or if <code>src</code> argument if not an array or
@@ -1271,14 +1271,14 @@ public class JArrays {
      * @throws IllegalArgumentException if <code>numberOfElements</code> is negative or too large:
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length&nbsp;/&nbsp;M</code>,
-     *                                  where <code>M</code> is number of bytes in every <code>src</code> element
+     *                                  where <code>M</code> is number of bytes in each <code>src</code> element
      *                                  returned by {@link Arrays#bytesPerElement(Class)}
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>),
      *                                  or if <code>src</code> argument if not an array or
      *                                  contains non-primitive elements (<code>Object[]</code> array).
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>M&nbsp;*&nbsp;(long)&nbsp;numberOfElements</code>,
-     *                                  where <code>M</code> is number of bytes in every <code>src</code> element,
+     *                                  where <code>M</code> is number of bytes in each <code>src</code> element,
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
@@ -1305,21 +1305,22 @@ public class JArrays {
         } else if (src instanceof double[] a) {
             return doubleArrayToBytes(dest, a, numberOfElements, byteOrder);
         } else if (src instanceof Object[]) {
-            throw new IllegalArgumentException("Object[] array cannot be copied into byte[]");
+            throw new IllegalArgumentException("Array of objects cannot be copied into byte[]");
         } else {
-            throw new IllegalArgumentException("The src argument is not a Java array (" + src.getClass() + ")");
+            throw new IllegalArgumentException("The src argument is not a Java array (" +
+                    src.getClass().getCanonicalName() + ")");
         }
     }
 
     /**
-     * Equivalent to {@link #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * Equivalent to {@link #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * bytesToArray(null, src, N, elementType, byteOrder)},
      * where <code>N</code> is the length of <code>src</code> Java array,
      * divided by {@link Arrays#bytesPerElement(Class) Arrays.bytesPerElement(elementType)}.
      *
-     * @param src              the source <code>byte[]</code> array.
-     * @param byteOrder        the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
-     * @param elementType      the element type of the result array.
+     * @param src         the source <code>byte[]</code> array.
+     * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
+     * @param elementType the element type of the result array.
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>elementType</code> is not a primitive type.
      */
@@ -1350,14 +1351,15 @@ public class JArrays {
         } else if (dest instanceof double[] a) {
             return bytesToDoubleArray(a, src, numberOfElements, byteOrder);
         } else if (dest instanceof Object[]) {
-            throw new AssertionError("Invalid component type (was checked above)");
+            throw new AssertionError("Invalid component type: Object[] (was checked above)");
         } else {
-            throw new AssertionError("The dest argument is not a Java array (" + dest.getClass() + ")");
+            throw new AssertionError("The dest argument is not a Java array (" +
+                    dest.getClass().getCanonicalName() + ")");
         }
     }
 
     /**
-     * Equivalent to {@link #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * Equivalent to {@link #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * bytesToArray(null, src, numberOfElements, elementType, byteOrder)}.
      *
      * @param src              the source <code>byte[]</code> array.
@@ -1367,12 +1369,12 @@ public class JArrays {
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>numberOfElements</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;M</code>,
-     *                                  where <code>M</code> is number of bytes in every <code>src</code> element
+     *                                  where <code>M</code> is number of bytes in each <code>src</code> element
      *                                  returned by {@link Arrays#bytesPerElement(Class)
      *                                  Arrays.bytesPerElement(elementType)},
      *                                  or if <code>elementType</code> is not a primitive type.
      */
-    public static Object bytesToArray(byte[] src, int numberOfElements, Class<?> elementType, ByteOrder byteOrder) {
+    public static Object bytesToArray(byte[] src, long numberOfElements, Class<?> elementType, ByteOrder byteOrder) {
         return bytesToArray(null, src, numberOfElements, elementType, byteOrder);
     }
 
@@ -1388,6 +1390,16 @@ public class JArrays {
      * If <code>dest&nbsp;==&nbsp;null</code>, it is used for creation new Java array;
      * if <code>dest&nbsp;!=&nbsp;null</code>, it is checked to be equal to the actual <code>dest</code>
      * element type.
+     *
+     * <p>The length of the <code>src</code> array must be not less than
+     * <code>M&nbsp;*&nbsp;&nbsp;numberOfElements</code>,
+     * where <code>M</code> is number of bytes in each <code>src</code> element
+     * returned by {@link Arrays#bytesPerElement(Class) Arrays.bytesPerElement(elementType)}.
+     * The length of <code>dest</code> array (when it is not <code>null</code>)
+     * must be not less than <code>numberOfElements</code>.
+     * Note: though the <code>numberOfElements</code> is <code>long</code>, it cannot be greater
+     * than <code>Integer.MAX_VALUE</code>. In other case, {@link IllegalArgumentException} will be thrown
+     * because  <code>M&nbsp;*&nbsp;&nbsp;numberOfElements</code> will be greater than <code>src.length</code>.</p>
      *
      * <p>Depending on the <code>elementType</code>, this method is equivalent to:
      * <ul>
@@ -1419,7 +1431,7 @@ public class JArrays {
      * @throws NullPointerException     if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>numberOfElements</code> is negative or too large:
      *                                  greater than <code>src.length&nbsp;/&nbsp;M</code>,
-     *                                  where <code>M</code> is number of bytes in every <code>src</code> element
+     *                                  where <code>M</code> is number of bytes in each <code>src</code> element
      *                                  returned by {@link Arrays#bytesPerElement(Class)
      *                                  Arrays.bytesPerElement(elementType)},
      *                                  or greater than <code>dest.length</code>
@@ -1433,7 +1445,7 @@ public class JArrays {
     public static Object bytesToArray(
             Object dest,
             byte[] src,
-            int numberOfElements,
+            long numberOfElements,
             Class<?> elementType,
             ByteOrder byteOrder) {
         Objects.requireNonNull(elementType, "Null elementType");
@@ -1446,12 +1458,12 @@ public class JArrays {
         if (bytesPerElement < 0) {
             throw new IllegalArgumentException("Element type is not primitive: " + elementType);
         }
-        if (bytesPerElement * (long) numberOfElements > src.length) {
+        if ((long) bytesPerElement * numberOfElements > src.length) {
             throw new IllegalArgumentException("Too short source array byte[" + src.length +
                     "]: it must contain at least " + numberOfElements + " elements");
         }
         if (dest == null) {
-            dest = java.lang.reflect.Array.newInstance(elementType, numberOfElements);
+            dest = java.lang.reflect.Array.newInstance(elementType, (int) numberOfElements);
         } else {
             final Class<?> componentType = dest.getClass().getComponentType();
             if (componentType == null) {
@@ -1459,30 +1471,31 @@ public class JArrays {
             }
             if (!elementType.equals(componentType)) {
                 throw new IllegalArgumentException("Element type of destination array " +
-                        componentType.getSimpleName() + "[] does not match the argument elementType = " +
-                        elementType + ".class");
+                        componentType.getSimpleName() + "[] does not match the argument elementType: " +
+                        elementType);
             }
         }
         if (dest instanceof byte[] a) {
-            return copyBytes(a, src, numberOfElements);
+            return copyBytes(a, src, (int) numberOfElements);
         } else if (dest instanceof boolean[] a) {
-            return bytesToBooleanArray(a, src, numberOfElements);
+            return bytesToBooleanArray(a, src, (int) numberOfElements);
         } else if (dest instanceof char[] a) {
-            return bytesToCharArray(a, src, numberOfElements, byteOrder);
+            return bytesToCharArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof short[] a) {
-            return bytesToShortArray(a, src, numberOfElements, byteOrder);
+            return bytesToShortArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof int[] a) {
-            return bytesToIntArray(a, src, numberOfElements, byteOrder);
+            return bytesToIntArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof long[] a) {
-            return bytesToLongArray(a, src, numberOfElements, byteOrder);
+            return bytesToLongArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof float[] a) {
-            return bytesToFloatArray(a, src, numberOfElements, byteOrder);
+            return bytesToFloatArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof double[] a) {
-            return bytesToDoubleArray(a, src, numberOfElements, byteOrder);
+            return bytesToDoubleArray(a, src, (int) numberOfElements, byteOrder);
         } else if (dest instanceof Object[]) {
-            throw new AssertionError("Invalid component type (was checked above)");
+            throw new AssertionError("Invalid component type: Object[] (was checked above)");
         } else {
-            throw new AssertionError("The dest argument is not a Java array (" + dest.getClass() + ")");
+            throw new AssertionError("The dest argument is not a Java array (" +
+                    dest.getClass().getCanonicalName() + ")");
         }
     }
 
@@ -1663,7 +1676,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;2</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static char[] bytesToCharArray(char[] dest, byte[] src, int numberOfChars, ByteOrder byteOrder) {
@@ -1862,7 +1875,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;2</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static short[] bytesToShortArray(short[] dest, byte[] src, int numberOfShorts, ByteOrder byteOrder) {
@@ -2059,7 +2072,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;4</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static int[] bytesToIntArray(int[] dest, byte[] src, int numberOfInts, ByteOrder byteOrder) {
@@ -2256,7 +2269,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;8</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static long[] bytesToLongArray(long[] dest, byte[] src, int numberOfLongs, ByteOrder byteOrder) {
@@ -2453,7 +2466,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;4</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static float[] bytesToFloatArray(float[] dest, byte[] src, int numberOfFloats, ByteOrder byteOrder) {
@@ -2650,7 +2663,7 @@ public class JArrays {
      *                                  greater than <code>src.length&nbsp;/&nbsp;8</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      * @see Arrays#toArray(UpdatablePArray, byte[], ByteOrder)
      */
     public static double[] bytesToDoubleArray(double[] dest, byte[] src, int numberOfDoubles, ByteOrder byteOrder) {
@@ -2822,7 +2835,7 @@ public class JArrays {
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
      */
     public static boolean[] bytesToBooleanArray(boolean[] dest, byte[] src, int numberOfBooleans) {
         Objects.requireNonNull(src, "Null src argument");

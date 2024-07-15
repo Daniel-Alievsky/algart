@@ -273,24 +273,32 @@ public class JArrayToBytesTest {
     }
 
     private static void miscellaneousTest(Random rnd, int arrayLength) {
-        float[] data = new float[arrayLength];
-        IntStream.range(0, data.length).forEach(k -> data[k] =  rnd.nextBoolean() ? 0 : rnd.nextFloat());
+        float[] data1 = new float[arrayLength];
+        IntStream.range(0, data1.length).forEach(k -> data1[k] =  rnd.nextBoolean() ? 0 : rnd.nextFloat());
 
-        byte[] bytes1 = JArrays.arrayToBytes(data, ByteOrder.LITTLE_ENDIAN);
+        // JArrays.arrayToBytes(new String[0], ByteOrder.LITTLE_ENDIAN);
+        byte[] bytes1 = JArrays.arrayToBytes(data1, ByteOrder.LITTLE_ENDIAN);
         byte[] saved = bytes1.clone();
         float[] floats1 = JArrays.bytesToFloatArray(bytes1, ByteOrder.LITTLE_ENDIAN);
-        assert java.util.Arrays.equals(data, floats1);
+        assert java.util.Arrays.equals(data1, floats1);
         float[] floats2 = (float[]) JArrays.bytesToArray(bytes1, float.class, ByteOrder.LITTLE_ENDIAN);
-        assert java.util.Arrays.equals(data, floats2);
+        assert java.util.Arrays.equals(data1, floats2);
         byte[] bytes2 = JArrays.arrayToBytes(bytes1, ByteOrder.LITTLE_ENDIAN);
         assert bytes2 != bytes1 && java.util.Arrays.equals(bytes1, bytes2);
         java.util.Arrays.fill(bytes2, (byte) 0);
         byte[] bytes3 = JArrays.arrayToBytes(bytes2, bytes1, bytes1.length, ByteOrder.LITTLE_ENDIAN);
         assert bytes3 == bytes2 && java.util.Arrays.equals(saved, bytes2);
+        Object data2 = JArrays.bytesToArray(bytes1, float.class, ByteOrder.LITTLE_ENDIAN);
+        assert JArrays.arrayEquals(data2, 0, floats1, 0, floats1.length);
+        Object data3 = JArrays.bytesToArray(new float[arrayLength], bytes1, arrayLength, float.class,
+                ByteOrder.LITTLE_ENDIAN);
+        assert JArrays.arrayEquals(data3, 0, floats1, 0, floats1.length);
+        // JArrays.bytesToArray(bytes1, 10000000000L, float.class, ByteOrder.LITTLE_ENDIAN);
+        assert JArrays.arrayEquals(data3, 0, floats1, 0, floats1.length);
 
         boolean[] booleans = JArrays.bytesToBooleanArray(bytes1);
         bytes2 = JArrays.arrayToBytes(booleans, ByteOrder.BIG_ENDIAN);
-        for (int k = 0; k < data.length; k++) {
+        for (int k = 0; k < data1.length; k++) {
             assert bytes2[k] == (booleans[k] ? 1 : 0);
         }
         bytes3 = JArrays.booleanArrayToBytes(booleans);
