@@ -929,6 +929,7 @@ public class JArrays {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
         }
         Object result = java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), toIndex - fromIndex);
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, length) - fromIndex);
         return result;
     }
@@ -1164,7 +1165,7 @@ public class JArrays {
 
 
     /**
-     * Equivalent to {@link #arrayToBytes(byte[], Object, int, ByteOrder)
+     * Equivalent to {@link #arrayToBytes(byte[], Object, long, ByteOrder)
      * arrayToBytes(null, src, N, byteOrder)},
      * where <code>N</code> is the length of <code>src</code> Java array.
      *
@@ -1206,7 +1207,7 @@ public class JArrays {
     }
 
     /**
-     * Equivalent to {@link #arrayToBytes(byte[], Object, int, ByteOrder)
+     * Equivalent to {@link #arrayToBytes(byte[], Object, long, ByteOrder)
      * arrayToBytes(null, src, n, byteOrder)}.
      *
      * @param src       the source array, containing elements of some primitive type.
@@ -1226,12 +1227,13 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
      */
-    public static byte[] arrayToBytes(Object src, int n, ByteOrder byteOrder) {
+    public static byte[] arrayToBytes(Object src, long n, ByteOrder byteOrder) {
         return arrayToBytes(null, src, n, byteOrder);
     }
 
     /**
-     * Copies the specified number of elements of the specified <code>src</code> array, containing elements
+     * Copies the specified number of elements <code>n</code>
+     * of the <code>src</code> array, containing elements
      * of some primitive type (2nd argument),
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
@@ -1280,28 +1282,32 @@ public class JArrays {
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
-    public static byte[] arrayToBytes(byte[] dest, Object src, int n, ByteOrder byteOrder) {
+    public static byte[] arrayToBytes(byte[] dest, Object src, long n, ByteOrder byteOrder) {
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         if (n < 0) {
             throw new IllegalArgumentException("Negative n = " + n);
         }
+        if (n > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("Too large number of elements " + n +
+                    ": it is greater than 2^31-1 and, of course, greater than the length of the source Java array");
+        }
         if (src instanceof byte[] a) {
-            return copyBytes(dest, a, n);
+            return copyBytes(dest, a, (int) n);
         } else if (src instanceof boolean[] a) {
-            return booleanArrayToBytes(dest, a, n);
+            return booleanArrayToBytes(dest, a, (int) n);
         } else if (src instanceof char[] a) {
-            return charArrayToBytes(dest, a, n, byteOrder);
+            return charArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof short[] a) {
-            return shortArrayToBytes(dest, a, n, byteOrder);
+            return shortArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof int[] a) {
-            return intArrayToBytes(dest, a, n, byteOrder);
+            return intArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof long[] a) {
-            return longArrayToBytes(dest, a, n, byteOrder);
+            return longArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof float[] a) {
-            return floatArrayToBytes(dest, a, n, byteOrder);
+            return floatArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof double[] a) {
-            return doubleArrayToBytes(dest, a, n, byteOrder);
+            return doubleArrayToBytes(dest, a, (int) n, byteOrder);
         } else if (src instanceof Object[]) {
             throw new IllegalArgumentException("Array of objects cannot be copied into byte[]");
         } else {
@@ -1377,9 +1383,9 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements,
+     * Copies the specified number of elements <code>n</code>,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
-     * by previous {@link #arrayToBytes(byte[], Object, int, ByteOrder)}
+     * by previous {@link #arrayToBytes(byte[], Object, long, ByteOrder)}
      * call, back into the given Java array (1st argument,
      * or into a newly created array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting Java array.
@@ -1573,7 +1579,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>2&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] charArrayToBytes(byte[] dest, char[] src, int n, ByteOrder byteOrder) {
@@ -1772,7 +1778,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>2&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] shortArrayToBytes(byte[] dest, short[] src, int n, ByteOrder byteOrder) {
@@ -1969,7 +1975,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>4&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] intArrayToBytes(byte[] dest, int[] src, int n, ByteOrder byteOrder) {
@@ -2166,7 +2172,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>8&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] longArrayToBytes(byte[] dest, long[] src, int n, ByteOrder byteOrder) {
@@ -2363,7 +2369,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>4&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] floatArrayToBytes(byte[] dest, float[] src, int n, ByteOrder byteOrder) {
@@ -2560,7 +2566,7 @@ public class JArrays {
      * @throws TooLargeArrayException   if the required result array length
      *                                  <code>8&nbsp;*&nbsp;(long)&nbsp;n</code>
      *                                  is greater than <code>Integer.MAX_VALUE</code> bytes.
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      * @see Arrays#toBytes(byte[], PArray, ByteOrder)
      */
     public static byte[] doubleArrayToBytes(byte[] dest, double[] src, int n, ByteOrder byteOrder) {
@@ -2746,7 +2752,7 @@ public class JArrays {
      *                                  greater than <code>src.length</code>
      *                                  or greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
      */
     public static byte[] booleanArrayToBytes(byte[] dest, boolean[] src, int n) {
         Objects.requireNonNull(src, "Null src argument");
@@ -4801,7 +4807,7 @@ public class JArrays {
     public static void addByteArray(int[] dest, int destPos, byte[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos] & 0xFF;
+            dest[destPos] += (int) src[srcPos] & 0xFF;
         }
     }
 
@@ -4864,7 +4870,7 @@ public class JArrays {
     public static void addCharArray(int[] dest, int destPos, char[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos];
+            dest[destPos] += (int) src[srcPos];
         }
     }
 
@@ -4926,7 +4932,7 @@ public class JArrays {
     public static void addShortArray(int[] dest, int destPos, short[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos] & 0xFFFF;
+            dest[destPos] += (int) src[srcPos] & 0xFFFF;
         }
     }
 
@@ -4988,7 +4994,7 @@ public class JArrays {
     public static void addIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos];
+            dest[destPos] += (int) src[srcPos];
         }
     }
 
@@ -5049,7 +5055,7 @@ public class JArrays {
     public static void addLongArray(int[] dest, int destPos, long[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos];
+            dest[destPos] += (int) src[srcPos];
         }
     }
 
@@ -5110,7 +5116,7 @@ public class JArrays {
     public static void addFloatArray(int[] dest, int destPos, float[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos];
+            dest[destPos] += (int) src[srcPos];
         }
     }
 
@@ -5171,7 +5177,7 @@ public class JArrays {
     public static void addDoubleArray(int[] dest, int destPos, double[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += src[srcPos];
+            dest[destPos] += (int) src[srcPos];
         }
     }
 
