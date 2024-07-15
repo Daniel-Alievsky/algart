@@ -75,8 +75,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyByteBuffer(ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyByteBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -123,14 +124,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyByteBuffer(
-            ByteBuffer dest, int destPos, ByteBuffer src, int srcPos, int count,
+            ByteBuffer dest,
+            int destPos,
+            ByteBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -165,7 +171,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapByteBuffer(ByteBuffer first, int firstPos, ByteBuffer second, int secondPos, int count) {
+    public static void swapByteBuffer(
+            ByteBuffer first,
+            int firstPos,
+            ByteBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             byte v1 = first.get(firstPos);
@@ -204,8 +215,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyCharBuffer(CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyCharBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -252,14 +264,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyCharBuffer(
-            CharBuffer dest, int destPos, CharBuffer src, int srcPos, int count,
+            CharBuffer dest,
+            int destPos,
+            CharBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -294,7 +311,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapCharBuffer(CharBuffer first, int firstPos, CharBuffer second, int secondPos, int count) {
+    public static void swapCharBuffer(
+            CharBuffer first,
+            int firstPos,
+            CharBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             char v1 = first.get(firstPos);
@@ -332,8 +354,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyShortBuffer(ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyShortBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -380,14 +403,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyShortBuffer(
-            ShortBuffer dest, int destPos, ShortBuffer src, int srcPos, int count,
+            ShortBuffer dest,
+            int destPos,
+            ShortBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -422,7 +450,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapShortBuffer(ShortBuffer first, int firstPos, ShortBuffer second, int secondPos, int count) {
+    public static void swapShortBuffer(
+            ShortBuffer first,
+            int firstPos,
+            ShortBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             short v1 = first.get(firstPos);
@@ -460,8 +493,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyIntBuffer(IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyIntBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -508,14 +542,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyIntBuffer(
-            IntBuffer dest, int destPos, IntBuffer src, int srcPos, int count,
+            IntBuffer dest,
+            int destPos,
+            IntBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -550,7 +589,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapIntBuffer(IntBuffer first, int firstPos, IntBuffer second, int secondPos, int count) {
+    public static void swapIntBuffer(
+            IntBuffer first,
+            int firstPos,
+            IntBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             int v1 = first.get(firstPos);
@@ -588,8 +632,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyLongBuffer(LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyLongBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -636,14 +681,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyLongBuffer(
-            LongBuffer dest, int destPos, LongBuffer src, int srcPos, int count,
+            LongBuffer dest,
+            int destPos,
+            LongBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -678,7 +728,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapLongBuffer(LongBuffer first, int firstPos, LongBuffer second, int secondPos, int count) {
+    public static void swapLongBuffer(
+            LongBuffer first,
+            int firstPos,
+            LongBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             long v1 = first.get(firstPos);
@@ -716,8 +771,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyFloatBuffer(FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyFloatBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -764,14 +820,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyFloatBuffer(
-            FloatBuffer dest, int destPos, FloatBuffer src, int srcPos, int count,
+            FloatBuffer dest,
+            int destPos,
+            FloatBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -806,7 +867,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapFloatBuffer(FloatBuffer first, int firstPos, FloatBuffer second, int secondPos, int count) {
+    public static void swapFloatBuffer(
+            FloatBuffer first,
+            int firstPos,
+            FloatBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             float v1 = first.get(firstPos);
@@ -844,8 +910,9 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyDoubleBuffer(DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count) {
-        if (src == dest && srcPos == destPos && src != null)
+        if (src == dest && srcPos == destPos && src != null) {
             return;
+        }
         copyDoubleBuffer(dest, destPos, src, srcPos, count,
                 src == dest && srcPos <= destPos && srcPos + count > destPos);
     }
@@ -892,14 +959,19 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
     public static void copyDoubleBuffer(
-            DoubleBuffer dest, int destPos, DoubleBuffer src, int srcPos, int count,
+            DoubleBuffer dest,
+            int destPos,
+            DoubleBuffer src,
+            int srcPos,
+            int count,
             boolean reverseOrder) {
         JArrays.rangeCheck(src.limit(), srcPos, dest.limit(), destPos, count);
         if (reverseOrder) {
             int srcPos2 = srcPos + count - 1;
             int destPos2 = destPos + count - 1;
-            for (; srcPos2 >= srcPos; srcPos2--, destPos2--)
+            for (; srcPos2 >= srcPos; srcPos2--, destPos2--) {
                 dest.put(destPos2, src.get(srcPos2));
+            }
         } else {
             src = src.duplicate();
             dest = dest.duplicate();
@@ -934,7 +1006,12 @@ public class JBuffers {
      * @throws IllegalArgumentException  if <code>count</code> is negative.
      * @throws IndexOutOfBoundsException if copying would cause access of data outside buffer limits.
      */
-    public static void swapDoubleBuffer(DoubleBuffer first, int firstPos, DoubleBuffer second, int secondPos, int count) {
+    public static void swapDoubleBuffer(
+            DoubleBuffer first,
+            int firstPos,
+            DoubleBuffer second,
+            int secondPos,
+            int count) {
         JArrays.rangeCheck(first.limit(), firstPos, second.limit(), secondPos, count);
         for (int firstPosMax = firstPos + count; firstPos < firstPosMax; firstPos++, secondPos++) {
             double v1 = first.get(firstPos);
@@ -979,12 +1056,14 @@ public class JBuffers {
             }
             ByteBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -1019,12 +1098,14 @@ public class JBuffers {
             }
             CharBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
 
@@ -1058,12 +1139,14 @@ public class JBuffers {
             }
             ShortBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
 
@@ -1097,12 +1180,14 @@ public class JBuffers {
             }
             IntBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
 
@@ -1136,12 +1221,14 @@ public class JBuffers {
             }
             LongBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
 
@@ -1175,12 +1262,14 @@ public class JBuffers {
             }
             FloatBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
 
@@ -1214,12 +1303,14 @@ public class JBuffers {
             }
             DoubleBuffer destDup = dest.duplicate();
             destDup.position(destPos);
-            for (; count >= arr.length; count -= arr.length)
+            for (; count >= arr.length; count -= arr.length) {
                 destDup.put(arr);
+            }
             destDup.put(arr, 0, count);
         } else {
-            for (int k = 0; k < count; k++)
+            for (int k = 0; k < count; k++) {
                 dest.put(destPos + k, value);
+            }
         }
     }
     /*Repeat.AutoGeneratedEnd*/
@@ -1761,8 +1852,9 @@ public class JBuffers {
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 byte v = src.get(srcPos);
-                if ((v & 0xFF) < (dest[destPos] & 0xFF))
+                if ((v & 0xFF) < (dest[destPos] & 0xFF)) {
                     dest[destPos] = v;
+                }
             }
         }
     }
@@ -1794,8 +1886,9 @@ public class JBuffers {
         } else {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 byte v = src.get(srcPos);
-                if ((v & 0xFF) > (dest[destPos] & 0xFF))
+                if ((v & 0xFF) > (dest[destPos] & 0xFF)) {
                     dest[destPos] = v;
+                }
             }
         }
     }
@@ -1826,8 +1919,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
-            if ((v & 0xFFFF) < (dest[destPos] & 0xFFFF))
+            if ((v & 0xFFFF) < (dest[destPos] & 0xFFFF)) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -1852,8 +1946,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             short v = src.get(srcPos);
-            if ((v & 0xFFFF) > (dest[destPos] & 0xFFFF))
+            if ((v & 0xFFFF) > (dest[destPos] & 0xFFFF)) {
                 dest[destPos] = v;
+            }
         }
     }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
@@ -1878,8 +1973,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
-            if ((v) < (dest[destPos]))
+            if ((v) < (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -1903,8 +1999,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             char v = src.get(srcPos);
-            if ((v) > (dest[destPos]))
+            if ((v) > (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -1928,8 +2025,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             int v = src.get(srcPos);
-            if ((v) < (dest[destPos]))
+            if ((v) < (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -1953,8 +2051,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             int v = src.get(srcPos);
-            if ((v) > (dest[destPos]))
+            if ((v) > (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -1978,8 +2077,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
-            if ((v) < (dest[destPos]))
+            if ((v) < (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -2003,8 +2103,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             long v = src.get(srcPos);
-            if ((v) > (dest[destPos]))
+            if ((v) > (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -2028,8 +2129,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
-            if ((v) < (dest[destPos]))
+            if ((v) < (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -2053,8 +2155,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             float v = src.get(srcPos);
-            if ((v) > (dest[destPos]))
+            if ((v) > (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -2078,8 +2181,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
-            if ((v) < (dest[destPos]))
+            if ((v) < (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
 
@@ -2103,8 +2207,9 @@ public class JBuffers {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             double v = src.get(srcPos);
-            if ((v) > (dest[destPos]))
+            if ((v) > (dest[destPos])) {
                 dest[destPos] = v;
+            }
         }
     }
     /*Repeat.AutoGeneratedEnd*/
@@ -2164,8 +2269,9 @@ public class JBuffers {
             double[] dest, int destPos, ByteBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos) & 0xFF;
@@ -2229,8 +2335,9 @@ public class JBuffers {
             double[] dest, int destPos, CharBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos);
@@ -2295,8 +2402,9 @@ public class JBuffers {
             double[] dest, int destPos, ShortBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos) & 0xFFFF;
@@ -2359,8 +2467,9 @@ public class JBuffers {
             double[] dest, int destPos, IntBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos);
@@ -2423,8 +2532,9 @@ public class JBuffers {
             double[] dest, int destPos, LongBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos);
@@ -2487,8 +2597,9 @@ public class JBuffers {
             double[] dest, int destPos, FloatBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos);
@@ -2551,8 +2662,9 @@ public class JBuffers {
             double[] dest, int destPos, DoubleBuffer src, int srcPos, int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
-        if (mult == 0.0)
+        if (mult == 0.0) {
             return;
+        }
         if (mult == 1.0) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 dest[destPos] += src.get(srcPos);
@@ -3027,8 +3139,9 @@ public class JBuffers {
         if (truncateOverflows) {
             for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
                 long v = (long) dest[destPos] - (long) src.get(srcPos);
-                if (v < 0)
+                if (v < 0) {
                     v = -v;
+                }
                 dest[destPos] = v > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) v;
             }
         } else {
