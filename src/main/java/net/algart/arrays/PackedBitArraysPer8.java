@@ -2375,6 +2375,11 @@ public class PackedBitArraysPer8 {
      * of incorrect arguments, than {@link #packBits(byte[], long, boolean[], int, int)}
      * method.</p>
      *
+     * <p>Note: <code>srcPos</code> and <code>count</code> arguments are declared as <code>long</code>,
+     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws <code>IllegalArgumentException</code>. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src    the source array (unpacked <code>boolean</code> values).
      * @param srcPos position of the first bit read in the source array
      *               (must be in <code>0..Integer.MAX_VALUE</code> range).
@@ -2559,6 +2564,11 @@ public class PackedBitArraysPer8 {
      * of incorrect arguments, than {@link #packBitsInReverseOrder(byte[], long, boolean[], int, int)}
      * method.</p>
      *
+     * <p>Note: <code>srcPos</code> and <code>count</code> arguments are declared as <code>long</code>,
+     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws <code>IllegalArgumentException</code>. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src    the source array (unpacked <code>boolean</code> values).
      * @param srcPos position of the first bit read in the source array
      *               (must be in <code>0..Integer.MAX_VALUE</code> range).
@@ -2738,6 +2748,11 @@ public class PackedBitArraysPer8 {
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src    the source array (bits are packed in <code>byte</code> values).
      * @param srcPos position of the first bit read in the source array.
      * @param count  the number of elements to be unpacked
@@ -2826,6 +2841,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBitsInReverseOrder(boolean[], int, byte[], long, int)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src    the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos position of the first bit read in the source array.
@@ -2916,6 +2936,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, byte[], long, int, boolean, boolean)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3017,6 +3042,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(boolean[], int, byte[], long, int, boolean, boolean)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -3112,6 +3142,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(char[], int, byte[], long, int, char, char)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3212,6 +3247,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(char[], int, byte[], long, int, char, char)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -3306,6 +3346,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(byte[], int, byte[], long, int, byte, byte)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3406,6 +3451,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(byte[], int, byte[], long, int, byte, byte)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -3500,6 +3550,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(short[], int, byte[], long, int, short, short)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3600,6 +3655,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(short[], int, byte[], long, int, short, short)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -3694,6 +3754,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(int[], int, byte[], long, int, int, int)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3794,6 +3859,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(int[], int, byte[], long, int, int, int)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -3888,6 +3958,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(long[], int, byte[], long, int, long, long)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -3988,6 +4063,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(long[], int, byte[], long, int, long, long)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -4082,6 +4162,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(float[], int, byte[], long, int, float, float)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -4182,6 +4267,11 @@ public class PackedBitArraysPer8 {
      * {@link #unpackBitsInReverseOrder(float[], int, byte[], long, int, float, float)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.
      * @param count     the number of elements to be unpacked
@@ -4276,6 +4366,11 @@ public class PackedBitArraysPer8 {
      * <p>Note that this method provides more user-friendly exception messages in a case
      * of incorrect arguments, than {@link #unpackBits(double[], int, byte[], long, int, double, double)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
@@ -4375,6 +4470,11 @@ public class PackedBitArraysPer8 {
      * of incorrect arguments, than
      * {@link #unpackBitsInReverseOrder(double[], int, byte[], long, int, double, double)}
      * method.</p>
+     *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
      * @param src       the source array (bits are packed in <code>byte</code> values in reverse order 76543210).
      * @param srcPos    position of the first bit read in the source array.

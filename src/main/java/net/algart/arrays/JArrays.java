@@ -1215,7 +1215,8 @@ public class JArrays {
      * arrayToBytes(null, src, n, byteOrder)}.
      *
      * @param src       the source array, containing elements of some primitive type.
-     * @param n         number of elements of <code>src</code> array to be copied.
+     * @param n         number of elements of <code>src</code> array to be copied
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param byteOrder the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1277,7 +1278,8 @@ public class JArrays {
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source Java array, containing elements of some primitive type.
-     * @param n         number of elements of <code>src</code> array to be copied.
+     * @param n         number of elements of <code>src</code> array to be copied
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param byteOrder the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1384,7 +1386,8 @@ public class JArrays {
      * bytesToArray(null, src, n, elementType, byteOrder)}.
      *
      * @param src         the source <code>byte[]</code> array.
-     * @param n           number of elements of <code>dest</code> array to be copied.
+     * @param n           number of elements of <code>dest</code> array to be copied
+     *                    (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @param elementType the element type of the result array.
      * @return Java array with resulting data.
@@ -1448,7 +1451,8 @@ public class JArrays {
      * @param dest        the result Java array, containing elements of some primitive type;
      *                    can be {@code null}, then it will be allocated automatically.
      * @param src         the source <code>byte[]</code> array.
-     * @param n           number of elements of <code>dest</code> array to be copied.
+     * @param n           number of elements of <code>dest</code> array to be copied
+     *                    (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param byteOrder   the byte order (ignored for <code>byte[]</code> and <code>boolean[]</code> arrays).
      * @param elementType the element type of the result array.
      * @return Java array with resulting data;

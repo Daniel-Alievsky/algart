@@ -973,6 +973,11 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #packBits(long[], long, boolean[], int, int)}
      * method.</p>
      *
+     * <p>Note: <code>srcPos</code> and <code>count</code> arguments are declared as <code>long</code>,
+     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws <code>IllegalArgumentException</code>. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src    the source array (unpacked <code>boolean</code> values).
      * @param srcPos position of the first bit read in the source array
      *               (must be in <code>0..Integer.MAX_VALUE</code> range).
@@ -5257,9 +5262,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src    the source array (bits are packed in <code>byte</code> values).
      * @param srcPos position of the first bit read in the source array.
-     * @param count  the number of elements to be unpacked (must be &gt;=0).
+     * @param count  the number of elements to be unpacked
+     *               (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @return the unpacked <code>boolean</code> array.
      * @throws NullPointerException     if<code>src</code> is {@code null}.
      * @throws IllegalArgumentException if <code>srcPos</code> or <code>count</code> is negative, or
@@ -5416,9 +5427,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(boolean[], int, long[], long, int, boolean, boolean)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>boolean</code> array.
@@ -5927,9 +5944,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(char[], int, long[], long, int, char, char)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>char</code> array.
@@ -6421,9 +6444,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(byte[], int, long[], long, int, byte, byte)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>byte</code> array.
@@ -6915,9 +6944,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(short[], int, long[], long, int, short, short)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>short</code> array.
@@ -7409,9 +7444,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(int[], int, long[], long, int, int, int)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>int</code> array.
@@ -7903,9 +7944,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(long[], int, long[], long, int, long, long)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>long</code> array.
@@ -8397,9 +8444,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(float[], int, long[], long, int, float, float)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>float</code> array.
@@ -8891,9 +8944,15 @@ public class PackedBitArrays {
      * of incorrect arguments, than {@link #unpackBits(double[], int, long[], long, int, double, double)}
      * method.</p>
      *
+     * <p>Note: <code>count</code> argument is declared as <code>long</code>,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * this method throws an exception. Using <code>long</code>
+     * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
+     *
      * @param src       the source array (bits are packed in <code>byte</code> values).
      * @param srcPos    position of the first bit read in the source array.
-     * @param count     the number of elements to be unpacked (must be &gt;=0).
+     * @param count     the number of elements to be unpacked
+     *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
      * @param bit0Value the value of elements in the destination array to which the bit 0 is translated.
      * @param bit1Value the value of elements in the destination array to which the bit 1 is translated.
      * @return the unpacked <code>double</code> array.
