@@ -2266,7 +2266,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addByteBufferToArray(
-            double[] dest, int destPos, ByteBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            ByteBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2332,7 +2336,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addCharBufferToArray(
-            double[] dest, int destPos, CharBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            CharBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2399,7 +2407,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addShortBufferToArray(
-            double[] dest, int destPos, ShortBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            ShortBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2464,7 +2476,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addIntBufferToArray(
-            double[] dest, int destPos, IntBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            IntBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2529,7 +2545,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addLongBufferToArray(
-            double[] dest, int destPos, LongBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            LongBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2594,7 +2614,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addFloatBufferToArray(
-            double[] dest, int destPos, FloatBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            FloatBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2659,7 +2683,11 @@ public class JBuffers {
      *                                   or buffer limit.
      */
     public static void addDoubleBufferToArray(
-            double[] dest, int destPos, DoubleBuffer src, int srcPos, int count,
+            double[] dest,
+            int destPos,
+            DoubleBuffer src,
+            int srcPos,
+            int count,
             double mult) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (mult == 0.0) {
@@ -2713,7 +2741,11 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void subtractByteBufferFromArray(
-            byte[] dest, int destPos, ByteBuffer src, int srcPos, int count,
+            byte[] dest,
+            int destPos,
+            ByteBuffer src,
+            int srcPos,
+            int count,
             boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
@@ -2750,7 +2782,11 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void subtractCharBufferFromArray(
-            char[] dest, int destPos, CharBuffer src, int srcPos, int count,
+            char[] dest,
+            int destPos,
+            CharBuffer src,
+            int srcPos,
+            int count,
             boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
@@ -2787,7 +2823,11 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void subtractShortBufferFromArray(
-            short[] dest, int destPos, ShortBuffer src, int srcPos, int count,
+            short[] dest,
+            int destPos,
+            ShortBuffer src,
+            int srcPos,
+            int count,
             boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
@@ -2862,7 +2902,12 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractLongBufferFromArray(long[] dest, int destPos, LongBuffer src, int srcPos, int count) {
+    public static void subtractLongBufferFromArray(
+            long[] dest,
+            int destPos,
+            LongBuffer src,
+            int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -2887,7 +2932,12 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractFloatBufferFromArray(float[] dest, int destPos, FloatBuffer src, int srcPos, int count) {
+    public static void subtractFloatBufferFromArray(
+            float[] dest,
+            int destPos,
+            FloatBuffer src,
+            int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -2911,7 +2961,12 @@ public class JBuffers {
      * @throws IndexOutOfBoundsException if accessing elements would cause access of data outside array bounds
      *                                   or buffer limits.
      */
-    public static void subtractDoubleBufferFromArray(double[] dest, int destPos, DoubleBuffer src, int srcPos, int count) {
+    public static void subtractDoubleBufferFromArray(
+            double[] dest,
+            int destPos,
+            DoubleBuffer src,
+            int srcPos,
+            int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
             dest[destPos] -= src.get(srcPos);
@@ -2946,7 +3001,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfByteArrayAndBuffer(
-            byte[] dest, int destPos, ByteBuffer src, int srcPos,
+            byte[] dest,
+            int destPos,
+            ByteBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -2977,7 +3035,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfCharArrayAndBuffer(
-            char[] dest, int destPos, CharBuffer src, int srcPos,
+            char[] dest,
+            int destPos,
+            CharBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -3008,7 +3069,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfShortArrayAndBuffer(
-            short[] dest, int destPos, ShortBuffer src, int srcPos,
+            short[] dest,
+            int destPos,
+            ShortBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -3038,7 +3102,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfLongArrayAndBuffer(
-            long[] dest, int destPos, LongBuffer src, int srcPos,
+            long[] dest,
+            int destPos,
+            LongBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -3068,7 +3135,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfFloatArrayAndBuffer(
-            float[] dest, int destPos, FloatBuffer src, int srcPos,
+            float[] dest,
+            int destPos,
+            FloatBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -3098,7 +3168,10 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfDoubleArrayAndBuffer(
-            double[] dest, int destPos, DoubleBuffer src, int srcPos,
+            double[] dest,
+            int destPos,
+            DoubleBuffer src,
+            int srcPos,
             int count) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
@@ -3133,7 +3206,11 @@ public class JBuffers {
      *                                   or buffer limits.
      */
     public static void absDiffOfIntArrayAndBuffer(
-            int[] dest, int destPos, IntBuffer src, int srcPos, int count,
+            int[] dest,
+            int destPos,
+            IntBuffer src,
+            int srcPos,
+            int count,
             boolean truncateOverflows) {
         JArrays.rangeCheck(dest.length, destPos, src.limit(), srcPos, count);
         if (truncateOverflows) {
