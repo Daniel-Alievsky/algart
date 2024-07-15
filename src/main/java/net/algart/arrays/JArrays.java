@@ -1239,6 +1239,15 @@ public class JArrays {
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
      *
+     * <p>The length of the <code>src</code> array must be not less than <code>n</code>.
+     * The length of <code>dest</code> array (when it is not <code>null</code>)
+     * must be not less than <code>M&nbsp;*&nbsp;n</code>,
+     * where <code>M</code> is number of bytes in each <code>src</code> element
+     * returned by {@link Arrays#bytesPerElement(Class)}.
+     * Note: though the <code>n</code> is <code>long</code>, it cannot be greater
+     * than <code>Integer.MAX_VALUE</code>; otherwise, {@link IllegalArgumentException} will be thrown
+     * because <code>n</code> will be greater than the length of <code>src</code> array.</p>
+     *
      * <p>Depending on the type of <code>src</code> array, this method is equivalent to:
      * <ul>
      *     <li>{@link #copyBytes(byte[], byte[], int)} if <code>src instanceof byte[]</code></li>
@@ -1402,8 +1411,8 @@ public class JArrays {
      * The length of <code>dest</code> array (when it is not <code>null</code>)
      * must be not less than <code>n</code>.
      * Note: though the <code>n</code> is <code>long</code>, it cannot be greater
-     * than <code>Integer.MAX_VALUE</code>. In other case, {@link IllegalArgumentException} will be thrown
-     * because  <code>M&nbsp;*&nbsp;&nbsp;n</code> will be greater than <code>src.length</code>.</p>
+     * than <code>Integer.MAX_VALUE</code>; otherwise, {@link IllegalArgumentException} will be thrown
+     * because <code>M&nbsp;*&nbsp;&nbsp;n</code> will be greater than <code>src.length</code>.</p>
      *
      * <p>Depending on the <code>elementType</code>, this method is equivalent to:
      * <ul>
@@ -4784,6 +4793,7 @@ public class JArrays {
 
     /*Repeat() byte ==> char,,short,,int,,long,,float,,double;;
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double;;
+               (\(int\)\s*)(src) ==> $2,,$1$2,,$2,,$1$2,,$1$2,,$1$2;;
                (\s*&(?:amp;)?\s*0xFF) ==> ,,$1FF,, ,,...;;
                (The\s+\w+\s+elements.*?\.\s*\*) ==> ,,$1,, ,,... */
 
@@ -4870,7 +4880,7 @@ public class JArrays {
     public static void addCharArray(int[] dest, int destPos, char[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += (int) src[srcPos];
+            dest[destPos] += src[srcPos];
         }
     }
 
@@ -4994,7 +5004,7 @@ public class JArrays {
     public static void addIntArray(int[] dest, int destPos, int[] src, int srcPos, int count) {
         rangeCheck(dest.length, destPos, src.length, srcPos, count);
         for (int srcPosMax = srcPos + count; srcPos < srcPosMax; srcPos++, destPos++) {
-            dest[destPos] += (int) src[srcPos];
+            dest[destPos] += src[srcPos];
         }
     }
 

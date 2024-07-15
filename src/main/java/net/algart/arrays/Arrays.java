@@ -4593,7 +4593,7 @@ public class Arrays {
      * @see #toArray(UpdatablePArray, byte[], ByteOrder)
      * @see #write(OutputStream, PArray, ByteOrder)
      * @see LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)
-     * @see JArrays#arrayToBytes(byte[], Object, int, ByteOrder)
+     * @see JArrays#arrayToBytes(byte[], Object, long, ByteOrder)
      */
     public static byte[] toBytes(byte[] bytes, PArray array, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
@@ -4683,7 +4683,7 @@ public class Arrays {
      *                                  is not enough for storing all elements of the target AlgART array.
      * @see #read(InputStream, UpdatablePArray, ByteOrder)
      * @see LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)
-     * @see JArrays#bytesToArray(Object, byte[], int, Class, ByteOrder)
+     * @see JArrays#bytesToArray(Object, byte[], long, Class, ByteOrder)
      */
     public static void toArray(UpdatablePArray array, byte[] bytes, ByteOrder byteOrder) {
         Objects.requireNonNull(array, "Null array");
