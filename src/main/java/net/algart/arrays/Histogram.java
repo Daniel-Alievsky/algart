@@ -58,8 +58,11 @@ import java.util.Objects;
  * some generalization of the integer rank and percentile to the floating-point case.
  * Below is the formal definition of the real rank and percentile.</p>
  *
+ * <style>
+ *     table.pad tr td {padding: 8px;}
+ * </style>
  * <blockquote>
- * <table border="1" cellpadding="8" cellspacing="0">
+ * <table border="1" class="pad" style="border-spacing:0">
  * <caption></caption>
  * <tr><td align="center"><b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)
  * </td></tr>

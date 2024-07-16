@@ -57,9 +57,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * the first mode is called <i>round-down mode</i>, and the second is called <i>round-up mode</i>.
  * Below is the specification of the behaviour in both modes.</p>
  *
+ * <style>
+ *     table.pad tr td {padding: 8px;}
+ * </style>
  * <div align="center">
- * <table width="90%" border="1" cellpadding="8" cellspacing="0">
- *   <caption></caption>
+ * <table class="pad" width="90%" border="1" style="border-spacing:0">
+ *   <caption>&nbsp;</caption>
  *   <tr>
  *     <td width="50%"><b>Round-down mode</b></td>
  *     <td width="50%"><b>Round-up mode</b></td>
@@ -143,8 +146,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * according to the following rule:</p>
  *
  * <div align="center">
- * <table width="90%" border="1" cellpadding="8" cellspacing="0">
- *   <caption></caption>
+ * <table class="pad" width="90%" border="1" style="border-spacing:0">
+ *   <caption>&nbsp;</caption>
  *   <tr>
  *     <td width="50%"><b>Round-down mode</b></td>
  *     <td width="50%"><b>Round-up mode</b></td>
