@@ -2355,7 +2355,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
                     jaOfs = buf.from();
                 }
             }
-            long[] bits = ja == null ? new long[(int) PackedBitArrays.packedLength(dBuf.capacity())] : ja;
+            long[] bits = ja == null ? new long[PackedBitArrays.packedLength32(dBuf.capacity())] : ja;
             for (long p = 0; p < arrayLength; p += dBuf.capacity()) {
                 if (context != null) {
                     context.checkInterruption();

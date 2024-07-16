@@ -142,7 +142,7 @@ public class PArraysSpeed {
             return result;
         } else {
             int result = 0;
-            long[] buf = new long[(int) PackedBitArrays.packedLength(Math.min(bufSize, a.length()))];
+            long[] buf = new long[PackedBitArrays.packedLength32(Math.min(bufSize, a.length()))];
             for (long p = 0, n = a.length(); p < n; p += bufSize) {
                 int len = (int) Math.min(bufSize, n - p);
                 ((BitArray) a).getBits(p, buf, 0, len);
