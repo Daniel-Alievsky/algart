@@ -125,7 +125,7 @@ public enum ConnectivityType {
         } // 3^dimCount
         byte[][] shifts = new byte[totalCount - 1][dimCount]; // zero-filled
         byte[] coordinates = new byte[dimCount];
-        JArrays.fillByteArray(coordinates, (byte)-1);
+        JArrays.fill(coordinates, (byte)-1);
         for (int index = 0, shiftsIndex = 0; ; ) {
             boolean origin = true;
             for (int j = 0; j < dimCount; j++) {

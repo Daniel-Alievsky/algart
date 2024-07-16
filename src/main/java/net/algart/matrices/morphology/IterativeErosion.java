@@ -247,7 +247,7 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
         int maxIterCount = 0;
         long[] position = new long[dimCount];
         long[] dimensions = new long[dimCount];
-        JArrays.fillLongArray(dimensions, TEST_MATRIX_DIM_FOR_COMPLEXITY_ESTIMATION);
+        JArrays.fill(dimensions, TEST_MATRIX_DIM_FOR_COMPLEXITY_ESTIMATION);
         final Random rnd = new Random(157);
         final MemoryModel smm = SimpleMemoryModel.getInstance();
         final Morphology morphology = BasicMorphology.getInstance(null);

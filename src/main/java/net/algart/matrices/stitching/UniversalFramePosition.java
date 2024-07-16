@@ -69,8 +69,8 @@ public class UniversalFramePosition implements FramePosition {
         }
         double[] minDestCoordinates = new double[n];
         double[] maxDestCoordinates = new double[n];
-        JArrays.fillDoubleArray(minDestCoordinates, Double.POSITIVE_INFINITY);
-        JArrays.fillDoubleArray(maxDestCoordinates, Double.NEGATIVE_INFINITY);
+        JArrays.fill(minDestCoordinates, Double.POSITIVE_INFINITY);
+        JArrays.fill(maxDestCoordinates, Double.NEGATIVE_INFINITY);
         double[] srcCoordinates = new double[n];
         double[] destCoordinates = new double[n];
         MainLoop:
@@ -81,8 +81,8 @@ public class UniversalFramePosition implements FramePosition {
             inverseTransform.inverseMap(destCoordinates, srcCoordinates);
             for (double v : destCoordinates) {
                 if (Double.isNaN(v)) {
-                    JArrays.fillDoubleArray(minDestCoordinates, Double.NEGATIVE_INFINITY);
-                    JArrays.fillDoubleArray(maxDestCoordinates, Double.POSITIVE_INFINITY);
+                    JArrays.fill(minDestCoordinates, Double.NEGATIVE_INFINITY);
+                    JArrays.fill(maxDestCoordinates, Double.POSITIVE_INFINITY);
                     break MainLoop; // return all the space
                 }
             }

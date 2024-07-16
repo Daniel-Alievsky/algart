@@ -43,27 +43,27 @@ public class SpecialRangeOfTest {
 
             Arrays.MinMaxInfo minMaxInfo = new Arrays.MinMaxInfo();
             double[] doubles = new double[100];
-            JArrays.fillDoubleArray(doubles, filler);
+            JArrays.fill(doubles, filler);
             doubles[5] = 0.0;
             Range range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
             System.out.printf("double[] rangeOf (0.0 at #5): %s (%s)%n", range, minMaxInfo);
 
-            JArrays.fillDoubleArray(doubles, filler);
+            JArrays.fill(doubles, filler);
             doubles[5] = Double.NEGATIVE_INFINITY;
             range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
             System.out.printf("double[] rangeOf (NEGATIVE_INFINITY at #5): %s (%s)%n", range, minMaxInfo);
 
-            JArrays.fillDoubleArray(doubles, filler);
+            JArrays.fill(doubles, filler);
             doubles[5] = Double.POSITIVE_INFINITY;
             range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
             System.out.printf("double[] rangeOf (POSITIVE_INFINITY at #5): %s (%s)%n", range, minMaxInfo);
 
-            JArrays.fillDoubleArray(doubles, filler);
+            JArrays.fill(doubles, filler);
             range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(doubles), minMaxInfo);
             System.out.printf("double[] rangeOf: %s (%s)%n", range, minMaxInfo);
 
             float[] floats= new float[100];
-            JArrays.fillFloatArray(floats, (float) filler);
+            JArrays.fill(floats, (float) filler);
             range = Arrays.rangeOf((PArray) SimpleMemoryModel.asUpdatableArray(floats), minMaxInfo);
             System.out.printf("float[] rangeOf: %s (%s)%n", range, minMaxInfo);
 

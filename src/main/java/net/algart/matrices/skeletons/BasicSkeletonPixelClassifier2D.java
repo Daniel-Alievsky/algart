@@ -1027,8 +1027,8 @@ public class BasicSkeletonPixelClassifier2D extends ApertureBasedSkeletonPixelCl
         if (classificationMap.length % 3 != 0) {
             throw new IllegalArgumentException("Length of classificationMap does not divide by 3");
         }
-        JArrays.fillIntArray(this.classificationTableWithAttachingBranches, TYPE_ILLEGAL);
-        JArrays.fillIntArray(this.classificationTableWithAttachedNodes, TYPE_ILLEGAL);
+        JArrays.fill(this.classificationTableWithAttachingBranches, TYPE_ILLEGAL);
+        JArrays.fill(this.classificationTableWithAttachedNodes, TYPE_ILLEGAL);
         for (int k = 0; k < classificationMap.length; k += 3) {
             int bitsA = classificationMap[k];
             if (bitsA < 0 || bitsA > 255) {

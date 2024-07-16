@@ -1094,7 +1094,7 @@ public class JBuffers {
             byte[] arr;
             if (value != 0) {
                 arr = new byte[FILL_BLOCK_LEN];
-                JArrays.fillByteArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new byte[ZERO_FILL_BLOCK_LEN];
             }
@@ -1137,7 +1137,7 @@ public class JBuffers {
             char[] arr;
             if (value != 0) {
                 arr = new char[FILL_BLOCK_LEN];
-                JArrays.fillCharArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new char[ZERO_FILL_BLOCK_LEN];
             }
@@ -1179,7 +1179,7 @@ public class JBuffers {
             short[] arr;
             if (value != 0) {
                 arr = new short[FILL_BLOCK_LEN];
-                JArrays.fillShortArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new short[ZERO_FILL_BLOCK_LEN];
             }
@@ -1221,7 +1221,7 @@ public class JBuffers {
             int[] arr;
             if (value != 0) {
                 arr = new int[FILL_BLOCK_LEN];
-                JArrays.fillIntArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new int[ZERO_FILL_BLOCK_LEN];
             }
@@ -1263,7 +1263,7 @@ public class JBuffers {
             long[] arr;
             if (value != 0) {
                 arr = new long[FILL_BLOCK_LEN];
-                JArrays.fillLongArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new long[ZERO_FILL_BLOCK_LEN];
             }
@@ -1305,7 +1305,7 @@ public class JBuffers {
             float[] arr;
             if (value != 0) {
                 arr = new float[FILL_BLOCK_LEN];
-                JArrays.fillFloatArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new float[ZERO_FILL_BLOCK_LEN];
             }
@@ -1347,7 +1347,7 @@ public class JBuffers {
             double[] arr;
             if (value != 0) {
                 arr = new double[FILL_BLOCK_LEN];
-                JArrays.fillDoubleArray(arr, value);
+                JArrays.fill(arr, value);
             } else {
                 arr = new double[ZERO_FILL_BLOCK_LEN];
             }

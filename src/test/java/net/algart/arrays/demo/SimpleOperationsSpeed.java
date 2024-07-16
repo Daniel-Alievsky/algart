@@ -156,22 +156,10 @@ public final class SimpleOperationsSpeed {
             someInfo += System.identityHashCode(byteBufferDirect);
 
             t1 = System.nanoTime();
-            JArrays.fillByteArray(bytes, (byte) 1);
-            t2 = System.nanoTime();
-            time("JArrays.fillByteArray", t1, t2);
-            someInfo += System.identityHashCode(bytes);
-
-            t1 = System.nanoTime();
             java.util.Arrays.fill(bytes, (byte) 1);
             t2 = System.nanoTime();
             time("Arrays.fill(byte[])", t1, t2);
             someInfo += System.identityHashCode(bytes);
-
-            t1 = System.nanoTime();
-            JArrays.fillIntArray(ints, 1);
-            t2 = System.nanoTime();
-            time("JArrays.fillIntArray", t1, t2);
-            someInfo += System.identityHashCode(ints);
 
             t1 = System.nanoTime();
             java.util.Arrays.fill(ints, 1);
@@ -200,12 +188,6 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             time("IntFiller(int[])", t1, t2);
             someInfo += System.identityHashCode(ints);
-
-            t1 = System.nanoTime();
-            JArrays.fillDoubleArray(doubles, 0);
-            t2 = System.nanoTime();
-            time("JArrays.fillDoubleArray", t1, t2);
-            someInfo += System.identityHashCode(doubles);
 
             t1 = System.nanoTime();
             java.util.Arrays.fill(doubles, 0);

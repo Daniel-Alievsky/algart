@@ -500,7 +500,7 @@ public final class ContourJoiner {
 
     public Contours joinContours() {
         long t1 = System.nanoTime();
-        JArrays.fillBooleanArray(alreadyProcessed, false);
+        JArrays.fill(alreadyProcessed, false);
         // - to be on the safe side (for multiple calls)
         result.clear();
         for (int k = 0; k < numberOfContours; k++) {

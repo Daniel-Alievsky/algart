@@ -594,7 +594,7 @@ public abstract class MatrixToBufferedImage {
                         System.arraycopy(ja, 0, result[0], 0, len);
                         System.arraycopy(ja, 0, result[1], 0, len);
                         System.arraycopy(ja, 0, result[2], 0, len);
-                        JArrays.fillByteArray(result[3], (byte) 0xFF);
+                        JArrays.fill(result[3], (byte) 0xFF);
                         return new java.awt.image.DataBufferByte(result, len);
                     } else {
                         byte[] result = new byte[len];

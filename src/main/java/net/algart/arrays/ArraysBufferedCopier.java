@@ -1025,8 +1025,8 @@ class ArraysBufferedCopier {
             }
             double[] minParentCoordinates = new double[n];
             double[] maxParentCoordinates = new double[n];
-            JArrays.fillDoubleArray(minParentCoordinates, Double.POSITIVE_INFINITY);
-            JArrays.fillDoubleArray(maxParentCoordinates, Double.NEGATIVE_INFINITY);
+            JArrays.fill(minParentCoordinates, Double.POSITIVE_INFINITY);
+            JArrays.fill(maxParentCoordinates, Double.NEGATIVE_INFINITY);
             double[] srcCoordinates = new double[n];
             double[] parentCoordinates = new double[n];
             for (int bits = 0, maxBits = 1 << n; bits < maxBits; bits++) {
@@ -1096,8 +1096,8 @@ class ArraysBufferedCopier {
             double[] maxParentCoordinates = new double[n]; // inclusive!
             double[] srcCoordinates = new double[n];
             double[] parentCoordinates = new double[n];
-            JArrays.fillDoubleArray(minParentCoordinates, Double.POSITIVE_INFINITY);
-            JArrays.fillDoubleArray(maxParentCoordinates, Double.NEGATIVE_INFINITY);
+            JArrays.fill(minParentCoordinates, Double.POSITIVE_INFINITY);
+            JArrays.fill(maxParentCoordinates, Double.NEGATIVE_INFINITY);
             for (int bits = 0, maxBits = 1 << n; bits < maxBits; bits++) {
                 for (int k = 0; k < n; k++) {
                     srcCoordinates[k] = ((bits >>> k) & 1) == 0 ? srcFrom[k] + aFrom[k] : srcTo[k] - 1 + aTo[k];

@@ -1175,7 +1175,7 @@ public final class ShiftStitchingMethod<P extends FramePosition> implements Stit
                 // important: we should not use frame.position().area() here, because it can be too large
                 if (shiftMinus05 == null) {
                     double[] shift = new double[area.coordCount()];
-                    JArrays.fillDoubleArray(shift, -0.5);
+                    JArrays.fill(shift, -0.5);
                     shiftMinus05 = Point.valueOf(shift);
                 }
                 this.areas[n] = area.shift(shiftMinus05);
