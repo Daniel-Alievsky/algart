@@ -60,22 +60,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newChars1, 0, newChars3, 0, count)) {
             throw new AssertionError("Bug B in bytesToCharArray/bytesToArray");
         }
+        char[] newChars4 = JArrays.copy(chars, newChars1, count / 2);
+        assert newChars4 == chars || chars == null;
+        if (!JArrays.arrayEquals(newChars4, 0, newChars1, 0, count / 2)) {
+            throw new AssertionError("Bug C in copy(char[],char[],int)");
+        }
+        char[] newChars5 = JArrays.copy(chars, newChars1);
+        assert newChars5 == chars || chars == null;
+        if (!java.util.Arrays.equals(newChars5, newChars1)) {
+            throw new AssertionError("Bug D in copy(char[],char[],int)");
+        }
         chars = newChars1;
+
         byte[] back = rnd.nextBoolean() ? new byte[2 * count + 2] : null;
         byte[] newBack1 = JArrays.charArrayToBytes(back, chars, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, chars, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in charArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in charArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(chars, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in charArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in charArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToCharArray/charArrayToBytes");
+            throw new AssertionError("Bug G in bytesToCharArray/charArrayToBytes");
         }
     }
 
@@ -100,22 +111,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newShorts1, 0, newShorts3, 0, count)) {
             throw new AssertionError("Bug B in bytesToShortArray/bytesToArray");
         }
+        short[] newShorts4 = JArrays.copy(shorts, newShorts1, count / 2);
+        assert newShorts4 == shorts || shorts == null;
+        if (!JArrays.arrayEquals(newShorts4, 0, newShorts1, 0, count / 2)) {
+            throw new AssertionError("Bug C in copy(short[],short[],int)");
+        }
+        short[] newShorts5 = JArrays.copy(shorts, newShorts1);
+        assert newShorts5 == shorts || shorts == null;
+        if (!java.util.Arrays.equals(newShorts5, newShorts1)) {
+            throw new AssertionError("Bug D in copy(short[],short[],int)");
+        }
         shorts = newShorts1;
+
         byte[] back = rnd.nextBoolean() ? new byte[2 * count + 2] : null;
         byte[] newBack1 = JArrays.shortArrayToBytes(back, shorts, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, shorts, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in shortArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in shortArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(shorts, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in shortArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in shortArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToShortArray/shortArrayToBytes");
+            throw new AssertionError("Bug G in bytesToShortArray/shortArrayToBytes");
         }
     }
 
@@ -138,22 +160,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newInts1, 0, newInts3, 0, count)) {
             throw new AssertionError("Bug B in bytesToIntArray/bytesToArray");
         }
+        int[] newInts4 = JArrays.copy(ints, newInts1, count / 4);
+        assert newInts4 == ints || ints == null;
+        if (!JArrays.arrayEquals(newInts4, 0, newInts1, 0, count / 4)) {
+            throw new AssertionError("Bug C in copy(int[],int[],int)");
+        }
+        int[] newInts5 = JArrays.copy(ints, newInts1);
+        assert newInts5 == ints || ints == null;
+        if (!java.util.Arrays.equals(newInts5, newInts1)) {
+            throw new AssertionError("Bug D in copy(int[],int[],int)");
+        }
         ints = newInts1;
+
         byte[] back = rnd.nextBoolean() ? new byte[4 * count + 2] : null;
         byte[] newBack1 = JArrays.intArrayToBytes(back, ints, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, ints, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in intArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in intArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(ints, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in intArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in intArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToIntArray/intArrayToBytes");
+            throw new AssertionError("Bug G in bytesToIntArray/intArrayToBytes");
         }
     }
 
@@ -176,22 +209,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newLongs1, 0, newLongs3, 0, count)) {
             throw new AssertionError("Bug B in bytesToLongArray/bytesToArray");
         }
+        long[] newLongs4 = JArrays.copy(longs, newLongs1, count / 8);
+        assert newLongs4 == longs || longs == null;
+        if (!JArrays.arrayEquals(newLongs4, 0, newLongs1, 0, count / 8)) {
+            throw new AssertionError("Bug C in copy(long[],long[],int)");
+        }
+        long[] newLongs5 = JArrays.copy(longs, newLongs1);
+        assert newLongs5 == longs || longs == null;
+        if (!java.util.Arrays.equals(newLongs5, newLongs1)) {
+            throw new AssertionError("Bug D in copy(long[],long[],int)");
+        }
         longs = newLongs1;
+
         byte[] back = rnd.nextBoolean() ? new byte[8 * count + 2] : null;
         byte[] newBack1 = JArrays.longArrayToBytes(back, longs, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, longs, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in longArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in longArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(longs, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in longArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in longArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToLongArray/longArrayToBytes");
+            throw new AssertionError("Bug G in bytesToLongArray/longArrayToBytes");
         }
     }
 
@@ -214,22 +258,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newFloats1, 0, newFloats3, 0, count)) {
             throw new AssertionError("Bug B in bytesToFloatArray/bytesToArray");
         }
+        float[] newFloats4 = JArrays.copy(floats, newFloats1, count / 4);
+        assert newFloats4 == floats || floats == null;
+        if (!JArrays.arrayEquals(newFloats4, 0, newFloats1, 0, count / 4)) {
+            throw new AssertionError("Bug C in copy(float[],float[],int)");
+        }
+        float[] newFloats5 = JArrays.copy(floats, newFloats1);
+        assert newFloats5 == floats || floats == null;
+        if (!java.util.Arrays.equals(newFloats5, newFloats1)) {
+            throw new AssertionError("Bug D in copy(float[],float[],int)");
+        }
         floats = newFloats1;
+
         byte[] back = rnd.nextBoolean() ? new byte[4 * count + 2] : null;
         byte[] newBack1 = JArrays.floatArrayToBytes(back, floats, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, floats, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in floatArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in floatArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(floats, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in floatArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in floatArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToFloatArray/floatArrayToBytes");
+            throw new AssertionError("Bug G in bytesToFloatArray/floatArrayToBytes");
         }
     }
 
@@ -252,22 +307,33 @@ public class JArrayToBytesTest {
         if (!JArrays.arrayEquals(newDoubles1, 0, newDoubles3, 0, count)) {
             throw new AssertionError("Bug B in bytesToDoubleArray/bytesToArray");
         }
+        double[] newDoubles4 = JArrays.copy(doubles, newDoubles1, count / 8);
+        assert newDoubles4 == doubles || doubles == null;
+        if (!JArrays.arrayEquals(newDoubles4, 0, newDoubles1, 0, count / 8)) {
+            throw new AssertionError("Bug C in copy(double[],double[],int)");
+        }
+        double[] newDoubles5 = JArrays.copy(doubles, newDoubles1);
+        assert newDoubles5 == doubles || doubles == null;
+        if (!java.util.Arrays.equals(newDoubles5, newDoubles1)) {
+            throw new AssertionError("Bug D in copy(double[],double[],int)");
+        }
         doubles = newDoubles1;
+
         byte[] back = rnd.nextBoolean() ? new byte[8 * count + 2] : null;
         byte[] newBack1 = JArrays.doubleArrayToBytes(back, doubles, count, order);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, doubles, count, order);
         assert back == null || newBack2 == back;
         if (!java.util.Arrays.equals(newBack1, newBack2)) {
-            throw new AssertionError("Bug C in doubleArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug E in doubleArrayToBytes/arrayToBytes");
         }
         byte[] newBack3 = JArrays.arrayToBytes(doubles, order);
         if (!JArrays.arrayEquals(newBack1, 0, newBack3, 0, count)) {
-            throw new AssertionError("Bug D in doubleArrayToBytes/arrayToBytes");
+            throw new AssertionError("Bug F in doubleArrayToBytes/arrayToBytes");
         }
         back = newBack1;
         if (!JArrays.arrayEquals(back, 0, serialized, 0, count)) {
-            throw new AssertionError("Bug E in bytesToDoubleArray/doubleArrayToBytes");
+            throw new AssertionError("Bug G in bytesToDoubleArray/doubleArrayToBytes");
         }
     }
 
@@ -281,7 +347,7 @@ public class JArrayToBytesTest {
         int count = rnd.nextInt(len  + 1);
         byte[] bytes = rnd.nextBoolean() ? new byte[count + 2] : null;
         ByteOrder order = rnd.nextBoolean() ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
-        byte[] newBytes1 = JArrays.copyBytes(bytes, serialized, count);
+        byte[] newBytes1 = JArrays.copy(bytes, serialized, count);
         assert newBytes1 == bytes || bytes == null;
         if (!JArrays.arrayEquals(newBytes1, 0, saved, 0, count)) {
             throw new AssertionError("Bug A in copyBytes");        }
@@ -297,7 +363,7 @@ public class JArrayToBytesTest {
         }
         bytes = newBytes1;
         byte[] back = rnd.nextBoolean() ? new byte[ count + 2] : null;
-        byte[] newBack1 = JArrays.copyBytes(back, bytes, count);
+        byte[] newBack1 = JArrays.copy(back, bytes, count);
         assert back == null || newBack1 == back;
         byte[] newBack2 = JArrays.arrayToBytes(back, bytes, count, order);
         assert back == null || newBack2 == back;
@@ -360,7 +426,7 @@ public class JArrayToBytesTest {
         // JArrays.bytesToArray(bytes1, 10000000000L, float.class, ByteOrder.LITTLE_ENDIAN);
         assert JArrays.arrayEquals(data3, 0, floats1, 0, floats1.length);
 
-        byte[] bytes4 = JArrays.copyBytes(null, bytes1, bytes1.length);
+        byte[] bytes4 = JArrays.copy(null, bytes1, bytes1.length);
         assert java.util.Arrays.equals(bytes4, bytes1.clone());
 
         boolean[] booleans = JArrays.bytesToBooleanArray(bytes1);

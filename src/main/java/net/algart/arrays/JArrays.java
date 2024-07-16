@@ -899,12 +899,11 @@ public class JArrays {
      *     float[] data = new float[10000];
      *     int len = 0;
      *     ... (filling some first elements, with incrementing len)
-     *     float[] result = (float[])JArrays.copyOfRange(data, 0, len);
+     *     float[] result = (float[]) JArrays.copyOfRange(data, 0, len);
      *     // now result contains first len elements of data array</pre>
      *
-     * <p>This method is an analog of <code>java.util.Arrays.copyOfRange</code> methods (Java 1.6),
-     * but it works with any type of array (which is passed as <code>Object</code> argument)
-     * and it is compatible with JRE 1.1.
+     * <p>This method is an analog of <code>java.util.Arrays.copyOfRange</code> methods,
+     * but it works with any type of arrays.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -928,7 +927,9 @@ public class JArrays {
         if (fromIndex < 0 || fromIndex > length) {
             throw new ArrayIndexOutOfBoundsException(fromIndex);
         }
-        Object result = java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), toIndex - fromIndex);
+        Object result = java.lang.reflect.Array.newInstance(
+                array.getClass().getComponentType(),
+                toIndex - fromIndex);
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, length) - fromIndex);
         return result;
@@ -939,7 +940,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(boolean[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(boolean[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -968,7 +969,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(byte[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(byte[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -996,7 +997,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(char[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(char[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1024,7 +1025,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(short[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(short[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1052,7 +1053,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(int[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(int[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1080,7 +1081,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(long[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(long[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1108,7 +1109,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(float[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(float[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1136,7 +1137,7 @@ public class JArrays {
 
     /**
      * Equivalent to
-     * <code>(double[]){@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
+     * <code>(double[]) {@link #copyOfRange(Object, int, int) copyOfRange}(array, fromIndex, toIndex)</code>.
      *
      * @param array     the source array.
      * @param fromIndex the initial index in <code>array</code>, inclusive.
@@ -1160,6 +1161,635 @@ public class JArrays {
         double[] result = new double[toIndex - fromIndex];
         System.arraycopy(array, fromIndex, result, 0, Math.min(toIndex, array.length) - fromIndex);
         return result;
+    }
+    /*Repeat.AutoGeneratedEnd*/
+
+    /*Repeat() byte ==> char,,short,,int,,long,,float,,double,,boolean;;
+               Byte ==> Char,,Short,,Int,,Long,,Float,,Double,,Boolean */
+
+    /**
+     * Equivalent to {@link #copy(byte[], byte[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>byte[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>byte[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static byte[] copy(byte[] dest, byte[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new byte[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>byte</code> elements
+     * from the <code>src</code> <code>byte[]</code> array
+     * into the <code>dest</code> <code>byte[]</code> array
+     * (or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>byte[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>byte[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>byte[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>byte[]</code> array.
+     * @param n    number of bytes to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static byte[] copy(byte[] dest, byte[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new byte[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+    /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
+
+    /**
+     * Equivalent to {@link #copy(char[], char[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>char[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>char[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static char[] copy(char[] dest, char[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new char[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array char[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>char</code> elements
+     * from the <code>src</code> <code>char[]</code> array
+     * into the <code>dest</code> <code>char[]</code> array
+     * (or into a newly created <code>char[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>char[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>char[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>char[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>char[]</code> array.
+     * @param n    number of chars to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static char[] copy(char[] dest, char[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array char[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new char[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array char[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(short[], short[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>short[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>short[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static short[] copy(short[] dest, short[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new short[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array short[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>short</code> elements
+     * from the <code>src</code> <code>short[]</code> array
+     * into the <code>dest</code> <code>short[]</code> array
+     * (or into a newly created <code>short[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>short[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>short[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>short[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>short[]</code> array.
+     * @param n    number of shorts to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static short[] copy(short[] dest, short[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array short[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new short[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array short[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(int[], int[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>int[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>int[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static int[] copy(int[] dest, int[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new int[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array int[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>int</code> elements
+     * from the <code>src</code> <code>int[]</code> array
+     * into the <code>dest</code> <code>int[]</code> array
+     * (or into a newly created <code>int[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>int[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>int[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>int[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>int[]</code> array.
+     * @param n    number of ints to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static int[] copy(int[] dest, int[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array int[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new int[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array int[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(long[], long[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>long[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>long[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static long[] copy(long[] dest, long[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new long[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array long[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>long</code> elements
+     * from the <code>src</code> <code>long[]</code> array
+     * into the <code>dest</code> <code>long[]</code> array
+     * (or into a newly created <code>long[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>long[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>long[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>long[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>long[]</code> array.
+     * @param n    number of longs to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static long[] copy(long[] dest, long[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new long[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array long[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(float[], float[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>float[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>float[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static float[] copy(float[] dest, float[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new float[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array float[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>float</code> elements
+     * from the <code>src</code> <code>float[]</code> array
+     * into the <code>dest</code> <code>float[]</code> array
+     * (or into a newly created <code>float[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>float[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>float[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>float[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>float[]</code> array.
+     * @param n    number of floats to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static float[] copy(float[] dest, float[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array float[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new float[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array float[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(double[], double[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>double[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>double[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static double[] copy(double[] dest, double[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new double[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array double[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>double</code> elements
+     * from the <code>src</code> <code>double[]</code> array
+     * into the <code>dest</code> <code>double[]</code> array
+     * (or into a newly created <code>double[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>double[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>double[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>double[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>double[]</code> array.
+     * @param n    number of doubles to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static double[] copy(double[] dest, double[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array double[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new double[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array double[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
+    }
+
+    /**
+     * Equivalent to {@link #copy(boolean[], boolean[], int) copy(dest, src, src.length)}.
+     *
+     * @param dest the result <code>boolean[]</code> array;
+     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     * @param src  the source <code>boolean[]</code> array.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>src.length</code> is greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static boolean[] copy(boolean[] dest, boolean[] src) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (dest == null) {
+            dest = new boolean[src.length];
+        } else if (src.length > dest.length) {
+            throw new IllegalArgumentException("Too short destination array boolean[" + dest.length +
+                    "]: it must contain at least " + src.length + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, src.length);
+        return dest;
+    }
+
+    /**
+     * Copies the specified number <code>n</code> of <code>boolean</code> elements
+     * from the <code>src</code> <code>boolean[]</code> array
+     * into the <code>dest</code> <code>boolean[]</code> array
+     * (or into a newly created <code>boolean[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
+     * and returns the resulting <code>boolean[]</code> array.
+     *
+     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
+     * <code>boolean[]</code> array with the length <code>n</code> and copies the data into
+     * the newly created array.
+     *
+     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
+     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
+     *
+     * <p>The copying is performed with the following call:</p>
+     *
+     * <pre>
+     *     System.arraycopy(dest, 0, src, 0, n);
+     * </pre>
+     *
+     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
+     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
+     *
+     * @param dest the result <code>boolean[]</code> array;
+     *             can be {@code null}, then it will be allocated automatically.
+     * @param src  the source <code>boolean[]</code> array.
+     * @param n    number of booleans to be copied.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
+     *                                  greater than <code>src.length</code>
+     *                                  or greater than <code>dest.length</code>
+     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
+     */
+    public static boolean[] copy(boolean[] dest, boolean[] src, int n) {
+        Objects.requireNonNull(src, "Null src argument");
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative n = " + n);
+        }
+        if (n > src.length) {
+            throw new IllegalArgumentException("Too short source array boolean[" + src.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        if (dest == null) {
+            dest = new boolean[n];
+        } else if (n > dest.length) {
+            throw new IllegalArgumentException("Too short destination array boolean[" + dest.length +
+                    "]: it must contain at least " + n + " elements");
+        }
+        System.arraycopy(src, 0, dest, 0, n);
+        return dest;
     }
     /*Repeat.AutoGeneratedEnd*/
 
@@ -1237,8 +1867,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>src</code> array, containing elements
+     * Copies the specified number <code>n</code> of elements
+     * from the <code>src</code> array, containing elements
      * of some primitive type (2nd argument),
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
@@ -1256,7 +1886,7 @@ public class JArrays {
      *
      * <p>Depending on the type of <code>src</code> array, this method is equivalent to:
      * <ul>
-     *     <li>{@link #copyBytes(byte[], byte[], int)} if <code>src instanceof byte[]</code></li>
+     *     <li>{@link #copy(byte[], byte[], int)} if <code>src instanceof byte[]</code></li>
      *     <li>{@link #booleanArrayToBytes(byte[], boolean[], int)}
      *     if <code>src instanceof boolean[]</code></li>
      *     <li>{@link #charArrayToBytes(byte[], char[], int, ByteOrder)}
@@ -1310,7 +1940,7 @@ public class JArrays {
                     ": it is greater than 2^31-1 and, of course, greater than the length of the source Java array");
         }
         if (src instanceof byte[] a) {
-            return copyBytes(dest, a, (int) n);
+            return copy(dest, a, (int) n);
         } else if (src instanceof boolean[] a) {
             return booleanArrayToBytes(dest, a, (int) n);
         } else if (src instanceof char[] a) {
@@ -1358,7 +1988,7 @@ public class JArrays {
         final int n = src.length / bytesPerElement;
         final Object dest = java.lang.reflect.Array.newInstance(elementType, n);
         if (dest instanceof byte[] a) {
-            return copyBytes(a, src, n);
+            return copy(a, src, n);
         } else if (dest instanceof boolean[] a) {
             return bytesToBooleanArray(a, src, n);
         } else if (dest instanceof char[] a) {
@@ -1404,7 +2034,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>,
+     * Copies the specified number <code>n</code> of elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #arrayToBytes(byte[], Object, long, ByteOrder)}
      * call, back into the given Java array (1st argument,
@@ -1429,7 +2059,7 @@ public class JArrays {
      *
      * <p>Depending on the <code>elementType</code>, this method is equivalent to:
      * <ul>
-     *     <li>{@link #copyBytes(byte[], byte[], int)} for <code>byte[]</code> array</li>
+     *     <li>{@link #copy(byte[], byte[], int)} for <code>byte[]</code> array</li>
      *     <li>{@link #bytesToBooleanArray(boolean[], byte[], int)}
      *     for <code>boolean[]</code> array</li>
      *     <li>{@link #bytesToCharArray(char[], byte[], int, ByteOrder)}
@@ -1501,7 +2131,7 @@ public class JArrays {
             }
         }
         if (dest instanceof byte[] a) {
-            return copyBytes(a, src, (int) n);
+            return copy(a, src, (int) n);
         } else if (dest instanceof boolean[] a) {
             return bytesToBooleanArray(a, src, (int) n);
         } else if (dest instanceof char[] a) {
@@ -1566,8 +2196,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>char[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>char</code> elements
+     * from the <code>char[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1668,7 +2298,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>char</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>char</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #charArrayToBytes(byte[], char[], int, ByteOrder)}
      * call, back into the given <code>char[]</code> array (1st argument,
@@ -1772,8 +2402,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>short[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>short</code> elements
+     * from the <code>short[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -1874,7 +2504,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>short</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>short</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #shortArrayToBytes(byte[], short[], int, ByteOrder)}
      * call, back into the given <code>short[]</code> array (1st argument,
@@ -1976,8 +2606,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>int[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>int</code> elements
+     * from the <code>int[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2078,7 +2708,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>int</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>int</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #intArrayToBytes(byte[], int[], int, ByteOrder)}
      * call, back into the given <code>int[]</code> array (1st argument,
@@ -2180,8 +2810,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>long[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>long</code> elements
+     * from the <code>long[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2282,7 +2912,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>long</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>long</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #longArrayToBytes(byte[], long[], int, ByteOrder)}
      * call, back into the given <code>long[]</code> array (1st argument,
@@ -2384,8 +3014,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>float[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>float</code> elements
+     * from the <code>float[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2486,7 +3116,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>float</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>float</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #floatArrayToBytes(byte[], float[], int, ByteOrder)}
      * call, back into the given <code>float[]</code> array (1st argument,
@@ -2588,8 +3218,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>double[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>double</code> elements
+     * from the <code>double[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2690,7 +3320,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>double</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>double</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument)
      * by previous {@link #doubleArrayToBytes(byte[], double[], int, ByteOrder)}
      * call, back into the given <code>double[]</code> array (1st argument,
@@ -2787,8 +3417,8 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of elements <code>n</code>
-     * of the <code>boolean[]</code> array (2nd argument)
+     * Copies the specified number <code>n</code> of <code>boolean</code> elements
+     * from the <code>boolean[]</code> array (2nd argument)
      * into the <code>dest</code> <code>byte[]</code> array (1st argument,
      * or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
      * and returns the resulting <code>byte[]</code> array.
@@ -2874,7 +3504,7 @@ public class JArrays {
     }
 
     /**
-     * Copies the specified number of <code>boolean</code> elements <code>n</code>,
+     * Copies the specified number <code>n</code> of <code>boolean</code> elements,
      * stored in the <code>src</code> <code>byte[]</code> array (2nd argument),
      * into the given <code>boolean[]</code> array (1st argument,
      * or into a newly created <code>boolean[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
@@ -2929,61 +3559,6 @@ public class JArrays {
         for (int k = 0; k < n; k++) {
             dest[k] = src[k] != 0;
         }
-        return dest;
-    }
-
-    /**
-     * Copies the specified number of bytes <code>n</code> of the <code>src</code> <code>byte[]</code> array
-     * into the <code>dest</code> <code>byte[]</code> array
-     * (or into a newly created <code>byte[]</code> array if <code>dest&nbsp;==&nbsp;null</code>),
-     * and returns the resulting <code>byte[]</code> array.
-     *
-     * <p>The <code>dest</code> argument can be {@code null}; in this case, this method automatically allocates
-     * <code>byte[]</code> array with the length <code>n</code> and copies the data into
-     * the newly created array.
-     *
-     * <p>Both the lengths of the <code>src</code> array and the <code>dest</code> array
-     * (when <code>dest&nbsp;!=&nbsp;null</code>) must be not less than <code>n</code>.
-     *
-     * <p>The copying is performed with the following call:</p>
-     *
-     * <pre>
-     *     System.arraycopy(dest, 0, src, 0, n);
-     * </pre>
-     *
-     * <p>Note that calling this method with <code>dest&nbsp;=&nbsp;null</code> and
-     * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
-     *
-     * @param dest the result <code>byte[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
-     * @param src  the source <code>byte[]</code> array.
-     * @param n    number of bytes to be copied.
-     * @return array with resulting data;
-     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
-     * @throws NullPointerException     if <code>src</code> argument is {@code null}.
-     * @throws IllegalArgumentException if <code>n</code> is negative or too large:
-     *                                  greater than <code>src.length</code>
-     *                                  or greater than <code>dest.length</code>
-     *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
-     * @see #arrayToBytes(byte[], Object, long, ByteOrder)
-     * @see #bytesToArray(Object, byte[], long, Class, ByteOrder)
-     */
-    public static byte[] copyBytes(byte[] dest, byte[] src, int n) {
-        Objects.requireNonNull(src, "Null src argument");
-        if (n < 0) {
-            throw new IllegalArgumentException("Negative n = " + n);
-        }
-        if (n > src.length) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
-                    "]: it must contain at least " + n + " elements");
-        }
-        if (dest == null) {
-            dest = new byte[n];
-        } else if (n > dest.length) {
-            throw new IllegalArgumentException("Too short destination array byte[" + dest.length +
-                    "]: it must contain at least " + n + " elements");
-        }
-        System.arraycopy(src, 0, dest, 0, n);
         return dest;
     }
 
