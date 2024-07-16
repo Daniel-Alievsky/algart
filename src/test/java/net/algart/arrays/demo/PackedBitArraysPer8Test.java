@@ -1568,10 +1568,10 @@ public class PackedBitArraysPer8Test {
             for (int testCount = 0; testCount < numberOfTests; testCount++) {
                 System.arraycopy(pDest, 0, pDestWork1, 0, pDest.length);
                 int count = rnd.nextInt(len + 1);
-                final int numberOfBytes = PackedBitArraysPer8.packedLength(count);
-                final int numberOfLongs = PackedBitArrays.packedLength(count);
+                final int numberOfBytes = PackedBitArraysPer8.packedLength32(count);
+                final int numberOfLongs = PackedBitArrays.packedLength32(count);
                 long[] longs1 = PackedBitArraysPer8.toLongArray(Arrays.copyOf(pDestWork1, numberOfBytes), count);
-                if (longs1.length != PackedBitArrays.packedLength(count)) {
+                if (longs1.length != PackedBitArrays.packedLength32(count)) {
                     throw new AssertionError("The bug in toLongArray() length");
                 }
                 for (int k = 0; k < count; k++) {

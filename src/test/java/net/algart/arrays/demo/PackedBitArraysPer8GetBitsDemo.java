@@ -25,7 +25,6 @@
 package net.algart.arrays.demo;
 
 import net.algart.arrays.JArrays;
-import net.algart.arrays.PackedBitArrays;
 import net.algart.arrays.PackedBitArraysPer8;
 
 import java.util.Random;
@@ -144,7 +143,7 @@ public class PackedBitArraysPer8GetBitsDemo {
         Random rnd = new Random(seed);
         System.out.println("Start random seed " + seed);
         final int len = 100;
-        final int packedLen = PackedBitArraysPer8.packedLength(len);
+        final int packedLen = PackedBitArraysPer8.packedLength32(len);
         boolean[] bSrc = new boolean[len];
         System.out.printf("Length %d, packed length %d, reverse unpacked length %d%n",
                 len,

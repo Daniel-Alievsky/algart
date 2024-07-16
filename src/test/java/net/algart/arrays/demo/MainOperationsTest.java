@@ -305,7 +305,7 @@ public class MainOperationsTest implements Cloneable {
             result.mwork1 = null; // for packed combiner
         }
         result.workJA1 = result.a.newJavaArray(result.len);
-        result.workJBits = new long[PackedBitArrays.packedLength(result.len)];
+        result.workJBits = new long[PackedBitArrays.packedLength32(result.len)];
         return result;
     }
 

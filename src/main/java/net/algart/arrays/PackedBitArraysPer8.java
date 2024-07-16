@@ -450,18 +450,42 @@ public class PackedBitArraysPer8 {
             throw new IllegalArgumentException("Negative unpacked length");
         }
         return (numberOfBits + 7) >>> 3;
-        // here >>> must be used instead of >>, because numberOfBits+7 may be >Long.MAX_VALUE
+        // here >>> must be used instead of >>, because numberOfBits+7 can be >Long.MAX_VALUE
     }
 
     /**
-     * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
+     * Returns the same result as {@link #packedLength(long) packedLength(numberOfBits)} as
+     * a 32-bit <code>int</code> value, or throws {@link TooLargeArrayException} if
+     * that result is greater than <code>Integer.MAX_VALUE</code>.
+     *
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 7) &gt;&gt;&gt; 3</code>
+     * (the length of corresponding <code>byte[]</code> array).
+     * @throws IllegalArgumentException if the argument is negative.
+     * @throws TooLargeArrayException if <code>numberOfBits &ge; 2<sup>34</sup></code>.
+     */
+    public static int packedLength32(long numberOfBits) {
+        if (numberOfBits < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
+        long result = (numberOfBits + 7) >>> 3;
+        // here >>> must be used instead of >>, because numberOfBits+63 can be >Long.MAX_VALUE
+        if (result > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large number of bits " + numberOfBits +
+                    ": number of packed longs " + result + " >= 2^31");
+        }
+        return (int) result;
+    }
+
+    /**
+     * Equivalent of {@link #packedLength32(long)} for <code>int</code> argument.
      *
      * @param numberOfBits the number of bits (the length of bit array).
      * @return <code>(numberOfBits + 7) &gt;&gt;&gt; 3</code>
      * (the length of corresponding <code>byte[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static int packedLength(int numberOfBits) {
+    public static int packedLength32(int numberOfBits) {
         if (numberOfBits < 0) {
             throw new IllegalArgumentException("Negative unpacked length");
         }
@@ -2368,7 +2392,7 @@ public class PackedBitArraysPer8 {
 
     /**
      * Packs <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
-     * into a newly created packed bit array <code>byte[{@link #packedLength(int) packedLength}(count)]</code>
+     * into a newly created packed bit array <code>byte[{@link #packedLength(long) packedLength}(count)]</code>
      * returned as a result, starting from the bit #0.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case
@@ -2556,7 +2580,7 @@ public class PackedBitArraysPer8 {
 
     /**
      * Packs <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
-     * into a newly created packed bit array <code>byte[{@link #packedLength(int) packedLength}(count)]</code>
+     * into a newly created packed bit array <code>byte[{@link #packedLength(long) packedLength}(count)]</code>
      * returned as a result, starting from the bit #0,
      * for a case, when the bits are packed in each byte in the reverse order.
      *

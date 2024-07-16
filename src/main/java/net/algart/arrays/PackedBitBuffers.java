@@ -115,12 +115,27 @@ public class PackedBitBuffers {
      * Returns <code>(numberOfButs + 63) &gt;&gt;&gt; 6</code>: the minimal number of <code>long</code> values
      * allowing to store the specified number of bits.
      *
-     * @param numberOfButs the number of bits (the length of bit array).
+     * @param numberOfBits the number of bits (the length of bit array).
      * @return <code>(numberOfButs + 63) &gt;&gt;&gt; 6</code>
      * (the length of corresponding <code>long[]</code> array).
      */
-    public static long packedLength(long numberOfButs) {
-        return PackedBitArrays.packedLength(numberOfButs);
+    public static long packedLength(long numberOfBits) {
+        return PackedBitArrays.packedLength(numberOfBits);
+    }
+
+    /**
+     * Returns the same result as {@link #packedLength(long) packedLength(numberOfBits)} as
+     * a 32-bit <code>int</code> value, or throws {@link TooLargeArrayException} if
+     * that result is greater than <code>Integer.MAX_VALUE</code>.
+     *
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
+     * @throws IllegalArgumentException if the argument is negative.
+     * @throws TooLargeArrayException   if <code>numberOfBits &ge; 2<sup>37</sup></code>.
+     */
+    public static int packedLength32(long numberOfBits) {
+        return PackedBitArrays.packedLength32(numberOfBits);
     }
 
     /**
@@ -130,8 +145,8 @@ public class PackedBitBuffers {
      * @return <code>(numberOfBits + 63) &gt;&gt;&gt; 6</code>
      * (the length of corresponding <code>long[]</code> array).
      */
-    public static int packedLength(int numberOfBits) {
-        return PackedBitArrays.packedLength(numberOfBits);
+    public static int packedLength32(int numberOfBits) {
+        return PackedBitArrays.packedLength32(numberOfBits);
     }
 
     /**

@@ -41,9 +41,15 @@ public class PackedLengthDemo {
         }
         if (r < 0) throw new AssertionError();
         try {
-            System.out.printf("packedLength(int): %d%n", r = PackedBitArrays.packedLength((int) length));
+            System.out.printf("packedLength32(long): %d%n", r = PackedBitArrays.packedLength32(length));
         } catch (RuntimeException e) {
-            System.out.printf("packedLength(int): %s%n", e.getMessage());
+            System.out.printf("packedLength32(long): %s%n", e.getMessage());
+        }
+        if (r < 0) throw new AssertionError();
+        try {
+            System.out.printf("packedLength32(int): %d%n", r = PackedBitArrays.packedLength32((int) length));
+        } catch (RuntimeException e) {
+            System.out.printf("packedLength32(int): %s%n", e.getMessage());
         }
         if (r < 0) throw new AssertionError();
         try {
@@ -67,9 +73,15 @@ public class PackedLengthDemo {
         }
         if (r < 0) throw new AssertionError();
         try {
-            System.out.printf("packedLength(int): %d%n", r = PackedBitBuffers.packedLength((int) length));
+            System.out.printf("packedLength32(long): %d%n", r = PackedBitBuffers.packedLength32(length));
         } catch (RuntimeException e) {
-            System.out.printf("packedLength(int): %s%n", e.getMessage());
+            System.out.printf("packedLength32(long): %s%n", e.getMessage());
+        }
+        if (r < 0) throw new AssertionError();
+        try {
+            System.out.printf("packedLength32(int): %d%n", r = PackedBitBuffers.packedLength32((int) length));
+        } catch (RuntimeException e) {
+            System.out.printf("packedLength32(int): %s%n", e.getMessage());
         }
         if (r < 0) throw new AssertionError();
         try {
@@ -91,9 +103,15 @@ public class PackedLengthDemo {
         }
         if (r < 0) throw new AssertionError();
         try {
-            System.out.printf("packedLength(int): %d%n", r = PackedBitArraysPer8.packedLength((int) length));
+            System.out.printf("packedLength32(long): %d%n", r = PackedBitArraysPer8.packedLength32(length));
         } catch (RuntimeException e) {
-            System.out.printf("packedLength(int): %s%n", e.getMessage());
+            System.out.printf("packedLength32(long): %s%n", e.getMessage());
+        }
+        if (r < 0) throw new AssertionError();
+        try {
+            System.out.printf("packedLength32(int): %d%n", r = PackedBitArraysPer8.packedLength32((int) length));
+        } catch (RuntimeException e) {
+            System.out.printf("packedLength32(int): %s%n", e.getMessage());
         }
         if (r < 0) throw new AssertionError();
         try {

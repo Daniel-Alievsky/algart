@@ -89,8 +89,6 @@ public class PackedBitArrays {
     private PackedBitArrays() {
     }
 
-    /*Repeat.SectionStart primitives*/
-
     /**
      * Returns <code>numberOfLongs &lt;&lt; 6</code>: the maximal number of bits that
      * can be stored in the specified number of <code>long</code> values.
@@ -136,18 +134,42 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative unpacked length");
         }
         return (numberOfBits + 63) >>> 6;
-        // here >>> must be used instead of >>, because numberOfBits+63 may be >Long.MAX_VALUE
+        // here >>> must be used instead of >>, because numberOfBits+63 can be >Long.MAX_VALUE
     }
 
     /**
-     * Equivalent of {@link #packedLength(long)} for <code>int</code> argument.
+     * Returns the same result as {@link #packedLength(long) packedLength(numberOfBits)} as
+     * a 32-bit <code>int</code> value, or throws {@link TooLargeArrayException} if
+     * that result is greater than <code>Integer.MAX_VALUE</code>.
+     *
+     * @param numberOfBits the number of bits (the length of bit array).
+     * @return <code>(numberOfBits + 63) &gt;&gt;&gt; 6</code>
+     * (the length of corresponding <code>long[]</code> array).
+     * @throws IllegalArgumentException if the argument is negative.
+     * @throws TooLargeArrayException   if <code>numberOfBits &ge; 2<sup>37</sup></code>.
+     */
+    public static int packedLength32(long numberOfBits) {
+        if (numberOfBits < 0) {
+            throw new IllegalArgumentException("Negative unpacked length");
+        }
+        long result = (numberOfBits + 63) >>> 6;
+        // here >>> must be used instead of >>, because numberOfBits+63 can be >Long.MAX_VALUE
+        if (result > Integer.MAX_VALUE) {
+            throw new TooLargeArrayException("Too large number of bits " + numberOfBits +
+                    ": number of packed longs " + result + " >= 2^31");
+        }
+        return (int) result;
+    }
+
+    /**
+     * Equivalent of {@link #packedLength32(long)} for <code>int</code> argument.
      *
      * @param numberOfBits the number of bits (the length of bit array).
      * @return <code>(numberOfBits + 63) &gt;&gt;&gt; 6</code>
      * (the length of corresponding <code>long[]</code> array).
      * @throws IllegalArgumentException if the argument is negative.
      */
-    public static int packedLength(int numberOfBits) {
+    public static int packedLength32(int numberOfBits) {
         if (numberOfBits < 0) {
             throw new IllegalArgumentException("Negative unpacked length");
         }
@@ -197,7 +219,6 @@ public class PackedBitArrays {
                 dest[(int) (index >>> 6)] &= ~(1L << (index & 63));
         }
     }
-    /*Repeat.SectionEnd primitives*/
 
     /**
      * Sets the bit <code>#index</code> in the packed <code>dest</code> bit array <i>without synchronization</i>.
@@ -966,7 +987,7 @@ public class PackedBitArrays {
 
     /**
      * Packs <code>count</code> bits from the <code>src</code> array, starting from the element <code>#srcPos</code>,
-     * into a newly created packed bit array <code>long[{@link #packedLength(int) packedLength}(count)]</code>
+     * into a newly created packed bit array <code>long[{@link #packedLength(long) packedLength}(count)]</code>
      * returned as a result, starting from the bit #0.
      *
      * <p>Note that this method provides more user-friendly exception messages in a case

@@ -162,9 +162,9 @@ public interface Array {
     long length();
 
     /**
-     * Returns the length as 32-bit <code>int</code> value.
+     * Returns the length as a 32-bit <code>int</code> value.
      * If the {@link #length() actual length} is greater than <code>Integer.MAX_VALUE</code>,
-     * throws <code>TooLargeArrayException</code>.
+     * throws {@link TooLargeArrayException}.
      *
      * <p>This method is convenient to allocate memory for a regular Java array
      * if you want to ensure that this AlgART array can be completely copied into such an array.</p>
