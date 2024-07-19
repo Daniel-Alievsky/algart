@@ -1826,30 +1826,30 @@ public class JArrays {
         return total;
     }
 
-    public static void setBytes8(byte[] dest, int destPos, long bytes, int count, ByteOrder byteOrder) {
+    public static void setBytes8(byte[] dest, int destPos, long bytes8, int count, ByteOrder byteOrder) {
         Objects.requireNonNull(byteOrder, "Null byteOrder");
         if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            setBytes8InBigEndianOrder(dest, destPos, bytes, count);
+            setBytes8InBigEndianOrder(dest, destPos, bytes8, count);
         } else {
-            setBytes8(dest, destPos, bytes, count);
+            setBytes8(dest, destPos, bytes8, count);
         }
     }
 
-    public static void setBytes8(byte[] dest, int destPos, long bytes, int count) {
+    public static void setBytes8(byte[] dest, int destPos, long bytes8, int count) {
         Objects.requireNonNull(dest, "Null dest");
         rangeCheckForBytes8(dest.length, destPos, count);
         for (int i = 0; i < count; i++, destPos++) {
-            dest[destPos] = (byte) (bytes & 0xff);
-            bytes >>>= 8;
+            dest[destPos] = (byte) (bytes8 & 0xff);
+            bytes8 >>>= 8;
         }
     }
 
-    public static void setBytes8InBigEndianOrder(byte[] dest, int destPos, long bytes, int count) {
+    public static void setBytes8InBigEndianOrder(byte[] dest, int destPos, long bytes8, int count) {
         Objects.requireNonNull(dest, "Null dest");
         rangeCheckForBytes8(dest.length, destPos, count);
         final int numberOfBits = count << 3;
         for (int shift = numberOfBits - 8; shift >= 0; shift -= 8, destPos++) {
-            dest[destPos] = (byte) ((bytes >>> shift) & 0xff);
+            dest[destPos] = (byte) ((bytes8 >>> shift) & 0xff);
         }
     }
 

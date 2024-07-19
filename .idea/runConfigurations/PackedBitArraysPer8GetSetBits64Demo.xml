@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="PackedBitArraysPer8GetBitsDemo" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysPer8GetBitsDemo" />
+  <configuration default="false" name="PackedBitArraysPer8GetSetBits64Demo" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.PackedBitArraysPer8GetSetBits64Demo" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="10 50" />
     <extension name="coverage">

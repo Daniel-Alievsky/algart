@@ -35,7 +35,7 @@ import java.util.Random;
  *
  * @author Daniel Alievsky
  */
-public class PackedBitArraysPer8GetBitsDemo {
+public class PackedBitArraysPer8GetSetBits64Demo {
     private static String bitsToString(long packed, int count) {
         final StringBuilder sb = new StringBuilder();
         for (int k = 0; k < count; k++) {
@@ -127,7 +127,7 @@ public class PackedBitArraysPer8GetBitsDemo {
     }
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.out.println("Usage: " + PackedBitArraysPer8GetBitsDemo.class.getName()
+            System.out.println("Usage: " + PackedBitArraysPer8GetSetBits64Demo.class.getName()
                     + " pos count [randSeed]");
             return;
         }
