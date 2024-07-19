@@ -1836,7 +1836,7 @@ public class Arrays {
 
     /**
      * Returns <code>true</code> if the passed element type is <code>boolean.class</code>,
-     * <code>short.class</code>, <code>byte.class</code> or <code>short.class</code>.
+     * <code>char.class</code>, <code>byte.class</code> or <code>short.class</code>.
      *
      * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
      * @return whether this element type is primitive and should be interpreted as unsigned primitive type
@@ -1847,6 +1847,43 @@ public class Arrays {
                 || elementType == char.class
                 || elementType == byte.class
                 || elementType == short.class;
+    }
+
+    /**
+     * Returns one of primitive element types <code>boolean.class</code>,
+     * <code>short.class</code>, <code>byte.class</code>, <code>int.class</code>, <code>long.class</code>
+     * (when <code>floatingPoint=false</code>) or one of <code>float.class</code> or <code>double.class</code>
+     * (when <code>floatingPoint=true</code>) according to the specified number of bits per element.
+     * The result of {@link #bitsPerElement(Class)} function, called for the resulting class,
+     * will be equal to the <code>bitsPerElement</code> argument,
+     * and the result of {@link #isFloatingPointElementType(Class)}
+     * will be equal to the <code>floatingPoint</code> argument.
+     *
+     * <p>Note that this method never returns <code>char.class</code>: for 16 bits/element and
+     * <code>floatingPoint=false</code> it returns <code>short.class</code>.</p>
+     *
+     * @param bitsPerElement the number of bits per element for the returned primitive type.
+     * @param floatingPoint whether the return type should be <code>float</code> / <code>double</code>.
+     * @return the primitive type corresponding to the function arguments.
+     * @throws IllegalArgumentException if there is no required primitive element type.
+     */
+    public static Class<?> primitiveType(int bitsPerElement, boolean floatingPoint) {
+        return floatingPoint ?
+                switch (bitsPerElement) {
+                    case 32 -> float.class;
+                    case 64 -> double.class;
+                    default -> throw new IllegalArgumentException(bitsPerElement +
+                            " bits/element is impossible for floating-point primitive types");
+                } :
+                switch (bitsPerElement) {
+                    case 1 -> boolean.class;
+                    case 8 -> byte.class;
+                    case 16 -> short.class;
+                    case 32 -> int.class;
+                    case 64 -> long.class;
+                    default -> throw new IllegalArgumentException(bitsPerElement +
+                            " bits/element is impossible for fixed-point primitive types");
+                };
     }
 
     /**

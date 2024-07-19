@@ -48,6 +48,8 @@ public class ElementTypeDemo {
             if (t.isPrimitive() != Arrays.isPrimitiveElementType(t)) {
                 throw new AssertionError();
             }
+            final int bitsPerElement = (int) Arrays.bitsPerElement(t);
+            final boolean floatingPoint = Arrays.isFloatingPointElementType(t);
             System.out.printf(Locale.US,
                     "%-16s - minimal possible element is %.1f, maximal possible element is %.1f%n" +
                             "    primitive: %s, numbers: %s, floating: %s, unsigned: %s, bits: %d, sizeOf: %s%n",
@@ -56,11 +58,14 @@ public class ElementTypeDemo {
                     max,
                     Arrays.isPrimitiveElementType(t),
                     Arrays.isNumberElementType(t),
-                    Arrays.isFloatingPointElementType(t),
+                    floatingPoint,
                     Arrays.isUnsignedElementType(t),
-                    Arrays.bitsPerElement(t),
+                    bitsPerElement,
                     Arrays.sizeOf(t));
             if (t.isPrimitive()) {
+                if (t != char.class && Arrays.primitiveType(bitsPerElement, floatingPoint) != t) {
+                    throw new AssertionError("Invalid Arrays.primitiveType() for " + t);
+                }
                 arrays[0] = (PArray) SimpleMemoryModel.getInstance().newEmptyArray(t);
                 arrays[1] = (PArray) BufferMemoryModel.getInstance().newEmptyArray(t);
                 arrays[2] = (PArray) LargeMemoryModel.getInstance().newEmptyArray(t);
@@ -82,7 +87,7 @@ public class ElementTypeDemo {
                     if (!m.isPrimitive()) {
                         throw new AssertionError("Illegal isPrimitive() in " + m);
                     }
-                    if (m.bitsPerElement() != Arrays.bitsPerElement(t)) {
+                    if (m.bitsPerElement() != bitsPerElement) {
                         throw new AssertionError("Illegal bitsPerElement() in " + m);
                     }
                     if (m.maxPossibleValue() != a.maxPossibleValue(1.0)) {
