@@ -1795,28 +1795,27 @@ public class JArrays {
 
 
     /**
-     * Equivalent to {@link #getBytes8(byte[], int, int)} with the same arguments,
+     * Equivalent to {@link #getBytes8(byte[], int, int)} with the same arguments
      * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.LITTLE_ENDIAN</code>, or to
-     * {@link #getBytes8InBigEndianOrder(byte[], int, int)} with the same arguments,
-     * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.BIG_ENDIAN</code>
+     * {@link #getBytes8InBigEndianOrder(byte[], int, int)} with the same arguments
+     * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.BIG_ENDIAN</code>.
      *
      * @param src       the source array.
      * @param srcPos    position of the first byte read in the source array.
      * @param count     the number of bytes to be returned (must be in range 0..8).
      * @param byteOrder the byte order.
      * @return the packed sequence of <code>count</code> bytes.
-     * @throws NullPointerException      if <code>src</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or <code>srcPos + count &ge; src.length</code>.
+     * @throws NullPointerException      if <code>src</code> or <code>byteOrder</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
+     *                                   <code>srcPos + count &ge; src.length</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
-     * @see #getBytes8(byte[], int, int, ByteOrder)
-     * @see PackedBitArraysPer8#getBits64InReverseOrder(byte[], long, int)
      */
     public static long getBytes8(byte[] src, int srcPos, int count, ByteOrder byteOrder) {
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            return getBytes8InBigEndianOrder(src, srcPos, count);
-        } else {
+        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             return getBytes8(src, srcPos, count);
+        } else {
+            return getBytes8InBigEndianOrder(src, srcPos, count);
         }
     }
 
@@ -1829,7 +1828,7 @@ public class JArrays {
      * i.e. in the byte equal to <code>(R&nbsp;&gt;&gt;&gt;&nbsp;(k&nbsp;*&nbsp;8))&nbsp;&amp;&nbsp;0xFF</code>.
      * The highest <code>8&nbsp;-&nbsp;count</code> bytes of the result <code>R</code>
      * (when <code>count&nbsp;&lt;&nbsp;8)</code> are zero.
-     * If <code>count=0</code>, the result is 0.</p>
+     * If <code>count&nbsp;==&nbsp;0</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop
      * (for correct <code>count</code> in the range 0..8):</p>
@@ -1855,25 +1854,26 @@ public class JArrays {
      * @param count  the number of bytes to be returned (must be in range 0..8).
      * @return the packed sequence of <code>count</code> bytes.
      * @throws NullPointerException      if <code>src</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or <code>srcPos + count &ge; src.length</code>.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
+     *                                   <code>srcPos + count &ge; src.length</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
      * @see #getBytes8(byte[], int, int, ByteOrder)
      * @see PackedBitArraysPer8#getBits64(byte[], long, int)
      */
     public static long getBytes8(byte[] src, int srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
-        if (count == 3) {
-            // - possible popular case
-            return ((long) src[srcPos] & 0xFF)
-                    | (((long) src[srcPos + 1] & 0xFF) << 8)
-                    | (((long) src[srcPos + 2] & 0xFF) << 16);
-        }
         if (count == 4) {
             // - possible popular case
             return ((long) src[srcPos] & 0xFF)
                     | (((long) src[srcPos + 1] & 0xFF) << 8)
                     | (((long) src[srcPos + 2] & 0xFF) << 16)
                     | (((long) src[srcPos + 3] & 0xFF) << 24);
+        }
+        if (count == 3) {
+            // - possible popular case
+            return ((long) src[srcPos] & 0xFF)
+                    | (((long) src[srcPos + 1] & 0xFF) << 8)
+                    | (((long) src[srcPos + 2] & 0xFF) << 16);
         }
         rangeCheckForBytes8(src.length, srcPos, count);
         // Note: special versions of this method for count = 1, 2, 4 has no sense,
@@ -1897,7 +1897,7 @@ public class JArrays {
      * <code>(R&nbsp;&gt;&gt;&gt;&nbsp;((count&nbsp;-&nbsp;1&nbsp;-&nbsp;k)&nbsp;*&nbsp;8))&nbsp;&amp;&nbsp;0xFF</code>.
      * The highest <code>8&nbsp;-&nbsp;count</code> bytes of the result <code>R</code>
      * (when <code>count&nbsp;&lt;&nbsp;8)</code> are zero.
-     * If <code>count=0</code>, the result is 0.</p>
+     * If <code>count&nbsp;==&nbsp;0</code>, the result is 0.</p>
      *
      * <p>The same result can be calculated using the following loop
      * (for correct <code>count</code> in the range 0..8):</p>
@@ -1923,25 +1923,26 @@ public class JArrays {
      * @param count  the number of bytes to be returned (must be in range 0..8).
      * @return the packed sequence of <code>count</code> bytes.
      * @throws NullPointerException      if <code>src</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or <code>srcPos + count &ge; src.length</code>.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
+     *                                   <code>srcPos + count &ge; src.length</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
      * @see #getBytes8(byte[], int, int, ByteOrder)
      * @see PackedBitArraysPer8#getBits64InReverseOrder(byte[], long, int)
      */
     public static long getBytes8InBigEndianOrder(byte[] src, int srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
-        if (count == 3) {
-            // - possible popular case
-            return (((long) src[srcPos] & 0xFF) << 16)
-                    | (((long) src[srcPos + 1] & 0xFF) << 8)
-                    | ((long) src[srcPos + 2] & 0xFF);
-        }
         if (count == 4) {
             // - possible popular case
             return (((long) src[srcPos] & 0xFF) << 24)
                     | (((long) src[srcPos + 1] & 0xFF) << 16)
                     | (((long) src[srcPos + 2] & 0xFF) << 8)
                     | ((long) src[srcPos + 3] & 0xFF);
+        }
+        if (count == 3) {
+            // - possible popular case
+            return (((long) src[srcPos] & 0xFF) << 16)
+                    | (((long) src[srcPos + 1] & 0xFF) << 8)
+                    | ((long) src[srcPos + 2] & 0xFF);
         }
         rangeCheckForBytes8(src.length, srcPos, count);
         long result = 0;
@@ -1951,47 +1952,121 @@ public class JArrays {
         return result;
     }
 
+    /**
+     * Equivalent to {@link #setBytes8(byte[], int, long, int)} with the same arguments
+     * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.LITTLE_ENDIAN</code>, or to
+     * {@link #setBytes8InBigEndianOrder(byte[], int, long, int)} with the same arguments
+     * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.BIG_ENDIAN</code>.
+     *
+     * @param dest        the destination array.
+     * @param destPos     position of the first byte written in the destination array.
+     * @param packedBytes sequence of new bytes to be copied into the destination array.
+     * @param count       the number of bytes to be written (must be in range 0..8).
+     * @param byteOrder   the byte order.
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
+     *                                   <code>destPos + count &ge; dest.length</code>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
+     */
     public static void setBytes8(byte[] dest, int destPos, long packedBytes, int count, ByteOrder byteOrder) {
         Objects.requireNonNull(byteOrder, "Null byteOrder");
-        if (byteOrder == ByteOrder.BIG_ENDIAN) {
-            setBytes8InBigEndianOrder(dest, destPos, packedBytes, count);
-        } else {
+        if (byteOrder == ByteOrder.LITTLE_ENDIAN) {
             setBytes8(dest, destPos, packedBytes, count);
+        } else {
+            setBytes8InBigEndianOrder(dest, destPos, packedBytes, count);
         }
     }
 
+    /**
+     * Sets the sequence of <code>count</code> bytes (maximum 8 bytes), starting from the byte <code>#destPos</code>,
+     * in the <code>dest</code> byte array,
+     * from the bytes packed in a single <code>long</code> value in little-endian order.
+     * Note that only <code>count</code> low-order bytes of <code>packedBytes</code> value are unpacked.
+     * This is the reverse operation of {@link #getBytes8(byte[], int, int)}.
+     *
+     * <p>This function is equivalent to the following loop
+     * (for correct <code>count</code> in the range 0..8):</p>
+     *
+     * <pre>
+     *     for (int i = 0; i &lt; count; i++, destPos++) {
+     *         dest[destPos] = (byte) packedBytes;
+     *         packedBytes &gt;&gt;&gt;= 8;
+     *     }</pre>
+     *
+     * <p>Note: if you know that the number of bytes <code>count</code> is always 2, 4 or 8,
+     * there is a better alternative to this function based on the standard {@link ByteBuffer} class,
+     * for example,</p><pre>
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN);
+     *     // using buffer.putInt(k, ...)
+     * </pre>or<pre>
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN).asIntBuffer();
+     *     // using buffer.put(k, ...)
+     * </pre>
+     *
+     * @param dest        the destination array.
+     * @param destPos     position of the first byte written in the destination array.
+     * @param packedBytes sequence of new bytes to be copied into the destination array.
+     * @param count       the number of bytes to be written (must be in range 0..8).
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
+     *                                   <code>destPos + count &ge; dest.length</code>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
+     * @see #setBytes8(byte[], int, long, int, ByteOrder)
+     * @see PackedBitArraysPer8#setBits64(byte[], long, long, int)
+     */
     public static void setBytes8(byte[] dest, int destPos, long packedBytes, int count) {
         Objects.requireNonNull(dest, "Null dest");
-        if (count == 4) {
-            // - possible popular case
-            rangeCheck4(dest.length, destPos);
-            dest[destPos] = (byte) packedBytes;
-            dest[destPos + 1] = (byte) (packedBytes >>> 8);
-            dest[destPos + 2] = (byte) (packedBytes >>> 16);
-            dest[destPos + 3] = (byte) (packedBytes >>> 24);
-            return;
-        }
         rangeCheckForBytes8(dest.length, destPos, count);
+        // Note: special branches for count = 3/4 may even lead to reducing performance in modern JVM
+        // (probably little methods are optimized better)
         for (int i = 0; i < count; i++, destPos++) {
             dest[destPos] = (byte) packedBytes;
             packedBytes >>>= 8;
         }
     }
 
+    /**
+     * Sets the sequence of <code>count</code> bytes (maximum 8 bytes), starting from the byte <code>#destPos</code>,
+     * in the <code>dest</code> byte array,
+     * from the bytes packed in a single <code>long</code> value in big-endian order.
+     * Note that only <code>count</code> low-order bytes of <code>packedBytes</code> value are unpacked.
+     * This is the reverse operation of {@link #getBytes8InBigEndianOrder(byte[], int, int)}.
+     *
+     * <p>This function is equivalent to the following loop
+     * (for correct <code>count</code> in the range 0..8):</p>
+     *
+     * <pre>
+     *    for (int shift = (count &lt;&lt; 3) - 8; shift &gt;= 0; shift -= 8, destPos++) {
+     *        dest[destPos] = (byte) (packedBytes &gt;&gt;&gt; shift);
+     *    }</pre>
+     *
+     * <p>Note: if you know that the number of bytes <code>count</code> is always 2, 4 or 8,
+     * there is a better alternative to this function based on the standard {@link ByteBuffer} class,
+     * for example,</p><pre>
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN);
+     *     // using buffer.putInt(k, ...)
+     * </pre>or<pre>
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN).asIntBuffer();
+     *     // using buffer.put(k, ...)
+     * </pre>
+     *
+     * @param dest        the destination array.
+     * @param destPos     position of the first byte written in the destination array.
+     * @param packedBytes sequence of new bytes to be copied into the destination array.
+     * @param count       the number of bytes to be written (must be in range 0..8).
+     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
+     *                                   <code>destPos + count &ge; dest.length</code>.
+     * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.
+     * @see #setBytes8(byte[], int, long, int, ByteOrder)
+     * @see PackedBitArraysPer8#setBits64InReverseOrder(byte[], long, long, int)
+     */
     public static void setBytes8InBigEndianOrder(byte[] dest, int destPos, long packedBytes, int count) {
         Objects.requireNonNull(dest, "Null dest");
-        if (count == 4) {
-            // - possible popular case
-            rangeCheck4(dest.length, destPos);
-            dest[destPos] = (byte) (packedBytes >> 24);
-            dest[destPos + 1] = (byte) (packedBytes >>> 16);
-            dest[destPos + 2] = (byte) (packedBytes >>> 8);
-            dest[destPos + 3] = (byte) packedBytes;
-            return;
-        }
         rangeCheckForBytes8(dest.length, destPos, count);
-        final int numberOfBits = count << 3;
-        for (int shift = numberOfBits - 8; shift >= 0; shift -= 8, destPos++) {
+        // Note: special branches for count = 3/4 may even lead to reducing performance in modern JVM
+        // (probably little methods are optimized better)
+        for (int shift = (count << 3) - 8; shift >= 0; shift -= 8, destPos++) {
             dest[destPos] = (byte) (packedBytes >>> shift);
         }
     }
@@ -7707,16 +7782,6 @@ public class JArrays {
         return Arrays.toString(cv);
     }
     /*Repeat.AutoGeneratedEnd*/
-
-    static void rangeCheck4(int arrayLen, int pos) {
-        if (pos < 0) {
-            throw new IndexOutOfBoundsException("Start position = " + pos + " < 0");
-        }
-        if (pos > arrayLen - 4) {
-            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos + 4)
-                    + " > array length = " + arrayLen);
-        }
-    }
 
     static void rangeCheck(int arrayLen, int pos, int count) {
         if (count < 0) {

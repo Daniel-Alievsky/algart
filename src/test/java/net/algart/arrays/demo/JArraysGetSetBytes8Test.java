@@ -119,7 +119,7 @@ public class JArraysGetSetBytes8Test {
             }
         }
         System.out.println("\rO'k       ");
-        for (int test = 1; test <= 32; test++) {
+        for (int test = 1; test <= 100; test++) {
             System.out.printf("%nTest #%d...%n", test);
             final int n = data.length / 8;
             final int aligned = n * 8;
@@ -204,7 +204,7 @@ public class JArraysGetSetBytes8Test {
                             (t2 - t1) * 1e-6, (double) (t2 - t1) / n);
 
                     if (count == 4) {
-                        IntBuffer buffer = ByteBuffer.wrap(data).order(byteOrder).asIntBuffer();
+                        var buffer = ByteBuffer.wrap(data).order(byteOrder).asIntBuffer();
                         final int aligned4 = 2 * n;
                         info2 = 0;
                         t1 = System.nanoTime();
