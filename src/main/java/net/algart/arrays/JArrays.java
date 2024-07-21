@@ -2498,6 +2498,11 @@ public class JArrays {
      *     bb.asCharBuffer().put(src, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>char[]</code> array.
@@ -2602,6 +2607,11 @@ public class JArrays {
      *     bb.asCharBuffer().get(dest, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>char[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
@@ -2703,6 +2713,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asShortBuffer().put(src, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
@@ -2808,6 +2823,11 @@ public class JArrays {
      *     bb.asShortBuffer().get(dest, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>short[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
@@ -2907,6 +2927,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asIntBuffer().put(src, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
@@ -3012,6 +3037,11 @@ public class JArrays {
      *     bb.asIntBuffer().get(dest, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>int[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
@@ -3111,6 +3141,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asLongBuffer().put(src, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
@@ -3216,6 +3251,11 @@ public class JArrays {
      *     bb.asLongBuffer().get(dest, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>long[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
@@ -3315,6 +3355,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asFloatBuffer().put(src, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
@@ -3420,6 +3465,11 @@ public class JArrays {
      *     bb.asFloatBuffer().get(dest, 0, n);
      * </pre>
      *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
+     *
      * @param dest      the result <code>float[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
@@ -3519,6 +3569,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asDoubleBuffer().put(src, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.
@@ -3623,6 +3678,11 @@ public class JArrays {
      *     bb.order(byteOrder);
      *     bb.asDoubleBuffer().get(dest, 0, n);
      * </pre>
+     *
+     * <p>Note that this copying is <i>very fast</i> in modern Java versions.
+     * If the byte order is native for the CPU, this can be implemented via direct memory copy
+     * (same as <code>System.arraycopy</code>), if not, this can be still translated into high-performance
+     * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>double[]</code> array;
      *                  can be {@code null}, then it will be allocated automatically.

@@ -29,6 +29,7 @@ import net.algart.math.Range;
 import net.algart.math.functions.SelectConstantFunc;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -36,8 +37,14 @@ public final class SimpleOperationsSpeed {
     private static final int n = 2048 * 2048;
 
     private static void time(String name, long t1, long t2) {
-        System.out.printf("%-62s %.6f ms, %.6f ns/element, %.3f Giga-element/second %n",
-                name + ":", (t2 - t1) * 1e-6, (t2 - t1) / (double) n, (double) n / (t2 - t1));
+        time(name, "element", t1, t2);
+    }
+
+    private static void time(String name, String elementName, long t1, long t2) {
+        System.out.printf("%-62s %.6f ms, %.6f ns/%s, %.3f Giga-%s/second %n",
+                name + ":",
+                (t2 - t1) * 1e-6, (t2 - t1) / (double) n, elementName,
+                (double) n / (t2 - t1), elementName);
     }
 
     private static class IntFiller extends Arrays.ParallelExecutor {
@@ -129,6 +136,33 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             time("arraycopy(int[],...)", t1, t2);
             someInfo += System.identityHashCode(intClone);
+
+            for (int bigEndian = 0; bigEndian <= 1; bigEndian++) {
+                ByteOrder byteOrder = bigEndian == 0 ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
+                t1 = System.nanoTime();
+                JArrays.intArrayToBytes(bytes, ints, n / 4, byteOrder);
+                t2 = System.nanoTime();
+                time("intArrayToBytes, " + byteOrder, "byte", t1, t2);
+                someInfo += System.identityHashCode(bytes);
+
+                t1 = System.nanoTime();
+                JArrays.doubleArrayToBytes(bytes, doubles, n / 8, byteOrder);
+                t2 = System.nanoTime();
+                time("doubleArrayToBytes, " + byteOrder, "byte", t1, t2);
+                someInfo += System.identityHashCode(bytes);
+
+                t1 = System.nanoTime();
+                JArrays.bytesToIntArray(ints, bytes, n / 4, byteOrder);
+                t2 = System.nanoTime();
+                time("bytesToIntArray, " + byteOrder, "byte", t1, t2);
+                someInfo += System.identityHashCode(bytes);
+
+                t1 = System.nanoTime();
+                JArrays.bytesToDoubleArray(doubles, bytes, n / 8, byteOrder);
+                t2 = System.nanoTime();
+                time("bytesToDoubleArray, " + byteOrder, "byte", t1, t2);
+                someInfo += System.identityHashCode(bytes);
+            }
 
             t1 = System.nanoTime();
             java.util.Arrays.sort(intClone);
