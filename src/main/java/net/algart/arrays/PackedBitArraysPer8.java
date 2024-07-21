@@ -596,6 +596,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
+     * @see JArrays#getBytes8(byte[], int, int) 
      */
     public static long getBits64(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
@@ -677,6 +678,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
+     * @see JArrays#setBytes8(byte[], int, long, int)
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBits64(byte[] dest, long destPos, long bits, int count) {
@@ -907,6 +909,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
+     * @see JArrays#getBytes8InBigEndianOrder(byte[], int, int)
      */
     public static long getBits64InReverseOrder(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
@@ -988,6 +991,7 @@ public class PackedBitArraysPer8 {
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   if copying would cause access of data outside array bounds.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
+     * @see JArrays#setBytes8InBigEndianOrder(byte[], int, long, int)
      */
     @SuppressWarnings("SynchronizationOnLocalVariableOrMethodParameter")
     public static void setBits64InReverseOrder(byte[] dest, long destPos, long bits, int count) {
