@@ -1826,7 +1826,7 @@ public class JArrays {
      * <p>More precisely, the byte <code>#(srcPos+k)</code> will be placed in the byte <code>#k</code> of the returned
      * <code>long</code> value <code>R</code> from the low-order bytes to the high-order,
      * i.e. in the byte equal to <code>(R&nbsp;&gt;&gt;&gt;&nbsp;(k&nbsp;*&nbsp;8))&nbsp;&amp;&nbsp;0xFF</code>.
-     * The highest <code>8&nbsp;-&nbsp;count</code> bytes of the result <code>R</code>
+     * The highest <code>8-count</code> bytes of the result <code>R</code>
      * (when <code>count&nbsp;&lt;&nbsp;8)</code> are zero.
      * If <code>count&nbsp;==&nbsp;0</code>, the result is 0.</p>
      *
@@ -1895,7 +1895,7 @@ public class JArrays {
      * <code>long</code> value <code>R</code> from the low-order bytes to the high-order,
      * i.e. in the byte equal to
      * <code>(R&nbsp;&gt;&gt;&gt;&nbsp;((count&nbsp;-&nbsp;1&nbsp;-&nbsp;k)&nbsp;*&nbsp;8))&nbsp;&amp;&nbsp;0xFF</code>.
-     * The highest <code>8&nbsp;-&nbsp;count</code> bytes of the result <code>R</code>
+     * The highest <code>8-count</code> bytes of the result <code>R</code>
      * (when <code>count&nbsp;&lt;&nbsp;8)</code> are zero.
      * If <code>count&nbsp;==&nbsp;0</code>, the result is 0.</p>
      *
@@ -1963,7 +1963,7 @@ public class JArrays {
      * @param packedBytes sequence of new bytes to be copied into the destination array.
      * @param count       the number of bytes to be written (must be in range 0..8).
      * @param byteOrder   the byte order.
-     * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
+     * @throws NullPointerException      if <code>dest</code> or <code>byteOrder</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
      *                                   <code>destPos + count &ge; dest.length</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 8</code>.

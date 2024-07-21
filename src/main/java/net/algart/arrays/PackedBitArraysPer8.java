@@ -593,10 +593,9 @@ public class PackedBitArraysPer8 {
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <code>count</code> bits.
      * @throws NullPointerException      if <code>src</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
-     * @see JArrays#getBytes8(byte[], int, int) 
+     * @see JArrays#getBytes8(byte[], int, int)
      */
     public static long getBits64(byte[] src, long srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
@@ -675,8 +674,7 @@ public class PackedBitArraysPer8 {
      * @param bits    sequence of new bits to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      * @see JArrays#setBytes8(byte[], int, long, int)
      */
@@ -738,8 +736,7 @@ public class PackedBitArraysPer8 {
      * @param bits    sequence of new bits to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64NoSync(byte[] dest, long destPos, long bits, int count) {
@@ -906,8 +903,7 @@ public class PackedBitArraysPer8 {
      * @param count  the number of bits to be unpacked (must be in range 0..64).
      * @return the sequence of <code>count</code> bits.
      * @throws NullPointerException      if <code>src</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>srcPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      * @see JArrays#getBytes8InBigEndianOrder(byte[], int, int)
      */
@@ -988,8 +984,7 @@ public class PackedBitArraysPer8 {
      * @param bits    sequence of new bits (in reverse order) to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      * @see JArrays#setBytes8InBigEndianOrder(byte[], int, long, int)
      */
@@ -1060,8 +1055,7 @@ public class PackedBitArraysPer8 {
      * @param bits    sequence of new bits (in reverse order) to be copied into the destination array.
      * @param count   the number of bits to be written (must be in range 0..64).
      * @throws NullPointerException      if <code>dest</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code> or
-     *                                   if copying would cause access of data outside array bounds.
+     * @throws IndexOutOfBoundsException if <code>destPos &lt; 0</code>.
      * @throws IllegalArgumentException  if <code>count &lt; 0</code> or <code>count &gt; 64</code>.
      */
     public static void setBits64InReverseOrderNoSync(byte[] dest, long destPos, long bits, int count) {

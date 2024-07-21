@@ -48,7 +48,7 @@ public class ElementTypeDemo {
             if (t.isPrimitive() != Arrays.isPrimitiveElementType(t)) {
                 throw new AssertionError();
             }
-            final int bitsPerElement = (int) Arrays.bitsPerElement(t);
+            final long bitsPerElement =Arrays.bitsPerElement(t);
             final boolean floatingPoint = Arrays.isFloatingPointElementType(t);
             System.out.printf(Locale.US,
                     "%-16s - minimal possible element is %.1f, maximal possible element is %.1f%n" +
@@ -99,5 +99,7 @@ public class ElementTypeDemo {
                 }
             }
         }
+        if (Arrays.primitiveType(1, false) != boolean.class) throw new AssertionError();
+        if (Arrays.primitiveType(32, true) != float.class) throw new AssertionError();
     }
 }

@@ -1862,20 +1862,30 @@ public class Arrays {
      * <p>Note that this method never returns <code>char.class</code>: for 16 bits/element and
      * <code>floatingPoint=false</code> it returns <code>short.class</code>.</p>
      *
+     * <p>Note: although the required number of bits per element is specified in <code>long</code> argument,
+     * valid values do not require such precision: they must always be in the range 1..64.</p>
+     *
      * @param bitsPerElement the number of bits per element for the returned primitive type.
      * @param floatingPoint whether the return type should be <code>float</code> / <code>double</code>.
      * @return the primitive type corresponding to the function arguments.
      * @throws IllegalArgumentException if there is no required primitive element type.
      */
-    public static Class<?> primitiveType(int bitsPerElement, boolean floatingPoint) {
+    public static Class<?> primitiveType(long bitsPerElement, boolean floatingPoint) {
+        if (bitsPerElement <= 0) {
+            throw new IllegalArgumentException("Zero or negative number of bits/element = " + bitsPerElement);
+        }
+        if (bitsPerElement > 64) {
+            throw new IllegalArgumentException("Too large number of bits/element = " + bitsPerElement +
+                    ": there are no primitive types with >64 bits/element");
+        }
         return floatingPoint ?
-                switch (bitsPerElement) {
+                switch ((int) bitsPerElement) {
                     case 32 -> float.class;
                     case 64 -> double.class;
                     default -> throw new IllegalArgumentException(bitsPerElement +
                             " bits/element is impossible for floating-point primitive types");
                 } :
-                switch (bitsPerElement) {
+                switch ((int) bitsPerElement) {
                     case 1 -> boolean.class;
                     case 8 -> byte.class;
                     case 16 -> short.class;
