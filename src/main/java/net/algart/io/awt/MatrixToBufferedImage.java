@@ -247,6 +247,45 @@ public abstract class MatrixToBufferedImage {
     }
 
     /**
+     * Converts the color to the form stored in the data buffer returned by {@link #toDataBuffer(Matrix)}.
+     *
+     * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.</p>
+     *
+     * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
+     * <code>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</code>,
+     * this method returns
+     * <pre>
+     * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
+     * </pre>
+     * <p>In such cases, it is a  good idea to provide identical R, G, B color components
+     * (if this method is not overridden).</p>
+     *
+     * <p>This method can be useful if you want to update the data buffer built by {@link #toDataBuffer(Matrix)}
+     * method, for example, to fill some areas with a "background" color.</p>
+     *
+     * @param interleavedMatrix the interleaved data.
+     * @param color             some color.
+     * @param bankIndex         index of the bank in terms of {@link java.awt.image.DataBuffer}.
+     * @return the corresponded component of this color or packed RGB-Alpha value,
+     * depending on the structure of the data buffer.
+     */
+    public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
+        final int bandCount = getBandCount(interleavedMatrix);
+        if (bandCount == 1) {
+            return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
+        }
+        if (color == null)
+            throw new NullPointerException("Null color argument");
+        return switch (bankIndex) {
+            case 0 -> color.getRed();
+            case 1 -> color.getGreen();
+            case 2 -> color.getBlue();
+            case 3 -> color.getAlpha();
+            default -> 0;
+        };
+    }
+
+    /**
      * Returns the palette (<code>byte[4][256]</code>) if the indexed image is supposed.
      *
      * <p>The default implementation returns {@code null}, that means non-indexed image.
@@ -417,6 +456,13 @@ public abstract class MatrixToBufferedImage {
         @Override
         public ColorChannelOrder channelOrder() {
             return ColorChannelOrder.RGB;
+        }
+
+        @Override
+        public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
+            return color.getRGB();
+            // Note: this behaviour is correct both for InterleavedRGBToPacked and InterleavedBGRToPacked.
+            // These classes use the same format of data buffer, the difference is only in packedSamplesRGBAMasks()
         }
 
         @Override
@@ -668,7 +714,7 @@ public abstract class MatrixToBufferedImage {
     public static class MonochromeToIndexed extends InterleavedRGBToPacked {
         private final byte[] baseColor0, baseColor255;
 
-        public MonochromeToIndexed(java.awt.Color baseColor0, java.awt.Color baseColor255) {
+        public MonochromeToIndexed(Color baseColor0, Color baseColor255) {
             Objects.requireNonNull(baseColor0, "Null baseColor0");
             Objects.requireNonNull(baseColor255, "Null baseColor255");
             this.baseColor0 = new byte[]{
@@ -697,6 +743,11 @@ public abstract class MatrixToBufferedImage {
                 double bc255 = baseColor255[k];
                 this.baseColor255[k] = (byte) (bc255 < 0.0 ? 0 : bc255 > 1.0 ? 255 : Math.round(bc255 * 255.0));
             }
+        }
+
+        @Override
+        public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
+            return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
 
         @Override
