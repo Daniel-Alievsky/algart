@@ -159,13 +159,13 @@ public abstract class BufferedImageToMatrix {
     }
 
     public static class ToInterleavedRGB extends BufferedImageToMatrix {
-        public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL = false;
-        public static final boolean DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D = false;
+        public static final boolean DEFAULT_READING_VIA_COLOR_MODEL = false;
+        public static final boolean DEFAULT_READING_VIA_GRAPHICS_2D = false;
 
         private final boolean bgrOrder;
 
-        private boolean readPixelValuesViaColorModel = DEFAULT_READ_PIXEL_VALUES_VIA_COLOR_MODEL;
-        private boolean readPixelValuesViaGraphics2D = DEFAULT_READ_PIXEL_VALUES_VIA_GRAPHICS_2D;
+        private boolean readingViaColorModel = DEFAULT_READING_VIA_COLOR_MODEL;
+        private boolean readingViaGraphics2D = DEFAULT_READING_VIA_GRAPHICS_2D;
 
         public ToInterleavedRGB() {
             this(false);
@@ -175,8 +175,8 @@ public abstract class BufferedImageToMatrix {
             this.bgrOrder = bgrOrder;
         }
 
-        public boolean isReadPixelValuesViaColorModel() {
-            return readPixelValuesViaColorModel;
+        public boolean isReadingViaColorModel() {
+            return readingViaColorModel;
         }
 
         /**
@@ -184,17 +184,17 @@ public abstract class BufferedImageToMatrix {
          * methods.
          * Usually should be <code>false</code> (default value).
          *
-         * @param readPixelValuesViaColorModel whether the sample values should
-         *                                     be read via <code>ColorModel</code> methods.
+         * @param readingViaColorModel whether the sample values should
+         *                             be read via <code>ColorModel</code> methods.
          * @return a reference to this object.
          */
-        public ToInterleavedRGB setReadingViaColorModel(boolean readPixelValuesViaColorModel) {
-            this.readPixelValuesViaColorModel = readPixelValuesViaColorModel;
+        public ToInterleavedRGB setReadingViaColorModel(boolean readingViaColorModel) {
+            this.readingViaColorModel = readingViaColorModel;
             return this;
         }
 
-        public boolean isReadPixelValuesViaGraphics2D() {
-            return readPixelValuesViaGraphics2D;
+        public boolean isReadingViaGraphics2D() {
+            return readingViaGraphics2D;
         }
 
         /**
@@ -210,12 +210,12 @@ public abstract class BufferedImageToMatrix {
          * <p>Note that {@link #setReadingViaColorModel(boolean)} method has a higher priority:
          * if reading via color model is selected, the mode set by this method is ignored.
          *
-         * @param readPixelValuesViaGraphics2D whether the sample values should
-         *                                     be read via drawing on <code>Graphics2D</code>.
+         * @param readingViaGraphics2D whether the sample values should
+         *                             be read via drawing on <code>Graphics2D</code>.
          * @return a reference to this object.
          */
-        public ToInterleavedRGB setReadingViaGraphics2D(boolean readPixelValuesViaGraphics2D) {
-            this.readPixelValuesViaGraphics2D = readPixelValuesViaGraphics2D;
+        public ToInterleavedRGB setReadingViaGraphics2D(boolean readingViaGraphics2D) {
+            this.readingViaGraphics2D = readingViaGraphics2D;
             return this;
         }
 
@@ -227,7 +227,7 @@ public abstract class BufferedImageToMatrix {
         @Override
         public Class<?> getResultElementType(BufferedImage bufferedImage) {
             Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-            if (readPixelValuesViaColorModel || readPixelValuesViaGraphics2D) {
+            if (readingViaColorModel || readingViaGraphics2D) {
                 return byte.class;
             }
             Class<?> result = getResultElementTypeOrNullForUnsupported(bufferedImage);
@@ -242,8 +242,8 @@ public abstract class BufferedImageToMatrix {
         @Override
         public String toString() {
             return "ToInterleaved" + (bgrOrder ? "BGR" : "RGB") +
-                    (readPixelValuesViaColorModel ? " (reading via color model)" :
-                            readPixelValuesViaGraphics2D ? " (reading via graphics)" : "");
+                    (readingViaColorModel ? " (reading via color model)" :
+                            readingViaGraphics2D ? " (reading via graphics)" : "");
 
         }
 
@@ -260,11 +260,11 @@ public abstract class BufferedImageToMatrix {
                         dimX + "x" + dimY + "x" + bandCount);
             }
             final boolean invertBandOrder = bgrOrder && (bandCount == 3 || bandCount == 4);
-            if (readPixelValuesViaColorModel) {
+            if (readingViaColorModel) {
                 toJavaArrayViaColorModel(resultJavaArray, bufferedImage);
                 return;
             }
-            if (readPixelValuesViaGraphics2D || !isSupportedStructure(bufferedImage)) {
+            if (readingViaGraphics2D || !isSupportedStructure(bufferedImage)) {
                 toJavaArrayViaGraphics2D(resultJavaArray, bufferedImage);
                 return;
             }
