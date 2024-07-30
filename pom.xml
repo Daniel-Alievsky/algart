@@ -14,7 +14,7 @@
 
     <name>AlgART Java Libraries</name>
     <description>Open-source Java libraries, supporting generalized smart arrays and matrices with elements
-        of any types, including a wide set of of 2D-, 3D- and multidimensional image processing
+        of any types, including a wide set of 2D-, 3D- and multidimensional image processing
         and other algorithms, working with arrays and matrices.
     </description>
     <url>http://algart.net/java/AlgART/</url>
