@@ -5190,6 +5190,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(ByteArray)
      * @see PArray#jaByte()
+     * @see Matrices#toByteJavaArray(Matrix)
      */
     public static byte[] toByteJavaArray(PArray array) {
         return toByteJavaArray(null, array);
@@ -5229,6 +5230,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toByteJavaArray(PArray)
      * @see PArray#jaByte()
+     * @see Matrices#toByteJavaArray(byte[], Matrix)
      */
     public static byte[] toByteJavaArray(byte[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5270,6 +5272,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(CharArray)
      * @see PArray#jaChar()
+     * @see Matrices#toCharJavaArray(Matrix)
      */
     public static char[] toCharJavaArray(PArray array) {
         return toCharJavaArray(null, array);
@@ -5309,6 +5312,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toCharJavaArray(PArray)
      * @see PArray#jaChar()
+     * @see Matrices#toCharJavaArray(char[], Matrix)
      */
     public static char[] toCharJavaArray(char[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5350,6 +5354,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(ShortArray)
      * @see PArray#jaShort()
+     * @see Matrices#toShortJavaArray(Matrix)
      */
     public static short[] toShortJavaArray(PArray array) {
         return toShortJavaArray(null, array);
@@ -5389,6 +5394,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toShortJavaArray(PArray)
      * @see PArray#jaShort()
+     * @see Matrices#toShortJavaArray(short[], Matrix)
      */
     public static short[] toShortJavaArray(short[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5430,6 +5436,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(IntArray)
      * @see PArray#jaInt()
+     * @see Matrices#toIntJavaArray(Matrix)
      */
     public static int[] toIntJavaArray(PArray array) {
         return toIntJavaArray(null, array);
@@ -5469,6 +5476,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toIntJavaArray(PArray)
      * @see PArray#jaInt()
+     * @see Matrices#toIntJavaArray(int[], Matrix)
      */
     public static int[] toIntJavaArray(int[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5510,6 +5518,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(LongArray)
      * @see PArray#jaLong()
+     * @see Matrices#toLongJavaArray(Matrix)
      */
     public static long[] toLongJavaArray(PArray array) {
         return toLongJavaArray(null, array);
@@ -5549,6 +5558,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toLongJavaArray(PArray)
      * @see PArray#jaLong()
+     * @see Matrices#toLongJavaArray(long[], Matrix)
      */
     public static long[] toLongJavaArray(long[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5590,6 +5600,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(FloatArray)
      * @see PArray#jaFloat()
+     * @see Matrices#toFloatJavaArray(Matrix)
      */
     public static float[] toFloatJavaArray(PArray array) {
         return toFloatJavaArray(null, array);
@@ -5629,6 +5640,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toFloatJavaArray(PArray)
      * @see PArray#jaFloat()
+     * @see Matrices#toFloatJavaArray(float[], Matrix)
      */
     public static float[] toFloatJavaArray(float[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
@@ -5670,6 +5682,7 @@ public class Arrays {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray(DoubleArray)
      * @see PArray#jaDouble()
+     * @see Matrices#toDoubleJavaArray(Matrix)
      */
     public static double[] toDoubleJavaArray(PArray array) {
         return toDoubleJavaArray(null, array);
@@ -5709,6 +5722,7 @@ public class Arrays {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toDoubleJavaArray(PArray)
      * @see PArray#jaDouble()
+     * @see Matrices#toDoubleJavaArray(double[], Matrix)
      */
     public static double[] toDoubleJavaArray(double[] result, PArray array) {
         Objects.requireNonNull(array, "Null array argument");
