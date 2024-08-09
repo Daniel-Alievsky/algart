@@ -279,7 +279,7 @@ public class Arrays {
          * {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} method in "non-strict" mode:
          * this optimization tries to preload whole original matrix in RAM (if it is little enough)
          * only if the resulting matrix depends on the specified part of the original one.
-         * In other case (for example, if the resulting matrix is fully defined by
+         * In another case (for example, if the resulting matrix is fully defined by
          * a little fragment of the original one) we use the common algorithms
          * of splitting the matrix into layers or tiles.
          *
@@ -295,7 +295,7 @@ public class Arrays {
          * {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} method in "strict" mode:
          * this optimization tries to preload whole original matrix in RAM (if it is little enough)
          * only if the resulting matrix depends on the specified part of the original one.
-         * In other case (for example, if the resulting matrix is fully defined by
+         * In another case (for example, if the resulting matrix is fully defined by
          * a very little fragment of the original one) we do not optimize copying:
          * even slow access to the original matrix elements (when it is created by
          * {@link LargeMemoryModel}) is better idea than downloading extra elements in RAM.
@@ -328,7 +328,7 @@ public class Arrays {
          * {@link Arrays#copy(ArrayContext, UpdatableArray, Array, int, boolean)} method in "non-strict" mode,
          * the case of resizing coordinate transformation:
          * layer optimization is used only if the resulting matrix depends on the specified part of every layer.
-         * In other case, we prefer to use tiling algorithm, which does not load extra parts of the matrix.
+         * In another case, we prefer to use tiling algorithm, which does not load extra parts of the matrix.
          *
          * <p>The value of this constant is 0.7 (70%).
          *
@@ -714,13 +714,13 @@ public class Arrays {
          *
          * <p>Warning: this method does not provide 100% guaranteed result, because the current Java specification
          * doesn't publish robust methods for distinguishing 32-bit and 64-bit Java.
-         * So, you cannot be absolutely sure that the system is 64-bit (or better)
+         * So, you cannot be completely sure that the system is 64-bit (or better)
          * if this method returns <code>false</code>.
          *
          * <p>This method checks <code>System.getProperty("sun.arch.data.model")</code>.
          * If this property exists, can be read without exceptions and contains "32" or "64" substring,
          * this method returns <code>true</code> if it contains "32" and <code>false</code> if it contains "64".
-         * In other case (for example, in Java applets, which have no permissions to read this property),
+         * Otherwise (for example, in Java applets, which have no permissions to read this property)
          * this method makes a decision on the base of <code>System.getProperty("os.arch")</code>.
          * If it cannot make a decision (for example, due to some exception in the last <code>getProperty</code>
          * call), it returns <code>false</code> by default.
@@ -4905,7 +4905,7 @@ public class Arrays {
     /**
      * Returns the Java array containing all the elements in this AlgART array in proper sequence,
      * if the length of this array is not too large (not greater than <code>Integer.MAX_VALUE</code>).
-     * In other case, throws {@link TooLargeArrayException}.
+     * In another case, throws {@link TooLargeArrayException}.
      *
      * <p>The result is always a newly created Java array.
      * Its length will be equal to current
@@ -6162,11 +6162,11 @@ public class Arrays {
      * <code>&nbsp;&nbsp;&nbsp;&nbsp;quickPosition = bitArray.{@link BitArray#nextQuickPosition
      * nextQuickPosition}(position - Math.max(maxAvailableGap, 64))</code>.<br>
      * (Subtracting <code>max(maxAvailableGap, 64)</code> does not change the result in a usual case,
-     * but allows to return better result if position is near bitArray.length().)
+     * but allows to return a better result if position is near bitArray.length().)
      *
      * <p>The <code>maxAvailableGap</code> argument should be a positive power of two (<code>2<sup>k</sup></code>)
      * not less than 64 (number of bits in 1 <code>long</code> value).
-     * In other case, it is automatically replaced with the maximal power of two less than it
+     * Otherwise, it is automatically replaced with the maximal power of two less than it
      * (<code>Integer.highestOneBit(maxAvailableGap)</code>) at the very beginning of the calculations.
      * If <code>maxAvailableGap=0</code>, this method always returns <code>0</code>.
      *

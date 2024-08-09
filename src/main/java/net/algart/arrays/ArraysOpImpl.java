@@ -353,7 +353,7 @@ class ArraysOpImpl {
                 Math.min(AbstractArray.largeBufferCapacity(src), src instanceof IntArray ? 32768 : 65536),
                 1, 1);
             // Very important! Here we MUST use only 1 thread to provide strict order of summing!
-            // In other case we have a risk to produce different results
+            // In another case, we have a risk to produce different results
             // even while different calls: the result of floating-point sum depends on the summing order.
             this.buffers = new DataBuffer[this.numberOfTasks];
         }

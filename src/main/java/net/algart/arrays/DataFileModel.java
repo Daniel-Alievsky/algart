@@ -282,7 +282,7 @@ public interface DataFileModel<P> {
      * and load there portions of large data file.
      *
      * <p>The returned number of banks must not be less than 2.
-     * In other case, an attempt to create {@link Array} instance will throw an exception.
+     * In another case, an attempt to create {@link Array} instance will throw an exception.
      * Usual values are 8-16.
      *
      <!--Repeat.SectionStart recommendedNumberOfBanks_multiprocessor-->
@@ -313,7 +313,7 @@ public interface DataFileModel<P> {
      * methods, the file size is usually fixed while its creation and bank size information is not used.
      *
      * <p>This returned size must be the power of two (2<sup>k</sup>) and must not be less than 256.
-     * In other case, an attempt to create {@link Array} instance will throw an exception.
+     * In another case, an attempt to create {@link Array} instance will throw an exception.
      *
      * <p>We recommend use large banks to reduce bank swapping.
      * But do not specify too large values here: every opened data file

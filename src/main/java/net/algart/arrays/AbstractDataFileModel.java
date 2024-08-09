@@ -316,7 +316,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * data file model class, which was used while creating temporary files.
      *
      * <p>The result of this method must be at least three characters long.
-     * In other case, its result will be automatically appended with "_" to fulfil
+     * In another case, its result will be automatically appended with "_" to fulfil
      * the requirements of the standard <code>File.createTempFile</code> method.
      *
      * <p>This method must not return {@code null}.

@@ -1637,7 +1637,7 @@ public class Matrices {
      * <code>{@link UpdatableFloatArray}.class</code>, <code>{@link UpdatableDoubleArray}.class</code>,
      * <code>{@link UpdatableObjectArray}.class</code>,
      * suitable for storing the specified element type.
-     * In other case, throws an exception.
+     * In another case, an exception is thrown.
      *
      * <p>More precisely, this method throws <code>ClassCastException</code>, if
      * <code>!arraySupertype.isAssignableFrom(type)</code>, where
@@ -2494,7 +2494,7 @@ public class Matrices {
      * <p><code>
      * 0 &lt;= <i>x</i><sub><i>k</i></sub> &lt; matrix.{@link Matrix#dim(int) dim}(<i>k</i>)
      * </code></p>
-     * <p>In other case the behavior of the returned function depends on <code>checkRanges</code> argument.
+     * <p>In another case, the behavior of the returned function depends on <code>checkRanges</code> argument.
      * If it is <code>true</code>, <code>IndexOutOfBoundsException</code> is thrown while calling
      * {@link Func#get(double...)} method, as while using {@link Matrix#index(long...)} method.
      * If <code>checkRanges</code> is <code>false</code>,
@@ -3912,7 +3912,7 @@ public class Matrices {
      * The details of this averaging are not specified.
      * This method is necessary while compression, if you want to get maximally "good" result picture.
      * It works fine while compression in the integer number of times (all <code>diagonal</code> values are integers).
-     * In other case, {@link ResizingMethod#POLYLINEAR_AVERAGING} mode can produce better results.
+     * In another case, {@link ResizingMethod#POLYLINEAR_AVERAGING} mode can produce better results.
      * <br>&nbsp;
      *
      * <li>If <code>resizingMethod</code> is {@link ResizingMethod#POLYLINEAR_INTERPOLATION} or

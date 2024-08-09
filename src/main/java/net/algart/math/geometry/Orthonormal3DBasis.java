@@ -176,7 +176,7 @@ public final class Orthonormal3DBasis {
      * about 10<sup>&minus;8</sup>..10<sup>&minus;6</sup> radians or something like this),
      * or if the length of one of the passed vectors is less than {@link #MIN_ALLOWED_LENGTH},
      * then behaviour depends on <code>exceptionOnCollinearity</code> argument. If it is <code>true</code>,
-     * the method throws {@link CollinearityException}. In other case, the method ignores the passed
+     * the method throws {@link CollinearityException}. In another case, the method ignores the passed
      * vector (<code>jx</code>,<code>jy</code>,<code>jz</code>) and returns some basis according the passed vector
      * (<code>ix</code>,<code>iy</code>,<code>iz</code>), as {@link #newSomeBasis(double, double, double)} method.
      *

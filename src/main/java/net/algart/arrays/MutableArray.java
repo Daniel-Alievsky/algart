@@ -34,7 +34,7 @@ import java.util.Objects;
  * {@link MutableBitArray}, {@link MutableCharArray}, {@link MutableByteArray}, {@link MutableShortArray},
  * {@link MutableIntArray}, {@link MutableLongArray}, {@link MutableFloatArray}, {@link MutableDoubleArray}
  * subinterfaces.
- * In other case, this array <b>must</b> implement {@link MutableObjectArray} subinterface.</p>
+ * In another case, this array <b>must</b> implement {@link MutableObjectArray} subinterface.</p>
  *
  * <p>Resizable arrays, implementing this interface,
  * are not thread-safe, but <b>are thread-compatible</b>

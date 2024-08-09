@@ -125,7 +125,7 @@ public interface SpectralTransform {
      * <p>More precisely, if this method returns <code>false</code> for the length of a sample array,
      * passed to 1st or 2nd methods, or for some dimension of some matrix, passed to 3rd or 4th method,
      * then those methods throw {@link IllegalArgumentException}.
-     * In other case, those methods will process that passed data.
+     * In another case, those methods will process that passed data.
      *
      * <p>In both implementations of this interface, offered by this package,
      * this method returns <code>true</code> if the passed length is a power of two (2<sup><i>k</i></sup>).
@@ -154,7 +154,7 @@ public interface SpectralTransform {
      * {@link #inverseTransformMatrix inverseTransformMatrix} checks, whether the <code>matrixIm</code> argument is
      * not {@code null}. If this condition is not fulfilled, these methods throw
      * <code>UnsupportedOperationException</code>.
-     * In other case, these methods work normally.
+     * In another case, these methods work normally.
      *
      * <p>In implementations, offered by this package, this method returns <code>true</code>
      * in {@link FastFourierTransform} class and <code>false</code> in {@link SeparableFastHartleyTransform} class.

@@ -35,7 +35,7 @@ import java.util.zip.CRC32;
  * <p>This class implements only {@link Array} interface and doesn't implement
  * {@link UpdatableArray} / {@link MutableArray}. (It is necessary to allow read-only arrays,
  * implementing {@link Array} only, to be inheritors of <code>AbstractArray</code>.
- * In other case, the user would be able to use illegal constructions as the following:</p>
+ * In another case, the user would be able to use illegal constructions as the following:</p>
  * <pre>
  * &nbsp;&nbsp;&nbsp;&nbsp;Array ar = some immutable array (inheritor of AbstractArray);
  * &nbsp;&nbsp;&nbsp;&nbsp;((AbstractArray)ar)set(0, newValue);
@@ -832,7 +832,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * to call this method with <code>true</code> argument.
      *
      * <p>If the argument is <code>false</code>, this instance must implement {@link UpdatableArray}
-     * interface. In other case, <code>UnsupportedOperationException</code> will be thrown.
+     * interface. In another case, <code>UnsupportedOperationException</code> will be thrown.
      *
      * <p>The access to the "new status", provided by this and {@link #isNew()} method,
      * is always internally synchronized (the corresponding private field is <code>volatile</code>).
@@ -868,7 +868,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * to call this method.
      *
      * <p>If the argument is <code>false</code>, this instance must implement {@link UpdatableArray}
-     * interface. In other case, <code>UnsupportedOperationException</code> will be thrown.
+     * interface. In another case, <code>UnsupportedOperationException</code> will be thrown.
      *
      * <p>The access to the "new-read-only-view status", provided by this and {@link #isNewReadOnlyView()} method,
      * is always internally synchronized (the corresponding private field is <code>volatile</code>).

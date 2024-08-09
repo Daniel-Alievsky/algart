@@ -186,7 +186,7 @@ public class SubContext extends AbstractContext implements Context {
     /**
      * This implementation returns <code>true</code> if <code>contextClass</code> is not {@code null}
      * and <code>contextClass.isAssignableFrom(thisInstance.getClass())</code>.
-     * In other case, if this instance was created by the constructor with the specified set of allowed classes
+     * In another case, if this instance was created by the constructor with the specified set of allowed classes
      * ({@link #SubContext(Context, Class[])}) and if the passed context class is not
      * in the list of allowed contexts, passed to the constructor,
      * this implementation returns <code>false</code>.

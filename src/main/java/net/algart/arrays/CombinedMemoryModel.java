@@ -139,7 +139,7 @@ import java.util.Objects;
  * So, you <i>should store in combined arrays only such objects,
  * that have <code>hashCode</code> method based on the their content
  * (stored inside a combined array via {@link CombinedMemoryModel.Combiner})</i>.
- * In other case, standard contract for <code>hashCode</code> and <code>equals</code>
+ * In another case, standard contract for <code>hashCode</code> and <code>equals</code>
  * methods can be violated, that can lead to problems, for example, while using arrays
  * as keys in hash maps.</li>
  * </ul>
@@ -293,7 +293,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * implements this interface, then {@link Array#getData(long, Object, int, int) getData(...)},
      * {@link UpdatableArray#setData(long, Object, int, int) setData(...)} and
      * {@link Array#buffer buffer-access} methods will use block <code>get/set</code>
-     * methods declared in this interface. In other case, those methods
+     * methods declared in this interface. In another case, those methods
      * will call separate <code>get/set</code> method, declared in {@link Combiner},
      * for every loaded/stored element of the combined array.</p>
      *

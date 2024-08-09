@@ -184,7 +184,7 @@ class BufferArraysImpl {
                 throw new AssertionError("Cannot reallocateStorage(): newCompatibleEmptyStorage "
                         + "cannot be copied from this storage");
             // It is very important here to copy the storage BEFORE switching!
-            // In other case, the following situation will be possible:
+            // In another case, the following situation will be possible:
             // the old storage have no attached arrays, but someone (we here,
             // while calling "copy") activate new mappings in that storage.
             // This situation is illegal and will not be properly processed by finalization

@@ -981,7 +981,7 @@ public abstract class SummingHistogram extends Histogram {
         assert r < total;
         final double delta = currentValue - v;
         // If b > 0, then v is the correct value for the current integer rank r: v=v(r).
-        // (In other case, it is possible that v is inside a zero area between v(r) and v(r+bar(v(r))).)
+        // (In another case, it is possible that v is inside a zero area between v(r) and v(r+bar(v(r))).)
         // Really, r <= precise rank < r+b, v(r) <= currentValue < v(r+b),
         // and the only non-zero bar between v(r) and v(r'=r+bar(v(r))) is v(r):
         // it's impossible that v(r)<v<v(r'), and also impossible v>=v(r'), because r(v)=r, not r'.

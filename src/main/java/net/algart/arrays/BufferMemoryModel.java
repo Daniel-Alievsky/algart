@@ -282,7 +282,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * this array is {@link Array#asCopyOnNextWrite() copy-on-next-write}.
      *
      * <p>The passed argument must be created by the buffer memory model: {@link #isBufferArray(Array)}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param bufferArray the AlgART array created by this memory model.
      * @return the underlying <code>ByteBuffer</code>.

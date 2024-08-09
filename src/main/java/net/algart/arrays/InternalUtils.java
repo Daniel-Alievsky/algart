@@ -160,7 +160,7 @@ class InternalUtils {
      * In this case, the algorithms may suppose that access to <code>ByteBuffer</code> elements by
      * <code>get(int index)</code>, <code>put(int index, byte b)</code> methods
      * works with the same (or almost same) speed as access to usual Java array elements.
-     * In other case, the algorithm should prefer to process Java arrays.
+     * In another case, the algorithm should prefer to process Java arrays.
      *
      * <p>This value is determined while initializing {@link Arrays} class
      * from the system property "net.algart.arrays.serverOptimization", that can contain

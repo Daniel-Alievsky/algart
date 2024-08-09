@@ -266,7 +266,7 @@ public interface BitArray extends PFixedArray {
      * to a beginning of some packed portion of such representation (usually <code>long</code> value),
      * in other words, if the position is <i>aligned</i>,
      * then the copying may be performed quickly: it is just copying a sequence of <code>long</code> values.
-     * In other case, the copying requires bit shift of <code>long</code> values.
+     * In another case, the copying requires bit shift of <code>long</code> values.
      * This method returns the nearest aligned position, starting from the passed index,
      * for such AlgART bit arrays.
      *
@@ -288,7 +288,7 @@ public interface BitArray extends PFixedArray {
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...)
      * Arrays.asFuncArray}
      * and similar methods.)
-     * In other case, the returned value is usually in a range <code>position..position+63</code>.
+     * In another case, the returned value is usually in a range <code>position..position+63</code>.
      *
      * <p>Important note: if this method returns <code>-1</code> for the argument <code>position=0</code>, it means
      * that {@link #getBits getBits} method never (or almost never) work faster than

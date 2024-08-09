@@ -37,7 +37,7 @@ import java.util.zip.Checksum;
  * <p>The maximal length of bit arrays supported by this class is <code>2<sup>37</sup>-64</code>.
  * All indexes and lengths passed to methods of this class must not exceed this value.
  * Moreover, all indexes and length, concerning usual (non-packed) Java array,
- * must not exceed <code>2<sup>31</sup>-1</code>. In other case, the results are unspecified.
+ * must not exceed <code>2<sup>31</sup>-1</code>. In another case, the results are unspecified.
  * ("Unspecified" means that any elements of the passed arrays can be read or changed,
  * or that <code>IndexOutOfBoundsException</code> can be thrown.)</p>
  *

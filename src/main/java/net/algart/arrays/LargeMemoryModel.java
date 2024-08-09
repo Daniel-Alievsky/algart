@@ -428,7 +428,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * However, you may change this flag via {@link #setTemporary(Array, boolean)} method.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @return <code>true</code> if the corresponded data file is temporary and should be automatically deleted.
@@ -463,7 +463,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * <p>This method also sets the temporary flag for <i>all</i> arrays, that share data with this one.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @param value      new temporary status for this array.
@@ -484,7 +484,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * storing all elements of the passed AlgART array.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @return the data file model used in this array.
@@ -518,13 +518,13 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * via {@link #asArray asArray} or {@link #asUpdatableArray asUpdatableArray} methods.
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * <p>The passed argument <i>may</i> be created by another instance of the large memory model
      * than this one. But the {@link #getDataFileModel(Array) data file model of that memory model},
      * which was used for creating the passed array, must use the same class (or an inheritor)
      * for data file paths (see {@link DataFileModel#pathClass()}),
-     * as the data file model of this large memory model. In other case, <code>ClassCastException</code>
+     * as the data file model of this large memory model. In another case, <code>ClassCastException</code>
      * will be thrown.
      *
      * @param largeArray the AlgART array.
@@ -590,7 +590,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * are immutable.)
      *
      * <p>The passed argument must be created by the large memory model: {@link #isLargeArray(Array)}
-     * must return <code>true</code>. In other case, <code>IllegalArgumentException</code> will be thrown.
+     * must return <code>true</code>. In another case, <code>IllegalArgumentException</code> will be thrown.
      *
      * @param largeArray the AlgART array.
      * @return <code>true</code> if this array and any other arrays, sharing data with it, are immutable.

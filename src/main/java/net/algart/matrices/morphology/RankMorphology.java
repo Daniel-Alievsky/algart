@@ -692,7 +692,7 @@ public interface RankMorphology extends Morphology {
      * <p>If the {@link Matrix#elementType() element type} of the passed <code>dest</code> matrix
      * is the same as the element type of the source one, the result, saved in <code>dest</code>, will be identically
      * equal to the result of {@link #percentile(Matrix, Matrix, Pattern)} method with the same
-     * <code>src</code>, <code>percentileIndexes</code> and <code>pattern</code> arguments. In other case,
+     * <code>src</code>, <code>percentileIndexes</code> and <code>pattern</code> arguments. In another case,
      * the result, saved in <code>dest</code>, will be equal to
      *
      * <pre>{@link Matrices#asFuncMatrix(boolean, Func, Class, Matrix)

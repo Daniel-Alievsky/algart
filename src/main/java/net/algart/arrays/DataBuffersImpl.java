@@ -60,7 +60,7 @@ class DataBuffersImpl {
         long from = 0, to = 0, count = 0;
         boolean caching = false;
         // "caching" field and "dispose()" method may be set inside this package only.
-        // In other case, the following terrible scenario is possible:
+        // In another case, the following terrible scenario is possible:
         //    1) a bad client sets this flag and maps the buffer (Java array is allocated in pool);
         //    2) he requests the reference to the array by "data()" call and saves it;
         //    3) he disposes the buffer - the array is returned to the pool;

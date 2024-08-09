@@ -55,7 +55,7 @@ package net.algart.arrays;
  * {@link BitStack}, {@link CharStack}, {@link ByteStack}, {@link ShortStack},
  * {@link IntStack}, {@link LongStack}, {@link FloatStack}, {@link DoubleStack}
  * subinterfaces.
- * In other case, the stack <b>must</b> implement {@link ObjectStack} subinterface.</p>
+ * In another case, the stack <b>must</b> implement {@link ObjectStack} subinterface.</p>
  *
  * <p>Objects, implementing this interface,
  * are not thread-safe, but <b>are thread-compatible</b>

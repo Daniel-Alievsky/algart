@@ -184,7 +184,7 @@ class ArraysBitTableGetDataOp {
                 // Synchronization is necessary to provide thread-safety.
                 // In this case, for DIRECT buffers (SimpleMemoryModel) the cost of synchronization is low:
                 // buffer mapping work very quickly for this case.
-                // In other case, synchronization is expensive enough (several CPUs cannot process the same array),
+                // In another case, synchronization is expensive enough (several CPUs cannot process the same array),
                 // but it is not too popular situation and I do not optimize it.
                 lock.lock();
                 final boolean direct = dbuf.isDirect();

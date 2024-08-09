@@ -35,7 +35,7 @@ import java.util.Objects;
  *
  * <p>The maximal length of bit arrays supported by this class is <code>2<sup>37</sup>-64</code>.
  * All indexes and lengths passed to methods of this class should not exceed this value.
- * In other case, the results are unspecified. ("Unspecified" means that any elements
+ * In another case, the results are unspecified. ("Unspecified" means that any elements
  * of the passed buffers can be read or changed, or that <code>IndexOutOfBoundsException</code> can be thrown.)</p>
  *
  * <p>In all methods of this class, it's supposed that the bit <code>#k</code>

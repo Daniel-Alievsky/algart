@@ -1737,7 +1737,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * If that call returns <code>false</code> for the only neighbour <i>Q</i> (case 1) or for some of two neighbours
      * <i>Q</i><sub>1</sub> and <i>Q</i><sub>2</sub> (cases 2 and 3),
      * this method moves to that neighbour and returns <code>true</code>.
-     * In other case it does nothing and returns <code>false</code>.
+     * In another case it does nothing and returns <code>false</code>.
      *
      * <p>Note, that even if this scanner is {@link #isRemembering() remembering}, this method does not store
      * information about visiting pixels. If you want, you should do this manually by
@@ -1845,7 +1845,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      *
      * <p>This method may be called only if the previous change of the current position was performed
      * by {@link #firstStep(int, boolean)}, {@link #firstStepFromBranch(boolean)} or this method.
-     * In other case (for example, if the last change of the current position was performed by {@link #goTo(long...)}
+     * In another case (for example, if the last change of the current position was performed by {@link #goTo(long...)}
      * or {@link #nextNodeOrBranch()}), this method throws <code>IllegalStateException</code>.
      *
      * <p>More precisely:

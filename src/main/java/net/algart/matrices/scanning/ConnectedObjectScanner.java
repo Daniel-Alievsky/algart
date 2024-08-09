@@ -383,7 +383,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * (<code>matrix.{@link Matrix#array() array()}.{@link Array#length() length()}</code>)
      * is not greater than {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()},
      * then the work matrix is allocated by {@link SimpleMemoryModel}.
-     * In other case, it is allocated by
+     * In another case, it is allocated by
      * <code>context.{@link ArrayContext#getMemoryModel() getMemoryModel()}</code>
      * (<code>context</code> is the argument of {@link #clear clear} method).
      *

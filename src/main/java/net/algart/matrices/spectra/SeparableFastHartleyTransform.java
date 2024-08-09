@@ -254,7 +254,7 @@ import java.util.Objects;
  * methods of this class, work with normal (i.e. high) performance only if
  * the passed one-dimensional AlgART matrices are stored in {@link SimpleMemoryModel}
  * (more precisely, if they are {@link DirectAccessible directly accessible}).
- * In other case, each access to every sample leads to calling accessing methods
+ * In another case, each access to every sample leads to calling accessing methods
  * {@link PArray#getDouble(long) getDouble} and {@link UpdatablePArray#setDouble(long, double) setDouble},
  * which can work slowly in non-simple memory models like {@link LargeMemoryModel}. There is the same problem for
  * {@link #directTransform directTransform} / {@link #inverseTransform inverseTransform} methods, if the passed

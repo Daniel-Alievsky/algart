@@ -78,7 +78,7 @@ import java.util.*;
  *
  * <p>Important note: the implementation of <code>Runnable</code> interface <b>must not contain any
  * direct or indirect references to <code>data</code> object</b>.
- * In other case, the <code>data</code> instance will never become unreachable and the <code>run()</code> method
+ * In another case, the <code>data</code> instance will never become unreachable and the <code>run()</code> method
  * will never be called. In particular, <code>largeResources</code> object, processed by
  * <code>run()</code> method and accessible there via "<code>final</code>" declaration,
  * must not refer to <code>data</code> instance in any ways.
@@ -191,7 +191,7 @@ public final class Finalizer {
      * reachable.
      *
      * <p>Important: the implementation of <code>task</code> <i>must not contain references
-     * to the passed <code>checkedForDeallocation</code> instance</i>! In other case,
+     * to the passed <code>checkedForDeallocation</code> instance</i>! In another case,
      * this instance will never become unreachable and <code>task.run()</code> method
      * will never be called.
      *

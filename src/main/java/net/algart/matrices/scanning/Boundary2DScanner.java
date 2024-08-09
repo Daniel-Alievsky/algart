@@ -209,7 +209,7 @@ import java.util.Objects;
  *
  * <p>then you either must pass different buffer matrices in different threads,
  * or you must synchronize usage of this class and <b>all</b> accesses to these matrices from any threads.
- * In other case, the content of buffer matrices will be unspecified and behavior of the scanning algorithm
+ * In another case, the content of buffer matrices will be unspecified and behavior of the scanning algorithm
  * will be undefined.</p>
  *
  * @author Daniel Alievsky
@@ -1525,7 +1525,7 @@ public abstract class Boundary2DScanner {
      * belonging to some object boundary,
      * after the current position (alike in the simplest scanner returned by
      * {@link #getSingleBoundaryScanner(Matrix, ConnectivityType) getSingleBoundaryScanner} method).
-     * In other case we suppose that we are at the "open bracket" (the beginning of a series of unit elements),
+     * In another case we suppose that we are at the "open bracket" (the beginning of a series of unit elements),
      * and {@link #nextBoundary()} method does the following:
      *
      * <ol>

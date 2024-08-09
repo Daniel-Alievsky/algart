@@ -303,7 +303,7 @@ public abstract class MatrixInfo {
      * <p>The passed data must have format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
      * that was somewhere implemented by this class in the past.
-     * In other case, {@link IllegalInfoSyntaxException} will be thrown.
+     * In another case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed array may contain extra elements after the end of the stored information.
      * All versions of this class guarantee that random bytes after the end of the serialized information
@@ -333,7 +333,7 @@ public abstract class MatrixInfo {
      * <p>The passed data must have format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
      * that was somewhere implemented by this class in the past.
-     * In other case, {@link IllegalInfoSyntaxException} will be thrown.
+     * In another case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed char array may contain extra elements after the end of the stored information.
      * All versions of this class guarantee that random characters after the end of the serialized information

@@ -903,7 +903,7 @@ public interface MemoryModel {
      *
      * <p>The <code>arraySupertype</code> argument must be equal to or supertype of the class of
      * the underlying array, created by the call specified above.
-     * In other case, <code>ClassCastException</code> is thrown.
+     * In another case, <code>ClassCastException</code> is thrown.
      * (This check is performed at the very beginning,
      * before actual calling {@link #newUnresizableArray(Class, long) newUnresizableArray}
      * and allocating memory.)

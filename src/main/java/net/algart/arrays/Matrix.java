@@ -344,7 +344,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * of the source matrix <code>m</code>,
          * and an attempt to write into this element of the submatrix modifies the corresponding element
          * of the source matrix <code>m</code>.
-         * In other case (if this element lies outside the source matrix),
+         * In another case (if this element lies outside the source matrix),
          * the element is considered to be equal <code>continuationConstant</code> (an argument of this method):
          * an attempt to read it returns this constant, and
          * an attempt to write into this element is just ignored.
@@ -1896,7 +1896,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>This method returns non-trivial results only if the matrix <code>m</code> is already a view of some other
      * matrix with some form of reordering elements, for example, if <code>m</code> is a {@link #isTiled() tiled} matrix.
-     * In other case, this method just returns this instance.
+     * In another case, this method just returns this instance.
      *
      * <p>In the current version of this package (if this instance was created by means of methods of this package),
      * this method is equivalent to the following:

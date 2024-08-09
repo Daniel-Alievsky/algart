@@ -39,7 +39,7 @@ package net.algart.arrays;
  * {@link UpdatableIntArray}, {@link UpdatableLongArray},
  * {@link UpdatableFloatArray}, {@link UpdatableDoubleArray}
  * subinterfaces.
- * In other case, this array <b>must</b> implement {@link UpdatableObjectArray} subinterface.</p>
+ * In another case, this array <b>must</b> implement {@link UpdatableObjectArray} subinterface.</p>
  *
  * <p>Updatable arrays, implementing this interface,
  * are not thread-safe, but <b>are thread-compatible</b>
