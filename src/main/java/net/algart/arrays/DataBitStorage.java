@@ -34,7 +34,7 @@ interface DataBitStorage {
      * Copies <code>count</code> bits of this storage, starting from <code>pos</code> index,
      * into the specified packed bit array, starting from <code>destArrayOffset</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target packed bit array.
      * @param destArrayOffset starting position in the target packed bit array.
      * @param count           the number of bits to be copied.
@@ -47,7 +47,7 @@ interface DataBitStorage {
      * starting from <code>srcArrayOffset</code> index,
      * into this storage, starting from <code>pos</code> index.
      *
-     * @param pos            starting position in the stored AlgART array (not sub-array).
+     * @param pos            starting position in the stored AlgART array (not subarray).
      * @param srcArray       the source packed bit array.
      * @param srcArrayOffset starting position in the source packed bit array.
      * @param count          the number of bits to be copied.
@@ -61,7 +61,7 @@ interface DataBitStorage {
      * with the logical AND of them and corresponding <code>count</code>
      * bits of this storage, starting from <code>pos</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -74,7 +74,7 @@ interface DataBitStorage {
      * with the logical OR of them and corresponding <code>count</code>
      * bits of this storage, starting from <code>pos</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -87,7 +87,7 @@ interface DataBitStorage {
      * with the logical XOR of them and corresponding <code>count</code>
      * bits of this storage, starting from <code>pos</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -100,7 +100,7 @@ interface DataBitStorage {
      * with the logical AND of them and <i>inverted</i> corresponding <code>count</code>
      * bits of this storage, starting from <code>pos</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.

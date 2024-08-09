@@ -163,7 +163,7 @@ abstract class DataStorage {
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a bit storage
      * <b>in a non-thread-safe manner</b>.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the bit to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a bit storage.
      */
@@ -190,7 +190,7 @@ abstract class DataStorage {
     /**
      * Returns the bit #<code>index</code> if it is a bit storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the bit at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a bit storage.
      */
@@ -201,7 +201,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a bit storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the bit to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a bit storage.
      */
@@ -252,7 +252,7 @@ abstract class DataStorage {
     /**
      * Returns the char #<code>index</code> if it is a char storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the char at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a char storage.
      */
@@ -263,7 +263,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a char storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the char to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a char storage.
      */
@@ -312,7 +312,7 @@ abstract class DataStorage {
     /**
      * Returns the byte #<code>index</code> if it is a byte storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the byte at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a byte storage.
      */
@@ -323,7 +323,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a byte storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the byte to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a byte storage.
      */
@@ -372,7 +372,7 @@ abstract class DataStorage {
     /**
      * Returns the short #<code>index</code> if it is a short storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the short at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a short storage.
      */
@@ -383,7 +383,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a short storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the short to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a short storage.
      */
@@ -432,7 +432,7 @@ abstract class DataStorage {
     /**
      * Returns the int #<code>index</code> if it is a int storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the int at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a int storage.
      */
@@ -443,7 +443,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a int storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the int to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a int storage.
      */
@@ -492,7 +492,7 @@ abstract class DataStorage {
     /**
      * Returns the long #<code>index</code> if it is a long storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the long at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a long storage.
      */
@@ -503,7 +503,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a long storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the long to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a long storage.
      */
@@ -552,7 +552,7 @@ abstract class DataStorage {
     /**
      * Returns the float #<code>index</code> if it is a float storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the float at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a float storage.
      */
@@ -563,7 +563,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a float storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the float to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a float storage.
      */
@@ -612,7 +612,7 @@ abstract class DataStorage {
     /**
      * Returns the double #<code>index</code> if it is a double storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @return the double at the specified position in the source array.
      * @throws UnsupportedOperationException if it is not a double storage.
      */
@@ -623,7 +623,7 @@ abstract class DataStorage {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code> if it is a double storage.
      *
-     * @param index the index of the data element in the source array (not sub-array).
+     * @param index the index of the data element in the source array (not subarray).
      * @param value the double to be stored at the specified position.
      * @throws UnsupportedOperationException if it is not a double storage.
      */
@@ -673,7 +673,7 @@ abstract class DataStorage {
 
     /**
      * Copies element #<code>srcIndex</code> to position #<code>destIndex</code> inside
-     * the stored array (not sub-array).
+     * the stored array (not subarray).
      *
      * @param destIndex index of element to replace.
      * @param srcIndex  index of element to be copied.
@@ -682,7 +682,7 @@ abstract class DataStorage {
 
     /**
      * Swaps elements at positions #<code>firstIndex</code> and #<code>secondIndex</code> inside
-     * the stored array (not sub-array).
+     * the stored array (not subarray).
      *
      * @param firstIndex  first index of element to exchange.
      * @param secondIndex second index of element to exchange.
@@ -693,7 +693,7 @@ abstract class DataStorage {
      * Copies <code>count</code> elements of this storage, starting from <code>pos</code> index,
      * into the specified Java array of corresponding type, starting from <code>destArrayOffset</code> index.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be copied.
@@ -705,7 +705,7 @@ abstract class DataStorage {
      * starting from <code>srcArrayOffset</code> index,
      * into this storage, starting from <code>pos</code> index.
      *
-     * @param pos            starting position in the stored AlgART array (not sub-array).
+     * @param pos            starting position in the stored AlgART array (not subarray).
      * @param srcArray       the source Java array.
      * @param srcArrayOffset starting position in the source Java array.
      * @param count          the number of elements to be copied.
@@ -718,7 +718,7 @@ abstract class DataStorage {
      * (<code>Boolean</code>, <code>Character</code>, <code>Byte</code>, <code>Short</code>,
      * <code>Integer</code>, <code>Long</code>, <code>Float</code> or <code>Double</code>).
      *
-     * @param pos           starting position in the stored AlgART array (not sub-array).
+     * @param pos           starting position in the stored AlgART array (not subarray).
      * @param count         the number of elements to be copied.
      * @param fillerWrapper the wrapper of primitive type storing the filling value.
      */
@@ -727,7 +727,7 @@ abstract class DataStorage {
     /**
      * Fills elements <code>#pos..#pos+count-1</code> of this storage by zero.
      *
-     * @param pos   starting position in the stored AlgART array (not sub-array).
+     * @param pos   starting position in the stored AlgART array (not subarray).
      * @param count the number of elements to be filled.
      */
     abstract void clearData(long pos, long count);
@@ -785,7 +785,7 @@ abstract class DataStorage {
      * elements of this storage, starting from <code>pos</code> index.
      * Must not be called for bit storages.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -799,7 +799,7 @@ abstract class DataStorage {
      * elements of this storage, starting from <code>pos</code> index.
      * Must not be called for bit storages.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -813,7 +813,7 @@ abstract class DataStorage {
      * elements of this storage, starting from <code>pos</code> index.
      * Must not be called for bit storages.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -828,7 +828,7 @@ abstract class DataStorage {
      * starting from <code>pos</code> index.
      * Must not be called for bit storages.
      *
-     * @param pos             starting position in the stored AlgART array (not sub-array).
+     * @param pos             starting position in the stored AlgART array (not subarray).
      * @param destArray       the target Java array.
      * @param destArrayOffset starting position in the target Java array.
      * @param count           the number of elements to be replaced.
@@ -851,7 +851,7 @@ abstract class DataStorage {
      * The byte / short elements are considered to be unsigned.
      * Must not be called for bit storages.
      *
-     * @param pos               starting position in the stored AlgART array (not sub-array).
+     * @param pos               starting position in the stored AlgART array (not subarray).
      * @param destArray         the target Java array.
      * @param destArrayOffset   starting position in the target Java array.
      * @param count             the number of elements to be replaced.
@@ -875,7 +875,7 @@ abstract class DataStorage {
      * The byte / short elements are considered to be unsigned.
      * Must not be called for bit storages.
      *
-     * @param pos               starting position in the stored AlgART array (not sub-array).
+     * @param pos               starting position in the stored AlgART array (not subarray).
      * @param destArray         the target Java array.
      * @param destArrayOffset   starting position in the target Java array.
      * @param count             the number of elements to be replaced.
@@ -915,8 +915,8 @@ abstract class DataStorage {
      * if it is necessary.
      *
      * @param context   the context of calculations; if not {@code null}, used for showing progress and interruption.
-     * @param fromIndex start index (inclusive) in the stored AlgART array (not sub-array).
-     * @param toIndex   end index (exclusive) in the stored AlgART array (not sub-array).
+     * @param fromIndex start index (inclusive) in the stored AlgART array (not subarray).
+     * @param toIndex   end index (exclusive) in the stored AlgART array (not subarray).
      */
     void actualizeLazyFilling(ArrayContext context, long fromIndex, long toIndex) {
     }
@@ -925,8 +925,8 @@ abstract class DataStorage {
      * If overridden, should try to preload the resources connected with the specified region
      * of this storage into RAM. It is possible that not all resources will be preloaded.
      *
-     * @param fromIndex start index (inclusive) in the stored AlgART array (not sub-array).
-     * @param toIndex   end index (exclusive) in the stored AlgART array (not sub-array).
+     * @param fromIndex start index (inclusive) in the stored AlgART array (not subarray).
+     * @param toIndex   end index (exclusive) in the stored AlgART array (not subarray).
      */
     void loadResources(long fromIndex, long toIndex) {
     }
@@ -937,8 +937,8 @@ abstract class DataStorage {
      * Maybe, does not fill the rest of array by zeroes; to do this, you need to call
      * {@link #actualizeLazyFilling(ArrayContext, long, long)} method before.
      *
-     * @param fromIndex            start index (inclusive) in the stored AlgART array (not sub-array).
-     * @param toIndex              end index (exclusive) in the stored AlgART array (not sub-array).
+     * @param fromIndex            start index (inclusive) in the stored AlgART array (not subarray).
+     * @param toIndex              end index (exclusive) in the stored AlgART array (not subarray).
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      */

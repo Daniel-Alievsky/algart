@@ -1092,9 +1092,8 @@ public interface Array {
      * <code>array.{@link Array#length() length()}</code>, and array elements will be stored
      * in elements <code>#0..#{@link Array#length() length()}-1}</code> of the returned array.
      *
-     * <p>The returned Java array will be "safe" in the sense that no references to it are
-     * stored inside this array.
-     * In other words, this method must always allocate a new Java array.
+     * <p>This method must always allocate a new Java array.
+     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
      * The caller is thus free to modify the returned array.
      *
      * <p>The type of returned array is always one of the following:<ul>
@@ -1195,7 +1194,7 @@ public interface Array {
      * {@link FloatArray#ja()}}, {@link DoubleArray#ja()}},
      * {@link ObjectArray#ja()}}.</p>
      *
-     * <p>Be careful: this method can potentially lead to bugs while inaccurate usage.
+     * <p>Be careful: this method can potentially lead to <b>bugs</b> while inaccurate usage.
      * The typical purpose of this method is to quickly access array data for <i>reading</i>.
      * But it also allows you to <i>modify</i> this data,
      * and the results of such modification can be different: this may change the original AlgART array,
@@ -1211,10 +1210,10 @@ public interface Array {
      * 2) {@link #isJavaArrayWrapper()} method must return <code>true</code>.</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
-     * instead of this method, because that interface allows to quickly process sub-arrays
+     * instead of this method, because that interface allows to quickly process subarrays
      * with non-zero start offsets and mutable arrays, for which the length of underlying Java array (capacity)
      * is usually greater than the actual AlgART array {@link #length() length}.
-     * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a sub-array,
+     * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a subarray,
      * this method provides the simplest way to receive an identical Java array maximally quickly.
      *
      * @return Java array, equivalent to this AlgART array.

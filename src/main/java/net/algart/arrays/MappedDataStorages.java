@@ -602,7 +602,7 @@ class MappedDataStorages {
          * Returns <code>index&~indexHighBits</code>.
          * The same offset will be returned by {@link #translateIndex(long)} method.
          *
-         * @param index the index of some data element in the source array (not sub-array).
+         * @param index the index of some data element in the source array (not subarray).
          * @return      the offset of this element in the bank.
          */
         final long offset(long index) {
@@ -611,7 +611,7 @@ class MappedDataStorages {
         /**
          * Equivalent to {@link #translateIndex(long, boolean) translateIndex(index, false)}.
          *
-         * @param index the index of the data element in the source array (not sub-array).
+         * @param index the index of the data element in the source array (not subarray).
          * @return      the index of the data element in the bank #0.
          */
         final long translateIndex(long index) {
@@ -648,7 +648,7 @@ class MappedDataStorages {
          * <p>For bits, returns the index of the bit
          * (it is the only case when it can be greater than 2^31).
          *
-         * @param index         the index of the data element in the source array (not sub-array).
+         * @param index         the index of the data element in the source array (not subarray).
          * @param useSecondBank if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                      else works with bank #0.
          * @return              the index of the data element in the bank #0 or #1.
@@ -670,7 +670,7 @@ class MappedDataStorages {
          * Used for optimization of large multi-bank writing operations.
          * Never used in the {@link #singleMapping single mapping mode}.
          *
-         * @param index the index of the data element in the source array (not sub-array).
+         * @param index the index of the data element in the source array (not subarray).
          * @return      the index of the data element in the bank #0.
          */
         final long translateIndexWO(long index) {
@@ -689,7 +689,7 @@ class MappedDataStorages {
          * Used for optimization of large multi-bank writing operations.
          * Never used in the {@link #singleMapping single mapping mode}.
          *
-         * @param index         the index of the data element in the source array (not sub-array).
+         * @param index         the index of the data element in the source array (not subarray).
          * @param useSecondBank if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                      else works with bank #0.
          * @return              the index of the data element in the bank #0 or #1.
@@ -708,7 +708,7 @@ class MappedDataStorages {
          * Equivalent to {@link #translateIndex(long, boolean)} if <code>notLoadDataFromFile</code>
          * is <code>false</code> or {@link #translateIndexWO(long, boolean)} if it is <code>true</code>.
          *
-         * @param index               the index of the data element in the source array (not sub-array).
+         * @param index               the index of the data element in the source array (not subarray).
          * @param useSecondBank       if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                            else works with bank #0.
          * @param notLoadDataFromFile if <code>true</code> and there is no required bank in memory,
@@ -734,7 +734,7 @@ class MappedDataStorages {
          * if the required element is not currently in the bank.
          * (Full method calls this one.)
          *
-         * @param index          the index of the data element in the source array (not sub-array).
+         * @param index          the index of the data element in the source array (not subarray).
          * @param useSecondBank  if <code>true</code>, works with bank #1 and doesn't correct bank #0;
          *                       else works with bank #0.
          * @param loadingMode    if {@link LoadingMode#NOT_LOAD_DATA_FROM_FILE} and
@@ -1765,8 +1765,8 @@ class MappedDataStorages {
          * The <code>toIndex</code> argument is ignored by this method, excepting the only case
          * when it is equal to <code>fromIndex</code> (when this method does nothing).
          *
-         * @param fromIndex start index (inclusive) in the stored AlgART array (not sub-array).
-         * @param toIndex   end index (exclusive) in the stored AlgART array (not sub-array).
+         * @param fromIndex start index (inclusive) in the stored AlgART array (not subarray).
+         * @param toIndex   end index (exclusive) in the stored AlgART array (not subarray).
          */
         @Override
         void loadResources(long fromIndex, long toIndex) {
