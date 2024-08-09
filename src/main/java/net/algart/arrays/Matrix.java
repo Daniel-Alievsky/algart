@@ -291,7 +291,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * In other words, it's possible to say that the matrix is infinitely reflected in each its bound as
          * in a mirror. Usually this mode provides the best smoothness of continuation of the matrix.
          */
-        public static final ContinuationMode MIRROR_CYCLIC = new ContinuationMode("mirroring-cyclically-continued mode");
+        public static final ContinuationMode MIRROR_CYCLIC = new ContinuationMode(
+                "mirroring-cyclically-continued mode");
 
         /**
          * The special case of constant continuation mode, corresponding to continuing by {@code null}
@@ -613,6 +614,14 @@ public interface Matrix<T extends Array> extends Cloneable {
     Class<?> elementType();
 
     /**
+     * Equivalent to <code>{@link #array()}.{@link Array#toJavaArray() toJavaArray()}</code>.
+     *
+     * @return Java array containing all the elements in this matrix.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     */
+    Object toJavaArray();
+
+    /**
      * Equivalent to <code>{@link #array()}.{@link Array#ja() ja()}</code>.
      *
      * @return Java array, equivalent to {@link #array()}.
@@ -624,103 +633,446 @@ public interface Matrix<T extends Array> extends Cloneable {
                Byte ==> Char,,Short,,Int,,Long,,Float,,Double */
 
     /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toByte() toByte()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>byte</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toByte(byte[])
+     * @see #jaByte()
+     */
+    default byte[] toByte() {
+        return toByte(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toByte(byte[]) toByte(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>byte[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>byte</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toByte()
+     * @see #jaByte()
+     */
+    default byte[] toByte(byte[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toByte(): " + this);
+        }
+        return a.toByte(result);
+    }
+
+    /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaByte() jaByte()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>byte</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toByteJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toByte()
+     * @see #toByte(byte[])
      */
-    byte[] jaByte();
+    default byte[] jaByte() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaByte(): " + this);
+        }
+        return a.jaByte();
+    }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toChar() toChar()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>char</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toChar(char[])
+     * @see #jaChar()
+     */
+    default char[] toChar() {
+        return toChar(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toChar(char[]) toChar(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>char[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>char</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toChar()
+     * @see #jaChar()
+     */
+    default char[] toChar(char[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toChar(): " + this);
+        }
+        return a.toChar(result);
+    }
+
+    /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaChar() jaChar()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>char</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toCharJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toChar()
+     * @see #toChar(char[])
      */
-    char[] jaChar();
+    default char[] jaChar() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaChar(): " + this);
+        }
+        return a.jaChar();
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toShort() toShort()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>short</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toShort(short[])
+     * @see #jaShort()
+     */
+    default short[] toShort() {
+        return toShort(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toShort(short[]) toShort(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>short[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>short</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toShort()
+     * @see #jaShort()
+     */
+    default short[] toShort(short[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toShort(): " + this);
+        }
+        return a.toShort(result);
+    }
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaShort() jaShort()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>short</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toShortJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toShort()
+     * @see #toShort(short[])
      */
-    short[] jaShort();
+    default short[] jaShort() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaShort(): " + this);
+        }
+        return a.jaShort();
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toInt() toInt()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>int</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toInt(int[])
+     * @see #jaInt()
+     */
+    default int[] toInt() {
+        return toInt(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toInt(int[]) toInt(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>int[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>int</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toInt()
+     * @see #jaInt()
+     */
+    default int[] toInt(int[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toInt(): " + this);
+        }
+        return a.toInt(result);
+    }
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaInt() jaInt()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>int</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toIntJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toInt()
+     * @see #toInt(int[])
      */
-    int[] jaInt();
+    default int[] jaInt() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaInt(): " + this);
+        }
+        return a.jaInt();
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toLong() toLong()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>long</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toLong(long[])
+     * @see #jaLong()
+     */
+    default long[] toLong() {
+        return toLong(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toLong(long[]) toLong(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>long[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>long</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toLong()
+     * @see #jaLong()
+     */
+    default long[] toLong(long[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toLong(): " + this);
+        }
+        return a.toLong(result);
+    }
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaLong() jaLong()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>long</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toLongJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toLong()
+     * @see #toLong(long[])
      */
-    long[] jaLong();
+    default long[] jaLong() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaLong(): " + this);
+        }
+        return a.jaLong();
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toFloat() toFloat()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>float</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toFloat(float[])
+     * @see #jaFloat()
+     */
+    default float[] toFloat() {
+        return toFloat(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toFloat(float[]) toFloat(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>float[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>float</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toFloat()
+     * @see #jaFloat()
+     */
+    default float[] toFloat(float[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toFloat(): " + this);
+        }
+        return a.toFloat(result);
+    }
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaFloat() jaFloat()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>float</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toFloatJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toFloat()
+     * @see #toFloat(float[])
      */
-    float[] jaFloat();
+    default float[] jaFloat() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaFloat(): " + this);
+        }
+        return a.jaFloat();
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toDouble() toDouble()}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @return Java array containing all the elements in this matrix, cast to <code>double</code> type.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toDouble(double[])
+     * @see #jaDouble()
+     */
+    default double[] toDouble() {
+        return toDouble(null);
+    }
+
+    /**
+     * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#toDouble(double[]) toDouble(result)}</code>.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
+     * if this matrix contains objects (non-primitive elements), this method
+     * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
+     *
+     * @param result the result <code>double[]</code> array; can be {@code null},
+     *               then it will be created automatically.
+     * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
+     * Java array containing all the elements in the source matrix,
+     * cast to <code>double</code> type according to AlgART rules.
+     * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
+     * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
+     * @throws IndexOutOfBoundsException     if the <code>result</code> argument is not {@code null}, but its length
+     *                                       is too small: less than {@link Matrix#size() matrix.size()}.
+     * @see #toDouble()
+     * @see #jaDouble()
+     */
+    default double[] toDouble(double[] result) {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using toDouble(): " + this);
+        }
+        return a.toDouble(result);
+    }
 
     /**
      * Equivalent to <code>(PArray) {@link #array()}.{@link PArray#jaDouble() jaDouble()}</code>.
-     * However, if the built-in AlgART array is not {@link PArray}, in other words.
+     * However, if the built-in AlgART array is not {@link PArray}, in other words,
      * if this matrix contains objects (non-primitive elements), this method
      * throws {@link UnsupportedOperationException} instead of {@link ClassCastException}.
      *
      * @return Java array containing all the elements in this matrix, cast to <code>double</code> type
      * according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
-     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrices#toDoubleJavaArray(Matrix)
+     * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toDouble()
+     * @see #toDouble(double[])
      */
-    double[] jaDouble();
+    default double[] jaDouble() {
+        if (!(array() instanceof PArray a)) {
+            throw new UnsupportedOperationException("Matrix, containing non-primitive (Object) elements, " +
+                    "cannot be accessed using jaDouble(): " + this);
+        }
+        return a.jaDouble();
+    }
     /*Repeat.AutoGeneratedEnd*/
 
     /**
@@ -1895,7 +2247,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * or similar areas in both matrices, to provide maximal performance.
      *
      * <p>This method returns non-trivial results only if the matrix <code>m</code> is already a view of some other
-     * matrix with some form of reordering elements, for example, if <code>m</code> is a {@link #isTiled() tiled} matrix.
+     * matrix with some form of reordering elements, for example, if <code>m</code> is a {@link #isTiled() tiled}
+     * matrix.
      * In another case, this method just returns this instance.
      *
      * <p>In the current version of this package (if this instance was created by means of methods of this package),

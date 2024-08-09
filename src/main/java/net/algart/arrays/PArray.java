@@ -234,7 +234,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaByte()
-     * @see Matrices#toByteJavaArray(Matrix)
+     * @see Matrix#toByte()
      */
     default byte[] toByte() {
         return toByte(null);
@@ -273,7 +273,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toByte()
      * @see #jaByte()
-     * @see Matrices#toByteJavaArray(byte[], Matrix)
+     * @see Matrix#toByte(byte[])
      */
     default byte[] toByte(byte[] result) {
         long len = length();
@@ -340,7 +340,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaChar()
-     * @see Matrices#toCharJavaArray(Matrix)
+     * @see Matrix#toChar()
      */
     default char[] toChar() {
         return toChar(null);
@@ -379,7 +379,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toChar()
      * @see #jaChar()
-     * @see Matrices#toCharJavaArray(char[], Matrix)
+     * @see Matrix#toChar(char[])
      */
     default char[] toChar(char[] result) {
         long len = length();
@@ -446,7 +446,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaShort()
-     * @see Matrices#toShortJavaArray(Matrix)
+     * @see Matrix#toShort()
      */
     default short[] toShort() {
         return toShort(null);
@@ -485,7 +485,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toShort()
      * @see #jaShort()
-     * @see Matrices#toShortJavaArray(short[], Matrix)
+     * @see Matrix#toShort(short[])
      */
     default short[] toShort(short[] result) {
         long len = length();
@@ -552,7 +552,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaInt()
-     * @see Matrices#toIntJavaArray(Matrix)
+     * @see Matrix#toInt()
      */
     default int[] toInt() {
         return toInt(null);
@@ -591,7 +591,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toInt()
      * @see #jaInt()
-     * @see Matrices#toIntJavaArray(int[], Matrix)
+     * @see Matrix#toInt(int[])
      */
     default int[] toInt(int[] result) {
         long len = length();
@@ -658,7 +658,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaLong()
-     * @see Matrices#toLongJavaArray(Matrix)
+     * @see Matrix#toLong()
      */
     default long[] toLong() {
         return toLong(null);
@@ -697,7 +697,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toLong()
      * @see #jaLong()
-     * @see Matrices#toLongJavaArray(long[], Matrix)
+     * @see Matrix#toLong(long[])
      */
     default long[] toLong(long[] result) {
         long len = length();
@@ -764,7 +764,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaFloat()
-     * @see Matrices#toFloatJavaArray(Matrix)
+     * @see Matrix#toFloat()
      */
     default float[] toFloat() {
         return toFloat(null);
@@ -803,7 +803,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toFloat()
      * @see #jaFloat()
-     * @see Matrices#toFloatJavaArray(float[], Matrix)
+     * @see Matrix#toFloat(float[])
      */
     default float[] toFloat(float[] result) {
         long len = length();
@@ -870,7 +870,7 @@ public interface PArray extends Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toJavaArray()
      * @see #jaDouble()
-     * @see Matrices#toDoubleJavaArray(Matrix)
+     * @see Matrix#toDouble()
      */
     default double[] toDouble() {
         return toDouble(null);
@@ -909,7 +909,7 @@ public interface PArray extends Array {
      *                                   is too small: less than {@link Array#length32() array.length()}.
      * @see #toDouble()
      * @see #jaDouble()
-     * @see Matrices#toDoubleJavaArray(double[], Matrix)
+     * @see Matrix#toDouble(double[])
      */
     default double[] toDouble(double[] result) {
         long len = length();

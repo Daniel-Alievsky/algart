@@ -1156,7 +1156,7 @@ public interface Array {
      * or by {@link #ja()} method.</p>
      *
      * @return whether this array is a wrapper for standard Java array: direct-accessible array with zero offset and
-     * with length, equal to the number of elements of the underlying Java array.
+     * with length, equal to the number of elements in the underlying Java array.
      * @see #ja()
      */
     default boolean isJavaArrayWrapper() {
@@ -1210,7 +1210,7 @@ public interface Array {
      * 2) {@link #isJavaArrayWrapper()} method must return <code>true</code>.</p>
      *
      * <p>Note that usually you <b>should</b> prefer methods of {@link DirectAccessible} interface
-     * instead of this method, because that interface allows to quickly process subarrays
+     * instead of this method, because that interface allows quickly processing subarrays
      * with non-zero start offsets and mutable arrays, for which the length of underlying Java array (capacity)
      * is usually greater than the actual AlgART array {@link #length() length}.
      * But if you are sure that your array is created by {@link SimpleMemoryModel} and is not a subarray,
@@ -1220,6 +1220,7 @@ public interface Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see DirectAccessible
      * @see #isJavaArrayWrapper()
+     * @see #toJavaArray()
      * @see PArray#jaByte()
      * @see PArray#jaShort()
      * @see PArray#jaInt()

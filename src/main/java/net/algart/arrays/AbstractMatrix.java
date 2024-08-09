@@ -35,73 +35,83 @@ import java.util.Objects;
  * <p>All non-abstract methods are completely implemented here and may be not overridden in subclasses.</p>
  *
  * @param <T> the type of the built-in AlgART array.
- *
  * @author Daniel Alievsky
  */
 public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
-
+    @Override
     public abstract T array();
 
+    @Override
     public Class<?> elementType() {
         return array().elementType();
     }
 
+    @Override
     public Class<? extends Array> type() {
         return array().type();
     }
 
+    @Override
     public Class<? extends UpdatableArray> updatableType() {
         return array().updatableType();
     }
 
+    @Override
     public <U extends Array> Class<? extends U> type(Class<U> arraySupertype) {
         Objects.requireNonNull(arraySupertype, "Null arraySupertype");
         if (UpdatableArray.class.isAssignableFrom(arraySupertype)) {
             throw new IllegalArgumentException("The passed arraySupertype, " + arraySupertype
-                + ", is updatable, but the argument of Matrix.type method must define an immutable basic array "
-                + "type (" + PArray.class.getName() + ", " + PIntegerArray.class.getName() + ", etc.)");
+                    + ", is updatable, but the argument of Matrix.type method must define an immutable basic array "
+                    + "type (" + PArray.class.getName() + ", " + PIntegerArray.class.getName() + ", etc.)");
         }
         Class<? extends Array> result = array().type();
         if (!arraySupertype.isAssignableFrom(result)) {
             throw new ClassCastException("The type of built-in array of this matrix " + result.getName()
-                + " is not the same type or a subtype of the specified supertype: " + arraySupertype
-                + " (this matrix is " + this + ")");
+                    + " is not the same type or a subtype of the specified supertype: " + arraySupertype
+                    + " (this matrix is " + this + ")");
         }
         return InternalUtils.cast(result);
     }
 
+    @Override
     public <U extends Array> Class<? extends U> updatableType(Class<U> arraySupertype) {
         Objects.requireNonNull(arraySupertype, "Null arraySupertype");
         Class<? extends Array> result = array().updatableType();
         if (!arraySupertype.isAssignableFrom(result)) {
             throw new ClassCastException("The type of built-in array of this matrix " + result.getName()
-                + " is not the same type or a subtype of the specified supertype: " + arraySupertype
-                + " (this matrix is " + this + ")");
+                    + " is not the same type or a subtype of the specified supertype: " + arraySupertype
+                    + " (this matrix is " + this + ")");
         }
         return InternalUtils.cast(result);
     }
 
+    @Override
     public boolean isPrimitive() {
         return array() instanceof PArray;
     }
 
+    @Override
     public boolean isFloatingPoint() {
         return array() instanceof PFloatingArray;
     }
 
+    @Override
     public boolean isFixedPoint() {
         return array() instanceof PFixedArray;
     }
 
+    @Override
     public boolean isUnsigned() {
         return Arrays.isUnsignedElementType(elementType());
     }
 
+    @Override
     public long bitsPerElement() {
         final T array = array();
         return array instanceof PArray ? ((PArray) array).bitsPerElement() : -1;
     }
 
+    @Override
     public double maxPossibleValue(double valueForFloatingPoint) {
         final T array = array();
         return array instanceof PArray ?
@@ -109,17 +119,22 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
                 Double.NaN;
     }
 
+    @Override
     public double maxPossibleValue() {
         return maxPossibleValue(1.0);
     }
 
+    @Override
     public abstract long[] dimensions();
 
+    @Override
     public abstract int dimCount();
 
+    @Override
     public abstract long dim(int n);
 
     /*Repeat.SectionStart dimEquals*/
+    @Override
     public boolean dimEquals(Matrix<?> m) {
         Objects.requireNonNull(m, "Null matrix");
         int dimCount = dimCount();
@@ -135,6 +150,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
     }
     /*Repeat.SectionEnd dimEquals*/
 
+    @Override
     public boolean dimEquals(long... dimensions) {
         Objects.requireNonNull(dimensions, "Null dimensions argument");
         if (dimensions.length != dimCount()) {
@@ -148,6 +164,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return true;
     }
 
+    @Override
     public long index(long... coordinates) {
         int n = coordinates.length;
         if (n == 0) {
@@ -157,7 +174,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         long result = coordinates[n];
         if (result < 0 || result >= dim(n)) {
             throw new IndexOutOfBoundsException("Coordinate #" + n + " (" + result
-                + (result < 0 ? ") < 0" : ") >= dim(" + n + ") (" + dim(n) + ")") + " in " + this);
+                    + (result < 0 ? ") < 0" : ") >= dim(" + n + ") (" + dim(n) + ")") + " in " + this);
         }
         while (n > 0) {
             --n;
@@ -165,43 +182,46 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
             long limit = dim(n);
             if (coord < 0 || coord >= limit) {
                 throw new IndexOutOfBoundsException("Coordinate #" + n + " (" + coord
-                    + (coord < 0 ? ") < 0" : ") >= dim(" + n + ") (" + limit + ")") + " in " + this);
+                        + (coord < 0 ? ") < 0" : ") >= dim(" + n + ") (" + limit + ")") + " in " + this);
             }
             result = limit * result + coord;
         }
         return result;
     }
 
+    @Override
     public long index(long x, long y) {
         long dimX = dim(0), dimY = dim(1);
         if (x < 0 || x >= dimX) {
             throw new IndexOutOfBoundsException("X-coordinate (" + x
-                + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")") + " in " + this);
+                    + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")") + " in " + this);
         }
         if (y < 0 || y >= dimY) {
             throw new IndexOutOfBoundsException("Y-coordinate (" + y
-                + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")") + " in " + this);
+                    + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")") + " in " + this);
         }
         return y * dimX + x;
     }
 
+    @Override
     public long index(long x, long y, long z) {
         long dimX = dim(0), dimY = dim(1), dimZ = dim(2);
         if (x < 0 || x >= dimX) {
             throw new IndexOutOfBoundsException("X-coordinate (" + x
-                + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")") + " in " + this);
+                    + (x < 0 ? ") < 0" : ") >= dim(0) (" + dimX + ")") + " in " + this);
         }
         if (y < 0 || y >= dimY) {
             throw new IndexOutOfBoundsException("Y-coordinate (" + y
-                + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")") + " in " + this);
+                    + (y < 0 ? ") < 0" : ") >= dim(1) (" + dimY + ")") + " in " + this);
         }
         if (z < 0 || z >= dimZ) {
             throw new IndexOutOfBoundsException("Z-coordinate (" + z
-                + (z < 0 ? ") < 0" : ") >= dim(2) (" + dimZ + ")") + " in " + this);
+                    + (z < 0 ? ") < 0" : ") >= dim(2) (" + dimZ + ")") + " in " + this);
         }
         return (z * dimY + y) * dimX + x;
     }
 
+    @Override
     public long[] coordinates(long index, long[] result) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Negative index argument");
@@ -211,7 +231,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
             result = new long[dimCount];
         } else if (result.length < dimCount) {
             throw new IllegalArgumentException("Too short result array: long[" + result.length
-                + "]; " + dimCount + " elements required to store coordinates");
+                    + "]; " + dimCount + " elements required to store coordinates");
         }
         long a = index;
         for (int k = 0; k < dimCount - 1; k++) {
@@ -223,12 +243,13 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         long dim = dim(dimCount - 1);
         if (a >= dim) {
             throw new IndexOutOfBoundsException("Too large index argument: " + index
-                + " >= matrix size " + JArrays.toString(dimensions(), "*", 10000));
+                    + " >= matrix size " + JArrays.toString(dimensions(), "*", 10000));
         }
         result[dimCount - 1] = a;
         return result;
     }
 
+    @Override
     public long uncheckedIndex(long... coordinates) {
         int n = coordinates.length;
         if (n == 0) {
@@ -243,6 +264,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return result;
     }
 
+    @Override
     public long cyclicIndex(long... coordinates) {
         int n = coordinates.length;
         if (n == 0) {
@@ -269,6 +291,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
     }
 
     /*Repeat.SectionStart pseudoCyclicIndex*/
+    @Override
     public long pseudoCyclicIndex(long... coordinates) {
         int n = coordinates.length;
         if (n == 0) {
@@ -318,6 +341,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
     }
     /*Repeat.SectionEnd pseudoCyclicIndex*/
 
+    @Override
     public long mirrorCyclicIndex(long... coordinates) {
         int n = coordinates.length;
         if (n == 0) {
@@ -337,6 +361,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return result;
     }
 
+    @Override
     public boolean inside(long... coordinates) {
         if (coordinates.length == 0) {
             throw new IllegalArgumentException("Empty coordinates array");
@@ -350,28 +375,34 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return true;
     }
 
+    @Override
     public boolean inside(long x, long y) {
         return x >= 0 && x < dim(0) && y >= 0 && y < dim(1);
     }
 
+    @Override
     public boolean inside(long x, long y, long z) {
         return x >= 0 && x < dim(0) && y >= 0 && y < dim(1) && z >= 0 && z < dim(2);
     }
 
+    @Override
     public abstract <U extends Array> Matrix<U> matrix(U anotherArray);
 
+    @Override
     public <U extends Array> Matrix<U> cast(Class<U> arrayClass) {
         if (!arrayClass.isInstance(array())) {
             throw new ClassCastException("Cannot cast " + array().getClass()
-                + " (" + array() + ") to the type " + arrayClass.getName());
+                    + " (" + array() + ") to the type " + arrayClass.getName());
         }
         return InternalUtils.cast(this);
     }
 
+    @Override
     public Matrix<T> subMatrix(long[] from, long[] to) {
         return subMatrix(from, to, ContinuationMode.NONE, true);
     }
 
+    @Override
     public Matrix<T> subMatrix(IRectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
         long[] from = area.min().coordinates();
@@ -382,18 +413,22 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return subMatrix(from, to, ContinuationMode.NONE, false);
     }
 
+    @Override
     public Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY) {
         return subMatrix(new long[]{fromX, fromY}, new long[]{toX, toY}, ContinuationMode.NONE, false);
     }
 
+    @Override
     public Matrix<T> subMatrix(long fromX, long fromY, long fromZ, long toX, long toY, long toZ) {
         return subMatrix(new long[]{fromX, fromY, fromZ}, new long[]{toX, toY, toZ}, ContinuationMode.NONE, false);
     }
 
+    @Override
     public Matrix<T> subMatrix(long[] from, long[] to, ContinuationMode continuationMode) {
         return subMatrix(from, to, continuationMode, true);
     }
 
+    @Override
     public Matrix<T> subMatrix(IRectangularArea area, ContinuationMode continuationMode) {
         Objects.requireNonNull(area, "Null area argument");
         long[] from = area.min().coordinates();
@@ -404,93 +439,107 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return subMatrix(from, to, continuationMode, false);
     }
 
+    @Override
     public Matrix<T> subMatrix(long fromX, long fromY, long toX, long toY, ContinuationMode continuationMode) {
         return subMatrix(new long[]{fromX, fromY}, new long[]{toX, toY}, continuationMode, false);
     }
 
+    @Override
     public Matrix<T> subMatrix(
-        long fromX, long fromY, long fromZ, long toX, long toY, long toZ,
-        ContinuationMode continuationMode)
-    {
+            long fromX, long fromY, long fromZ, long toX, long toY, long toZ,
+            ContinuationMode continuationMode) {
         return subMatrix(new long[]{fromX, fromY, fromZ}, new long[]{toX, toY, toZ}, continuationMode, false);
     }
 
+    @Override
     public Matrix<T> subMatr(long[] position, long[] dimensions) {
         return subMatr(position, dimensions, ContinuationMode.NONE, true);
     }
 
+    @Override
     public Matrix<T> subMatr(long x, long y, long dimX, long dimY) {
         return subMatr(new long[]{x, y}, new long[]{dimX, dimY}, ContinuationMode.NONE, false);
     }
 
+    @Override
     public Matrix<T> subMatr(long x, long y, long z, long dimX, long dimY, long dimZ) {
         return subMatr(new long[]{x, y, z}, new long[]{dimX, dimY, dimZ}, ContinuationMode.NONE, false);
     }
 
+    @Override
     public Matrix<T> subMatr(long[] position, long[] dimensions, ContinuationMode continuationMode) {
         return subMatr(position, dimensions, continuationMode, true);
     }
 
+    @Override
     public Matrix<T> subMatr(long x, long y, long dimX, long dimY, ContinuationMode continuationMode) {
         return subMatr(new long[]{x, y}, new long[]{dimX, dimY}, continuationMode, false);
     }
 
+    @Override
     public Matrix<T> subMatr(
-        long x, long y, long z, long dimX, long dimY, long dimZ,
-        ContinuationMode continuationMode)
-    {
+            long x, long y, long z, long dimX, long dimY, long dimZ,
+            ContinuationMode continuationMode) {
         return subMatr(new long[]{x, y, z}, new long[]{dimX, dimY, dimZ}, continuationMode, false);
     }
 
+    @Override
     public boolean isSubMatrix() {
         return array() instanceof ArraysSubMatrixImpl.SubMatrixArray;
     }
 
+    @Override
     public Matrix<T> subMatrixParent() {
         T a = array();
         if (!(a instanceof ArraysSubMatrixImpl.SubMatrixArray)) {
             throw new NotSubMatrixException("subMatrixParent() method must not be called "
-                + "for non-submatrix: " + this);
+                    + "for non-submatrix: " + this);
         }
         Matrix<?> result = ((ArraysSubMatrixImpl.SubMatrixArray) a).baseMatrix();
         return InternalUtils.cast(result);
     }
 
+    @Override
     public long[] subMatrixFrom() {
         T a = array();
         if (!(a instanceof ArraysSubMatrixImpl.SubMatrixArray)) {
             throw new NotSubMatrixException("subMatrixFrom() method must not be called "
-                + "for non-submatrix: " + this);
+                    + "for non-submatrix: " + this);
         }
         return ((ArraysSubMatrixImpl.SubMatrixArray) a).from();
     }
 
+    @Override
     public long[] subMatrixTo() {
         T a = array();
         if (!(a instanceof ArraysSubMatrixImpl.SubMatrixArray)) {
             throw new NotSubMatrixException("subMatrixTo() method must not be called "
-                + "for non-submatrix: " + this);
+                    + "for non-submatrix: " + this);
         }
         return ((ArraysSubMatrixImpl.SubMatrixArray) a).to();
     }
 
+    @Override
     public ContinuationMode subMatrixContinuationMode() {
         T a = array();
         if (!(a instanceof ArraysSubMatrixImpl.SubMatrixArray)) {
             throw new NotSubMatrixException("subMatrixContinuationMode() method must not be called "
-                + "for non-submatrix: " + this);
+                    + "for non-submatrix: " + this);
         }
         return ((ArraysSubMatrixImpl.SubMatrixArray) a).continuationMode();
     }
 
+    @Override
     public Matrix<T> structureLike(Matrix<?> m) {
         return m.isTiled() ? this.tile(m.tileDimensions()) : this;
     }
 
+    @Override
     public boolean isStructuredLike(Matrix<?> m) {
         return m.isTiled() == this.isTiled();
     }
 
+    @Override
     public Matrix<T> tile(long... tileDim) {
         Objects.requireNonNull(tileDim, "Null tile dimensions Java array");
         T a = array();
@@ -560,41 +609,48 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return matrix(InternalUtils.<T>cast(result));
     }
 
+    @Override
     public Matrix<T> tile() {
         return tile(Matrices.defaultTileDimensions(dimCount()));
     }
 
+    @Override
     public Matrix<T> tileParent() {
         T a = array();
         if (!(a instanceof ArraysTileMatrixImpl.TileMatrixArray)) {
             throw new NotTiledMatrixException("tileParent() method must not be called "
-                + "for non-tiled matrix: " + this);
+                    + "for non-tiled matrix: " + this);
         }
         Matrix<?> result = ((ArraysTileMatrixImpl.TileMatrixArray) a).baseMatrix();
         return InternalUtils.cast(result);
     }
 
+    @Override
     public long[] tileDimensions() {
         T a = array();
         if (!(a instanceof ArraysTileMatrixImpl.TileMatrixArray)) {
             throw new NotTiledMatrixException("tileDimensions() method must not be called "
-                + "for non-tiled matrix: " + this);
+                    + "for non-tiled matrix: " + this);
         }
         return ((ArraysTileMatrixImpl.TileMatrixArray) a).tileDimensions();
     }
 
+    @Override
     public boolean isTiled() {
         return Arrays.isTiled(array());
     }
 
+    @Override
     public boolean isImmutable() {
         return array().isImmutable();
     }
 
+    @Override
     public boolean isCopyOnNextWrite() {
         return array().isCopyOnNextWrite();
     }
 
+    @Override
     public boolean isDirectAccessible() {
         Array a = array();
         return a instanceof DirectAccessible && ((DirectAccessible) a).hasJavaArray();
@@ -609,14 +665,17 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return InternalUtils.cast(result);
     }
 
+    @Override
     public void flushResources(ArrayContext context) {
         array().flushResources(context);
     }
 
+    @Override
     public void freeResources(ArrayContext context) {
         array().freeResources(context);
     }
 
+    @Override
     public void freeResources() {
         array().freeResources(null);
     }
@@ -671,7 +730,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         long correctLen = checkDimensions(dim);
         if (correctLen != len) {
             throw new SizeMismatchException("Dimensions / length mismatch: dim[0] * dim[1] * ... "
-                + " = " + correctLen + ", but the array length = " + len);
+                    + " = " + correctLen + ", but the array length = " + len);
         }
     }
 
@@ -681,11 +740,11 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         Objects.requireNonNull(continuationMode, "Null continuation mode");
         if (from.length != dimCount()) {
             throw new IllegalArgumentException("Illegal number of from[] elements: "
-                + from.length + " instead " + dimCount());
+                    + from.length + " instead " + dimCount());
         }
         if (to.length != from.length) {
             throw new IllegalArgumentException("Illegal number of to[] elements: "
-                + to.length + " instead " + dimCount());
+                    + to.length + " instead " + dimCount());
         }
         long[] dimensions = new long[from.length];
         if (needCloning) {
@@ -695,29 +754,28 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
             long tok = to[k];  // unlike to[k], "tok" cannot be changed by parallel thread
             if (from[k] > tok) {
                 throw new IndexOutOfBoundsException("Negative number of elements: from[" + k
-                    + "] = " + from[k] + " > to[" + k + "] = " + tok
-                    + " (start and end submatrix coordinate in the matrix " + this + ")");
+                        + "] = " + from[k] + " > to[" + k + "] = " + tok
+                        + " (start and end submatrix coordinate in the matrix " + this + ")");
             }
             dimensions[k] = tok - from[k];
             if (dimensions[k] < 0) {
                 throw new IllegalArgumentException("Too large number of elements: to[" + k
-                    + "] - from[" + k + "] > Long.MAX_VALUE "
-                    + " (end and start submatrix coordinate in the matrix " + this + ")");
+                        + "] - from[" + k + "] > Long.MAX_VALUE "
+                        + " (end and start submatrix coordinate in the matrix " + this + ")");
             }
         }
         return subMatr(from, dimensions, continuationMode, false);
     }
 
     private Matrix<T> subMatr(
-        long[] position, long[] dimensions,
-        ContinuationMode continuationMode, boolean needCloning)
-    {
+            long[] position, long[] dimensions,
+            ContinuationMode continuationMode, boolean needCloning) {
         Objects.requireNonNull(position, "Null position argument");
         Objects.requireNonNull(dimensions, "Null dimensions argument");
         Objects.requireNonNull(continuationMode, "Null continuation mode");
         T a = array();
         Object outsideValue = Matrices.castOutsideValue(continuationMode.isConstant() ?
-            continuationMode.continuationConstant() : null, a);
+                continuationMode.continuationConstant() : null, a);
         if (needCloning) { // necessary if some parallel thread is changing these arrays right now
             position = position.clone();
             dimensions = dimensions.clone();
@@ -733,68 +791,68 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         if (a instanceof UpdatableBitArray) {
             Matrix<UpdatableBitArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableBitArray(m, position, dimensions,
-                (Boolean) outsideValue, continuationMode);
+                    (Boolean) outsideValue, continuationMode);
         } else if (a instanceof BitArray) {
             Matrix<BitArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixBitArray(m, position, dimensions,
-                (Boolean) outsideValue, continuationMode);
+                    (Boolean) outsideValue, continuationMode);
             //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
         } else if (a instanceof UpdatableCharArray) {
             Matrix<UpdatableCharArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableCharArray(m, position, dimensions,
-                (Character) outsideValue, continuationMode);
+                    (Character) outsideValue, continuationMode);
         } else if (a instanceof CharArray) {
             Matrix<CharArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixCharArray(m, position, dimensions,
-                (Character) outsideValue, continuationMode);
+                    (Character) outsideValue, continuationMode);
         } else if (a instanceof UpdatableByteArray) {
             Matrix<UpdatableByteArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableByteArray(m, position, dimensions,
-                (Byte) outsideValue, continuationMode);
+                    (Byte) outsideValue, continuationMode);
         } else if (a instanceof ByteArray) {
             Matrix<ByteArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixByteArray(m, position, dimensions,
-                (Byte) outsideValue, continuationMode);
+                    (Byte) outsideValue, continuationMode);
         } else if (a instanceof UpdatableShortArray) {
             Matrix<UpdatableShortArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableShortArray(m, position, dimensions,
-                (Short) outsideValue, continuationMode);
+                    (Short) outsideValue, continuationMode);
         } else if (a instanceof ShortArray) {
             Matrix<ShortArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixShortArray(m, position, dimensions,
-                (Short) outsideValue, continuationMode);
+                    (Short) outsideValue, continuationMode);
         } else if (a instanceof UpdatableIntArray) {
             Matrix<UpdatableIntArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableIntArray(m, position, dimensions,
-                (Integer) outsideValue, continuationMode);
+                    (Integer) outsideValue, continuationMode);
         } else if (a instanceof IntArray) {
             Matrix<IntArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixIntArray(m, position, dimensions,
-                (Integer) outsideValue, continuationMode);
+                    (Integer) outsideValue, continuationMode);
         } else if (a instanceof UpdatableLongArray) {
             Matrix<UpdatableLongArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableLongArray(m, position, dimensions,
-                (Long) outsideValue, continuationMode);
+                    (Long) outsideValue, continuationMode);
         } else if (a instanceof LongArray) {
             Matrix<LongArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixLongArray(m, position, dimensions,
-                (Long) outsideValue, continuationMode);
+                    (Long) outsideValue, continuationMode);
         } else if (a instanceof UpdatableFloatArray) {
             Matrix<UpdatableFloatArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableFloatArray(m, position, dimensions,
-                (Float) outsideValue, continuationMode);
+                    (Float) outsideValue, continuationMode);
         } else if (a instanceof FloatArray) {
             Matrix<FloatArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixFloatArray(m, position, dimensions,
-                (Float) outsideValue, continuationMode);
+                    (Float) outsideValue, continuationMode);
         } else if (a instanceof UpdatableDoubleArray) {
             Matrix<UpdatableDoubleArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixUpdatableDoubleArray(m, position, dimensions,
-                (Double) outsideValue, continuationMode);
+                    (Double) outsideValue, continuationMode);
         } else if (a instanceof DoubleArray) {
             Matrix<DoubleArray> m = InternalUtils.cast(this);
             result = new ArraysSubMatrixImpl.SubMatrixDoubleArray(m, position, dimensions,
-                (Double) outsideValue, continuationMode);
+                    (Double) outsideValue, continuationMode);
             //[[Repeat.AutoGeneratedEnd]]
         } else if (a instanceof UpdatableObjectArray<?>) {
             Matrix<UpdatableObjectArray<Object>> m = InternalUtils.cast(this);
