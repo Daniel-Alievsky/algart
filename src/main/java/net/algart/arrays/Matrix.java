@@ -236,7 +236,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * is a submatrix of an infinite "matrix", which is come out from the original matrix
          * by infinite periodical repeating along all coordinate axes.
          */
-        public static final ContinuationMode CYCLIC = new ContinuationMode("cyclically-continued mode");
+        public static final ContinuationMode CYCLIC = new ContinuationMode(
+                "cyclically-continued mode");
 
         /**
          * The <i>pseudo-cyclic</i> (or <i>toroidal</i>) continuation mode.
@@ -263,7 +264,8 @@ public interface Matrix<T extends Array> extends Cloneable {
          * It is the most natural mode for many image processing algorithms,
          * which work directly with the built-in array instead of working with coordinates of matrix elements.
          */
-        public static final ContinuationMode PSEUDO_CYCLIC = new ContinuationMode("pseudo-cyclically-continued mode");
+        public static final ContinuationMode PSEUDO_CYCLIC = new ContinuationMode(
+                "pseudo-cyclically-continued mode");
 
         /**
          * The <i>mirror-cyclic</i> continuation mode.
