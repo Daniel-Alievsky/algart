@@ -5056,7 +5056,7 @@ public class Arrays {
             offset = javaArrayOffsetInternal(charArray);
             count = (int) charArray.length();
         } else {
-            array = toJavaArray(charArray);
+            array = charArray.toJavaArray();
             offset = 0;
             count = array.length;
         }
