@@ -4630,9 +4630,9 @@ public class MainOperationsTest implements Cloneable {
                 double v = cfm.array().getDouble(k);
                 double vReq = idm.array().getDouble(k);
                 if (v != vReq) {
-                    long[] coordinatess = pm.coordinates(k, null);
-                    double[] doubleCoords = Arrays.toJavaArray(Arrays.asFuncArray(Func.IDENTITY, DoubleArray.class,
-                            SimpleMemoryModel.asUpdatableLongArray(coordinatess)));
+                    long[] coordinates = pm.coordinates(k, null);
+                    double[] doubleCoords = Arrays.asFuncArray(Func.IDENTITY, DoubleArray.class,
+                            SimpleMemoryModel.asUpdatableLongArray(coordinates)).toJavaArray();
                     double[] transformed = new double[doubleCoords.length];
                     if (doShift) {
                         ((CoordinateTransformationOperator) op).map(transformed, doubleCoords);
@@ -4643,7 +4643,7 @@ public class MainOperationsTest implements Cloneable {
                             + ", original value " + sm.array().getDouble(k)
                             + ", transformed function result " + f.get(doubleCoords)
                             + ", dim = " + JArrays.toString(dim, ";", 100)
-                            + ", indexes = [" + JArrays.toString(coordinatess, ",", 100) + "]"
+                            + ", indexes = [" + JArrays.toString(coordinates, ",", 100) + "]"
                             + ", transformed = [" + JArrays.toString(transformed, ",", 100) + "]"
                             + " (" + idm.elementType()
                             + (doShift ? ", with shifting by " + JArrays.toString(shifts, ";", 100) : "")

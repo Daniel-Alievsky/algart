@@ -1169,22 +1169,21 @@ public interface Array {
 
     /**
      * Returns a reference to the underlying Java array <code>ja</code>, if this AlgART array is its wrapper
-     * (see {@link #isJavaArrayWrapper()}); otherwise returns
-     * <code>{@link Arrays#toJavaArray(Array) Arrays.toJavaArray}(thisObject)</code>.
+     * (see {@link #isJavaArrayWrapper()}); otherwise equivalent to {@link #toJavaArray()} method.
      *
      * <p>In other words, this method returns a Java-array, absolutely identical to this AlgART array &mdash;
      * having identical length and elements, &mdash; and does this as quickly as possible
-     * (unlike {@link Arrays#toJavaArray(Array)}, which always copies the data).</p>
+     * (unlike {@link #toJavaArray()}, which always copies the data).</p>
      *
      * <p>This method is equivalent to the following operators:</p>
      * <pre>
-     *     thisObject thisArray DirectAccessible da &amp;&amp;
+     *     thisArray DirectAccessible da &amp;&amp;
      *                 da.hasJavaArray() &amp;&amp;
      *                 da.javaArrayOffset() == 0 &amp;&amp;
      *                 java.lang.reflect.Array.getLength(da.javaArray()) == thisObject.{@link Array#length()
      *                 length()} ?
      *                 da.javaArray() :
-     *                 Arrays.toJavaArray(this);
+     *                 thisArray.toJavaArray();
      * </pre>
      * <p>but works little faster if the first case, "<code>da.javaArray()</code>",
      * is selected (this is a wrapper).</p>

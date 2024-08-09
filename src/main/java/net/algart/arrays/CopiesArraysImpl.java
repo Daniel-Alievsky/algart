@@ -235,7 +235,7 @@ class CopiesArraysImpl {
 
         @Override
         public float[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -572,7 +572,7 @@ class CopiesArraysImpl {
 
         @Override
         public boolean[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -947,7 +947,7 @@ class CopiesArraysImpl {
 
         @Override
         public char[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -1289,7 +1289,7 @@ class CopiesArraysImpl {
 
         @Override
         public byte[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -1632,7 +1632,7 @@ class CopiesArraysImpl {
 
         @Override
         public short[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -1970,7 +1970,7 @@ class CopiesArraysImpl {
 
         @Override
         public int[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -2302,7 +2302,7 @@ class CopiesArraysImpl {
 
         @Override
         public long[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -2624,7 +2624,7 @@ class CopiesArraysImpl {
 
         @Override
         public double[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public long bitsPerElement() {
@@ -2907,7 +2907,7 @@ class CopiesArraysImpl {
 
         @Override
         public E[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Object getElement(long index) {

@@ -71,7 +71,7 @@ public class HashCodeEqualsTest {
                 UpdatableArray a3 = SimpleMemoryModel.getInstance().newArray(a1.elementType(), a1.length());
                 a3.copy(a1);
 
-                Object arr1 = Arrays.toJavaArray(a1);
+                Object arr1 = a1.toJavaArray();
                 System.out.println("Testing hashCode algorithm...");
                 int hA = a1.hashCode();
                 int hJA = JArrays.arrayHashCode(arr1, 0, arrayLen);

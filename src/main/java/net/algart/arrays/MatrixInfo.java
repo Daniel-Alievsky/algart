@@ -143,7 +143,7 @@ import java.util.Objects;
  * &#32;   Math.min(file.length(), MatrixInfo.{@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}),
  * &#32;   ByteOrder.nativeOrder());
  * // "min" here is added to be on the safe side: maybe, this file was created by another program with shorter prefix
- * MatrixInfo mi = MatrixInfo.valueOf(Arrays.{@link Arrays#toJavaArray toJavaArray}(ba));
+ * MatrixInfo mi = MatrixInfo.valueOf(ba.{@link Array#toJavaArray() toJavaArray()});
  * {@link UpdatablePArray} pa = lmm.asUpdatableArray(file,
  * &#32;   mi.{@link #elementType()}, mi.{@link #dataOffset()}, LargeMemoryModel.{@link LargeMemoryModel#ALL_FILE
  * ALL_FILE}, false, mi.{@link #byteOrder()});

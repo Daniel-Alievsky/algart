@@ -285,7 +285,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
                 int n = done ? 1 + storeSize : 2 + numberOfStoredOpenings;
                 // if done, then the current temp3 is extra: it is equal to the previous one
                 if (n > 1) { // may be 1 if done and NUMBER_OF_STORED_EROSIONS == 0
-                    Func f = LinearFunc.getInstance(0.0, Arrays.toJavaArray(Arrays.nDoubleCopies(n, 1.0)));
+                    final Func f = LinearFunc.getInstance(0.0, Arrays.nDoubleCopies(n, 1.0).toJavaArray());
                     Matrices.applyFunc(part(context, 0.9, 1.0), f, result, store.subList(0, n));
                 }
                 storeSize = 0;

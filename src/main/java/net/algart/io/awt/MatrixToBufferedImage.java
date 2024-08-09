@@ -581,11 +581,11 @@ public abstract class MatrixToBufferedImage {
         protected java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount) {
             checkArray(interleavedArray, bandCount);
             if (interleavedArray instanceof ByteArray a) {
-                final byte[] result = Arrays.toJavaArray(a);
+                final byte[] result = a.toJavaArray();
                 // - not ja(): we must be sure that "result" is a newly created Java array
                 return new java.awt.image.DataBufferByte(result, result.length);
             } else if (interleavedArray instanceof ShortArray a) {
-                final short[] result = Arrays.toJavaArray(a);
+                final short[] result = a.toJavaArray();
                 return new java.awt.image.DataBufferUShort(result, result.length);
             } else {
                 throw new AssertionError("Unsupported element type: " + interleavedArray.elementType());

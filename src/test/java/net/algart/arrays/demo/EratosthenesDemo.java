@@ -24,12 +24,13 @@
 
 package net.algart.arrays.demo;
 
-import java.io.*;
-import java.util.BitSet;
-import java.util.Locale;
-
 import net.algart.arrays.*;
 import net.algart.contexts.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.BitSet;
+import java.util.Locale;
 
 /**
  * <p>Sieve of Eratoshpenes: test for {@link BitArray} class.</p>
@@ -98,7 +99,7 @@ public class EratosthenesDemo {
         t1 = System.nanoTime();
         if (startPattern != null) {
             if (useBitSet) {
-                boolean[] ptn = Arrays.toJavaArray(startPattern);
+                boolean[] ptn = startPattern.toJavaArray();
                 t1 = System.nanoTime(); // not timing our method
                 for (int k = 0; k <= n; ) {
                     int kMax = Math.min(k + ptn.length, n + 1);

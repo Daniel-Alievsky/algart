@@ -334,9 +334,9 @@ public class Stitcher<P extends FramePosition> {
     }
 
     private double outsideValue(List<Frame<P>> stitchedFrames) {
-        double[] probeCoordinates = Arrays.toJavaArray(Arrays.nDoubleCopies(dimCount(), 0.0));
+        double[] probeCoordinates = Arrays.nDoubleCopies(dimCount(), 0.0).toJavaArray();
         // (0,0,...) - ignored in SimpleStitchingMethod
-        double[] probeValues = Arrays.toJavaArray(Arrays.nDoubleCopies(stitchedFrames.size(), Double.NaN));
+        double[] probeValues = Arrays.nDoubleCopies(stitchedFrames.size(), Double.NaN).toJavaArray();
         // all values are Double.NaN, that means the area outside frames
         return stitchingMethod.getStitchingFunc(stitchedFrames).get(probeCoordinates, probeValues);
     }
@@ -348,47 +348,29 @@ public class Stitcher<P extends FramePosition> {
 
     private Func getCombiner(List<Frame<P>> frames, Point offset) {
         if (offset.isOrigin()) {
-            switch (frames.size()) {
-                case 1:
-                    return new CombinerFor1Frame(frames);
-                case 2:
-                    return new CombinerFor2Frames(frames);
-                case 3:
-                    return new CombinerFor3Frames(frames);
-                case 4:
-                    return new CombinerFor4Frames(frames);
-                case 5:
-                    return new CombinerFor5Frames(frames);
-                case 6:
-                    return new CombinerFor6Frames(frames);
-                case 7:
-                    return new CombinerFor7Frames(frames);
-                case 8:
-                    return new CombinerFor8Frames(frames);
-                default:
-                    return new Combiner(frames);
-            }
+            return switch (frames.size()) {
+                case 1 -> new CombinerFor1Frame(frames);
+                case 2 -> new CombinerFor2Frames(frames);
+                case 3 -> new CombinerFor3Frames(frames);
+                case 4 -> new CombinerFor4Frames(frames);
+                case 5 -> new CombinerFor5Frames(frames);
+                case 6 -> new CombinerFor6Frames(frames);
+                case 7 -> new CombinerFor7Frames(frames);
+                case 8 -> new CombinerFor8Frames(frames);
+                default -> new Combiner(frames);
+            };
         } else {
-            switch (frames.size()) {
-                case 1:
-                    return new ShiftingCombinerFor1Frame(frames, offset);
-                case 2:
-                    return new ShiftingCombinerFor2Frames(frames, offset);
-                case 3:
-                    return new ShiftingCombinerFor3Frames(frames, offset);
-                case 4:
-                    return new ShiftingCombinerFor4Frames(frames, offset);
-                case 5:
-                    return new ShiftingCombinerFor5Frames(frames, offset);
-                case 6:
-                    return new ShiftingCombinerFor6Frames(frames, offset);
-                case 7:
-                    return new ShiftingCombinerFor7Frames(frames, offset);
-                case 8:
-                    return new ShiftingCombinerFor8Frames(frames, offset);
-                default:
-                    return new ShiftingCombiner(frames, offset);
-            }
+            return switch (frames.size()) {
+                case 1 -> new ShiftingCombinerFor1Frame(frames, offset);
+                case 2 -> new ShiftingCombinerFor2Frames(frames, offset);
+                case 3 -> new ShiftingCombinerFor3Frames(frames, offset);
+                case 4 -> new ShiftingCombinerFor4Frames(frames, offset);
+                case 5 -> new ShiftingCombinerFor5Frames(frames, offset);
+                case 6 -> new ShiftingCombinerFor6Frames(frames, offset);
+                case 7 -> new ShiftingCombinerFor7Frames(frames, offset);
+                case 8 -> new ShiftingCombinerFor8Frames(frames, offset);
+                default -> new ShiftingCombiner(frames, offset);
+            };
         }
     }
 

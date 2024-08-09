@@ -81,7 +81,7 @@ public class SimpleMatrixDemo {
             ByteArray ba = lmm.asByteArray(file, 0,
                 Math.min(file.length(), MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH),
                 ByteOrder.nativeOrder());
-            MatrixInfo mi = MatrixInfo.valueOf(Arrays.toJavaArray(ba));
+            MatrixInfo mi = MatrixInfo.valueOf(ba.toJavaArray());
             System.out.println(lmm.asMatrix(file, mi));
             System.out.println("    - read-only version");
             m = lmm.asUpdatableMatrix(file, mi);

@@ -1166,7 +1166,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
         }
 
         public E[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public <D> ObjectArray<D> cast(Class<D> elementType) {

@@ -40,6 +40,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AnalyseSkeletonConfigurations {
     private static final boolean CHECK_ONLY_8_CONNECTED = false; // usually don't increase speed essentially
@@ -335,7 +336,7 @@ public class AnalyseSkeletonConfigurations {
     public void analyseConfigurations(boolean checkAll3x3, boolean checkAll5x5) {
         int[] stablyImpossibleBitsA = new int[0];
         if (allImpossible3x3 != null) {
-            stablyImpossibleBitsA = Arrays.toJavaArray(allImpossible3x3); // checkAll5x5 mode
+            stablyImpossibleBitsA = allImpossible3x3.toJavaArray(); // checkAll5x5 mode
         } else if (skeletonType == Quadruple3x5ThinningSkeleton2D.class) {
             stablyImpossibleBitsA = STABLY_IMPOSSIBLE_BITS_A_FOR_QUADRUPLE_3x5;
         } else if (skeletonType == StrongQuadruple3x5ThinningSkeleton2D.class) {

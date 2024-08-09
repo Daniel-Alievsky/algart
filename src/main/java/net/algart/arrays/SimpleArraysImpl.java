@@ -319,7 +319,8 @@ class SimpleArraysImpl {
                 }
                 Object newArray = allocateArray(newCapacity);
                 if (this instanceof BitArray) {
-                    PackedBitArrays.copyBits((long[]) newArray, 0, (long[]) this.array, this.longJavaArrayOffsetInternal(),
+                    PackedBitArrays.copyBits((long[]) newArray, 0, (long[]) this.array,
+                            this.longJavaArrayOffsetInternal(),
                             this.length);
                 } else {
                     System.arraycopy(this.array, this.javaArrayOffsetInternal(),
@@ -643,7 +644,7 @@ class SimpleArraysImpl {
         }
 
         public float[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -884,7 +885,7 @@ class SimpleArraysImpl {
         }
 
         public float[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -927,7 +928,7 @@ class SimpleArraysImpl {
             if (length == this.floatArray.length) {
                 return this.floatArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -1027,7 +1028,7 @@ class SimpleArraysImpl {
                 }
                 return this.floatArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -2215,7 +2216,7 @@ class SimpleArraysImpl {
         }
 
         public char[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -2456,7 +2457,7 @@ class SimpleArraysImpl {
         }
 
         public char[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -2499,7 +2500,7 @@ class SimpleArraysImpl {
             if (length == this.charArray.length) {
                 return this.charArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -2599,7 +2600,7 @@ class SimpleArraysImpl {
                 }
                 return this.charArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -3800,7 +3801,7 @@ class SimpleArraysImpl {
         }
 
         public byte[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -4041,7 +4042,7 @@ class SimpleArraysImpl {
         }
 
         public byte[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -4084,7 +4085,7 @@ class SimpleArraysImpl {
             if (length == this.byteArray.length) {
                 return this.byteArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -4184,7 +4185,7 @@ class SimpleArraysImpl {
                 }
                 return this.byteArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5365,7 +5366,7 @@ class SimpleArraysImpl {
         }
 
         public short[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -5606,7 +5607,7 @@ class SimpleArraysImpl {
         }
 
         public short[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -5649,7 +5650,7 @@ class SimpleArraysImpl {
             if (length == this.shortArray.length) {
                 return this.shortArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -5749,7 +5750,7 @@ class SimpleArraysImpl {
                 }
                 return this.shortArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -6921,7 +6922,7 @@ class SimpleArraysImpl {
         }
 
         public int[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -7156,7 +7157,7 @@ class SimpleArraysImpl {
         }
 
         public int[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -7199,7 +7200,7 @@ class SimpleArraysImpl {
             if (length == this.intArray.length) {
                 return this.intArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -7299,7 +7300,7 @@ class SimpleArraysImpl {
                 }
                 return this.intArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8444,7 +8445,7 @@ class SimpleArraysImpl {
         }
 
         public long[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -8671,7 +8672,7 @@ class SimpleArraysImpl {
         }
 
         public long[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -8714,7 +8715,7 @@ class SimpleArraysImpl {
             if (length == this.longArray.length) {
                 return this.longArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -8814,7 +8815,7 @@ class SimpleArraysImpl {
                 }
                 return this.longArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -9943,7 +9944,7 @@ class SimpleArraysImpl {
         }
 
         public double[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -10170,7 +10171,7 @@ class SimpleArraysImpl {
         }
 
         public double[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -10213,7 +10214,7 @@ class SimpleArraysImpl {
             if (length == this.doubleArray.length) {
                 return this.doubleArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -10313,7 +10314,7 @@ class SimpleArraysImpl {
                 }
                 return this.doubleArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -11468,7 +11469,7 @@ class SimpleArraysImpl {
 
         @SuppressWarnings("unchecked")
         public Object[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -11680,7 +11681,7 @@ class SimpleArraysImpl {
 
         @SuppressWarnings("unchecked")
         public Object[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -11725,7 +11726,7 @@ class SimpleArraysImpl {
             if (length == this.objectArray.length) {
                 return this.objectArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -11834,7 +11835,7 @@ class SimpleArraysImpl {
                 }
                 return this.objectArray;
             }
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public Array subArray(long fromIndex, long toIndex) {
@@ -12904,7 +12905,7 @@ class SimpleArraysImpl {
         }
 
         public boolean[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -12989,7 +12990,7 @@ class SimpleArraysImpl {
         public final double getDouble(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
+            return (bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, double value) {
@@ -13003,13 +13004,13 @@ class SimpleArraysImpl {
         public final long getLong(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
+            return (bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final int getInt(long index) {
             if (index < 0 || index >= length)
                 throw rangeException(index);
-            return (this.bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
+            return (bitArray[(int) ((offset + index) >>> 6)] & (1L << ((int) (offset + index) & 63))) != 0L ? 1 : 0;
         }
 
         public final long indexOf(long lowIndex, long highIndex, long value) {
@@ -13162,7 +13163,7 @@ class SimpleArraysImpl {
         }
 
         public boolean[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {

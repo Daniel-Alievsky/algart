@@ -24,10 +24,13 @@
 
 package net.algart.arrays.demo;
 
-import java.nio.*;
-import java.util.Locale;
-
 import net.algart.arrays.*;
+
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.nio.LongBuffer;
+import java.util.Locale;
 
 /**
  * <p>Speed of primitive arrays: common speed test</p>
@@ -396,7 +399,7 @@ public class PArraysSpeed {
                 Object ja1Converted = null;
                 try {
                     if (useHeap) {
-                        ja1Converted = Arrays.toJavaArray(a1);
+                        ja1Converted = a1.toJavaArray();
                     }
                 } catch (TooLargeArrayException ex) {
                 }

@@ -96,9 +96,9 @@ public class NCopiesSpeed {
             testArray1.copy(testArray2);
 
             long t1 = System.nanoTime();
-            Object zeroArray = testJavaArray1 != null ? Arrays.toJavaArray(vZeroCopies) : null;
+            Object zeroArray = testJavaArray1 != null ? vZeroCopies.toJavaArray() : null;
             long t2 = System.nanoTime();
-            Object nonzeroArray = testJavaArray1 != null ? Arrays.toJavaArray(vNonzeroCopies) : null;
+            Object nonzeroArray = testJavaArray1 != null ? vNonzeroCopies.toJavaArray() : null;
             long t3 = System.nanoTime();
             if (testJavaArray1 != null)
                 vZeroCopies.getData(0, testJavaArray1);

@@ -727,7 +727,7 @@ class BufferArraysImpl {
         }
 
         public float[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -1277,7 +1277,7 @@ class BufferArraysImpl {
         }
 
         public char[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -1825,7 +1825,7 @@ class BufferArraysImpl {
         }
 
         public byte[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -2373,7 +2373,7 @@ class BufferArraysImpl {
         }
 
         public short[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -2915,7 +2915,7 @@ class BufferArraysImpl {
         }
 
         public int[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -3436,7 +3436,7 @@ class BufferArraysImpl {
         }
 
         public long[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -3954,7 +3954,7 @@ class BufferArraysImpl {
         }
 
         public double[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
@@ -4496,7 +4496,7 @@ class BufferArraysImpl {
         }
 
         public boolean[] ja() {
-            return Arrays.toJavaArray(this);
+            return toJavaArray();
         }
 
         public String toString() {
