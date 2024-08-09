@@ -55,6 +55,10 @@ public interface ByteArray extends PIntegerArray {
      */
     int getByte(long index);
 
+    default byte[] newJavaArray(int length) {
+        return new byte[length];
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -114,6 +118,17 @@ public interface ByteArray extends PIntegerArray {
     MutableByteArray mutableClone(MemoryModel memoryModel);
 
     UpdatableByteArray updatableClone(MemoryModel memoryModel);
+
+    default byte[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to byte[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     byte[] ja();
 

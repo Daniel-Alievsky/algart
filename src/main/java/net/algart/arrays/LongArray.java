@@ -53,6 +53,10 @@ public interface LongArray extends PIntegerArray {
      */
     long getLong(long index);
 
+    default long[] newJavaArray(int length) {
+        return new long[length];
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -112,6 +116,17 @@ public interface LongArray extends PIntegerArray {
     MutableLongArray mutableClone(MemoryModel memoryModel);
 
     UpdatableLongArray updatableClone(MemoryModel memoryModel);
+
+    default long[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to long[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     long[] ja();
 

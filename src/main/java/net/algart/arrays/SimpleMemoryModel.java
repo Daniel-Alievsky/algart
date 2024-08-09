@@ -411,7 +411,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Analog of {@link #asUpdatableArray(Object)} with the only difference, that this method
-     * does not work with Java array of objects.
+     * does not work with a Java array of objects.
      *
      * <p>This method has a brief alias: {@link PArray#as(Object)}.</p>
      *
@@ -430,7 +430,7 @@ public final class SimpleMemoryModel extends AbstractMemoryModel {
 
     /**
      * Analog of {@link #asUpdatableArray(Object)} with the only difference, that this method
-     * does not work with Java array of objects.
+     * does not work with a Java array of objects.
      *
      * <p>This method has a brief alias: {@link PNumberArray#as(Object)}.</p>
      *

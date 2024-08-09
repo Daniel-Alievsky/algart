@@ -57,6 +57,10 @@ public interface BitArray extends PFixedArray {
      */
     boolean getBit(long index);
 
+    default boolean[] newJavaArray(int length) {
+        return new boolean[length];
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -116,6 +120,17 @@ public interface BitArray extends PFixedArray {
     MutableBitArray mutableClone(MemoryModel memoryModel);
 
     UpdatableBitArray updatableClone(MemoryModel memoryModel);
+
+    default boolean[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to boolean[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     boolean[] ja();
 
@@ -338,15 +353,51 @@ public interface BitArray extends PFixedArray {
     }
 
     /**
-     * Returns a reference to the underlying packed bit array, if this AlgART array is its wrapper
-     * (see {@link #isPackedBitArrayWrapper()}), otherwise returns
-     * <code>{@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)}</code>.
+     * Returns packed bit array containing all the bits in this AlgART array
+     * in terms of {@link PackedBitArrays} class and {@link BitArray#getBits} method.
+     * If the length of this array is too large (greater than 2<sup>37</sup>&minus;1),
+     * this method throws {@link TooLargeArrayException}.
      *
      * <p>In other words, this method returns a packed bit array, identical to this AlgART array
      * in terms of {@link PackedBitArrays} class.</p>
      *
-     * <p>The returned array is always identical to
-     * the result of {@link Arrays#toPackedBitArray(BitArray) Arrays.toPackedBitArray(thisArray)}.
+     * <p>The result is always a newly created Java array.
+     * Its length will be equal to <code>{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(array.{@link Array#length() length()}</code>,
+     * and array elements will be stored the first <code>#0..#{@link Array#length() length()}-1}</code> bits
+     * of the returned packed bit array.</p>
+     *
+     * <p>This method is equivalent to the following code:</p>
+     * <pre>
+     *     final long length = thisArray.length();
+     *     final long packedLength = PackedBitArrays.packedLength(length);
+     *     if (packedLength != (int) packedLength) ... // throwing TooLargeArrayException
+     *     final long[] result = new long[(int) packedLength];
+     *     thisArray.{@link BitArray#getBits(long, long[], long, long) getBits}(0, result, 0, length);
+     * </pre>
+     *
+     * @return packed Java bit array containing all the bits in this array.
+     * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
+     * @see BitArray#jaBit()
+     * @see BitArray#getBits(long, long[], long, long)
+     */
+    default long[] toBit() {
+        final long length = length();
+        final long packedLength = PackedBitArrays.packedLength(length);
+        if (packedLength != (int) packedLength) {
+            throw new TooLargeArrayException("Cannot convert AlgART bit array to packed long[] array, "
+                    + "because it is too large: " + this);
+        }
+        final long[] result = new long[(int) packedLength];
+        getBits(0, result, 0, length);
+        return result;
+    }
+
+    /**
+     * Returns a reference to the underlying packed bit array, if this AlgART array is its wrapper
+     * (see {@link #isPackedBitArrayWrapper()}), otherwise equivalent to {@link #toBit()} method.
+     *
+     * <p>The returned array is always identical to the result of {@link BitArray#toBit()} method.
      * But this method works very quickly when possible, in particular, for most bit arrays created
      * by {@link SimpleMemoryModel}.</p>
      *
@@ -369,7 +420,7 @@ public interface BitArray extends PFixedArray {
      * @see #isPackedBitArrayWrapper()
      */
     default long[] jaBit() {
-        return Arrays.toPackedBitArray(this);
+        return toBit();
     }
 
     /**

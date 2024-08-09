@@ -4903,104 +4903,24 @@ public class Arrays {
     }
 
     /**
-     * Returns the Java array containing all the elements in this AlgART array in proper sequence,
-     * if the length of this array is not too large (not greater than <code>Integer.MAX_VALUE</code>).
-     * In another case, throws {@link TooLargeArrayException}.
-     *
-     * <p>The result is always a newly created Java array.
-     * Its length will be equal to current
-     * <code>array.{@link Array#length() length()}</code>, and array elements will be stored
-     * in elements <code>#0..#{@link Array#length() length()}-1}</code> of the returned array.
-     *
-     * <p>The returned Java array will be "safe" in the sense that no references to it are
-     * maintained by this array.
-     * (In other words, this method must always allocate a new Java array.)
-     * The caller is thus free to modify the returned array.
-     *
-     * <p>The type of returned array is always one of the following:<ul>
-     * <li><code>boolean[]</code> for {@link BitArray},
-     * <li><code>char[]</code> for {@link CharArray},
-     * <li><code>byte[]</code> for {@link ByteArray},
-     * <li><code>short[]</code> for {@link ShortArray},
-     * <li><code>int[]</code> for {@link IntArray},
-     * <li><code>long[]</code> for {@link LongArray},
-     * <li><code>float[]</code> for {@link FloatArray},
-     * <li><code>double[]</code> for {@link DoubleArray},
-     * <li><code><i>type</i>[]</code>, where <i>type</i> is the result of {@link Array#elementType()} method,
-     * in all other cases.
-     * </ul>
-     *
-     * <p>Reverse operation &mdash; conversion of Java array into AlgART array &mdash;
-     * can be performed by {@link SimpleMemoryModel#asUpdatableArray(Object)} method,
-     * returning a view of Java array, or by {@link MemoryModel#valueOf(Object)} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * Equivalent to {@link Array#toJavaArray() array.toJavaArray()} (this is an alias for that method).
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Array#ja()
-     * @see Array#getData(long, Object)
      */
     public static Object toJavaArray(Array array) {
         Objects.requireNonNull(array, "Null array argument");
-        long len = array.length();
-        if (len != (int) len) {
-            throw new TooLargeArrayException("Cannot convert AlgART array to Java array, "
-                    + "because it is too large: " + array);
-        }
-        Object result = java.lang.reflect.Array.newInstance(array.elementType(), (int) len);
-        array.getData(0, result);
-        return result;
-    }
-
-    /**
-     * Returns packed bit array containing all the bits in this AlgART array
-     * in terms of {@link PackedBitArrays} class and {@link BitArray#getBits} method.
-     * If the length of this array is too large (greater than 2<sup>37</sup>&minus;1),
-     * this method throws {@link TooLargeArrayException}.
-     *
-     * <p>The result is always a newly created Java array.
-     * Its length will be equal to <code>{@link PackedBitArrays#packedLength(long)
-     * PackedBitArrays.packedLength}(array.{@link Array#length() length()}</code>,
-     * and array elements will be stored the first <code>#0..#{@link Array#length() length()}-1}</code> bits
-     * of the returned packed bit array.</p>
-     *
-     * <p>This method is equivalent to the following code:</p>
-     * <pre>
-     *     final long length = thisArray.length();
-     *     final long packedLength = PackedBitArrays.packedLength(length);
-     *     if (packedLength != (int) packedLength) ... // throwing TooLargeArrayException
-     *     final long[] result = new long[(int) packedLength];
-     *     thisArray.{@link BitArray#getBits(long, long[], long, long) getBits}(0, result, 0, length);
-     * </pre>
-     *
-     * @param array the source AlgART array.
-     * @return packed Java bit array containing all the bits in this array.
-     * @throws NullPointerException   if <code>array</code> argument is {@code null}.
-     * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
-     * @see BitArray#jaBit()
-     * @see BitArray#getBits(long, long[], long, long)
-     */
-    public static long[] toPackedBitArray(BitArray array) {
-        Objects.requireNonNull(array, "Null array argument");
-        final long length = array.length();
-        final long packedLength = PackedBitArrays.packedLength(length);
-        if (packedLength != (int) packedLength) {
-            throw new TooLargeArrayException("Cannot convert AlgART bit array to packed long[] array, "
-                    + "because it is too large: " + array);
-        }
-        final long[] result = new long[(int) packedLength];
-        array.getBits(0, result, 0, length);
-        return result;
+        return array.toJavaArray();
     }
 
     /**
      * Equivalent to <code>(boolean[]){@link #toJavaArray(Array) toJavaArray}((Array)array)</code>.
      *
-     * <p>Reverse operation &mdash; conversion of Java array into AlgART array &mdash;
+     * <p>Reverse operation &mdash; conversion of a Java array into AlgART array &mdash;
      * can be performed by {@link MemoryModel#valueOf(boolean[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5022,7 +4942,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>char[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableCharArray(char[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(char[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5042,7 +4962,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>byte[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableByteArray(byte[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(byte[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5061,7 +4981,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>short[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableShortArray(short[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(short[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5080,7 +5000,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>int[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableIntArray(int[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(int[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5099,7 +5019,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>long[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableLongArray(long[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(long[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5118,7 +5038,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>float[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableFloatArray(float[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(float[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.
@@ -5137,7 +5057,7 @@ public class Arrays {
      * <p>Reverse operation &mdash; conversion of Java <code>double[]</code> array into AlgART array &mdash;
      * can be performed by {@link SimpleMemoryModel#asUpdatableDoubleArray(double[])} method,
      * returning a view of Java array, or by {@link MemoryModel#valueOf(double[])} method
-     * of any memory model instance, which actually copies data into newly allocated array.
+     * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @param array the source AlgART array.
      * @return Java array containing all the elements in this array.

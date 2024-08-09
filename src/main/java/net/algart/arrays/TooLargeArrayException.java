@@ -32,7 +32,7 @@ import java.io.Serial;
  * It is thrown by methods, creating new arrays or resizing existing arrays,
  * if the desired array length is too large for the used memory model (regardless of the amount of available memory,
  * for example, greater than <code>Long.MAX_VALUE</code> for {@link SimpleMemoryModel}),
- * or by methods trying to convert AlgART array into a Java array (as {@link Arrays#toJavaArray(Array)}),
+ * or by methods trying to convert AlgART array into a Java array (as {@link Array#toJavaArray()}),
  * if the array is too large for storing its content in a form of Java array
  * (Java arrays can contain, as a maximum, <code>Integer.MAX_VALUE</code> (2<sup>31</sup>-1) elements).</p>
  *

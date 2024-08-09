@@ -161,17 +161,6 @@ public abstract class AbstractArray implements Array, Cloneable {
     public abstract void getData(long arrayPos, Object destArray);
 
     /**
-     * This implementation returns <code>java.lang.reflect.Array.newInstance(elementType(),&nbsp;length)</code>.
-     *
-     * @param length the length of created Java-array.
-     * @return Java-array with the specified length and the same type of elements.
-     * @throws NegativeArraySizeException if the specified <code>length</code> is negative.
-     */
-    public Object newJavaArray(int length) {
-        return java.lang.reflect.Array.newInstance(elementType(), length);
-    }
-
-    /**
      * This method of {@link PArray} interface is fully implemented in this class.
      * If this instance does not implement {@link PArray} (i.e. if it is {@link ObjectArray}),
      * this method throws <code>UnsupportedOperationException</code>.
@@ -431,7 +420,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      *                 da.javaArrayOffset() == 0 &amp;&amp;
      *                 java.lang.reflect.Array.getLength(da.javaArray()) == this.length() ?
      *                 da.javaArray() :
-     *                 Arrays.toJavaArray(this);
+     *                 this.toJavaArray();
      * </pre>
      *
      * @return Java array, equivalent to this AlgART array.
@@ -444,7 +433,7 @@ public abstract class AbstractArray implements Array, Cloneable {
                 da.javaArrayOffset() == 0 &&
                 java.lang.reflect.Array.getLength(a = da.javaArray()) == length() ?
                 a :
-                Arrays.toJavaArray(this);
+                this.toJavaArray();
     }
 
     /**

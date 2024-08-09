@@ -123,10 +123,6 @@ class CopiesArraysImpl {
             return element; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new float[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -462,10 +458,6 @@ class CopiesArraysImpl {
                 throw AbstractArray.rangeException(index, length, getClass());
             }
             return element; // autoboxing
-        }
-
-        public Object newJavaArray(int length) {
-            return new boolean[length];
         }
 
         public boolean isZeroFilled() {
@@ -843,10 +835,6 @@ class CopiesArraysImpl {
             return element; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new char[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -1187,10 +1175,6 @@ class CopiesArraysImpl {
                 throw AbstractArray.rangeException(index, length, getClass());
             }
             return element & 0xFF; // autoboxing
-        }
-
-        public Object newJavaArray(int length) {
-            return new byte[length];
         }
 
         public boolean isZeroFilled() {
@@ -1536,10 +1520,6 @@ class CopiesArraysImpl {
             return element & 0xFFFF; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new short[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -1878,10 +1858,6 @@ class CopiesArraysImpl {
             return element; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new int[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -2214,10 +2190,6 @@ class CopiesArraysImpl {
             return element; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new long[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -2540,10 +2512,6 @@ class CopiesArraysImpl {
             return element; // autoboxing
         }
 
-        public Object newJavaArray(int length) {
-            return new double[length];
-        }
-
         public boolean isZeroFilled() {
             return length == 0 || element == 0;
         }
@@ -2829,10 +2797,6 @@ class CopiesArraysImpl {
                 count = (int) (length - arrayPos);
             }
             JArrays.fillObjectArray(dest, 0, count, this.element);
-        }
-
-        public Object newJavaArray(int length) {
-            return new Object[length];
         }
 
         public Array subArray(long fromIndex, long toIndex) {

@@ -13582,7 +13582,7 @@ class SimpleArraysImpl {
             if (isPackedBitArrayWrapper()) {
                 return this.bitArray;
             }
-            return Arrays.toPackedBitArray(this);
+            return toBit();
         }
 
         public String toString() {
@@ -14055,7 +14055,7 @@ class SimpleArraysImpl {
                 }
                 return this.bitArray;
             }
-            return Arrays.toPackedBitArray(this);
+            return toBit();
         }
 
         public String toString() {

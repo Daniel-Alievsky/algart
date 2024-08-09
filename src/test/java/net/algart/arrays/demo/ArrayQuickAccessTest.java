@@ -164,7 +164,7 @@ public class ArrayQuickAccessTest {
 
     private static void compareJaBits(BitArray array) {
         final long[] ja = array.jaBit();
-        final long[] j = Arrays.toPackedBitArray(array);
+        final long[] j = array.toBit();
         if (!java.util.Arrays.equals(ja, j)) {
                 throw new AssertionError();
             }

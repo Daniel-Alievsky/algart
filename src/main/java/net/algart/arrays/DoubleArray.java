@@ -52,6 +52,10 @@ public interface DoubleArray extends PFloatingArray {
      */
     double getDouble(long index);
 
+    default double[] newJavaArray(int length) {
+        return new double[length];
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -111,6 +115,17 @@ public interface DoubleArray extends PFloatingArray {
     MutableDoubleArray mutableClone(MemoryModel memoryModel);
 
     UpdatableDoubleArray updatableClone(MemoryModel memoryModel);
+
+    default double[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to double[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     double[] ja();
 

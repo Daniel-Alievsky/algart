@@ -53,6 +53,10 @@ public interface ObjectArray<E> extends Array {
      */
     E get(long index);
 
+    default E[] newJavaArray(int length) {
+        return InternalUtils.cast(java.lang.reflect.Array.newInstance(elementType(), length));
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -125,6 +129,7 @@ public interface ObjectArray<E> extends Array {
 
     /*Repeat(INCLUDE_FROM_FILE, FloatArray.java, resultTypes)
       Float(?!ing) ==> Object ;;
+      float\[\]\s*toJavaArray ==> E[] toJavaArray ;;
       float\[\]\s*ja ==> E[] ja ;;
       float ==> Object ;;
       ObjectArray ==> ObjectArray<E> ;;
@@ -145,6 +150,17 @@ public interface ObjectArray<E> extends Array {
     MutableObjectArray<E> mutableClone(MemoryModel memoryModel);
 
     UpdatableObjectArray<E> updatableClone(MemoryModel memoryModel);
+
+    default E[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Object[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     E[] ja();
 

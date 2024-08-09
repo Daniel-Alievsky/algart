@@ -44,7 +44,7 @@ import java.util.Objects;
  * {@link IntArray}, {@link LongArray},
  * {@link FloatArray}, {@link DoubleArray}
  * subinterfaces.
- * In other case, the array <b>must</b> implement {@link ObjectArray} subinterface.</p>
+ * In another case, the array <b>must</b> implement {@link ObjectArray} subinterface.</p>
  *
  * <p>{@link #asImmutable() Immutable} arrays, implementing this interface,
  * are <b>thread-safe</b> and can be used simultaneously in several threads.
@@ -313,7 +313,9 @@ public interface Array {
      * @return Java-array with the specified length and the same type of elements.
      * @throws NegativeArraySizeException if the specified <code>length</code> is negative.
      */
-    Object newJavaArray(int length);
+    default Object newJavaArray(int length) {
+        return java.lang.reflect.Array.newInstance(elementType(), length);
+    }
 
     /**
      * Returns a view of the portion of this array between <code>fromIndex</code>,
@@ -1059,7 +1061,7 @@ public interface Array {
      * </pre>
      *
      * <p>Please note: this method is a good choice for cloning little arrays (thousands,
-     * maybe millions elements). If you clone large arrays by this method,
+     * maybe million elements). If you clone large arrays by this method,
      * the user, in particular, has no ways to view the progress of copying or to interrupt copying.
      * To clone large arrays, we recommend the following code:
      *
@@ -1081,8 +1083,57 @@ public interface Array {
     UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
+     * Returns the Java array containing all the elements in this AlgART array in a proper sequence,
+     * if the length of this array is not too large (not greater than <code>Integer.MAX_VALUE</code>).
+     * In another case, throws {@link TooLargeArrayException}.
+     *
+     * <p>The result is always a newly created Java array.
+     * Its length will be equal to current
+     * <code>array.{@link Array#length() length()}</code>, and array elements will be stored
+     * in elements <code>#0..#{@link Array#length() length()}-1}</code> of the returned array.
+     *
+     * <p>The returned Java array will be "safe" in the sense that no references to it are
+     * stored inside this array.
+     * In other words, this method must always allocate a new Java array.
+     * The caller is thus free to modify the returned array.
+     *
+     * <p>The type of returned array is always one of the following:<ul>
+     * <li><code>boolean[]</code> for {@link BitArray},
+     * <li><code>char[]</code> for {@link CharArray},
+     * <li><code>byte[]</code> for {@link ByteArray},
+     * <li><code>short[]</code> for {@link ShortArray},
+     * <li><code>int[]</code> for {@link IntArray},
+     * <li><code>long[]</code> for {@link LongArray},
+     * <li><code>float[]</code> for {@link FloatArray},
+     * <li><code>double[]</code> for {@link DoubleArray},
+     * <li><code><i>type</i>[]</code>, where <i>type</i> is the result of {@link Array#elementType()} method,
+     * in all other cases.
+     * </ul>
+     *
+     * <p>Reverse operation &mdash; conversion of a Java array into AlgART array &mdash;
+     * can be performed by {@link SimpleMemoryModel#asUpdatableArray(Object)} method,
+     * returning a view of Java array, or by {@link MemoryModel#valueOf(Object)} method
+     * of any memory model instance, which actually copies data into a newly allocated array.
+     *
+     * @return Java array containing all the elements in this array.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #ja()
+     * @see #getData(long, Object)
+     */
+    default Object toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to Java array, "
+                    + "because it is too large: " + this);
+        }
+        Object result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
+
+    /**
      * Returns <code>true</code> this array is actually a <i>wrapper</i> for
-     * standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
+     * a standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
      * That array is returned by {@link #ja()} method,
      * if and only if this method returns <code>true</code>;
      * otherwise {@link #ja()} method returns a copy of array data.
@@ -1480,7 +1531,7 @@ public interface Array {
      * This RAM cannot be automatically released by the garbage collector until you call this method.
      * So, you <i>must</i> manually release all resources by calling this method every time,
      * when this array is already not necessary, but should be stored in some collection for the future.
-     * In other case, thousands of inactive instances of AlgART arrays with non-released resources
+     * In another case, thousands of inactive instances of AlgART arrays with non-released resources
      * can exhaust all available RAM (or address space).
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.

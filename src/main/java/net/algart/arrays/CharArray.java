@@ -53,6 +53,10 @@ public interface CharArray extends PFixedArray {
      */
     char getChar(long index);
 
+    default char[] newJavaArray(int length) {
+        return new char[length];
+    }
+
     /**
      * Returns the minimal index <code>k</code>, so that
      * <code>lowIndex&lt;=k&lt;min(highIndex,thisArray.{@link #length() length()})</code>
@@ -112,6 +116,17 @@ public interface CharArray extends PFixedArray {
     MutableCharArray mutableClone(MemoryModel memoryModel);
 
     UpdatableCharArray updatableClone(MemoryModel memoryModel);
+
+    default char[] toJavaArray() {
+        final long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART array to char[] Java array, "
+                    + "because it is too large: " + this);
+        }
+        var result = newJavaArray((int) len);
+        getData(0, result);
+        return result;
+    }
 
     char[] ja();
 
