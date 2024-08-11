@@ -39,7 +39,7 @@ public interface UpdatableIntArray extends IntArray, UpdatablePIntegerArray {
     /**
      * Sets the element #<code>index</code> to the specified <code>value</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */

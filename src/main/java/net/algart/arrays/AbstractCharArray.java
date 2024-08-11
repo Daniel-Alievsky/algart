@@ -253,7 +253,7 @@ public abstract class AbstractCharArray extends AbstractArray implements CharArr
     /**
      * This implementation returns <code>getChar(index)</code>.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
@@ -271,13 +271,13 @@ public abstract class AbstractCharArray extends AbstractArray implements CharArr
      * {@link #getData(long, Object, int, int)},
      * calling the same methods of this instance with corresponding corrections of the arguments.
      *
-     * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
+     * <p>The returned instance also has overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
      * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
-     * <p>The returned instance also have overridden method {@link #isLazy()},
+     * <p>The returned instance also has overridden method {@link #isLazy()},
      * that just calls the same methods of this instance with the same arguments.
      *
      * @param fromIndex low endpoint (inclusive) of the subarray.

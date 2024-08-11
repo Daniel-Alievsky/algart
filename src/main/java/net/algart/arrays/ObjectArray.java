@@ -47,7 +47,7 @@ public interface ObjectArray<E> extends Array {
     /**
      * Equivalent to {@link #getElement(long) getElement(index)}.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
@@ -77,7 +77,7 @@ public interface ObjectArray<E> extends Array {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return the index of the first occurrence of this value in this array
+     * @return the index of the first occurrence of this value in this array.
      * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
      * or <code>-1</code> if this value does not occur in this range.
      */
@@ -103,7 +103,7 @@ public interface ObjectArray<E> extends Array {
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).
      * @param value     the value to be found.
-     * @return the index of the last occurrence of this value in this array
+     * @return the index of the last occurrence of this value in this array.
      * in range <code>lowIndex&lt;=index&lt;highIndex</code>,
      * or <code>-1</code> if this value does not occur in this range.
      */

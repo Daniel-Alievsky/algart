@@ -37,7 +37,7 @@ public interface UpdatableObjectArray<E> extends ObjectArray<E>, UpdatableArray 
     /**
      * Equivalent to {@link #setElement(long, Object) setElement(index, value)}.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements.
