@@ -40,7 +40,7 @@ public abstract class BufferedImageToMatrix {
     // - must be true to avoid a problem with reading gray images via Graphics2D ("simplest" algorithm)
 
     private boolean enableAlpha = true;
-    // if true and BufferedImage contains alpha-channel, the matrix 4xMxN will be returned
+    // if true and if BufferedImage contains an alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
 
     public boolean isEnableAlpha() {
@@ -92,7 +92,7 @@ public abstract class BufferedImageToMatrix {
         boolean gray = cm.getNumComponents() == 1;
         // ...SampleModel sm = bufferedImage.getSampleModel();...
         // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
-        // In some TIFF we have only 1 band, but RGB color model, because it uses palette; so, result must be 3.
+        // In some TIFF we have only 1 band, but RGB color model, because it uses palette; so, the result must be 3.
         return cm.hasAlpha() && enableAlpha ? 4 : gray ? 1 : 3;
     }
 
@@ -139,21 +139,23 @@ public abstract class BufferedImageToMatrix {
         if (numberOfChannels > colorComponentsCount || colorComponentsCount != sampleModel.getNumBands()) {
             return null;
             // - excluding images with palette (getNumberOfChannels will be 3, but only 1 band in getNumBands())
-            // but numberOfChannels=3 and colorComponentsCount=4 is allowed
+            // but numberOfChannels=3 and colorComponentsCount=4 case is allowed
         }
         if (!(colorModel instanceof ComponentColorModel && sampleModel instanceof ComponentSampleModel)) {
             // - in this case, for example, for the result of
             //      new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB)
             // or
             //      new BufferedImage(1000, 1000, BufferedImage.TYPE_USHORT_565_RGB)
-            // there is no simple way to detect correct element type:
+            // there is no simple way to detect a correct element type:
             // for example, DataBuffer.TYPE_INT can really mean packed 8-bit RGB values
             return null;
         }
         return switch (sampleModel.getDataType()) {
             case DataBuffer.TYPE_BYTE,
                  DataBuffer.TYPE_USHORT,
-                 DataBuffer.TYPE_INT -> tryToDetectElementType(sampleModel);
+                 DataBuffer.TYPE_INT,
+                 DataBuffer.TYPE_FLOAT,
+                 DataBuffer.TYPE_DOUBLE -> tryToDetectElementType(sampleModel);
             default -> null;
         };
     }
@@ -208,7 +210,7 @@ public abstract class BufferedImageToMatrix {
          * such as {@link BufferedImage#TYPE_USHORT_565_RGB}.
          *
          * <p>Note that {@link #setReadingViaColorModel(boolean)} method has a higher priority:
-         * if reading via color model is selected, the mode set by this method is ignored.
+         * if reading via a color model is selected, the mode set by this method is ignored.
          *
          * @param readingViaGraphics2D whether the sample values should
          *                             be read via drawing on <code>Graphics2D</code>.
@@ -269,45 +271,60 @@ public abstract class BufferedImageToMatrix {
                 return;
             }
             // Default branch, used by this class without special settings.
-            // But in a case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
+            // But in the case of strange colorModel.getNumComponents() (like 2 or 1 with alpha),
             // or incompatibility of color components count and samples count (RGB, but indexed 1-band data),
             // or unsupported element type,
             // we don't use it and prefer more stable "simplest" algorithm below.
             final Raster r = bufferedImage.getRaster();
             final int dataBufferType = r.getSampleModel().getDataType();
-            final int[] buffer = new int[dimX];
-            final int lineCount = buffer.length / dimX;
-            assert lineCount >= 1;
-            int numberOfPixels;
-            for (int y = 0, disp = 0; y < dimY; y += lineCount, disp += numberOfPixels * bandCount) {
-                int m = Math.min(lineCount, dimY - y);
-                numberOfPixels = m * dimX;
+            int[] iBuffer = null;
+            float[] fBuffer = null;
+            switch (dataBufferType) {
+                case DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT: {
+                    iBuffer = new int[dimX];
+                }
+                case DataBuffer.TYPE_FLOAT, DataBuffer.TYPE_DOUBLE: {
+                    fBuffer = new float[dimX];
+                }
+            }
+            for (int y = 0, disp = 0; y < dimY; y++, disp += dimX * bandCount) {
                 for (int bandIndex = 0; bandIndex < bandCount; bandIndex++) {
                     final int correctedBandIndex = invertBandOrder && bandIndex < 3 ? 2 - bandIndex : bandIndex;
-                    r.getSamples(0, y, dimX, m, correctedBandIndex, buffer);
                     switch (dataBufferType) {
                         case DataBuffer.TYPE_BYTE -> {
                             if (!(resultJavaArray instanceof byte[] result)) {
                                 throw new IllegalArgumentException("resultJavaArray must be byte[]");
                             }
-                            for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
-                                result[j] = (byte) (buffer[i] & 0xFF);
+                            r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
+                            for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
+                                result[j] = (byte) (iBuffer[i] & 0xFF);
                             }
                         }
                         case DataBuffer.TYPE_USHORT -> {
                             if (!(resultJavaArray instanceof short[] result)) {
                                 throw new IllegalArgumentException("resultJavaArray must be short[]");
                             }
-                            for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
-                                result[j] = (short) (buffer[i] & 0xFFFF);
+                            r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
+                            for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
+                                result[j] = (short) (iBuffer[i] & 0xFFFF);
                             }
                         }
                         case DataBuffer.TYPE_INT -> {
                             if (!(resultJavaArray instanceof int[] result)) {
                                 throw new IllegalArgumentException("resultJavaArray must be int[]");
                             }
-                            for (int i = 0, j = disp + bandIndex; i < numberOfPixels; i++, j += bandCount) {
-                                result[j] = buffer[i];
+                            r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
+                            for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
+                                result[j] = iBuffer[i];
+                            }
+                        }
+                        case DataBuffer.TYPE_FLOAT, DataBuffer.TYPE_DOUBLE -> {
+                            if (!(resultJavaArray instanceof float[] result)) {
+                                throw new IllegalArgumentException("resultJavaArray must be float[]");
+                            }
+                            r.getSamples(0, y, dimX, 1, correctedBandIndex, fBuffer);
+                            for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
+                                result[j] = fBuffer[i];
                             }
                         }
                         default -> throw new AssertionError(
@@ -321,8 +338,8 @@ public abstract class BufferedImageToMatrix {
 
         private void toJavaArrayViaGraphics2D(Object resultJavaArray, BufferedImage bufferedImage) {
             // Simplest algorithm: via BufferedImage.getGraphics
-            // Note: sometimes, due to some internal optimizations, this branch work even faster
-            // than the previous one. But usually the previous branch works in several times faster.
+            // Note: sometimes, due to some internal optimizations, this branch works even faster
+            // than the previous one. But usually, the previous branch works in several times faster.
             if (!(resultJavaArray instanceof byte[] result)) {
                 throw new IllegalArgumentException("resultJavaArray must be byte[]");
             }

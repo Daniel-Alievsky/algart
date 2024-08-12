@@ -115,7 +115,7 @@ public class MatrixIO {
 
     /**
      * Analog of {@link #extension(String, String)}, but in a case when the file name does not contain a dot ".",
-     * throws <code>IllegalArgumentException</code> instead of returning default extension.
+     * throws <code>IllegalArgumentException</code> instead of returning the default extension.
      * This method never returns {@code null}.
      *
      * @param fileName some file name.
@@ -335,7 +335,7 @@ public class MatrixIO {
     /**
      * Saves the multichannel <code>image</code> (list of matrices) in the specified folder.
      * Matrices are saved in several files in very simple format without any compression.
-     * If this folder already contain an image, saved by previous call of this method,
+     * If this folder already contains an image, saved by previous call of this method,
      * it is automatically deleted (replaced with the new one).
      *
      * @param folder                              folder to save the image.

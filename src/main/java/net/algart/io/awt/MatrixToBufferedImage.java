@@ -76,7 +76,7 @@ public abstract class MatrixToBufferedImage {
     /**
      * Converts the given interleaved matrix (2- or 3-dimensional) into <code>BufferedImage</code>.
      * Note: <code>dataBuffer!=null</code>, then the elements of the given matrix ignored, but the data
-     * of the given buffer are used instead. (It is supposed, that this buffer was created
+     * of the given buffer are used instead. (It is supposed that this buffer was created
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
      * @param interleavedMatrix the interleaved matrix.
@@ -187,7 +187,7 @@ public abstract class MatrixToBufferedImage {
      * This method is useful in addition to {@link #toBufferedImage(Matrix, java.awt.image.DataBuffer)},
      * if you want to do something with the created DataBuffer, for example, to correct some its pixels.
      *
-     * <p>This method automatically converts the source data to byte (8-bit) array,
+     * <p>This method automatically converts the source data to a byte (8-bit) array,
      * if {@link #elementTypeSupported(Class)} returns <code>false</code> for the element type.
      *
      * @param interleavedMatrix the interleaved data.
@@ -319,7 +319,7 @@ public abstract class MatrixToBufferedImage {
      *
      * <p>Note that actual number of color channels will be equal to the length of the returned array,
      * not to the original <code>bandCount</code>; for example, this allows to automatically add
-     * alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
+     * an alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
      *
      * @param bandCount the number of bands (color channels) in the source matrix
      * @return the bit masks for storing bands in the packed <code>int</code> values;
@@ -333,11 +333,11 @@ public abstract class MatrixToBufferedImage {
      * Returns the band offsets inside the single pixel, which will be passed to {@link
      * Raster#createInterleavedRaster(java.awt.image.DataBuffer, int, int, int, int, int[], Point)} method,
      * if you want to convert data into an interleaved <code>BufferedImage</code>.
-     * The resulting array must contain at least 1 element.
+     * The resulting array must contain at least one element.
      *
      * <p>Note that actual number of color channels will be equal to the length of the returned array,
      * not to the original <code>bandCount</code>; for example, this allows to automatically add
-     * alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
+     * an alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
      * But this feature is not used by the classes in this package.
      *
      * @param bandCount the number of bands (color channels) in the source matrix; always &ge;1.
@@ -351,7 +351,7 @@ public abstract class MatrixToBufferedImage {
      * Returns the bank indexes, which will be passed to {@link
      * Raster#createBandedRaster(DataBuffer, int, int, int, int[], int[], Point)} method,
      * if you want to convert data into a banded <code>BufferedImage</code>.
-     * The resulting array must contain at least 1 element.
+     * The resulting array must contain at least one element.
      *
      * @param bankCount the number of banks in the data buffer.
      * @return the bank indexes for each band.
@@ -461,7 +461,7 @@ public abstract class MatrixToBufferedImage {
         @Override
         public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
             return color.getRGB();
-            // Note: this behaviour is correct both for InterleavedRGBToPacked and InterleavedBGRToPacked.
+            // Note: this behavior is correct both for InterleavedRGBToPacked and InterleavedBGRToPacked.
             // These classes use the same format of data buffer, the difference is only in packedSamplesRGBAMasks()
         }
 

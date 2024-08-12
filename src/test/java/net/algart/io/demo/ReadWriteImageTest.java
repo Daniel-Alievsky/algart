@@ -50,7 +50,7 @@ public class ReadWriteImageTest {
         }
         if (args.length < startArgIndex + 3) {
             System.out.printf("Usage: %s [-mono] source_image.jpg/png/bmp " +
-                            "copy_1.jpg/png/bmp copy_2.jpg/png/bmp copy_3.jpg/png/bmp" +
+                            "copy_1.jpg/png/bmp copy_2.jpg/png/bmp copy_3.jpg/png/bmp " +
                             "[RGBToPacked|BGRToPacked|RGBToInterleaved|BGRToInterleaved]%n",
                     ReadWriteImageTest.class.getName());
             return;
