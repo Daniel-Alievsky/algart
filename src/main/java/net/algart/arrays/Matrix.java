@@ -659,7 +659,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>byte[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>byte</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -723,7 +723,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>char[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>char</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -786,7 +786,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>short[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>short</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -849,7 +849,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>int[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>int</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -912,7 +912,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>long[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>long</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -975,7 +975,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>float[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>float</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -1038,7 +1038,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param result the result <code>double[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source matrix,
+     * Java array containing all the elements in this matrix,
      * cast to <code>double</code> type according to AlgART rules.
      * @throws UnsupportedOperationException if {@link #array()} is not {@link PArray}.
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
@@ -1853,7 +1853,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * be representable by <code>long</code> type.)
      *
      * <p>The elements of the returned matrix, that do not correspond to any elements of this one,
-     * i.e. "lie outside" of the source matrix, are considered to be equal to some values, according to
+     * i.e. "lie outside" of this matrix, are considered to be equal to some values, according to
      * some <i>continuation model</i>, described by <code>continuationMode</code> argument.
      * Such "outside" elements can correspond (according some rules) to actual elements of the source elements &mdash;
      * then attempts to read them return the values of the corresponding source elements

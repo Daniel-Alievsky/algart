@@ -241,13 +241,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>byte</code> type if the array is not a {@link ByteArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>byte[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -266,7 +266,7 @@ public interface PArray extends Array {
      * @param result the result <code>byte[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>byte</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -347,13 +347,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>char</code> type if the array is not a {@link CharArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>char[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -372,7 +372,7 @@ public interface PArray extends Array {
      * @param result the result <code>char[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>char</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -453,13 +453,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>short</code> type if the array is not a {@link ShortArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>short[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -478,7 +478,7 @@ public interface PArray extends Array {
      * @param result the result <code>short[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>short</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -559,13 +559,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>int</code> type if the array is not a {@link IntArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>int[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -584,7 +584,7 @@ public interface PArray extends Array {
      * @param result the result <code>int[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>int</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -665,13 +665,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>long</code> type if the array is not a {@link LongArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>long[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -690,7 +690,7 @@ public interface PArray extends Array {
      * @param result the result <code>long[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>long</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -771,13 +771,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>float</code> type if the array is not a {@link FloatArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>float[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -796,7 +796,7 @@ public interface PArray extends Array {
      * @param result the result <code>float[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>float</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
@@ -877,13 +877,13 @@ public interface PArray extends Array {
     }
 
     /**
-     * Copies all elements in the source AlgART array into the <code>result</code> array,
+     * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>double</code> type if the array is not a {@link DoubleArray},
      * and return a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>double[]</code> array
-     * with a length equal to the source array length {@link Array#length() array.length()};
-     * if it is not {@code null}, its length must be &ge;{@link Array#length32() array.length()}.
-     * If the length of the source AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * with a length equal to this array length (returned by {@link Array#length()} method);
+     * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
+     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -902,7 +902,7 @@ public interface PArray extends Array {
      * @param result the result <code>double[]</code> array; can be {@code null},
      *               then it will be created automatically.
      * @return a reference to <code>result</code> argument or (when <code>result==null</code>) a newly created array:
-     * Java array containing all the elements in the source AlgART array,
+     * Java array containing all the elements in this AlgART array,
      * cast to <code>double</code> type according to AlgART rules.
      * @throws TooLargeArrayException    if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @throws IndexOutOfBoundsException if the <code>result</code> argument is not {@code null}, but its length
