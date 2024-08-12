@@ -318,9 +318,18 @@ public abstract class BufferedImageToMatrix {
                                 result[j] = iBuffer[i];
                             }
                         }
-                        case DataBuffer.TYPE_FLOAT, DataBuffer.TYPE_DOUBLE -> {
+                        case DataBuffer.TYPE_FLOAT -> {
                             if (!(resultJavaArray instanceof float[] result)) {
                                 throw new IllegalArgumentException("resultJavaArray must be float[]");
+                            }
+                            r.getSamples(0, y, dimX, 1, correctedBandIndex, fBuffer);
+                            for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
+                                result[j] = fBuffer[i];
+                            }
+                        }
+                        case DataBuffer.TYPE_DOUBLE -> {
+                            if (!(resultJavaArray instanceof double[] result)) {
+                                throw new IllegalArgumentException("resultJavaArray must be double[]");
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, fBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
