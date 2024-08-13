@@ -876,7 +876,7 @@ public abstract class PowerFunc implements Func {
     }
 
     /**
-     * Returns an instance of the updatable version of this class, a case of unary function
+     * Returns an updatable version of this object, a case of unary function
      * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>Math.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of
@@ -1273,7 +1273,7 @@ public abstract class PowerFunc implements Func {
     }
 
     /**
-     * Returns an instance of the updatable version of this class, a case of unary function
+     * Returns an updatable version of this object, a case of unary function
      * <i>scale</i>*<i>x</i><sub>0</sub><i><sup>c</sup></i>, using <code>StrictMath.pow</code> method.
      *
      * <p>This method returns special optimized versions of this class for several popular values of

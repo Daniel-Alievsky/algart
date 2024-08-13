@@ -367,8 +367,8 @@ public abstract class Histogram {
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] =
-     * <span style="font-size:200%">&sum;</span>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
-     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>2<sup><i>s</i></sup>*<i>k</i>
+     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub>
      * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
      * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
      * = <code>histogramLength</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
@@ -445,8 +445,8 @@ public abstract class Histogram {
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] =
-     * <span style="font-size:200%">&sum;</span>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
-     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>2<sup><i>s</i></sup>*<i>k</i>
+     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub>
      * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
      * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
      * = <code>histogram.length</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
@@ -529,8 +529,8 @@ public abstract class Histogram {
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] =
-     * <span style="font-size:200%">&sum;</span>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
-     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>2<sup><i>s</i></sup>*<i>k</i>
+     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub>
      * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
      * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
      * = <code>histogramLength</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].
@@ -606,8 +606,8 @@ public abstract class Histogram {
      *
      * <blockquote>
      * <b>b</b><sup><i>q</i></sup>[<i>k</i>] =
-     * <span style="font-size:200%">&sum;</span>&nbsp;<sub><sub>2<sup><i>s</i></sup>*<i>k</i>
-     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub></sub>
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>2<sup><i>s</i></sup>*<i>k</i>
+     * &le; <i>j</i> &lt; min(2<sup><i>s</i></sup>*(<i>k</i>+1), <i>M</i>)</sub>
      * <b>b</b>[<i>j</i>], <i>s</i>=<code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1];<br>
      * <b>b</b><sup><i>q</i></sup><code>.length</code> = &lfloor;<i>M</i>/2<sup><i>s</i></sup>&rfloor;
      * = <code>histogram.length</code> &gt;&gt; <code>bitLevelsOfPyramid</code>[<i>q</i>&minus;1].

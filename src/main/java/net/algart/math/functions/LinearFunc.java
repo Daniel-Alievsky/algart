@@ -364,14 +364,14 @@ public abstract class LinearFunc implements Func {
 
     /**
      * Returns an instance of this class describing the following linear function with one argument:
-     * <i><i>d</i><sub>min</sub> + (<i>d</i><sub>max</sub>-<i>d</i><sub>min</sub>) *
-     * (x</i>-<i>s</i><sub>min</sub>) / (<i>s</i><sub>max</sub>-<i>s</i><sub>min</sub>),
+     * <i>d</i><sub>min</sub> + (<i>d</i><sub>max</sub>-<i>d</i><sub>min</sub>) *
+     * (<i>x</i>-<i>s</i><sub>min</sub>) / (<i>s</i><sub>max</sub>-<i>s</i><sub>min</sub>),
      * where <i>s</i><sub>min</sub>..<i>s</i><sub>max</sub> is <code>srcRange</code>
      * and <i>d</i><sub>min</sub>..<i>d</i><sub>max</sub> is <code>destRange</code>.
      * This function maps the source range <code>srcRange</code>
      * to the destination range <code>destRange</code>,
      * excepting the only case when <code>srcRange.{@link Range#size() size()}==0</code>.
-     * In that special case the behavior of the returned function is not specified
+     * In that special case, the behavior of the returned function is not specified
      * (but no exceptions are thrown).
      *
      * @param destRange the destination range.
@@ -386,9 +386,9 @@ public abstract class LinearFunc implements Func {
     }
 
     /**
-     * Returns an instance of the updatable version of this class,
+     * Returns an updatable version of this object,
      * describing the linear function with specified coefficients:
-     * <i>b</i> + <i>a</i><i>x</i><sub>0</sub>.</p>
+     * <i>b</i> + <i>a</i><i>x</i><sub>0</sub>.
      * The {@link Func.Updatable#set set} method of this instance sets
      * <code>x[0]=(newResult-b)*aInv</code>, where <code>aInv=1.0/a</code>
      * is calculated while the instance creation.

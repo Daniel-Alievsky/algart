@@ -1178,12 +1178,14 @@ public class RectangularArea {
     }
 
     /**
-     * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
-     * returns
+     * Returns this rectangular area, dilated (expanded) according the argument. More precisely, returns
+     *
      * <pre>RectangularArea.valueOf(
      * thisInstance.{@link #min() min()}.{@link Point#subtract(Point) subtract}(expansion),
      * thisInstance.{@link #max() max()}.{@link Point#add(Point) add}(expansion))</pre>
-     * (but if <code>expansion.{@link Point#isOrigin() isOrigin()}</code>, return this object without changes).</code>
+     *
+     * <p>(but if <code>expansion.{@link Point#isOrigin() isOrigin()}</code>,
+     * returns this object without changes).</p>
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
@@ -1234,13 +1236,13 @@ public class RectangularArea {
      * </pre>
      * This figure shows dilation of some 2-dimensional rectangle <code><b>R</b></code> by
      * expansion=<code>Point.valueOf(2,1)</code>:
-     * the results consists of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
+     * the results consist of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
      * <code>c</code>, <code>d</code> (width 2).
      *
      * <p>Note: all coordinates of <code>expansion</code> argument <b>must</b> be non-negative
      * (unlike {@link #dilate(Point)} method).
      *
-     * <p>If some of coordinates of the point <code>expansion</code> are zero, new areas adouble the corresponding
+     * <p>If some coordinates of the point <code>expansion</code> are zero, new areas adouble the corresponding
      * facets are not added (recanglar area cannot be empty).
      * In particular, if <code>expansion.{@link Point#isOrigin() isOrigin()}</code>,
      * the result will contain this area as the only element.
@@ -1311,13 +1313,13 @@ public class RectangularArea {
      * and returns the list of dilated areas.
      * <p>If <code>straightOnly</code> argument is <code>false</code>, this method is equivalent to the following code:
      * <pre>
-     * final List<RectangularArea> result = new ArrayList<RectangularArea>();
+     * final List&lt;RectangularArea&gt; result = new ArrayList&lt;RectangularArea&gt;();
      * for (RectangularArea area : areas) {
      *     result.add(area.{@link #dilate(Point) dilate}(expansion));
      * }</pre>
      * <p>If <code>straightOnly</code> argument is <code>true</code>, this method is equivalent to the following code:
      * <pre>
-     * final List<RectangularArea> result = new ArrayList<RectangularArea>();
+     * final List&lt;RectangularArea&gt; result = new ArrayList&lt;RectangularArea&gt;();
      * for (RectangularArea area : areas) {
      *     area.{@link #dilateStraightOnly(List, Point) dilateStraightOnly}(result, expansion);
      * }</pre>

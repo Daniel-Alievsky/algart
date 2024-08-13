@@ -66,7 +66,7 @@ public class InverseNumberFunc implements Func {
     }
 
     /**
-     * Returns an instance of the updatable version of this class for the given constant <code>c</code>.
+     * Returns an updatable version of this object for the given constant <code>c</code>.
      *
      * @param c the numerator of fraction.
      * @return an instance of the updatable version of this class.

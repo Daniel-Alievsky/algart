@@ -1251,7 +1251,9 @@ public class IRectangularArea {
      * <pre>IRectangularArea.valueOf(
      * thisInstance.{@link #min() min()}.{@link IPoint#subtractExact(IPoint) subtractExact}(expansion),
      * thisInstance.{@link #max() max()}.{@link IPoint#addExact(IPoint) addExact}(expansion))</pre>
-     * (but if <code>expansion.{@link IPoint#isOrigin() isOrigin()}</code>, return this object without changes).
+     *
+     * <p>(but if <code>expansion.{@link IPoint#isOrigin() isOrigin()}</code>,
+     * returns this object without changes).</p>
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
@@ -1304,7 +1306,7 @@ public class IRectangularArea {
      * </pre>
      * This figure shows dilation of some 2-dimensional rectangle <code><b>R</b></code> by
      * expansion=<code>IPoint.valueOf(2,1)</code>:
-     * the results consists of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
+     * the results consist of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
      * <code>c</code>, <code>d</code> (width 2).
      *
      * <p>Note: all coordinates of <code>expansion</code> argument <b>must</b> be non-negative
@@ -1314,7 +1316,7 @@ public class IRectangularArea {
      * if the result cannot be exactly represented by 64-bit <code>long</code> integers,
      * this method throws <code>ArithmeticException</code>.
      *
-     * <p>If some of coordinates of the point <code>expansion</code> are zero, new areas along the corresponding
+     * <p>If some coordinates of the point <code>expansion</code> are zero, new areas along the corresponding
      * facets are not added (recanglar area cannot be empty).
      * In particular, if <code>expansion.{@link IPoint#isOrigin() isOrigin()}</code>,
      * the result will contain this area as the only element.

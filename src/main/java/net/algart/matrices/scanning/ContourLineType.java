@@ -67,7 +67,7 @@ public enum ContourLineType {
      * visited by {@link Boundary2DScanner#scanBoundary(net.algart.arrays.ArrayContext)
      * scanBoundary} method (boundary pixels of an object).
      * Such contour consists of segments with the length 1.0 and &radic;2,
-     * lying inside an object at the little distance from its boundary (not farther than 0.5).
+     * lying inside an object at a little distance from its boundary (not farther than 0.5).
      * In this case, for example, if an object consists of only 1 pixel (a square with the side 1.0),
      * the contour line is empty (degenerated to a point).
      */
@@ -89,7 +89,7 @@ public enum ContourLineType {
      * lying almost at the boundary of an object (sometimes little inside, sometimes little outside).
      * In this case, for example, if an object consists of only 1 pixel (a square with the side 1.0),
      * the contour line consists of 4 segments of the length 0.5*&radic;2, connecting centers of
-     * the sides of this square, and the length of contour is 2*&radic;2.
+     * this square sides, and the length of contour is 2*&radic;2.
      */
     SEGMENT_CENTERS_POLYLINE(2) {
         public double x(Boundary2DScanner scanner) {
@@ -116,8 +116,8 @@ public enum ContourLineType {
      *
      * <p>More precisely, this method is equivalent to:
      * <blockquote>
-     * <table cellpadding=0 cellspacing=0 border=0>
-     * <caption></caption>
+     * <table style="border:0;border-collapse:collapse">
+     * <caption>&nbsp;</caption>
      * <tr>
      * <td><code>scanner.{@link Boundary2DScanner#x() x()}+scanner.{@link Boundary2DScanner#lastStep()
      * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexX() pixelVertexX()}</code></td>
@@ -151,7 +151,8 @@ public enum ContourLineType {
      *
      * <p>More precisely, this method is equivalent to:
      * <blockquote>
-     * <table cellpadding=0 cellspacing=0 border=0><caption></caption>
+     * <table style="border:0;border-collapse:collapse">
+     * <caption>&nbsp;</caption>
      * <tr>
      * <td><code>scanner.{@link Boundary2DScanner#y() y()}+scanner.{@link Boundary2DScanner#lastStep()
      * lastStep()}.{@link Boundary2DScanner.Step#pixelVertexY() pixelVertexY()}</code></td>

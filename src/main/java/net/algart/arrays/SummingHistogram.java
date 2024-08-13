@@ -843,10 +843,10 @@ public abstract class SummingHistogram extends Histogram {
      *
      * <blockquote>
      * <i>S<sup>S</sup></i> = <i>s</i>(<i>v</i><sub>0</sub>) =
-     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>
+     * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i>&#x2080;</sub>
      * (<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
      * <i>z</i>(<i>v</i><sub>0</sub>) +
-     * 0.5 * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>
+     * 0.5 * <span style="font-size:200%">&sum;</span>&nbsp;<sub>0&le;<i>j</i>&lt;<i>v</i>&#x2080;</sub>
      * <b>b</b>[<i>j</i>] =
      * <i>z</i>(<i>v</i><sub>0</sub>) + <i>r</i>(<i>v</i><sub>0</sub>)/2
      * </blockquote>

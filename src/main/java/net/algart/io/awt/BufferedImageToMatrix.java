@@ -263,12 +263,8 @@ public abstract class BufferedImageToMatrix {
             int[] iBuffer = null;
             float[] fBuffer = null;
             switch (dataBufferType) {
-                case DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT: {
-                    iBuffer = new int[dimX];
-                }
-                case DataBuffer.TYPE_FLOAT, DataBuffer.TYPE_DOUBLE: {
-                    fBuffer = new float[dimX];
-                }
+                case DataBuffer.TYPE_BYTE, DataBuffer.TYPE_USHORT, DataBuffer.TYPE_INT -> iBuffer = new int[dimX];
+                case DataBuffer.TYPE_FLOAT, DataBuffer.TYPE_DOUBLE -> fBuffer = new float[dimX];
             }
             for (int y = 0, disp = 0; y < dimY; y++, disp += dimX * bandCount) {
                 for (int bandIndex = 0; bandIndex < bandCount; bandIndex++) {
