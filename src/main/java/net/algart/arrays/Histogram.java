@@ -58,16 +58,13 @@ import java.util.Objects;
  * some generalization of the integer rank and percentile to the floating-point case.
  * Below is the formal definition of the real rank and percentile.</p>
  *
- * <style>
- *     table.pad tr td {padding: 8px;}
- * </style>
  * <blockquote>
- * <table border="1" class="pad" style="border-spacing:0">
- * <caption></caption>
- * <tr><td align="center"><b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)
- * </td></tr>
+ * <table border="1" style="border-spacing:0">
+ * <caption>
+ *     <b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)</b>
+ * </caption>
  *
- * <tr><td>
+ * <tr><td style="padding:8px">
  * <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
  * the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
  * (the length of the supposed, but not stored source sorted array <b>A</b>). In addition,
@@ -150,7 +147,7 @@ import java.util.Objects;
  * <ol>
  * <li>
  * <i>v</i>(<i>r</i>) =
- *     <ul type="disc">
+ *     <ul>
  *     <li><i>v</i><sub>0</sub> + (<i>r</i>&minus;<i>r</i><sub>0</sub>)/<i>b</i>,
  *     where <i>v</i><sub>0</sub> is the minimal integer value so that
  *     <b>b</b>[0]+<b>b</b>[1]+...+<b>b</b>[<i>v</i><sub>0</sub>]&gt;&lfloor;<i>r</i>&rfloor;,

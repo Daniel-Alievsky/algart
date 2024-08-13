@@ -77,17 +77,13 @@ import java.util.Objects;
  * floating-point case. Below is the formal definition of the real <i>S</i> and
  * <i>s</i> functions, calculated by this class.</p>
  *
- * <style>
- *     table.pad tr td {padding: 8px;}
- * </style>
  * <blockquote>
- * <table border="1" class="pad" style="border-spacing:0">
- * <caption></caption>
- * <tr><td align="center"><b>Definition of floating-point summing functions
- * <i>S</i>(<i>r</i>) and <i>s</i>(<i>v</i>)</b>
- * </td></tr>
+ * <table border="1" style="border-spacing:0">
+ * <caption>
+ *     <b>Definition of floating-point summing functions <i>S</i>(<i>r</i>) and <i>s</i>(<i>v</i>)</b>
+ * </caption>
  *
- * <tr><td>
+ * <tr><td style="padding:8px">
  * <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
  * the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
  * (the length of the supposed, but not stored source sorted array <b>A</b>).
@@ -137,7 +133,7 @@ import java.util.Objects;
  * <blockquote>
  * <i>s</i>(<i>v</i><sub>0</sub>) =
  * <span style="font-size:200%">&sum;</span>&nbsp;
- * <sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
+ * <sub>0&le;<i>j</i>&lt;<i>v</i>&#x2080;</sub>(<i>j</i>+0.5)*<b>b</b>[<i>j</i>] =
  * <i>z</i>(<i>v</i><sub>0</sub>) + <i>r</i>(<i>v</i><sub>0</sub>)/2
  * </blockquote>
  * </dd>
@@ -213,7 +209,7 @@ import java.util.Objects;
  * you also can use {@link #currentSum()} method, which just returns
  * <i>z</i>(<i>v</i><sub>0</sub>) =
  * <span style="font-size:200%">&sum;</span>&nbsp;
- * <sub>0&le;<i>j</i>&lt;<i>v</i><sub>0</sub></sub><i>j</i>*<b>b</b>[<i>j</i>]
+ * <sub>0&le;<i>j</i>&lt;<i>v</i>&#x2080;</sub><i>j</i>*<b>b</b>[<i>j</i>]
  * for integer <i>v</i><sub>0</sub>={@link #currentIValue() currentIValue()}.</p>
  *
  * <p>You can create an instance of this class by the following methods:</p>

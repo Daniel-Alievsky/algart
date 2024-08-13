@@ -44,7 +44,7 @@ import java.util.Arrays;
  *
  * <blockquote>
  * <table>
- * <caption></caption>
+ * <caption>&nbsp;</caption>
  * <tr>
  * <td><b>y</b> = </td>
  * <td><i>y</i><sub>0</sub><br><i>y</i><sub>1</sub><br>...<br><i>y</i><sub><i>n</i>&minus;1</sub></td>

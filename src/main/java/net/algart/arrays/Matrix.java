@@ -1508,8 +1508,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>All calculations are performed with <code>long</code> type without any overflow checks.
      * All elements of <code>coordinates</code> array are always used, regardless of the number of matrix dimensions.
      * Please remember that <code><i>d<sub>k</sub></i>={@link #dim(int) dim}(<i>k</i>)=1</code>
-     * for <code><i>k</i>&gt;={@link #dimCount()}
-     * (extra elements of <code>coordinates</code> array).</code>.
+     * for <code><i>k</i>&gt;={@link #dimCount()}</code>
+     * (extra elements of <code>coordinates</code> array).
      *
      * @param coordinates all coordinates.
      * @return the linear index of the matrix element with specified coordinates, without range checks.
@@ -1577,7 +1577,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * Here we <i>do no require</i> that the passed indexes <code><i>i<sub>k</sub></i></code>
      * are in ranges <code>0..<i>d<sub>k</sub></i>-1</code>.
      * Then, let <code><i>len</i>={@link #array()}.{@link Array#length()
-     * length()}=d<sub>n-1</sub>...d<sub>1</sub>d<sub>0</sub></i></code>.
+     * length()}=d<sub>n-1</sub>...d<sub>1</sub>d<sub>0</sub></code>.
      * The result of this method is the following:
      *
      * <blockquote>
@@ -1687,7 +1687,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @param x the first coordinate.
      * @param y the second coordinate.
-     * @return code>true</code> if all specified coordinates are inside the matrix.
+     * @return <code>true</code> if all specified coordinates are inside the matrix.
      */
     boolean inside(long x, long y);
 
@@ -1698,7 +1698,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param x the first coordinate.
      * @param y the second coordinate.
      * @param z the third coordinate.
-     * @return code>true</code> if all specified coordinates are inside the matrix.
+     * @return <code>true</code> if all specified coordinates are inside the matrix.
      */
     boolean inside(long x, long y, long z);
 
@@ -2526,7 +2526,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * but the generic type of the result is not {@link UpdatableArray updatable}.
      * For any types, equivalent to the following operators:
      * <pre>
-     *     final Matrix<UpdatableArray> result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     final Matrix&lt;UpdatableArray&gt; result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
      *     newMatrix}(UpdatableArray.class, thisInstance);
      *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
      *     Matrices.copy}(null, result, thisInstance); // - maximally fast multithreading copying

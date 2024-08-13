@@ -113,7 +113,7 @@ public interface ObjectArray<E> extends Array {
      * Returns this array cast to the specified generic element type
      * or throws <code>ClassCastException</code> if the elements cannot be cast
      * to the required type (because the {@link #elementType() element type} is not its subclass).
-     * Equivalent to <code>(ObjectArray<D>)thisArray</code>, but is compiled
+     * Equivalent to <code>(ObjectArray&lt;D&gt;)thisArray</code>, but is compiled
      * without "unchecked cast" warning or "inconvertible type" error.
      *
      * <p>Unlike <code>ArrayList</code> architecture, such casting is safe here,

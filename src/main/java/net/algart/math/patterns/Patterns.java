@@ -109,7 +109,7 @@ public class Patterns {
      * excepting the only case when the number of points is 1.
      *
      * <p>The returned pattern will be "safe" in the sense that no references to the passed set are maintained by it.
-     * In other words, this method always allocates new set (probably <code>HashSet</code>) and copies
+     * In other words, this method always allocates a new set (probably <code>HashSet</code>) and copies
      * the passed set into it.
      *
      * @param points the source points set.
@@ -131,7 +131,7 @@ public class Patterns {
 
     /**
      * Equivalent to <code>{@link #newIntegerPattern
-     * newIntegerPattern}(new HashSet<IPoint>(Arrays.asList(points)))</code>.
+     * newIntegerPattern}List.of(points)))</code>.
      *
      * @param points the source points set.
      * @return the pattern consisting of all source points.
@@ -158,7 +158,7 @@ public class Patterns {
      * The result of this method consists of all points
      * <i>A</i>=(<i>x</i><sub>0</sub>,<i>x</i><sub>1</sub>,...,<i>x</i><sub><i>n</i>-1</sub>)
      * that |<i>OA</i>|<sup>2</sup> =
-     * (<i>x</i><sub>0</sub>-<i>c</i><sub>0</sub>)</sub><sup>2</sup>
+     * (<i>x</i><sub>0</sub>-<i>c</i><sub>0</sub>)<sup>2</sup>
      * + (<i>x</i><sub>1</sub>-<i>c</i><sub>1</sub>)<sup>2</sup>
      * + ... + (<i>x</i><sub><i>n</i>-1</sub>-<i>c</i><sub><i>n</i>-1</sub>)<sup>2</sup>
      * &le; <i>r</i><sup>2</sup>.

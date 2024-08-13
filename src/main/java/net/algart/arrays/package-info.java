@@ -202,21 +202,19 @@
 
  <p>Below is a diagram of basic array interfaces and classes.</p>
 
- <table border="1" cellpadding="4" cellspacing="1">
-     <caption></caption>
+ <table border="1">
+     <caption><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b>
+ (the only model that supports <i>all</i> {@link net.algart.arrays.Array#elementType() element types})
+ </caption>
      <tr>
-         <td colspan="5"><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b>
-         (the only model that supports <i>all</i> {@link net.algart.arrays.Array#elementType() element types})</td>
+         <td style="width:20%;padding:4px">Read-only access</td>
+         <td style="width:20%;padding:4px">Read/write access</td>
+         <td style="width:20%;padding:4px">Stack access (adding/removing the last element)</td>
+         <td style="width:20%;padding:4px">Full access</td>
+         <td style="width:20%;padding:4px">Access to internal Java array</td>
      </tr>
      <tr>
-         <td valign="top" width="20%">Read-only access</td>
-         <td valign="top" width="20%">Read/write access</td>
-         <td valign="top" width="20%">Stack access (adding/removing the last element)</td>
-         <td valign="top" width="20%">Full access</td>
-         <td valign="top" width="20%">Access to internal Java array</td>
-     </tr>
-     <tr>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.Array}</i>,<br>
          <i>{@link net.algart.arrays.BitArray}</i>,<br>
          <i>{@link net.algart.arrays.CharArray}</i>,<br>
@@ -228,7 +226,7 @@
          <i>{@link net.algart.arrays.DoubleArray}</i>,<br>
          <i>{@link net.algart.arrays.ObjectArray}</i>
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.UpdatableArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableBitArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableCharArray}</i>,<br>
@@ -240,7 +238,7 @@
          <i>{@link net.algart.arrays.UpdatableDoubleArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableObjectArray}</i>
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.Stack}</i>,<br>
          <i>{@link net.algart.arrays.BitStack}</i>,<br>
          <i>{@link net.algart.arrays.CharStack}</i>,<br>
@@ -252,7 +250,7 @@
          <i>{@link net.algart.arrays.DoubleStack}</i>,<br>
          <i>{@link net.algart.arrays.ObjectStack}</i>
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.MutableArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableBitArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableCharArray}</i>,<br>
@@ -264,35 +262,27 @@
          <i>{@link net.algart.arrays.MutableDoubleArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableObjectArray}</i>
          </td>
-         <td valign="top">Interface
+         <td style="vertical-align:top;padding:4px">Interface
          <i>{@link net.algart.arrays.DirectAccessible}</i>:
          implemented by all arrays excepting bit (<code>boolean</code>) ones
          and {@link net.algart.arrays.Array#asImmutable() immutable} instances
          </td>
      </tr>
  </table>
- <table border="0" cellpadding="0" cellspacing="0">
-     <caption></caption>
+ <p>&nbsp;</p>
+ <table border="1">
+     <caption><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b>
+ and <b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b>
+ (support all <i>primitive</i> {@link net.algart.arrays.Array#elementType() element types})</caption>
      <tr>
-         <td>&nbsp;</td>
-     </tr>
- </table>
- <table border="1" cellpadding="4" cellspacing="1">
-     <caption></caption>
-     <tr>
-         <td colspan="5"><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b>
-         and <b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b>
-         (support all <i>primitive</i> {@link net.algart.arrays.Array#elementType() element types})</td>
-     </tr>
-     <tr>
-         <td valign="top" width="20%">Read-only access</td>
-         <td valign="top" width="20%">Read/write access</td>
-         <td valign="top" width="20%">Stack access (adding/removing the last element)</td>
-         <td valign="top" width="20%">Full access</td>
-         <td valign="top" width="20%">Access to internal Java array</td>
+         <td style="width:20%;padding:4px">Read-only access</td>
+         <td style="width:20%;padding:4px">Read/write access</td>
+         <td style="width:20%;padding:4px">Stack access (adding/removing the last element)</td>
+         <td style="width:20%;padding:4px">Full access</td>
+         <td style="width:20%;padding:4px">Access to internal Java array</td>
      </tr>
      <tr>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.Array}</i>,<br>
          <i>{@link net.algart.arrays.BitArray}</i>,<br>
          <i>{@link net.algart.arrays.CharArray}</i>,<br>
@@ -304,7 +294,7 @@
          <i>{@link net.algart.arrays.DoubleArray}</i>,<br>
          (but not <i>{@link net.algart.arrays.ObjectArray}</i>)
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.UpdatableArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableBitArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableCharArray}</i>,<br>
@@ -316,7 +306,7 @@
          <i>{@link net.algart.arrays.UpdatableDoubleArray}</i><br>
          (but not <i>{@link net.algart.arrays.UpdatableObjectArray}</i>)
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.Stack}</i>,<br>
          <i>{@link net.algart.arrays.BitStack}</i>,<br>
          <i>{@link net.algart.arrays.CharStack}</i>,<br>
@@ -328,7 +318,7 @@
          <i>{@link net.algart.arrays.DoubleStack}</i>,<br>
          (but not <i>{@link net.algart.arrays.ObjectStack}</i>)
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.MutableArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableBitArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableCharArray}</i>,<br>
@@ -340,51 +330,42 @@
          <i>{@link net.algart.arrays.MutableDoubleArray}</i>,<br>
          (but not <i>{@link net.algart.arrays.MutableObjectArray}</i>)
          </td>
-         <td valign="top">Interface
+         <td style="vertical-align:top;padding:4px">Interface
          <i>{@link net.algart.arrays.DirectAccessible}</i>:
          is never implemented
          </td>
      </tr>
  </table>
- <table border="0" cellpadding="0" cellspacing="0">
-     <caption></caption>
+ <table border="1">
+     <caption><b>{@link net.algart.arrays.CombinedMemoryModel} memory model</b>
+ (supports only <i>non-primitive</i> {@link net.algart.arrays.Array#elementType() element types})</caption>
      <tr>
-         <td>&nbsp;</td>
-     </tr>
- </table>
- <table border="1" cellpadding="4" cellspacing="1">
-     <caption></caption>
-     <tr>
-         <td colspan="5"><b>{@link net.algart.arrays.CombinedMemoryModel} memory model</b>
-         (supports only <i>non-primitive</i> {@link net.algart.arrays.Array#elementType() element types})</td>
+         <td style="width:20%;padding:4px">Read-only access</td>
+         <td style="width:20%;padding:4px">Read/write access</td>
+         <td style="width:20%;padding:4px">Stack access (adding/removing the last element)</td>
+         <td style="width:20%;padding:4px">Full access</td>
+         <td style="width:20%;padding:4px">Access to internal Java array</td>
      </tr>
      <tr>
-         <td valign="top" width="20%">Read-only access</td>
-         <td valign="top" width="20%">Read/write access</td>
-         <td valign="top" width="20%">Stack access (adding/removing the last element)</td>
-         <td valign="top" width="20%">Full access</td>
-         <td valign="top" width="20%">Access to internal Java array</td>
-     </tr>
-     <tr>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.Array}</i>,<br>
          <i>{@link net.algart.arrays.ObjectArray}</i>,<br>
          <i>{@link net.algart.arrays.ObjectInPlaceArray}</i> (optional)
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.UpdatableArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableObjectArray}</i>,<br>
          <i>{@link net.algart.arrays.UpdatableObjectInPlaceArray}</i> (optional)
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.ObjectStack}</i>
          </td>
-         <td valign="top">Interfaces:<br>
+         <td style="vertical-align:top;padding:4px">Interfaces:<br>
          <i>{@link net.algart.arrays.MutableArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableObjectArray}</i>,<br>
          <i>{@link net.algart.arrays.MutableObjectInPlaceArray}</i> (optional)
          </td>
-         <td valign="top">Interface
+         <td style="vertical-align:top;padding:4px">Interface
          <i>{@link net.algart.arrays.DirectAccessible}</i>:
          is never implemented
          </td>
@@ -446,11 +427,10 @@
 
  <p>The maximal array lengths for different memory models are listed below.</p>
 
- <table border="1" cellpadding="4" cellspacing="1" width="60%">
-     <caption></caption>
+ <table border="1" style="width:60%">
+     <caption><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b></caption>
      <tr>
-         <td colspan="3"><b>{@link net.algart.arrays.SimpleMemoryModel Simple memory model}</b><br>
-         <br>
+         <td style="padding:4px" colspan="3">
          The maximal array length is defined by the language limitations for arrays.
          So, it cannot exceed <code>2<sup>31</sup>-1</code> &mdash; the maximal possible length of Java arrays,
          excepting bit arrays, that can contain up to <code>2<sup>37</sup>-1</code>
@@ -460,12 +440,12 @@
          <i>elements</i>). It reduces the maximal possible length of AlgART arrays.</td>
      </tr>
      <tr>
-         <td valign="top" width="34%">The type of elements</td>
-         <td valign="top" width="33%">Theoretical limit for array length</td>
-         <td valign="top" width="330%">Usual real limit for array length</td>
+         <td style="width:34%;padding:4px">The type of elements</td>
+         <td style="width:33%;padding:4px">Theoretical limit for array length</td>
+         <td style="width:34%;padding:4px">Usual real limit for array length</td>
      </tr>
      <tr>
-         <td valign="top" nowrap>
+         <td style="vertical-align:top;padding:4px">
          <code>boolean</code> (<i>{@link net.algart.arrays.BitArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>char</code> (<i>{@link net.algart.arrays.CharArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>byte</code> (<i>{@link net.algart.arrays.ByteArray}</i>)<code><sup>&nbsp;</sup></code><br>
@@ -476,7 +456,7 @@
          <code>double</code> (<i>{@link net.algart.arrays.DoubleArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>Object</code> (<i>{@link net.algart.arrays.ObjectArray}</i>)
          </td>
-         <td valign="top"><code>2<sup>37</sup>-1</code><br>
+         <td style="vertical-align:top;padding:4px"><code>2<sup>37</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code><br>
@@ -486,7 +466,7 @@
          <code>2<sup>31</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code>
          </td>
-         <td valign="top"><code>2<sup>34</sup>-1</code><br>
+         <td style="vertical-align:top;padding:4px"><code>2<sup>34</sup>-1</code><br>
          <code>2<sup>30</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code><br>
          <code>2<sup>30</sup>-1</code><br>
@@ -498,30 +478,25 @@
          </td>
      </tr>
  </table>
- <table border="0" cellpadding="0" cellspacing="0">
-     <caption></caption>
-     <tr>
-         <td>The real limits are less in 32-bit JVM,
-         that usually cannot utilize 2 GB of memory.<br>&nbsp;</td>
-     </tr>
- </table>
+ <div style="margin:0 0 20px">
+ The real limits are less in 32-bit JVM, that usually cannot utilize 2 GB of memory.
+ </div>
 
-<table border="1" cellpadding="4" cellspacing="1" width="60%">
-     <caption></caption>
+ <table border="1" style="width:60%">
+     <caption><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b></caption>
      <tr>
-         <td colspan="2"><b>{@link net.algart.arrays.BufferMemoryModel Buffer memory model}</b><br>
-         <br>
+         <td style="padding:4px" colspan="2">
          The maximal array length is defined by the Java API limitations for <code>ByteBuffer</code> class.
          This API use <code>int</code> type for the buffer length
          and allows creating direct NIO buffers only as views of <code>ByteBuffer</code>.
          So, the limit is <code>2<sup>31</sup>-1</code> <i>bytes</i>.</td>
      </tr>
      <tr>
-         <td valign="top">The type of elements</td>
-         <td valign="top">The limit for array length</td>
+         <td style="width:50%;padding:4px">The type of elements</td>
+         <td style="width:50%;padding:4px">The limit for array length</td>
      </tr>
      <tr>
-         <td valign="top" nowrap>
+         <td style="vertical-align:top;padding:4px">
          <code>boolean</code> (<i>{@link net.algart.arrays.BitArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>char</code> (<i>{@link net.algart.arrays.CharArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>byte</code> (<i>{@link net.algart.arrays.ByteArray}</i>)<code><sup>&nbsp;</sup></code><br>
@@ -531,7 +506,7 @@
          <code>float</code> (<i>{@link net.algart.arrays.FloatArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>double</code> (<i>{@link net.algart.arrays.DoubleArray}</i>)<code><sup>&nbsp;</sup></code>
          </td>
-         <td valign="top"><code>2<sup>34</sup>-1</code><br>
+         <td style="vertical-align:top;padding:4px"><code>2<sup>34</sup>-1</code><br>
          <code>2<sup>30</sup>-1</code><br>
          <code>2<sup>31</sup>-1</code><br>
          <code>2<sup>30</sup>-1</code><br>
@@ -542,30 +517,25 @@
          </td>
      </tr>
  </table>
- <table border="0" cellpadding="0" cellspacing="0">
-     <caption></caption>
-     <tr>
-         <td>The real limits are less in 32-bit JVM,
-         that usually cannot utilize 2 GB of memory.<br>&nbsp;</td>
-     </tr>
- </table>
+ <div style="margin:0 0 20px">
+The real limits are less in 32-bit JVM, that usually cannot utilize 2 GB of memory.
+ </div>
 
-<table border="1" cellpadding="4" cellspacing="1" width="60%">
-     <caption></caption>
+ <table border="1" style="width:60%">
+     <caption><b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b></caption>
      <tr>
-         <td colspan="2"><b>{@link net.algart.arrays.LargeMemoryModel Large memory model}</b><br>
-         <br>
+         <td style="padding:4px" colspan="2">
          The maximal array length is limited by <code>2<sup>63</sup>-1</code> <i>bytes</i> (the maximal
          supported file length in Java API and most OS), but also, of course,
          cannot exceed the common limit <code>2<sup>63</sup>-1</code> <i>elements</i>
          (that is more strict limitation for bit arrays).</td>
      </tr>
      <tr>
-         <td valign="top">The type of elements</td>
-         <td valign="top">The limit for array length</td>
+         <td style="width:50%;padding:4px">The type of elements</td>
+         <td style="width:50%;padding:4px">The limit for array length</td>
      </tr>
      <tr>
-         <td valign="top" nowrap>
+         <td style="vertical-align:top;padding:4px">
          <code>boolean</code> (<i>{@link net.algart.arrays.BitArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>char</code> (<i>{@link net.algart.arrays.CharArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>byte</code> (<i>{@link net.algart.arrays.ByteArray}</i>)<code><sup>&nbsp;</sup></code><br>
@@ -575,7 +545,7 @@
          <code>float</code> (<i>{@link net.algart.arrays.FloatArray}</i>)<code><sup>&nbsp;</sup></code><br>
          <code>double</code> (<i>{@link net.algart.arrays.DoubleArray}</i>)<code><sup>&nbsp;</sup></code>
          </td>
-         <td valign="top"><code>2<sup>63</sup>-1</code><br>
+         <td style="vertical-align:top;padding:4px"><code>2<sup>63</sup>-1</code><br>
          <code>2<sup>62</sup>-1</code><br>
          <code>2<sup>63</sup>-1</code><br>
          <code>2<sup>62</sup>-1</code><br>
@@ -586,19 +556,15 @@
          </td>
      </tr>
  </table>
- <table border="0" cellpadding="0" cellspacing="0">
-     <caption></caption>
-     <tr>
-         <td>In other words, the limits are so large that the real maximal array length
-         depends only on the available disk space.<br>&nbsp;</td>
-     </tr>
- </table>
+<div style="margin:0 0 20px">
+ In other words, the limits are so large that the real maximal array length
+ depends only on the available disk space.
+ </div>
 
-<table border="1" cellpadding="4" cellspacing="1" width="60%">
-     <caption></caption>
+ <table border="1" style="width:60%">
+     <caption><b>{@link net.algart.arrays.CombinedMemoryModel Combined memory model}</b></caption>
      <tr>
-         <td colspan="1"><b>{@link net.algart.arrays.CombinedMemoryModel Combined memory model}</b><br>
-         <br>
+         <td style="padding:4px" colspan="1">
          The maximal array length depends on the corresponding limit for a memory model,
          that is used by the {@link net.algart.arrays.CombinedMemoryModel.Combiner combiner}
          which defines an algorithm of storing objects.
@@ -980,7 +946,7 @@
  <dd>Helps to define the number of threads in the global system thread pool
  if "<code>net.algart.arrays.globalThreadPoolSize</code>" system property does not exist: see above.</dd>
 
- <td>"<b><code>net.algart.arrays.globalDiskSynchronizer</code></b>"</dt>
+ <dt>"<b><code>net.algart.arrays.globalDiskSynchronizer</code></b>"</dt>
  <dd>Defines the default
  {@link net.algart.arrays.Arrays.SystemSettings.DiskSynchronizer disk synchronizer},
  that will be used for synchronization of all disk operations, performed by this package.
@@ -997,7 +963,7 @@
  <dd>Defines the default {@link net.algart.arrays.DataFileModel data file model},
  used by the {@link net.algart.arrays.LargeMemoryModel Large memory model}.
  {@link net.algart.arrays.DefaultDataFileModel DefaultDataFileModel} is used by default.
- See {@link net.algart.arrays.LargeMemoryModel#getInstance()} for more details.</dt>
+ See {@link net.algart.arrays.LargeMemoryModel#getInstance()} for more details.</dd>
 
  <dt>"<b><code>net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU</code></b>"</dt>
  <dd>Defines the number of banks per each existing CPU or CPU kernel,

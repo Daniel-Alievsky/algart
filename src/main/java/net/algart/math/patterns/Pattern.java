@@ -269,7 +269,8 @@ import net.algart.math.*;
  * #MAX_COORDINATE} for all <i>j</i>, where
  * |<i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup>| means
  * <i>the absolute value of mathematically precise difference</i> (not the result of Java operators
- * <code>Math.abs(</code><i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup><code>)</code>).
+ * <code>Math.abs(</code><i>x</i><sub><i>j</i></sub><sup>1</sup>&minus;<i>x</i><sub><i>j</i></sub><sup>2</sup><code>)
+ * </code>).
  * (This condition can be checked with help of
  * {@link Patterns#isAllowedDifference(double, double)} method.)</li>
  * </ol>
@@ -477,8 +478,9 @@ public interface Pattern {
      *
      * @return the number of {@link Point points} in this pattern.
      * @throws TooManyPointsInPatternError for some forms of large patterns, if the number of points is greater than
-     *                                     <code>Integer.MAX_VALUE</code> or, in some rare situations, is near this limit
-     *                                     (<code>OutOfMemoryError</code> can be also thrown instead of this exception).
+     *                                     <code>Integer.MAX_VALUE</code> or, in some rare situations,
+     *                                     is near this limit (<code>OutOfMemoryError</code>
+     *                                     can be also thrown instead of this exception).
      * @see #largePointCount()
      * @see #isSurelySinglePoint
      * @see QuickPointCountPattern#isPointCountVeryLarge()
@@ -786,8 +788,9 @@ public interface Pattern {
      * i.e. this method also returns <code>true</code> for it.</li>
      * </ol>
      *
-     * <p>However, there are no strict guarantees that this method <i>always</i> returns <code>true</code> if the pattern
-     * is really integer. In other words, if this method returns <code>false</code>, there is no guarantee, that
+     * <p>However, there are no strict guarantees that this method <i>always</i> returns <code>true</code> if the
+     * pattern is really integer.
+     * In other words, if this method returns <code>false</code>, there is no guarantee, that
      * this pattern really contains some non-integer points &mdash; but it is probable.
      *
      * <p>Unlike {@link #points()} method, there is a guarantee that this method
@@ -856,7 +859,7 @@ public interface Pattern {
      * obtained from all points of this pattern by the call <code>point.{@link Point#add(Point) add}(shift)</code>.
      * <p>
      * <!--Repeat.SectionStart simple_corrections_features-->
-     * <p>The returned pattern always implements {@link DirectPointSetPattern}
+     * The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
@@ -865,12 +868,13 @@ public interface Pattern {
      * <p>The returned pattern always implements {@link UniformGridPattern}
      * if this pattern implements {@link UniformGridPattern}.
      *
-     * <p>There is a guarantee, that this method does not try to allocate much more memory,
+     * <p>There is a guarantee that this method does not try to allocate much more memory,
      * that it is required for storing this pattern itself, and that it
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>
+     * for some forms of large patterns.
      * <!--Repeat.SectionEnd simple_corrections_features-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
@@ -911,7 +915,7 @@ public interface Pattern {
      * Returns the symmetric pattern: equivalent to {@link #multiply(double) multiply(-1.0)}.
      * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
-     * <p>The returned pattern always implements {@link DirectPointSetPattern}
+     * The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
@@ -920,12 +924,13 @@ public interface Pattern {
      * <p>The returned pattern always implements {@link UniformGridPattern}
      * if this pattern implements {@link UniformGridPattern}.
      *
-     * <p>There is a guarantee, that this method does not try to allocate much more memory,
+     * <p>There is a guarantee that this method does not try to allocate much more memory,
      * that it is required for storing this pattern itself, and that it
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>
+     * for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * @return the symmetric pattern.
@@ -943,7 +948,7 @@ public interface Pattern {
      * {@link #dimCount()} arguments of that method are equal to <code>multiplier</code>.
      * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
-     * <p>The returned pattern always implements {@link DirectPointSetPattern}
+     * The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
@@ -952,12 +957,13 @@ public interface Pattern {
      * <p>The returned pattern always implements {@link UniformGridPattern}
      * if this pattern implements {@link UniformGridPattern}.
      *
-     * <p>There is a guarantee, that this method does not try to allocate much more memory,
+     * <p>There is a guarantee that this method does not try to allocate much more memory,
      * that it is required for storing this pattern itself, and that it
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>
+     * for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
@@ -983,7 +989,7 @@ public interface Pattern {
      * <code>point.{@link Point#scale(double...) scale}(multipliers)</code>.
      * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
-     * <p>The returned pattern always implements {@link DirectPointSetPattern}
+     * The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
@@ -992,12 +998,13 @@ public interface Pattern {
      * <p>The returned pattern always implements {@link UniformGridPattern}
      * if this pattern implements {@link UniformGridPattern}.
      *
-     * <p>There is a guarantee, that this method does not try to allocate much more memory,
+     * <p>There is a guarantee that this method does not try to allocate much more memory,
      * that it is required for storing this pattern itself, and that it
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>
+     * for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * <p>Warning: this method can fail with {@link TooLargePatternCoordinatesException}, if some of new points
@@ -1026,7 +1033,7 @@ public interface Pattern {
      * <code>point.{@link Point#projectionAlongAxis(int) projectionAlongAxis}(coordIndex)</code>.
      * <p>
      * <!--Repeat(INCLUDE_FROM_FILE, THIS_FILE, simple_corrections_features)!! Auto-generated: NOT EDIT !! -->
-     * <p>The returned pattern always implements {@link DirectPointSetPattern}
+     * The returned pattern always implements {@link DirectPointSetPattern}
      * if this pattern implements {@link DirectPointSetPattern}
      *
      * <p>The returned pattern always implements {@link RectangularPattern}
@@ -1035,12 +1042,13 @@ public interface Pattern {
      * <p>The returned pattern always implements {@link UniformGridPattern}
      * if this pattern implements {@link UniformGridPattern}.
      *
-     * <p>There is a guarantee, that this method does not try to allocate much more memory,
+     * <p>There is a guarantee that this method does not try to allocate much more memory,
      * that it is required for storing this pattern itself, and that it
      * never throws {@link TooManyPointsInPatternError}.
      * For comparison, an attempt to do the same operation via getting all points ({@link #points()} method),
      * correcting them and forming a new pattern via {@link Patterns#newPattern(java.util.Collection)}
-     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code> for some forms of large patterns.
+     * will lead to {@link TooManyPointsInPatternError} / <code>OutOfMemoryError</code>
+     * for some forms of large patterns.
      * <!--Repeat.IncludeEnd-->
      *
      * @param coordIndex the index of the coordinate (0 for <i>x</i>-axis , 1 for <i>y</i>-axis,
@@ -1242,9 +1250,8 @@ public interface Pattern {
      *
      * <p>This method can require some time and memory for execution,
      * but never throws {@link TooManyPointsInPatternError}.
-     * <p>
-     * <!-- below is a bug: sum of 2^ik*C is much greater, than k*C
-     * <p><small>
+     *
+     * <p><small> <!-- below is a bug: sum of 2^ik*C is much greater, than k*C -->
      * Note: the condition II is a logical consequence from the conditions I.<br>
      * Proof.<br>
      * Let <i>k</i> = 2<sup><i>i</i><sub>1</sub></sup>+2<sup><i>i</i><sub>2</sub></sup>+...

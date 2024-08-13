@@ -1093,16 +1093,16 @@ public class IPoint implements Comparable<IPoint> {
      * <code>product&nbsp;=&nbsp;<i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-1</sub></code>
      * is not greater than <code>Long.MAX_VALUE</code>, then all calculations are performed absolutely precisely,
      * even in a case when the direct calculation according the formulas above leads to overflow (because some
-     * of values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
+     * values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
      * However, if <code>product&gt;Long.MAX_VALUE</code>, the results will be probably incorrect due to overflow.
      *
      * <p>If <code>pseudoCyclicTruncation</code> is false, the result is calculated by the traditional Horner scheme
      * without any overflow checks, using standard Java <code>long</code> arithmetic:
-     * <pre>
+     * <p><code>
      * (...({@link #coord(int)
      * coord(<i>n</i>-1)}*<i>dim</i><sub><i>n</i>-2</sub>+{@link #coord(int)
      * coord(<i>n</i>-2)})*<i>dim</i><sub><i>n</i>-3</sub>+...)*<i>dim</i><sub>0</sub>+{@link #coord(int) coord(0)}
-     * </pre>
+     * </code></p>
      * So, the result can be incorrect in a case of overflow.
      *
      * @param dimensions             the dimensions of some <i>n</i>-dimensional matrix, stored in the one-dimensional

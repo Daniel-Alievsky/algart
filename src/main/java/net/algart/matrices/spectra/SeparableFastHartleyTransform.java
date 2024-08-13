@@ -102,13 +102,13 @@ import java.util.Objects;
  * <blockquote>
  * direct:
  * <i>H<sub>ij</sub></i> =
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>m</i>&lt;<i>M</i>)</sub></sub>
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>m</i>&lt;<i>M</i>)</sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub>
  * <i>x<sub>mn</sub></i>&nbsp;cas(2<i>im</i>&pi;/<i>M</i>)&nbsp;cas(2<i>jn</i>&pi;/<i>N</i>),<br>
  * inverse:
  * <i>x<sub>mn</sub></i> = (<i>MN</i>)<sup>&nbsp;&minus;1</sup>
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>i</i>&lt;<i>M</i>)</sub></sub>
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>j</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>i</i>&lt;<i>M</i>)</sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>j</i>&lt;<i>N</i>)</sub>
  * <i>x<sub>ij</sub></i>&nbsp;cas(2<i>im</i>&pi;/<i>M</i>)&nbsp;cas(2<i>jn</i>&pi;/<i>N</i>).
  * </blockquote>
  *
@@ -186,7 +186,7 @@ import java.util.Objects;
  *
  * <blockquote>
  * <i>c<sub>k</sub></i> =
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub>
  * <i>p<sub>n</sub></i><i>q</i><sub><i>k</i>&minus;<i>n</i></sub>
  * </blockquote>
  *

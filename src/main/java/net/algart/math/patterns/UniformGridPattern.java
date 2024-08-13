@@ -359,7 +359,7 @@ public interface UniformGridPattern extends Pattern {
      * {@link #gridIndexRange(int) gridIndexRange(<i>j</i>)}.{@link net.algart.math.IRange#min()
      * min()}&lt;=<i>i</i><sub><i>j</i></sub>&lt;={@link #gridIndexRange(int)
      * gridIndexRange(<i>j</i>)}.{@link net.algart.math.IRange#max()
-     * max()}, <i>j</i>=0,1,...,{@link #dimCount() dimCount()}&minus;1.</p>
+     * max()}, <i>j</i>=0,1,...,{@link #dimCount() dimCount()}&minus;1.
      *
      * <p>Note that this condition is the same as in the definition of rectangular patterns, represented by
      * {@link RectangularPattern} interface. Really, if the object implements {@link RectangularPattern},

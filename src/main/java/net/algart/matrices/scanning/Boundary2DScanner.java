@@ -441,36 +441,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%">&uarr;</td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%">&uarr;</td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int Y_MINUS_CODE = 0;
@@ -483,36 +479,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_PLUS_CODE = 1;
@@ -525,36 +517,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%">&darr;</td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%">&darr;</td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int Y_PLUS_CODE = 2;
@@ -567,36 +555,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_MINUS_CODE = 3;
@@ -609,36 +593,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%"><b>&uarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_MINUS_Y_MINUS_CODE = 4;
@@ -651,36 +631,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%"><b>&uarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_PLUS_Y_MINUS_CODE = 5;
@@ -693,36 +669,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%"><b>&darr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_PLUS_Y_PLUS_CODE = 6;
@@ -735,36 +707,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%"><b>&darr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int X_MINUS_Y_PLUS_CODE = 7;
@@ -777,36 +745,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_MINUS Side.Y_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%"><b>&uarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int ROTATION_X_MINUS_TO_Y_MINUS_CODE = 8;
@@ -819,36 +783,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_PLUS Side.X_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF" align="center" valign="bottom"
-         *     style="font-size:120%;line-height:10px"><b>&rarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF">&rarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%"><b>&darr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int ROTATION_Y_MINUS_TO_X_PLUS_CODE = 9;
@@ -861,36 +821,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#Y_PLUS Side.Y_PLUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="right" valign="middle"
-         *     style="font-size:120%"><b>&darr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&darr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int ROTATION_X_PLUS_TO_Y_PLUS_CODE = 10;
@@ -903,36 +859,32 @@ public abstract class Boundary2DScanner {
          * {@link #newSide()} = {@link Side#X_MINUS Side.X_MINUS}.
          * It is shown below:
          * <blockquote>
-         * <pre><table cellpadding=0 cellspacing=0 border=0><caption></caption><tr>
-         * <td bgcolor="#000000"><table cellpadding=0 cellspacing=1 border=0><caption></caption>
+         * <table border="1" style="border-collapse:collapse;font-size:120%"><caption>&nbsp;</caption>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#E0E000" align="left" valign="middle"
-         *     style="font-size:120%"><b>&uarr;</b></td>
-         *     <td width=25 height=25 bgcolor="#E0E0E0"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#E0E000">&uarr;</td>
+         *     <td style="width:25px;height:25px;background-color:#E0E0E0"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF" align="center" valign="top"
-         *     style="font-size:120%;line-height:10px"><b>&larr;</b></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF">&larr;</td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
          * <tr>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
-         *     <td width=25 height=25 bgcolor="#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
+         *     <td style="width:25px;height:25px;background-color:#FFFFFF"></td>
          * </tr>
-         * </table></td></tr></table>
-         * </pre>
+         * </table>
          * </blockquote>
          */
         public static final int ROTATION_Y_PLUS_TO_X_MINUS_CODE = 11;

@@ -71,7 +71,7 @@ import java.util.Objects;
  * minus sign &minus;, as in specifications of {@link StreamingApertureProcessor}
  * or {@link net.algart.matrices.morphology.RankMorphology}
  * (a set of points
- * <b>x</b>&minus;<b>p</b></sub> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub>0</sub>,
+ * <b>x</b>&minus;<b>p</b> = (<i>x</i><sub>0</sub>&minus;<i>p</i><sub>0</sub>,
  * <i>x</i><sub>1</sub>&minus;<i>p</i><sub>1</sub>, ...,
  * <i>x</i><sub><i>n</i>&minus;1</sub>&minus;<i>p</i><sub><i>n</i>&minus;1</sub>)
  * for all <b>p</b>&isin;<b>P</b>, <b>P</b> is a pattern).</p>

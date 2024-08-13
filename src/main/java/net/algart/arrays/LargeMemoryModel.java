@@ -274,7 +274,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * <p>The following standard aliases are allowed for the class name
      * in "net.algart.arrays.LargeMemoryModel.dataFileModel" system property:<ul>
      * <li>"DEFAULT" means {@link DefaultDataFileModel},</li>
-     * <li>"STANDARD_IO" means {@link StandardIODataFileModel}</li>.
+     * <li>"STANDARD_IO" means {@link StandardIODataFileModel}.</li>
      * </ul>
      *
      * @return default instance of this memory model.

@@ -3626,7 +3626,7 @@ public class Arrays {
     }
 
     /**
-     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, minMaxInfo)}</code>.
+     * Equivalent to {@link #rangeOf(ArrayContext, PArray, MinMaxInfo) rangeOf(null, array, minMaxInfo)}.
      *
      * @param array      some primitive array.
      * @param minMaxInfo the object where to store the indexes and values of found minimum and maximum;
@@ -4436,7 +4436,7 @@ public class Arrays {
      * <p>More precisely, if <code>newElementType==array.elementType()</code>, this function just returns
      * the <code>array</code> argument without changes, in other case it is equivalent to the following operators:
      * <pre>
-     *     final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
+     *     final Class&lt;PArray&gt; newType = Arrays.type(PArray.class, newElementType);
      *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
      *     Arrays.maxPossibleValue}(newType));
      *     final Range srcRange = Range.valueOf(0.0, array.{@link PArray#maxPossibleValue(double)
@@ -5944,7 +5944,7 @@ public class Arrays {
      * <code>charArray.{@link CharArray#getChar(long) getChar}(index)</code>;</li>
      * <li><code>subSequence(int start, int end)</code> returns an analogous view for
      * <code>(CharArray)charArray.{@link Array#subArray(long, long) subArray}(start, end)</code>;</li>
-     * <li><code>toString()</code> {@link Arrays#toString Arrays.toString}(charArray)</li>.
+     * <li><code>toString()</code> {@link Arrays#toString Arrays.toString}(charArray).</li>
      * </ul>
      *
      * <p>Please note that <code>toString()</code> method of {@link CharArray} returns <i>another</i> result,

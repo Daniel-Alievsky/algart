@@ -47,7 +47,8 @@ import java.util.Objects;
  * <i>j</i><sub>0</sub>, <i>j</i><sub>1</sub>, ..., <i>j</i><sub><i>n</i>-1</sub>
  * are <i>neighbours</i> if one from the coordinates differs by 1, but all other coordinates are equal:</p>
  *
- * <blockquote><big>&sum;&nbsp;</big>|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1</blockquote>
+ * <blockquote><span style="font-size:200%">&sum;
+ * </span>|<i>i</i><sub><i>k</i></sub>&minus;<i>j</i><sub><i>k</i></sub>|=1</blockquote>
  *
  * <p>For 2D matrices, this connectivity kind is also known as "4-connectivity".
  * It the second case (<i>straight-and-diagonal</i> connectivity), two unit elements

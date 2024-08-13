@@ -57,18 +57,14 @@ import java.util.concurrent.locks.ReentrantLock;
  * the first mode is called <i>round-down mode</i>, and the second is called <i>round-up mode</i>.
  * Below is the specification of the behaviour in both modes.</p>
  *
- * <style>
- *     table.pad tr td {padding: 8px;}
- * </style>
- * <div align="center">
- * <table class="pad" width="90%" border="1" style="border-spacing:0">
+ * <table border="1" style="border-spacing:0">
  *   <caption>&nbsp;</caption>
  *   <tr>
- *     <td width="50%"><b>Round-down mode</b></td>
- *     <td width="50%"><b>Round-up mode</b></td>
+ *     <td style="padding:8px;width:50%"><b>Round-down mode</b></td>
+ *     <td style="padding:8px;width:50%"><b>Round-up mode</b></td>
  *   </tr>
  *   <tr>
- *     <td colspan="2">
+ *     <td style="padding:8px" colspan="2">
  *     <p>In both modes, we consider <i>n</i>+1 (<i>n</i>&ge;0) numeric <i>thresholds</i>
  *     <i>t</i><sub>0</sub>, <i>t</i><sub>1</sub>, ..., <i>t</i><sub><i>n</i></sub> in
  *     <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range:</p>
@@ -85,15 +81,15 @@ import java.util.concurrent.locks.ReentrantLock;
  *     </td>
  *   </tr>
  *   <tr>
- *     <td>(In the degenerated case <i>n</i>=0, we consider
+ *     <td style="padding:8px">(In the degenerated case <i>n</i>=0, we consider
  *     <i>t</i><sub>0</sub> = <i>t</i><sub><i>n</i></sub> = <i>a<sub>min</sub></i>.)
  *     </td>
- *     <td>(In the degenerated case <i>n</i>=0, we consider
+ *     <td style="padding:8px">(In the degenerated case <i>n</i>=0, we consider
  *     <i>t</i><sub>0</sub> = <i>t</i><sub><i>n</i></sub> = <i>a<sub>max</sub></i>.)
  *     </td>
  *   </tr>
  *   <tr>
- *     <td>
+ *     <td style="padding:8px">
  *     <p>Then we define the <i>bit slice</i> <b>b</b><sub><i>i</i></sub>, <i>i</i>=0,1,...,<i>n</i>,
  *     as a bit array <b>a</b>&ge;<i>t</i><sub><i>i</i></sub>, i.e. {@link BitArray} with the same length as <b>a</b>,
  *     where each element</p>
@@ -101,7 +97,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *     <b>b</b><sub><i>i</i></sub>[k] = <b>a</b>[k]&ge;<i>t</i><sub><i>i</i></sub> ? 1 : 0
  *     </blockquote>
  *     </td>
- *     <td>
+ *     <td style="padding:8px">
  *     <p>Then we define the <i>bit slice</i> <b>b</b><sub><i>i</i></sub>, <i>i</i>=0,1,...,<i>n</i>,
  *     as a bit array <b>a</b>&gt;<i>t</i><sub><i>i</i></sub>, i.e. {@link BitArray} with the same length as <b>a</b>,
  *     where each element</p>
@@ -111,7 +107,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *     </td>
  *   </tr>
  *   <tr>
- *     <td colspan="2">
+ *     <td style="padding:8px" colspan="2">
  *     The described transformation of the numeric array <b>a</b> to a set of <i>n</i>+1 "slices"
  *     (bit arrays) <b>b</b><sub><i>i</i></sub> is called <i>splitting to slices</i>.
  *     Then we consider the backward conversion of the set of bit slices
@@ -119,21 +115,20 @@ import java.util.concurrent.locks.ReentrantLock;
  *     </td>
  *   </tr>
  *   <tr>
- *     <td>
+ *     <td style="padding:8px">
  *     <blockquote>
- *     <b>a'</b>[k] = <i>t</i><sub>max <i>i</i>: <b>b</b><sub><i>i</i></sub>[k] = 1</sub>,
+ *     <b>a'</b>[k] = <i>t</i><sub><i>i</i></sub> for max <i>i</i>: <b>b</b><sub><i>i</i></sub>[k] = 1,
  *     or <b>a'</b>[k] = <i>a<sub>min</sub></i> if all <b>b</b><sub><i>i</i></sub>[k] = 0
  *     </blockquote>
  *     </td>
- *     <td>
+ *     <td style="padding:8px">
  *     <blockquote>
- *     <b>a'</b>[k] = <i>t</i><sub>min <i>i</i>: <b>b</b><sub><i>i</i></sub>[k] = 0</sub>,
+ *     <b>a'</b>[k] = <i>t</i><sub><i>i</i></sub> for min <i>i</i>: <b>b</b><sub><i>i</i></sub>[k] = 0,
  *     or <b>a'</b>[k] = <i>a<sub>max</sub></i> if all <b>b</b><sub><i>i</i></sub>[k] = 1
  *     </blockquote>
  *     </td>
  *   </tr>
  * </table>
- * </div>
  *
  * <p>It's obvious that if all <b>a</b> elements are inside <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i>
  * range and if <i>n</i> is large enough, then <b>a'</b> is almost equal to <b>a</b>.
@@ -145,35 +140,35 @@ import java.util.concurrent.locks.ReentrantLock;
  * to a new operation <i>g</i>(<b>a</b>), defining for any primitive-type array <b>a</b>,
  * according to the following rule:</p>
  *
- * <div align="center">
- * <table class="pad" width="90%" border="1" style="border-spacing:0">
+ * <table border="1" style="border-spacing:0">
  *   <caption>&nbsp;</caption>
  *   <tr>
- *     <td width="50%"><b>Round-down mode</b></td>
- *     <td width="50%"><b>Round-up mode</b></td>
+ *     <td style="padding:8px;width:50%"><b>Round-down mode</b></td>
+ *     <td style="padding:8px;width:50%"><b>Round-up mode</b></td>
  *   </tr>
  *   <tr>
- *     <td>
+ *     <td style="padding:8px">
  *     <blockquote>
- *     <i>g</i>(<b>a</b>)[k] = <i>t</i><sub>max <i>i</i>: &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 1</sub>,
+ *     <i>g</i>(<b>a</b>)[k] = <i>t</i><sub><i>i</i></sub> for max <i>i</i>:
+ *     &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 1,
  *     or <i>g</i>(<b>a</b>)[k] = <i>a<sub>min</sub></i> if all &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 0
  *     </blockquote>
  *     </td>
- *     <td>
+ *     <td style="padding:8px">
  *     <blockquote>
- *     <i>g</i>(<b>a</b>)[k] = <i>t</i><sub>min <i>i</i>: &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 0</sub>,
+ *     <i>g</i>(<b>a</b>)[k] = <i>t</i><sub><i>i</i></sub> for min <i>i</i>:
+ *     &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 0,
  *     or <i>g</i>(<b>a</b>)[k] = <i>a<sub>max</sub></i> if all &fnof;(<b>b</b><sub><i>i</i></sub>)[k] = 0
  *     </blockquote>
  *     </td>
  *   </tr>
  *   <tr>
- *     <td colspan="2">
+ *     <td style="padding:8px" colspan="2">
  *     In other words, the source array is split into bit slices, the bitwise operation is applied to all slices,
  *     and then we perform the backward conversion (joining) of slices set to a numeric array <i>g</i>(<b>a</b>).
  *     </td>
  *   </tr>
  * </table>
- * </div>
  *
  * <p>The conversion of the source array <b>a</b> to the target array <b>c</b>=<i>g</i>(<b>a</b>)
  * is performed by the main

@@ -91,7 +91,7 @@ import java.util.Objects;
  *
  * <blockquote>
  * <i>c<sub>k</sub></i> =
- * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub></sub>
+ * <span style="font-size:200%">&sum;</span><sub>(0&le;<i>n</i>&lt;<i>N</i>)</sub>
  * <i>p<sub>n</sub></i><i>q</i><sub>(<i>k</i>&minus;<i>n</i>)&nbsp;mod&nbsp;<i>N</i></sub>
  * </blockquote>
  *
