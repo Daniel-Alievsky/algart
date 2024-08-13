@@ -49,9 +49,9 @@ public class ConverterNames {
         show(new BufferedImageToMatrix.ToInterleavedRGB(), ColorChannelOrder.RGB);
         show(new BufferedImageToMatrix.ToInterleavedBGR(), ColorChannelOrder.BGR);
         show(new BufferedImageToMatrix.ToInterleavedBGR().setReadingViaColorModel(true), ColorChannelOrder.BGR);
-        show(new BufferedImageToMatrix.ToInterleavedBGR().setReadingViaGraphics2D(true), ColorChannelOrder.BGR);
+        show(new BufferedImageToMatrix.ToInterleavedBGR().setReadingViaGraphics(true), ColorChannelOrder.BGR);
         show(new BufferedImageToMatrix.ToInterleavedBGR()
-                .setReadingViaColorModel(true).setReadingViaGraphics2D(true), ColorChannelOrder.BGR);
+                .setReadingViaColorModel(true).setReadingViaGraphics(true), ColorChannelOrder.BGR);
         show(new MatrixToBufferedImage.InterleavedRGBToPacked(), ColorChannelOrder.RGB);
         show(new MatrixToBufferedImage.InterleavedBGRToPacked(), ColorChannelOrder.BGR);
         show(new MatrixToBufferedImage.InterleavedBGRToPacked().setAlwaysAddAlpha(true), ColorChannelOrder.BGR);

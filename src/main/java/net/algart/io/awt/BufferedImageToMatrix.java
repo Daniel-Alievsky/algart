@@ -37,8 +37,6 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public abstract class BufferedImageToMatrix {
-    // - must be true to avoid a problem with reading gray images via Graphics2D ("simplest" algorithm)
-
     private boolean enableAlpha = true;
     // if true and if BufferedImage contains an alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
@@ -53,10 +51,6 @@ public abstract class BufferedImageToMatrix {
     }
 
     public Matrix<UpdatablePArray> toMatrix(BufferedImage bufferedImage) {
-        return toMatrix(bufferedImage, null);
-    }
-
-    public Matrix<UpdatablePArray> toMatrix(BufferedImage bufferedImage, UpdatablePArray resultArray) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         final int dimX = bufferedImage.getWidth();
         final int dimY = bufferedImage.getHeight();
@@ -67,21 +61,7 @@ public abstract class BufferedImageToMatrix {
         if (size > Integer.MAX_VALUE || size == Long.MIN_VALUE) {
             throw new AssertionError("Illegal getResultMatrixDimensions implementation: too large results");
         }
-        Object resultData = null;
-        if (resultArray != null) {
-            if (resultArray.elementType() != elementType) {
-                throw new IllegalArgumentException("Incompatible result array: element type should be "
-                        + elementType);
-            }
-            if (resultArray instanceof DirectAccessible && ((DirectAccessible) resultArray).hasJavaArray()
-                    && ((DirectAccessible) resultArray).javaArrayOffset() == 0
-                    && resultArray.length() >= size) {
-                resultData = ((DirectAccessible) resultArray).javaArray();
-            }
-        }
-        if (resultData == null) {
-            resultData = java.lang.reflect.Array.newInstance(elementType, (int) size);
-        }
+        Object resultData = java.lang.reflect.Array.newInstance(elementType, (int) size);
         toJavaArray(resultData, bufferedImage);
         return SimpleMemoryModel.asMatrix(resultData, dimensions);
     }
@@ -162,12 +142,12 @@ public abstract class BufferedImageToMatrix {
 
     public static class ToInterleavedRGB extends BufferedImageToMatrix {
         public static final boolean DEFAULT_READING_VIA_COLOR_MODEL = false;
-        public static final boolean DEFAULT_READING_VIA_GRAPHICS_2D = false;
+        public static final boolean DEFAULT_READING_VIA_GRAPHICS = false;
 
         private final boolean bgrOrder;
 
         private boolean readingViaColorModel = DEFAULT_READING_VIA_COLOR_MODEL;
-        private boolean readingViaGraphics2D = DEFAULT_READING_VIA_GRAPHICS_2D;
+        private boolean readingViaGraphics = DEFAULT_READING_VIA_GRAPHICS;
 
         public ToInterleavedRGB() {
             this(false);
@@ -195,8 +175,8 @@ public abstract class BufferedImageToMatrix {
             return this;
         }
 
-        public boolean isReadingViaGraphics2D() {
-            return readingViaGraphics2D;
+        public boolean isReadingViaGraphics() {
+            return readingViaGraphics;
         }
 
         /**
@@ -212,12 +192,12 @@ public abstract class BufferedImageToMatrix {
          * <p>Note that {@link #setReadingViaColorModel(boolean)} method has a higher priority:
          * if reading via a color model is selected, the mode set by this method is ignored.
          *
-         * @param readingViaGraphics2D whether the sample values should
-         *                             be read via drawing on <code>Graphics2D</code>.
+         * @param readingViaGraphics whether the sample values should
+         *                           be read via drawing on <code>Graphics</code>.
          * @return a reference to this object.
          */
-        public ToInterleavedRGB setReadingViaGraphics2D(boolean readingViaGraphics2D) {
-            this.readingViaGraphics2D = readingViaGraphics2D;
+        public ToInterleavedRGB setReadingViaGraphics(boolean readingViaGraphics) {
+            this.readingViaGraphics = readingViaGraphics;
             return this;
         }
 
@@ -229,7 +209,7 @@ public abstract class BufferedImageToMatrix {
         @Override
         public Class<?> getResultElementType(BufferedImage bufferedImage) {
             Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-            if (readingViaColorModel || readingViaGraphics2D) {
+            if (readingViaColorModel || readingViaGraphics) {
                 return byte.class;
             }
             Class<?> result = getResultElementTypeOrNullForUnsupported(bufferedImage);
@@ -245,7 +225,7 @@ public abstract class BufferedImageToMatrix {
         public String toString() {
             return "ToInterleaved" + (bgrOrder ? "BGR" : "RGB") +
                     (readingViaColorModel ? " (reading via color model)" :
-                            readingViaGraphics2D ? " (reading via graphics)" : "");
+                            readingViaGraphics ? " (reading via graphics)" : "");
 
         }
 
@@ -253,6 +233,9 @@ public abstract class BufferedImageToMatrix {
         protected void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage) {
             Objects.requireNonNull(resultJavaArray, "Null resultJavaArray");
             Objects.requireNonNull(bufferedImage, "Null bufferedImage");
+            if (!resultJavaArray.getClass().isArray()) {
+                throw new IllegalArgumentException("resultJavaArray is not an array: " + resultJavaArray.getClass());
+            }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
             final int bandCount = getNumberOfChannels(bufferedImage);
@@ -266,8 +249,8 @@ public abstract class BufferedImageToMatrix {
                 toJavaArrayViaColorModel(resultJavaArray, bufferedImage);
                 return;
             }
-            if (readingViaGraphics2D || !isSupportedStructure(bufferedImage)) {
-                toJavaArrayViaGraphics2D(resultJavaArray, bufferedImage);
+            if (readingViaGraphics || !isSupportedStructure(bufferedImage)) {
+                toJavaArrayViaGraphics(resultJavaArray, bufferedImage);
                 return;
             }
             // Default branch, used by this class without special settings.
@@ -293,7 +276,8 @@ public abstract class BufferedImageToMatrix {
                     switch (dataBufferType) {
                         case DataBuffer.TYPE_BYTE -> {
                             if (!(resultJavaArray instanceof byte[] result)) {
-                                throw new IllegalArgumentException("resultJavaArray must be byte[]");
+                                throw new IllegalArgumentException("resultJavaArray must be byte[], but it is " +
+                                        resultJavaArray.getClass().getSimpleName());
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
@@ -302,7 +286,8 @@ public abstract class BufferedImageToMatrix {
                         }
                         case DataBuffer.TYPE_USHORT -> {
                             if (!(resultJavaArray instanceof short[] result)) {
-                                throw new IllegalArgumentException("resultJavaArray must be short[]");
+                                throw new IllegalArgumentException("resultJavaArray must be short[], but it is " +
+                                        resultJavaArray.getClass().getSimpleName());
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
@@ -311,7 +296,8 @@ public abstract class BufferedImageToMatrix {
                         }
                         case DataBuffer.TYPE_INT -> {
                             if (!(resultJavaArray instanceof int[] result)) {
-                                throw new IllegalArgumentException("resultJavaArray must be int[]");
+                                throw new IllegalArgumentException("resultJavaArray must be int[], but it is " +
+                                        resultJavaArray.getClass().getSimpleName());
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, iBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
@@ -320,7 +306,8 @@ public abstract class BufferedImageToMatrix {
                         }
                         case DataBuffer.TYPE_FLOAT -> {
                             if (!(resultJavaArray instanceof float[] result)) {
-                                throw new IllegalArgumentException("resultJavaArray must be float[]");
+                                throw new IllegalArgumentException("resultJavaArray must be float[], but it is " +
+                                        resultJavaArray.getClass().getSimpleName());
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, fBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
@@ -329,7 +316,8 @@ public abstract class BufferedImageToMatrix {
                         }
                         case DataBuffer.TYPE_DOUBLE -> {
                             if (!(resultJavaArray instanceof double[] result)) {
-                                throw new IllegalArgumentException("resultJavaArray must be double[]");
+                                throw new IllegalArgumentException("resultJavaArray must be double[], but it is " +
+                                        resultJavaArray.getClass().getSimpleName());
                             }
                             r.getSamples(0, y, dimX, 1, correctedBandIndex, fBuffer);
                             for (int i = 0, j = disp + bandIndex; i < dimX; i++, j += bandCount) {
@@ -337,7 +325,7 @@ public abstract class BufferedImageToMatrix {
                             }
                         }
                         default -> throw new AssertionError(
-                                "Unsupported data buffer type " + dataBufferType);
+                                "Unsupported data buffer type: " + dataBufferType);
                         // can occur only in incorrect subclasses: it is checked in isSupportedStructure()
                     }
                 }
@@ -345,12 +333,13 @@ public abstract class BufferedImageToMatrix {
 
         }
 
-        private void toJavaArrayViaGraphics2D(Object resultJavaArray, BufferedImage bufferedImage) {
+        private void toJavaArrayViaGraphics(Object resultJavaArray, BufferedImage bufferedImage) {
             // Simplest algorithm: via BufferedImage.getGraphics
             // Note: sometimes, due to some internal optimizations, this branch works even faster
             // than the previous one. But usually, the previous branch works in several times faster.
             if (!(resultJavaArray instanceof byte[] result)) {
-                throw new IllegalArgumentException("resultJavaArray must be byte[]");
+                // - also checked in getResultElementType
+                throw new IllegalArgumentException("resultJavaArray must be byte[] for conversion via Graphics");
             }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
@@ -402,7 +391,8 @@ public abstract class BufferedImageToMatrix {
 
         private void toJavaArrayViaColorModel(Object resultJavaArray, BufferedImage bufferedImage) {
             if (!(resultJavaArray instanceof byte[] result)) {
-                throw new IllegalArgumentException("resultJavaArray must be byte[]");
+                // - also checked in getResultElementType
+                throw new IllegalArgumentException("resultJavaArray must be byte[] for conversion via color model");
             }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();

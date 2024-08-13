@@ -330,14 +330,12 @@ public class IRectangleUnionTest {
                             g.drawLine((int) c1[0], (int) c1[1], (int) c2[0], (int) c2[1]);
                         }
                         count++;
-                        if (testIndex == 0) {
-                            if (count < 40) {
-                                System.out.printf(
-                                    "AWT path iteration #%d: type %d, rule %d, coordinates %.1f, %.1f%n",
-                                    count, type, pi.getWindingRule(), c2[0], c2[1]);
-                            } else if (count == 20) {
-                                System.out.println("...");
-                            }
+                        if (count < 10) {
+                            System.out.printf(
+                                "AWT path iteration #%d: type %d, rule %d, coordinates %.1f, %.1f%n",
+                                count, type, pi.getWindingRule(), c2[0], c2[1]);
+                        } else if (count == 20) {
+                            System.out.println("...");
                         }
                         c1 = c2;
                         value += 32;

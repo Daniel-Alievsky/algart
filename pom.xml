@@ -47,7 +47,7 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-    <!-- You may uncomment the following dependence for testing file writing, for example WriteDemoImageTest -->
+    <!-- You may uncomment the following dependence for testing file writing, for example, WriteDemoImageTest -->
 <!--    <dependencies>-->
 <!--        <dependency>-->
 <!--            <groupId>com.github.jai-imageio</groupId>-->

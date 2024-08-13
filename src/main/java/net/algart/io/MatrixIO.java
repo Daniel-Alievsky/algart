@@ -52,7 +52,7 @@ public class MatrixIO {
     /**
      * Equivalent to {@link #extension(String) extension(file.getFileName().toString())}.
      *
-     * @param file             some path.
+     * @param file some path.
      * @return the ending file extension (suffix) like "txt", "jpeg" etc.
      * @throws NullPointerException     if <code>file</code> is {@code null}.
      * @throws IllegalArgumentException if <code>file.getFileName()</code> is {@code null}
@@ -183,6 +183,42 @@ public class MatrixIO {
         }
         final int p = fileName.lastIndexOf('.');
         return p == -1 ? fileName : fileName.substring(0, p);
+    }
+
+    /**
+     * Sets the specified compression by calling two methods:
+     * <code>{@link ImageWriteParam#setCompressionMode(int)
+     * parameters.setCompressionMode}(ImageWriteParam.MODE_EXPLICIT)</code>
+     * and <code>{@link ImageWriteParam#setCompressionQuality(float)
+     * parameters.setCompressionQuality}(quality.floatValue())</code>.
+     * The second method is not called if there is no currently set compression type,
+     * that is if {@link ImageWriteParam#getCompressionType() parameters.getCompressionType()} is <code>null</code>.
+     * Returns <code>true</code> if both methods <code>setCompressionMode</code> and
+     * <code>setCompressionQuality</code> have been successfully called.
+     *
+     * <p>The <code>quality</code> argument can be <code>null</code>, then this method does nothing
+     * and simply returns <code>false</code>.</p>
+     *
+     * <p>This method can be used inside a customizer passed to
+     * {@link #writeBufferedImage(Path, BufferedImage, Consumer)} and similar methods.</p>
+     *
+     * @param parameters parameters for writing image.
+     * @param quality    quality in range 0.0..1.0; can be <code>null</code>, then this method does nothing.
+     * @return whether the quality was set.
+     * @throws NullPointerException if <code>parameters</code> is <code>null</code>.
+     */
+    public static boolean setQuality(ImageWriteParam parameters, Double quality) {
+        Objects.requireNonNull(parameters, "Null parameters (ImageWriteParam)");
+        if (quality == null) {
+            return false;
+        }
+        parameters.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        if (parameters.getCompressionType() != null) {
+            parameters.setCompressionQuality(quality.floatValue());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void writeBufferedImage(Path file, BufferedImage image) throws IOException {

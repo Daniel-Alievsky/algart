@@ -90,21 +90,10 @@ public class WriteDemoImageTest {
             }
         } else if (formatName != null) {
             System.out.println("Writing " + targetFile +  " by format name \"" + formatName + "\"...");
-            MatrixIO.writeBufferedImageByFormatName(targetFile, bi, formatName, param -> setQuality(param, quality));
+            MatrixIO.writeBufferedImageByFormatName(targetFile, bi, formatName, p -> MatrixIO.setQuality(p, quality));
         } else {
             System.out.println("Writing " + targetFile + " by file suffix...");
-            MatrixIO.writeBufferedImage(targetFile, bi, param -> setQuality(param, quality));
-        }
-    }
-
-    private static void setQuality(ImageWriteParam param, Double quality) {
-        if (quality != null) {
-            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            if (param.getCompressionType() != null) {
-                param.setCompressionQuality(quality.floatValue());
-            } else {
-                System.out.println("No default compression");
-            }
+            MatrixIO.writeBufferedImage(targetFile, bi, p -> MatrixIO.setQuality(p, quality));
         }
     }
 

@@ -24,14 +24,16 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.Matrices;
+import net.algart.arrays.Matrix;
+import net.algart.arrays.UpdatablePArray;
 import net.algart.io.MatrixIO;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Random;
@@ -51,33 +53,24 @@ public class FillPolygonTest {
             return;
         }
         final int numberOfTests = Integer.parseInt(args[0]);
-        final Class<?> elementType;
         final String elementTtypeName = args[1];
-        if (elementTtypeName.equals("bit")) {
-            elementType = boolean.class;
-        } else if (elementTtypeName.equals("char")) {
-            elementType = char.class;
-        } else if (elementTtypeName.equals("byte")) {
-            elementType = byte.class;
-        } else if (elementTtypeName.equals("short")) {
-            elementType = short.class;
-        } else if (elementTtypeName.equals("int")) {
-            elementType = int.class;
-        } else if (elementTtypeName.equals("long")) {
-            elementType = long.class;
-        } else if (elementTtypeName.equals("float")) {
-            elementType = float.class;
-        } else if (elementTtypeName.equals("double")) {
-            elementType = double.class;
-        } else {
-            throw new IllegalArgumentException("Invalid element type");
-        }
+        final Class<?> elementType  = switch (elementTtypeName) {
+            case "bit" -> boolean.class;
+            case "char" -> char.class;
+            case "byte" -> byte.class;
+            case "short" -> short.class;
+            case "int" -> int.class;
+            case "long" -> long.class;
+            case "float" -> float.class;
+            case "double" -> double.class;
+            default -> throw new IllegalArgumentException("Invalid element type");
+        };
         final String style = args[2].toLowerCase();
         final long width = Long.parseLong(args[3]);
         final long height = Long.parseLong(args[4]);
         final int numberOfVertices = Integer.parseInt(args[5]);
-        final File resultFile = new File(args[6]);
-        final File resultAwtFile = new File(args[7]);
+        final Path resultFile = Path.of(args[6]);
+        final Path resultAwtFile = Path.of(args[7]);
         final Random rnd = args.length > 8 ? new Random(Long.parseLong(args[8])) : new Random();
 
         final double[][] vertices = new double[numberOfVertices][2];
@@ -182,14 +175,14 @@ public class FillPolygonTest {
             Matrices.fillRegion(matrix, polygon, matrix.array().maxPossibleValue(1.0));
             long t2 = System.nanoTime();
             System.out.printf(Locale.US, "Polygon filled in %.3f ms%n", (t2 - t1) * 1e-6);
-            MatrixIO.writeImage(resultFile.toPath(), Collections.singletonList(matrix));
+            MatrixIO.writeImage(resultFile, Collections.singletonList(matrix));
             System.out.printf(Locale.US, "Polygon saved in %s%n", resultFile);
 
             if (width == (int) width && height == (int) height) {
                 System.out.printf("Filling polygon by AWT with %d vertices...%n", numberOfVertices);
                 final BufferedImage bufferedImage = new BufferedImage(
                         (int) width, (int) height, BufferedImage.TYPE_BYTE_BINARY);
-                final Graphics2D graphics = (Graphics2D) bufferedImage.getGraphics();
+                final Graphics graphics = bufferedImage.getGraphics();
                 final int[] xPoints = new int[numberOfVertices];
                 final int[] yPoints = new int[numberOfVertices];
                 for (int k = 0; k < numberOfVertices; k++) {
@@ -200,7 +193,7 @@ public class FillPolygonTest {
                 graphics.fillPolygon(xPoints, yPoints, numberOfVertices);
                 t2 = System.nanoTime();
                 System.out.printf(Locale.US, "Polygon filled by AWT in %.3f ms%n", (t2 - t1) * 1e-6);
-                ImageIO.write(bufferedImage, MatrixIO.extension(resultAwtFile, "bmp"), resultAwtFile);
+                MatrixIO.writeBufferedImage(resultAwtFile, bufferedImage);
                 System.out.printf(Locale.US, "Polygon saved in %s%n", resultAwtFile);
             }
             System.out.println();

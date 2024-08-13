@@ -175,13 +175,13 @@ public class ReadWriteImageTest {
                 System.out.println("        " + matrix3);
             }
 
-            // Testing toMatrix via Graphics2D
+            // Testing toMatrix via Graphics
             toMatrix.setReadingViaColorModel(false);
-            toMatrix.setReadingViaGraphics2D(true);
+            toMatrix.setReadingViaGraphics(true);
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix4 = toMatrix.toMatrix(bi1);
             t2 = System.nanoTime();
-            System.out.printf("BufferedImageToMatrix, Graphics2D: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("BufferedImageToMatrix, getGraphics: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix4) / ((t2 - t1) * 1e-9));
 
             t1 = System.nanoTime();
@@ -196,7 +196,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile3, bi4);
 
             if (!matrix1.equals(matrix4)) {
-                System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics2D!");
+                System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics!");
                 System.out.println("        " + matrix4);
             }
         }
