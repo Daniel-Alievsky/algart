@@ -119,7 +119,7 @@ public abstract class AbstractUpdatableObjectArray<E>
         checkSubArrayArguments(fromIndex, toIndex);
         final AbstractUpdatableObjectArray<E> parent = this;
         final long offset = fromIndex;
-        return new AbstractUpdatableObjectArray<E>(elementType, toIndex - fromIndex,
+        return new AbstractUpdatableObjectArray<>(elementType, toIndex - fromIndex,
                 underlyingArraysAreParallel, underlyingArrays) {
             @Override
             public E get(long index) {

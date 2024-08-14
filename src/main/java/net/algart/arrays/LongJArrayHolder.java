@@ -45,7 +45,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public final class LongJArrayHolder {
-    private SoftReference<long[]> reference = new SoftReference<long[]>(new long[0]);
+    private SoftReference<long[]> reference = new SoftReference<>(new long[0]);
     private final Object lock = new Object();
 
     /**
@@ -110,7 +110,7 @@ public final class LongJArrayHolder {
                 return oldArray;
             }
             final long[] result = new long[newArrayLength];
-            reference = new SoftReference<long[]>(result);
+            reference = new SoftReference<>(result);
             return result;
         }
     }

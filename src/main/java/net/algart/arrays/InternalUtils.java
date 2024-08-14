@@ -450,13 +450,13 @@ class InternalUtils {
     }
 
     private static class Hooks extends Thread {
-        private static final List<Runnable> tasksBefore = new ArrayList<Runnable>();
-        private static final List<Runnable> tasksStandard = new ArrayList<Runnable>();
-        private static final List<Runnable> tasksAfter = new ArrayList<Runnable>();
+        private static final List<Runnable> tasksBefore = new ArrayList<>();
+        private static final List<Runnable> tasksStandard = new ArrayList<>();
+        private static final List<Runnable> tasksAfter = new ArrayList<>();
         private static final Object hookLock = new Object();
         private static boolean hookInstalled = false;
         public void run() {
-            java.util.List<Runnable> allTasks = new java.util.ArrayList<Runnable>();
+            java.util.List<Runnable> allTasks = new java.util.ArrayList<>();
             synchronized (hookLock) {
                 allTasks.addAll(tasksBefore);
                 allTasks.addAll(tasksStandard);

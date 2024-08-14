@@ -45,7 +45,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public final class BooleanJArrayHolder {
-    private SoftReference<boolean[]> reference = new SoftReference<boolean[]>(new boolean[0]);
+    private SoftReference<boolean[]> reference = new SoftReference<>(new boolean[0]);
     private final Object lock = new Object();
 
     /**
@@ -110,7 +110,7 @@ public final class BooleanJArrayHolder {
                 return oldArray;
             }
             final boolean[] result = new boolean[newArrayLength];
-            reference = new SoftReference<boolean[]>(result);
+            reference = new SoftReference<>(result);
             return result;
         }
     }

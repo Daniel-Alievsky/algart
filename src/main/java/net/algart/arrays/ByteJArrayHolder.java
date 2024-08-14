@@ -45,7 +45,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public final class ByteJArrayHolder {
-    private SoftReference<byte[]> reference = new SoftReference<byte[]>(new byte[0]);
+    private SoftReference<byte[]> reference = new SoftReference<>(new byte[0]);
     private final Object lock = new Object();
 
     /**
@@ -110,7 +110,7 @@ public final class ByteJArrayHolder {
                 return oldArray;
             }
             final byte[] result = new byte[newArrayLength];
-            reference = new SoftReference<byte[]>(result);
+            reference = new SoftReference<>(result);
             return result;
         }
     }

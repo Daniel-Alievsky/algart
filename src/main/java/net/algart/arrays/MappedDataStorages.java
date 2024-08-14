@@ -41,7 +41,7 @@ class MappedDataStorages {
     private MappedDataStorages() {}
 
     static final Set<MappedStorage> allNonFinalizedMappedStorages =
-        Collections.synchronizedSet(new HashSet<MappedStorage>());
+        Collections.synchronizedSet(new HashSet<>());
 
     private static boolean tempCleanerInstalled = false;
     static void installTempCleaner() {
@@ -249,8 +249,8 @@ class MappedDataStorages {
             Class<?> arrayElementClass)
         {
             Objects.requireNonNull(dataFile, "Null dataFile argument");
-            return new MappingSettings<P>(dataFileModel, dataFile, dataFileStartOffset, dataFileEndOffset,
-                false, readOnly, true, arrayElementClass, null);
+            return new MappingSettings<>(dataFileModel, dataFile, dataFileStartOffset, dataFileEndOffset,
+                    false, readOnly, true, arrayElementClass, null);
         }
 
         static <P> MappingSettings<P> getInstanceForTemporaryFile(
@@ -258,15 +258,15 @@ class MappedDataStorages {
             Class<?> arrayElementClass, boolean unresizable, PArray lazyFillingPattern)
         {
             Objects.requireNonNull(dataFileModel, "Null dataFileModel argument");
-            return new MappingSettings<P>(dataFileModel, null,
-                Math.max(0, dataFileModel.recommendedPrefixSize()), Long.MAX_VALUE,
-                true, false, unresizable, arrayElementClass, lazyFillingPattern);
+            return new MappingSettings<>(dataFileModel, null,
+                    Math.max(0, dataFileModel.recommendedPrefixSize()), Long.MAX_VALUE,
+                    true, false, unresizable, arrayElementClass, lazyFillingPattern);
         }
 
         MappingSettings<P> getCompatibleInstanceForNewTemporaryFile(boolean unresizable) {
-            return new MappingSettings<P>(this.dataFileModel,
-                null, this.dataFileStartOffset, Long.MAX_VALUE,
-                true, false, unresizable, this.arrayElementClass, null);
+            return new MappingSettings<>(this.dataFileModel,
+                    null, this.dataFileStartOffset, Long.MAX_VALUE,
+                    true, false, unresizable, this.arrayElementClass, null);
         }
 
         void finalizationNotify(Object dataFilePath, boolean isApplicationShutdown) {

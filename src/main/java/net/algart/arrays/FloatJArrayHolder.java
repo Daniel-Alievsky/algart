@@ -42,7 +42,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public final class FloatJArrayHolder {
-    private SoftReference<float[]> reference = new SoftReference<float[]>(new float[0]);
+    private SoftReference<float[]> reference = new SoftReference<>(new float[0]);
     private final Object lock = new Object();
 
     /**
@@ -107,7 +107,7 @@ public final class FloatJArrayHolder {
                 return oldArray;
             }
             final float[] result = new float[newArrayLength];
-            reference = new SoftReference<float[]>(result);
+            reference = new SoftReference<>(result);
             return result;
         }
     }

@@ -1865,25 +1865,18 @@ class ArraysTileMatrixImpl {
             actualBaseDim[0] *= collapsedDimensions;
             actualTileDim[0] *= collapsedDimensions; // overflow impossible, because tileDim[q] >= baseMatrix.dim(q)
             if (isPowerOfTwo(actualTileDim) && n > 1) {
-                switch (n) {
-                    case 2:
-                        return new IndexerForPowerOfTwo2D(baseMatrix.array(), actualBaseDim, actualTileDim);
-                    case 3:
-                        return new IndexerForPowerOfTwo3D(baseMatrix.array(), actualBaseDim, actualTileDim);
-                    default:
-                        return new IndexerForPowerOfTwo(baseMatrix.array(), actualBaseDim, actualTileDim);
-                }
+                return switch (n) {
+                    case 2 -> new IndexerForPowerOfTwo2D(baseMatrix.array(), actualBaseDim, actualTileDim);
+                    case 3 -> new IndexerForPowerOfTwo3D(baseMatrix.array(), actualBaseDim, actualTileDim);
+                    default -> new IndexerForPowerOfTwo(baseMatrix.array(), actualBaseDim, actualTileDim);
+                };
             } else {
-                switch (n) {
-                    case 1:
-                        return new Indexer1D(baseMatrix.array(), actualBaseDim, actualTileDim);
-                    case 2:
-                        return new Indexer2D(baseMatrix.array(), actualBaseDim, actualTileDim);
-                    case 3:
-                        return new Indexer3D(baseMatrix.array(), actualBaseDim, actualTileDim);
-                    default:
-                        return new Indexer(baseMatrix.array(), actualBaseDim, actualTileDim);
-                }
+                return switch (n) {
+                    case 1 -> new Indexer1D(baseMatrix.array(), actualBaseDim, actualTileDim);
+                    case 2 -> new Indexer2D(baseMatrix.array(), actualBaseDim, actualTileDim);
+                    case 3 -> new Indexer3D(baseMatrix.array(), actualBaseDim, actualTileDim);
+                    default -> new Indexer(baseMatrix.array(), actualBaseDim, actualTileDim);
+                };
             }
         }
 

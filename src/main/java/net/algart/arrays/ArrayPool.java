@@ -44,7 +44,7 @@ public class ArrayPool {
     private final MemoryModel memoryModel;
     private final Class<?> elementType;
     private final long arrayLength;
-    private final List<Reference<UpdatableArray>> freeArrays = new LinkedList<Reference<UpdatableArray>>();
+    private final List<Reference<UpdatableArray>> freeArrays = new LinkedList<>();
     private final ReentrantLock lock = new ReentrantLock();
 
     private ArrayPool(MemoryModel memoryModel, Class<?> elementType, long arrayLength) {
@@ -155,8 +155,8 @@ public class ArrayPool {
         lock.lock();
         try {
             Reference<UpdatableArray> ref = SimpleMemoryModel.isSimpleArray(array) ?
-                new SoftReference<UpdatableArray>(array) :
-                new WeakReference<UpdatableArray>(array);
+                    new SoftReference<>(array) :
+                    new WeakReference<>(array);
             // for non-trivial memory models, there is a risk that the SoftReference will not be released in time
             freeArrays.add(ref);
         } finally {

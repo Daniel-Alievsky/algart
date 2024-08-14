@@ -588,17 +588,11 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
         // numberOfSlices thresholds split the range into numberOfRanges ranges:
         // range.min(), range.min() + range.size() / numberOfRanges, ..., range.max()
         ArrayContext acFill = numberOfRanges == 0 ? context() : contextPart(0.0, 0.1 / numberOfRanges);
-        ConstantFunc filler;
-        switch (roundingMode) {
-            case ROUND_DOWN:
-                filler = ConstantFunc.getInstance(range.min());
-                break;
-            case ROUND_UP:
-                filler = ConstantFunc.getInstance(range.max());
-                break;
-            default:
-                throw new AssertionError();
-        }
+        ConstantFunc filler = switch (roundingMode) {
+            case ROUND_DOWN -> ConstantFunc.getInstance(range.min());
+            case ROUND_UP -> ConstantFunc.getInstance(range.max());
+            default -> throw new AssertionError();
+        };
         Arrays.copy(acFill, dest, Arrays.asIndexFuncArray(filler, dest.type(), dest.length()));
         // equivalent to dest.fill(range.min()), but supports context (important for a case of very large disk array)
         if (numberOfRanges == 0) { // degenerated case: numberOfSlices == 1
@@ -710,19 +704,13 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
             }
             for (long sliceIndex = threadIndex + 1; sliceIndex <= numberOfRanges; sliceIndex += numberOfThreads) {
                 // threadIndex+1 because processing the layer #0 is trivial and should be skipped
-                double value;
-                switch (roundingMode) {
-                    case ROUND_DOWN:
-                        value = sliceIndex == numberOfRanges ? range.max() : // to be on the safe side
-                            range.min() + range.size() * (double)sliceIndex / numberOfRanges;
-                        break;
-                    case ROUND_UP:
-                        value = sliceIndex == numberOfRanges ? range.min() : // to be on the safe side
-                            range.max() - range.size() * (double)sliceIndex / numberOfRanges;
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
+                double value = switch (roundingMode) {
+                    case ROUND_DOWN -> sliceIndex == numberOfRanges ? range.max() : // to be on the safe side
+                            range.min() + range.size() * (double) sliceIndex / numberOfRanges;
+                    case ROUND_UP -> sliceIndex == numberOfRanges ? range.min() : // to be on the safe side
+                            range.max() - range.size() * (double) sliceIndex / numberOfRanges;
+                    default -> throw new AssertionError();
+                };
                 ArrayContext acToBit, acOp, acFromBit;
                 if (context != null) {
                     ArrayContext ac = context.part(sliceIndex - 1, sliceIndex, numberOfRanges);

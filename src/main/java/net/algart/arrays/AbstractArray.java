@@ -505,7 +505,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * This method is fully implemented in this class and is not be overridden usually.
+     * This method is fully implemented in this class and is not usually overridden.
      *
      * <p>For non-primitive element type ({@link ObjectArray} subinterface),
      * this implementation is based on calls

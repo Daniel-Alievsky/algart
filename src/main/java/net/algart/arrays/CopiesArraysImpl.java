@@ -2810,7 +2810,7 @@ class CopiesArraysImpl {
                 throw new IndexOutOfBoundsException("Negative number of elements (fromIndex = " + fromIndex
                         + " > toIndex = " + toIndex + ") in " + getClass());
             }
-            return new CopiesObjectArray<E>(toIndex - fromIndex, element);
+            return new CopiesObjectArray<>(toIndex - fromIndex, element);
         }
 
         public Array subArr(long position, long count) {
@@ -2824,7 +2824,7 @@ class CopiesArraysImpl {
             if (position > length() - count) {
                 throw AbstractArray.rangeException(position + count - 1, length(), getClass());
             }
-            return new CopiesObjectArray<E>(count, element);
+            return new CopiesObjectArray<>(count, element);
         }
 
         public DataObjectBuffer<E> buffer(DataBuffer.AccessMode mode, long capacity) {
@@ -2892,7 +2892,7 @@ class CopiesArraysImpl {
         }
 
         public Array shallowClone() {
-            return new CopiesObjectArray<E>(this.length, this.element);
+            return new CopiesObjectArray<>(this.length, this.element);
         }
 
         public MutableObjectArray<E> mutableClone(MemoryModel memoryModel) {

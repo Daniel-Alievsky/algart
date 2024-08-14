@@ -6096,7 +6096,7 @@ class ArraysFuncImpl {
 
     private static PArray[] addUnderlyingArraysWithSameMinMaxFunc(Func f, PArray[] arrays) {
         assert f == Func.MIN || f == Func.MAX;
-        List<Array> expanded = new ArrayList<Array>(arrays.length);
+        List<Array> expanded = new ArrayList<>(arrays.length);
         for (Array a : arrays) {
             if (a instanceof FuncArray && ((FuncArray)a).f() == f) {
                 Array[] underlyings = ((AbstractArray)a).underlyingArrays;

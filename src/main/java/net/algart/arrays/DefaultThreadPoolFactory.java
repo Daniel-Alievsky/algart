@@ -330,7 +330,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
         private static final ThreadPoolExecutor GLOBAL_THREAD_POOL = GLOBAL_THREAD_POOL_SIZE <= 0 ? null :
                 new ThreadPoolExecutor(GLOBAL_THREAD_POOL_SIZE, GLOBAL_THREAD_POOL_SIZE,
                         GLOBAL_THREAD_POOL_KEEP_ALIVE_TIME, TimeUnit.MILLISECONDS,
-                        new LinkedBlockingQueue<Runnable>(),
+                        new LinkedBlockingQueue<>(),
                         new ThreadFactory() {
                             private final AtomicInteger threadNumber = new AtomicInteger(1);
 

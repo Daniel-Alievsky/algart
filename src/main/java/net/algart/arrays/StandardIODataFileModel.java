@@ -546,7 +546,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
             super(file, byteOrder, false);
             this.cacheReading = cacheReading;
             this.directBuffers = directBuffers;
-            this.unusedBuffersPool = cacheReading ? null : new ArrayList<ByteBuffer>();
+            this.unusedBuffersPool = cacheReading ? null : new ArrayList<>();
         }
 
         public void close() {
@@ -612,7 +612,7 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     bb.rewind();
                 }
                 if (cacheReading) {
-                    mappingCache.put(range, new DefaultDataFileModel.RangeWeakReference<ByteBuffer>(
+                    mappingCache.put(range, new DefaultDataFileModel.RangeWeakReference<>(
                             bb, fileIndex, file.getPath(), range, reaped));
 //                    System.out.println("SSSS caching " + range + " of " + file);
                     LargeMemoryModel.LOGGER.finest("SSSS caching " + range + " of " + file);

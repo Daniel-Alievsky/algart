@@ -785,7 +785,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     static class MappableFile implements DataFile {
         private static final AtomicLong CURRENT_FILE_INDEX = new AtomicLong(0);
         private static final Set<RangeWeakReference<ByteBuffer>> ALL_WRITABLE_MAPPINGS = Collections.synchronizedSet(
-            new HashSet<RangeWeakReference<ByteBuffer>>());
+                new HashSet<>());
         private static volatile long unforcedMappingMemory = 0; // atomic to be on the safe side
 
         final File file;
@@ -796,9 +796,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         private RandomAccessFile raf;
         FileChannel fc;
 
-        final ReferenceQueue<ByteBuffer> reaped = new ReferenceQueue<ByteBuffer>();
+        final ReferenceQueue<ByteBuffer> reaped = new ReferenceQueue<>();
         final Map<Range, RangeWeakReference<ByteBuffer>> mappingCache = Collections.synchronizedMap(
-            new HashMap<Range, RangeWeakReference<ByteBuffer>>());
+                new HashMap<>());
         // - synchronization necessary due to using it in unsafeUnmap
 
         MappableFile(File file, ByteOrder byteOrder, boolean lazyWriting) {
@@ -853,7 +853,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
             List<RangeWeakReference<ByteBuffer>> ranges;
             synchronized (mappingCache) {
-                ranges = new ArrayList<RangeWeakReference<ByteBuffer>>(mappingCache.values());
+                ranges = new ArrayList<>(mappingCache.values());
             }
             Collections.sort(ranges);
             // sorting allows better force() method: buffers will be written in the position increasing order
@@ -933,7 +933,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     if (CACHE_MAPPINGS) {
                         br = UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ?
                             new UnmappableRangeWeakReference(mbb, fileIndex, file.getPath(), range, reaped) :
-                            new RangeWeakReference<ByteBuffer>(mbb, fileIndex, file.getPath(), range, reaped);
+                                new RangeWeakReference<>(mbb, fileIndex, file.getPath(), range, reaped);
                         mappingCache.put(range, br);
                         if (MAX_MAPPED_MEMORY > 0) {
                             ALL_WRITABLE_MAPPINGS.add(br);
@@ -993,7 +993,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             Set<RangeWeakReference<ByteBuffer>> ranges;
             synchronized (mappingCache) {
                 synchronized (ALL_WRITABLE_MAPPINGS) {
-                    ranges = new TreeSet<RangeWeakReference<ByteBuffer>>(mappingCache.values());
+                    ranges = new TreeSet<>(mappingCache.values());
                     // sorting allows better unmapping: buffers will be written in the position increasing order.
                     ALL_WRITABLE_MAPPINGS.removeAll(ranges);
                     mappingCache.clear();
@@ -1049,7 +1049,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 unforcedMappingMemory = 0;
                 t1 = System.nanoTime();
                 List<RangeWeakReference<ByteBuffer>> ranges;
-                ranges = new ArrayList<RangeWeakReference<ByteBuffer>>(ALL_WRITABLE_MAPPINGS);
+                ranges = new ArrayList<>(ALL_WRITABLE_MAPPINGS);
                 ALL_WRITABLE_MAPPINGS.clear();
                 Collections.sort(ranges);
                 // sorting allows better force() method: buffers will be written in the position increasing order

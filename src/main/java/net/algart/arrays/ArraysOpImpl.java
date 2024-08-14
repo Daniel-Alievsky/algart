@@ -2147,7 +2147,7 @@ class ArraysOpImpl {
             for (int k = 0; k < arrays.length; k++) {
                 a[k] = ((ObjectArray<?>) arrays[k]).cast(Object.class);
             }
-            return new ConcatenatedObjectArray<Object>(a);
+            return new ConcatenatedObjectArray<>(a);
         }
     }
 

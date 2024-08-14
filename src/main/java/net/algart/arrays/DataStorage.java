@@ -89,7 +89,7 @@ abstract class DataStorage {
     static void freeAllResources() {
         Set<DataStorage> all;
         synchronized (MappedDataStorages.allNonFinalizedMappedStorages) {
-            all = new HashSet<DataStorage>(MappedDataStorages.allNonFinalizedMappedStorages);
+            all = new HashSet<>(MappedDataStorages.allNonFinalizedMappedStorages);
         }
         for (DataStorage storage : all) {
             storage.freeResources(null, false); // implementations here do not use the first argument

@@ -279,7 +279,7 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> value) {
-        List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> result = new ArrayList<>();
         result.add(asRedFromHSV(resultType, hue, saturation, value));
         result.add(asGreenFromHSV(resultType, hue, saturation, value));
         result.add(asBlueFromHSV(resultType, hue, saturation, value));
@@ -293,7 +293,7 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> lightness) {
-        List<Matrix<? extends PArray>> result = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> result = new ArrayList<>();
         result.add(asRedFromHSL(resultType, hue, saturation, lightness));
         result.add(asGreenFromHSL(resultType, hue, saturation, lightness));
         result.add(asBlueFromHSL(resultType, hue, saturation, lightness));

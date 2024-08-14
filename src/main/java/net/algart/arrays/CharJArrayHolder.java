@@ -45,7 +45,7 @@ import java.util.Objects;
  * @author Daniel Alievsky
  */
 public final class CharJArrayHolder {
-    private SoftReference<char[]> reference = new SoftReference<char[]>(new char[0]);
+    private SoftReference<char[]> reference = new SoftReference<>(new char[0]);
     private final Object lock = new Object();
 
     /**
@@ -110,7 +110,7 @@ public final class CharJArrayHolder {
                 return oldArray;
             }
             final char[] result = new char[newArrayLength];
-            reference = new SoftReference<char[]>(result);
+            reference = new SoftReference<>(result);
             return result;
         }
     }
