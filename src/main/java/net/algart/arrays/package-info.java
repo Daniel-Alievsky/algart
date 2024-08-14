@@ -956,7 +956,7 @@ The real limits are less in 32-bit JVM, that usually cannot utilize 2 GB of memo
  <dd>Defines whether the algorithms, processing AlgART arrays, should write to logs some timing information.
  May be "<code>false</code>" or "<code>true</code>". Default value is identical to "-ea" JVM flag:
  if java was called with "-ea" flag (assertions are enabled), the default profiling mode is <code>true</code>,
- in other case it is <code>false</code>.
+ in another case it is <code>false</code>.
  See {@link net.algart.arrays.Arrays.SystemSettings#profilingMode()} for more details.</dd>
 
  <dt>"<b><code>net.algart.arrays.LargeMemoryModel.dataFileModel</code></b>"</dt>

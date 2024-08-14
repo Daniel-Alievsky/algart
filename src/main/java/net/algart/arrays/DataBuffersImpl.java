@@ -201,7 +201,7 @@ class DataBuffersImpl {
             allocateData();
             this.position = position;
             count = Math.min(maxCount, Math.min(capacity, len - position));
-            if (!isNCopies) { // in other case, the data are loaded in allocateData() only once
+            if (!isNCopies) { // in another case, the data are loaded in allocateData() only once
                 if (array instanceof BitArray) {
                     if (isDirect) {
                         from = position + Arrays.longJavaArrayOffsetInternal((BitArray) array);

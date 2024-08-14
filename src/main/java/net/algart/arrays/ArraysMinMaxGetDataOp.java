@@ -148,7 +148,7 @@ class ArraysMinMaxGetDataOp {
                         destOffset = 0;
                     }
                     if (analyzeResult != SAFE_IN_PLACE_TO_ARRAY_0_WITH_SAME_OFFSET) {
-                        // in other case, the copying does nothing and can be skipped
+                        // in another case, the copying does nothing and can be skipped
                         x[0].getData(arrayPos, dest, destOffset, len);
                     }
                     for (int k = 1; k < x.length; k++) {

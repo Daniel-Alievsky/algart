@@ -49,7 +49,7 @@ public abstract class AbstractIterativeArrayProcessor<T>
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <code>{@link #context}!=null</code>, in other case equal to
+     * <code>{@link #context}!=null</code>, in another case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     protected final MemoryModel memoryModel;

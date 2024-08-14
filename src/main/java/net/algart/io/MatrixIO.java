@@ -345,13 +345,13 @@ public class MatrixIO {
     }
 
     /**
-     * Should be called if you are going to call {@link #writeAlgARTImage(Path, List, boolean)}
+     * Should be called if you are going to call {@link #writeImageFolder(Path, List, boolean)}
      * with <code>allowReferencesToStandardLargeFiles=true</code> from an external algorithm before its finishing
      * (to return its results).
      *
      * @param image matrices, for built-in arrays of which you want to clear the temporary status
      */
-    public static void clearAlgARTImageTemporaryStatus(
+    public static void clearImageFolderTemporaryStatus(
             List<Matrix<? extends PArray>> image) {
         for (Matrix<? extends PArray> m : image) {
             PArray a = m.array();
@@ -362,9 +362,9 @@ public class MatrixIO {
         }
     }
 
-    public static void writeAlgARTImage(Path folder, List<? extends Matrix<? extends PArray>> image)
+    public static void writeImageFolder(Path folder, List<? extends Matrix<? extends PArray>> image)
             throws IOException {
-        writeAlgARTImage(folder, image, false);
+        writeImageFolder(folder, image, false);
     }
 
     /**
@@ -383,7 +383,7 @@ public class MatrixIO {
      * @throws IOException          in a case of I/O error.
      * @throws NullPointerException if one of the arguments or elements of <code>image</code> list is {@code null}.
      */
-    public static void writeAlgARTImage(
+    public static void writeImageFolder(
             Path folder,
             List<? extends Matrix<? extends PArray>> image,
             boolean allowReferencesToStandardLargeFiles) throws IOException {
@@ -448,7 +448,7 @@ public class MatrixIO {
 
     /**
      * Loads the multichannel image (list of matrices), saved in the specified folder
-     * by {@link #writeAlgARTImage(Path, List)} call.
+     * by {@link #writeImageFolder(Path, List)} call.
      *
      * <p>Note: the files containing the matrices retain open, and any access to the returned
      * matrices will lead to operations with these files (mapping).
@@ -460,7 +460,7 @@ public class MatrixIO {
      * @throws IOException          in a case of I/O error.
      * @throws NullPointerException if the argument is {@code null}.
      */
-    public static List<Matrix<? extends PArray>> readAlgARTImage(Path folder) throws IOException {
+    public static List<Matrix<? extends PArray>> readImageFolder(Path folder) throws IOException {
         Objects.requireNonNull(folder, "Null folder");
         File f = folder.toFile();
         if (!f.exists()) {

@@ -195,7 +195,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      * @param morphology        the {@link Morphology} object that will be used for performing openings.
      * @param requiredType      the type of built-in AlgART array for {@link #result()} matrix.
      *                          Should be enough for storing elementwise sums of hundreds of opened matrices;
-     *                          in other case, overflows will lead to truncation of the sums.
+     *                          in another case, overflows will lead to truncation of the sums.
      * @param matrix            the source matrix, that will be opened by Minkowski sums of the passed patterns
      *                          (or just by Minkowski multiples <i>k</i>&otimes;<i>P</i>, if <code>patterns</code>
      *                          argument contains only 1 pattern).

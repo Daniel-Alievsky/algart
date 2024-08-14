@@ -108,7 +108,7 @@ public class Stitcher<P extends FramePosition> {
                 Matrix<? extends PArray> m = frame.matrix();
                 RectangularArea shiftedArea = frame.position().area().shift(area.min().symmetric());
                 P position = castPosition(ShiftFramePosition.valueOf(shiftedArea));
-                // here we are sure that P is ShiftFramePosition, in other case shiftPosition(...) cannot return true
+                // here we are sure that P is ShiftFramePosition, in another case shiftPosition(...) cannot return true
                 shiftedFrames.add(DefaultFrame.valueOf(m, position));
             }
             actualFrames = shiftedFrames;

@@ -49,7 +49,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <code>{@link #context}!=null</code>, in other case equal to
+     * <code>{@link #context}!=null</code>, in another case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     private MemoryModel memoryModel;
@@ -100,7 +100,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
     /**
      * Returns the memory model used by this instance for all operations.
      * Equal to {@link #context()}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <code>{@link #context()}!=null</code>, in other case equal to
+     * <code>{@link #context()}!=null</code>, in another case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      *
      * <p>This method works very quickly (it just returns a value of some private field).

@@ -53,7 +53,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
      * in the element <code>#k</code> of <code>samples</code> array.
      *
      * <p>The returned sample array is backed by this AlgART array, so any changes of the samples
-     * in the returned array are reflected in this array, and vice-versa.
+     * in the returned array are reflected in this array, and vice versa.
      * More precisely, the returned sample array is backed by
      * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed array is {@link MutableArray resizable}, possible future changes of its length

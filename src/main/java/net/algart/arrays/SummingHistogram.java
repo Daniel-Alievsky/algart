@@ -1175,7 +1175,7 @@ public abstract class SummingHistogram extends Histogram {
      * defined in terms of the simple histogram model,
      * between <i>r</i>=<code>fromRank</code> and <i>r</i>=<code>toRank</code>.
      * The <code>fromRank</code> argument should be not greater than <code>toRank</code>;
-     * in other case this method returns 0.0.
+     * in another case, this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
@@ -1195,7 +1195,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>]
      *                  is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
@@ -1272,7 +1272,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
@@ -1353,7 +1353,7 @@ public abstract class SummingHistogram extends Histogram {
      * defined in terms of the precise histogram model,
      * between <i>r</i>=<code>fromRank</code> and <i>r</i>=<code>toRank</code>.
      * The <code>fromRank</code> argument should be not greater than <code>toRank</code>;
-     * in other case this method returns 0.0.
+     * in another case, this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
@@ -1373,7 +1373,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>]
      *                  is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
@@ -1404,7 +1404,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
      *                  that are equal to <i>k</i>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
      * @param toRank    the end rank.
@@ -1742,7 +1742,7 @@ public abstract class SummingHistogram extends Histogram {
      * between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
-     * in other case this method returns 0.0.
+     * in another case, this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>If <code>minValue&lt;=maxValue</code>, the result of this method is equal
@@ -1809,7 +1809,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      All <code>histogram[k]</code> must be non-negative; in another case,
      *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
@@ -1902,7 +1902,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      All <code>histogram[k]</code> must be non-negative; in another case,
      *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
@@ -2000,7 +2000,7 @@ public abstract class SummingHistogram extends Histogram {
      * between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).
      * The <code>minValue</code> argument should be not greater than <code>maxValue</code>;
-     * in other case this method returns 0.0.
+     * in another case this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
      * <p>If <code>minValue&lt;=maxValue</code>, the result of this method is equal
@@ -2067,7 +2067,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      All <code>histogram[k]</code> must be non-negative; in another case,
      *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
@@ -2270,8 +2270,8 @@ public abstract class SummingHistogram extends Histogram {
                 // Instead of direct calculation, we splits this pentagon into two parts: the trapezoid MADN,
                 //     D = (v+1,r'),
                 // and the triangle BCD.
-                // The area of MADN part is added at the loop iteration, corresponding to the value v, and
-                // the area of BCD part is added at the loop iteration, corresponding the next non-zero value v'.
+                // The area of MADN part is added at the loop iteration corresponding to the value v, and
+                // the area of BCD part is added at the loop iteration corresponding to the next nonzero value v'.
                 if (v - lastNonZero > 1) {
                     // height of BCD is 1 (rank increment), base of the triangle CD = leftV-(lastNonZero+1)
                     middleIntegral += 0.5 * (v - lastNonZero - 1);
@@ -2300,7 +2300,7 @@ public abstract class SummingHistogram extends Histogram {
      *
      * @param histogram     <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements
      *                      in the source array that are equal to <i>k</i>.
-     *                      All <code>histogram[k]</code> must be non-negative; in other case,
+     *                      All <code>histogram[k]</code> must be non-negative; otherwise,
      *                      <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
@@ -2504,8 +2504,8 @@ public abstract class SummingHistogram extends Histogram {
                 // Instead of direct calculation, we splits this pentagon into two parts: the trapezoid MADN,
                 //     D = (v+1,r'),
                 // and the triangle BCD.
-                // The area of MADN part is added at the loop iteration, corresponding to the value v, and
-                // the area of BCD part is added at the loop iteration, corresponding the next non-zero value v'.
+                // The area of MADN part is added at the loop iteration corresponding to the value v, and
+                // the area of BCD part is added at the loop iteration corresponding to the next nonzero value v'.
                 if (v - lastNonZero > 1) {
                     // height of BCD is 1 (rank increment), base of the triangle CD = leftV-(lastNonZero+1)
                     middleIntegral += 0.5 * (v - lastNonZero - 1);

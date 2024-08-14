@@ -453,7 +453,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
      * In this case, please not forget to call
      * <code>largeArray.{@link Array#flushResources(ArrayContext) flushResources}(context)</code>
      * after completion of filling this array;
-     * in other case, some array elements can be lost while further garbage collection or JVM termination.
+     * in another case, some array elements can be lost while further garbage collection or JVM termination.
      *
      * <p>When <code>value=true</code>, this method allows to safely delete the external data file,
      * mapped to an AlgART array via {@link #asArray asArray} or

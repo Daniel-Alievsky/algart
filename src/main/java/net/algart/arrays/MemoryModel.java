@@ -846,7 +846,7 @@ public interface MemoryModel {
      *
      * @param array the source array.
      * @return the lazy copy of the source array, if lazy copying is supported by the memory model,
-     * or the usual identical copy of the source array in other case.
+     * or the usual identical copy of the source array in another case.
      * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
@@ -882,7 +882,7 @@ public interface MemoryModel {
      *
      * @param array the source array.
      * @return the lazy unresizable copy of the source array, if lazy copying is supported by the memory model,
-     * or the usual identical unresizable copy of the source array in other case.
+     * or the usual identical unresizable copy of the source array in another case.
      * @throws NullPointerException            if the argument is {@code null}.
      * @throws UnsupportedElementTypeException if the element type of the passed array
      *                                         is not supported by this memory model.
@@ -1289,7 +1289,7 @@ public interface MemoryModel {
      *                       (usually an updatable version of the built-in array of the source matrix).
      * @param matrix         the source matrix.
      * @return the lazy copy of the source matrix, if lazy copying is supported by the memory model,
-     * or the usual identical copy of the source matrix in other case.
+     * or the usual identical copy of the source matrix in another case.
      * @throws NullPointerException            if onn of the arguments is {@code null}.
      * @throws ClassCastException              if <code>arraySupertype</code> does not match
      *                                         to the element type of the passed matrix.
@@ -1306,9 +1306,8 @@ public interface MemoryModel {
      * the specified Java array:
      * <code>array[offset], array[offset + 1], ..., array[offset + count - 1]</code>.
      *
-     * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
-     * are maintained by it.
-     * In other words, this method must always allocate a new AlgART array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * <p>This method is equivalent to the following expression:
      * <code>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, count).{@link
@@ -1330,9 +1329,8 @@ public interface MemoryModel {
      * Allocates an unresizable AlgART array containing all elements of the specified Java array:
      * <code>array[0], array[1], ..., array[array.length - 1]</code>.
      *
-     * <p>The returned AlgART array will be "safe" in the sense that no references to the passed Java array
-     * are maintained by it.
-     * In other words, this method must always allocate a new array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * <p>This method is equivalent to the following expression:
      * <code>{@link #newUnresizableArray(Class, long) newUnresizableArray}(elementType, len).{@link
@@ -1341,7 +1339,7 @@ public interface MemoryModel {
      * (<code>array.getClass().getComponentType()</code>) and
      * <code>len</code> is the length of the passed Java array.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>array</code> argument is not a Java array.
@@ -1360,7 +1358,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableBitArray valueOf(boolean[] array, int offset, int count);
 
@@ -1383,7 +1381,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableCharArray valueOf(char[] array, int offset, int count);
 
@@ -1405,7 +1403,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableByteArray valueOf(byte[] array, int offset, int count);
 
@@ -1427,7 +1425,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableShortArray valueOf(short[] array, int offset, int count);
 
@@ -1449,7 +1447,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableIntArray valueOf(int[] array, int offset, int count);
 
@@ -1471,7 +1469,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableLongArray valueOf(long[] array, int offset, int count);
 
@@ -1493,7 +1491,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableFloatArray valueOf(float[] array, int offset, int count);
 
@@ -1515,7 +1513,7 @@ public interface MemoryModel {
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
     UpdatableDoubleArray valueOf(double[] array, int offset, int count);
 

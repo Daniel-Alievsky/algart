@@ -136,7 +136,7 @@ public class SubContext extends AbstractContext implements Context {
      * This implementation returns the reference to this instance, if
      * <code>contextClass.isAssignableFrom(thisInstance.getClass())</code>,
      * or calls <code>superContext.{@link #as(Class) as}(contextClass)</code>
-     * in other case.
+     * in another case.
      *
      * <p>If this instance was created by the constructor with the specified set of allowed classes
      * ({@link #SubContext(Context, Class[])}),

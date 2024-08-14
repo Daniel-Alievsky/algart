@@ -344,8 +344,8 @@ public enum DependenceApertureBuilder {
      * for detailed specification of this behavior.
      *
      * @param dimCount        the number of dimensions.
-     * @param patterns        the set of patterns, describing the dependence apertures of different parts
-     *                        (stages) of the full algorithms, for example, in terms
+     * @param patterns        the set of patterns, describing the dependence apertures on different parts
+     *                        (stages) of the full algorithm, for example, in terms
      *                        of {@link StreamingApertureProcessor} class.
      * @param inverted        if some element <code>inverted[k]</code> is <code>true</code>,
      *                        then the corresponding element
@@ -594,7 +594,7 @@ public enum DependenceApertureBuilder {
     /**
      * Returns sum of the arguments <code>a+b</code>, if this sum can be precisely represented by <code>long</code>
      * type, i&#46;e&#46; if it lies in <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range,
-     * or throws <code>IndexOutOfBoundsException</code> in other case.
+     * or throws <code>IndexOutOfBoundsException</code> in another case.
      * (Unlike this method, the simple Java operator <code>a+b</code> always returns low 64 bits
      * of the mathematical sum <code>a+b</code> without any checks and exceptions.)
      *

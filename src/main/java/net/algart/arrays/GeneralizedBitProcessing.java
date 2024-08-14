@@ -502,8 +502,8 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * in the {@link GeneralizedBitProcessing comments to this class}.
      *
      * <p>The <code>src</code> and <code>dest</code> arrays must not be the same array or views of the same array;
-     * in other case, the results will be incorrect.
-     * These arrays must have the same element types and the same lengths; in other case,
+     * in another case, the results will be incorrect.
+     * These arrays must have the same element types and the same lengths; in another case,
      * an exception will occur.
      *
      * <p>The <code>range</code> argument specifies the <i>a<sub>min</sub></i>..<i>a<sub>max</sub></i> range,

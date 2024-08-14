@@ -55,7 +55,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
      * of <code>samplesIm</code> array.
      *
      * <p>The returned sample array is backed by these two arrays, so any changes of the samples
-     * in the returned array are reflected in these arrays, and vice-versa.
+     * in the returned array are reflected in these arrays, and vice versa.
      * More precisely, the returned sample array is backed by
      * <code>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</code> and
      * <code>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:

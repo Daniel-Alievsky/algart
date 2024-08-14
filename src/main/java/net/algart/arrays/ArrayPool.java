@@ -100,8 +100,8 @@ public class ArrayPool {
     }
 
     /**
-     * Returns the ready for use unresizable AlgART array. If it is not found in the internal cache, it is created,
-     * in other case some free array from the cache is returned.
+     * Returns the ready-for-use unresizable AlgART array. If it is not found in the internal cache, it is created,
+     * in another case some free array from the cache is returned.
      *
      * <p>The {@link #releaseArray(UpdatableArray)} should be called after finishing working with this array.
      *

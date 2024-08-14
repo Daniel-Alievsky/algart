@@ -1125,7 +1125,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
     private static boolean isSegmentAlongTheAxis(Pattern pattern, int coordIndex) {
         if (!(pattern instanceof QuickPointCountPattern)) {
-            return false; // in other case, the checking can be too slow
+            return false; // in another case, the checking can be too slow
         }
         if (pattern.pointCount() == 1) {
             return true;

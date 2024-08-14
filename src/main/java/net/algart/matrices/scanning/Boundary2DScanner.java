@@ -1336,7 +1336,7 @@ public abstract class Boundary2DScanner {
      * and <code>buffer2</code>, that are used for marking already visited boundary segments.
      * These matrices can have any fixed-point element type (but usually it is <code>boolean</code>)
      * and must have the same dimensions as the main matrix.
-     * These matrices should be zero-initialized before using the created instance (in other case,
+     * These matrices should be zero-initialized before using the created instance (in another case,
      * some boundaries are possible to be skipped).
      * One of these matrices is always <i>current</i>.
      * In the <i>state&nbsp;1</i>, the current buffer matrix is <code>buffer1</code>;
@@ -1450,7 +1450,7 @@ public abstract class Boundary2DScanner {
      * of all objects are stored as a result of the scanning.
      * This matrix can have any fixed-point element type (but usually it is <code>boolean</code>)
      * and must have the same dimensions as the main matrix.
-     * This matrix should be zero-initialized before using the created instance (in other case,
+     * This matrix should be zero-initialized before using the created instance (in another case,
      * some boundaries are possible to be skipped).
      *
      * <p>While scanning boundaries, inside the {@link #next()} method, this scanner writes "brackets" in the

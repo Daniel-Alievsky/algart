@@ -1357,7 +1357,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in some source array
      *                  that are equal to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
      * @return value of the found element (percentile).
@@ -1394,7 +1394,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source array
      *                  that are equal to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array.
      * @return value of the found element (percentile).
@@ -1466,7 +1466,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method returns a real value,
      *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank,
@@ -1508,7 +1508,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method returns a real value,
      *                  which is little greater than the element #<i>r</i><sub>1</sub>=(long)rank,
@@ -1615,7 +1615,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return interpolated value of the found element (percentile), rounded to the "best" integer value.
@@ -1703,7 +1703,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source floating-point array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return interpolated value of the found element (percentile), rounded to the "best" integer value.
@@ -1808,7 +1808,7 @@ public abstract class Histogram {
      * if <i>r</i><sub>2</sub>&lt;<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>] or
      * if <i>r</i><sub>2</sub>=<i>r</i><sub>0</sub>+<b>b</b>[<i>v</i><sub>0</sub>] and
      * the next bar is non-zero: <b>b</b>[<i>v</i><sub>0</sub>+1]&gt;0;
-     * in other case, <i>v</i><sub>2</sub> is the minimal integer &gt;<i>v</i><sub>0</sub> so that
+     * in another case, <i>v</i><sub>2</sub> is the minimal integer &gt;<i>v</i><sub>0</sub> so that
      * <b>b</b>[<i>v</i><sub>2</sub>]&gt;0.
      *
      * <p>After finding <i>v</i><sub>1</sub> and <i>v</i><sub>2</sub>, this method returns the value
@@ -1840,7 +1840,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return interpolated value of the found element (percentile).
@@ -1909,7 +1909,7 @@ public abstract class Histogram {
      *
      * @param histogram <code>histogram[k]</code> is the number of elements in the source array
      *                  that are "almost equal" to <code>k</code>.
-     *                  All <code>histogram[k]</code> must be non-negative; in other case,
+     *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param rank      the index in the source array (if non-integer, this method interpolates nearest elements).
      * @return interpolated value of the found element (percentile).
@@ -1991,7 +1991,7 @@ public abstract class Histogram {
      *
      * @param histogram       <code>histogram[k]</code> is the number of elements in the source array
      *                        that are "almost equal" to <code>k</code>.
-     *                        All <code>histogram[k]</code> must be non-negative; in other case,
+     *                        All <code>histogram[k]</code> must be non-negative; in another case,
      *                        <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param sumOfColumns    should be equal to sum of all histogram elements
      *                        (in other words, the length of the source array).
@@ -2031,7 +2031,7 @@ public abstract class Histogram {
      *
      * @param histogram       <code>histogram[k]</code> is the number of elements in the source array
      *                        that are "almost equal" to <code>k</code>.
-     *                        All <code>histogram[k]</code> must be non-negative; in other case,
+     *                        All <code>histogram[k]</code> must be non-negative; in another case,
      *                        <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param sumOfColumns    should be equal to sum of all histogram elements
      *                        (in other words, the length of the source array).
@@ -4066,7 +4066,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -4209,7 +4209,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -4944,7 +4944,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -5017,7 +5017,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;

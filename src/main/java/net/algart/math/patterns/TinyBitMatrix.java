@@ -126,7 +126,7 @@ class TinyBitMatrix {
         //
         --n;
         if (isEmpty()) {
-            // we must check it here, in other case the further assertions can be false:
+            // we must check it here; otherwise, the further assertions can be false:
             // production of some dimensions in an empty matrix can be greater than Long.MAX_VALUE
             return 0;
         }

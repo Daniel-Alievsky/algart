@@ -213,7 +213,7 @@ public abstract class AbstractPattern implements Pattern {
      * This implementation calls {@link #points()} method and checks, whether all returned points are integer,
      * i&#46;e&#46; {@link Point#isInteger()} method returns <code>true</code> for all elements the returned set.
      * If all points, returned by {@link #points()} call, are integer, this method returns <code>true</code>,
-     * in other case it returns <code>false</code>.
+     * in another case it returns <code>false</code>.
      *
      * <p>This method caches its results: the following calls will work faster.
      *
@@ -587,7 +587,7 @@ public abstract class AbstractPattern implements Pattern {
     /**
      * Throws <code>IndexOutOfBoundsException</code>
      * if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;={@link #dimCount()}</code>.
-     * Does nothing in other case.
+     * Does nothing in another case.
      *
      * @param coordIndex checked index of the coordinate.
      * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or

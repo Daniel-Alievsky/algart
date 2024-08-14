@@ -305,7 +305,7 @@ public abstract class AbstractMorphology extends AbstractArrayProcessorWithConte
      *                                for optimizing the algorithm speed;
      *                                if <code>true</code>, no any work memory will be allocated.
      * @return the reference to <code>dest</code> argument if it is not {@code null},
-     * newly allocated resulting matrix in other case.
+     * newly allocated resulting matrix in another case.
      * @throws NullPointerException     if <code>src</code> or <code>pattern</code> argument is {@code null}.
      * @throws SizeMismatchException    if <code>dest&nbsp;!=&nbsp;null</code>
      *                                  and the passed matrices have different dimensions.

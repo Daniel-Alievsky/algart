@@ -42,7 +42,7 @@ public interface CustomRankPrecision {
     /**
      * The maximal possible number of analyzed bits: {@value}.
      * The bit levels, returned by {@link #bitLevels()} method,
-     * must not be greater than this value; in other case, an attempt to create an instance
+     * must not be greater than this value; in another case, an attempt to create an instance
      * of {@link BasicRankMorphology} will lead to <code>IllegalArgumentException</code>.
      */
     int MAX_NUMBER_OF_ANALYZED_BITS = 30;

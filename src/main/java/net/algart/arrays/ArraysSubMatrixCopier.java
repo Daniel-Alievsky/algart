@@ -259,7 +259,7 @@ abstract class ArraysSubMatrixCopier {
             tileEnumerator.coordinates(tileIndex, tileIndexes);
             boolean continuousSubArray = true;
             // - this tile part corresponds to a continuous block in the parent array (which was tiled), if:
-            // 1) it fully lies inside the matrix (in other case, subMatrix mechanism provides different schemes
+            // 1) it fully lies inside the matrix (in another case, subMatrix mechanism provides different schemes
             // for continuation depending on the continuation model: we do not try to optimize this case)
             // 2) it is the whole tile (100% of the matrix tile) or, maybe, a part along the high (last) coordinate,
             // but the full tile along all other coordinates; for example, for 2-dimensional matrix 8700x3400 and

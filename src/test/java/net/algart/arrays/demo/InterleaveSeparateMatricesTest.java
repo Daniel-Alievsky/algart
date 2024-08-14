@@ -61,7 +61,7 @@ public class InterleaveSeparateMatricesTest {
         System.out.printf("List: %s%n", matrices);
         Matrix<PArray> merged = Matrices.mergeLayers(matrices);
         System.out.printf("Merged: %s%n", merged);
-        MatrixIO.writeAlgARTImage(matrixFolder, List.of(merged));
+        MatrixIO.writeImageFolder(matrixFolder, List.of(merged));
         List<Matrix<PArray>> unpacked = Matrices.asLayers(merged);
         for (int k = 0; k < unpacked.size(); k++) {
             checkIdentity(unpacked.get(k), matrices.get(k), "Channel #" + k);

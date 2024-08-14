@@ -388,7 +388,7 @@ public class Patterns {
      * the {@link UniformGridPattern#isActuallyRectangular()} method returns <code>true</code> always.
      * The {@link Pattern#minkowskiAdd(Pattern)} method creates a new rectangular pattern (via this method),
      * if its argument is also rectangular, according the definition of Minkowski sum;
-     * in other case, it returns new {@link #newIntegerPattern simple} pattern and works slowly
+     * in another case, it returns new {@link #newIntegerPattern simple} pattern and works slowly
      * (<i>O</i>(<i>NM</i>) operations, where <i>N</i> and <i>M</i> is the number of points in both patterns).
      * The {@link Pattern#minkowskiDecomposition(int)} method returns the list containing
      * ~log<sub>2</sub>(<i>N</i>) 2-point simple patterns or, maybe,

@@ -738,7 +738,7 @@ public interface DataBuffer {
 
     /**
      * Returns <code>(int){@link #fromIndex()}</code>, if <code>{@link #fromIndex()}&lt;=Integer.MAX_VALUE</code>,
-     * or throws {@link DataBufferIndexOverflowException} in other case.
+     * or throws {@link DataBufferIndexOverflowException} in another case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
      * is not longer than <code>Integer.MAX_VALUE</code> elements.
@@ -751,7 +751,7 @@ public interface DataBuffer {
 
     /**
      * Returns <code>(int){@link #toIndex()}</code>, if <code>{@link #toIndex()}&lt;=Integer.MAX_VALUE</code>,
-     * or throws {@link DataBufferIndexOverflowException} in other case.
+     * or throws {@link DataBufferIndexOverflowException} in another case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
      * is not longer than <code>Integer.MAX_VALUE</code> elements.
@@ -764,7 +764,7 @@ public interface DataBuffer {
 
     /**
      * Returns <code>(int){@link #count()}</code>, if <code>{@link #count()}&lt;=Integer.MAX_VALUE</code>,
-     * or throws {@link DataBufferIndexOverflowException} in other case.
+     * or throws {@link DataBufferIndexOverflowException} in another case.
      * May be used if you are sure that this buffer is not a {@link DataBitBuffer bit buffer},
      * or if you are sure that the AlgART array, processed by this buffer,
      * is not longer than <code>Integer.MAX_VALUE</code> elements.

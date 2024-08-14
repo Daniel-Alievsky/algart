@@ -107,7 +107,7 @@ public class PackedBitArraysPer8Test {
             long count) {
         if (src == dest) {
             src = src.clone();
-            // - in other case, the simple algorithm below may work wrong even inside 1 byte
+            // - in another case, the simple algorithm below may work wrong even inside 1 byte
         }
         for (int k = 0; k < count; k++) {
             final boolean bit = PackedBitArraysPer8.getBitInReverseOrder(src, srcPos + k);
@@ -123,7 +123,7 @@ public class PackedBitArraysPer8Test {
             long count) {
         if (src == dest) {
             src = src.clone();
-            // - in other case, the simple algorithm below may work wrong even inside 1 byte
+            // - in another case, the simple algorithm below may work wrong even inside 1 byte
         }
         for (int k = 0; k < count; k++) {
             final boolean bit = PackedBitArraysPer8.getBit(src, srcPos + k);

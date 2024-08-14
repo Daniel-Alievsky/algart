@@ -461,7 +461,7 @@ public class RankProcessors {
      * RankMorphology#functionOfPercentilePair(Matrix, Matrix, Matrix, Matrix, net.algart.math.patterns.Pattern, Func)
      * functionOfPercentilePair}</code>(<b>R</b>, <b>M</b>, <b>M</b><sub>1</sub>, <b>M</b><sub>2</sub>, <b>P</b>,
      * <code>processingFunc</code>) (where <code>processingFunc</code> is the argument of this method),
-     * in other case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
+     * in another case if works analogously, but gets the first argument of <i>f</i> function from <b>M</b><sub>0</sub>
      * matrix instead of <b>M</b>.</li>
      * </ul>
      *

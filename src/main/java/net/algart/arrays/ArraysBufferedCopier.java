@@ -321,7 +321,7 @@ class ArraysBufferedCopier {
                 }
                 if (SimpleMemoryModel.isSimpleArray(mDest.array())) {
                     return super.process();
-                } // in other case, continue checks: maybe mDest is very large (strong stretching)
+                } // in another case, continue checks: maybe mDest is very large (strong stretching)
             }
             // the geometrical transformation requires random access to any elements,
             // that can be very slow for all cases excepting SimpleMemoryModel;
@@ -415,7 +415,7 @@ class ArraysBufferedCopier {
          *         or {@code null} if copying by this algorithm is impossible or undesirable.
          */
         private Boolean copyWithBufferingWholeMatrix() {
-            if (projectiveTransformation // in other case, we cannot estimate the parent tile size
+            if (projectiveTransformation // in another case, we cannot estimate the parent tile size
                 && !optimizeResizingWholeMatrix) // if optimizeResizingWholeMatrix, whole parent matrix is always used
             {
                 final double minimalUsedPart = !strictMode ?
@@ -1297,7 +1297,7 @@ class ArraysBufferedCopier {
                         tiledBuf = buf.tile(tileDim);
                         // The last layer should be tiled with less tiles.
                         // It is important for tiling operation (baseMatrixDest != null):
-                        // in other case, copying src.subArr(p, len) into tiledBuf will fill it
+                        // in another case, copying src.subArr(p, len) into tiledBuf will fill it
                         // by tiles with full height lastTileDim instead of correct lastDim - lastCoord.
                     }
                     if (baseMatrixSrc != null) { // src is tiled: untiling operation

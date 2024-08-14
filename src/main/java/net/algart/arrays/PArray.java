@@ -76,6 +76,7 @@ public interface PArray extends Array {
      *
      * @return the number of bytes occupied by every element of this array, or -1 if it cannot be determined.
      * @see Arrays#bitsPerElement(Class)
+     * @see Matrix#bitsPerElement()
      */
     long bitsPerElement();
 
@@ -116,6 +117,7 @@ public interface PArray extends Array {
      * @return the maximal possible value, that can stored in elements of this array,
      * if it is a fixed-point array, or the argument for floating-point arrays.
      * @see PFixedArray#maxPossibleValue()
+     * @see Matrix#maxPossibleValue(double)
      */
     double maxPossibleValue(double valueForFloatingPoint);
 
@@ -224,16 +226,15 @@ public interface PArray extends Array {
      * cast to <code>byte</code> type if necessary.
      * Equivalent to <code>{@link #toByte(byte[]) toByte}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>byte</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaByte()
+     * @see Array#toJavaArray()
      * @see Matrix#toByte()
      */
     default byte[] toByte() {
@@ -243,11 +244,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>byte</code> type if the array is not a {@link ByteArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>byte[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -259,7 +260,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof ByteArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, ByteArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, ByteArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -304,7 +305,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toByte() toByte}()</code>.
      *
      * <p>This method may be used instead of {@link #toByte()},
-     * if you need maximally quick access to this data in a form of <code>byte[]</code> array
+     * if you need maximally quick access to the data in a form of <code>byte[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>byte[]</code> array.</p>
      *
@@ -318,8 +319,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>byte</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaByte()
      * @see #toByte()
+     * @see Array#ja()
+     * @see Matrix#jaByte()
      */
     default byte[] jaByte() {
         return this instanceof ByteArray a ? a.ja() : this.toByte();
@@ -330,16 +332,15 @@ public interface PArray extends Array {
      * cast to <code>char</code> type if necessary.
      * Equivalent to <code>{@link #toChar(char[]) toChar}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>char</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaChar()
+     * @see Array#toJavaArray()
      * @see Matrix#toChar()
      */
     default char[] toChar() {
@@ -349,11 +350,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>char</code> type if the array is not a {@link CharArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>char[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -365,7 +366,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof CharArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, CharArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, CharArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -410,7 +411,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toChar() toChar}()</code>.
      *
      * <p>This method may be used instead of {@link #toChar()},
-     * if you need maximally quick access to this data in a form of <code>char[]</code> array
+     * if you need maximally quick access to the data in a form of <code>char[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>char[]</code> array.</p>
      *
@@ -424,8 +425,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>char</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaChar()
      * @see #toChar()
+     * @see Array#ja()
+     * @see Matrix#jaChar()
      */
     default char[] jaChar() {
         return this instanceof CharArray a ? a.ja() : this.toChar();
@@ -436,16 +438,15 @@ public interface PArray extends Array {
      * cast to <code>short</code> type if necessary.
      * Equivalent to <code>{@link #toShort(short[]) toShort}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>short</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaShort()
+     * @see Array#toJavaArray()
      * @see Matrix#toShort()
      */
     default short[] toShort() {
@@ -455,11 +456,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>short</code> type if the array is not a {@link ShortArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>short[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -471,7 +472,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof ShortArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, ShortArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, ShortArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -516,7 +517,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toShort() toShort}()</code>.
      *
      * <p>This method may be used instead of {@link #toShort()},
-     * if you need maximally quick access to this data in a form of <code>short[]</code> array
+     * if you need maximally quick access to the data in a form of <code>short[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>short[]</code> array.</p>
      *
@@ -530,8 +531,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>short</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaShort()
      * @see #toShort()
+     * @see Array#ja()
+     * @see Matrix#jaShort()
      */
     default short[] jaShort() {
         return this instanceof ShortArray a ? a.ja() : this.toShort();
@@ -542,16 +544,15 @@ public interface PArray extends Array {
      * cast to <code>int</code> type if necessary.
      * Equivalent to <code>{@link #toInt(int[]) toInt}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>int</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaInt()
+     * @see Array#toJavaArray()
      * @see Matrix#toInt()
      */
     default int[] toInt() {
@@ -561,11 +562,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>int</code> type if the array is not a {@link IntArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>int[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -577,7 +578,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof IntArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, IntArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, IntArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -622,7 +623,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toInt() toInt}()</code>.
      *
      * <p>This method may be used instead of {@link #toInt()},
-     * if you need maximally quick access to this data in a form of <code>int[]</code> array
+     * if you need maximally quick access to the data in a form of <code>int[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>int[]</code> array.</p>
      *
@@ -636,8 +637,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>int</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaInt()
      * @see #toInt()
+     * @see Array#ja()
+     * @see Matrix#jaInt()
      */
     default int[] jaInt() {
         return this instanceof IntArray a ? a.ja() : this.toInt();
@@ -648,16 +650,15 @@ public interface PArray extends Array {
      * cast to <code>long</code> type if necessary.
      * Equivalent to <code>{@link #toLong(long[]) toLong}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>long</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaLong()
+     * @see Array#toJavaArray()
      * @see Matrix#toLong()
      */
     default long[] toLong() {
@@ -667,11 +668,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>long</code> type if the array is not a {@link LongArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>long[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -683,7 +684,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof LongArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, LongArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, LongArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -728,7 +729,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toLong() toLong}()</code>.
      *
      * <p>This method may be used instead of {@link #toLong()},
-     * if you need maximally quick access to this data in a form of <code>long[]</code> array
+     * if you need maximally quick access to the data in a form of <code>long[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>long[]</code> array.</p>
      *
@@ -742,8 +743,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>long</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaLong()
      * @see #toLong()
+     * @see Array#ja()
+     * @see Matrix#jaLong()
      */
     default long[] jaLong() {
         return this instanceof LongArray a ? a.ja() : this.toLong();
@@ -754,16 +756,15 @@ public interface PArray extends Array {
      * cast to <code>float</code> type if necessary.
      * Equivalent to <code>{@link #toFloat(float[]) toFloat}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>float</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaFloat()
+     * @see Array#toJavaArray()
      * @see Matrix#toFloat()
      */
     default float[] toFloat() {
@@ -773,11 +774,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>float</code> type if the array is not a {@link FloatArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>float[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -789,7 +790,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof FloatArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, FloatArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, FloatArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -834,7 +835,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toFloat() toFloat}()</code>.
      *
      * <p>This method may be used instead of {@link #toFloat()},
-     * if you need maximally quick access to this data in a form of <code>float[]</code> array
+     * if you need maximally quick access to the data in a form of <code>float[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>float[]</code> array.</p>
      *
@@ -848,8 +849,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>float</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaFloat()
      * @see #toFloat()
+     * @see Array#ja()
+     * @see Matrix#jaFloat()
      */
     default float[] jaFloat() {
         return this instanceof FloatArray a ? a.ja() : this.toFloat();
@@ -860,16 +862,15 @@ public interface PArray extends Array {
      * cast to <code>double</code> type if necessary.
      * Equivalent to <code>{@link #toDouble(double[]) toDouble}(null)</code>.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * @return Java array containing all the elements in this array, cast to <code>double</code> type
      * according to AlgART rules.
      * @throws NullPointerException   if <code>array</code> argument is {@code null}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see #toJavaArray()
      * @see #jaDouble()
+     * @see Array#toJavaArray()
      * @see Matrix#toDouble()
      */
     default double[] toDouble() {
@@ -879,11 +880,11 @@ public interface PArray extends Array {
     /**
      * Copies all elements in this AlgART array into the <code>result</code> Java array,
      * automatically casting the elements to <code>double</code> type if the array is not a {@link DoubleArray},
-     * and return a reference to the <code>result</code>.
+     * and returns a reference to the <code>result</code>.
      * If <code>result</code> argument is {@code null}, creates a new <code>double[]</code> array
      * with a length equal to this array length (returned by {@link Array#length()} method);
      * if it is not {@code null}, its length must be &ge;{@link Array#length() length()}.
-     * If the length of this AlgART array is too large (greater than <code>Integer.MAX_VALUE</code>),
+     * If the length of this AlgART array is greater than <code>Integer.MAX_VALUE</code>,
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is equivalent to the following code:</p>
@@ -895,7 +896,7 @@ public interface PArray extends Array {
      *      }
      *      if (!(array instanceof DoubleArray)) {
      *          array = {@link Arrays#asFuncArray(Func, Class, PArray...)
-     *          Arrays.asFuncArray}(Func.IDENTITY, DoubleArray.class, array);
+     *          Arrays.asFuncArray}({@link Func#IDENTITY Func.IDENTITY}, DoubleArray.class, array);
      *      }
      *      array.{@link Array#getData(long, Object) getData}(0, result);</pre>
      *
@@ -940,7 +941,7 @@ public interface PArray extends Array {
      * ja()} : thisObject.{@link #toDouble() toDouble}()</code>.
      *
      * <p>This method may be used instead of {@link #toDouble()},
-     * if you need maximally quick access to this data in a form of <code>double[]</code> array
+     * if you need maximally quick access to the data in a form of <code>double[]</code> Java array
      * and there is high probability that this AlgART array is a {@link Array#isJavaArrayWrapper() wrapper}
      * for standard <code>double[]</code> array.</p>
      *
@@ -954,8 +955,9 @@ public interface PArray extends Array {
      * @return Java array containing all the elements in this array, cast to <code>double</code> type
      * according to AlgART rules.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
-     * @see Matrix#jaDouble()
      * @see #toDouble()
+     * @see Array#ja()
+     * @see Matrix#jaDouble()
      */
     default double[] jaDouble() {
         return this instanceof DoubleArray a ? a.ja() : this.toDouble();

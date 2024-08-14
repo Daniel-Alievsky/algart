@@ -700,7 +700,7 @@ public class Matrices {
          * Indicates whether the method {@link #contains(long...)} in this class works correctly.
          * You should use {@link #contains(long...)} method only
          * if this method returns <code>true</code>;
-         * in other case, {@link #contains(long...)} throws <code>UnsupportedOperationException</code>.
+         * in another case, {@link #contains(long...)} throws <code>UnsupportedOperationException</code>.
          *
          * <p>This default implementation returns <code>true</code>.
          * So, if you prefer not to implement {@link #contains(long...)} method,
@@ -1380,7 +1380,7 @@ public class Matrices {
                         if (vyNext != sectionY) {
                             sectionX[sectionCount++] = vx[k];
                             if ((vyNext > sectionY) == (vyPrev > sectionY)) {
-                                // it means that we only touch the horizontal; in other case, we pass through it
+                                // it means that we only touch the horizontal; in another case, we pass through it
                                 sectionX[sectionCount++] = vx[k]; // adding this vertex twice
                             }
                             break;
@@ -1764,7 +1764,7 @@ public class Matrices {
      * Returns an updatable list <code>java.util.Arrays.asList(matrices.clone())</code>,
      * if all these matrices are not {@code null} and all their built-in arrays
      * <code>matrices[k].{@link Matrix#array() array()}</code> are instances of the required <code>arrayClass</code>,
-     * or throws an exception in other case.
+     * or throws an exception in another case.
      *
      * <p>Unlike <code>java.util.Arrays.asList</code> method, this one allows creating a list
      * without unchecked warnings.
@@ -3255,7 +3255,7 @@ public class Matrices {
      * <code>{x.get(0).{@link Matrix#array() array}(), x.get(1).{@link Matrix#array() array}(), ...}</code>.
      *
      * <p>In addition, this method checks, whether all passed matrices have the
-     * {@link Matrix#dimEquals(Matrix) same dimensions}, and throws an exception in other case.
+     * {@link Matrix#dimEquals(Matrix) same dimensions}, and throws an exception in another case.
      *
      * @param <T>               the generic type of AlgART array.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3741,7 +3741,7 @@ public class Matrices {
      *
      * <p>In addition, this method checks, whether all passed matrices have the
      * {@link Matrix#dimEquals(Matrix) same dimensions} as <code>result</code> one,
-     * and throws an exception in other case.
+     * and throws an exception in another case.
      *
      * @param context           the context of copying; can be {@code null}.
      * @param truncateOverflows specifies behavior of typecasting to <code>int</code>, <code>short</code>,
@@ -3786,7 +3786,7 @@ public class Matrices {
      * elements we suppose that maximal possible value is 1.0.)
      *
      * <p>More precisely, if <code>newElementType==matrix.elementType()</code>, this function just returns
-     * the <code>matrix</code> argument without changes, in other case it is equivalent to the following operators:
+     * the <code>matrix</code> argument without changes; in another case, it is equivalent to the following operators:
      * <pre>
      *     final Class&lt;PArray&gt; newType = Arrays.type(PArray.class, newElementType);
      *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
@@ -3837,7 +3837,7 @@ public class Matrices {
      *
      * <p>In addition, this method checks, whether all passed matrices have the
      * {@link Matrix#dimEquals(Matrix) same dimensions},
-     * and throws an exception in other case.
+     * and throws an exception in another case.
      *
      * <p>If the source and result matrices have the same element type, this method just copies <code>matrix</code>
      * to <code>result</code>.
@@ -4544,7 +4544,7 @@ public class Matrices {
      * This method just calls <code>{@link Arrays#copy(ArrayContext, UpdatableArray, Array)
      * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
-     * or throws {@link SizeMismatchException} in other case.
+     * or throws {@link SizeMismatchException} in another case.
      *
      * @param context the context of copying; can be {@code null}.
      * @param dest    the destination matrix.
@@ -4568,7 +4568,7 @@ public class Matrices {
      * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()},
      * numberOfTasks)</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
-     * or throws {@link SizeMismatchException} in other case.
+     * or throws {@link SizeMismatchException} in another case.
      *
      * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination matrix.
@@ -4601,7 +4601,7 @@ public class Matrices {
      * Arrays.copy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()},
      * numberOfTasks, strictMode)</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
-     * or throws {@link SizeMismatchException} in other case.
+     * or throws {@link SizeMismatchException} in another case.
      *
      * @param context       the context of copying; can be {@code null}.
      * @param dest          the destination matrix.
@@ -4636,7 +4636,7 @@ public class Matrices {
      * This method just calls <code>{@link Arrays#compareAndCopy(ArrayContext, UpdatableArray, Array)
      * Arrays.compareAndCopy}(context, dest.{@link Matrix#array() array()}, src.{@link Matrix#array() array()})</code>,
      * if the passed matrices {@link Matrix#dimEquals have the same dimensions},
-     * or throws {@link SizeMismatchException} in other case.
+     * or throws {@link SizeMismatchException} in another case.
      *
      * @param context the context of copying; can be {@code null}.
      * @param dest    the destination matrix.

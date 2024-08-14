@@ -620,6 +620,15 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return Java array containing all the elements in this matrix.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toByte()
+     * @see #toChar()
+     * @see #toShort()
+     * @see #toInt()
+     * @see #toLong()
+     * @see #toFloat()
+     * @see #toDouble()
+     * @see #ja()
+     * @see Array#toJavaArray()
      */
     Object toJavaArray();
 
@@ -628,6 +637,15 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return Java array, equivalent to {@link #array()}.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #jaByte()
+     * @see #jaChar()
+     * @see #jaShort()
+     * @see #jaInt()
+     * @see #jaLong()
+     * @see #jaFloat()
+     * @see #jaDouble()
+     * @see #toJavaArray()
+     * @see Array#ja()
      */
     Object ja();
 
@@ -645,6 +663,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toByte(byte[])
      * @see #jaByte()
+     * @see #toJavaArray()
+     * @see PArray#toByte()
      */
     default byte[] toByte() {
         return toByte(null);
@@ -667,6 +687,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toByte()
      * @see #jaByte()
+     * @see #toJavaArray()
+     * @see PArray#toByte(byte[])
      */
     default byte[] toByte(byte[] result) {
         if (!(array() instanceof PArray a)) {
@@ -688,6 +710,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toByte()
      * @see #toByte(byte[])
+     * @see #ja
+     * @see PArray#jaByte()
      */
     default byte[] jaByte() {
         if (!(array() instanceof PArray a)) {
@@ -709,6 +733,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toChar(char[])
      * @see #jaChar()
+     * @see #toJavaArray()
+     * @see PArray#toChar()
      */
     default char[] toChar() {
         return toChar(null);
@@ -731,6 +757,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toChar()
      * @see #jaChar()
+     * @see #toJavaArray()
+     * @see PArray#toChar(char[])
      */
     default char[] toChar(char[] result) {
         if (!(array() instanceof PArray a)) {
@@ -752,6 +780,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toChar()
      * @see #toChar(char[])
+     * @see #ja
+     * @see PArray#jaChar()
      */
     default char[] jaChar() {
         if (!(array() instanceof PArray a)) {
@@ -772,6 +802,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toShort(short[])
      * @see #jaShort()
+     * @see #toJavaArray()
+     * @see PArray#toShort()
      */
     default short[] toShort() {
         return toShort(null);
@@ -794,6 +826,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toShort()
      * @see #jaShort()
+     * @see #toJavaArray()
+     * @see PArray#toShort(short[])
      */
     default short[] toShort(short[] result) {
         if (!(array() instanceof PArray a)) {
@@ -815,6 +849,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toShort()
      * @see #toShort(short[])
+     * @see #ja
+     * @see PArray#jaShort()
      */
     default short[] jaShort() {
         if (!(array() instanceof PArray a)) {
@@ -835,6 +871,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toInt(int[])
      * @see #jaInt()
+     * @see #toJavaArray()
+     * @see PArray#toInt()
      */
     default int[] toInt() {
         return toInt(null);
@@ -857,6 +895,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toInt()
      * @see #jaInt()
+     * @see #toJavaArray()
+     * @see PArray#toInt(int[])
      */
     default int[] toInt(int[] result) {
         if (!(array() instanceof PArray a)) {
@@ -878,6 +918,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toInt()
      * @see #toInt(int[])
+     * @see #ja
+     * @see PArray#jaInt()
      */
     default int[] jaInt() {
         if (!(array() instanceof PArray a)) {
@@ -898,6 +940,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toLong(long[])
      * @see #jaLong()
+     * @see #toJavaArray()
+     * @see PArray#toLong()
      */
     default long[] toLong() {
         return toLong(null);
@@ -920,6 +964,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toLong()
      * @see #jaLong()
+     * @see #toJavaArray()
+     * @see PArray#toLong(long[])
      */
     default long[] toLong(long[] result) {
         if (!(array() instanceof PArray a)) {
@@ -941,6 +987,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toLong()
      * @see #toLong(long[])
+     * @see #ja
+     * @see PArray#jaLong()
      */
     default long[] jaLong() {
         if (!(array() instanceof PArray a)) {
@@ -961,6 +1009,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toFloat(float[])
      * @see #jaFloat()
+     * @see #toJavaArray()
+     * @see PArray#toFloat()
      */
     default float[] toFloat() {
         return toFloat(null);
@@ -983,6 +1033,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toFloat()
      * @see #jaFloat()
+     * @see #toJavaArray()
+     * @see PArray#toFloat(float[])
      */
     default float[] toFloat(float[] result) {
         if (!(array() instanceof PArray a)) {
@@ -1004,6 +1056,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toFloat()
      * @see #toFloat(float[])
+     * @see #ja
+     * @see PArray#jaFloat()
      */
     default float[] jaFloat() {
         if (!(array() instanceof PArray a)) {
@@ -1024,6 +1078,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the matrix size is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toDouble(double[])
      * @see #jaDouble()
+     * @see #toJavaArray()
+     * @see PArray#toDouble()
      */
     default double[] toDouble() {
         return toDouble(null);
@@ -1046,6 +1102,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                       is too small: less than {@link Matrix#size() matrix.size()}.
      * @see #toDouble()
      * @see #jaDouble()
+     * @see #toJavaArray()
+     * @see PArray#toDouble(double[])
      */
     default double[] toDouble(double[] result) {
         if (!(array() instanceof PArray a)) {
@@ -1067,6 +1125,8 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @throws TooLargeArrayException        if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #toDouble()
      * @see #toDouble(double[])
+     * @see #ja
+     * @see PArray#jaDouble()
      */
     default double[] jaDouble() {
         if (!(array() instanceof PArray a)) {
@@ -1126,8 +1186,8 @@ public interface Matrix<T extends Array> extends Cloneable {
 
     /**
      * Returns <code>{@link #array()}.{@link Array#type() type()}</code>,
-     * if it is subtype of (or same type as) the passed <code>arraySupertype</code>,
-     * or throws <code>ClassCastException</code> in other case.
+     * if it is a subtype of (or same type as) the passed <code>arraySupertype</code>,
+     * or throws <code>ClassCastException</code> in another case.
      * (If the passed argument is a class of {@link UpdatableArray} or some its
      * subinterfaces or subclasses, <code>IllegalArgumentException</code> is thrown instead:
      * updatable array classes cannot be specified in this method.)
@@ -1146,8 +1206,8 @@ public interface Matrix<T extends Array> extends Cloneable {
 
     /**
      * Returns <code>{@link #array()}.{@link Array#updatableType() updatableType()}</code>,
-     * if it is subtype of (or same type as) the passed <code>arraySupertype</code>,
-     * or throws <code>ClassCastException</code> in other case.
+     * if it is a subtype of (or same type as) the passed <code>arraySupertype</code>,
+     * or throws <code>ClassCastException</code> in another case.
      *
      * @param <U>            the generic type of AlgART array.
      * @param arraySupertype the required supertype of the built-in AlgART array.
@@ -1196,7 +1256,7 @@ public interface Matrix<T extends Array> extends Cloneable {
 
     /**
      * Returns the number of in bits, required for each element of this matrix, if they are
-     * {@link #isPrimitive() primitive}; in other case returns &minus;1.
+     * {@link #isPrimitive() primitive}; in another case returns &minus;1.
      * Equivalent to {@link Arrays#bitsPerElement(Class)
      * Arrays.bitsPerElement}(thisMatrix.{@link #elementType() elementType()}).
      *
@@ -1269,6 +1329,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * @param n the index of dimension.
      * @return the dimension <code>#n</code> of this matrix or 1 if the index is too large.
      * @throws IndexOutOfBoundsException if <code>n&lt;0</code> (but <i>not</i> if <code>n</code> is too large).
+     * @see #dim32(int)
      */
     long dim(int n);
 
@@ -1764,7 +1825,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>The built-in AlgART array of the returned matrix is backed by the built-in array of this matrix,
      * so &mdash; if this matrix is not {@link #isImmutable() immutable}
-     * &mdash; any changes of the elements of the returned matrix are reflected in this matrix, and vice-versa.
+     * &mdash; any changes of the elements in the returned matrix are reflected in this matrix, and vice versa.
      * The returned matrix is {@link #isImmutable() immutable} if, and only if,
      * the built-in array of this matrix does not implement {@link UpdatableArray}.
      * The {@link Array#asTrustedImmutable()} method
@@ -1811,7 +1872,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatrix(long[], long[])
      * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY})</code>.
-     * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 2-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
      * @param fromY low endpoints (inclusive) of the second coordinate.
@@ -1826,7 +1888,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatrix(long[], long[])
      * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ})</code>.
-     * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 3-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX low endpoints (inclusive) of the first coordinate.
      * @param fromY low endpoints (inclusive) of the second coordinate.
@@ -1867,7 +1930,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * See {@link ContinuationMode} class for more details.
      *
      * <p>Important note: there are two cases, when requirements to the <code>from</code> and <code>to</code>
-     * coordinate boundaries are more strong, than described above.
+     * coordinate boundaries are stronger, than described above.
      * <ol>
      *     <li>If <code>continuationMode=={@link ContinuationMode#NONE}</code>, this method is strictly
      *     equivalent to more simple {@link Matrix#subMatrix(long[], long[])} method,
@@ -1944,7 +2007,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatrix(long[], long[], ContinuationMode)
      * subMatrix}(new long[]{fromX,fromY}, new long[]{toX,toY}, continuationMode)</code>.
-     * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 2-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
      * @param fromY            low endpoints (inclusive) of the second coordinate.
@@ -1975,7 +2039,8 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatrix(long[], long[], ContinuationMode)
      * subMatrix}(new long[]{fromX,fromY,fromZ}, new long[]{toX,toY,toZ}, continuationMode)</code>.
-     * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 3-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param fromX            low endpoints (inclusive) of the first coordinate.
      * @param fromY            low endpoints (inclusive) of the second coordinate.
@@ -2028,11 +2093,12 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatr(long[], long[])
      * subMatr}(new long[]{x,y}, new long[]{dimX,dimY})</code>.
-     * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 2-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
      * @param y    low endpoint (inclusive) of the second coordinate.
-     * @param dimX th first dimension of the returned submatrix.
+     * @param dimX the first dimension of the returned submatrix.
      * @param dimY the second dimension of the returned submatrix.
      * @return a view of the specified rectangular fragment within this matrix.
      * @throws IllegalArgumentException  if <code>{@link #dimCount()}!=2</code>.
@@ -2043,12 +2109,13 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatr(long[], long[])
      * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ})</code>.
-     * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 3-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x    low endpoint (inclusive) of the first coordinate.
      * @param y    low endpoint (inclusive) of the second coordinate.
      * @param z    low endpoint (inclusive) of the third coordinate.
-     * @param dimX th first dimension of the returned submatrix.
+     * @param dimX the first dimension of the returned submatrix.
      * @param dimY the second dimension of the returned submatrix.
      * @param dimZ the third dimension of the returned submatrix.
      * @return a view of the specified rectangular fragment within this matrix.
@@ -2092,11 +2159,12 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatr(long[], long[], ContinuationMode)
      * subMatr}(new long[]{x,y}, new long[]{dimX,dimY}, continuationMode)</code>.
-     * Note that this matrix must be 2-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 2-dimensional
+     * (in another case <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
      * @param y                low endpoint (inclusive) of the second coordinate.
-     * @param dimX             th first dimension of the returned submatrix.
+     * @param dimX             the first dimension of the returned submatrix.
      * @param dimY             the second dimension of the returned submatrix.
      * @param continuationMode the value returned while reading elements, lying outside this matrix.
      * @return a view of the specified rectangular fragment within this matrix.
@@ -2114,7 +2182,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *                                   ContinuationMode#getConstantMode(Object) a constant mode},
      *                                   the {@link Matrix.ContinuationMode#continuationConstant()
      *                                   continuation constant} is not {@code null} and the class of this
-     *                                   constant is illegal, i.e.
+     *                                   constant is illegal, i.e.,
      *                                   cannot be cast to the necessary type according the rules, specified
      *                                   for the {@link
      *                                   ContinuationMode#getConstantMode(Object) constant continuation mode}.
@@ -2124,12 +2192,12 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #subMatr(long[], long[], ContinuationMode)
      * subMatr}(new long[]{x,y,z}, new long[]{dimX,dimY,dimZ}, continuationMode)</code>.
-     * Note that this matrix must be 3-dimensional (in other case <code>IllegalArgumentException</code> will be thrown).
+     * Note that this matrix must be 3-dimensional (otherwise, <code>IllegalArgumentException</code> will be thrown).
      *
      * @param x                low endpoint (inclusive) of the first coordinate.
      * @param y                low endpoint (inclusive) of the second coordinate.
      * @param z                low endpoint (inclusive) of the third coordinate.
-     * @param dimX             th first dimension of the returned submatrix.
+     * @param dimX             the first dimension of the returned submatrix.
      * @param dimY             the second dimension of the returned submatrix.
      * @param dimZ             the third dimension of the returned submatrix.
      * @param continuationMode the value returned while reading elements, lying outside this matrix.
@@ -2243,9 +2311,9 @@ public interface Matrix<T extends Array> extends Cloneable {
      * in the specified matrix <code>m</code>.
      * In other words, the elements of the {@link #array() built-in array} of the returned matrix are
      * the same as the elements of the {@link #array() built-in array} of this one
-     * (any changes of the elements of the returned matrix are reflected in this matrix, and vice-versa),
+     * (any changes of the elements in the returned matrix are reflected in this matrix, and vice versa),
      * but the order of the elements can differ. The precise algorithm of reordering is not specified
-     * and depends of the matrix <code>m</code>: this method tries to help algorithms, processing the same
+     * and depends on the matrix <code>m</code>: this method tries to help algorithms, processing the same
      * or similar areas in both matrices, to provide maximal performance.
      *
      * <p>This method returns non-trivial results only if the matrix <code>m</code> is already a view of some other
@@ -2253,7 +2321,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * matrix.
      * In another case, this method just returns this instance.
      *
-     * <p>In the current version of this package (if this instance was created by means of methods of this package),
+     * <p>In the current version of this package (if this instance was created by methods of this package),
      * this method is equivalent to the following:
      *
      * <pre>
@@ -2387,7 +2455,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * <p>The built-in AlgART array of the returned matrix is backed by the built-in array of this matrix,
      * so &mdash; if this matrix is not {@link #isImmutable() immutable}
-     * &mdash; any changes of the elements of the returned matrix are reflected in this matrix, and vice-versa.
+     * &mdash; any changes of the elements of the returned matrix are reflected in this matrix, and vice versa.
      * The returned matrix is {@link #isImmutable() immutable} if, and only if,
      * the built-in array of this matrix does not implement {@link UpdatableArray}.
      * The {@link Array#asTrustedImmutable()} method
@@ -2552,7 +2620,7 @@ public interface Matrix<T extends Array> extends Cloneable {
     void freeResources(ArrayContext context);
 
     /**
-     * Equivalent to <code>{@link #array()}.{@link Array#freeResources(ArrayContext) freeResources(null)}</code>.
+     * Equivalent to <code>{@link #array()}.{@link Array#freeResources() freeResources()}</code>.
      */
     void freeResources();
 

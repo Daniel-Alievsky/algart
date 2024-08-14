@@ -4757,7 +4757,7 @@ public class MainOperationsTest implements Cloneable {
                                     inside = false;
                                 }
                             }
-                            if (inside) { // in other case, 0.0 is used as outside value in asResized
+                            if (inside) { // in another case, 0.0 is used as outside value in asResized
                                 sum += pm.array().getDouble(pm.index(srcCoords));
                             }
                         }

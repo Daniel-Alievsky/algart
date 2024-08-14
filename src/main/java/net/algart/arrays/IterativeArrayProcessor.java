@@ -271,7 +271,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * <li>{@link #performIteration(ArrayContext context)} in the returned instance calls
      * <code>thisInstance.{@link #performIteration performIteration}(context)</code>, if
      * <code>!thisInstance.{@link #done()}</code>, or calls
-     * <code>followingProcessor.{@link #performIteration performIteration}(context)</code> in other case.</li>
+     * <code>followingProcessor.{@link #performIteration performIteration}(context)</code> in another case.</li>
      *
      * <li>{@link #done()} in the returned instance is equivalent to
      * <code>thisInstance.{@link #done()}&amp;&amp;followingProcessor.{@link #done()}</code>.</li>
@@ -280,7 +280,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      * <code>n1=thisInstance.{@link #estimatedNumberOfIterations()}</code> and
      * <code>n2=followingProcessor.{@link #estimatedNumberOfIterations()}</code>,
      * and returns <code>n2</code> if <code>thisInstance.{@link #done()}</code>,
-     * or, in other case, <code>n1+Math.round(weight*n2)</code>, where <code>weight</code>
+     * or, in another case, <code>n1+Math.round(weight*n2)</code>, where <code>weight</code>
      * is the 2nd argument if this method. (If <code>n1==0</code> or <code>n2==0</code>, <code>0</code> is returned.)
      * The necessity of the weight here is connected with the fact, that
      * the <code>followingProcessor</code> may return illegal results,

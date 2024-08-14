@@ -329,32 +329,10 @@ public interface BitArray extends PFixedArray {
     long nextQuickPosition(long position);
 
     /**
-     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
-     * a packed bit array,
-     * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method
-     * (see {@link PackedBitArrays} class about packed bit <code>long[]</code> arrays).
-     * That packed bit array is returned by {@link #jaBit()} method,
-     * if and only if this method returns <code>true</code>;
-     * otherwise {@link #jaBit()} method returns a copy of array data.
-     *
-     * <p>Note that this method returns <code>false</code> for {@link #subArray(long, long) subarrays} with non-zero
-     * offset. Also, it returns <code>false</code> if the underlying packed array contains more than
-     * <code>{@link PackedBitArrays#packedLength(long)
-     * PackedBitArrays.packedLength}(thisArray.{@link Array#length() length()}</code> elements:
-     * possible for a growing {@link MutableBitArray}.
-     * In other words, the situation is similar to {@link Array#isJavaArrayWrapper()} method,
-     * but for packed bits.
-     *
-     * @return whether this array is a wrapper for a packed bit array.
-     * @see #jaBit()
-     */
-    default boolean isPackedBitArrayWrapper() {
-        return false;
-    }
-
-    /**
      * Returns packed bit array containing all the bits in this AlgART array
-     * in terms of {@link PackedBitArrays} class and {@link BitArray#getBits} method.
+     * in terms of {@link PackedBitArrays} class.
+     * The same data can be retrieved using {@link BitArray#getBits(long, long[], long, long)} method
+     * with zero <code>arrayPos</code> argument.
      * If the length of this array is too large (greater than 2<sup>37</sup>&minus;1),
      * this method throws {@link TooLargeArrayException}.
      *
@@ -378,8 +356,9 @@ public interface BitArray extends PFixedArray {
      *
      * @return packed Java bit array containing all the bits in this array.
      * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
-     * @see BitArray#jaBit()
-     * @see BitArray#getBits(long, long[], long, long)
+     * @see #jaBit()
+     * @see #getBits(long, long[], long, long)
+     * @see #toJavaArray()
      */
     default long[] toBit() {
         final long length = length();
@@ -418,9 +397,35 @@ public interface BitArray extends PFixedArray {
      *
      * @return packed Java bit array containing all the bits in this array.
      * @see #isPackedBitArrayWrapper()
+     * @see #toBit()
+     * @see #ja()
      */
     default long[] jaBit() {
         return toBit();
+    }
+
+    /**
+     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
+     * a packed bit array,
+     * like wrappers returned by {@link SimpleMemoryModel#asUpdatableBitArray(long[], long)} method
+     * (see {@link PackedBitArrays} class about packed bit <code>long[]</code> arrays).
+     * That packed bit array is returned by {@link #jaBit()} method,
+     * if and only if this method returns <code>true</code>;
+     * otherwise {@link #jaBit()} method returns a copy of array data.
+     *
+     * <p>Note that this method returns <code>false</code> for {@link #subArray(long, long) subarrays} with non-zero
+     * offset. Also, it returns <code>false</code> if the underlying packed array contains more than
+     * <code>{@link PackedBitArrays#packedLength(long)
+     * PackedBitArrays.packedLength}(thisArray.{@link Array#length() length()}</code> elements:
+     * possible for a growing {@link MutableBitArray}.
+     * In other words, the situation is similar to {@link Array#isJavaArrayWrapper()} method,
+     * but for packed bits.
+     *
+     * @return whether this array is a wrapper for a packed bit array.
+     * @see #jaBit()
+     */
+    default boolean isPackedBitArrayWrapper() {
+        return false;
     }
 
     /**

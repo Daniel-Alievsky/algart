@@ -149,7 +149,7 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
      * @param morphology        the {@link Morphology} object that will be used for performing erosions.
      * @param requiredType      the type of built-in AlgART array for {@link #result()} matrix.
      *                          Should be enough for storing elementwise sums of hundreds of eroded matrices;
-     *                          in other case, overflows will lead to trunctation of the sums.
+     *                          in another case, overflows will lead to trunctation of the sums.
      * @param matrix            the source matrix, that will be eroded by Minkowski sums of the passed patterns
      *                          (or just by Minkowski muptiples <i>k</i>&otimes;<i>P</i>, if <code>patterns</code>
      *                          argument contains only 1 pattern).

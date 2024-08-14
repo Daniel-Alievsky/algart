@@ -1608,7 +1608,7 @@ public final class ContourJoiner {
                 final int currentY = current[q + 1] - intersectionMinY;
                 if (currentX == lastX && currentY == lastY) {
                     // If we have CODIRECTIONAL segments, we must reject this contour at all:
-                    // in other case we can lead to current contour, containing some segments TWICE.
+                    // in another case, we can lead to current contour, containing some segments TWICE.
                     if (DETAILED_DEBUG_LEVEL >= 2) {
                         System.out.printf("  Joining failed%n");
                     }

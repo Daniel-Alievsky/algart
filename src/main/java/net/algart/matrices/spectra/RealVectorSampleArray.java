@@ -101,7 +101,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * <code>#(k*vectorStep)+j</code> of <code>samples</code> array.
      *
      * <p>The returned sample array is backed by this AlgART array, so any changes of the samples
-     * in the returned array are reflected in this array, and vice-versa.
+     * in the returned array are reflected in this array, and vice versa.
      * More precisely, the returned sample array is backed by
      * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of its length

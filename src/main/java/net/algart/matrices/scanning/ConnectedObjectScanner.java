@@ -460,8 +460,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
-     * to some newly created bit matrix,
-     * in other case the performance will not be improved (because access to each element of the submatrix is slow).
+     * to some newly created bit matrix;
+     * in another case, the performance will not be improved (because access to each element of the submatrix is slow).
      *
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
@@ -515,8 +515,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
-     * to some newly created bit matrix,
-     * in other case the performance will not be improved (because access to each element of the submatrix is slow).
+     * to some newly created bit matrix;
+     * in another case, the performance will not be improved (because access to each element of the submatrix is slow).
      *
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.
@@ -569,8 +569,8 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * where all <code>from[k]==-1</code> and <code>to[k]=matrix.{@link Matrix#dim(int) dim}(k)+1</code>.
      * Note: please copy the matrix, created by this
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode) subMatrix} call,
-     * to some newly created bit matrix,
-     * in other case the performance will not be improved (because access to each element of the submatrix is slow).
+     * to some newly created bit matrix;
+     * in another case, the performance will not be improved (because access to each element of the submatrix is slow).
      *
      * @param matrix           the matrix that will be scanned and cleared by the created instance.
      * @param connectivityType the connectivity kind used by the created instance.

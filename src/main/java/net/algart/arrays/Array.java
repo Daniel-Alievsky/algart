@@ -78,6 +78,7 @@ public interface Array {
      * (usually it just returns a value of some private field).
      *
      * @return the type of array elements.
+     * @see Matrix#elementType()
      * @see Arrays#elementType(Class)
      */
     Class<?> elementType();
@@ -158,6 +159,7 @@ public interface Array {
      * The result of this method is never negative.</p>
      *
      * @return the length: number of elements in this array.
+     * @see Matrix#size()
      */
     long length();
 
@@ -167,11 +169,12 @@ public interface Array {
      * throws {@link TooLargeArrayException}.
      *
      * <p>This method is convenient to allocate memory for a regular Java array
-     * if you want to ensure that this AlgART array can be completely copied into such an array.</p>
+     * if you want to ensure that this AlgART array is not too big to be entirely copied into a Java array.</p>
      *
      * @return the length: number of elements in this array, if it is less than 2<sup>31</sup>.
      * @throws TooLargeArrayException if the actual length is greater than
      *                                <code>Integer.MAX_VALUE</code>=2<sup>31</sup>&minus;1.
+     * @see Matrix#size32()
      */
     default int length32() throws TooLargeArrayException {
         long result = length();
@@ -188,6 +191,7 @@ public interface Array {
      * Equivalent to the call <code>{@link #length() length}() == 0</code>.
      *
      * @return <code>true</code> if the array is empty, i.e. its length is zero.
+     * @see Matrix#isEmpty()
      */
     default boolean isEmpty() {
         return length() == 0;
@@ -323,7 +327,7 @@ public interface Array {
      * <ul>
      * <li>If <code>fromIndex</code> and <code>toIndex</code> are equal, the returned array is empty.
      * <li>The returned array is backed by this array, so &mdash; if this array is not immutable
-     * &mdash; any changes of the elements of the returned array are reflected in this array, and vice-versa.
+     * &mdash; any changes of the elements of the returned array are reflected in this array, and vice versa.
      * <li>The capacity of returned array (returned by {@link #capacity()} method) will be
      * equal to the its length (returned by {@link #length()}, that is <code>toIndex-fromIndex</code>.
      * <li>The {@link #elementType() type of elements} of the returned array is the same
@@ -508,7 +512,7 @@ public interface Array {
      * <li>it this object is not immutable (<code>{@link #isImmutable()}==false</code>),
      * then, according to the contract to {@link #isNewReadOnlyView()} method,
      * {@link #isNewReadOnlyView()} must return <code>false</code> for this array
-     * (in other case {@link #isImmutable()} would return <code>true</code>) and
+     * (in another case {@link #isImmutable()} would return <code>true</code>) and
      * it also must return <code>false</code> for the returned array
      * (because it is a view of another array and not an original view of external data &mdash;
      * see the beginning of the comment to {@link #isNewReadOnlyView()}).
@@ -580,12 +584,12 @@ public interface Array {
      * query operations on the returned array "read through"
      * to this array.
      *
-     * <p>The only standard way allowing to change elements of returned array
+     * <p>The only standard way allowing to change elements of the returned array
      * is using {@link DirectAccessible#javaArray()} method, in a case when the array is backed
      * by an accessible array.
      * But the Java code, processing the trusted immutable array,
      * must use this method <i>only for quick reading</i> elements and <i>not try to change</i> them.
-     * If, despite the promise, the elements of the trusted immutable array will be changed,
+     * If, despite the promise, the elements of the trusted immutable array are changed,
      * the {@link UnallowedMutationError} may be thrown by the call of
      * {@link #checkUnallowedMutation()} method.
      *
@@ -945,7 +949,7 @@ public interface Array {
     /**
      * Returns the byte order used by this array for storing data.
      *
-     * <p>This value does not important for using AlgART arrays.
+     * <p>This value is not important for using AlgART arrays.
      * The only case when it can be interesting is when the array is stored in some external resources,
      * for example, in a disk file.
      *
@@ -975,7 +979,7 @@ public interface Array {
      * but with independent length, start offset, capacity, copy-on-next-write and
      * possible other information about any array characteristics besides its elements.
      * In other words, any changes in the <i>elements</i> of the returned array
-     * are usually reflected in this array, and vice-versa; but changes of any other
+     * are usually reflected in this array, and vice versa; but changes of any other
      * characteristics of the original or returned array, including the length,
      * capacity, etc., will not be reflected in another array.
      *
@@ -988,7 +992,7 @@ public interface Array {
      * <p>There are <i>no guarantees</i> that the returned array will share the elements with this one.
      * Some implementations may return the full (deep) copy of this object, alike
      * {@link #updatableClone(MemoryModel)} or {@link #mutableClone(MemoryModel)} methods.
-     * All implementations from this package returns a shallow (non-deep) copy.
+     * All implementations from this package return a shallow (non-deep) copy.
      *
      * <p>If modifications of this or returned array characteristics lead to reallocation
      * of the internal storage, then the returned array ceases to be a view of this array.
@@ -1083,18 +1087,19 @@ public interface Array {
     UpdatableArray updatableClone(MemoryModel memoryModel);
 
     /**
-     * Returns the Java array containing all the elements in this AlgART array in a proper sequence,
-     * if the length of this array is not too large (not greater than <code>Integer.MAX_VALUE</code>).
-     * In another case, throws {@link TooLargeArrayException}.
+     * Returns the Java array containing all the elements in this AlgART array in a proper sequence.
+     * The same data can be retrieved using {@link BitArray#getData(long, Object)} method
+     * with zero <code>arrayPos</code> argument.
+     * If the length of this array is greater than <code>Integer.MAX_VALUE</code>,
+     * this method throws {@link TooLargeArrayException}.
      *
      * <p>The result is always a newly created Java array.
      * Its length will be equal to current
      * <code>array.{@link Array#length() length()}</code>, and array elements will be stored
      * in elements <code>#0..#{@link Array#length() length()}-1}</code> of the returned array.
      *
-     * <p>This method must always allocate a new Java array.
-     * The returned Java array will be "safe" in the sense that no references to it are stored inside this array.
-     * The caller is thus free to modify the returned array.
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
      *
      * <p>The type of returned array is always one of the following:<ul>
      * <li><code>boolean[]</code> for {@link BitArray},
@@ -1118,6 +1123,15 @@ public interface Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #ja()
      * @see #getData(long, Object)
+     * @see PArray#toByte()
+     * @see PArray#toChar()
+     * @see PArray#toShort()
+     * @see PArray#toInt()
+     * @see PArray#toLong()
+     * @see PArray#toFloat()
+     * @see PArray#toDouble()
+     * @see BitArray#toBit()
+     * @see Matrix#toJavaArray()
      */
     default Object toJavaArray() {
         final long len = length();
@@ -1128,42 +1142,6 @@ public interface Array {
         Object result = newJavaArray((int) len);
         getData(0, result);
         return result;
-    }
-
-    /**
-     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
-     * a standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
-     * That array is returned by {@link #ja()} method,
-     * if and only if this method returns <code>true</code>;
-     * otherwise {@link #ja()} method returns a copy of array data.
-     *
-     * <p>More precisely, this method returns <code>true</code>,
-     * if and only if all the following conditions are fulfilled:</p>
-     * <ol>
-     *     <li><code>thisArray instanceof {@link DirectAccessible}</code>;
-     *     let <code>da = (DirectAccessible) thisArray</code>;</li>
-     *     <li><code>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</code>;</li>
-     *     <li><code>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</code>;</li>
-     *     <li><code>array.{@link Array#length() length()} == n</code>, where <code>n</code>
-     *     is the length of Java array
-     *     <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>:<br>
-     *     <code>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</code>
-     *     (this condition is usually not fulfilled, for example, in a growing {@link MutableArray}).</li>
-     * </ol>
-     *
-     * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
-     * of the underlying Java array, returned by <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>
-     * or by {@link #ja()} method.</p>
-     *
-     * @return whether this array is a wrapper for standard Java array: direct-accessible array with zero offset and
-     * with length, equal to the number of elements in the underlying Java array.
-     * @see #ja()
-     */
-    default boolean isJavaArrayWrapper() {
-        return this instanceof DirectAccessible da &&
-                da.hasJavaArray() &&
-                da.javaArrayOffset() == 0 &&
-                java.lang.reflect.Array.getLength(da.javaArray()) == length();
     }
 
     /**
@@ -1222,14 +1200,52 @@ public interface Array {
      * @see #isJavaArrayWrapper()
      * @see #toJavaArray()
      * @see PArray#jaByte()
+     * @see PArray#jaChar()
      * @see PArray#jaShort()
      * @see PArray#jaInt()
      * @see PArray#jaLong()
      * @see PArray#jaFloat()
      * @see PArray#jaDouble()
+     * @see BitArray#jaBit()
      * @see Matrix#ja()
      */
     Object ja();
+
+    /**
+     * Returns <code>true</code> this array is actually a <i>wrapper</i> for
+     * a standard Java array, like wrappers returned by {@link SimpleMemoryModel#asUpdatableArray(Object)} method.
+     * That array is returned by {@link #ja()} method,
+     * if and only if this method returns <code>true</code>;
+     * otherwise {@link #ja()} method returns a copy of array data.
+     *
+     * <p>More precisely, this method returns <code>true</code>,
+     * if and only if all the following conditions are fulfilled:</p>
+     * <ol>
+     *     <li><code>thisArray instanceof {@link DirectAccessible}</code>;
+     *     let <code>da = (DirectAccessible) thisArray</code>;</li>
+     *     <li><code>da.{@link DirectAccessible#hasJavaArray() hasJavaArray()}</code>;</li>
+     *     <li><code>da.{@link DirectAccessible#javaArrayOffset() javaArrayOffset()} == 0</code>;</li>
+     *     <li><code>array.{@link Array#length() length()} == n</code>, where <code>n</code>
+     *     is the length of Java array
+     *     <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>:<br>
+     *     <code>array.{@link Array#length() length()} == java.lang.reflect.Array.getLength(da.javaArray())</code>
+     *     (this condition is usually not fulfilled, for example, in a growing {@link MutableArray}).</li>
+     * </ol>
+     *
+     * <p>In this situation, the specified AlgART array is called <i>a wrapper</i>
+     * of the underlying Java array, returned by <code>da.{@link DirectAccessible#javaArray() javaArray()}</code>
+     * or by {@link #ja()} method.</p>
+     *
+     * @return whether this array is a wrapper for standard Java array: direct-accessible array with zero offset and
+     * with length, equal to the number of elements in the underlying Java array.
+     * @see #ja()
+     */
+    default boolean isJavaArrayWrapper() {
+        return this instanceof DirectAccessible da &&
+                da.hasJavaArray() &&
+                da.javaArrayOffset() == 0 &&
+                java.lang.reflect.Array.getLength(da.javaArray()) == length();
+    }
 
     /**
      * Equivalent to <code>{@link Matrices#matrix(Array, long[]) matrix}(thisArray, dim)</code>.
@@ -1240,7 +1256,7 @@ public interface Array {
      * @throws IllegalArgumentException if the passed array is resizable
      *                                  (for example, implements {@link MutableArray}),
      *                                  or if the number of dimensions is 0 (empty <code>dim</code> Java array),
-     *                                  or if some of the dimensions are negative.
+     *                                  or if some dimensions are negative.
      * @throws SizeMismatchException    if the product of all dimensions is not equal to the array length.
      * @throws TooLargeArrayException   if the product of all dimensions is greater than <code>Long.MAX_VALUE</code>.
      */
@@ -1417,6 +1433,7 @@ public interface Array {
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see #freeResources(ArrayContext, boolean)
+     * @see Matrix#flushResources(ArrayContext)
      */
     void flushResources(ArrayContext context, boolean forcePhysicalWriting);
 
@@ -1426,6 +1443,7 @@ public interface Array {
      *
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
+     * @see Matrix#freeResources()
      */
     default void freeResources() {
         freeResources(null, false);
@@ -1437,6 +1455,7 @@ public interface Array {
      * @param context the context of execution; can be {@code null}, then it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
+     * @see Matrix#freeResources(ArrayContext)
      */
     default void freeResources(ArrayContext context) {
         freeResources(context, false);

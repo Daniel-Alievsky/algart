@@ -462,7 +462,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     /**
      * The memory model used by this instance for all operations.
      * Equal to {@link #context}.{@link ArrayContext#getMemoryModel() getMemoryModel()} if
-     * <code>{@link #context}!=null</code>, in other case equal to
+     * <code>{@link #context}!=null</code>, in another case equal to
      * {@link SimpleMemoryModel#getInstance()}.
      */
     final MemoryModel memoryModel;
@@ -1424,7 +1424,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * <p>If this index <i>k</i> exists, this method performs
      * <code>{@link #goToIndexInArray(long) goToIndexInArray}(<i>k</i>)</code>
      * and returns <code>true</code>,
-     * in other case doesn't change the state of this object and returns <code>false</code>.
+     * in another case doesn't change the state of this object and returns <code>false</code>.
      *
      * <p>Note, that if this scanner was not {@link #isInitialized() positioned yet}, it becomes positioned
      * if this method returns <code>true</code>, but stays not positioned if it returns <code>false</code>.
@@ -1640,7 +1640,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * &mdash; see the description of group 5 of pixel types in the
      * {@link SkeletonPixelClassifier comments to SkeletonPixelClassifier}.
      * If one of pixels <i>A</i> or <i>B</i> is the current node, this method moves the current position to
-     * this neighbour and returns <code>true</code>, in other case if does nothing and returns <code>false</code>.</li>
+     * this neighbour and returns <code>true</code>, in another case if does nothing and returns <code>false</code>.</li>
      *
      * <li>In all other situations (the given neighbour is zero or
      * "{@link SkeletonPixelClassifier#TYPE_ILLEGAL illegal}" unit element),
@@ -1653,7 +1653,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * whether the given neighbour was already visited, i.e. checks the result of
      * {@link #neighbourVisitRemembered(int) neighbourVisitRemembered(neighbourIndex)} call.
      * If that call returns <code>true</code>, this method does nothing and returns <code>false</code>,
-     * in other case it works as described above.
+     * in another case it works as described above.
      *
      * <p>Note, that even if this scanner is {@link #isRemembering() remembering}, this method does not store
      * information about visiting pixels. If you want, you should do this manually by

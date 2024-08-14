@@ -114,7 +114,7 @@ public final class ApertureFilterOperator implements Operator {
             if (lf.n() > this.totalCount) {
                 throw new IllegalArgumentException("Insufficient number of aperture points for the aperture function");
             }
-            if (lf.n() == this.totalCount) { // in other case, we'll not perform optimization
+            if (lf.n() == this.totalCount) { // in another case, we'll not perform optimization
                 this.a = lf.a(0);
                 this.isNonweightedSum = lf.isNonweighted();
             } else {

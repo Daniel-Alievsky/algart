@@ -87,7 +87,7 @@ public final class JArrayPool {
 
     /**
      * Returns the ready for use Java array. If it is not found in the internal cache, it is created,
-     * in other case some free array from the cache is returned.
+     * in another case some free array from the cache is returned.
      *
      * <p>The {@link #releaseArray(Object)} should be called after finishing working with this array.
      *

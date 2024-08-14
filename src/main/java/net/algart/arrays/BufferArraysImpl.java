@@ -78,7 +78,7 @@ class BufferArraysImpl {
         protected long offset = 0;
 
         /**
-         * The copy-on-next-write flag.
+         * The "copy-on-next-write" flag.
          */
         protected boolean copyOnNextWrite = false;
 

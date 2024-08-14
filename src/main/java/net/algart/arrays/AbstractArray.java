@@ -933,7 +933,7 @@ public abstract class AbstractArray implements Array, Cloneable {
                 && ((CopiesArraysImpl.CopiesObjectArray<?>) src).element == null;
         if (!(allowNulls && nullFilled)) {
             checkCopyArguments(thisArray, src);
-        } // in other case, thisArray and src are not null (they are ObjectArray), so we don't need to check null
+        } // in another case, thisArray and src are not null (they are ObjectArray), so we don't need to check null
         if (ArraysSubMatrixCopier.copySubMatrixArray(null, thisArray, src)) {
             return;
         }

@@ -86,7 +86,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * So, the application can be terminated by the usual way, even
      * if the global thread pool contains some working threads.
      *
-     * @return the global thread pool, usually returned by this factory, if it exists, or {@code null} in other case.
+     * @return the global thread pool, usually returned by this factory, if it exists, or {@code null} in another case.
      */
     public static ThreadPoolExecutor globalThreadPool() {
         return ConstantHolder.GLOBAL_THREAD_POOL;
@@ -293,7 +293,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
 
     /**
      * This implementation calls <code>pool.shutdown()</code>, if there is no persistent thread pool
-     * ({@link #persistentThreadPool()} returns {@code null}), or does nothing in other case.
+     * ({@link #persistentThreadPool()} returns {@code null}), or does nothing in another case.
      *
      * @param pool the thread pool created by the previous {@link #getThreadPool(Array, ThreadFactory)} call.
      * @throws NullPointerException if <code>poll</code> argument is {@code null}
@@ -308,7 +308,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     /**
      * Returns the persistent thread pool,
      * returned by all calls of {@link #getThreadPool(Array, ThreadFactory)} method,
-     * if it exists, or {@code null} in other case.
+     * if it exists, or {@code null} in another case.
      * (In the second case, every call of {@link #getThreadPool(Array, ThreadFactory)} method
      * creates new thread pool.)
      *
@@ -320,7 +320,7 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * or {@link #getDefaultThreadPoolFactory(int)},
      * this method returns the result of {@link #globalThreadPool()}.
      *
-     * @return the persistent thread pool and {@code null} if it exists, or {@code null} in other case.
+     * @return the persistent thread pool and {@code null} if it exists, or {@code null} in another case.
      */
     public final ExecutorService persistentThreadPool() {
         return persistentThreadPool;

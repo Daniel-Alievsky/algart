@@ -31,7 +31,7 @@ import net.algart.math.Range;
  * <i>f</i>(<i>x</i><sub>0</sub>) = <code>in</code>
  * if <code>min&lt;=<i>x</i><sub>0</sub>&lt;=max</code> and
  * <i>f</i>(<i>x</i><sub>0</sub>) = <code>out</code>
- * in other case, where <code>min</code>, <code>max</code>, <code>in</code>, <code>out</code>
+ * in another case, where <code>min</code>, <code>max</code>, <code>in</code>, <code>out</code>
  * are parameters of this function.
  * The {@link #get} method of the instance of this class requires at least 1 argument
  * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0.</p>

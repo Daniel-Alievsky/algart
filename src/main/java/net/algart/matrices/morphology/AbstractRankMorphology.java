@@ -787,7 +787,7 @@ public abstract class AbstractRankMorphology extends AbstractMorphology implemen
      * if <code>percentileIndex==(long)percentileIndex</code>,</li>
      * <li>or <code>const = {@link Arrays#nDoubleCopies(long, double)
      * Arrays.nDoubleCopies}(src.size(), percentileIndex)</code>
-     * in other case.</li>
+     * in another case.</li>
      * </ul>
      *
      * @param src             some matrix.

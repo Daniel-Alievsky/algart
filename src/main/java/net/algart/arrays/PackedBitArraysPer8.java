@@ -2398,7 +2398,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>srcPos</code> and <code>count</code> arguments are declared as <code>long</code>,
-     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws <code>IllegalArgumentException</code>. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -2587,7 +2587,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>srcPos</code> and <code>count</code> arguments are declared as <code>long</code>,
-     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually they must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws <code>IllegalArgumentException</code>. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -2771,7 +2771,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -2865,7 +2865,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -2960,7 +2960,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3065,7 +3065,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3166,7 +3166,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3270,7 +3270,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3370,7 +3370,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3474,7 +3474,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3574,7 +3574,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3678,7 +3678,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3778,7 +3778,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3882,7 +3882,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -3982,7 +3982,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -4086,7 +4086,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -4186,7 +4186,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -4290,7 +4290,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -4390,7 +4390,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *
@@ -4494,7 +4494,7 @@ public class PackedBitArraysPer8 {
      * method.</p>
      *
      * <p>Note: <code>count</code> argument is declared as <code>long</code>,
-     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in other case,
+     * but actually it must be in <code>0..Integer.MAX_VALUE</code> range; in another case,
      * this method throws an exception. Using <code>long</code>
      * type instead of <code>int</code> may make this method more convenient to use in some situations.</p>
      *

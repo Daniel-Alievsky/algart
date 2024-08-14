@@ -233,7 +233,8 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
          *
          * @param length      initial length of corresponding <i>combined</i> arrays.
          * @param unresizable if <code>true</code>, the created arrays <i>should</i> be unresizable,
-         *                    in other case they <i>must</i> be mutable and implement {@link MutableArray} interface.
+         *                    in another case, they <i>must</i> be mutable
+         *                    and implement {@link MutableArray} interface.
          * @return created storage.
          */
         UpdatableArray[] allocateStorage(long length, boolean unresizable);
@@ -707,12 +708,12 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * Array#shallowClone() shallowClone()}</code>,
      * with the current combiner (specified while creating this memory model).
      * Changes of elements of the passed arrays
-     * will be reflected in the returned combined array, and vice-versa.
+     * will be reflected in the returned combined array, and vice versa.
      *
      * <p>Using shallow copies means that any further changes of lengths or capacities
      * of the passed <code>storage</code> arrays will not affect to the length or capacity of
-     * the returned combined array. However, changes of elements of the passed arrays
-     * will be reflected in the returned combined array, and vice-versa. Also it means that
+     * the returned combined array. However, changes of elements in the specified arrays
+     * will be reflected in the returned combined array, and vice versa. Also, it means that
      * if modifications of the passed arrays characteristics lead to reallocation
      * of their internal storage, then the returned array <i>ceases to be a view of passed arrays</i>.
      * The only possible reasons for reallocation are the following:
@@ -760,7 +761,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * <p>Using shallow copies means that you are free to change the lengths or capacities
      * of the returned arrays: it will not affect to the length or capacity of
      * the passed combined array. However, changes of elements
-     * of the returned arrays will be reflected in the combined array, and vice-versa.
+     * in the returned arrays will be reflected in the combined array, and vice versa.
      * If modifications of the passed combined array characteristics lead to reallocation
      * of the internal storage, then the returned arrays ceases to be a view of the passed array.
      * The only possible reasons for reallocation are the following:

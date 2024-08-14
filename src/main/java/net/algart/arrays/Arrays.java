@@ -536,7 +536,7 @@ public class Arrays {
         /**
          * Returns {@link #globalMemoryModel() global memory model}, if it
          * {@link MemoryModel#isElementTypeSupported(Class) supports} the passed type
-         * of array elements, or {@link SimpleMemoryModel} instance in other case.
+         * of array elements, or {@link SimpleMemoryModel} instance otherwise.
          *
          * @param elementType the type of array elements.
          * @return the global memory model if it supports this type, {@link SimpleMemoryModel} otherwise.
@@ -1771,6 +1771,7 @@ public class Arrays {
      * @return the size of each element of the AlgART array in bits or &minus;1 if it is unknown.
      * @see #sizeOf(Class)
      * @see PArray#bitsPerElement()
+     * @see Matrix#bitsPerElement()
      */
     public static long bitsPerElement(Class<?> elementType) {
         if (elementType == boolean.class) {
@@ -2673,11 +2674,11 @@ public class Arrays {
      * </ul>
      *
      * <p>The <code>x</code> argument is "vararg"; so you may pass a Java array as this argument.
-     * In this case, no references to the passed Java array are maintained by the result:
+     * In this case, no references to the passed Java array are stored in the result object:
      * it is cloned by this method.
      *
      * <p>The {@link Array#length() lengths} of all passed <code>x</code> arrays must be equal;
-     * in other case, an exception is thrown.
+     * in another case, an exception is thrown.
      *
      * <p>In the returned array:
      *
@@ -2964,7 +2965,7 @@ public class Arrays {
      * copy(context, result, lazy, numberOfTasks, strictMode)}</code> call.
      *
      * <p>In addition, this method checks, whether all passed arrays have the
-     * same length as <code>result</code> one, and throws an exception in other case.
+     * same length as <code>result</code> one, and throws an exception in another case.
      *
      * <p>If no source arrays are passed (<code>x.length==0</code>), the "lazy" array is created by
      * another way: <code>lazy = {@link #asIndexFuncArray(boolean, Func, Class, long)
@@ -3186,7 +3187,7 @@ public class Arrays {
      *
      * <p>All passed arrays must be {@link UpdatableArray#asUnresizable() unresizable}
      * and have the same {@link Array#elementType() element type};
-     * in other case, an exception is thrown.
+     * in another case, an exception is thrown.
      *
      * <p>The array, returned by this method, is immutable.
      * Its class implements the same basic interface
@@ -3261,7 +3262,7 @@ public class Arrays {
      * and the returned array contains no elements.)
      *
      * <p>The passed array must be {@link UpdatableArray#asUnresizable() unresizable};
-     * in other case, an exception is thrown.
+     * in another case, an exception is thrown.
      *
      * <p>The array, returned by this method, is immutable.
      * Its class implements the same basic interface
@@ -4434,7 +4435,7 @@ public class Arrays {
      * elements we suppose that maximal possible value is 1.0.)
      *
      * <p>More precisely, if <code>newElementType==array.elementType()</code>, this function just returns
-     * the <code>array</code> argument without changes, in other case it is equivalent to the following operators:
+     * the <code>array</code> argument without changes, in another case it is equivalent to the following operators:
      * <pre>
      *     final Class&lt;PArray&gt; newType = Arrays.type(PArray.class, newElementType);
      *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
@@ -4490,7 +4491,7 @@ public class Arrays {
      * <code>{@link #copy(ArrayContext, UpdatableArray, Array) copy(context, result, lazy)}</code> call.
      *
      * <p>In addition, this method checks, whether the passed arrays have the same length,
-     * and throws an exception in other case.
+     * and throws an exception in another case.
      *
      * <p>If the source and result array have the same element type, this method just copies <code>array</code>
      * to <code>result</code>.
@@ -5422,7 +5423,7 @@ public class Arrays {
      * More precisely, this method throws {@link TooLargeArrayException}
      * if <code>newUnsignedLength&lt;0</code>
      * (for unsigned values, it means that the number <code>&gt;=2<sup>63</sup></code>);
-     * in other case, this method just calls <code>array.length(newUnsignedLength)</code>.
+     * in another case, this method just calls <code>array.length(newUnsignedLength)</code>.
      *
      * <p>This method is convenient if you need to set the new length to a sum <code>a+b</code> of 2
      * <code>long</code> values <code>a</code> and <code>b</code> (usual signed positive <code>long</code> values),
@@ -6280,7 +6281,7 @@ public class Arrays {
         long bL = b & 0xFFFFFFFFL, bH = b >>> 32;
         // |a*b| = aH*bH * 2^64 + (aH*bL + aL*bH) * 2^32 + aL*bL (all unsigned, aH,bH < 2^31)
         // let c = aH*bL + aL*bH, d = aL*bL (unsigned)
-        // aH*bH must be zero (in other case, there is overflow)
+        // aH*bH must be zero (in another case, there is overflow)
         // so, |a*b| = c * 2^32 + d; it must be < 2^31
         long c, d;
         if (aH == 0L) {
@@ -6401,7 +6402,7 @@ public class Arrays {
         if (!sorted) {
             java.util.Arrays.sort(positions);
         }
-        // assert positions.length >= 2; // important: in other case, maxGap below will be set to length instead of 0
+        // assert positions.length >= 2; // important: in another case, maxGap below will be set to length instead of 0
         long maxGap = positions[0] - positions[positions.length - 1] + length;
         int maxGapRightIndex = 0;
         if (maxGap > half) {
@@ -7950,7 +7951,7 @@ public class Arrays {
          * Returns the granularity of splitting: an integer value so that the start index of any range is
          * multiple of {@link #granularity()}.
          * The default implementation of this method returns 64 if the source processed array
-         * is {@link BitArray} (good splitting for processing packed bits)or 1 in other case.
+         * is {@link BitArray} (good splitting for processing packed bits)or 1 in another case.
          * You may override this method, for example, if you need every processed range to contain
          * an integer number of lines of some {@link Matrix AlgART matrix}.
          *

@@ -1624,7 +1624,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             boolean[] a = (boolean[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 boolean temp = a[i];
                 a[i] = a[j];
@@ -1647,7 +1647,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             char[] a = (char[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 char temp = a[i];
                 a[i] = a[j];
@@ -1669,7 +1669,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             byte[] a = (byte[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 byte temp = a[i];
                 a[i] = a[j];
@@ -1691,7 +1691,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             short[] a = (short[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 short temp = a[i];
                 a[i] = a[j];
@@ -1713,7 +1713,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             int[] a = (int[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 int temp = a[i];
                 a[i] = a[j];
@@ -1735,7 +1735,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             long[] a = (long[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 long temp = a[i];
                 a[i] = a[j];
@@ -1757,7 +1757,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             float[] a = (float[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 float temp = a[i];
                 a[i] = a[j];
@@ -1779,7 +1779,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             double[] a = (double[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 double temp = a[i];
                 a[i] = a[j];
@@ -1801,7 +1801,7 @@ class ArraysSubMatrixMirrorCyclicIndexer implements ArraysSubMatrixIndexer {
             Object[] a = (Object[]) javaArray;
             // all count elements were previously read into this array,
             // so we can be sure that position+count is calculated without overflow:
-            // in other case, we would already throw IndexOutOfBoundException
+            // in another case, we would already throw IndexOutOfBoundException
             for (int i = position, mid = position + (count >> 1), j = position + count - 1; i < mid; i++, j--) {
                 Object temp = a[i];
                 a[i] = a[j];

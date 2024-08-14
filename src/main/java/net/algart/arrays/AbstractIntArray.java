@@ -58,7 +58,7 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      *
      * <ol>
      * <li>If it is <code>true</code>, then all passed underlying arrays (if <code>underlyingArrays.length&gt;1</code>)
-     * must have identical length &mdash; in other case, this constructor throws {@link SizeMismatchException}.
+     * must have identical length &mdash; in another case, this constructor throws {@link SizeMismatchException}.
      * </li>
      *
      * <li>If it is <code>true</code>, then<ul>
@@ -660,7 +660,7 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      * for the corresponding subarray
      * of all underlying arrays, passed via the last argument of the constructor,
      * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
-     * or does nothing in other case.
+     * or does nothing in another case.
      *
      * @param context   the context of execution; can be {@code null}, then it will be ignored.
      * @param fromIndex low endpoint (inclusive) of the subarray that should be loaded.
@@ -687,7 +687,7 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
      * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
-     * or for original underlying arrays in other case
+     * or for original underlying arrays in another case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.
@@ -720,7 +720,7 @@ public abstract class AbstractIntArray extends AbstractArray implements IntArray
      * (where <code>c</code> is a necessary {@link ArrayContext#part(long, long, long) part} of the passed context)
      * for the corresponding subarray of all underlying arrays, passed via the last argument of the constructor,
      * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
-     * or for original underlying arrays in other case
+     * or for original underlying arrays in another case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.

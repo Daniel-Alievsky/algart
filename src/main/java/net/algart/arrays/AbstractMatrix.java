@@ -309,7 +309,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         //
         --n;
         if (isEmpty()) {
-            // we must check it here, in other case the further assertions can be false:
+            // we must check it here; otherwise, the further assertions can be false:
             // production of some dimensions in an empty matrix can be greater than Long.MAX_VALUE
             return 0;
         }
@@ -677,7 +677,7 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
 
     @Override
     public void freeResources() {
-        array().freeResources(null);
+        array().freeResources();
     }
 
     @Override

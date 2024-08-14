@@ -1023,7 +1023,7 @@ class MappedDataStorages {
             long ofs = offset(pos);
             assert ofs >= 0;
             int len = singleMapping ? count : (int)Math.min(count, bse - ofs);
-            if (singleMapping || ofs > 0) { // in other case all tasks can be performed by the loop
+            if (singleMapping || ofs > 0) { // in another case, all tasks can be performed by the loop
                 incrementMappingInUseCounter();
                 try {
                     Buffer buf;
@@ -1082,7 +1082,7 @@ class MappedDataStorages {
                 long ofs = offset(pos);
                 assert ofs >= 0;
                 long len = singleMapping ? count : Math.min(count, bse - ofs);
-                if (singleMapping || ofs > 0) { // in other case all tasks can be performed by the loop
+                if (singleMapping || ofs > 0) { // in another case, all tasks can be performed by the loop
                     long o = translateIndex(pos);
                     assert o == ofs;
                     fillDataInFirstBank(ofs, len, fillerWrapper);
@@ -2583,7 +2583,7 @@ class MappedDataStorages {
                 if (needToClearBanks) {
                     final ReentrantLock lock = this.lock;
                     lock.lock();
-                    // Synchronization is necessary: in other case, freeResources method will be able
+                    // Synchronization is necessary: in another case, freeResources method will be able
                     // to close the unmapping buffers here, that can lead to error in some data file models
                     try {
                         releaseFileAndMapping(ReleaseMode.DATA_MAY_BE_LOST, false);
@@ -2953,7 +2953,7 @@ class MappedDataStorages {
             long ofs = offset(pos);
             assert ofs >= 0;
             long len = singleMapping ? count : Math.min(count, bse - ofs);
-            if (singleMapping || ofs > 0) { // in other case all tasks can be performed by the loop
+            if (singleMapping || ofs > 0) { // in another case, the loop can perform all tasks
                 incrementMappingInUseCounter();
                 try {
                     LongBuffer buf;
