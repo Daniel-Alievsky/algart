@@ -162,7 +162,7 @@ public class AJFileChooser extends JFileChooser {
      * JFileChooser.APPROVE_SELECTION is originated (and the dialog
      * is closed) always when the user presses the approve button.
      * <p>Default value for this property is true (that corresponds to
-     * the standard behaviour).
+     * the standard behavior).
      * <p>This property has no effect in the <i>Save</i> dialogs or
      * when multiple file selections are allowed.
      * <p>This method fires a property-changed event, using the string
@@ -201,7 +201,7 @@ public class AJFileChooser extends JFileChooser {
      * By default (and in the standard JFileChooser component),
      * no warning is shown.
      * <p>Default value for this property is false (that corresponds to
-     * the standard behaviour).
+     * the standard behavior).
      * <p>This property has no effect in the <i>Open</i> dialogs or
      * when multiple file selections are allowed.
      * <p>This method fires a property-changed event, using the string
@@ -253,7 +253,7 @@ public class AJFileChooser extends JFileChooser {
      * during using AJFileChooser dialog - by <code>getSelectedFile()</code>
      * method.
      * <p>Default value for this property is false (that corresponds to
-     * the standard behaviour).
+     * the standard behavior).
      * <p>This method fires a property-changed event, using the string
      * value of <code>APPROVING_FILES_ONLY_ENABLED_CHANGED_PROPERTY</code>
      * as the name of the property.
@@ -293,7 +293,7 @@ public class AJFileChooser extends JFileChooser {
      * and an attemt to choose a link corresponding to a file
      * leads to choosing that file.
      * <p>Default value for this property is false (that corresponds to
-     * the standard behaviour).
+     * the standard behavior).
      * <p>This method fires a property-changed event, using the string
      * value of <code>TRAVERSING_LINKS_ENABLED_CHANGED_PROPERTY</code>
      * as the name of the property.
@@ -331,7 +331,7 @@ public class AJFileChooser extends JFileChooser {
      * of <code>tryToAddButtons</code> method.
      * <p>Warning: if you want to delete not only files, but also subdirectories,
      * you should not use FILES_ONLY file-selection mode. If you need to provide
-     * usual behaviour of <i>Approve</i> button for folders - opening the
+     * usual behavior of <i>Approve</i> button for folders - opening the
      * selected folder - please use <code>approvingFilesOnlyEnabled</code>
      * property.
      * <p>This method fires a property-changed event, using the string

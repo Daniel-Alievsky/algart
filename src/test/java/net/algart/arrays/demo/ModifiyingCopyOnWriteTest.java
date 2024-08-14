@@ -27,7 +27,7 @@ package net.algart.arrays.demo;
 import net.algart.arrays.*;
 
 /**
- * <p>Simple test for behaviour of copy-on-write arrays while attempt to modify it.</p>
+ * <p>Simple test for behavior of copy-on-write arrays while attempt to modify it.</p>
  *
  * @author Daniel Alievsky
  */

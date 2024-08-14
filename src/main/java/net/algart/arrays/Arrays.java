@@ -7542,7 +7542,7 @@ public class Arrays {
                         }
                         if (numberOfTasks == 1) {
                             tasks[0].run();
-                            // to be on the safe side, does not hope on the similar behaviour of
+                            // to be on the safe side, we do not hope on the similar behavior for
                             // the implementation of performTasks method in threadPoolFactory object
                         } else {
                             ThreadFactory threadFactory = ThreadForRanges::new;

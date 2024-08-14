@@ -856,7 +856,7 @@ public class PackedBitArraysPer8Test {
                 int destPos = rnd.nextInt(len + 1);
                 if (destPos > srcPos) {
                     continue;
-                    // - copyBitsFromReverseToNormalOrder does not provide correct behaviour in this case
+                    // - copyBitsFromReverseToNormalOrder does not provide correct behavior in this case
                 }
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromReverseToNormalOrder(
@@ -980,7 +980,7 @@ public class PackedBitArraysPer8Test {
                 int destPos = rnd.nextInt(len + 1);
                 if (destPos > srcPos) {
                     continue;
-                    // - copyBitsFromNormalToReverseOrder does not provide correct behaviour in this case
+                    // - copyBitsFromNormalToReverseOrder does not provide correct behavior in this case
                 }
                 int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos));
                 PackedBitArraysPer8.copyBitsFromNormalToReverseOrder(

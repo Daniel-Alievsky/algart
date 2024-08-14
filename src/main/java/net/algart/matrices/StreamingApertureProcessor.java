@@ -163,7 +163,7 @@ import java.util.Set;
  * <p><b>Note 1:</b> the definition of the aperture above always supposes the pseudo-cyclic continuation
  * of the source matrix, as described in {@link Matrix#pseudoCyclicIndex(long...)} method. You can use
  * {@link ContinuedStreamingApertureProcessor} (an example of non-standard implementation of this class)
- * to change this behaviour to another continuation way.</p>
+ * to change this behavior to another continuation way.</p>
  *
  * <p><b>Note 2:</b> it is easy to see that all basic morphology, defined in
  * {@link net.algart.matrices.morphology.Morphology} interface
@@ -630,7 +630,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
             // If there is enough memory, it is a good idea to download matrix into RAM and to provide
             // non-negative coordinates for all pattern points by shifting the matrix;
             // such shifting is useful even if the source matrix is already in RAM (DirectAccessible).
-            // The reason of shifting is to provide stable behaviour of checks in loops which process aperture
+            // The reason of shifting is to provide stable behavior of checks in loops which process aperture
             // in most aperture processors. The typical loop is
             //     for (long shift : shifts) {
             //        long i = index - shift;
@@ -770,7 +770,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
      * and <code>elementSize</code> is the number of bytes, required for each element of <code>src</code> array
      * (i.e. <code>src.{@link PArray#bitsPerElement() bitsPerElement()}/8.0</code>).
      *
-     * <p>You may override this method if you want to change this behaviour.
+     * <p>You may override this method if you want to change this behavior.
      * For example, it can be necessary if your implementation of
      * {@link #asProcessed(Class, Matrix, List, Pattern) asProcessed} method allocates some Java memory itself:
      * in this case, you should correct the result of this method in such a way, that the total

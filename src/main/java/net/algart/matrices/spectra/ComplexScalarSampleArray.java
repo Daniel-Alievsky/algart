@@ -60,7 +60,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
      * <code>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</code> and
      * <code>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of their lengths
-     * will not affect behaviour of the returned sample array.
+     * will not affect behavior of the returned sample array.
      *
      * <p>The {@link #length() length} of the returned sample array is equal to lengths of <code>samplesRe</code>
      * and <code>samplesIm</code> arrays. (Their lengths must be equal to each other.)

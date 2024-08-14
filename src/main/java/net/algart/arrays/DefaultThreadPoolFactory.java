@@ -96,13 +96,13 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
     private final ThreadPoolExecutor persistentThreadPool;
 
     /**
-     * Returns an instance of this class with the default (simplest) behaviour.
+     * Returns an instance of this class with the default (simplest) behavior.
      * Namely, it is equivalent to {@link #getDefaultThreadPoolFactory(int)
      * getDefaultThreadPoolFactory(0)}. This method is the typical way for getting instances of this class.
      *
      * <p>Note: this method works very quickly (it just returns a global internal constant).
      *
-     * @return an instance of this class with the default behaviour.
+     * @return an instance of this class with the default behavior.
      */
     public static DefaultThreadPoolFactory getDefaultThreadPoolFactory() {
         return ConstantHolder.DEFAULT;

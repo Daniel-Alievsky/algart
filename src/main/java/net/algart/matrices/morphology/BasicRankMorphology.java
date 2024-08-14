@@ -132,7 +132,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * is ignored by this implementation.)
      *
      * <p>Please note: using <code>Math.round</code> for rounding the percentile index does not correspond
-     * to the standard behaviour of integer percentiles, which are rounded, in a case of the precise histogram model,
+     * to the standard behavior of integer percentiles, which are rounded, in a case of the precise histogram model,
      * according more complicated rules (see comments to
      * {@link RankMorphology#percentile(Matrix, Matrix, Pattern)} and
      * {@link Histogram#iPreciseValue(long[], double)} methods).
@@ -141,7 +141,7 @@ public abstract class BasicRankMorphology extends AbstractRankMorphology impleme
      * in any case, this method calls <code>Math.round</code> &mdash; it provides
      * better "symmetry" between dilation and erosion operations.
      *
-     * <p>The precise behaviour of all methods of {@link RankMorphology} interface in the returned object
+     * <p>The precise behavior of all methods of {@link RankMorphology} interface in the returned object
      * depends on <code>precision</code> object: see comments to {@link CustomRankPrecision} and
      * {@link RankMorphology}.
      *

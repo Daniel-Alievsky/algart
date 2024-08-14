@@ -64,7 +64,7 @@ package net.algart.matrices.spectra;
  * If this requirement is not satisfied, the results are unspecified.
  * ("Unspecified" means that any elements of sample arrays can be read or changed,
  * or that <code>IndexOutOfBoundsException</code> can be thrown.)
- * The reason of this behaviour is that this interface is designed for maximal performance,
+ * The reason of this behavior is that this interface is designed for maximal performance,
  * and its methods do not always check the passed indexes.</p>
  *
  * <p>All calculations, performed by methods of this interface and its implementations,

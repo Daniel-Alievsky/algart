@@ -57,7 +57,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
      * More precisely, the returned sample array is backed by
      * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed array is {@link MutableArray resizable}, possible future changes of its length
-     * will not affect behaviour of the returned sample array.
+     * will not affect behavior of the returned sample array.
      *
      * <p>The {@link #length() length} of the returned sample array is equal to length of <code>samples</code> array.
      *

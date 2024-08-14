@@ -318,7 +318,7 @@ public abstract class ArraySorter {
      * implement some additional interface, necessary for this sorting algorithm.
      *
      * <p>In the current version of the package, this method always returns <code>true</code>.
-     * But this behaviour may change in future versions.
+     * But this behavior may change in future versions.
      *
      * @return whether {@link #sort sort} method works properly if its <code>exchanger</code> implements only
      * the simple {@link ArrayExchanger} interface.

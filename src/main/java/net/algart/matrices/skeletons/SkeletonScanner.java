@@ -254,7 +254,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * The main feature of a remembering scanner is that it allocates additional memory
  * (probably a bit matrix with the same sizes as the scanned skeleton), where it can store the fact of visiting
  * some pixels by {@link #visit()} and {@link #visitPreviousBranchPixel()} methods,
- * and this information is used by some other methods (see the following list of differences in behaviour
+ * and this information is used by some other methods (see the following list of differences in behavior
  * of the methods).</p>
  *
  * <p>You can find out, is a skeleton scanner lightweight or remembering, by {@link #isRemembering()} method.
@@ -275,7 +275,7 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * as well as <code>withVisiting</code> argument of
  * {@link #scanBranch(int, boolean, boolean)}, {@link #scanBranchFromBranch(boolean, boolean)} methods
  * do not matter (as if they would be <code>false</code>);<br>
- * in remembering scanners, these arguments affect the behaviour (see comments to those methods).</li>
+ * in remembering scanners, these arguments affect the behavior (see comments to those methods).</li>
  * </ul>
  *
  * <p>Note, that in remembering scanners the only ways to mark some pixels as "visited" are explicit direct calls
@@ -744,7 +744,7 @@ public final class SkeletonScanner implements ArrayProcessor {
     }
 
     /**
-     * Creates new instance of this class with the identical behaviour, excepting
+     * Creates new instance of this class with the identical behavior, excepting
      * that the returned object is always remembering skeleton scanner (remembering visits of pixels).
      * See the {@link SkeletonScanner comments to this class} about remembering and lightweight skeleton scanners.
      *

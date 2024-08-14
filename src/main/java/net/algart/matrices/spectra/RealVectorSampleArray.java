@@ -105,7 +105,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
      * More precisely, the returned sample array is backed by
      * <code>samples.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of its length
-     * will not affect behaviour of the returned sample array.
+     * will not affect behavior of the returned sample array.
      *
      * <p>The length of each vector sample, <code>vectorLength</code>, must be in range
      * <code>0&lt;=vectorLength&lt;=vectorStep</code>. Moreover, <code>samples</code>

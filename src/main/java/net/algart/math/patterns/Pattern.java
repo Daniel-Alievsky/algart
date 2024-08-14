@@ -200,7 +200,7 @@ import net.algart.math.*;
  * <p>where <code>pattern</code> is a rectangular pattern.
  * However, the resulting pattern is considered to be direct, but not rectangular.</p>
  *
- * <p>The main difference between direct point-set and rectangular patterns is the behaviour of methods,
+ * <p>The main difference between direct point-set and rectangular patterns is the behavior of methods,
  * retrieving the point set like {@link #points()}, and some methods, retrieving boundaries of the pattern,
  * like {@link UniformGridPattern#upperSurface(int)}, {@link UniformGridPattern#maxBound(int)}, etc.
  * In direct patterns, all methods always work stably, i.e. without exceptions (if the passed arguments

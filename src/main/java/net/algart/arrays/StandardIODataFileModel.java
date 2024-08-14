@@ -74,7 +74,7 @@ import java.util.concurrent.Callable;
  * in some applications, when you need sequential access to very large disk files, much larger than available RAM.
  * Some operation systems can be not optimized for a case of very intensive mapping of very large files,
  * which is the base of {@link DefaultDataFileModel}; at the same time, this data file model
- * uses only simple input/output OS calls and can have more predictable behaviour.</p>
+ * uses only simple input/output OS calls and can have more predictable behavior.</p>
  *
  * <p>In addition, this variant is absolutely stable on all platforms,
  * when Java file mapping technique has a serious bug in Java 1.5 and 1.6:

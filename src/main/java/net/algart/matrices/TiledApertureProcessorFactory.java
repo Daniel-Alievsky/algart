@@ -89,7 +89,7 @@ import java.util.*;
  * <h2>Specification of {@link ApertureProcessor#process(Map, Map)
  * process} and other methods in the tiled aperture processors</h2>
  *
- * <p>Here is the precise specification of the behaviour of the {@link ApertureProcessor},
+ * <p>Here is the precise specification of the behavior of the {@link ApertureProcessor},
  * tiled by this tiler, i.e. of the result of {@link #tile(ApertureProcessor oneTileProcessor)}.
  * We call the argument of this method the <i>one-tile processor</i>, and the result of this method
  * the <i>tiled processor</i>.</p>
@@ -285,27 +285,27 @@ import java.util.*;
  *
  * <h2>Continuation model outside the bounds of the large matrices</h2>
  *
- * <p>The behaviour of the aperture processor, tiled by {@link #tile(ApertureProcessor oneTileProcessor)} method,
- * can little differ from the behaviour of the original one-tile processor near the bounds of the matrices,
+ * <p>The behavior of the aperture processor, tiled by {@link #tile(ApertureProcessor oneTileProcessor)} method,
+ * can little differ from the behavior of the original one-tile processor near the bounds of the matrices,
  * namely for the resulting elements, for which the dependence aperture
  * <b>A</b><sub><i>i</i></sub>={@link ApertureProcessor#dependenceAperture(Object)
  * dependenceAperture(<i>i</i>)} (at least for one index <i>i</i> of a source matrix)
  * does not fully lie inside the corresponding source matrix <b>M</b><sub><i>i</i></sub>.</p>
  *
- * <p>In such situation the behaviour of the original one-tile processor depends on implementation &mdash;
+ * <p>In such situation the behavior of the original one-tile processor depends on implementation &mdash;
  * for example, many algorithms suppose so-called pseudo-cyclic continuation mode, described in comments
  * to {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC} constant.
- * But the behaviour of the resulting processor,
+ * But the behavior of the resulting processor,
  * tiled by {@link #tile(ApertureProcessor)} method, is strictly defined always and corresponds to
  * the {@link net.algart.arrays.Matrix.ContinuationMode continuation mode},
  * passed as <code>continuationMode</code> argument to an instantiation method <code>getInstance</code>
  * of the tiler and returned by {@link #continuationMode()} method.
- * You can see it from the specification of the behaviour of
+ * You can see it from the specification of the behavior of
  * {@link ApertureProcessor#process(Map dest, Map src) process} method above,
  * stage <b>4.b</b>.</p>
  *
  * <p>If the one-tile processor works according one of continuation models, provided by
- * {@link net.algart.arrays.Matrix.ContinuationMode} class, you can guarantee the identical behaviour of
+ * {@link net.algart.arrays.Matrix.ContinuationMode} class, you can guarantee the identical behavior of
  * the tiled processor by passing the same continuation mode into a tiler instantiation
  * method <code>getInstance</code>;
  * if no, the tiled processor will be impossible to provide identical results.</p>
@@ -337,7 +337,7 @@ import java.util.*;
  * AlgART arrays, etc. Such algorithms <i>should</i> implement not only {@link ApertureProcessor} interface,
  * but also {@link ArrayProcessorWithContextSwitching} interface, and <i>should</i> get the current context
  * via their {@link #context()} method. This requirement if not absolute, but if your algorithm retrieves
- * the context with some other way, then the behaviour of its {@link ArrayContext#updateProgress(ArrayContext.Event)}
+ * the context with some other way, then the behavior of its {@link ArrayContext#updateProgress(ArrayContext.Event)}
  * method can be incorrect &mdash; your processor, processing one tile, will not "know" that it is only a part
  * of the full task (processing all tiles).</p>
  *
@@ -374,7 +374,7 @@ import java.util.*;
  * context()} method &mdash; a part, corresponding to processing only one from a lot of tiles.
  * (As written above, by default the current context of the tiled processor is equal to the
  * {@link #context() current context} of the tiler.)
- * Thus, the tiler provides correct behaviour of
+ * Thus, the tiler provides correct behavior of
  * <code>oneTileProcessor.{@link ArrayProcessor#context()
  * context()}.{@link ArrayContext#updateProgress(ArrayContext.Event) updateProgress(...)}</code>
  * inside {@link ApertureProcessor#process(Map, Map) process} method

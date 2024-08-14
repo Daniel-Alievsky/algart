@@ -15,7 +15,7 @@
      * will be reached.
      * In a case of timeout, the corresponded <tt>java.io.IOError</tt> will be thrown.
      *
-     * <p>This behaviour can be used for {@link DefaultDataFileModel},
+     * <p>This behavior can be used for {@link DefaultDataFileModel},
      * that is based on standard Java mapping technique. The reason is a bug in
      * Java machines: under some OS, it generates an internal error
      * ("java.lang.Error: Cleaner terminated abnormally")

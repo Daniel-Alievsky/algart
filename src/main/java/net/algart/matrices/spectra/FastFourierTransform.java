@@ -73,7 +73,7 @@ import java.util.Objects;
  * (case 2). The Wikipedia offers formulas of the 1st case. This class allows to calculate both variants:
  * the 1st case is chosen if the <code>normalizeDirectTransform</code> argument
  * of the constructors is <code>false</code>
- * or if this class is created by a constructor without this argument (it is the default behaviour),
+ * or if this class is created by a constructor without this argument (it is the default behavior),
  * the 2nd case is chosen  if the <code>normalizeDirectTransform</code> argument
  * of the constructors is <code>true</code>.</p>
  *

@@ -75,8 +75,8 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      *     <li>{@link Morphology#opening(Matrix, Pattern, Morphology.SubtractionMode)},</li>
      * </ul>
      *
-     * <p>vary their behaviour depending on the last argument of this type.
-     * The usual behaviour, corresponding to names of the methods, obtains when this argument is {@link #NONE}.
+     * <p>vary their behavior depending on the last argument of this type.
+     * The usual behavior, corresponding to names of the methods, obtains when this argument is {@link #NONE}.
      * However, if this argument is {@link #SUBTRACT_RESULT_FROM_SRC} or {@link #SUBTRACT_SRC_FROM_RESULT},
      * every method, after calculating the result <code>R</code> by usual rules,
      * automatically performs elementwise subtraction
@@ -98,7 +98,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      */
     enum SubtractionMode {
         /**
-         * No subtractions are performed: standard behaviour.
+         * No subtractions are performed: standard behavior.
          * See {@link SubtractionMode comments to this enumeration} for more details.
          */
         NONE() {
@@ -144,7 +144,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * <p>More precisely, it means that when the value in some element of the processed matrix,
      * returned by a method of this class, depends on elements of the source matrix, lying outside its bounds,
      * then it is supposed that the values outside the source matrix are calculated as described in
-     * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC}. Exactly such behaviour is specified in
+     * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC}. Exactly such behavior is specified in
      * the comments to the basic {@link #dilation(Matrix, Pattern)} and {@link #erosion(Matrix, Pattern)}
      * methods as the default definition of dilation and erosion.
      *
@@ -492,7 +492,7 @@ public interface Morphology extends ArrayProcessorWithContextSwitching {
      * of the source matrix by the specified patterns.
      *
      * <p>If <code>subtractionMode</code> is not {@link SubtractionMode#NONE},
-     * the behaviour is little other: this method returns the difference between
+     * the behavior is little other: this method returns the difference between
      * the result of these two operation and the <code>src</code> matrix, according the specified mode.
      *
      * <p>When both patterns are equal, the result is the {@link #closing(Matrix, Pattern, Morphology.SubtractionMode)

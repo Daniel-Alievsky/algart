@@ -592,7 +592,7 @@ public interface DataBuffer {
      * If <code>readData=true</code>, the fragment of the data storage will be loaded
      * and accessible in the {@link #data()} Java array at the positions
      * <code>{@link #fromIndex()}..{@link #toIndex()}-1</code>.
-     * If <code>readData=false</code>, the behaviour is the same with the exception of
+     * If <code>readData=false</code>, the behavior is the same except for
      * <i>reading data from the data storage is not guaranteed</i>.
      * This mode can be useful for optimization in {@link AccessMode#READ_WRITE} mode,
      * if you are sure that you will fully rewrite all mapped elements and, so, want

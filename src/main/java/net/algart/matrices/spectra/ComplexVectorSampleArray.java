@@ -120,7 +120,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * <code>samplesRe.{@link UpdatableArray#asUnresizable asUnresizable()}</code> and
      * <code>samplesIm.{@link UpdatableArray#asUnresizable asUnresizable()}</code>:
      * if the passed arrays are {@link MutableArray resizable}, posible future changes of their lengths
-     * will not affect behaviour of the returned sample array.
+     * will not affect behavior of the returned sample array.
      *
      * <p>The length of each vector sample, <code>vectorLength</code>, must be in range
      * <code>0&lt;=vectorLength&lt;=vectorStep</code>. Moreover, <code>samplesRe</code> and <code>samplesIm</code>

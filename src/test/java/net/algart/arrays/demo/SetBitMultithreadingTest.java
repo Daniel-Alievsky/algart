@@ -53,12 +53,12 @@ public class SetBitMultithreadingTest {
             final int k = where == 0 ? 0 : where == 1 ? length - 1 : rnd.nextInt(length);
             if (noSync)
                 // synchronized (a)
-                // - uncommenting the previous synchronization restores stable behaviour
+                // - uncommenting the previous synchronization restores stable behavior
             {
                 a.clearBitNoSync(offset + k);
                 a.setBitNoSync(offset + k);
                 a.setBitNoSync(offset + k, data[offset + k]);
-                // We should not call setData here: this method perform synchronization, so all will work fine
+                // We should not call setData here: this method performs synchronization, so all will work fine
             } else {
                 a.clearBit(offset + k);
                 a.setBit(offset + k);
@@ -130,10 +130,10 @@ public class SetBitMultithreadingTest {
         if (regionLength % 64 == 0) {
             System.out.println("Synchronization not necessary: region length % 64 == 0");
         } else if (UNSAFE) {
-            System.out.println("DANGEROUS: behaviour should be unstable, AssertionError is probable");
+            System.out.println("DANGEROUS: behavior should be unstable, AssertionError is probable");
         }
         if (regionLength % 64 == 0 || UNSAFE) {
-            // - For even lengths, unsafe version should also work
+            // - For even lengths, an unsafe version should also work
             for (int test = 1; test <= numberOfTests; test++) {
                 System.out.printf("\rTest no-sync #%d... ", test);
                 testThreads(testData, a, numberOfRegions, regionLength, true);

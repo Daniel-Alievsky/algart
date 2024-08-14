@@ -126,7 +126,7 @@ import java.util.Objects;
  * </ol>
  * <p>It's easy to see that the <i>r</i>(<i>v</i>) function is continuous, but, unfortunately,
  * the <i>v</i>(<i>r</i>) function is discontinuous if some bars <b>b</b>[<i>k</i>] are zero.
- * This behaviour is not too good for calculating percentiles on sparse histograms, when a lot of bars are zero.
+ * This behavior is not too good for calculating percentiles on sparse histograms, when a lot of bars are zero.
  * In this case, this generalization to floating-point almost does not improve the precision of
  * the calculated percentile.</p>
  * <p>To better understand the sense of this model, please also read the comments
@@ -1321,7 +1321,7 @@ public abstract class Histogram {
      * has an independent set of {@link #currentValue() current value}, {@link #currentRank() current simple rank}
      * and {@link #currentPreciseRank() current precise rank}, and they are initially set to 0.
      *
-     * <p>The returned instance has the absolutely same behaviour as this one: it uses the same set of
+     * <p>The returned instance has the absolutely same behavior as this one: it uses the same set of
      * <i>bit levels</i> (see comments to {@link #newLongHistogram(int, int...)} method),
      * it is {@link #newIntHistogram(int, int...) 32-bit} if and only if this instance is 32-bit,
      * it is a {@link SummingHistogram} if and only if this instance is a {@link SummingHistogram}, etc.
@@ -1570,7 +1570,7 @@ public abstract class Histogram {
      * this method does not try to find <i>v</i><sub>2</sub> and just returns <i>v</i><sub>1</sub>.
      * Until this moment, this method works like {@link #preciseValue(long[], double) preciseValue}.
      *
-     * <p>After this, the behaviour of this method is more complicated. If <code>rank</code> is not integer,
+     * <p>After this, the behavior of this method is more complicated. If <code>rank</code> is not integer,
      * we calculate <i>v</i><sub>1</sub>'=<i>v</i><sub>1</sub>+1/<b>b</b>[<i>v</i><sub>1</sub>]
      * and <i>v</i><sub>2</sub>'=<i>v</i><sub>2</sub>+1/<b>b</b>[<i>v</i><sub>2</sub>].
      * Let's consider that the true real values in the source array
@@ -1831,7 +1831,7 @@ public abstract class Histogram {
      * <i>k</i>=<i>v</i><sub>1</sub>).
      * If all columns <b>b</b>[<i>k</i>] are zero (no elements), this method returns <code>0</code>.
      *
-     * <p>Please compare the described behaviour with little more simple behaviour of
+     * <p>Please compare the described behavior with little more simple behavior of
      * {@link #value(long[], double)} method.
      *
      * <p>The result of this method is equal to the percentile <i>v</i>(<i>r</i>) for the passed
@@ -2521,7 +2521,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -2664,7 +2664,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -3396,7 +3396,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -3469,7 +3469,7 @@ public abstract class Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;

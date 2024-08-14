@@ -557,7 +557,7 @@ public interface Array {
      * <i>if this object</i> <b>a</b> <i>is the only reference to its content, which you have</i>.
      * The same note is true for immutable collections, created by the standard
      * <code>Collections.unmodifiableList</code> and analogous methods.
-     * Please compare this with the behaviour of another method {@link #isNewReadOnlyView()}.
+     * Please compare this with the behavior of another method {@link #isNewReadOnlyView()}.
      *
      * <p>There is a guarantee that this method works very quickly
      * (usually it just returns a constant or a value of some private field).
@@ -797,7 +797,7 @@ public interface Array {
      * On the other hand, we usually cannot just store a reference to an AlgART array
      * or to its internal data: it is very possible, that one array, received from the factory, is a view of another
      * one ({@link #asImmutable() immutable view}, {@link #subArray(long, long) subarray}, etc.), and storing
-     * both references in our storage will lead to incorrect behaviour &mdash; possible future changing
+     * both references in our storage will lead to incorrect behavior &mdash; possible future changing
      * of one element of the storage will be reflected in other elements.
      *
      * <p><i>New</i> status of the array, provided by this method, allows to correctly resolve this problem.
@@ -884,11 +884,11 @@ public interface Array {
      * data, as well as there is no problem to create a lot of references to the same
      * immutable Java object like <code>String</code>.
      *
-     * <p>This method allows to improve the described behaviour. Namely, if this method returns <code>true</code>,
+     * <p>This method allows to improve the described behavior. Namely, if this method returns <code>true</code>,
      * you still <i>may</i> store the reference to an AlgART array or to its internal data in your storage,
      * though {@link #isNew()} returns <code>false</code>.
      * Yes, you can so create several references to the same array data,
-     * but it does not lead to incorrect behaviour &mdash; this data will always remain unchanged.
+     * but it does not lead to incorrect behavior &mdash; this data will always remain unchanged.
      *
      * <p>But here is an important <i>warning</i>: while using this technique, you should never try
      * to increase the access rights to the external data, corresponding to the AlgART array, stored in your storage.
@@ -1361,7 +1361,7 @@ public interface Array {
      * <p>If <code>forcePhysicalWriting</code> argument is <code>true</code>, this
      * method tries to physically flush all unsaved elements of this array to the storage device.
      * The precise actions, performed in this case, are not specified.
-     * The typical behaviour: all internal caches, if they are provided by Java implementation of the AlgART array,
+     * The typical behavior: all internal caches, if they are provided by Java implementation of the AlgART array,
      * are written to the external device via OS calls, and OS is requested to flush buffers or file-mapping
      * to the physical disk.
      * The mode <code>forcePhysicalWriting=true</code> increases chances that the data will be really flushed to
@@ -1389,7 +1389,7 @@ public interface Array {
      * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
      * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
-     * requires long time. For example, it is possible for arrays, created by
+     *  requires a long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
      * You always may pass {@code null} as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
@@ -1472,7 +1472,7 @@ public interface Array {
      * <code>context.{@link ArrayContext#checkInterruption() checkInterruption}</code> and
      * <code>context.{@link ArrayContext#updateProgress updateProgress}</code> methods from time to time.
      * It may be useful if this array is very large and writing non-flushed data to an external device
-     * requires long time. For example, it is possible for arrays, created by
+     *  requires a long time. For example, it is possible for arrays, created by
      * {@link LargeMemoryModel#newLazyCopy(Array) LargeMemoryModel.newLazyCopy} method.
      * You always may pass {@code null} as this argument; then all will work correctly,
      * but, maybe, the user will be bored for some time.
@@ -1490,7 +1490,7 @@ public interface Array {
      * "<code>array.freeResources(null,false)</code>",
      * because there is no necessity to <i>flush all array elements</i>:
      * releasing a subarray requires flushing only the subarray elements,
-     * i.e. no elements in a case of the zero-length subarray.
+     * i.e., no elements in a case of the zero-length subarray.
      * This speeding-up is guaranteed for arrays, created by {@link LargeMemoryModel large memory model},
      * but is not guaranteed for other arrays: it is still possible that
      * "<code>array.{@link #subArray(long, long) subArray(0,0)}.freeResources(context,false)</code>"

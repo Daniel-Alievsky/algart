@@ -395,13 +395,13 @@ public interface DataFile {
          * or performs some reduced form of unmapping (or even does nothing) and returns <code>false</code>.
          *
          * <p>This method is called by AlgART array manager for temporary data files
-         * when we are absolutely sure that the this buffer's content will never be useful in future
+         * when we are sure that this buffer's content will never be useful in future
          * and may be lost. Namely, it is called while array finalization and while
          * system shutdown. (In all other cases, {@link #unmap(boolean)} method is called instead.)
          *
          * <p>So, the implementation of this method should release all external resources,
          * if there are such resources associated with this mapping buffer, but may not to force writing
-         * buffer's content to external device, if it requires long time.
+         * buffer's content to an external device, if it requires a long time.
          *
          * <p>In {@link DefaultDataFileModel}, this method is equivalent to
          * {@link #unmap(boolean) unmap(false)}} and always

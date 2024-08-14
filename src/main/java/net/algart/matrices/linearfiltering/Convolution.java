@@ -39,7 +39,7 @@ public interface Convolution extends ArrayProcessorWithContextSwitching {
      * <p>More precisely, it means that when the value in some element of the processed matrix,
      * returned by a method of this class, depends on elements of the source matrix, lying outside its bounds,
      * then it is supposed that the values outside the source matrix are calculated as described in
-     * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC}. Exactly such behaviour is specified in
+     * {@link net.algart.arrays.Matrix.ContinuationMode#PSEUDO_CYCLIC}. Exactly such behavior is specified in
      * the comments to the {@link #convolution(Matrix, WeightedPattern)}
      * method as the default definition of convolution.
      *

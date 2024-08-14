@@ -1442,7 +1442,7 @@ public interface RankMorphology extends Morphology {
      * &lfloor;<i>m</i>+0.5&rfloor;=<code>Math.round(</code><i>m</i><code>)</code>
      * (excepting some rare cases when the real mean <i>m</i> is a strictly half-integer:
      * <i>m</i>=2<i>k</i>+&frac12;, <i>k</i>&isin;<b>Z</b>). In other words,
-     * this behaviour provides the maximal possible precision of the returned integer mean.
+     * this behavior provides the maximal possible precision of the returned integer mean.
      *
      * <p>Note: the behaviour of this method is similar to
      * <code>{@link #asMeanBetweenPercentiles(Matrix, double, double, Pattern, double)

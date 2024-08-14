@@ -55,7 +55,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * This class can work in two modes, called <i>rounding modes</i>
  * (and represented by {@link GeneralizedBitProcessing.RoundingMode} enum):
  * the first mode is called <i>round-down mode</i>, and the second is called <i>round-up mode</i>.
- * Below is the specification of the behaviour in both modes.</p>
+ * Below is the specification of the behavior in both modes.</p>
  *
  * <table border="1" style="border-spacing:0">
  *   <caption>&nbsp;</caption>

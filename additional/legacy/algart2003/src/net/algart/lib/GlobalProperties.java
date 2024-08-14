@@ -30,12 +30,12 @@ import java.util.*;
 /**
  * <p>This class offers a global store for different string properties.
  * If some class <code>MyClass</code> needs a global flag or control parameter that
- * acts on the class behaviour, we offer to use the following idiom:<pre>
+ * acts on the class behavior, we offer to use the following idiom:<pre>
  *    public static final MY_CONTROL_PARAMETER = GlobalProperties.getClassProperty(
  *      MyClass.class,
  *      "MY_CONTROL_PARAMETER",
  *      (default value));
- * </pre>(or analogous). Then the behaviour of your class, controlled by
+ * </pre>(or analogous). Then the behavior of your class, controlled by
  * this parameter, will be guaranteed unchanged since the moment of the class
  * initialization. Simultaneously, you are able to initialize this
  * control parameter in your application or applet <i>before</i> the first access

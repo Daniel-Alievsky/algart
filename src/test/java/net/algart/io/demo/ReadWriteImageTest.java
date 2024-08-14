@@ -171,7 +171,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile2, bi3);
 
             if (!matrix1.equals(matrix3)) {
-                System.out.println("Different behaviour of ImageToMatrix while using ColorModel!");
+                System.out.println("Different behavior of ImageToMatrix while using ColorModel!");
                 System.out.println("        " + matrix3);
             }
 
@@ -196,7 +196,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile3, bi4);
 
             if (!matrix1.equals(matrix4)) {
-                System.out.println("Different behaviour of ImageToMatrix while using Graphics!");
+                System.out.println("Different behavior of ImageToMatrix while using Graphics!");
                 System.out.println("        " + matrix4);
             }
         }

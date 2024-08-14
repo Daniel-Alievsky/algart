@@ -337,11 +337,11 @@ public enum DependenceApertureBuilder {
     }
 
     /**
-     * Builds the rectangular aperture on the base of specified array of apertures-patterns.
+     * Builds the rectangular aperture on the base of the specified apertures-patterns array.
      * If <code>inverted[k]</code> is <code>true</code>, then the corresponding pattern is supposed to be inverted
      * (i.e. replaced with its {@link Pattern#symmetric() symmetric} version).
      * Please see comments to {@link #SUM}, {@link #MAX} and {@link #SUM_MAX_0} constants
-     * for detailed specification of the behaviour of this method.
+     * for detailed specification of this behavior.
      *
      * @param dimCount        the number of dimensions.
      * @param patterns        the set of patterns, describing the dependence apertures of different parts
@@ -351,7 +351,7 @@ public enum DependenceApertureBuilder {
      *                        then the corresponding element
      *                        <code>patterns[k]</code> is supposed to be inverted.
      * @param additionalSpace additional gap, added to all coordinate ranges of the resulting aperture.
-     * @return rectangular dependence aperture, describing dependence of the elements of the full
+     * @return rectangular dependence aperture, describing dependence on the elements of the full
      * processing algorithm, consisting of <code>patterns.length</code> parts (stages).
      * @throws NullPointerException      if <code>patterns</code> or <code>inverted</code> argument is {@code null},
      *                                   or if some elements of <code>patterns</code> array is {@code null}.

@@ -3973,7 +3973,7 @@ public class Matrices {
      * or if <code>scales</code> argument is {@code null}, this method is equivalent to
      * {@link #asResized(Matrices.ResizingMethod, Matrix, long...)}.
      *
-     * <p>To get a strict specification of behaviour of this method, please
+     * <p>To get a strict behavior specification of this method, please
      * look at the comments to {@link #asResized(Matrices.ResizingMethod, Matrix, long...)},
      * section 1, and replace definition of <code>diagonal</code> array with the following:
      * <pre>
@@ -5205,7 +5205,7 @@ public class Matrices {
             throw new IllegalStateException("The matrix must have at least 2 dimensions");
         }
         final long n = lastDimension ? dimensions[dimensions.length - 1] : dimensions[0];
-        assert n >= 0 : "illegal Matrix.dimensions() behaviour: negative dimension";
+        assert n >= 0 : "illegal Matrix.dimensions() behavior: negative dimension";
         return n;
     }
 

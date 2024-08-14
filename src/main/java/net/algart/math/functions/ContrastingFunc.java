@@ -92,7 +92,7 @@ public abstract class ContrastingFunc implements Func {
     }
 
     /**
-     * Returns an instance of this class, providing the default behaviour described in the
+     * Returns an instance of this class, providing the default behavior described in the
      * {@link ContrastingFunc comments to this class}.
      *
      * @param m         the <i>M</i> constant: maximal value returned by this function.

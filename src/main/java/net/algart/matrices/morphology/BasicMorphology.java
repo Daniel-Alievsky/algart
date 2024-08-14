@@ -298,7 +298,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         numberOfTasks = Math.min(numberOfTasks, MAX_NUMBER_OF_TASKS);
         int numberOfRanges = numberOfTasks == 1 ? 1 :
             (int) Math.min(Arrays.Copier.recommendedNumberOfRanges(array, false),
-                // false to provide stable behaviour, not depending on possibleDest internal nature
+                // false to provide stable behavior, not depending on possibleDest internal nature
                 MAX_NUMBER_OF_RANGES_FOR_CUSTOM_COPIER);
         numberOfRanges = (int) Arrays.Copier.correctNumberOfRanges(numberOfRanges, numberOfTasks);
         if (minkSize >= 2) { // Minkowski decomposition

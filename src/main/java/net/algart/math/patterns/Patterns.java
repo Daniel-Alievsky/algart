@@ -521,7 +521,7 @@ public class Patterns {
             throw new IllegalArgumentException("Empty patterns array");
         }
         Pattern[] patternsArray = patterns.toArray(new Pattern[0]);
-        // cloning before checking guarantees correct behaviour while multithreading
+        // cloning before checking guarantees correct behavior while multithreading
         boolean allCompatibleRectangular = true;
         Pattern first = patternsArray[0];
         for (int k = 0; k < patternsArray.length; k++) {
@@ -617,13 +617,13 @@ public class Patterns {
     public static Pattern newUnion(Pattern... patterns) {
         Objects.requireNonNull(patterns, "Null patterns argument");
         return new Union(patterns.clone());
-        // cloning guarantees correct behaviour while multithreading
+        // cloning guarantees correct behavior while multithreading
     }
 
     public static Pattern newUnion(Collection<Pattern> patterns) {
         Objects.requireNonNull(patterns, "Null patterns argument");
-        return new Union(patterns.toArray(new Pattern[patterns.size()]));
-        // cloning guarantees correct behaviour while multithreading
+        return new Union(patterns.toArray(new Pattern[0]));
+        // cloning guarantees correct behavior while multithreading
     }
 
     /**

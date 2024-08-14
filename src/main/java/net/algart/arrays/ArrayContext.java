@@ -85,7 +85,7 @@ public interface ArrayContext {
      * If you specify {@code null} as a context (as well as {@link #DEFAULT} object),
      * it leads to using {@link DefaultThreadPoolFactory#getDefaultThreadPoolFactory()},
      * which tries to use all available processor kernels.
-     * To get analogous behaviour without multithreading, you should use this object.
+     * To get analogous behavior without a multithreading, you should use this object.
      *
      * <p>Note: this object is also returned by
      * <code>ArrayContext.{@link #DEFAULT}.{@link #singleThreadVersion() singleThreadVersion()}</code> call.

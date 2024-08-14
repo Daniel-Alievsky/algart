@@ -141,7 +141,7 @@ import java.util.Objects;
  * <dt><b>Precise histogram model</b></dt>
  *
  * <dd>
- * <p>In this case, the behaviour of <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>)
+ * <p>In this case, the behavior of <i>v</i>(<i>r</i>) and <i>r</i>(<i>v</i>)
  * is more complicated and calculating the integral is little more difficult. To allow this class
  * optimization of algorithms, we little change the definition of <i>S</i>(<i>r</i>)
  * and <i>s</i>(<i>v</i>). Namely, in the precise histogram model, these functions
@@ -3050,7 +3050,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -3220,7 +3220,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -4165,7 +4165,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -4246,7 +4246,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -5082,7 +5082,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -5252,7 +5252,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -6202,7 +6202,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -6283,7 +6283,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -7004,7 +7004,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -7158,7 +7158,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -7984,7 +7984,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -8059,7 +8059,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -8747,7 +8747,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -8901,7 +8901,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -9732,7 +9732,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;
@@ -9807,7 +9807,7 @@ public abstract class SummingHistogram extends Histogram {
                 // However, it is possible that now currentValue < currentIValue:
                 // if we called moveToPreciseRank in a sparse histogram and, after this,
                 // cleared the histogram by "exclude(...)" calls.
-                // To provide the correct behaviour, we must set some "sensible" value of currentValue.
+                // To provide the correct behavior, we must set some "sensible" value of currentValue.
                 // The good solution is assigning to currentIValue: variations of the current value
                 // should be little to provide good performance of possible future rank corrections.
                 return this;

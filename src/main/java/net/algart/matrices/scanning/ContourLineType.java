@@ -33,7 +33,7 @@ package net.algart.matrices.scanning;
  *
  * <p>Please note: this enum <b>may be extended in future versions</b> with new contour styles
  * (for example, rounded or curve).
- * So, if your application chooses behaviour depending on a switch of this type,
+ * So, if your application chooses behavior depending on a switch of this type,
  * please always provide a special branch for a case of new future contour types, unknown yet.
  * (It can be <code>default</code> case for Java <code>switch</code> operator.)
  * It is a good idea to throw <code>UnsupportedOperationException</code> in such a branch.</p>

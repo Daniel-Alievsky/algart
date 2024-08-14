@@ -147,7 +147,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * it is ignored and {@link #MIN_SPECTRAL_JAVA_MEMORY} will be used instead.
      *
      * <p>The <code>maxTempJavaMemory</code> value is accesed via {@link #maxTempJavaMemory()} method only.
-     * If you override that method, you can change the described behaviour.
+     * If you override that method, you can change the described behavior.
      *
      * <p>This constructor is called by all constructors of
      * {@link FastFourierTransform} and {@link SeparableFastHartleyTransform} classes,
@@ -379,7 +379,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * or {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()},
      * if {@link #AbstractSpectralTransform() the costructor without argument} has been used.
      *
-     * <p>You may override this method if you want to change this behaviour.
+     * <p>You may override this method if you want to change this behavior.
      * Please not return here too small values: transformation of two- or multidimensional matrices
      * can work very slowly, if the result of this method does not allow allocate a work buffer for
      * storing at least several matrix lines (i.e. K*{@link Matrix#dimX()} elements, where K
