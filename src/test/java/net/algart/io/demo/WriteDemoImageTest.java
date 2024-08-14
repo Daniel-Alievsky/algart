@@ -26,10 +26,9 @@ package net.algart.io.demo;
 
 import net.algart.arrays.*;
 import net.algart.io.MatrixIO;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.MatrixToImage;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -78,7 +77,7 @@ public class WriteDemoImageTest {
         List<Matrix<UpdatablePArray>> image = Matrix.as(array, dimX, dimY, channels).asLayers();
 
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved()
+        final BufferedImage bi = new MatrixToImage.InterleavedRGBToInterleaved()
                 .setUnsignedInt32(true)
                 .toBufferedImage(matrix);
         System.out.println(AWT2MatrixTest.toString(bi));

@@ -28,8 +28,8 @@ import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
 import net.algart.io.MatrixIO;
-import net.algart.io.awt.BufferedImageToMatrix;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.ImageToMatrix;
+import net.algart.io.awt.MatrixToImage;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -61,18 +61,18 @@ public class AWT2MatrixTest {
         System.out.printf("Writing BufferedImage to %s...%n", resultFile1);
         MatrixIO.writeBufferedImage(resultFile1, bi1);
 
-        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
+        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
         List<Matrix<UpdatablePArray>> matrices = Matrices.separate(matrix);
         final int dimX = matrices.get(0).dimX32();
         final int dimY = matrices.get(0).dimY32();
 
-        BufferedImage bi2 = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(
+        BufferedImage bi2 = new MatrixToImage.InterleavedRGBToInterleaved().toBufferedImage(
                 Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi2);
         System.out.printf("Writing AlgART InterleavedRGBToInterleavedSamples to %s...%n", resultFile2);
         MatrixIO.writeBufferedImage(resultFile2, bi2);
 
-        BufferedImage bi3 = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(
+        BufferedImage bi3 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(
                 Matrices.interleave(matrices));
         System.out.printf("BufferedImage: %s%n", bi3);
         System.out.printf("Writing AlgART InterleavedRGBToPackedSamples to %s...%n", resultFile3);
@@ -99,7 +99,7 @@ public class AWT2MatrixTest {
         return bi
                 + "; sample model: " + sm + " " +
                 sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands() +
-                " type " + sm.getDataType() + " (" + BufferedImageToMatrix.tryToDetectElementType(sm) + ")" +
+                " type " + sm.getDataType() + " (" + ImageToMatrix.tryToDetectElementType(sm) + ")" +
                 "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
     }
 }

@@ -27,21 +27,12 @@ package net.algart.io.demo;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
 import net.algart.io.MatrixIO;
-import net.algart.io.awt.BufferedImageToMatrix;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.ImageToMatrix;
+import net.algart.io.awt.MatrixToImage;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Iterator;
 
 public class AWTNewBufferedImageTest {
     public static void main(String[] args) throws IOException {
@@ -71,10 +62,10 @@ public class AWTNewBufferedImageTest {
         System.out.printf("Written to %s%n", file);
         MatrixIO.writeBufferedImage(file, bi1);
         System.out.printf("BufferedImage: %s%n", AWT2MatrixTest.toString(bi1));
-        Matrix<UpdatablePArray> m = new BufferedImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
+        Matrix<UpdatablePArray> m = new ImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
         System.out.printf("Converted to matrix: %s%n", m);
         file = Path.of(file + ".converted.png");
-        MatrixIO.writeBufferedImage(file, new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(m));
+        MatrixIO.writeBufferedImage(file, new MatrixToImage.InterleavedRGBToInterleaved().toBufferedImage(m));
         System.out.printf("Written after conversion to %s%n%n", file);
     }
 }

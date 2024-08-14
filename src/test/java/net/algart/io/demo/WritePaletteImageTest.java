@@ -26,7 +26,7 @@ package net.algart.io.demo;
 
 import net.algart.arrays.*;
 import net.algart.io.MatrixIO;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.MatrixToImage;
 import net.algart.math.functions.Func2;
 
 import java.awt.*;
@@ -47,7 +47,7 @@ public class WritePaletteImageTest {
         final int dimY = Integer.parseInt(args[2]);
         Matrix<? extends PArray> m = Matrices.asCoordFuncMatrix(
                 (Func2) (x, y) -> (x + y) / 2, ByteArray.class, dimX, dimY).clone();
-        final BufferedImage bi = new MatrixToBufferedImage.MonochromeToIndexed(Color.BLUE, Color.RED)
+        final BufferedImage bi = new MatrixToImage.MonochromeToIndexed(Color.BLUE, Color.RED)
                 .toBufferedImage(m);
         System.out.println(AWT2MatrixTest.toString(bi));
 

@@ -25,20 +25,20 @@
 package net.algart.io.demo;
 
 import net.algart.arrays.ColorChannelOrder;
-import net.algart.io.awt.BufferedImageToMatrix;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.ImageToMatrix;
+import net.algart.io.awt.MatrixToImage;
 
 import java.awt.*;
 
 public class ConverterNames {
-    private static void show(BufferedImageToMatrix converter, ColorChannelOrder order) {
+    private static void show(ImageToMatrix converter, ColorChannelOrder order) {
         System.out.println(converter);
         if (converter.channelOrder() != order) {
             throw new AssertionError();
         }
     }
 
-    private static void show(MatrixToBufferedImage converter, ColorChannelOrder order) {
+    private static void show(MatrixToImage converter, ColorChannelOrder order) {
         System.out.println(converter);
         if (converter.channelOrder() != order) {
             throw new AssertionError();
@@ -46,20 +46,20 @@ public class ConverterNames {
     }
 
     public static void main(String[] args) {
-        show(new BufferedImageToMatrix.ToInterleavedRGB(), ColorChannelOrder.RGB);
-        show(new BufferedImageToMatrix.ToInterleavedBGR(), ColorChannelOrder.BGR);
-        show(new BufferedImageToMatrix.ToInterleavedBGR().setReadingViaColorModel(true), ColorChannelOrder.BGR);
-        show(new BufferedImageToMatrix.ToInterleavedBGR().setReadingViaGraphics(true), ColorChannelOrder.BGR);
-        show(new BufferedImageToMatrix.ToInterleavedBGR()
+        show(new ImageToMatrix.ToInterleavedRGB(), ColorChannelOrder.RGB);
+        show(new ImageToMatrix.ToInterleavedBGR(), ColorChannelOrder.BGR);
+        show(new ImageToMatrix.ToInterleavedBGR().setReadingViaColorModel(true), ColorChannelOrder.BGR);
+        show(new ImageToMatrix.ToInterleavedBGR().setReadingViaGraphics(true), ColorChannelOrder.BGR);
+        show(new ImageToMatrix.ToInterleavedBGR()
                 .setReadingViaColorModel(true).setReadingViaGraphics(true), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.InterleavedRGBToPacked(), ColorChannelOrder.RGB);
-        show(new MatrixToBufferedImage.InterleavedBGRToPacked(), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.InterleavedBGRToPacked().setAlwaysAddAlpha(true), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.InterleavedRGBToInterleaved(), ColorChannelOrder.RGB);
-        show(new MatrixToBufferedImage.InterleavedBGRToInterleaved(), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.InterleavedRGBToBanded(), ColorChannelOrder.RGB);
-        show(new MatrixToBufferedImage.InterleavedBGRToBanded(), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.InterleavedBGRToBanded().setAlwaysAddAlpha(true), ColorChannelOrder.BGR);
-        show(new MatrixToBufferedImage.MonochromeToIndexed(Color.BLUE, Color.WHITE), ColorChannelOrder.RGB);
+        show(new MatrixToImage.InterleavedRGBToPacked(), ColorChannelOrder.RGB);
+        show(new MatrixToImage.InterleavedBGRToPacked(), ColorChannelOrder.BGR);
+        show(new MatrixToImage.InterleavedBGRToPacked().setAlwaysAddAlpha(true), ColorChannelOrder.BGR);
+        show(new MatrixToImage.InterleavedRGBToInterleaved(), ColorChannelOrder.RGB);
+        show(new MatrixToImage.InterleavedBGRToInterleaved(), ColorChannelOrder.BGR);
+        show(new MatrixToImage.InterleavedRGBToBanded(), ColorChannelOrder.RGB);
+        show(new MatrixToImage.InterleavedBGRToBanded(), ColorChannelOrder.BGR);
+        show(new MatrixToImage.InterleavedBGRToBanded().setAlwaysAddAlpha(true), ColorChannelOrder.BGR);
+        show(new MatrixToImage.MonochromeToIndexed(Color.BLUE, Color.WHITE), ColorChannelOrder.RGB);
     }
 }

@@ -25,8 +25,8 @@
 package net.algart.io;
 
 import net.algart.arrays.*;
-import net.algart.io.awt.BufferedImageToMatrix;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.ImageToMatrix;
+import net.algart.io.awt.MatrixToImage;
 
 import javax.imageio.*;
 import javax.imageio.stream.ImageOutputStream;
@@ -334,14 +334,13 @@ public class MatrixIO {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        final BufferedImage bi = new MatrixToBufferedImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
+        final BufferedImage bi = new MatrixToImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
         writeBufferedImage(file, bi, customizer);
     }
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         final BufferedImage bi = readBufferedImage(file);
-        final Matrix<UpdatablePArray> matrix = new BufferedImageToMatrix.ToInterleavedRGB()
-                .toMatrix(bi);
+        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bi);
         return Matrices.separate(matrix);
     }
 

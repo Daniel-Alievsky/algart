@@ -40,7 +40,7 @@ import java.util.Objects;
  *
  * @author Daniel Alievsky
  */
-public abstract class MatrixToBufferedImage {
+public abstract class MatrixToImage {
     private boolean unsignedInt32 = false;
 
     public boolean isUnsignedInt32() {
@@ -57,7 +57,7 @@ public abstract class MatrixToBufferedImage {
      *                      default is <code>false</code>.
      * @return a reference to this object.
      */
-    public MatrixToBufferedImage setUnsignedInt32(boolean unsignedInt32) {
+    public MatrixToImage setUnsignedInt32(boolean unsignedInt32) {
         this.unsignedInt32 = unsignedInt32;
         return this;
     }
@@ -92,9 +92,9 @@ public abstract class MatrixToBufferedImage {
         if (dataBuffer == null) {
             dataBuffer = toDataBuffer(interleavedMatrix);
         }
-        final int dimX = getWidth(interleavedMatrix);
-        final int dimY = getHeight(interleavedMatrix);
-        final int bandCount = getBandCount(interleavedMatrix);
+        final int dimX = getDimX(interleavedMatrix);
+        final int dimY = getDimY(interleavedMatrix);
+        final int bandCount = getNumberOfChannels(interleavedMatrix);
         byte[][] palette = palette();
         if (palette != null) {
             if (bandCount != 1) {
@@ -153,7 +153,7 @@ public abstract class MatrixToBufferedImage {
      * @param interleavedMatrix the interleaved matrix.
      * @return the width of the corresponding image.
      */
-    public int getWidth(Matrix<? extends PArray> interleavedMatrix) {
+    public int getDimX(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 2);
     }
@@ -165,19 +165,19 @@ public abstract class MatrixToBufferedImage {
      * @param interleavedMatrix the interleaved matrix.
      * @return the height of the corresponding image.
      */
-    public int getHeight(Matrix<? extends PArray> interleavedMatrix) {
+    public int getDimY(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 1);
     }
 
     /**
-     * Returns the number of color bands of the image, corresponding to the given interleaved matrix.
+     * Returns the number of color channels in the image, corresponding to the given interleaved matrix.
      * For example, it is 3 for RGB image or 4 for RGB-Alpha.
      *
      * @param interleavedMatrix the interleaved matrix.
      * @return the corresponding number of color bands.
      */
-    public int getBandCount(Matrix<? extends PArray> interleavedMatrix) {
+    public int getNumberOfChannels(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return interleavedMatrix.dimCount() == 2 ? 1 : (int) interleavedMatrix.dim(0);
     }
@@ -252,7 +252,7 @@ public abstract class MatrixToBufferedImage {
      * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.</p>
      *
      * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
-     * <code>{@link #getBandCount(Matrix) getBandCount}(interleavedMatrix)==1</code>,
+     * <code>{@link #getNumberOfChannels(Matrix) getBandCount}(interleavedMatrix)==1</code>,
      * this method returns
      * <pre>
      * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
@@ -270,7 +270,7 @@ public abstract class MatrixToBufferedImage {
      * depending on the structure of the data buffer.
      */
     public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
-        final int bandCount = getBandCount(interleavedMatrix);
+        final int bandCount = getNumberOfChannels(interleavedMatrix);
         if (bandCount == 1) {
             return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
@@ -441,7 +441,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedRGBToPacked extends MatrixToBufferedImage {
+    public static class InterleavedRGBToPacked extends MatrixToImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {
@@ -561,7 +561,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedRGBToInterleaved extends MatrixToBufferedImage {
+    public static class InterleavedRGBToInterleaved extends MatrixToImage {
         @Override
         public boolean elementTypeSupported(Class<?> elementType) {
             return elementType == byte.class || elementType == short.class;
@@ -607,7 +607,7 @@ public abstract class MatrixToBufferedImage {
         }
     }
 
-    public static class InterleavedRGBToBanded extends MatrixToBufferedImage {
+    public static class InterleavedRGBToBanded extends MatrixToImage {
         private boolean alwaysAddAlpha = false;
 
         public boolean isAlwaysAddAlpha() {

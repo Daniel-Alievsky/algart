@@ -30,8 +30,8 @@ import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.UpdatablePArray;
 import net.algart.io.MatrixIO;
-import net.algart.io.awt.BufferedImageToMatrix;
-import net.algart.io.awt.MatrixToBufferedImage;
+import net.algart.io.awt.ImageToMatrix;
+import net.algart.io.awt.MatrixToImage;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -59,16 +59,16 @@ public class ReadWriteImageTest {
         final Path targetFile1 = Paths.get(args[startArgIndex + 1]);
         final Path targetFile2 = Paths.get(args[startArgIndex + 2]);
         final Path targetFile3 = Paths.get(args[startArgIndex + 3]);
-        Class<? extends MatrixToBufferedImage> matrixToBufferedImageClass =
-                MatrixToBufferedImage.InterleavedRGBToPacked.class;
+        Class<? extends MatrixToImage> matrixToBufferedImageClass =
+                MatrixToImage.InterleavedRGBToPacked.class;
         if (args.length > startArgIndex + 4) {
             matrixToBufferedImageClass = switch (args[startArgIndex + 4]) {
-                case "RGBToPacked" -> MatrixToBufferedImage.InterleavedRGBToPacked.class;
-                case "BGRToPacked" -> MatrixToBufferedImage.InterleavedBGRToPacked.class;
-                case "RGBToInterleaved" -> MatrixToBufferedImage.InterleavedRGBToInterleaved.class;
-                case "BGRToInterleaved" -> MatrixToBufferedImage.InterleavedBGRToInterleaved.class;
-                case "RGBToBanded" -> MatrixToBufferedImage.InterleavedRGBToBanded.class;
-                case "BGRToBanded" -> MatrixToBufferedImage.InterleavedBGRToBanded.class;
+                case "RGBToPacked" -> MatrixToImage.InterleavedRGBToPacked.class;
+                case "BGRToPacked" -> MatrixToImage.InterleavedBGRToPacked.class;
+                case "RGBToInterleaved" -> MatrixToImage.InterleavedRGBToInterleaved.class;
+                case "BGRToInterleaved" -> MatrixToImage.InterleavedBGRToInterleaved.class;
+                case "RGBToBanded" -> MatrixToImage.InterleavedRGBToBanded.class;
+                case "BGRToBanded" -> MatrixToImage.InterleavedBGRToBanded.class;
                 default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 3]);
             };
         }
@@ -78,8 +78,8 @@ public class ReadWriteImageTest {
             var toBufferedImage = matrixToBufferedImageClass.getConstructor().newInstance();
             System.out.printf("Channel order: %s%n", toBufferedImage.channelOrder());
             var toMatrix = toBufferedImage.channelOrder() == ColorChannelOrder.RGB ?
-                    new BufferedImageToMatrix.ToInterleavedRGB() :
-                    new BufferedImageToMatrix.ToInterleavedBGR();
+                    new ImageToMatrix.ToInterleavedRGB() :
+                    new ImageToMatrix.ToInterleavedBGR();
             toMatrix.setEnableAlpha(true);
             System.out.println("toBufferedImage converter: " + toBufferedImage);
             System.out.println("toMatrix converter: " + toMatrix);
@@ -93,7 +93,7 @@ public class ReadWriteImageTest {
                 t1 = System.nanoTime();
                 var separate = Matrices.separate(toMatrix.toMatrix(bi1));
                 var intensity = ColorMatrices.asRGBIntensity(separate).clone();
-                bi1 = new MatrixToBufferedImage.InterleavedRGBToPacked().toBufferedImage(intensity);
+                bi1 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(intensity);
                 t2 = System.nanoTime();
                 System.out.printf("Converted to monochrome in %.3f ms%n", (t2 - t1) * 1e-6);
             }
@@ -102,7 +102,7 @@ public class ReadWriteImageTest {
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix1 = toMatrix.toMatrix(bi1);
             t2 = System.nanoTime();
-            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("ImageToMatrix: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
 
             t1 = System.nanoTime();
@@ -124,14 +124,14 @@ public class ReadWriteImageTest {
             t1 = System.nanoTime();
             final BufferedImage bi2 = toBufferedImage.toBufferedImage(interleave);
             t2 = System.nanoTime();
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("MatrixToImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
             System.out.println("Converted first: " + AWT2MatrixTest.toString(bi2));
 
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix2 = toMatrix.toMatrix(bi2);
             t2 = System.nanoTime();
-            System.out.printf("BufferedImageToMatrix: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("ImageToMatrix: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix2) / ((t2 - t1) * 1e-9));
             if (!matrix1.equals(matrix2)) {
                 System.out.println("        Matrix 2: " + matrix2);
@@ -156,13 +156,13 @@ public class ReadWriteImageTest {
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix3 = toMatrix.toMatrix(bi1);
             t2 = System.nanoTime();
-            System.out.printf("BufferedImageToMatrix, ColorModel: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("ImageToMatrix, ColorModel: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix3) / ((t2 - t1) * 1e-9));
 
             t1 = System.nanoTime();
             final BufferedImage bi3 = toBufferedImage.toBufferedImage(matrix3);
             t2 = System.nanoTime();
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("MatrixToImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix3) / ((t2 - t1) * 1e-9));
             System.out.println("Converted second: " + AWT2MatrixTest.toString(bi3));
 
@@ -171,7 +171,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile2, bi3);
 
             if (!matrix1.equals(matrix3)) {
-                System.out.println("Different behaviour of BufferedImageToMatrix while using ColorModel!");
+                System.out.println("Different behaviour of ImageToMatrix while using ColorModel!");
                 System.out.println("        " + matrix3);
             }
 
@@ -181,13 +181,13 @@ public class ReadWriteImageTest {
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix4 = toMatrix.toMatrix(bi1);
             t2 = System.nanoTime();
-            System.out.printf("BufferedImageToMatrix, getGraphics: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("ImageToMatrix, getGraphics: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix4) / ((t2 - t1) * 1e-9));
 
             t1 = System.nanoTime();
             final BufferedImage bi4 = toBufferedImage.toBufferedImage(matrix4);
             t2 = System.nanoTime();
-            System.out.printf("MatrixToBufferedImage: %.3f ms, %.3f MB/sec%n",
+            System.out.printf("MatrixToImage: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix4) / ((t2 - t1) * 1e-9));
             System.out.println("Converted 2: " + AWT2MatrixTest.toString(bi4));
 
@@ -196,7 +196,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile3, bi4);
 
             if (!matrix1.equals(matrix4)) {
-                System.out.println("Different behaviour of BufferedImageToMatrix while using Graphics!");
+                System.out.println("Different behaviour of ImageToMatrix while using Graphics!");
                 System.out.println("        " + matrix4);
             }
         }

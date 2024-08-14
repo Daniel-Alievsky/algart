@@ -36,7 +36,7 @@ import java.util.Objects;
  *
  * @author Daniel Alievsky
  */
-public abstract class BufferedImageToMatrix {
+public abstract class ImageToMatrix {
     private boolean enableAlpha = true;
     // if true and if BufferedImage contains an alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
@@ -45,7 +45,7 @@ public abstract class BufferedImageToMatrix {
         return enableAlpha;
     }
 
-    public BufferedImageToMatrix setEnableAlpha(boolean enableAlpha) {
+    public ImageToMatrix setEnableAlpha(boolean enableAlpha) {
         this.enableAlpha = enableAlpha;
         return this;
     }
@@ -140,7 +140,7 @@ public abstract class BufferedImageToMatrix {
         };
     }
 
-    public static class ToInterleavedRGB extends BufferedImageToMatrix {
+    public static class ToInterleavedRGB extends ImageToMatrix {
         public static final boolean DEFAULT_READING_VIA_COLOR_MODEL = false;
         public static final boolean DEFAULT_READING_VIA_GRAPHICS = false;
 
