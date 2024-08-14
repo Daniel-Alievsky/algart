@@ -76,10 +76,10 @@ public class ByteArraySelector {
      * <p>This method does not modify the passed <code>array</code>.</p>
      *
      * @param results           results of this method: values of some elements of the passed array.
-     * @param percentileIndexes list of indexes inside the array, the values of which, in increasing order,
+     * @param percentileIndexes the list of indexes inside the array, the values of which, in increasing order,
      *                          must be returned.
      * @param array             array of bytes.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */
@@ -170,7 +170,7 @@ public class ByteArraySelector {
      * @param results          results of this method: values of some elements of the passed array.
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            array of bytes.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if one of the arguments is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
      */

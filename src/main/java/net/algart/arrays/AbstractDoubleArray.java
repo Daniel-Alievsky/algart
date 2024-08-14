@@ -89,7 +89,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * </ol>
      *
      * <p>The created array is not <i>{@link #isNew() new}</i> by default.
-     * This is correct usually, because this class is often used
+     * This is usually correct, because this class is often used
      * for creating a view of another data. However, if the instance
      * of this class does not depend on any other data sources,
      * you may call {@link #setNewStatus(boolean) setNewStatus(true)} in
@@ -109,7 +109,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
      * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
-     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of the passed arrays
      *                                  have different lengths.
      */
     protected AbstractDoubleArray(
@@ -154,7 +154,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      *                                  elements is {@code null}.
      * @throws IllegalArgumentException if <code>initialCapacityAndLength</code> argument is negative.
      * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
-     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of the passed arrays
      *                                  have different lengths.
      */
     protected AbstractDoubleArray(
@@ -308,7 +308,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
                     highIndex = length;
                 }
                 if (highIndex <= lowIndex) {
-                    // this check guarantees that overflow is impossible below:
+                    // this check guarantees that overflow is impossible:
                     // offset + lowIndex <= offset + highIndex <= offset + length = toIndex <= Long.MAX_VALUE
                     return -1;
                 }
@@ -325,7 +325,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
                     highIndex = length;
                 }
                 if (highIndex <= lowIndex) {
-                    // this check guarantees that overflow is impossible below:
+                    // this check guarantees that overflow is impossible:
                     // offset + lowIndex <= offset + highIndex <= offset + length = toIndex <= Long.MAX_VALUE
                     return -1;
                 }
@@ -594,7 +594,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
-     *                             to the external device.
+     *                             to the external device?
      */
     @Override
     public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -608,7 +608,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
-     *                             to the external device.
+     *                             to the external device?
      */
     @Override
     public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -658,7 +658,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be flushed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be flushed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
-     *                             to the external device.
+     *                             to the external device?
      * @throws IndexOutOfBoundsException for illegal fromIndex and toIndex
      *                                   (fromIndex &lt; 0 || toIndex &gt; length() || fromIndex &gt; toIndex).
      */
@@ -691,7 +691,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be freed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be freed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
-     *                             to the external device.
+     *                             to the external device?
      * @throws IndexOutOfBoundsException for illegal fromIndex and toIndex
      *                                   (fromIndex &lt; 0 || toIndex &gt; length() || fromIndex &gt; toIndex).
      */

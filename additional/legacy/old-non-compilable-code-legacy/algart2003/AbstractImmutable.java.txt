@@ -181,7 +181,7 @@ public abstract class AbstractImmutable implements Immutable, Cloneable, java.io
   }
 
   /**
-   * Checks whether the given class can be considered <i>immutable</i>:
+   * Checks, whether the given class can be considered <i>immutable</i>:
    * see comments to {@link Immutable} interface.
    *
    * @param clazz The checked class

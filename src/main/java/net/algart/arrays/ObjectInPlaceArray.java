@@ -45,7 +45,7 @@ public interface ObjectInPlaceArray<E> extends ObjectArray<E> {
      * because allows to avoid allocating Java objects in the heap.
      *
      * @return            a reference to <code>resultValue</code>.
-     * @param index       index of element to load.
+     * @param index       index of the element to load.
      * @param resultValue the object where the retrieved content will be stored.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @throws NullPointerException if <code>resultValue</code> is {@code null}.

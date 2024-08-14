@@ -78,7 +78,7 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * but may set the element to some default value, if {@code null} elements are not supported
      * by the {@link MemoryModel memory model} (as in a case of {@link CombinedMemoryModel}).
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements.
@@ -162,8 +162,8 @@ public interface UpdatableArray extends Array, ArrayExchanger {
     /**
      * Copies element #<code>srcIndex</code> to position #<code>destIndex</code> inside this array.
      *
-     * @param destIndex index of element to replace.
-     * @param srcIndex  index of element to be copied.
+     * @param destIndex index of the element to replace.
+     * @param srcIndex  index of the element to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void copy(long destIndex, long srcIndex);
@@ -180,8 +180,8 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * and then the contents of the temporary array were copied into positions
      * <code>destIndex..destIndex+count-1</code> of this array.
      *
-     * @param destIndex starting index of element to replace.
-     * @param srcIndex  starting index of element to be copied.
+     * @param destIndex starting index of the element to replace.
+     * @param srcIndex  starting index of the element to be copied.
      * @param count     the number of elements to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
@@ -190,8 +190,8 @@ public interface UpdatableArray extends Array, ArrayExchanger {
     /**
      * Swaps elements at positions #<code>firstIndex</code> and #<code>secondIndex</code> inside this array.
      *
-     * @param firstIndex  first index of element to exchange.
-     * @param secondIndex second index of element to exchange.
+     * @param firstIndex  first index of the element to exchange.
+     * @param secondIndex second index of the element to exchange.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     void swap(long firstIndex, long secondIndex);
@@ -203,8 +203,8 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * <p>Some elements may be swapped incorrectly if the swapped areas overlap,
      * i.e. if <code>Math.abs(firstIndex - secondIndex) &lt; count</code>.
      *
-     * @param firstIndex  starting first index of element to exchange.
-     * @param secondIndex starting second index of element to exchange.
+     * @param firstIndex  starting first index of the element to exchange.
+     * @param secondIndex starting second index of the element to exchange.
      * @param count       the number of elements to be exchanged.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */

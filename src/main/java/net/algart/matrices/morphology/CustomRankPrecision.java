@@ -52,7 +52,7 @@ public interface CustomRankPrecision {
      * The <i>bit levels</i>. (Here and below we shall designate this array as <code>bitLevels</code>.)
      *
      * <p>The last element of this array <code>bitLevels[bitLevels.length-1]</code> is named
-     * <i>the number of analysed bits</i> and specifies the logarithm of the length
+     * <i>the number of analyzed bits</i> and specifies the logarithm of the length
      * of the histogram, used while calculating rank characteristics. More precisely, the length
      * of the histogram is <i>M</i>=2<sup>&mu;</sup>,
      * where &mu; = <code>bitLevels[bitLevels.length-1]</code>

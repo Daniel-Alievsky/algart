@@ -3925,7 +3925,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(boolean[], int, int, boolean) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -3962,7 +3962,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(byte[], int, int, byte) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -3998,7 +3998,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(char[], int, int, char) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4034,7 +4034,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(short[], int, int, short) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4070,7 +4070,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(int[], int, int, int) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4106,7 +4106,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(long[], int, int, long) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4142,7 +4142,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(float[], int, int, float) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4178,7 +4178,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(double[], int, int, double) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4214,7 +4214,7 @@ public class JArrays {
      * as in {@link java.util.Arrays#fill(Object[], int, int, Object) java.util.Arrays.fill} method.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -4243,7 +4243,7 @@ public class JArrays {
      * but checks possible <code>IndexOutOfBoundsException</code> <i>before</i> any operations.
      *
      * @param dest      the filled Java array.
-     * @param destPos   starting index of element to replace.
+     * @param destPos   starting index of the element to replace.
      * @param count     the number of elements to be filled (should be &gt;=0).
      * @param start     starting value of the progression.
      * @param increment step of the progression.
@@ -4294,7 +4294,7 @@ public class JArrays {
      * as in <code>java.util.Arrays.fill</code> methods.
      *
      * @param dest    the filled Java array.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if the <code>dest</code> argument is not a Java array,

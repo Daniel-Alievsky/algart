@@ -675,8 +675,8 @@ abstract class DataStorage {
      * Copies element #<code>srcIndex</code> to position #<code>destIndex</code> inside
      * the stored array (not subarray).
      *
-     * @param destIndex index of element to replace.
-     * @param srcIndex  index of element to be copied.
+     * @param destIndex index of the element to replace.
+     * @param srcIndex  index of the element to be copied.
      */
     abstract void copy(long destIndex, long srcIndex);
 
@@ -684,8 +684,8 @@ abstract class DataStorage {
      * Swaps elements at positions #<code>firstIndex</code> and #<code>secondIndex</code> inside
      * the stored array (not subarray).
      *
-     * @param firstIndex  first index of element to exchange.
-     * @param secondIndex second index of element to exchange.
+     * @param firstIndex  first index of the element to exchange.
+     * @param secondIndex second index of the element to exchange.
      */
     abstract void swap(long firstIndex, long secondIndex);
 

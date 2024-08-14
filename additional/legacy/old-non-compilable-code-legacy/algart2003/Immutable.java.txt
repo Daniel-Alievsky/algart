@@ -62,7 +62,7 @@ public interface Immutable { //extends TrueStatic {
 
 
     /**
-     * Checks whether the given <code>inheritorClass</code>, which extends
+     * Checks, whether the given <code>inheritorClass</code>, which extends
      * correct immutable class <code>immutableClass</code> (implementing
      * {@link Immutable} interface), can be mutable in regard to
      * the binary data saved in the stream while serialization, and throws

@@ -67,7 +67,7 @@ public interface MutablePArray extends UpdatablePArray, MutableArray {
      *     {@link DoubleStack}.</li>
      * </ul>
      *
-     * @return the last element at array (it is removed from the array).
+     * @return the last element at the array (it is removed from the array).
      * @throws java.util.EmptyStackException if this array is empty.
      */
     double popDouble();

@@ -29,7 +29,7 @@ package net.algart.arrays;
  *
  * <p>Unlike the standard <code>java.util.Comparator</code>, the basic method {@link #less(long, long)}
  * of this interface works not with data elements, but with their indexes in the array:
- * this method should get them from the analysed array itself.
+ * this method should get them from the analyzed array itself.
  * So, every object, implementing this interface, is supposed to be working with some fixed linear data array.
  * The method of storing data in the array can be any; for example, it can be an {@link Array AlgART array}
  * or a usual Java array.

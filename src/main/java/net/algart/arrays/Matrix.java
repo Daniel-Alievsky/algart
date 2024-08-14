@@ -194,7 +194,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
          * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
-         * are the low endpoints of all coordinates of the submatrix,
+         * are the low endpoints of all coordinates in the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method.
          * An attempt to read this element of the submatrix returns the corresponding element
@@ -224,7 +224,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * cyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
          * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
-         * are the low endpoints of all coordinates of the submatrix,
+         * are the low endpoints of all coordinates in the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method.
          * An attempt to read this element of the submatrix returns the corresponding element
@@ -250,7 +250,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * pseudoCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
          * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
-         * are the low endpoints of all coordinates of the submatrix,
+         * are the low endpoints of all coordinates in the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method.
          * An attempt to read this element of the submatrix returns the corresponding element
@@ -278,7 +278,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * mirrorCyclicIndex}(<i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
          * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i>)</code>,
          * where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
-         * are the low endpoints of all coordinates of the submatrix,
+         * are the low endpoints of all coordinates in the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method.
          * An attempt to read this element of the submatrix returns the corresponding element
@@ -339,7 +339,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <code><i>p<sub>0</sub></i>+<i>i<sub>0</sub></i>,<i>p<sub>1</sub></i>+<i>i<sub>1</sub></i>,
          * ..., <i>p<sub>n-1</sub></i>+<i>i<sub>n-1</sub></i></code>
          * (where <code><i>p<sub>0</sub></i>,<i>p<sub>1</sub></i>,...,<i>p<sub>n-1</sub></i></code>
-         * are the low endpoints of all coordinates of the submatrix,
+         * are the low endpoints of all coordinates in the submatrix,
          * passed as the first argument of {@link Matrix#subMatrix(long[], long[], ContinuationMode)}
          * or {@link Matrix#subMatr(long[], long[], ContinuationMode)} method) &mdash;
          * if this element {@link Matrix#inside(long...) lies inside} the source matrix.

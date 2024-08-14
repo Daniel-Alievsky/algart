@@ -92,7 +92,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
      * Equivalent to <code>{@link #setBit(long, boolean) setBit}(index, true)</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void setBit(long index);
@@ -100,7 +100,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
      * Equivalent to <code>{@link #setBit(long, boolean) setBit}(index, false)</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void clearBit(long index);
@@ -129,7 +129,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
      * or, vise versa, always use synchronization. In such cases this method may be equivalent
      * to {@link #setBit(long, boolean)}.</p>
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
@@ -138,7 +138,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
      * Equivalent to <code>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, true)</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void setBitNoSync(long index);
@@ -146,7 +146,7 @@ public interface UpdatableBitArray extends BitArray, UpdatablePFixedArray {
     /**
      * Equivalent to <code>{@link #setBitNoSync(long, boolean) setBitNoSync}(index, false)</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      */
     void clearBitNoSync(long index);

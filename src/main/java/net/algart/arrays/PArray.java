@@ -66,7 +66,7 @@ public interface PArray extends Array {
      * <p>Please keep in mind that the real amount of occupied memory, theoretically, can differ
      * from the value returned by this method.
      * For example, some JVM, theoretically, may store <code>byte</code> elements of <code>byte[]</code> array
-     * in 32-bit memory words. In this case, this method will return invalid result for byte arrays
+     * in 32-bit memory words. In this case, this method will return an invalid result for byte arrays
      * created by the {@link SimpleMemoryModel simple memory model}.
      * <i>However:</i> we guarantee the results of this method are always correct for arrays created
      * by the {@link BufferMemoryModel buffer memory model} and {@link LargeMemoryModel large memory model}.
@@ -92,8 +92,8 @@ public interface PArray extends Array {
      * <code>{@link Arrays#minPossibleValue(Class, double) minPossibleValue}(thisArray.getClass(),
      * valueForFloatingPoint)</code>.
      *
-     * @param valueForFloatingPoint the value returned for floating-point array type.
-     * @return the minimal possible value, that can stored in elements of this array,
+     * @param valueForFloatingPoint the value returned for a floating-point array type.
+     * @return the minimal possible value that can stored in elements of this array
      * if it is a fixed-point array, or the argument for floating-point arrays.
      * @see PFixedArray#minPossibleValue()
      */
@@ -113,8 +113,8 @@ public interface PArray extends Array {
      * <code>{@link Arrays#maxPossibleValue(Class, double) maxPossibleValue}(thisArray.getClass(),
      * valueForFloatingPoint)</code>.
      *
-     * @param valueForFloatingPoint the value returned for floating-point array type.
-     * @return the maximal possible value, that can stored in elements of this array,
+     * @param valueForFloatingPoint the value returned for a floating-point array type.
+     * @return the maximal possible value that can stored in elements of this array
      * if it is a fixed-point array, or the argument for floating-point arrays.
      * @see PFixedArray#maxPossibleValue()
      * @see Matrix#maxPossibleValue(double)
@@ -132,7 +132,7 @@ public interface PArray extends Array {
      * Returned value contains full information stored in the element,
      * excepting the case of very large <code>long</code> elements.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setDouble(long, double)

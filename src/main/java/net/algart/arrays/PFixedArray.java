@@ -79,7 +79,7 @@ public interface PFixedArray extends PArray {
      * Returned value contains full information stored in the element,
      * if it is not an array of <code>float</code> or <code>double</code> elements.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setLong(long, long)
@@ -99,7 +99,7 @@ public interface PFixedArray extends PArray {
      * Returned value contains full information stored in the element,
      * if it is not an array of <code>long</code>, <code>float</code> or <code>double</code> elements.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see UpdatablePArray#setInt(long, int)

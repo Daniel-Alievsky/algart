@@ -173,10 +173,10 @@ public class ArraySelector {
      *     comparator.less(j, m)
      *     comparator.less(m, i)
      * </pre>
-     * <p>Elements with indexes <code>&lt;from</code> and <code>&ge;to</code> are not analysed.
+     * <p>Elements with indexes <code>&lt;from</code> and <code>&ge;to</code> are not analyzed.
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param comparator    comparator for checking order of elements.
      * @param exchanger     exchanger for exchanging reordered elements.
@@ -338,7 +338,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -370,7 +370,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -395,8 +395,8 @@ public class ArraySelector {
      * we always compare {@code array[i] & 0xFF} and {@code array[j] & 0xFF}
      * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -623,7 +623,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -651,7 +651,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -672,8 +672,8 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <code>char[]</code> array.
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -903,7 +903,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -935,7 +935,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -960,8 +960,8 @@ public class ArraySelector {
      * we always compare {@code array[i] & 0xFFFF} and {@code array[j] & 0xFFFF}
      * instead of simple {@code array[i]} and {@code array[j]}.</p>
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -1187,7 +1187,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1215,7 +1215,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1236,8 +1236,8 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <code>int[]</code> array.
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -1463,7 +1463,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1491,7 +1491,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1512,8 +1512,8 @@ public class ArraySelector {
      * Optimized version of {@link #select(long, long, long, ArrayComparator, ArrayExchanger)} method for selecting
      * the element from <code>long[]</code> array.
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -1745,7 +1745,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1779,7 +1779,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -1806,8 +1806,8 @@ public class ArraySelector {
      * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
      * be greater than <code>-0.0</code>.</p>
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -2039,7 +2039,7 @@ public class ArraySelector {
      * @param percentileIndexes list of indexes inside the array, that should be placed to correct place
      *                          in increasing order.
      * @param array             data array.
-     * @param length            number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length            number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileIndexes</code> or
      *                                  <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -2073,7 +2073,7 @@ public class ArraySelector {
      *
      * @param percentileLevels list of percentile levels: required indexes, divided by array length.
      * @param array            data array.
-     * @param length           number of elements: only elements <code>array[0..length-1</code> are analysed.
+     * @param length           number of elements: only elements <code>array[0..length-1</code> are analyzed.
      * @throws NullPointerException     if <code>percentileLevels</code> or <code>array</code> argument
      *                                  is {@code null}.
      * @throws IllegalArgumentException if <code>length&le;0</code>, or <code>length&gt;array.length</code>.
@@ -2100,8 +2100,8 @@ public class ArraySelector {
      * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
      * be greater than <code>-0.0</code>.</p>
      *
-     * @param from          index of the first analysed element of some data array, inclusive.
-     * @param to            index of the last analysed element of some data array, exclusive.
+     * @param from          index of the first analyzed element of some data array, inclusive.
+     * @param to            index of the last analyzed element of some data array, exclusive.
      * @param requiredIndex index inside the array, that should be placed to correct place in increasing order.
      * @param array         data array.
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
@@ -2347,7 +2347,7 @@ public class ArraySelector {
     }
 
     /**
-     * Checks whether the given percentile indexes are correct for passing to
+     * Checks, whether the given percentile indexes are correct for passing to
      * {@link #select(long, long[], ArrayComparator, ArrayExchanger)} method.
      * Throws an exception if they are incorrect.
      *
@@ -2378,7 +2378,7 @@ public class ArraySelector {
     }
 
     /**
-     * Checks whether the given percentile indexes are correct for passing to
+     * Checks, whether the given percentile indexes are correct for passing to
      * {@link #select(int[], float[], int)} and similar methods.
      * Throws an exception if they are incorrect.
      *
@@ -2406,7 +2406,7 @@ public class ArraySelector {
     }
 
     /**
-     * Checks whether the given percentile levels are correct for passing to
+     * Checks, whether the given percentile levels are correct for passing to
      * {@link #select(long, double[], ArrayComparator, ArrayExchanger)} method.
      * Throws an exception if they are incorrect.
      *

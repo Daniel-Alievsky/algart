@@ -427,7 +427,7 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     /**
      * This implementation calls <code>setFloat(index, (Float)value).floatValue())</code>.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      * @throws NullPointerException      if <code>value == null</code> and it is an array of primitive elements
@@ -512,8 +512,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     /**
      * This implementation calls <code>setFloat(destIndex, getFloat(srcIndex))</code>.
      *
-     * @param destIndex index of element to replace.
-     * @param srcIndex  index of element to be copied.
+     * @param destIndex index of the element to replace.
+     * @param srcIndex  index of the element to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void copy(long destIndex, long srcIndex) {
@@ -523,8 +523,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     /**
      * This implementation is based on a loop of calls of {@link #copy(long, long)} method.
      *
-     * @param destIndex starting index of element to replace.
-     * @param srcIndex  starting index of element to be copied.
+     * @param destIndex starting index of the element to replace.
+     * @param srcIndex  starting index of the element to be copied.
      * @param count     the number of elements to be copied.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
@@ -550,8 +550,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
      * This implementation swaps two elements by {@link #getFloat(long)}
      * and {@link #setFloat(long, float)} methods.
      *
-     * @param firstIndex  first index of element to exchange.
-     * @param secondIndex second index of element to exchange.
+     * @param firstIndex  first index of the element to exchange.
+     * @param secondIndex second index of the element to exchange.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */
     public void swap(long firstIndex, long secondIndex) {
@@ -563,8 +563,8 @@ public abstract class AbstractUpdatableFloatArray extends AbstractFloatArray imp
     /**
      * This implementation is based on a loop of calls of {@link #swap(long, long)} method.
      *
-     * @param firstIndex  starting first index of element to exchange.
-     * @param secondIndex starting second index of element to exchange.
+     * @param firstIndex  starting first index of the element to exchange.
+     * @param secondIndex starting second index of the element to exchange.
      * @param count       the number of elements to be exchanged.
      * @throws IndexOutOfBoundsException if one of indexes is out of range <code>0..length()-1</code>.
      */

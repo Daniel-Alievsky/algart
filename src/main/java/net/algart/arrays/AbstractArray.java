@@ -689,11 +689,11 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Checks whether the passed arguments correct for
+     * Checks, whether the passed arguments correct for
      * {@link UpdatableArray#copy(Array)} and throws corresponding exception if no.
      * More precisely, this method throws <code>IllegalArgumentException</code>
      * if is not possible to assign elements of <code>src</code> array to elements of <code>thisArray</code>,
-     * i.e. if <code>!thisArray.{@link #elementType() elementType()}.isAssignableFrom(src.{@link #elementType()
+     * i.e., if <code>!thisArray.{@link #elementType() elementType()}.isAssignableFrom(src.{@link #elementType()
      * elementType()})</code>.
      *
      * <p>Note: for primitive array types ({@link PArray} and its inheritors), this method throws an exception
@@ -763,7 +763,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Checks whether the passed arguments correct for {@link #subArray(long, long)}
+     * Checks, whether the passed arguments correct for {@link #subArray(long, long)}
      * and throws corresponding exception if no.
      *
      * @param fromIndex low endpoint (inclusive) of the subarray.
@@ -786,7 +786,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Checks whether the passed arguments correct for {@link #subArr(long, long)}
+     * Checks, whether the passed arguments correct for {@link #subArr(long, long)}
      * and throws corresponding exception if no.
      *
      * @param position start position (inclusive) of the subarray.
@@ -1024,7 +1024,7 @@ public abstract class AbstractArray implements Array, Cloneable {
             } else {
                 long[] jaDest = Arrays.longJavaArrayInternal((BitArray) thisArray);
                 if (jaDest != null) {
-                    // Popular case: for example, src is a lazy array copied into quick Java array.
+                    // Popular case: for example, src is a lazy array copied into a quick Java array.
                     // Here src is probably not direct (because the copy method from SimpleArraysImpls is not used).
                     long jaOffset = Arrays.longJavaArrayOffsetInternal((BitArray) thisArray);
                     t1 = nanoTime();

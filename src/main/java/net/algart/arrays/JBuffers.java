@@ -67,9 +67,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>ByteBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>ByteBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -117,9 +117,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>ByteBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>ByteBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -168,9 +168,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>ByteBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>ByteBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>ByteBuffer</code>.
      * @param second    the second <code>ByteBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>ByteBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>ByteBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -213,9 +213,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>CharBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>CharBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -263,9 +263,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>CharBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>CharBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -314,9 +314,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>CharBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>CharBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>CharBuffer</code>.
      * @param second    the second <code>CharBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>CharBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>CharBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -358,9 +358,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>ShortBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>ShortBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -408,9 +408,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>ShortBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>ShortBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -459,9 +459,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>ShortBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>ShortBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>ShortBuffer</code>.
      * @param second    the second <code>ShortBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>ShortBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>ShortBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -503,9 +503,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>IntBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>IntBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -553,9 +553,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>IntBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>IntBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -604,9 +604,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>IntBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>IntBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>IntBuffer</code>.
      * @param second    the second <code>IntBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>IntBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>IntBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -648,9 +648,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>LongBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>LongBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -698,9 +698,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>LongBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>LongBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -749,9 +749,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>LongBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>LongBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>LongBuffer</code>.
      * @param second    the second <code>LongBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>LongBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>LongBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -793,9 +793,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>FloatBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>FloatBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -843,9 +843,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>FloatBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>FloatBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -894,9 +894,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>FloatBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>FloatBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>FloatBuffer</code>.
      * @param second    the second <code>FloatBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>FloatBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>FloatBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -938,9 +938,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest    the destination <code>DoubleBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param src     the source <code>DoubleBuffer</code>.
-     * @param srcPos  starting index of element to be copied.
+     * @param srcPos  starting index of the element to be copied.
      * @param count   the number of elements to be copied (should be &gt;=0).
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -988,9 +988,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param dest         the destination <code>DoubleBuffer</code>.
-     * @param destPos      starting index of element to replace.
+     * @param destPos      starting index of the element to replace.
      * @param src          the source <code>DoubleBuffer</code>.
-     * @param srcPos       starting index of element to be copied.
+     * @param srcPos       starting index of the element to be copied.
      * @param count        the number of elements to be copied (should be &gt;=0).
      * @param reverseOrder if <code>true</code>, the elements will be copied in the reverse order.
      * @throws NullPointerException      if either <code>src</code> or <code>dest</code> is {@code null}.
@@ -1039,9 +1039,9 @@ public class JBuffers {
      * of the passed buffers.
      *
      * @param first     the first <code>DoubleBuffer</code>.
-     * @param firstPos  starting index of element to exchange in the first <code>DoubleBuffer</code>.
+     * @param firstPos  starting index of the element to exchange in the first <code>DoubleBuffer</code>.
      * @param second    the second <code>DoubleBuffer</code>.
-     * @param secondPos starting index of element to exchange in the second <code>DoubleBuffer</code>.
+     * @param secondPos starting index of the element to exchange in the second <code>DoubleBuffer</code>.
      * @param count     the number of elements to be exchanged (should be &gt;=0).
      * @throws NullPointerException      if either <code>first</code> or <code>second</code> is {@code null}.
      * @throws IllegalArgumentException  if <code>count</code> is negative.
@@ -1080,7 +1080,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>ByteBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1123,7 +1123,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>CharBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1165,7 +1165,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>ShortBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1207,7 +1207,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>IntBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1249,7 +1249,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>LongBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1291,7 +1291,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>FloatBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.
@@ -1333,7 +1333,7 @@ public class JBuffers {
      * of the passed buffer.
      *
      * @param dest    the filled <code>DoubleBuffer</code>.
-     * @param destPos starting index of element to replace.
+     * @param destPos starting index of the element to replace.
      * @param count   the number of elements to be filled (should be &gt;=0).
      * @param value   the filler.
      * @throws NullPointerException      if <code>dest</code> is {@code null}.

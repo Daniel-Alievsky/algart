@@ -1625,7 +1625,7 @@ public class Matrices {
     }
 
     /**
-     * Checks whether the passed <code>arraySupertype</code> is one of 18 basic non-mutable array types
+     * Checks, whether the passed <code>arraySupertype</code> is one of 18 basic non-mutable array types
      * <code>{@link BitArray}.class</code>, <code>{@link CharArray}.class</code>,
      * <code>{@link ByteArray}.class</code>, <code>{@link ShortArray}.class</code>,
      * <code>{@link IntArray}.class</code>, <code>{@link LongArray}.class</code>,
@@ -1803,7 +1803,7 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not {@code null} and have
+     * Checks, whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, if it is true,
      * creates and returns Java array of {@link Matrix#array() built-in AlgART arrays} of all passed matrices.
      * In other words, in the returned array the element <code>#k</code> is
@@ -2428,7 +2428,7 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not {@code null} and have
+     * Checks, whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
      * The same check is performed by {@link #arraysOfParallelMatrices} method,
      * but this method does not return any result.
@@ -2444,7 +2444,7 @@ public class Matrices {
     }
 
     /**
-     * Checks whether all passed matrices are not {@code null} and have
+     * Checks, whether all passed matrices are not {@code null} and have
      * {@link Matrix#dimEquals(Matrix) equal dimensions} and, it is not so, throws a corresponding exception.
      * Equivalent to <code>{@link #checkDimensionEquality(java.util.Collection)
      * checkDimensionEquality}({@link Matrices#several Matrices.several}(matrices))</code>.

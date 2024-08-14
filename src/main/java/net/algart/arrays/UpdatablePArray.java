@@ -64,7 +64,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      *     <li>for {@link UpdatableDoubleArray}: the same method is already declared in this interface.</li>
      * </ul>
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see #getDouble(long)
@@ -97,7 +97,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      *     <code>{@link UpdatableDoubleArray#setDouble(long, double) setDouble}(index, (double) value)</code>.</li>
      * </ul>
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see PFixedArray#getLong(long)
@@ -114,7 +114,7 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      * <p>This method is equivalent to both {@link #setLong(long, long) setLong(index, (long) value)}
      * and {@link #setDouble(long, double) setDouble(index, (double) value)}, but can work little faster.
      *
-     * @param index index of element to replace.
+     * @param index index of the element to replace.
      * @param value element to be stored at the specified position.
      * @throws IndexOutOfBoundsException if index out of range <code>0..length()-1</code>.
      * @see PFixedArray#getInt(long)

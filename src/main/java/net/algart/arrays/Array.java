@@ -213,7 +213,7 @@ public interface Array {
 
     /**
      * Returns the element #<code>index</code>.
-     * It this array contains elements of primitive types,
+     * If this array contains elements of primitive types,
      * the value is automatically wrapped in an object (<code>Boolean</code>,
      * <code>Byte</code>, etc.).
      *
@@ -231,7 +231,7 @@ public interface Array {
      * For other arrays, implementing {@link ObjectArray},
      * we recommend to use {@link ObjectArray#get(long)}.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */
@@ -261,7 +261,7 @@ public interface Array {
      * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array or
      *                                   if <code>count &lt; 0</code>.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside this array or target Java array.
      * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
      * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
@@ -423,7 +423,7 @@ public interface Array {
      * Equivalent to {@link #buffer(net.algart.arrays.DataBuffer.AccessMode, long)
      * buffer(mode, someCapacity)}, where <code>mode</code> is the argument of this method
      * and <code>someCapacity</code> is chosen automatically to provide good performance in typical situations.
-     * Usually, the capacity is chosen to get a buffer occupying several kilobytes,
+     * Usually, the capacity is chosen to get a buffer occupying several kilobytes
      * that can fit in an internal cache of most processors.
      *
      * <p>In any case, you can be sure that the chosen capacity will not be greater than
@@ -489,7 +489,7 @@ public interface Array {
      * as this array, but independent length, start offset, capacity, copy-on-next-write and
      * possible other information about array characteristics besides its elements,
      * as for {@link #shallowClone()} method.
-     * If modifications of this array characteristics lead to reallocation
+     * If modifications of the array characteristics lead to reallocation
      * of the internal storage, then the returned array ceases to be a view of this array.
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
@@ -549,7 +549,7 @@ public interface Array {
      * In principle, it is possible that both these conditions are satisfied, but the array
      * is though mutable. Maybe, some class from another package (or from future versions
      * of this package), implementing {@link Array} interface, does not implement
-     * neither {@link UpdatableArray}, nor {@link DirectAccessible}, but offers another methods
+     * neither {@link UpdatableArray}, nor {@link DirectAccessible}, but offers other methods
      * allowing to change its state or content.
      *
      * <p>Note: if this method returns <code>true</code>, it does not mean that its content cannot
@@ -683,7 +683,7 @@ public interface Array {
      * will be performed with the newly allocated storage only.
      *
      * <p>Please be careful: if you will want to change arrays created by this method, the result may
-     * be unexpected! For example, an attempt to copy other arrays into copy-on-next-write array
+     * be unexpected! For example, an attempt to copy other arrays into "copy-on-next-write" array
      * by some methods like {@link Arrays#copy(ArrayContext, UpdatableArray, Array)} will probably
      * do nothing. The reason is working with the array via its subarrays &mdash;
      * for example, {@link Arrays#copy(ArrayContext, UpdatableArray, Array) Arrays.copy} method
@@ -817,7 +817,7 @@ public interface Array {
      * for example, for {@link LargeMemoryModel}: if this method returns <code>true</code>, then the content
      * of this array corresponds to the content of an external file according to a known, fully documented scheme.
      * Unlike this, another forms of AlgART arrays &mdash; like {@link #subArray(long, long) subarrays} &mdash;
-     * have no documented correspondence with the content of an external data, even when we can retrieve
+     * have no documented correspondence with the content of external data, even when we can retrieve
      * some information about such data (as a name of the disk file {@link LargeMemoryModel#getDataFilePath(Array)}).
      *
      * <p>There is a guarantee that this method works very quickly
@@ -881,14 +881,14 @@ public interface Array {
      * to {@link #isNew()}. Sometimes we need to store some number of absolutely identical AlgART
      * arrays, corresponding to the same data, maybe very large (many gigabytes).
      * The listed scheme permits storing only 1 reference to each array
-     * (or its data), because we should avoid ability of changes in one stored array,
+     * (or its data), because we should avoid the ability of changes in one stored array,
      * reflecting in another stored array. It is a good and safe strategy, but it does not provide
      * maximal performance in a case, when <i>we know that all data are immutable (read-only) and we shall never
      * change them</i>. In the last case, there is no problem to create any number of references to the same
      * data, as well as there is no problem to create a lot of references to the same
      * immutable Java object like <code>String</code>.
      *
-     * <p>This method allows to improve the described behavior. Namely, if this method returns <code>true</code>,
+     * <p>This method allows improving the described behavior. Namely, if this method returns <code>true</code>,
      * you still <i>may</i> store the reference to an AlgART array or to its internal data in your storage,
      * though {@link #isNew()} returns <code>false</code>.
      * Yes, you can so create several references to the same array data,
@@ -910,11 +910,11 @@ public interface Array {
      *
      * <p>In addition, this method provides the same feature as {@link #isNew()} method:
      * if you know the memory model, which has created this instance,
-     * then you can be absolutely sure in all details of the algorithm of internal storing
+     * then you can be sure in all details of the algorithm of internal storing
      * the array data (if it is documented in the corresponding memory model). It is important
      * for {@link LargeMemoryModel}: if this method returns <code>true</code>, then the content
      * of this array corresponds to the content of an external file according to a known, fully documented scheme.
-     * Unlike this, another forms of AlgART arrays &mdash; like {@link #subArray(long, long) subarrays} &mdash;
+     * Unlike this, other forms of AlgART arrays &mdash; like {@link #subArray(long, long) subarrays} &mdash;
      * have no documented correspondence with the content of an external data, even when we can retrieve
      * some information about such data (as a name of the disk file {@link LargeMemoryModel#getDataFilePath(Array)}).
      *

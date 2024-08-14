@@ -55,7 +55,7 @@ import net.algart.arrays.*;
  * of the skeleton has no neighbour elements;</li>
  * <li>we call a pixel "<i>{@link #TYPE_ILLEGAL illegal}</i>", if analysis of some close neighbourhood of this pixel
  * (usually 3x3 or 5x5) allows to conclude, that this pixel cannot belong to a skeleton of the concrete
- * analysed kind;</li>
+ * analyzed kind;</li>
  * <li id="groupAttachable">in other cases, i.e. if a unit pixel has <i>k</i>&ge;3 neighbours
  * and is not "illegal", we call it either <i>{@link #TYPE_USUAL_NODE node}</i>, or an
  * <i>{@link #isAttachableBranchEndPixelType(int) attachable branch end}</i>.

@@ -47,7 +47,7 @@ public interface IntArray extends PIntegerArray {
     /**
      * Returns the element #<code>index</code>.
      *
-     * @param index index of element to get.
+     * @param index index of the element to get.
      * @return the element at the specified position in this array.
      * @throws IndexOutOfBoundsException if <code>index</code> is out of range <code>0..length()-1</code>.
      */

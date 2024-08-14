@@ -787,7 +787,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
     }
 
     /**
-     * Checks whether the passed arguments are allowed arguments for
+     * Checks, whether the passed arguments are allowed arguments for
      * {@link #process(Matrix, Matrix, List, Pattern)} method and throws the corresponding exception
      * if it is not so. Does nothing if the arguments are correct.
      *
