@@ -878,7 +878,7 @@ public abstract class MatrixInfo {
 
         @Override
         public Map<String, String> additionalProperties() {
-            return new LinkedHashMap<String, String>();
+            return new LinkedHashMap<>();
         }
 
 
@@ -989,7 +989,7 @@ public abstract class MatrixInfo {
             long length = -1;
             long[] dimensions = null;
             long dataOffset = -1;
-            Map<String, String> additional = new LinkedHashMap<String, String>();
+            Map<String, String> additional = new LinkedHashMap<>();
             int q;
             for (int p = 0, lineIndex = 0, len = chars.length(); p < len; p = q, lineIndex++) {
                 if (lineIndex > MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO + 500) {
@@ -1136,9 +1136,7 @@ public abstract class MatrixInfo {
 
         @Override
         public Map<String, String> additionalProperties() {
-            Map<String, String> result = new LinkedHashMap<String, String>();
-            result.putAll(additionalProperties);
-            return result;
+            return new LinkedHashMap<>(additionalProperties);
         }
 
         @Override
@@ -1167,7 +1165,7 @@ public abstract class MatrixInfo {
         @Override
         public MatrixInfo cloneWithOtherAdditionalProperties(Map<String, String> additionalProperties) {
             Objects.requireNonNull(additionalProperties, "Null additionalProperties argument");
-            Map<String, String> additional = new LinkedHashMap<String, String>();
+            Map<String, String> additional = new LinkedHashMap<>();
             for (Map.Entry<String, String> e : additionalProperties.entrySet()) {
                 String key = e.getKey();
                 Objects.requireNonNull(key, "Null name of additional property");

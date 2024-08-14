@@ -592,11 +592,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         {
             try {
                 result = Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName,
-                    new Callable<MappedByteBuffer>() {
-                        public MappedByteBuffer call() throws IOException {
-                            return fileChannel.map(mode, position, size);
-                        }
-                    });
+                        () -> fileChannel.map(mode, position, size));
                 break;
             } catch (Exception ex) {
                 if (!(ex instanceof IOException)) {
@@ -655,11 +651,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             resultError = null;
             try {
                 attemptCount++;
-                Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName, new Callable<Object>() {
-                    public Object call() {
-                        mbb.force();
-                        return null;
-                    }
+                Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName, () -> {
+                    mbb.force();
+                    return null;
                 });
             } catch (Throwable ex) {
                 if (ex instanceof Error) {
@@ -1169,8 +1163,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 if (!preloaded || System.currentTimeMillis() - lastLoadTime > NEXT_RELOAD_MIN_DELAY) {
                     try {
                         Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName,
-                            new Callable<Object>() {
-                                public Object call() throws Exception {
+                                () -> {
 //                                    System.out.print("Loading " + range + "...");
 //                                    long t1 = System.nanoTime();
                                     mbb.load();
@@ -1179,8 +1172,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 //                                        + mbb.limit() / 1048576.0 / ((t2 - t1) * 1e-9) + " MB/sec (" + fileName
 //                                        + ") in " + Thread.currentThread());
                                     return null;
-                                }
-                            });
+                                });
                     } catch (Exception ex) {
                         throw new AssertionError("Unexpected exception: " + ex);
                     }

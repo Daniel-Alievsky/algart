@@ -600,11 +600,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     final ByteBuffer bbLocal = bb;
                     try {
                         Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(file.getPath(),
-                                new Callable<Object>() {
-                                    public Object call() throws Exception {
-                                        readAllBuffer(fc, range.position(), bbLocal);
-                                        return null;
-                                    }
+                                () -> {
+                                    readAllBuffer(fc, range.position(), bbLocal);
+                                    return null;
                                 });
                     } catch (IOException ex) {
                         throw new IOError(ex);
@@ -674,11 +672,9 @@ public class StandardIODataFileModel extends AbstractDataFileModel implements Da
                     try {
 //                        System.out.println("SSSS flushing " + this);
                         Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName,
-                                new Callable<Object>() {
-                                    public Object call() throws Exception {
-                                        writeAllBuffer(fc, range.position(), bb);
-                                        return null;
-                                    }
+                                () -> {
+                                    writeAllBuffer(fc, range.position(), bb);
+                                    return null;
                                 });
                     } catch (IOException ex) {
                         throw new IOError(ex);

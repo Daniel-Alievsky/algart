@@ -1948,10 +1948,8 @@ class MappedDataStorages {
                                         return;
                                         // - no any other actions, that could prevent normal shutdown
                                     } else {
-                                        Error err = new InternalError("Error while calling undocumented "
-                                            + "cleaning methods of DirectByteBuffer!");
-                                        err.initCause(ex);
-                                        throw err;
+                                        throw new InternalError("Error while calling undocumented "
+                                            + "cleaning methods of DirectByteBuffer!", ex);
                                     }
                                 }
                             }
@@ -2371,15 +2369,13 @@ class MappedDataStorages {
                 } finally {
                     lockForGc.unlock();
                 }
-                LargeMemoryModel.globalMappingFinalizer.invokeOnDeallocation(checkedData, new Runnable() {
-                    public void run() {
-                        if (bhToString != null) { // i.e. if loggable
-                            LargeMemoryModel.LOGGER.finer("~~~~ " + bhToString + " @"
-                                + Integer.toHexString(id) + " is deallocated"
-                                + " (" + finalizationTasksInfo() + ")");
-                        }
-                        decreaseArrayOrMappingCounter(CounterKind.MAPPING_COUNTER);
+                LargeMemoryModel.globalMappingFinalizer.invokeOnDeallocation(checkedData, () -> {
+                    if (bhToString != null) { // i.e. if loggable
+                        LargeMemoryModel.LOGGER.finer("~~~~ " + bhToString + " @"
+                            + Integer.toHexString(id) + " is deallocated"
+                            + " (" + finalizationTasksInfo() + ")");
                     }
+                    decreaseArrayOrMappingCounter(CounterKind.MAPPING_COUNTER);
                 });
             }
         }

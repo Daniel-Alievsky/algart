@@ -81,7 +81,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Some implementations may use bit #63 for service goals.
      *
      * <p>If the created array is a view of some another AlgART arrays,
-     * as result of
+     * as the result of
      * {@link Arrays#asFuncArray(boolean, net.algart.math.functions.Func, Class, PArray...) Arrays.asFuncArray}
      * method, all these arrays should be passed by <code>underlyingArrays</code> argument.
      * The {@link Array#flushResources(ArrayContext)}, {@link Array#flushResources(ArrayContext, boolean)} and
@@ -162,7 +162,7 @@ public abstract class AbstractArray implements Array, Cloneable {
 
     /**
      * This method of {@link PArray} interface is fully implemented in this class.
-     * If this instance does not implement {@link PArray} (i.e. if it is {@link ObjectArray}),
+     * If this instance does not implement {@link PArray} (i.e., if it is {@link ObjectArray}),
      * this method throws <code>UnsupportedOperationException</code>.
      *
      * @return <code>true</code> if and only if all elements of this array are zero, or if this array is empty.
@@ -233,7 +233,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * if <code>mode</code> is not {@link DataBuffer.AccessMode#PRIVATE PRIVATE},
      * this array is not {@link Array#asImmutable() immutable},
      * is not {@link Array#asCopyOnNextWrite() copy-on-next-write},
-     * and either it implements {@link DirectAccessible} interface and
+     * and either this array implements {@link DirectAccessible} interface and
      * its {@link DirectAccessible#hasJavaArray() hasJavaArray()} method returns <code>true</code>,
      * or it is a bit array created by the {@link SimpleMemoryModel simple memory model}.
      *
@@ -451,7 +451,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * for all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
      * Please override it if you want to provide (in a case of subarray)
-     * flushing correct part of the underlying arrays.
+     * flushing the correct part of the underlying arrays.
      *
      * @param context              the context of execution; can be {@code null}, then it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
@@ -715,7 +715,7 @@ public abstract class AbstractArray implements Array, Cloneable {
     }
 
     /**
-     * Checks whether the passed arguments correct for
+     * Checks weather the passed arguments correct for
      * {@link UpdatableArray#swap(UpdatableArray)} and throws corresponding exception if no.
      * More precisely, this method throws <code>IllegalArgumentException</code>
      * if <code>another</code> array <code>thisArray</code> have different element types,
