@@ -117,8 +117,8 @@ public interface ArrayContext {
      * Returns new context, describing the execution of some subtask of the current task,
      * from <code>fromPart*100%</code> of total execution until <code>toPart*100%</code> of total execution.
      * The returned context works alike the current context with the only exception, that
-     * its {@link #updateProgress updateProgress} method passes to this (parent) context little
-     * corrected event. Namely, its {@link ArrayContext.Event#readyPart()} method of the passed event
+     * its {@link #updateProgress updateProgress} method passes to this (parent) context little-corrected
+     * event. Namely, its {@link ArrayContext.Event#readyPart()} method of the passed event
      * returns <code>fromPart+event.readyPart()*(toPart-fromPart)</code>.
      * The methods {@link #getMemoryModel()}, {@link #getThreadPoolFactory()}, {@link #checkInterruption()}
      * of the returned instance call the same methods of this one.

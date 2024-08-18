@@ -237,7 +237,7 @@ public final class SimpleOperationsSpeed {
 
             t1 = System.nanoTime();
             UpdatablePArray array = SimpleMemoryModel.asUpdatableByteArray(bytes);
-            Arrays.applyFunc(SelectConstantFunc.getInstance(0, 255), array, (BitArray) mask);
+            Arrays.applyFunc(SelectConstantFunc.getInstance(0, 255), array, mask);
             t2 = System.nanoTime();
             time("unpackBits via applyFunc (->byte)", t1, t2);
 
@@ -372,6 +372,24 @@ public final class SimpleOperationsSpeed {
             }
             t2 = System.nanoTime();
             time("setBits64NoSync(5)", t1, t2);
+
+            t1 = System.nanoTime();
+            long cardinality1 = PackedBitArrays.cardinality(bits, 0, 64L * bits.length);
+            t2 = System.nanoTime();
+            someInfo += cardinality1;
+            time("cardinality (" + cardinality1 + ")", t1, t2);
+
+            t1 = System.nanoTime();
+            long cardinality2 = 0;
+            for (long l : bits) {
+                cardinality2 += Long.bitCount(l);
+            }
+            t2 = System.nanoTime();
+            someInfo += cardinality2;
+            time("Long.bitCount", t1, t2);
+            if (cardinality1 != cardinality2) {
+                throw new AssertionError();
+            }
 
             t1 = System.nanoTime();
             for (int k = 0; k < n; k++) {
