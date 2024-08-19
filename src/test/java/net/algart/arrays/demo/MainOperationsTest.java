@@ -1676,7 +1676,7 @@ public class MainOperationsTest implements Cloneable {
         if (!(a instanceof PArray)) {
             return;
         }
-        if (!title(ti, "Testing \"Arrays.unpackBits\", \"Arrays.unpacUnitkBits\" "
+        if (!title(ti, "Testing \"Arrays.unpackBits\", \"Arrays.unpackUnitBits\" "
                 + "and \"Arrays.unpackZeroBits\" methods...")) {
             return;
         }

@@ -6149,17 +6149,17 @@ public class PackedBitArraysPer8 {
         }
         long result = 0;
         if (cntStart > 0) {
-            result += PackedBitArrays.bitCount(src[sPos] & maskStart);
+            result += Integer.bitCount(src[sPos] & maskStart);
             count -= cntStart;
             sPos++;
         }
         for (int sPosMax = sPos + (int) (count >>> 3); sPos < sPosMax; sPos++) {
-            result += PackedBitArrays.bitCount(src[sPos] & 0xFF);
+            result += Integer.bitCount(src[sPos] & 0xFF);
         }
         int cntFinish = (int) (count & 7);
         if (cntFinish > 0) {
             int maskFinish = ((1 << cntFinish) - 1) & 0xFF; // cntFinish times 1 (from the left)
-            result += PackedBitArrays.bitCount(src[sPos] & maskFinish);
+            result += Integer.bitCount(src[sPos] & maskFinish);
         }
         return result;
     }

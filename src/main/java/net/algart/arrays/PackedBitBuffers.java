@@ -1674,8 +1674,7 @@ public class PackedBitBuffers {
     public static long indexOfBit(LongBuffer src, long lowIndex, long highIndex, boolean value) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, indexOfBit_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1);;
-        //  src\.length ==> src.limit();;
-        //  (numberOfTrailingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
+        //  src\.length ==> src.limit()  !! Auto-generated: NOT EDIT !! >>
         Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
@@ -1697,7 +1696,7 @@ public class PackedBitBuffers {
             maskStart &= (1L << (sPosRem + cntStart)) - 1; // &= sPosRem+cntStart times 1 (from the left)
         }
         if (cntStart > 0) {
-            int index = PackedBitArrays.numberOfTrailingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskStart);
+            int index = Long.numberOfTrailingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskStart);
             if (index != 64)
                 return fromAligned + index;
             count -= cntStart;
@@ -1706,14 +1705,14 @@ public class PackedBitBuffers {
         }
         if (value) {
             for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; sPos++, fromAligned += 64) {
-                int index = PackedBitArrays.numberOfTrailingZeros(src.get(sPos));
+                int index = Long.numberOfTrailingZeros(src.get(sPos));
                 if (index != 64) {
                     return fromAligned + index;
                 }
             }
         } else {
             for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; sPos++, fromAligned += 64) {
-                int index = PackedBitArrays.numberOfTrailingZeros(~src.get(sPos));
+                int index = Long.numberOfTrailingZeros(~src.get(sPos));
                 if (index != 64) {
                     return fromAligned + index;
                 }
@@ -1722,7 +1721,7 @@ public class PackedBitBuffers {
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
-            int index = PackedBitArrays.numberOfTrailingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskFinish);
+            int index = Long.numberOfTrailingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskFinish);
             if (index != 64) {
                 return fromAligned + index;
             }
@@ -1757,8 +1756,7 @@ public class PackedBitBuffers {
     public static long lastIndexOfBit(LongBuffer src, long lowIndex, long highIndex, boolean value) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, lastIndexOfBit_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1);;
-        //  src\.length ==> src.limit();;
-        //  (numberOfLeadingZeros\() ==> PackedBitArrays.$1   !! Auto-generated: NOT EDIT !! >>
+        //  src\.length ==> src.limit()   !! Auto-generated: NOT EDIT !! >>
         Objects.requireNonNull(src, "Null src");
         if (lowIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: low index = " + lowIndex);
@@ -1779,7 +1777,7 @@ public class PackedBitBuffers {
             cntStart = (int) count;
         }
         if (cntStart > 0) {
-            int index = PackedBitArrays.numberOfLeadingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskStart);
+            int index = Long.numberOfLeadingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskStart);
             if (index != 64) {
                 return fromAligned - index;
             }
@@ -1789,14 +1787,14 @@ public class PackedBitBuffers {
         }
         if (value) {
             for (int sPosMin = sPos - (int) (count >>> 6); sPos > sPosMin; sPos--, fromAligned -= 64) {
-                int index = PackedBitArrays.numberOfLeadingZeros(src.get(sPos));
+                int index = Long.numberOfLeadingZeros(src.get(sPos));
                 if (index != 64) {
                     return fromAligned - index;
                 }
             }
         } else {
             for (int sPosMin = sPos - (int) (count >>> 6); sPos > sPosMin; sPos--, fromAligned -= 64) {
-                int index = PackedBitArrays.numberOfLeadingZeros(~src.get(sPos));
+                int index = Long.numberOfLeadingZeros(~src.get(sPos));
                 if (index != 64) {
                     return fromAligned - index;
                 }
@@ -1805,7 +1803,7 @@ public class PackedBitBuffers {
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = -1L << (64 - cntFinish); // cntFinish times 1 (from the right)
-            int index = PackedBitArrays.numberOfLeadingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskFinish);
+            int index = Long.numberOfLeadingZeros((value ? src.get(sPos) : ~src.get(sPos)) & maskFinish);
             if (index != 64) {
                 return fromAligned - index;
             }
@@ -1829,8 +1827,7 @@ public class PackedBitBuffers {
     public static long cardinality(LongBuffer src, long fromIndex, long toIndex) {
         //<<Repeat(INCLUDE_FROM_FILE, PackedBitArrays.java, cardinality_method_impl)
         //  src\[([^\]]+)\] ==> src.get($1);;
-        //  src\.length ==> src.limit();;
-        //  bitCount\( ==> PackedBitArrays.bitCount(   !! Auto-generated: NOT EDIT !! >>
+        //  src\.length ==> src.limit()   !! Auto-generated: NOT EDIT !! >>
         Objects.requireNonNull(src, "Null src argument in cardinality method");
         if (fromIndex < 0) {
             throw new ArrayIndexOutOfBoundsException("Bit array index out of range: initial index = " + fromIndex);
@@ -1854,13 +1851,19 @@ public class PackedBitBuffers {
         }
         long result = 0;
         if (cntStart > 0) {
-            result += PackedBitArrays.bitCount(src.get(sPos) & maskStart);
+            result += Long.bitCount(src.get(sPos) & maskStart);
             count -= cntStart;
             sPos++;
         }
+        final int sPosMax = sPos + (int) (count >>> 6);
+        result += bitCount(src, sPos, sPosMax);
+        sPos = sPosMax;
+        /*
         // The loop below is the 64-bit version of the algorithm published in
         // "Hacker's Delight" by Henry S. Warren, figure 5-4,
         // Addison-Wesley Publishing Company, Inc., 2002.
+        // In new JVM, this is usually a bad idea, because
+        // Long.bitCount is an intrinsic candidate and works faster on most CPU.
         for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; ) {
             long s8 = 0;
             for (int lim = Math.min(sPosMax, sPos + 31); sPos < lim; sPos++) {
@@ -1876,12 +1879,21 @@ public class PackedBitBuffers {
             result += ((int) s8 + (int) (s8 >>> 32)) & 0xFFFF;
 
         }
+        */
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
-            result += PackedBitArrays.bitCount(src.get(sPos) & maskFinish);
+            result += Long.bitCount(src.get(sPos) & maskFinish);
         }
         return result;
         //<<Repeat.IncludeEnd>>
+    }
+
+    static long bitCount(LongBuffer src, int from, int to) {
+        long result = 0;
+        for (int i = from; i < to; i++) {
+            result += Long.bitCount(src.get(i));
+        }
+        return result;
     }
 }

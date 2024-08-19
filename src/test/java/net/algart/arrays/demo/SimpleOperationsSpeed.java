@@ -34,7 +34,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public final class SimpleOperationsSpeed {
-    private static final int n = 2048 * 2048;
+    private static final int n = 4096 * 2048;
 
     private static void time(String name, long t1, long t2) {
         time(name, "element", t1, t2);
@@ -63,6 +63,10 @@ public final class SimpleOperationsSpeed {
     }
 
     public static void main(String[] args) {
+        int numberOfTests = 32;
+        if (args.length > 0) {
+            numberOfTests = Integer.parseInt(args[0]);
+        }
         UpdatableBitArray mask = BitArray.newArray(n);
         UpdatableBitArray bitArray = BitArray.newArray(n);
         UpdatableByteArray byteArray = ByteArray.newArray(n);
@@ -77,9 +81,9 @@ public final class SimpleOperationsSpeed {
         }
         double someInfo = 0;
         long[] histogram = new long[256];
-        for (int test = 1; test <= 32; test++) {
+        for (int test = 1; test <= numberOfTests; test++) {
             System.gc();
-            System.out.printf("%nSpeed test #%d (%d numbers)%n", test, n);
+            System.out.printf("%nSpeed test #%d/%d (%d numbers)%n", test, numberOfTests, n);
 
             long t1, t2;
 
@@ -373,21 +377,29 @@ public final class SimpleOperationsSpeed {
             t2 = System.nanoTime();
             time("setBits64NoSync(5)", t1, t2);
 
-            t1 = System.nanoTime();
-            long cardinality1 = PackedBitArrays.cardinality(bits, 0, 64L * bits.length);
-            t2 = System.nanoTime();
-            someInfo += cardinality1;
-            time("cardinality (" + cardinality1 + ")", t1, t2);
+            long cardinalityWarming = 0;
+            for (long l : bits) {
+                cardinalityWarming += Long.bitCount(l);
+                // - loading into CPU cache
+            }
+            someInfo += cardinalityWarming;
 
             t1 = System.nanoTime();
-            long cardinality2 = 0;
+            long cardinalityBC = 0;
             for (long l : bits) {
-                cardinality2 += Long.bitCount(l);
+                cardinalityBC += Long.bitCount(l);
             }
             t2 = System.nanoTime();
-            someInfo += cardinality2;
+            someInfo += cardinalityBC;
             time("Long.bitCount", t1, t2);
-            if (cardinality1 != cardinality2) {
+
+            t1 = System.nanoTime();
+            long cardinalityA = PackedBitArrays.cardinality(bits, 0, 64L * bits.length);
+            t2 = System.nanoTime();
+            someInfo += cardinalityA;
+            time("cardinality (" + cardinalityA + ")", t1, t2);
+
+            if (cardinalityBC != cardinalityA) {
                 throw new AssertionError();
             }
 

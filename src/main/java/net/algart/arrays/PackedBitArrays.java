@@ -10966,7 +10966,7 @@ public class PackedBitArrays {
             maskStart &= (1L << (sPosRem + cntStart)) - 1; // &= sPosRem+cntStart times 1 (from the left)
         }
         if (cntStart > 0) {
-            int index = numberOfTrailingZeros((value ? src[sPos] : ~src[sPos]) & maskStart);
+            int index = Long.numberOfTrailingZeros((value ? src[sPos] : ~src[sPos]) & maskStart);
             if (index != 64)
                 return fromAligned + index;
             count -= cntStart;
@@ -10975,14 +10975,14 @@ public class PackedBitArrays {
         }
         if (value) {
             for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; sPos++, fromAligned += 64) {
-                int index = numberOfTrailingZeros(src[sPos]);
+                int index = Long.numberOfTrailingZeros(src[sPos]);
                 if (index != 64) {
                     return fromAligned + index;
                 }
             }
         } else {
             for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; sPos++, fromAligned += 64) {
-                int index = numberOfTrailingZeros(~src[sPos]);
+                int index = Long.numberOfTrailingZeros(~src[sPos]);
                 if (index != 64) {
                     return fromAligned + index;
                 }
@@ -10991,7 +10991,7 @@ public class PackedBitArrays {
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
-            int index = numberOfTrailingZeros((value ? src[sPos] : ~src[sPos]) & maskFinish);
+            int index = Long.numberOfTrailingZeros((value ? src[sPos] : ~src[sPos]) & maskFinish);
             if (index != 64) {
                 return fromAligned + index;
             }
@@ -11046,7 +11046,7 @@ public class PackedBitArrays {
             cntStart = (int) count;
         }
         if (cntStart > 0) {
-            int index = numberOfLeadingZeros((value ? src[sPos] : ~src[sPos]) & maskStart);
+            int index = Long.numberOfLeadingZeros((value ? src[sPos] : ~src[sPos]) & maskStart);
             if (index != 64) {
                 return fromAligned - index;
             }
@@ -11056,14 +11056,14 @@ public class PackedBitArrays {
         }
         if (value) {
             for (int sPosMin = sPos - (int) (count >>> 6); sPos > sPosMin; sPos--, fromAligned -= 64) {
-                int index = numberOfLeadingZeros(src[sPos]);
+                int index = Long.numberOfLeadingZeros(src[sPos]);
                 if (index != 64) {
                     return fromAligned - index;
                 }
             }
         } else {
             for (int sPosMin = sPos - (int) (count >>> 6); sPos > sPosMin; sPos--, fromAligned -= 64) {
-                int index = numberOfLeadingZeros(~src[sPos]);
+                int index = Long.numberOfLeadingZeros(~src[sPos]);
                 if (index != 64) {
                     return fromAligned - index;
                 }
@@ -11072,7 +11072,7 @@ public class PackedBitArrays {
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = -1L << (64 - cntFinish); // cntFinish times 1 (from the right)
-            int index = numberOfLeadingZeros((value ? src[sPos] : ~src[sPos]) & maskFinish);
+            int index = Long.numberOfLeadingZeros((value ? src[sPos] : ~src[sPos]) & maskFinish);
             if (index != 64) {
                 return fromAligned - index;
             }
@@ -11120,13 +11120,19 @@ public class PackedBitArrays {
         }
         long result = 0;
         if (cntStart > 0) {
-            result += bitCount(src[sPos] & maskStart);
+            result += Long.bitCount(src[sPos] & maskStart);
             count -= cntStart;
             sPos++;
         }
+        final int sPosMax = sPos + (int) (count >>> 6);
+        result += bitCount(src, sPos, sPosMax);
+        sPos = sPosMax;
+        /*
         // The loop below is the 64-bit version of the algorithm published in
         // "Hacker's Delight" by Henry S. Warren, figure 5-4,
         // Addison-Wesley Publishing Company, Inc., 2002.
+        // In new JVM, this is usually a bad idea, because
+        // Long.bitCount is an intrinsic candidate and works faster on most CPU.
         for (int sPosMax = sPos + (int) (count >>> 6); sPos < sPosMax; ) {
             long s8 = 0;
             for (int lim = Math.min(sPosMax, sPos + 31); sPos < lim; sPos++) {
@@ -11142,13 +11148,22 @@ public class PackedBitArrays {
             result += ((int) s8 + (int) (s8 >>> 32)) & 0xFFFF;
 
         }
+        */
         int cntFinish = (int) (count & 63);
         if (cntFinish > 0) {
             long maskFinish = (1L << cntFinish) - 1; // cntFinish times 1 (from the left)
-            result += bitCount(src[sPos] & maskFinish);
+            result += Long.bitCount(src[sPos] & maskFinish);
         }
         return result;
         //[[Repeat.SectionEnd cardinality_method_impl]]
+    }
+
+    static long bitCount(long[] src, int from, int to) {
+        long result = 0;
+        for (int i = from; i < to; i++) {
+            result += Long.bitCount(src[i]);
+        }
+        return result;
     }
     /*Repeat.SectionEnd cardinality*/
 
@@ -11198,90 +11213,4 @@ public class PackedBitArrays {
             dest[dPos] = (bits & maskFinish) | (dest[dPos] & ~maskFinish);
         }
     }
-
-    static int numberOfLeadingZeros(long i) {
-        // The 64-bit version of the algorithm published in
-        // "Hacker's Delight" by Henry S. Warren, figure 5-5,
-        // Addison-Wesley Publishing Company, Inc., 2002.
-        // Long.numberOfLeadingZeros method is not used for compatibility with JDK 1.1.
-        if (i == 0) {
-            return 64;
-        }
-        int n = 1;
-        int x = (int) (i >>> 32);
-        if (x == 0) {
-            n += 32;
-            x = (int) i;
-        }
-        if (x >>> 16 == 0) {
-            n += 16;
-            x <<= 16;
-        }
-        if (x >>> 24 == 0) {
-            n += 8;
-            x <<= 8;
-        }
-        if (x >>> 28 == 0) {
-            n += 4;
-            x <<= 4;
-        }
-        if (x >>> 30 == 0) {
-            n += 2;
-            x <<= 2;
-        }
-        n -= x >>> 31;
-        return n;
-    }
-
-    static int numberOfTrailingZeros(long i) {
-        // The 64-bit version of the algorithm published in
-        // "Hacker's Delight" by Henry S. Warren, figure 5-13,
-        // Addison-Wesley Publishing Company, Inc., 2002.
-        // Long.numberOfTrailingZeros method is not used for compatibility with JDK 1.1.
-        int x, y;
-        if (i == 0) {
-            return 64;
-        }
-        int n = 63;
-        y = (int) i;
-        if (y != 0) {
-            n = n - 32;
-            x = y;
-        } else x = (int) (i >>> 32);
-        y = x << 16;
-        if (y != 0) {
-            n = n - 16;
-            x = y;
-        }
-        y = x << 8;
-        if (y != 0) {
-            n = n - 8;
-            x = y;
-        }
-        y = x << 4;
-        if (y != 0) {
-            n = n - 4;
-            x = y;
-        }
-        y = x << 2;
-        if (y != 0) {
-            n = n - 2;
-            x = y;
-        }
-        return n - ((x << 1) >>> 31);
-    }
-
-    static int bitCount(long value) {
-        // The 64-bit version of the algorithm published in
-        // "Hacker's Delight" by Henry S. Warren, figure 5-1,
-        // Addison-Wesley Publishing Company, Inc., 2002.
-        // Long.bitCount method is not used for compatibility with JDK 1.1.
-        value -= (value >>> 1) & 0x5555555555555555L;
-        value = (value & 0x3333333333333333L) + ((value >>> 2) & 0x3333333333333333L);
-        value = (value + (value >>> 4)) & 0x0F0F0F0F0F0F0F0FL;
-        value += value >>> 8;
-        value += value >>> 16;
-        return ((int) value + (int) (value >>> 32)) & 0xFF;
-    }
-
 }
