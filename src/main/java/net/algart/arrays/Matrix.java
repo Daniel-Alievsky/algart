@@ -620,6 +620,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *
      * @return Java array containing all the elements in this matrix.
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toBoolean()
      * @see #toByte()
      * @see #toChar()
      * @see #toShort()

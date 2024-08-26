@@ -227,6 +227,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>byte[]</code> array containing all elements in this AlgART array,
      * cast to <code>byte</code> type if necessary.
      * Equivalent to <code>{@link #toByte(byte[]) toByte}(null)</code>.
+     * For {@link ByteArray} subinterface, this method is also equivalent to {@link ByteArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -278,7 +279,7 @@ public interface PArray extends Array {
      * @see Matrix#toByte(byte[])
      */
     default byte[] toByte(byte[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java byte[] array, "
                     + "because it is too large: " + this);
@@ -305,6 +306,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>char[]</code> array containing all elements in this AlgART array,
      * cast to <code>char</code> type if necessary.
      * Equivalent to <code>{@link #toChar(char[]) toChar}(null)</code>.
+     * For {@link CharArray} subinterface, this method is also equivalent to {@link CharArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -356,7 +358,7 @@ public interface PArray extends Array {
      * @see Matrix#toChar(char[])
      */
     default char[] toChar(char[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java char[] array, "
                     + "because it is too large: " + this);
@@ -382,6 +384,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>short[]</code> array containing all elements in this AlgART array,
      * cast to <code>short</code> type if necessary.
      * Equivalent to <code>{@link #toShort(short[]) toShort}(null)</code>.
+     * For {@link ShortArray} subinterface, this method is also equivalent to {@link ShortArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -433,7 +436,7 @@ public interface PArray extends Array {
      * @see Matrix#toShort(short[])
      */
     default short[] toShort(short[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java short[] array, "
                     + "because it is too large: " + this);
@@ -459,6 +462,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>int[]</code> array containing all elements in this AlgART array,
      * cast to <code>int</code> type if necessary.
      * Equivalent to <code>{@link #toInt(int[]) toInt}(null)</code>.
+     * For {@link IntArray} subinterface, this method is also equivalent to {@link IntArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -510,7 +514,7 @@ public interface PArray extends Array {
      * @see Matrix#toInt(int[])
      */
     default int[] toInt(int[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java int[] array, "
                     + "because it is too large: " + this);
@@ -536,6 +540,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>long[]</code> array containing all elements in this AlgART array,
      * cast to <code>long</code> type if necessary.
      * Equivalent to <code>{@link #toLong(long[]) toLong}(null)</code>.
+     * For {@link LongArray} subinterface, this method is also equivalent to {@link LongArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -587,7 +592,7 @@ public interface PArray extends Array {
      * @see Matrix#toLong(long[])
      */
     default long[] toLong(long[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java long[] array, "
                     + "because it is too large: " + this);
@@ -613,6 +618,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>float[]</code> array containing all elements in this AlgART array,
      * cast to <code>float</code> type if necessary.
      * Equivalent to <code>{@link #toFloat(float[]) toFloat}(null)</code>.
+     * For {@link FloatArray} subinterface, this method is also equivalent to {@link FloatArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -664,7 +670,7 @@ public interface PArray extends Array {
      * @see Matrix#toFloat(float[])
      */
     default float[] toFloat(float[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java float[] array, "
                     + "because it is too large: " + this);
@@ -690,6 +696,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>double[]</code> array containing all elements in this AlgART array,
      * cast to <code>double</code> type if necessary.
      * Equivalent to <code>{@link #toDouble(double[]) toDouble}(null)</code>.
+     * For {@link DoubleArray} subinterface, this method is also equivalent to {@link DoubleArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -741,7 +748,7 @@ public interface PArray extends Array {
      * @see Matrix#toDouble(double[])
      */
     default double[] toDouble(double[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java double[] array, "
                     + "because it is too large: " + this);
@@ -767,6 +774,7 @@ public interface PArray extends Array {
      * Returns a newly created Java <code>boolean[]</code> array containing all elements in this AlgART array,
      * cast to <code>boolean</code> type if necessary.
      * Equivalent to <code>{@link #toBoolean(boolean[]) toBoolean}(null)</code>.
+     * For {@link BitArray} subinterface, this method is also equivalent to {@link BitArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -816,7 +824,7 @@ public interface PArray extends Array {
      * @see Matrix#toBoolean(boolean[])
      */
     default boolean[] toBoolean(boolean[] result) {
-        long len = length();
+        final long len = length();
         if (len != (int) len) {
             throw new TooLargeArrayException("Cannot convert AlgART array to Java boolean[] array, "
                     + "because it is too large: " + this);

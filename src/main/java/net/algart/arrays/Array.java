@@ -1123,6 +1123,7 @@ public interface Array {
      * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
      * @see #ja()
      * @see #getData(long, Object)
+     * @see PArray#toBoolean()
      * @see PArray#toByte()
      * @see PArray#toChar()
      * @see PArray#toShort()

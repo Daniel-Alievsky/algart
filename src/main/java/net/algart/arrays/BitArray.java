@@ -412,6 +412,7 @@ public interface BitArray extends PFixedArray {
      * If the length of this array is too large (greater than 2<sup>31</sup>&minus;1),
      * this method throws {@link TooLargeArrayException}.
      * This method is equivalent to <code>{@link #toBoolean(boolean[]) toBoolean}(null)</code>.
+     * In this interface, this method is also equivalent to {@link #toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
      * Thus, the caller is free to modify the returned array.
@@ -423,14 +424,7 @@ public interface BitArray extends PFixedArray {
      * @see Matrix#toBoolean()
      */
     default boolean[] toBoolean() {
-        long len = length();
-        if (len != (int) len) {
-            throw new TooLargeArrayException("Cannot convert AlgART bit array to Java boolean[] array, "
-                    + "because it is too large: " + this);
-        }
-        boolean[] result = new boolean[(int) len];
-        getData(0, result);
-        return result;
+        return toJavaArray();
     }
 
     /**
