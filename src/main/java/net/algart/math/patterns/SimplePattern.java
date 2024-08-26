@@ -268,7 +268,7 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
         Point p = iterator.next();
         Objects.requireNonNull(p, "Null point is the collection");
         int result = p.coordCount();
-        for (; iterator.hasNext(); ) {
+        while (iterator.hasNext()) {
             p = iterator.next();
             Objects.requireNonNull(p, "Null point is the collection");
             if (p.coordCount() != result) {

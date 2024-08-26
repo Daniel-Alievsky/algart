@@ -572,7 +572,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -822,7 +822,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -1323,7 +1323,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -1573,7 +1573,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -2073,7 +2073,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -2323,7 +2323,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -2594,7 +2594,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -2873,7 +2873,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -3158,7 +3158,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -3437,7 +3437,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -3723,7 +3723,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -3986,7 +3986,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -4259,7 +4259,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < 0.0) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         if (DEBUG_MODE) {
                                             if (Math.abs(i - SummingHistogram.integralBetweenRanks(
@@ -4522,7 +4522,7 @@ class AveragerBetweenPercentiles extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < 0.0) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     if (DEBUG_MODE) {
                                         if (Math.abs(i - SummingHistogram.integralBetweenRanks(

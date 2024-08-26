@@ -179,7 +179,7 @@ public final class IRange {
      * @return      the passed number if it is in this range or the nearest range bound in other cases.
      */
     public long cut(long value) {
-        return value < min ? min : value > max ? max : value;
+        return value < min ? min : Math.min(value, max);
     }
 
     /**
@@ -232,8 +232,8 @@ public final class IRange {
             throw new IllegalArgumentException("Cannot expand " + this + " until Long.MAX_VALUE");
         if (value <= -Long.MAX_VALUE)
             throw new IllegalArgumentException("Cannot expand " + this + " until -Long.MAX_VALUE or Long.MIN_VALUE");
-        long min = value < this.min ? value : this.min;
-        long max = value > this.max ? value : this.max;
+        long min = Math.min(value, this.min);
+        long max = Math.max(value, this.max);
         if (max - min + 1L <= 0L)
             throw new IllegalArgumentException("Cannot expand " + this + " until " + value
                 + ", because in the result max - min >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")");

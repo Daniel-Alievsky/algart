@@ -543,7 +543,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 UniformGridPattern nc = c; // will be n*c; now n=1
                 AbstractUniformGridPattern np = DEBUG_MODE ? pUnscaled : null; // will be n(x)P
                 AbstractUniformGridPattern np2 = DEBUG_MODE ? pUnscaled.simpleMinkowskiAdd(c) : null; // will be 2n(x)P
-                for (; n < m; ) {
+                while (n < m) {
                     // Here 2n<=m, so we are sure that the circumscribed parallelepiped contains 4n(x)P.
                     // Now multiple = 2n(x)P = n(x)P (+) n*c (here k(x)P means P(+)P(+)...(+)P, k times)
                     // Let's check whether 4n(x)P = 2x(x)P (+) 2n*c
@@ -831,12 +831,12 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             throw new IllegalArgumentException("Negative minimalPointCount");
         }
         if (!isActuallyRectangular()) {
-            return Collections.<Pattern>singletonList(this);
+            return Collections.singletonList(this);
         }
         // Below is decomposition of rectangular patterns only
         long pointCount = pointCount();
         if (pointCount <= 2) {
-            return Collections.<Pattern>singletonList(this);
+            return Collections.singletonList(this);
         }
         if (minimalPointCount < minkowskiDecompositions.size()) {
             List<Pattern> result = minkowskiDecompositions.get(minimalPointCount);
@@ -927,7 +927,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             throw new IllegalArgumentException("Negative minimalPointCount");
         }
         if (trivialUnionDecomposition) {
-            return Collections.singletonList(Collections.<Pattern>singletonList(this));
+            return Collections.singletonList(Collections.singletonList(this));
         }
         if (minimalPointCount < allUnionDecompositions.size()) {
             List<List<Pattern>> result = allUnionDecompositions.get(minimalPointCount);
@@ -937,7 +937,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         }
         List<IPoint> points = new ArrayList<>(gridIndexes());
         if (points.size() < minimalPointCount) {
-            return Collections.singletonList(Collections.<Pattern>singletonList(this));
+            return Collections.singletonList(Collections.singletonList(this));
         }
         List<IPoint> retainedPoints = new ArrayList<>();
         List<List<Pattern>> decompositions = new ArrayList<>();
@@ -950,7 +950,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
 
             // Adding retained points
             if (!retainedPoints.isEmpty()) {
-                gridIndexes.add(Patterns.newIntegerPattern(retainedPoints.toArray(new IPoint[retainedPoints.size()])));
+                gridIndexes.add(Patterns.newIntegerPattern(retainedPoints.toArray(new IPoint[0])));
             }
 
             // Calculating the quality and storing the result

@@ -248,7 +248,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
      * @return an immutable view of the built-in AlgART array storing the sums of all elements of all openings.
      */
     public PNumberArray sumsOfOpenings() {
-        return sumsOfOpenings == null ? sumsOfOpenings : sumsOfOpenings.asImmutable();
+        return sumsOfOpenings == null ? null : sumsOfOpenings.asImmutable();
     }
 
     @Override

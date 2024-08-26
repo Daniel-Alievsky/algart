@@ -1541,8 +1541,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * If you need maximal performance, you can eliminate memory allocation in a scanning loop
      * by using {@link #adjacentBranches(int[])} method.
      *
-     * @return the list of indexes of neighbours of the current pixel (node), towards which this class supposes
-     * existence of a branch, originating from this node.
+     * @return an array of neighbor indexes for the current pixel (node), towards which this class supposes
+     * the existence of a branch, originating from this node.
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet} or
      *                               if <code>!{@link #isNode() isNode()}</code>.
      */

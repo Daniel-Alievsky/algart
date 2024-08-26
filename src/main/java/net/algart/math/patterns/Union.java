@@ -67,7 +67,7 @@ final class Union extends AbstractPattern implements Pattern {
             this.coordRanges[k] = Range.valueOf(minCoord[k], maxCoord[k]);
             checkCoordRange(this.coordRanges[k]);
         }
-        this.subsets = allSubsets.toArray(new Pattern[allSubsets.size()]);
+        this.subsets = allSubsets.toArray(new Pattern[0]);
         this.projections = new UniformGridPattern[dimCount]; //null-filled
     }
 

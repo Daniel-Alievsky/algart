@@ -61,7 +61,7 @@ public class MinExceptingNaN implements Func {
 
     public double get(double x0, double x1) {
         return x0 == x0 ?
-            (x1 == x1 ? (x0 < x1 ? x0 : x1) : x0) :
+            (x1 == x1 ? Math.min(x0, x1) : x0) :
             (x1 == x1 ? x1 : defaultValue);
     }
 
@@ -85,8 +85,8 @@ public class MinExceptingNaN implements Func {
         if (!valid) {
             return defaultValue;
         }
-        double x = x0 <= x1 ? x0 : x1;
-        return x <= x2 ? x : x2;
+        double x = Math.min(x0, x1);
+        return Math.min(x, x2);
     }
 
     public double get(double x0, double x1, double x2, double x3) {
@@ -114,9 +114,9 @@ public class MinExceptingNaN implements Func {
         if (!valid) {
             return defaultValue;
         }
-        double x = x0 <= x1 ? x0 : x1;
-        double y = x2 <= x3 ? x2 : x3;
-        return x <= y ? x : y;
+        double x = Math.min(x0, x1);
+        double y = Math.min(x2, x3);
+        return Math.min(x, y);
     }
 
     /**

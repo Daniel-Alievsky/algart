@@ -216,6 +216,6 @@ public abstract class AbstractWeightedPattern implements WeightedPattern {
     public List<WeightedPattern> productDecomposition(int minimalPointCount) {
         if (minimalPointCount < 0)
             throw new IllegalArgumentException("Negative minimalPointCount");
-        return Collections.<WeightedPattern>singletonList(this);
+        return Collections.singletonList(this);
     }
 }

@@ -125,7 +125,7 @@ public final class Range {
      * @return      the passed number if it is in this range or the nearest range bound in other cases.
      */
     public double cut(double value) {
-        return value < min ? min : value > max ? max : value;
+        return value < min ? min : Math.min(value, max);
     }
 
     /**
@@ -180,8 +180,8 @@ public final class Range {
             double max = StrictMath.max(value, this.max);
             return new Range(min, max);
         } else {
-            double min = value < this.min ? value : this.min;
-            double max = value > this.max ? value : this.max;
+            double min = Math.min(value, this.min);
+            double max = Math.max(value, this.max);
             return new Range(min, max);
         }
     }

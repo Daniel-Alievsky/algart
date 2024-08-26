@@ -492,7 +492,7 @@ public abstract class AbstractPattern implements Pattern {
         if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
         }
-        return Collections.<Pattern>singletonList(this);
+        return Collections.singletonList(this);
     }
 
     /**
@@ -536,7 +536,7 @@ public abstract class AbstractPattern implements Pattern {
         if (minimalPointCount < 0) {
             throw new IllegalArgumentException("Negative minimalPointCount");
         }
-        return Collections.singletonList(Collections.<Pattern>singletonList(this));
+        return Collections.singletonList(Collections.singletonList(this));
     }
 
     /**

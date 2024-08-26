@@ -523,7 +523,7 @@ public final class ContourJoiner {
         final long tActualJoining = tRevivingGrid
                 + tJoiningReadingNewJoined
                 + tJoiningScanning1Success + tJoiningScanning1Fail
-                + tJoiningScanning2Success + +tJoiningScanning2Fail
+                + tJoiningScanning2Success + tJoiningScanning2Fail
                 + tJoiningSwitching + tJoiningAddingToGridAndNeighbours;
         final long tCreating = tCreatingInitialization + tCreatingJoinedLists
                 + tCreatingAnalysingRectangles + tCreatingAllocating
@@ -1526,8 +1526,8 @@ public final class ContourJoiner {
                 // - its possible, because we didn't check ALL segments of the joined contour
                 throw new IllegalArgumentException("One of the contours [#"
                         + Arrays.toString(currentIndexesOfJoinedContours, ", #", 500)
-                        + "] intersects itself, i.e. twice contains the segment " +
-                        +(intersectionMinX + lastX) + "," + (intersectionMinY + lastY) + " - "
+                        + "] intersects itself, i.e. twice contains the segment "
+                        + (intersectionMinX + lastX) + "," + (intersectionMinY + lastY) + " - "
                         + (intersectionMinX + x) + "," + (intersectionMinY + y)
                         + "; such contours cannot be joined");
             }
@@ -1596,8 +1596,8 @@ public final class ContourJoiner {
                     joinedPositionsForYPlusSegments;
             if (joinedPositions[disp] != EMPTY_POSITION) {
                 throw new IllegalArgumentException("The contour #" + joinedIndex
-                        + " intersects itself, i.e. twice contains the segment " +
-                        +(intersectionMinX + lastX) + "," + (intersectionMinY + lastY) + " - "
+                        + " intersects itself, i.e. twice contains the segment "
+                        + (intersectionMinX + lastX) + "," + (intersectionMinY + lastY) + " - "
                         + (intersectionMinX + x) + "," + (intersectionMinY + y)
                         + "; such contours cannot be joined");
             }

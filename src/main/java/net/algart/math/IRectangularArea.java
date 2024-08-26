@@ -979,8 +979,8 @@ public class IRectangularArea {
         long[] newMin = new long[min.coordinates.length];
         long[] newMax = new long[min.coordinates.length];
         for (int k = 0; k < min.coordinates.length; k++) {
-            newMin[k] = min.coordinates[k] <= point.coordinates[k] ? min.coordinates[k] : point.coordinates[k];
-            newMax[k] = max.coordinates[k] >= point.coordinates[k] ? max.coordinates[k] : point.coordinates[k];
+            newMin[k] = Math.min(min.coordinates[k], point.coordinates[k]);
+            newMax[k] = Math.max(max.coordinates[k], point.coordinates[k]);
         }
         return valueOf(new IPoint(newMin), new IPoint(newMax));
     }
@@ -1006,8 +1006,8 @@ public class IRectangularArea {
         long[] newMin = new long[min.coordinates.length];
         long[] newMax = new long[min.coordinates.length];
         for (int k = 0; k < min.coordinates.length; k++) {
-            newMin[k] = min.coordinates[k] <= area.min.coordinates[k] ? min.coordinates[k] : area.min.coordinates[k];
-            newMax[k] = max.coordinates[k] >= area.max.coordinates[k] ? max.coordinates[k] : area.max.coordinates[k];
+            newMin[k] = Math.min(min.coordinates[k], area.min.coordinates[k]);
+            newMax[k] = Math.max(max.coordinates[k], area.max.coordinates[k]);
         }
         return new IRectangularArea(new IPoint(newMin), new IPoint(newMax));
     }
@@ -1109,12 +1109,12 @@ public class IRectangularArea {
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
         long x = coordinates[0];
-        long maxD = min - x >= x - max ? min - x : x - max;
+        long maxD = Math.max(min - x, x - max);
         for (int k = 1; k < n; k++) {
             min = this.min.coordinates[k];
             max = this.max.coordinates[k];
             long xk = coordinates[k];
-            long d = min - xk >= xk - max ? min - xk : xk - max;
+            long d = Math.max(min - xk, xk - max);
             if (d > maxD) {
                 maxD = d;
             }
@@ -1140,10 +1140,10 @@ public class IRectangularArea {
         }
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
-        long maxD = min - x >= x - max ? min - x : x - max;
+        long maxD = Math.max(min - x, x - max);
         min = this.min.coordinates[1];
         max = this.max.coordinates[1];
-        long d = min - y >= y - max ? min - y : y - max;
+        long d = Math.max(min - y, y - max);
         if (d > maxD) {
             maxD = d;
         }
@@ -1169,16 +1169,16 @@ public class IRectangularArea {
         }
         long min = this.min.coordinates[0];
         long max = this.max.coordinates[0];
-        long maxD = min - x >= x - max ? min - x : x - max;
+        long maxD = Math.max(min - x, x - max);
         min = this.min.coordinates[1];
         max = this.max.coordinates[1];
-        long d = min - y >= y - max ? min - y : y - max;
+        long d = Math.max(min - y, y - max);
         if (d > maxD) {
             maxD = d;
         }
         min = this.min.coordinates[2];
         max = this.max.coordinates[2];
-        d = min - z >= z - max ? min - z : z - max;
+        d = Math.max(min - z, z - max);
         if (d > maxD) {
             maxD = d;
         }

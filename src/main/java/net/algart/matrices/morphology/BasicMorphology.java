@@ -266,7 +266,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
             assert pattern.isSurelyInteger() : "non-integer pattern must not be used for union decomposition";
             // - if not, simpleAlgorithm should be true, because there is no additional dimensions
             List<List<Pattern>> all = pattern.allUnionDecompositions(MIN_POINT_COUNT_TO_DECOMPOSE);
-            assert all.size() >= 1 : "illegal length of the list of union decompositions";
+            assert !all.isEmpty() : "illegal length of the list of union decompositions";
             if (all.size() == 1 || !(array instanceof BitArray)) {
                 unionDecomposition = all.get(0);
             } else {
@@ -1176,7 +1176,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
             sameRightEnd &= rightShift[k] == 0;
         }
         if (largerLength == smallerLength) {
-            return Collections.<Pattern>singletonList(Patterns.newIntegerPattern(IPoint.valueOf(rightShift)));
+            return Collections.singletonList(Patterns.newIntegerPattern(IPoint.valueOf(rightShift)));
         }
         ArrayList<Pattern> result = new ArrayList<Pattern>();
         long[] leftShift = rightShift; // optimization (no allocation new array): rightShift will not be used below

@@ -919,8 +919,8 @@ public class RectangularArea {
         double[] newMin = new double[min.coordinates.length];
         double[] newMax = new double[min.coordinates.length];
         for (int k = 0; k < min.coordinates.length; k++) {
-            newMin[k] = min.coordinates[k] <= point.coordinates[k] ? min.coordinates[k] : point.coordinates[k];
-            newMax[k] = max.coordinates[k] >= point.coordinates[k] ? max.coordinates[k] : point.coordinates[k];
+            newMin[k] = Math.min(min.coordinates[k], point.coordinates[k]);
+            newMax[k] = Math.max(max.coordinates[k], point.coordinates[k]);
         }
         return valueOf(new Point(newMin), new Point(newMax));
     }
@@ -946,8 +946,8 @@ public class RectangularArea {
         double[] newMin = new double[min.coordinates.length];
         double[] newMax = new double[min.coordinates.length];
         for (int k = 0; k < min.coordinates.length; k++) {
-            newMin[k] = min.coordinates[k] <= area.min.coordinates[k] ? min.coordinates[k] : area.min.coordinates[k];
-            newMax[k] = max.coordinates[k] >= area.max.coordinates[k] ? max.coordinates[k] : area.max.coordinates[k];
+            newMin[k] = Math.min(min.coordinates[k], area.min.coordinates[k]);
+            newMax[k] = Math.max(max.coordinates[k], area.max.coordinates[k]);
         }
         return new RectangularArea(new Point(newMin), new Point(newMax));
     }
@@ -1049,12 +1049,12 @@ public class RectangularArea {
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
         double x = coordinates[0];
-        double maxD = min - x >= x - max ? min - x : x - max;
+        double maxD = Math.max(min - x, x - max);
         for (int k = 1; k < n; k++) {
             min = this.min.coordinates[k];
             max = this.max.coordinates[k];
             double xk = coordinates[k];
-            double d = min - xk >= xk - max ? min - xk : xk - max;
+            double d = Math.max(min - xk, xk - max);
             if (d > maxD) {
                 maxD = d;
             }
@@ -1080,10 +1080,10 @@ public class RectangularArea {
         }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
-        double maxD = min - x >= x - max ? min - x : x - max;
+        double maxD = Math.max(min - x, x - max);
         min = this.min.coordinates[1];
         max = this.max.coordinates[1];
-        double d = min - y >= y - max ? min - y : y - max;
+        double d = Math.max(min - y, y - max);
         if (d > maxD) {
             maxD = d;
         }
@@ -1109,16 +1109,16 @@ public class RectangularArea {
         }
         double min = this.min.coordinates[0];
         double max = this.max.coordinates[0];
-        double maxD = min - x >= x - max ? min - x : x - max;
+        double maxD = Math.max(min - x, x - max);
         min = this.min.coordinates[1];
         max = this.max.coordinates[1];
-        double d = min - y >= y - max ? min - y : y - max;
+        double d = Math.max(min - y, y - max);
         if (d > maxD) {
             maxD = d;
         }
         min = this.min.coordinates[2];
         max = this.max.coordinates[2];
-        d = min - z >= z - max ? min - z : z - max;
+        d = Math.max(min - z, z - max);
         if (d > maxD) {
             maxD = d;
         }

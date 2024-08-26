@@ -397,7 +397,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double n = rank2 - rank1;
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + rank2 + " - " + rank1);
+                                                rank2 + " - " + rank1);
                                         }
                                         if (n > 0.0) {
                                             w = (i / n) * multiplierInv;
@@ -549,12 +549,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                                hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -690,13 +690,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - " +
+                                                    hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                            throw new AssertionError("Negative rank difference= " + n +
+                                                    " = " + hist2.currentPreciseRank() + " - " +
+                                                    hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -830,12 +831,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                            hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -966,13 +967,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
-                                            + hist1.currentPreciseIntegral());
+                                                hist2.currentPreciseIntegral() + " - " +
+                                                hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " +
+                                                hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -1187,7 +1189,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double n = rank2 - rank1;
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + rank2 + " - " + rank1);
+                                                rank2 + " - " + rank1);
                                         }
                                         if (n > 0.0) {
                                             w = (i / n) * multiplierInv;
@@ -1339,12 +1341,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                                hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -1480,13 +1482,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - " +
+                                                    hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                            throw new AssertionError("Negative rank difference= " + n +
+                                                    " = " + hist2.currentPreciseRank() + " - " +
+                                                    hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -1620,12 +1623,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                            hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -1756,13 +1759,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
-                                            + hist1.currentPreciseIntegral());
+                                                hist2.currentPreciseIntegral() + " - " +
+                                                hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " +
+                                                hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -1976,7 +1980,7 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double n = rank2 - rank1;
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + rank2 + " - " + rank1);
+                                                rank2 + " - " + rank1);
                                         }
                                         if (n > 0.0) {
                                             w = (i / n) * multiplierInv;
@@ -2128,12 +2132,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                                hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -2269,13 +2273,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - " +
+                                                    hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                            throw new AssertionError("Negative rank difference= " + n +
+                                                    " = " + hist2.currentPreciseRank() + " - " +
+                                                    hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -2409,12 +2414,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                            hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -2545,13 +2550,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
-                                            + hist1.currentPreciseIntegral());
+                                                hist2.currentPreciseIntegral() + " - " +
+                                                hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " +
+                                                hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -2712,12 +2718,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                    hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                            throw new AssertionError("Negative rank difference= " + n +
+                                                    " = " +
+                                                    hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -2867,13 +2874,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - "
+                                                    + hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                            throw new AssertionError("Negative rank difference= " +
+                                                    n + " = " +
+                                                    hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3022,12 +3030,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                            hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3173,13 +3181,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
-                                            + hist1.currentPreciseIntegral());
+                                                hist2.currentPreciseIntegral() + " - " +
+                                                hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3339,12 +3347,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                    hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                            throw new AssertionError("Negative rank difference= " + n +
+                                                    " = " +
+                                                    hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3494,13 +3503,14 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - "
+                                                    + hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
-                                            throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                            throw new AssertionError("Negative rank difference= " +
+                                                    n + " = " +
+                                                    hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3649,12 +3659,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                            hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                            hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3800,13 +3810,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
-                                            + hist1.currentPreciseIntegral());
+                                                hist2.currentPreciseIntegral() + " - " +
+                                                hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -3966,12 +3976,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                    hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                                    hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4113,13 +4123,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - "
+                                                    + hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                    hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4260,12 +4270,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                                hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4405,13 +4415,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
+                                                hist2.currentPreciseIntegral() + " - "
                                             + hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4564,12 +4574,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                    hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                         }
                                         double n = hist2.currentRank() - hist1.currentRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentRank() + " - " + hist1.currentRank());
+                                                    hist2.currentRank() + " - " + hist1.currentRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4711,13 +4721,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                         double i = hist1.currentPreciseIntegralBetweenSharing();
                                         if (i < -1.0e-5) {
                                             throw new AssertionError("Negative integral = " + i + " = " +
-                                                + hist2.currentPreciseIntegral() + " - "
-                                                + hist1.currentPreciseIntegral());
+                                                    hist2.currentPreciseIntegral() + " - "
+                                                    + hist1.currentPreciseIntegral());
                                         }
                                         double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                         if (n < -1.0e-5) {
                                             throw new AssertionError("Negative rank difference= " + n + " = " +
-                                                + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                    hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                         }
                                         if (DEBUG_MODE) {
                                             debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -4858,12 +4868,12 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentIntegral() + " - " + hist1.currentIntegral());
+                                                hist2.currentIntegral() + " - " + hist1.currentIntegral());
                                     }
                                     double n = hist2.currentRank() - hist1.currentRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentRank() + " - " + hist1.currentRank());
+                                                hist2.currentRank() + " - " + hist1.currentRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugIntegral(arrayPos, v1, v2, hist1, hist2, n, i);
@@ -5003,13 +5013,13 @@ class AveragerBetweenValues extends RankOperationProcessor {
                                     double i = hist1.currentPreciseIntegralBetweenSharing();
                                     if (i < -1.0e-5) {
                                         throw new AssertionError("Negative integral = " + i + " = " +
-                                            + hist2.currentPreciseIntegral() + " - "
+                                                hist2.currentPreciseIntegral() + " - "
                                             + hist1.currentPreciseIntegral());
                                     }
                                     double n = hist2.currentPreciseRank() - hist1.currentPreciseRank();
                                     if (n < -1.0e-5) {
                                         throw new AssertionError("Negative rank difference= " + n + " = " +
-                                            + hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
+                                                hist2.currentPreciseRank() + " - " + hist1.currentPreciseRank());
                                     }
                                     if (DEBUG_MODE) {
                                         debugPreciseIntegral(arrayPos, v1, v2, hist1, hist2, n, i);

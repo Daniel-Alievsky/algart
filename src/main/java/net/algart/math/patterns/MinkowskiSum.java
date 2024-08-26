@@ -68,7 +68,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
             this.coordRanges[k] = Range.valueOf(minCoord[k], maxCoord[k]);
             checkCoordRange(this.coordRanges[k]);
         }
-        this.summands = allSummands.toArray(new Pattern[allSummands.size()]);
+        this.summands = allSummands.toArray(new Pattern[0]);
         if (optimizedSummands == null) {
             this.optimizedSummands = optimizeMinkowskiSum(allSummands);
         } else {
@@ -214,7 +214,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
             }
         }
         if (numberOfPatternsWithAtLeast2Points <= 1) {
-            return Collections.<Pattern>singletonList(this);
+            return Collections.singletonList(this);
         }
         return Collections.unmodifiableList(result);
     }

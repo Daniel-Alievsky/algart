@@ -1128,7 +1128,7 @@ public class IPoint implements Comparable<IPoint> {
         //       x' = x % (nu*nz*ny*nx)
         //
         if (pseudoCyclicTruncation) {
-            int n = coordinates.length <= dimensions.length ? coordinates.length : dimensions.length;
+            int n = Math.min(coordinates.length, dimensions.length);
             if (n == 0) {
                 return 0; // N = 1, so index = something % N = 0
             }

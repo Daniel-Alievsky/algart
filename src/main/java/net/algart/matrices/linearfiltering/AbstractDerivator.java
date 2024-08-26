@@ -218,7 +218,7 @@ public abstract class AbstractDerivator extends AbstractArrayProcessorWithContex
     }
 
     public IPoint[] roundedDirections2D() {
-        return Func.SHIFTS_ALONG_8_DIRECTIONS_2D.toArray(new IPoint[Func.SHIFTS_ALONG_8_DIRECTIONS_2D.size()]);
+        return Func.SHIFTS_ALONG_8_DIRECTIONS_2D.toArray(new IPoint[0]);
     }
 
     public <T extends PArray> Matrix<T> asModuleOfVector(Class<? extends T> requiredType,
