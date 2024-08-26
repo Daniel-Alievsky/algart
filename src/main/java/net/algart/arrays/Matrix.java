@@ -2639,23 +2639,34 @@ public interface Matrix<T extends Array> extends Cloneable {
     boolean isDirectAccessible();
 
     /**
-     * Returns an exact clone of this  matrix, created in {@link SimpleMemoryModel}.
+     * Equivalent to {@link #clone(ArrayContext) clone(null)}.
+     * <p>Note: <code>null</code> context provides the fastest multithreading copying.
+     * If you don't want to use multithreading,
+     * please pass {@link ArrayContext#DEFAULT_SINGLE_THREAD} as an argument.
      *
-     * <p>For primitive element types, equivalent to
-     * <code>{@link Matrices#clone(Matrix) Matrices.clone}(thisInstance)</code>,
-     * but the generic type of the result is not {@link UpdatableArray updatable}.
-     * For any types, equivalent to the following operators:
+     * @return an exact clone of the passed matrix.
+     */
+    Matrix<T> clone();
+
+    /**
+     * Returns an exact clone of this matrix, created in a memory model, returned by the specified context,
+     * or in {@link SimpleMemoryModel} for <code>null</code> context.
+     *
+     * <p>Equivalent to the following operators:
      * <pre>
-     *     final Matrix&lt;UpdatableArray&gt; result = Arrays.SMM.{@link MemoryModel#newMatrix(Class, Matrix)
+     *     MemoryModel memoryModel = context == null ? Arrays.SMM : context.getMemoryModel();
+     *     final Matrix&lt;UpdatableArray&gt; result = memoryModel.{@link MemoryModel#newMatrix(Class, Matrix)
      *     newMatrix}(UpdatableArray.class, thisInstance);
      *     {@link Matrices#copy(ArrayContext, Matrix, Matrix)
-     *     Matrices.copy}(null, result, thisInstance); // - maximally fast multithreading copying
+     *     Matrices.copy}(context, result, thisInstance);
      *     (return result)
      * </pre>
      *
-     * @return exact clone of the passed matrix.
+     * @return an exact clone of the passed matrix.
+     * @see #clone()
+     * @see Matrices#clone(MemoryModel, Matrix)
      */
-    Matrix<T> clone();
+    Matrix<T> clone(ArrayContext arrayContext);
 
     /**
      * Equivalent to <code>{@link #array()}.{@link Array#flushResources(ArrayContext) flushResources(context)}</code>.

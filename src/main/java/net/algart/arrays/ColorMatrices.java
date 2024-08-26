@@ -47,16 +47,28 @@ public class ColorMatrices {
     public static final double INTENSITY_B_WEIGHT = 0.114;
     public static final double INTENSITY_G_WEIGHT = 1.0 - (INTENSITY_R_WEIGHT + INTENSITY_B_WEIGHT); // ~0.587
 
-    public static Matrix<? extends PArray> asRGBIntensity(List<? extends Matrix<? extends PArray>> colorBands) {
-        return colorBands.size() < 3 ?
-                colorBands.get(0) :
-                asRGBIntensity(colorBands.get(0), colorBands.get(1), colorBands.get(2));
+    public static Matrix<? extends PArray> toRGBIntensity(List<? extends Matrix<? extends PArray>> colorChannels) {
+        Objects.requireNonNull(colorChannels, "Null color channels");
+        return colorChannels.size() < 3 ?
+                colorChannels.get(0) :
+                asRGBIntensity(colorChannels.get(0), colorChannels.get(1), colorChannels.get(2))
+                        .clone(ArrayContext.DEFAULT_SINGLE_THREAD);
+    }
+
+    public static Matrix<? extends PArray> asRGBIntensity(List<? extends Matrix<? extends PArray>> colorChannels) {
+        Objects.requireNonNull(colorChannels, "Null color channels");
+        return colorChannels.size() < 3 ?
+                colorChannels.get(0) :
+                asRGBIntensity(colorChannels.get(0), colorChannels.get(1), colorChannels.get(2));
     }
 
     public static Matrix<? extends PArray> asRGBIntensity(
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         if (g.type() == r.type() && g.type() == r.type()) {
             return asRGBIntensity(g.type(PArray.class), r, g, b);
         } else if (r.array().bitsPerElement() <= 8
@@ -78,6 +90,9 @@ public class ColorMatrices {
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
         Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         if (r.type() == resultType && g.type() == resultType && g.type() == resultType) {
             final double increment = r.isFloatingPoint() ? 0.0 : 0.5;
             // - for integer matrices with the same type (most popular case) we prefer rounding (by adding 0.5)
@@ -100,6 +115,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         final double rScaleInv = 1.0 / r.array().maxPossibleValue(1.0);
         final double gScaleInv = 1.0 / g.array().maxPossibleValue(1.0);
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
@@ -115,6 +134,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         final double rScaleInv = 1.0 / r.array().maxPossibleValue(1.0);
         final double gScaleInv = 1.0 / g.array().maxPossibleValue(1.0);
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
@@ -130,6 +153,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         final double rScaleInv = 1.0 / r.array().maxPossibleValue(1.0);
         final double gScaleInv = 1.0 / g.array().maxPossibleValue(1.0);
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
@@ -145,6 +172,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         final double rScaleInv = 1.0 / r.array().maxPossibleValue(1.0);
         final double gScaleInv = 1.0 / g.array().maxPossibleValue(1.0);
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
@@ -160,6 +191,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> r,
             Matrix<? extends PArray> g,
             Matrix<? extends PArray> b) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(r, "Null r matrix");
+        Objects.requireNonNull(g, "Null g matrix");
+        Objects.requireNonNull(b, "Null b matrix");
         final double rScaleInv = 1.0 / r.array().maxPossibleValue(1.0);
         final double gScaleInv = 1.0 / g.array().maxPossibleValue(1.0);
         final double bScaleInv = 1.0 / b.array().maxPossibleValue(1.0);
@@ -177,6 +212,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> value) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(value, "Null value matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
@@ -194,6 +233,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> value) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(value, "Null value matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
@@ -209,6 +252,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> value) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(value, "Null value matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double vScaleInv = 1.0 / value.array().maxPossibleValue(1.0);
@@ -228,6 +275,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> lightness) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(lightness, "Null lightness matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
@@ -245,6 +296,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> lightness) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(lightness, "Null lightness matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
@@ -260,6 +315,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> lightness) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(lightness, "Null lightness matrix");
         final double hScaleInv = 1.0 / hue.array().maxPossibleValue(1.0);
         final double sScaleInv = 1.0 / saturation.array().maxPossibleValue(1.0);
         final double lScaleInv = 1.0 / lightness.array().maxPossibleValue(1.0);
@@ -279,6 +338,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> value) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(value, "Null value matrix");
         List<Matrix<? extends PArray>> result = new ArrayList<>();
         result.add(asRedFromHSV(resultType, hue, saturation, value));
         result.add(asGreenFromHSV(resultType, hue, saturation, value));
@@ -293,6 +356,10 @@ public class ColorMatrices {
             Matrix<? extends PArray> hue,
             Matrix<? extends PArray> saturation,
             Matrix<? extends PArray> lightness) {
+        Objects.requireNonNull(resultType, "Null resultType");
+        Objects.requireNonNull(hue, "Null hue matrix");
+        Objects.requireNonNull(saturation, "Null saturation matrix");
+        Objects.requireNonNull(lightness, "Null lightness matrix");
         List<Matrix<? extends PArray>> result = new ArrayList<>();
         result.add(asRedFromHSL(resultType, hue, saturation, lightness));
         result.add(asGreenFromHSL(resultType, hue, saturation, lightness));

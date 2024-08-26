@@ -3574,7 +3574,7 @@ public class Arrays {
      * it after lazy calculations.</p>
      *
      * @param array the array to be cloned.
-     * @return exact updatable clone of the passed matrix.
+     * @return an exact updatable clone of the passed matrix.
      * @throws NullPointerException if the argument is {@code null}.
      */
     public static UpdatablePArray clone(PArray array) {
@@ -3594,7 +3594,7 @@ public class Arrays {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @param array       the array to be cloned.
-     * @return exact updatable clone of the passed matrix.
+     * @return an exact updatable clone of the passed matrix.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static UpdatablePArray clone(MemoryModel memoryModel, PArray array) {
@@ -3614,7 +3614,7 @@ public class Arrays {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @param array       the array to be cloned.
-     * @return exact updatable clone of the passed array.
+     * @return an exact updatable clone of the passed array.
      * @throws NullPointerException if one of the arguments is {@code null}.
      */
     public static UpdatableArray clone(MemoryModel memoryModel, Array array) {

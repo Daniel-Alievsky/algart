@@ -92,7 +92,7 @@ public class ReadWriteImageTest {
             if (monochrome) {
                 t1 = System.nanoTime();
                 var separate = Matrices.separate(toMatrix.toMatrix(bi1));
-                var intensity = ColorMatrices.asRGBIntensity(separate).clone();
+                var intensity = ColorMatrices.toRGBIntensity(separate);
                 bi1 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(intensity);
                 t2 = System.nanoTime();
                 System.out.printf("Converted to monochrome in %.3f ms%n", (t2 - t1) * 1e-6);

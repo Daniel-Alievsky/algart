@@ -4508,8 +4508,10 @@ public class Matrices {
      * it after lazy calculations.</p>
      *
      * @param matrix the matrix to be cloned.
-     * @return exact updatable clone of the passed matrix.
+     * @return an exact updatable clone of the passed matrix.
      * @throws NullPointerException if the argument is {@code null}.
+     * @see Matrix#clone()
+     * @see Matrix#clone(ArrayContext)
      */
     public static Matrix<? extends UpdatablePArray> clone(Matrix<? extends PArray> matrix) {
         return clone(Arrays.SMM, matrix);
@@ -4528,8 +4530,9 @@ public class Matrices {
      *
      * @param memoryModel the memory model, used for allocation a new copy of this array.
      * @param matrix      the matrix to be cloned.
-     * @return exact updatable clone of the passed matrix.
+     * @return an exact updatable clone of the passed matrix.
      * @throws NullPointerException if one of the arguments is {@code null}.
+     * @see Matrix#clone(ArrayContext)
      */
     public static Matrix<? extends UpdatablePArray> clone(MemoryModel memoryModel, Matrix<? extends PArray> matrix) {
         Objects.requireNonNull(memoryModel, "Null memory model");

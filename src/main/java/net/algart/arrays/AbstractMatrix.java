@@ -656,11 +656,17 @@ public abstract class AbstractMatrix<T extends Array> implements Matrix<T> {
         return a instanceof DirectAccessible && ((DirectAccessible) a).hasJavaArray();
     }
 
-    @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
     public Matrix<T> clone() {
-        final Matrix<UpdatableArray> result = Arrays.SMM.newMatrix(UpdatableArray.class, this);
-        Matrices.copy(null, result, this);
+        return clone(null);
+    }
+
+    @Override
+    public Matrix<T> clone(ArrayContext context) {
+        MemoryModel memoryModel = context == null ? Arrays. SMM : context. getMemoryModel();
+        final Matrix<UpdatableArray> result = memoryModel.newMatrix(UpdatableArray.class, this);
+        Matrices.copy(context, result, this);
         // - maximally fast multithreading copying
         return InternalUtils.cast(result);
     }
