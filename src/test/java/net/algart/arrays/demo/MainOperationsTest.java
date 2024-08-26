@@ -1002,10 +1002,12 @@ public class MainOperationsTest implements Cloneable {
         if (funcOnly) {
             return;
         }
-        if (!(a instanceof BitArray)) {
+        if (!(a instanceof PArray)) {
             return;
         }
-        if (!title(ti, "Testing \"getBits\", \"setBits\", \"getBits64\", \"setBits64[NoSync]\"  methods...")) {
+        if (!title(ti, "Testing \"toBoolean()\"" +
+                (a instanceof BitArray ? ", \"getBits\", \"setBits\", \"getBits64\", \"setBits64[NoSync]\"" : "") +
+                " methods...")) {
             return;
         }
         for (int testCount = 0; testCount < numberOfTests; testCount++) {
@@ -1013,6 +1015,17 @@ public class MainOperationsTest implements Cloneable {
             int destPos = rnd.nextInt(len + 1) / blockSize * blockSize;
             int count = rnd.nextInt(len + 1 - Math.max(srcPos, destPos)) / blockSize * blockSize;
 
+            boolean[] booleans = ((UpdatablePArray) a).subArr(srcPos, count).toBoolean();
+            for (int k = 0; k < count; k++) {
+                if (booleans[k] != (((PArray) a).getDouble(srcPos + k) != 0)) {
+                    throw new AssertionError("The bug in getBoolean found in test #"
+                            + testCount + ": srcPos = " + srcPos + ", count = " + count + ", "
+                            + ", error found at " + k);
+                }
+            }
+            if (!(a instanceof BitArray)) {
+                continue;
+            }
             work1.copy(a);
             work2.copy(a);
             ((BitArray) a).getBits(srcPos, workJBits, 0, count);
@@ -1021,12 +1034,12 @@ public class MainOperationsTest implements Cloneable {
             for (int k = 0; k < count; k++) {
                 if (((BitArray) a).getBit(srcPos + k) != PackedBitArrays.getBit(workJBits, k)) {
                     throw new AssertionError("The bug A in getBits found in test #"
-                            + testCount + ": destPos = " + destPos + ", count = " + count + ", "
+                            + testCount + ": srcPos = " + srcPos + ", count = " + count + ", "
                             + ", error found at " + k);
                 }
                 if (((BitArray) work1).getBit(destPos + k) != PackedBitArrays.getBit(workJBits, k)) {
                     throw new AssertionError("The bug B in setBits found in test #"
-                            + testCount + ": destPos = " + destPos + ", count = " + count + ", "
+                            + testCount + ": srcPos = " + srcPos + ", count = " + count + ", "
                             + ", error found at " + k);
                 }
             }

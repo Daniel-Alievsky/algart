@@ -357,6 +357,7 @@ public interface BitArray extends PFixedArray {
      * @return packed Java bit array containing all the bits in this array.
      * @throws TooLargeArrayException if the array length is greater than 2<sup>37</sup>&minus;1.
      * @see #jaBit()
+     * @see #toBoolean()
      * @see #getBits(long, long[], long, long)
      * @see #toJavaArray()
      */
@@ -402,6 +403,34 @@ public interface BitArray extends PFixedArray {
      */
     default long[] jaBit() {
         return toBit();
+    }
+
+    /**
+     * Returns a newly created Java <code>boolean[]</code> array containing all elements in this AlgART array.
+     * The same data can be retrieved using {@link BitArray#getData(long, Object)} method
+     * with zero <code>arrayPos</code> argument.
+     * If the length of this array is too large (greater than 2<sup>31</sup>&minus;1),
+     * this method throws {@link TooLargeArrayException}.
+     * This method is equivalent to <code>{@link #toBoolean(boolean[]) toBoolean}(null)</code>.
+     *
+     * <p>This method always allocates a new Java array.
+     * Thus, the caller is free to modify the returned array.
+     *
+     * @return Java array containing all the elements in this array as <code>boolean</code> values.
+     * @throws TooLargeArrayException if the array length is greater than <code>Integer.MAX_VALUE</code>.
+     * @see #toBit()
+     * @see Array#toJavaArray()
+     * @see Matrix#toBoolean()
+     */
+    default boolean[] toBoolean() {
+        long len = length();
+        if (len != (int) len) {
+            throw new TooLargeArrayException("Cannot convert AlgART bit array to Java boolean[] array, "
+                    + "because it is too large: " + this);
+        }
+        boolean[] result = new boolean[(int) len];
+        getData(0, result);
+        return result;
     }
 
     /**
