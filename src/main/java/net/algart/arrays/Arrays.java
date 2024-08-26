@@ -97,7 +97,7 @@ public class Arrays {
         private SystemSettings() {
         }
 
-        private static final String VERSION = "1.4.18";
+        private static final String VERSION = "1.4.19";
         private static final int[] PARSED_VERSION;
 
         static {
@@ -390,17 +390,17 @@ public class Arrays {
         }
 
         /**
-         * The number of processor units, that are allowed for simultaneous usage by AlgART libraries:
+         * The number of processor units that are allowed for simultaneous usage by AlgART libraries:
          * the minimum from <code>Runtime.getRuntime().availableProcessors()</code> value and
          * the {@link #MAX_AVAILABLE_PROCESSORS} constant.
          * The value of that constant is read from system property
          * "net.algart.arrays.maxAvailableProcessors" and equal to 16384 by default
          * (or 16 on 32-bit JVM). See comments to that constant for more details.
          *
-         * <p>This method is used by AlgART libraries in all situation, where it is necessary to
+         * <p>This method is used by AlgART libraries in all situations, where it is necessary to
          * know to actual number of processor units, in particular, in {@link #cpuCount()} method,
          * in {@link DefaultThreadPoolFactory} class while detecting the size of the global thread pool
-         * and in {@link DefaultDataFileModel} class while calculation of the recommended number of banks.
+         * and in {@link DefaultDataFileModel} class while calculation of the recommended banks number.
          * We also recommend you to use this method instead of direct
          * <code>Runtime.getRuntime().availableProcessors()</code> call.
          * It is very helpful on multiprocessor systems, containing many CPU kernels (several tens),
