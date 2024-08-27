@@ -135,6 +135,11 @@ public interface IntArray extends PIntegerArray {
     }
 
     @Override
+    default int[] toInt() {
+        return toJavaArray();
+    }
+
+    @Override
     default int[] jaInt() {
         return ja();
     }
@@ -177,7 +182,7 @@ public interface IntArray extends PIntegerArray {
      *
      * @param array the source Java array.
      * @return an unresizable AlgART array backed by the specified Java array.
-     * @throws NullPointerException     if <code>array</code> argument is {@code null}.
+     * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
     static UpdatableIntArray as(int[] array) {
         return SimpleMemoryModel.asUpdatableIntArray(array);

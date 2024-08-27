@@ -137,6 +137,11 @@ public interface ShortArray extends PIntegerArray {
     }
 
     @Override
+    default short[] toShort() {
+        return toJavaArray();
+    }
+
+    @Override
     default short[] jaShort() {
         return ja();
     }

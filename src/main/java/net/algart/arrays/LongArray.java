@@ -135,6 +135,11 @@ public interface LongArray extends PIntegerArray {
     }
 
     @Override
+    default long[] toLong() {
+        return toJavaArray();
+    }
+
+    @Override
     default long[] jaLong() {
         return ja();
     }

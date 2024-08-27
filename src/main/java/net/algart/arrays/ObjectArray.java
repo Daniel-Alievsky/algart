@@ -98,7 +98,8 @@ public interface ObjectArray<E> extends Array {
      * <p>You may specify <code>lowIndex=0</code> and <code>highIndex=Long.MAX_VALUE</code> to search
      * through all array elements.
      *
-     * <p>Unlike the standard <code>List.indexOf</code> method, this method never throws <code>ClassCastException</code>.
+     * <p>Unlike the standard <code>List.indexOf</code> method, this method never throws
+     * <code>ClassCastException</code>.
      *
      * @param lowIndex  the low index in the array for search (inclusive).
      * @param highIndex the high index in the array for search (exclusive).

@@ -226,7 +226,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>byte[]</code> array containing all elements in this AlgART array,
      * cast to <code>byte</code> type if necessary.
-     * Equivalent to <code>{@link #toByte(byte[]) toByte}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toByte(byte[]) toByte}(null)</code>.
      * For {@link ByteArray} subinterface, this method is also equivalent to {@link ByteArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -305,7 +306,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>char[]</code> array containing all elements in this AlgART array,
      * cast to <code>char</code> type if necessary.
-     * Equivalent to <code>{@link #toChar(char[]) toChar}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toChar(char[]) toChar}(null)</code>.
      * For {@link CharArray} subinterface, this method is also equivalent to {@link CharArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -383,7 +385,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>short[]</code> array containing all elements in this AlgART array,
      * cast to <code>short</code> type if necessary.
-     * Equivalent to <code>{@link #toShort(short[]) toShort}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toShort(short[]) toShort}(null)</code>.
      * For {@link ShortArray} subinterface, this method is also equivalent to {@link ShortArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -461,7 +464,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>int[]</code> array containing all elements in this AlgART array,
      * cast to <code>int</code> type if necessary.
-     * Equivalent to <code>{@link #toInt(int[]) toInt}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toInt(int[]) toInt}(null)</code>.
      * For {@link IntArray} subinterface, this method is also equivalent to {@link IntArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -539,7 +543,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>long[]</code> array containing all elements in this AlgART array,
      * cast to <code>long</code> type if necessary.
-     * Equivalent to <code>{@link #toLong(long[]) toLong}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toLong(long[]) toLong}(null)</code>.
      * For {@link LongArray} subinterface, this method is also equivalent to {@link LongArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -617,7 +622,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>float[]</code> array containing all elements in this AlgART array,
      * cast to <code>float</code> type if necessary.
-     * Equivalent to <code>{@link #toFloat(float[]) toFloat}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toFloat(float[]) toFloat}(null)</code>.
      * For {@link FloatArray} subinterface, this method is also equivalent to {@link FloatArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -695,7 +701,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>double[]</code> array containing all elements in this AlgART array,
      * cast to <code>double</code> type if necessary.
-     * Equivalent to <code>{@link #toDouble(double[]) toDouble}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toDouble(double[]) toDouble}(null)</code>.
      * For {@link DoubleArray} subinterface, this method is also equivalent to {@link DoubleArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.
@@ -773,7 +780,8 @@ public interface PArray extends Array {
     /**
      * Returns a newly created Java <code>boolean[]</code> array containing all elements in this AlgART array,
      * cast to <code>boolean</code> type if necessary.
-     * Equivalent to <code>{@link #toBoolean(boolean[]) toBoolean}(null)</code>.
+     *
+     * <p>This method is equivalent to <code>{@link #toBoolean(boolean[]) toBoolean}(null)</code>.
      * For {@link BitArray} subinterface, this method is also equivalent to {@link BitArray#toJavaArray()}.
      *
      * <p>This method always allocates a new Java array.

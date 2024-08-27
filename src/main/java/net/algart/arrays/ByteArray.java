@@ -137,6 +137,11 @@ public interface ByteArray extends PIntegerArray {
     }
 
     @Override
+    default byte[] toByte() {
+        return toJavaArray();
+    }
+
+    @Override
     default byte[] jaByte() {
         return ja();
     }

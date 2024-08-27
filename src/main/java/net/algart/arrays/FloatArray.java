@@ -134,6 +134,11 @@ public interface FloatArray extends PFloatingArray {
     /*Repeat.SectionEnd resultTypes*/
 
     @Override
+    default float[] toFloat() {
+        return toJavaArray();
+    }
+
+    @Override
     default float[] jaFloat() {
         return ja();
     }

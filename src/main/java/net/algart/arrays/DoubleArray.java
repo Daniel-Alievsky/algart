@@ -134,6 +134,11 @@ public interface DoubleArray extends PFloatingArray {
     }
 
     @Override
+    default double[] toDouble() {
+        return toJavaArray();
+    }
+
+    @Override
     default double[] jaDouble() {
         return ja();
     }

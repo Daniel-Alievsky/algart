@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ArrayQuickAccessTest" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.ArrayQuickAccessTest" />
+  <configuration default="false" name="ArrayToJavaArrayTest" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="net.algart.arrays.demo.ArrayToJavaArrayTest" />
     <module name="algart" />
     <option name="VM_PARAMETERS" value="-ea -esa" />
     <extension name="coverage">

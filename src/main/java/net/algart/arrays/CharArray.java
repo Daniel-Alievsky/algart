@@ -135,6 +135,11 @@ public interface CharArray extends PFixedArray {
     }
 
     @Override
+    default char[] toChar() {
+        return toJavaArray();
+    }
+
+    @Override
     default char[] jaChar() {
         return ja();
     }
