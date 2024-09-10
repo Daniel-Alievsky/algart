@@ -27,9 +27,9 @@ package net.algart.arrays.demo.jre;
 import java.util.Locale;
 
 public class MillionsOfArraysTest {
-    private static void testAllocation(Runtime rt, int test, int numberOfArrays, int arrayLength) {
+    private static void testAllocation(int numberOfArrays, int arrayLength) {
+        final Runtime rt =  Runtime.getRuntime();
         long m1 = rt.totalMemory() - rt.freeMemory();
-        System.out.printf("%nTest %d: current memory %.3f MB%n", test, (double) m1 / 1048576.0);
         final byte[][] arrays = new byte[numberOfArrays][];
         long t1 = System.nanoTime();
         for (int i = 0; i < numberOfArrays; i++) {
@@ -39,7 +39,7 @@ public class MillionsOfArraysTest {
         long t2 = System.nanoTime();
         System.out.printf(Locale.US, "%d arrays byte[%d] allocated in %.3f ms (%.2f ns/array), " +
                         "used memory %.3f MB (%.2f bytes/array)%n",
-                numberOfArrays, arrayLength,
+                numberOfArrays, arrays[0].length,
                 (t2 - t1) * 1e-6, (double) (t2 - t1) / numberOfArrays,
                 (double) (m2 - m1) / 1048576.0, (double) (m2 - m1) / numberOfArrays);
     }
@@ -52,10 +52,13 @@ public class MillionsOfArraysTest {
         }
         final int arrayLength = Integer.parseInt(args[0]);
         final int numberOfArrays = Integer.parseInt(args[1]);
-        final Runtime rt = Runtime.getRuntime();
 
         for (int test = 0; test < 16; test++) {
-            testAllocation(rt, test, numberOfArrays, arrayLength);
+            final Runtime rt = Runtime.getRuntime();
+            System.out.printf("%nTest %d: current memory %.3f MB%n",
+                    test, (double) (rt.totalMemory() - rt.freeMemory()) / 1048576.0);
+            testAllocation(numberOfArrays, arrayLength);
+
             System.gc();
             System.gc();
             System.gc();
