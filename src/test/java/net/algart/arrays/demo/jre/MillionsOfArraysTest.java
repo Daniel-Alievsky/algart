@@ -24,8 +24,6 @@
 
 package net.algart.arrays.demo.jre;
 
-import net.algart.arrays.demo.NCopiesSpeed;
-
 import java.util.Locale;
 
 public class MillionsOfArraysTest {
