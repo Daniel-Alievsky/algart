@@ -155,7 +155,7 @@ public final class Contours {
         final Contours r = new Contours();
         r.points = serialized.clone();
         r.pointsLength = serialized.length;
-        // - since this moment, we will work with this copy
+        // - from this moment, we will work with this copy
         ContourHeader checkedHeader = new ContourHeader();
         int p = 0;
         while (p < serialized.length) {
