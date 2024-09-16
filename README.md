@@ -6,4 +6,4 @@ and a wide set of algorithms of their processing.
 
 This library is distributed under the MIT license.
 
-See also [AlgART page]( http://algart.net/java/AlgART/) for more details.
+See also [AlgART page]( https://algart.net/java/AlgART/) for more details.
