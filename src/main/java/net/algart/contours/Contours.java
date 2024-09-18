@@ -411,9 +411,8 @@ public final class Contours {
     public void addContour(ContourHeader header, IntArray contour, boolean packAddedContour) {
         Objects.requireNonNull(header, "Null header");
         Objects.requireNonNull(contour, "Null contour");
-        if (contour instanceof DirectAccessible && ((DirectAccessible) contour).hasJavaArray()) {
+        if (contour instanceof DirectAccessible da && da.hasJavaArray()) {
             // - usually true, but can be false if contour was created manually in non-simple memory model
-            final DirectAccessible da = (DirectAccessible) contour;
             final int[] points = (int[]) da.javaArray();
             final int offset = da.javaArrayOffset();
             final int length = da.javaArrayLength();
@@ -1215,10 +1214,8 @@ public final class Contours {
         Objects.requireNonNull(nonOptimizedContour, "Null non-optimized contour");
         long n = nonOptimizedContour.length();
         checkContourLength(n);
-        if (nonOptimizedContour instanceof DirectAccessible
-                && ((DirectAccessible) nonOptimizedContour).hasJavaArray()) {
+        if (nonOptimizedContour instanceof DirectAccessible da && da.hasJavaArray()) {
             // - usually true, but can be false if nonOptimizedContour was created manually in non-simple memory model
-            final DirectAccessible da = (DirectAccessible) nonOptimizedContour;
             final int[] points = (int[]) da.javaArray();
             final int offset = da.javaArrayOffset();
             final int length = da.javaArrayLength();
@@ -1546,8 +1543,7 @@ public final class Contours {
             resultLength.setNumberOfPoints(1);
             return resultPoints;
         }
-        if (optimizedContour instanceof DirectAccessible && ((DirectAccessible) optimizedContour).hasJavaArray()) {
-            final DirectAccessible da = (DirectAccessible) optimizedContour;
+        if (optimizedContour instanceof DirectAccessible da && da.hasJavaArray()) {
             final int[] points = (int[]) da.javaArray();
             final int offset = da.javaArrayOffset();
             return unpackContourAndReallocateResult(

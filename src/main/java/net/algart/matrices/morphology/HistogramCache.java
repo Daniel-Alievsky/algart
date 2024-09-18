@@ -38,7 +38,7 @@ class HistogramCache<T> {
     HistogramCache() {
         this.histogramCacheCapacity = 2 * Arrays.SystemSettings.cpuCount();
         // "2*" - to be on the safe side, when the we access an array in non-optimal order
-        this.histogramCache = new LinkedHashMap<Long, Reference<T>>() {
+        this.histogramCache = new LinkedHashMap<>() {
             @Override
             protected boolean removeEldestEntry(Map.Entry<Long, Reference<T>> eldest) {
                 return size() > histogramCacheCapacity;
@@ -64,7 +64,7 @@ class HistogramCache<T> {
     public synchronized void put(long position, T histogram) {
         Objects.requireNonNull(histogram, "Null histogram");
         reap();
-        Reference<T> ref = new SoftReference<T>(histogram);
+        Reference<T> ref = new SoftReference<>(histogram);
         histogramCache.put(position, ref);
     }
 

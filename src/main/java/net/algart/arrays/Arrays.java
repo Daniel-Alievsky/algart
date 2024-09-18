@@ -1132,10 +1132,10 @@ public class Arrays {
 
         /**
          * Alternate implementation of {@link Arrays.SystemSettings.DiskSynchronizer}, based on
-         * the pool with 1 thread. Not used in current version.
+         * the pool with one thread. Not used in the current version.
          */
         static class DefaultDiskSynchronizerPooling implements DiskSynchronizer {
-            public <T> T doSynchronously(String fileName, Callable<T> action) throws Exception {
+            public <T> T doSynchronously(String fileName, Callable<T> action) {
                 Future<T> result = DiskThreadPoolHolder.globalDiskThreadPool.submit(action);
                 try {
                     return result.get(); // waiting for finishing

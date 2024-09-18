@@ -24,6 +24,8 @@
 
 package net.algart.arrays;
 
+import java.util.Objects;
+
 /**
  * <p>Indexer for creating usual and constantly continued submatrices.</p>
  *
@@ -669,7 +671,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
 
     //[[Repeat() Bit ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double,,Object;;
     //           boolean(?=\s+value) ==> char,,byte,,short,,int,,long,,float,,double,,Object;;
-    //           (value)\s*==\s*(outsideObjectConst) ==> $1 != null ? $1.equals($2) : $2 == null,,...]]
+    //           (value)\s*==\s*(outsideObjectConst) ==> Objects.equals($1, $2),,...]]
     public long indexOfBit(long lowIndex, long highIndex, boolean value) {
         if (lowIndex < 0) {
             lowIndex = 0;
@@ -3595,7 +3597,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
                 }
             }
             if (fullLineOutside) { // then indexInBase has no sense
-                if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+                if (Objects.equals(value, outsideObjectConst)) {
                     return index;
                 }
             } else {
@@ -3619,7 +3621,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
         }
         if (baseCoord0 < 0) {
             long m = -baseCoord0;
-            if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+            if (Objects.equals(value, outsideObjectConst)) {
                 return indexInBase;
             }
             len -= m;
@@ -3640,7 +3642,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
             indexInBase += m;
         }
         if (baseCoord0 >= baseDim0 && len > 0) {
-            if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+            if (Objects.equals(value, outsideObjectConst)) {
                 return indexInBase;
             }
         }
@@ -3725,7 +3727,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
                 }
             }
             if (fullLineOutside) { // then indexInBase has no sense
-                if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+                if (Objects.equals(value, outsideObjectConst)) {
                     return index;
                 }
             } else {
@@ -3749,7 +3751,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
             return Long.MAX_VALUE;
         }
         if (baseCoord0 >= baseDim0) {
-            if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+            if (Objects.equals(value, outsideObjectConst)) {
                 return indexInBase;
             }
             long m = baseCoord0 - baseDim0 + 1;
@@ -3771,7 +3773,7 @@ class ArraysSubMatrixConstantlyContinuedIndexer implements ArraysSubMatrixIndexe
             indexInBase -= m;
         }
         if (baseCoord0 < 0 && len > 0) {
-            if (value != null ? value.equals(outsideObjectConst) : outsideObjectConst == null) {
+            if (Objects.equals(value, outsideObjectConst)) {
                 return indexInBase;
             }
         }

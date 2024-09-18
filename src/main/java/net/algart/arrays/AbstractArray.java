@@ -523,7 +523,8 @@ public abstract class AbstractArray implements Array, Cloneable {
      */
     @Override
     public boolean equals(Object obj) {
-        return equals(this, obj);
+        return obj instanceof Array && equals(this, obj);
+        // - explicit "instanceof" helps to avoid a warning
     }
 
     /**
@@ -583,12 +584,20 @@ public abstract class AbstractArray implements Array, Cloneable {
      * Classes that extend {@link AbstractArray} may just inherit standard implementation
      * {@link AbstractArray#equals(Object) AbstractArray.equals(Object)}.
      *
-     * @param obj1 first compared object.
-     * @param obj2 second compared object.
+     * <p>Note: if both arguments are the same reference (<code>obj1==obj2</code>), in particular,
+     * if <code>obj1==null</code> and <code>obj2==null</code>, this method returns <code>true</code>.
+     * But if one of them is <code>null</code> and other is not <code>null</code>,
+     * this method returns <code>false</code>.
+     *
+     * @param obj1 the first object to compare (can be <code>null</code>).
+     * @param obj2 the second object to compare (can be <code>null</code>).
      * @return <code>true</code> if <code>obj2</code> is an array and the specified arrays are equal.
      */
     public static boolean equals(Array obj1, Object obj2) {
-        if (!(obj2 instanceof Array a)) {
+        if (obj1 == obj2) {
+            return true;
+        }
+        if (obj1 == null || !(obj2 instanceof Array a)) {
             return false;
         }
         long n = obj1.length();

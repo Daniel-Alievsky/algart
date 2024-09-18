@@ -1124,11 +1124,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         if (points.isEmpty()) { // to be on the safe side: never occurs for pattern's point set
             return result;
         }
-        Collections.sort(points, new Comparator<>() {
-            public int compare(IPoint o1, IPoint o2) {
-                return o1.compareTo(o2, coordIndex);
-            }
-        });
+        Collections.sort(points, (o1, o2) -> o1.compareTo(o2, coordIndex));
         IPoint last = points.get(0);
         final int coordCount = last.coordCount();
         IPoint min = last;

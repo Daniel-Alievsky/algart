@@ -64,7 +64,7 @@ class Ranker extends RankOperationProcessor {
         if (src instanceof BitArray) {
             final BitArray a = (BitArray)src;
             final BitArray ra = (BitArray)rankedArray;
-            final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+            final HistogramCache<int[]> histogramCache = new HistogramCache<>();
             switch (interpolated ? 1 : 0) { // for bit case, the interpolated rank is the same as the simple one
                 //[[Repeat() IntArray ==> DoubleArray;;
                 //           int\s+getInt ==> double getDouble;;
@@ -259,7 +259,7 @@ class Ranker extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && !interpolated) { // char A: simple rank, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
                             int level = ra.getChar(index) >> bs;
@@ -361,7 +361,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else if (!interpolated) { // char B: simple rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
@@ -444,7 +444,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else { // char C: precise rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractDoubleArray(src.length(), true, src) {
                         public double getDouble(long index) {
@@ -573,7 +573,7 @@ class Ranker extends RankOperationProcessor {
                     };
                 }
             } else if (!interpolated) { // char D: simple rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractIntArray(src.length(), true, src) {
                     public int getInt(long index) {
                         int level = ra.getChar(index) >> bs;
@@ -651,7 +651,7 @@ class Ranker extends RankOperationProcessor {
                     }
                 };
             } else { // char E: precise rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractDoubleArray(src.length(), true, src) {
                     public double getDouble(long index) {
                         int level = ra.getChar(index) >> bs;
@@ -786,7 +786,7 @@ class Ranker extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && !interpolated) { // byte A: simple rank, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
                             int level = ra.getByte(index) >> bs;
@@ -888,7 +888,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else if (!interpolated) { // byte B: simple rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
@@ -971,7 +971,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else { // byte C: precise rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractDoubleArray(src.length(), true, src) {
                         public double getDouble(long index) {
@@ -1100,7 +1100,7 @@ class Ranker extends RankOperationProcessor {
                     };
                 }
             } else if (!interpolated) { // byte D: simple rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractIntArray(src.length(), true, src) {
                     public int getInt(long index) {
                         int level = ra.getByte(index) >> bs;
@@ -1178,7 +1178,7 @@ class Ranker extends RankOperationProcessor {
                     }
                 };
             } else { // byte E: precise rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractDoubleArray(src.length(), true, src) {
                     public double getDouble(long index) {
                         int level = ra.getByte(index) >> bs;
@@ -1312,7 +1312,7 @@ class Ranker extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && !interpolated) { // short A: simple rank, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
                             int level = ra.getShort(index) >> bs;
@@ -1414,7 +1414,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else if (!interpolated) { // short B: simple rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractIntArray(src.length(), true, src) {
                         public int getInt(long index) {
@@ -1497,7 +1497,7 @@ class Ranker extends RankOperationProcessor {
                         }
                     };
                 } else { // short C: precise rank, direct
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractDoubleArray(src.length(), true, src) {
                         public double getDouble(long index) {
@@ -1626,7 +1626,7 @@ class Ranker extends RankOperationProcessor {
                     };
                 }
             } else if (!interpolated) { // short D: simple rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractIntArray(src.length(), true, src) {
                     public int getInt(long index) {
                         int level = ra.getShort(index) >> bs;
@@ -1704,7 +1704,7 @@ class Ranker extends RankOperationProcessor {
                     }
                 };
             } else { // short E: precise rank, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractDoubleArray(src.length(), true, src) {
                     public double getDouble(long index) {
                         int level = ra.getShort(index) >> bs;
@@ -1844,7 +1844,7 @@ class Ranker extends RankOperationProcessor {
             final IntArray ra = (IntArray)rankedArray;
             final int nab = Math.min(numberOfAnalyzedBits, 30);
             final int bs = 31 - nab;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final int[] ja = (int[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -2360,7 +2360,7 @@ class Ranker extends RankOperationProcessor {
             final LongArray ra = (LongArray)rankedArray;
             final int nab = Math.min(numberOfAnalyzedBits, 30);
             final int bs = 63 - nab;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final long[] ja = (long[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -2879,7 +2879,7 @@ class Ranker extends RankOperationProcessor {
             final FloatArray ra = (FloatArray)rankedArray;
             final int histLength = 1 << numberOfAnalyzedBits;
             final double multiplier = histLength - 1; // only strict 1.0 is transformed to histLength-1
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final float[] ja = (float[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -3507,7 +3507,7 @@ class Ranker extends RankOperationProcessor {
             final DoubleArray ra = (DoubleArray)rankedArray;
             final int histLength = 1 << numberOfAnalyzedBits;
             final double multiplier = histLength - 1; // only strict 1.0 is transformed to histLength-1
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final double[] ja = (double[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();

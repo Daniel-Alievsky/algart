@@ -177,7 +177,7 @@ public class IterativeOpening extends AbstractIterativeArrayProcessor<Matrix<? e
         this.temp2 = mmTemp.newMatrix(UpdatablePArray.class, matrix);
         this.temp3 = mmTemp.newMatrix(UpdatablePArray.class, matrix);
         if (!onlyGranulometry) {
-            store = new ArrayList<Matrix<? extends UpdatablePArray>>();
+            store = new ArrayList<>();
             store.add(result);
             for (int k = 0; k < numberOfStoredOpenings; k++) {
                 store.add(mmTemp.newMatrix(UpdatablePArray.class, matrix));

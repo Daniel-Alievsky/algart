@@ -60,7 +60,7 @@ class Percentiler extends RankOperationProcessor {
                 ArrayPool.getInstance(Arrays.SMM, fPerc.elementType(), BUFFER_BLOCK_SIZE);
         if (src instanceof BitArray) {
             final BitArray a = (BitArray)src;
-            final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+            final HistogramCache<int[]> histogramCache = new HistogramCache<>();
             return new AbstractBitArray(src.length(), true, src) {
                 public boolean getBit(long index) {
                     long r;
@@ -232,7 +232,7 @@ class Percentiler extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && iPerc != null) { // char A: simple histogram, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractCharArray(src.length(), true, src) {
                         public char getChar(long index) {
                             long percentileIndex = iPerc.getLong(index);
@@ -357,7 +357,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (implementHere) { // char B: precise percentile, direct, without Histogram class
                     assert iPerc == null;
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractCharArray(src.length(), true, src) {
                         public char getChar(long index) {
                             double percentileIndex = fPerc.getDouble(index);
@@ -522,7 +522,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (iPerc != null) { // char C: simple percentile, direct
                     assert !implementHere;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractCharArray(src.length(), true, src) {
                         public char getChar(long index) {
@@ -605,7 +605,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else { // char D: precise percentile, direct
                     assert iPerc == null;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractCharArray(src.length(), true, src) {
                         public char getChar(long index) {
@@ -689,7 +689,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 }
             } else if (iPerc != null) { // char E: simple percentile, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractCharArray(src.length(), true, src) {
                     public char getChar(long index) {
                         long percentileIndex = iPerc.getLong(index);
@@ -767,7 +767,7 @@ class Percentiler extends RankOperationProcessor {
                 };
             } else { // char F: precise percentile, indirect
                 assert iPerc == null;
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractCharArray(src.length(), true, src) {
                     public char getChar(long index) {
                         double percentileIndex = fPerc.getDouble(index);
@@ -856,7 +856,7 @@ class Percentiler extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && iPerc != null) { // byte A: simple histogram, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractByteArray(src.length(), true, src) {
                         public int getByte(long index) {
                             long percentileIndex = iPerc.getLong(index);
@@ -981,7 +981,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (implementHere) { // byte B: precise percentile, direct, without Histogram class
                     assert iPerc == null;
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractByteArray(src.length(), true, src) {
                         public int getByte(long index) {
                             double percentileIndex = fPerc.getDouble(index);
@@ -1146,7 +1146,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (iPerc != null) { // byte C: simple percentile, direct
                     assert !implementHere;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractByteArray(src.length(), true, src) {
                         public int getByte(long index) {
@@ -1229,7 +1229,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else { // byte D: precise percentile, direct
                     assert iPerc == null;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractByteArray(src.length(), true, src) {
                         public int getByte(long index) {
@@ -1313,7 +1313,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 }
             } else if (iPerc != null) { // byte E: simple percentile, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractByteArray(src.length(), true, src) {
                     public int getByte(long index) {
                         long percentileIndex = iPerc.getLong(index);
@@ -1391,7 +1391,7 @@ class Percentiler extends RankOperationProcessor {
                 };
             } else { // byte F: precise percentile, indirect
                 assert iPerc == null;
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractByteArray(src.length(), true, src) {
                     public int getByte(long index) {
                         double percentileIndex = fPerc.getDouble(index);
@@ -1479,7 +1479,7 @@ class Percentiler extends RankOperationProcessor {
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
                 final boolean implementHere = inlineOneLevel && bitLevels.length == 0;
                 if (implementHere && iPerc != null) { // short A: simple histogram, direct, without Histogram class
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractShortArray(src.length(), true, src) {
                         public int getShort(long index) {
                             long percentileIndex = iPerc.getLong(index);
@@ -1604,7 +1604,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (implementHere) { // short B: precise percentile, direct, without Histogram class
                     assert iPerc == null;
-                    final HistogramCache<int[]> histogramCache = new HistogramCache<int[]>();
+                    final HistogramCache<int[]> histogramCache = new HistogramCache<>();
                     return new AbstractShortArray(src.length(), true, src) {
                         public int getShort(long index) {
                             double percentileIndex = fPerc.getDouble(index);
@@ -1769,7 +1769,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else if (iPerc != null) { // short C: simple percentile, direct
                     assert !implementHere;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractShortArray(src.length(), true, src) {
                         public int getShort(long index) {
@@ -1852,7 +1852,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 } else { // short D: precise percentile, direct
                     assert iPerc == null;
-                    final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                    final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                     final JArrayPool indexesPool = JArrayPool.getInstance(int.class, left.length);
                     return new AbstractShortArray(src.length(), true, src) {
                         public int getShort(long index) {
@@ -1936,7 +1936,7 @@ class Percentiler extends RankOperationProcessor {
                     };
                 }
             } else if (iPerc != null) { // short E: simple percentile, indirect
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractShortArray(src.length(), true, src) {
                     public int getShort(long index) {
                         long percentileIndex = iPerc.getLong(index);
@@ -2014,7 +2014,7 @@ class Percentiler extends RankOperationProcessor {
                 };
             } else { // short F: precise percentile, indirect
                 assert iPerc == null;
-                final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+                final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
                 return new AbstractShortArray(src.length(), true, src) {
                     public int getShort(long index) {
                         double percentileIndex = fPerc.getDouble(index);
@@ -2107,7 +2107,7 @@ class Percentiler extends RankOperationProcessor {
             final IntArray a = (IntArray)src;
             final int nab = Math.min(numberOfAnalyzedBits, 30);
             final int bs = 31 - nab;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final int[] ja = (int[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -2500,7 +2500,7 @@ class Percentiler extends RankOperationProcessor {
             final LongArray a = (LongArray)src;
             final int nab = Math.min(numberOfAnalyzedBits, 30);
             final int bs = 63 - nab;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final long[] ja = (long[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -2899,7 +2899,7 @@ class Percentiler extends RankOperationProcessor {
             final int histLength = 1 << numberOfAnalyzedBits;
             final double multiplier = histLength - 1; // only strict 1.0 is transformed to histLength-1
             final double multiplierInv = 1.0 / multiplier;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final float[] ja = (float[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();
@@ -3261,7 +3261,7 @@ class Percentiler extends RankOperationProcessor {
             final int histLength = 1 << numberOfAnalyzedBits;
             final double multiplier = histLength - 1; // only strict 1.0 is transformed to histLength-1
             final double multiplierInv = 1.0 / multiplier;
-            final HistogramCache<Histogram> histogramCache = new HistogramCache<Histogram>();
+            final HistogramCache<Histogram> histogramCache = new HistogramCache<>();
             if (direct) {
                 final double[] ja = (double[])((DirectAccessible)a).javaArray();
                 final int jaOfs = ((DirectAccessible)a).javaArrayOffset();

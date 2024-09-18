@@ -167,7 +167,7 @@ public interface DataFile {
      * @param notLoadDataFromFile if <code>true</code>, this method may discard the previous content
      *                            of the specified region of the data file.
      * @return                    an object allowing to access mapped data.
-     * @throws java.io.IOError in a case of some disk errors.
+     * @throws java.io.IOError in the case of some disk errors.
      */
     BufferHolder map(Range range, boolean notLoadDataFromFile);
 
@@ -248,7 +248,7 @@ public interface DataFile {
          *          1 if it is greater and 0 if they are equal.
          */
         public int compareTo(Range o) {
-            return position < o.position ? -1 : position > o.position ? 1 : 0;
+            return Long.compare(position, o.position);
         }
 
 

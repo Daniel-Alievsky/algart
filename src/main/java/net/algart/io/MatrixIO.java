@@ -380,7 +380,7 @@ public class MatrixIO {
      *                                            this method does not write the matrix content and
      *                                            saves a little text "reference" file with information about
      *                                            the path to this file F.
-     * @throws IOException          in a case of I/O error.
+     * @throws IOException          in the case of I/O error.
      * @throws NullPointerException if one of the arguments or elements of <code>image</code> list is {@code null}.
      */
     public static void writeImageFolder(
@@ -457,7 +457,7 @@ public class MatrixIO {
      *
      * @param folder folder with multichannel image, stored in a set of files.
      * @return all channels of this image.
-     * @throws IOException          in a case of I/O error.
+     * @throws IOException          in the case of I/O error.
      * @throws NullPointerException if the argument is {@code null}.
      */
     public static List<Matrix<? extends PArray>> readImageFolder(Path folder) throws IOException {

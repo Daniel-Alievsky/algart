@@ -60,13 +60,7 @@ class IBracket implements Comparable<IBracket> {
         // with the same x (from different frames):
         final int thisUniqueId = this.intersectingSide.frame.index;
         final int otherUniqueId = o.intersectingSide.frame.index;
-        if (thisUniqueId < otherUniqueId) {
-            return -1;
-        }
-        if (thisUniqueId > otherUniqueId) {
-            return 1;
-        }
-        return 0;
+        return Integer.compare(thisUniqueId, otherUniqueId);
     }
 
     @Override

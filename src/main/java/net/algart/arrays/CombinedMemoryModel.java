@@ -678,7 +678,7 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
-     * for this array, or any modification of this or returned array in a case when
+     * for this array, or any modification of this or returned array in the case when
      * this array is {@link Array#asCopyOnNextWrite() copy-on-next-write}.
      *
      * @param elementType the type of created array elements

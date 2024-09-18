@@ -63,7 +63,6 @@ import java.util.Objects;
  * <caption>
  *     <b>Definition of floating-point percentile <i>v</i>(<i>r</i>) and rank <i>r</i>(<i>v</i>)</b>
  * </caption>
- *
  * <tr><td style="padding:8px">
  * <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
  * the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
@@ -1692,7 +1691,8 @@ public abstract class Histogram {
         // to be on the safe side, we guarantee that newIValue + 1 > newValue
         // (any real stripe width is not less than 1/Integer.MAX_VALUE>1e-10)
         final int result = (int) rangeCenter;
-        assert result >= leftV && result <= rightV : "bug: " + result + " is not in [" + leftV + ".." + rightV + "] range";
+        assert result >= leftV && result <= rightV :
+                "bug: " + result + " is not in [" + leftV + ".." + rightV + "] " + "range";
         return result;
         //[[Repeat.SectionEnd iPreciseValue]]
     }
@@ -1780,7 +1780,8 @@ public abstract class Histogram {
         // to be on the safe side, we guarantee that newIValue + 1 > newValue
         // (any real stripe width is not less than 1/Integer.MAX_VALUE>1e-10)
         final int result = (int) rangeCenter;
-        assert result >= leftV && result <= rightV : "bug: " + result + " is not in [" + leftV + ".." + rightV + "] range";
+        assert result >= leftV && result <= rightV :
+                "bug: " + result + " is not in [" + leftV + ".." + rightV + "] " + "range";
         return result;
         //[[Repeat.IncludeEnd]]
     }
@@ -2174,7 +2175,7 @@ public abstract class Histogram {
     //        (Summing|summing\s) ==> ;;
     //        (?:\@Override\s+)?public\s+\w+\s+currentSum\(\).*?} ==> ;;
     //        (?:\@Override\s+)?public\s+\w+\s+currentNumberOfDifferentValues\(\).*?} ==> ;;
-    //        [ \t]*[^\n\r]*(sum(?!Of|\sof)|Sum|NDV|DifferentValues).*?(?:\r(?!\n)|\n|\r\n) ==>   !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*[^\n\r]*(sum(?!Of|\sof)|Sum|NDV|DifferentValues).*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class LongHistogram extends Histogram {
         private final long[][] histogram;
         private final long[] histogram0;
@@ -3001,7 +3002,8 @@ public abstract class Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -3137,7 +3139,7 @@ public abstract class Histogram {
     //        [ \t]*[^\n\r]*(sum(?!Of|\sof)|Sum|NDV|DifferentValues).*?(?:\r(?!\n)|\n|\r\n) ==> ;;
     //        LongHistogram ==> Long1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>  !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class Long1LevelHistogram extends Histogram {
         private final long[][] histogram;
         private final long[] histogram0;
@@ -4546,7 +4548,8 @@ public abstract class Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -4685,7 +4688,7 @@ public abstract class Histogram {
     //        Long ==> Int ;;
     //        IntHistogram ==> Int1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>  !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class Int1LevelHistogram extends Histogram {
         private final int[][] histogram;
         private final int[] histogram0;

@@ -67,7 +67,7 @@ class Continuer {
                      List<Matrix<? extends PArray>> arguments, Pattern pattern,
                      RankMorphology parent, Matrix.ContinuationMode continuationMode)
     {
-        arguments = new ArrayList<Matrix<? extends PArray>>(arguments);
+        arguments = new ArrayList<>(arguments);
         Matrix<? extends PArray> mainArgument = arguments.get(0);
         if (dest != null) {
             Matrices.checkDimensionEquality(dest, mainArgument);
@@ -104,7 +104,7 @@ class Continuer {
         if (matrices.isEmpty()) {
             return matrices;
         }
-        List<Matrix<? extends PArray>> continued = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> continued = new ArrayList<>();
         for (Matrix<? extends PArray> m : matrices) {
             long[] from = aperture.min().coordinates();
             long[] to = IPoint.valueOf(m.dimensions()).add(aperture.max()).coordinates();

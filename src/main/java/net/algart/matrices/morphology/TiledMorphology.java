@@ -364,8 +364,8 @@ public class TiledMorphology implements Morphology {
         if (disableMemoryAllocation) { // in this case we should not allocate anything, already having 1-pass algorithm
             parent.dilation(dest, src, pattern, true);
         } else {
-            Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<Integer, Matrix<?>>();
-            Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<Integer, Matrix<?>>();
+            Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<>();
+            Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<>();
             destMatrices.put(0, dest);
             srcMatrices.put(0, src);
             tiler.tile(new MorphologyInPlaceProcessor(SUM.getAperture(dimCount, pattern, false)) {
@@ -385,8 +385,8 @@ public class TiledMorphology implements Morphology {
         if (disableMemoryAllocation) { // in this case we should not allocate anything, already having 1-pass algorithm
             parent.erosion(dest, src, pattern, true);
         } else {
-            Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<Integer, Matrix<?>>();
-            Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<Integer, Matrix<?>>();
+            Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<>();
+            Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<>();
             destMatrices.put(0, dest);
             srcMatrices.put(0, src);
             tiler.tile(new MorphologyInPlaceProcessor(SUM.getAperture(dimCount, pattern, true)) {
@@ -411,8 +411,8 @@ public class TiledMorphology implements Morphology {
     private Matrix<? extends UpdatablePArray> tilingProcess(
             ApertureProcessor<Integer> processor,
             Matrix<? extends PArray> src) {
-        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<Integer, Matrix<?>>();
-        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<Integer, Matrix<?>>();
+        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<>();
+        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<>();
         destMatrices.put(0, null); // reserving space for 1 result
         srcMatrices.put(0, src);
         tiler.tile(processor).process(destMatrices, srcMatrices);

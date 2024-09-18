@@ -124,10 +124,9 @@ public class UniversalFramePosition implements FramePosition {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof UniversalFramePosition)) {
+        if (!(obj instanceof UniversalFramePosition ufp)) {
             return false;
         }
-        UniversalFramePosition ufp = (UniversalFramePosition)obj;
         return area.equals(ufp.area) && inverseTransform.equals(ufp.inverseTransform);
     }
 

@@ -43,13 +43,13 @@ public final class ShiftStitchingMethod<P extends FramePosition> implements Stit
     public static <P extends FramePosition> ShiftStitchingMethod<P> getNearestNeighbourInstance(
         double defaultValue)
     {
-        return new ShiftStitchingMethod<P>(defaultValue, false);
+        return new ShiftStitchingMethod<>(defaultValue, false);
     }
 
     public static <P extends FramePosition> ShiftStitchingMethod<P> getWeightedNeighboursInstance(
         double defaultValue)
     {
-        return new ShiftStitchingMethod<P>(defaultValue, true);
+        return new ShiftStitchingMethod<>(defaultValue, true);
     }
 
     public boolean simpleBehaviorForEmptySpace() {

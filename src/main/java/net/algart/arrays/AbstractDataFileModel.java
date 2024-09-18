@@ -195,7 +195,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      * @param dataFile the data file that should be deleted.
      * @return         <code>true</code> if and only if the data file existed and was successfully deleted,
      *                 <code>false</code> if the data file does not exist (maybe was deleted already).
-     * @throws java.io.IOError      in a case of any problems while file deletion.
+     * @throws java.io.IOError      in the case of any problems while file deletion.
      * @throws NullPointerException if the passed data file is {@code null}.
      */
     public boolean delete(DataFile dataFile) {
@@ -206,10 +206,10 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
                 return false;
             }
 //          The following code allows to get more informative IOError in a case when the file cannot be deleted;
-//          but it may sometimes lead to problem in Java 1.7.0-ea-b10.
+//          but it may sometimes lead to a problem in Java 1.7.0-ea-b10.
 //          dataFile.open(false);
 //          try {
-//              dataFile.length(0); // allows to get more detailed error message
+//              dataFile.length(0); // allows to get a more detailed error message
 //          } finally {
 //              dataFile.close();
 //          }
@@ -379,7 +379,7 @@ public abstract class AbstractDataFileModel implements DataFileModel<File> {
      *                    or directory. If this flag is set, it does not mean that {@link DataFile#length(long)}
      *                    method will not be called to change the file length; it will be called at least once.
      * @return            the absolute path to new created temporary file.
-     * @throws IOException in a case of any disk errors.
+     * @throws IOException in the case of any disk errors.
      */
     protected File createTemporaryFile(boolean unresizable) throws IOException {
         if (isConcreteFile()) {

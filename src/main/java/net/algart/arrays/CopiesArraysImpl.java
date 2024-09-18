@@ -2924,8 +2924,7 @@ class CopiesArraysImpl {
             if (highIndex > length) {
                 highIndex = length;
             }
-            return lowIndex < highIndex && (value == null ?
-                    element == null : value.equals(element)) ? lowIndex : -1;
+            return lowIndex < highIndex && Objects.equals(value, element) ? lowIndex : -1;
         }
 
         public long lastIndexOf(long lowIndex, long highIndex, Object value) {
@@ -2935,8 +2934,7 @@ class CopiesArraysImpl {
             if (highIndex > length) {
                 highIndex = length;
             }
-            return lowIndex < highIndex && (value == null ?
-                    element == null : value.equals(element)) ? highIndex - 1 : -1;
+            return lowIndex < highIndex && Objects.equals(value, element) ? highIndex - 1 : -1;
         }
 
         public void loadResources(ArrayContext context) {
@@ -2973,7 +2971,7 @@ class CopiesArraysImpl {
             }
             if (a instanceof CopiesObjectArray<?>) {
                 Object e = ((CopiesObjectArray<?>) a).element;
-                return e == null ? element == null : e.equals(element);
+                return Objects.equals(e, element);
             }
             return AbstractArray.equals(this, a); // AbstractArray has a good equals implementation
         }

@@ -45,13 +45,13 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
     public static <P extends UniversalFramePosition> UniversalStitchingMethod<P> getNearestNeighbourInstance(
         double defaultValue)
     {
-        return new UniversalStitchingMethod<P>(defaultValue, false);
+        return new UniversalStitchingMethod<>(defaultValue, false);
     }
 
     public static <P extends UniversalFramePosition> UniversalStitchingMethod<P> getWeightedNeighboursInstance(
         double defaultValue)
     {
-        return new UniversalStitchingMethod<P>(defaultValue, true);
+        return new UniversalStitchingMethod<>(defaultValue, true);
     }
 
     public boolean simpleBehaviorForEmptySpace() {

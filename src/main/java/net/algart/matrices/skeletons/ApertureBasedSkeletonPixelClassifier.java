@@ -115,16 +115,16 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
         Objects.requireNonNull(neighbourOffsets, "Null neighbourOffsets array");
         if (dimCount > 3) {
             throw new IllegalArgumentException("This class " + getClass().getName() + " cannot process "
-                + dimCount + "-dimensional apertures (maximum 3-dimensional ones are allowed)");
+                    + dimCount + "-dimensional apertures (maximum 3-dimensional ones are allowed)");
         }
         if (this.numberOfNeighbours != neighbourOffsets.length) {
             throw new IllegalArgumentException("Number of passed neighbour offsets " + neighbourOffsets.length
-                + " does not match the number of neighbours in 3x3x... aperture " + this.numberOfNeighbours);
+                    + " does not match the number of neighbours in 3x3x... aperture " + this.numberOfNeighbours);
         }
         if (this.numberOfNeighbours > 30) // bit #31 can be used for the central element of the aperture
         {
             throw new AssertionError("This class " + getClass().getName()
-                + " cannot process more than 30 elements in the aperture (besides the central element)");
+                    + " cannot process more than 30 elements in the aperture (besides the central element)");
         }
         // We cannot use full 63-bit precision here, because double values cannot precisely store all long values
         this.neighbourOffsets = new long[neighbourOffsets.length][dimCount];
@@ -134,7 +134,7 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
             Objects.requireNonNull(neighbourOffset, "Null neighbourOffsets[" + k + "]");
             if (neighbourOffset.length != dimCount) {
                 throw new IllegalArgumentException("Illegal neighbourOffsets[" + k + "].length = "
-                    + neighbourOffset.length + ": does not match to the number of dimensions " + dimCount);
+                        + neighbourOffset.length + ": does not match to the number of dimensions " + dimCount);
             }
             System.arraycopy(neighbourOffset, 0, this.neighbourOffsets[k], 0, dimCount);
         }
@@ -146,8 +146,8 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
             for (int j = 0; j < dimCount; j++) {
                 if (Math.abs(this.neighbourOffsets[k][j]) > 1) {
                     throw new IllegalArgumentException("Illegal neighbourOffsets: the offset #" + k
-                        + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
-                        + " describes not a neighbour, because some of its components is not in -1..1 range");
+                            + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
+                            + " describes not a neighbour, because some of its components is not in -1..1 range");
                 }
                 allZero &= this.neighbourOffsets[k][j] == 0;
             }
@@ -164,20 +164,21 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
                 }
                 if (matchThis) {
                     throw new IllegalArgumentException("Illegal neighbourOffsets: the offsets #" + k
-                        + " and # " + i + " are equal");
+                            + " and # " + i + " are equal");
                 }
                 boolean matchNegative = true;
                 for (int j = 0; j < dimCount; j++) {
                     matchNegative &= this.neighbourOffsets[i][j] == -this.neighbourOffsets[k][j];
                 }
                 if (matchNegative) {
-                    reverseIndex = i; break;
+                    reverseIndex = i;
+                    break;
                 }
             }
             if (reverseIndex == -1) {
                 throw new IllegalArgumentException("Illegal neighbourOffsets: the offset #" + k
-                    + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
-                    + ") has no corresponding reverse offset (the same but with negative sign)");
+                        + " (" + JArrays.toString(this.neighbourOffsets[k], ",", 1000)
+                        + ") has no corresponding reverse offset (the same but with negative sign)");
             }
             this.reverseNeighbourIndexes[k] = reverseIndex;
         }
@@ -190,11 +191,11 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
         Objects.requireNonNull(coordinateIncrements, "Null list of coordinates");
         if (coordinateIncrements.length != dimCount) {
             throw new IllegalArgumentException("Number of coordinates " + coordinateIncrements.length
-                + " is not equal to the number of matrix dimensions " + dimCount());
+                    + " is not equal to the number of matrix dimensions " + dimCount());
         }
         if (neighbourIndex < 0 || neighbourIndex >= numberOfNeighbours) {
             throw new IndexOutOfBoundsException("Illegal neighbourIndex = " + neighbourIndex
-                + ": must be in 0.." + (numberOfNeighbours - 1) + " range");
+                    + ": must be in 0.." + (numberOfNeighbours - 1) + " range");
         }
         System.arraycopy(neighbourOffsets[neighbourIndex], 0, coordinateIncrements, 0, dimCount);
     }
@@ -207,47 +208,45 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
 
     @Override
     public Matrix<? extends PIntegerArray> asPixelTypes(
-        Matrix<? extends BitArray> skeleton,
-        AttachmentInformation attachmentInformation)
-    {
+            Matrix<? extends BitArray> skeleton,
+            AttachmentInformation attachmentInformation) {
         Objects.requireNonNull(attachmentInformation, "Null attachmentInformation");
         Matrix<? extends PIntegerArray> packed = asNeighbourhoodBitMaps(skeleton);
-        switch (attachmentInformation) {
-            case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH:
-                return Matrices.asFuncMatrix(false, new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0]);
-                    }
-
-                    @Override
-                    public double get(double x0) {
-                        int apertureBits = (int) x0; // precise operations, because x0 is "int" 31-bit value
-                        if ((apertureBits & 1) == 0) {
-                            return TYPE_ZERO;
+        return switch (attachmentInformation) {
+            case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH -> Matrices.asFuncMatrix(
+                    false, new AbstractFunc() {
+                        @Override
+                        public double get(double... x) {
+                            return get(x[0]);
                         }
-                        return pixelTypeOrAttachingBranch(apertureBits >>> 1);
-                    }
-                }, IntArray.class, packed);
-            case NEIGHBOUR_INDEX_OF_ATTACHED_NODE:
-                return Matrices.asFuncMatrix(false, new AbstractFunc() {
-                    @Override
-                    public double get(double... x) {
-                        return get(x[0]);
-                    }
 
-                    @Override
-                    public double get(double x0) {
-                        int apertureBits = (int) x0; // precise operations, because x0 is "int" 31-bit value
-                        if ((apertureBits & 1) == 0) {
-                            return TYPE_ZERO;
+                        @Override
+                        public double get(double x0) {
+                            int apertureBits = (int) x0; // precise operations, because x0 is "int" 31-bit value
+                            if ((apertureBits & 1) == 0) {
+                                return TYPE_ZERO;
+                            }
+                            return pixelTypeOrAttachingBranch(apertureBits >>> 1);
                         }
-                        return pixelTypeOrAttachedNode(apertureBits >>> 1);
+                    }, IntArray.class, packed);
+            case NEIGHBOUR_INDEX_OF_ATTACHED_NODE -> Matrices.asFuncMatrix(
+                    false, new AbstractFunc() {
+                @Override
+                public double get(double... x) {
+                    return get(x[0]);
+                }
+
+                @Override
+                public double get(double x0) {
+                    int apertureBits = (int) x0; // precise operations, because x0 is "int" 31-bit value
+                    if ((apertureBits & 1) == 0) {
+                        return TYPE_ZERO;
                     }
-                }, IntArray.class, packed);
-            default:
-                throw new AssertionError("Unknown attachmentInformation: " + attachmentInformation);
-        }
+                    return pixelTypeOrAttachedNode(apertureBits >>> 1);
+                }
+            }, IntArray.class, packed);
+            default -> throw new AssertionError("Unknown attachmentInformation: " + attachmentInformation);
+        };
     }
 
     @Override
@@ -261,8 +260,7 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
         for (int neighbourIndex = 0; neighbourIndex < numberOfNeighbours; neighbourIndex++) {
             if (neighbourIndex % 2 == 0) { // diagonal degenerated branch
                 if (pixelTypesOfAllNeighbours[(neighbourIndex + 1) & 7] == TYPE_USUAL_NODE
-                    || pixelTypesOfAllNeighbours[(neighbourIndex + 7) & 7] == TYPE_USUAL_NODE)
-                {
+                        || pixelTypesOfAllNeighbours[(neighbourIndex + 7) & 7] == TYPE_USUAL_NODE) {
                     pixelTypesOfAllNeighbours[neighbourIndex] = Integer.MIN_VALUE;
                 }
             }
@@ -309,22 +307,21 @@ public abstract class ApertureBasedSkeletonPixelClassifier extends SkeletonPixel
      * is processed according to the model of infinite pseudo-cyclical continuation &mdash;
      * see the end of the {@link SkeletonPixelClassifier comments to SkeletonPixelClassifier}.
      *
-     * @param skeleton    the skeleton matrix that should be processed.
-     * @return            the matrix of integer values with the same sizes, containing the bit maps
-     *                    of the neighbourhoods of all skeleton pixels.
+     * @param skeleton the skeleton matrix that should be processed.
+     * @return the matrix of integer values with the same sizes, containing the bit maps
+     * of the neighbourhoods of all skeleton pixels.
      * @throws NullPointerException     if <code>skeleton</code> is {@code null}.
      * @throws IllegalArgumentException if <code>skeleton.dimCount()!={@link #dimCount()}</code>.
      */
     public final Matrix<? extends PIntegerArray> asNeighbourhoodBitMaps(
-        Matrix<? extends BitArray> skeleton)
-    {
+            Matrix<? extends BitArray> skeleton) {
         Objects.requireNonNull(skeleton, "Null skeleton");
         if (skeleton.dimCount() != dimCount) {
             throw new IllegalArgumentException("This object (" + this + ") can process "
-                + dimCount + "-dimensional matrices only");
+                    + dimCount + "-dimensional matrices only");
         }
 
-        List<Matrix<? extends PArray>> shifted = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> shifted = new ArrayList<>();
         shifted.add(skeleton);
         long[] shift = new long[dimCount];
         for (long[] apertureOffset : this.neighbourOffsets) {

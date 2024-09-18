@@ -1448,7 +1448,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     private static int hashCode(long value) {
-        return (int) (value ^ (value >>> 32));
+        return Long.hashCode(value);
     }
 
     private static boolean lessUnsigned(long a, long b) {

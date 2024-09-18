@@ -146,7 +146,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
     private List<Matrix<? extends PArray>> getShiftedMatrices(Matrix<? extends PArray> src,
         Matrix<? extends PIntegerArray> directionIndexes, IPoint... directions)
     {
-        List<Matrix<? extends PArray>> matrices = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> matrices = new ArrayList<>();
         matrices.add(directionIndexes);
         for (IPoint dir : directions) {
             matrices.add(Matrices.asShifted(src, dir.coordinates()).cast(PArray.class));

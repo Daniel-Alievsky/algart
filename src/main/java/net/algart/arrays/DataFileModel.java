@@ -283,13 +283,12 @@ public interface DataFileModel<P> {
      *
      * <p>The returned number of banks must not be less than 2.
      * In another case, an attempt to create {@link Array} instance will throw an exception.
-     * Usual values are 8-16.
-     *
+     * The usual values are 8-16.
      <!--Repeat.SectionStart recommendedNumberOfBanks_multiprocessor-->
      * <p>Please note that many algorithms, on multiprocessor or multicore systems,
      * use several parallel threads for processing arrays: see {@link Arrays.ParallelExecutor}.
-     * So, the number of banks should be enough for parallel using by all CPU units,
-     * to avoid frequently bank swapping.
+     * So, the number of banks should be enough for parallel using by all CPU units
+     * to avoid frequent bank swapping.
      * There should be at least 2 banks per each CPU unit,
      * better 3-4 banks (for complex random-access algorithms).
      <!--Repeat.SectionEnd recommendedNumberOfBanks_multiprocessor-->

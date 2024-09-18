@@ -574,7 +574,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         if (minkSize == 0) {
             throw new AssertionError("This method must not be called for empty minkowskiDecomposition list");
         }
-        List<Pattern> goodPatterns = new ArrayList<Pattern>(minkowskiDecomposition);
+        List<Pattern> goodPatterns = new ArrayList<>(minkowskiDecomposition);
         List<Pattern> complexPatterns = extractComplexPatterns(src.dimCount(), goodPatterns);
         int goodSize = goodPatterns.size();
         int complexSize = complexPatterns.size();
@@ -873,7 +873,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
     }
 
     private static List<Pattern> extractComplexPatterns(int matrixDimCount, List<Pattern> patterns) {
-        List<Pattern> result = new ArrayList<Pattern>();
+        List<Pattern> result = new ArrayList<>();
         int newLength = 0, n = patterns.size();
         for (int k = 0; k < n; k++) {
             Pattern ptn = patterns.get(k);
@@ -954,7 +954,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
     // Removes all 1-point patterns and compact all multipoint patterns;
     // adds the summary correction shift as the last element (if necessary)
     private static long[][] optimizeMinkowskiDecomposition(long totalLength, long[][] shifts) {
-        List<long[]> result = new ArrayList<long[]>();
+        List<long[]> result = new ArrayList<>();
         long summaryCorrection = 0;
         for (long[] ptn : shifts) {
             assert ptn.length > 0;
@@ -980,8 +980,8 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         for (Pattern ptn : patterns) {
             maxDimCount = Math.max(maxDimCount, ptn.dimCount());
         }
-        List<Pattern> source = new LinkedList<Pattern>(patterns);
-        List<Pattern> result = new ArrayList<Pattern>();
+        List<Pattern> source = new LinkedList<>(patterns);
+        List<Pattern> result = new ArrayList<>();
         for (int k = maxDimCount - 1; k >= 0; k--) {
             int before = result.size();
             for (Iterator<Pattern> iterator = source.iterator(); iterator.hasNext(); ) {
@@ -994,12 +994,10 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
                 }
             }
             int after = result.size();
-            Collections.sort(result.subList(before, after), new Comparator<Pattern>() {
-                public int compare(Pattern o1, Pattern o2) {
-                    long count1 = o1.pointCount();
-                    long count2 = o2.pointCount();
-                    return count1 < count2 ? -1 : count1 == count2 ? 0 : 1;
-                }
+            Collections.sort(result.subList(before, after), (o1, o2) -> {
+                long count1 = o1.pointCount();
+                long count2 = o2.pointCount();
+                return count1 < count2 ? -1 : count1 == count2 ? 0 : 1;
             });
         }
         result.addAll(source);
@@ -1008,9 +1006,9 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
 
     private static List<MinkowskiPair> compactUnionDecomposition(List<Pattern> patterns, boolean negativeSegments) {
         patterns = optimizeUnionDecomposition(patterns);
-        List<MinkowskiPair> result = new ArrayList<MinkowskiPair>();
+        List<MinkowskiPair> result = new ArrayList<>();
         Pattern lastNormalized = null;
-        Set<IPoint> shiftsOfEqualSegments = new HashSet<IPoint>();
+        Set<IPoint> shiftsOfEqualSegments = new HashSet<>();
         for (Pattern ptn : patterns) {
             Pattern normalized;
             List<Pattern> minkowskiIncrement;
@@ -1178,7 +1176,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         if (largerLength == smallerLength) {
             return Collections.singletonList(Patterns.newIntegerPattern(IPoint.valueOf(rightShift)));
         }
-        ArrayList<Pattern> result = new ArrayList<Pattern>();
+        ArrayList<Pattern> result = new ArrayList<>();
         long[] leftShift = rightShift; // optimization (no allocation new array): rightShift will not be used below
         boolean sameLeftEnd = true;
         for (int k = 0; k < dimCount; k++) {

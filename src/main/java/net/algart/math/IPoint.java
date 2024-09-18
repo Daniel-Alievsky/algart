@@ -885,8 +885,7 @@ public class IPoint implements Comparable<IPoint> {
                 return -1;
             }
         }
-        return coordinates.length < o.coordinates.length ? -1 :
-                coordinates.length > o.coordinates.length ? 1 : 0;
+        return Integer.compare(coordinates.length, o.coordinates.length);
     }
 
     /**

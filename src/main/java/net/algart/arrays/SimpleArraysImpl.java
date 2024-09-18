@@ -11258,7 +11258,6 @@ class SimpleArraysImpl {
         final Class<?> elementType; ;;
       \@SuppressWarnings\(\"cast\"\) ==> @SuppressWarnings("rawtypes") ;;
       ((?:\r(?!\n)|\n|\r\n)[ \t]+)(static\s+class\s+Trusted) ==> $1@SuppressWarnings("rawtypes")$1$2 ;;
-      ((?:\r(?!\n)|\n|\r\n)[ \t]+)(public\s+Object\[\]\s+ja) ==> $1@SuppressWarnings("unchecked")$1$2 ;;
       (public\s+(?:final\s+)?)(\w*?)((?:Object)?Array\s+asCopyOnNextWrite\(\)\s*\{.*?[\r\n]\s*}) ==> $1$2$3
 
         public $2ObjectArray cast(Class elementType) {
@@ -11467,7 +11466,6 @@ class SimpleArraysImpl {
             }
         }
 
-        @SuppressWarnings("unchecked")
         public Object[] ja() {
             return toJavaArray();
         }
@@ -11679,7 +11677,6 @@ class SimpleArraysImpl {
             }
         }
 
-        @SuppressWarnings("unchecked")
         public Object[] ja() {
             return toJavaArray();
         }
@@ -11721,7 +11718,6 @@ class SimpleArraysImpl {
             return length == this.objectArray.length;
         }
 
-        @SuppressWarnings("unchecked")
         public Object[] ja() {
             if (length == this.objectArray.length) {
                 return this.objectArray;
@@ -11827,7 +11823,6 @@ class SimpleArraysImpl {
             return offset == 0 && length == this.objectArray.length;
         }
 
-        @SuppressWarnings("unchecked")
         public Object[] ja() {
             if (offset == 0 && length == this.objectArray.length) {
                 if (isCopyOnNextWrite()) {

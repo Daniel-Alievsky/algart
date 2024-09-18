@@ -165,7 +165,7 @@ public final class Finalizer {
     private Thread thread = null;
     private int priority = Thread.NORM_PRIORITY;
 
-    private final Set<PhantomFinalizeHolder> taskSet = new HashSet<PhantomFinalizeHolder>();
+    private final Set<PhantomFinalizeHolder> taskSet = new HashSet<>();
     private boolean shutdownRequested = false;
     private ReferenceQueue<Object> refQueue = null;
 
@@ -209,7 +209,7 @@ public final class Finalizer {
     public void invokeOnDeallocation(Object checkedForDeallocation, Runnable task) {
         synchronized (taskSet) {
             if (thread == null) {
-                refQueue = new ReferenceQueue<Object>();
+                refQueue = new ReferenceQueue<>();
                 shutdownRequested = false;
                 thread = new CleanupThread(this);
                 thread.setDaemon(true);

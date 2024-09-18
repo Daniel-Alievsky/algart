@@ -45,7 +45,7 @@ public class DefaultFrame<P extends FramePosition> implements Frame<P> {
     }
 
     public static <P extends FramePosition> DefaultFrame<P> valueOf(Matrix<? extends PArray> matrix, P position) {
-        return new DefaultFrame<P>(matrix, position);
+        return new DefaultFrame<>(matrix, position);
     }
 
     public int dimCount() {

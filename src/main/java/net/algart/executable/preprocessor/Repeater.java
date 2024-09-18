@@ -596,11 +596,7 @@ public class Repeater implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError(e);
         }
-        pool.submit(new Runnable() {
-            public void run() {
-                r.processFile();
-            }
-        });
+        pool.submit(() -> r.processFile());
     }
 
     public void processFileMask(String fileMask) {
@@ -616,11 +612,9 @@ public class Repeater implements Cloneable {
                 }
                 return;
             }
-            File[] subDirs = parent.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    File f = new File(dir, name);
-                    return f.isDirectory() && !f.isHidden();
-                }
+            File[] subDirs = parent.listFiles((dir, name) -> {
+                File f = new File(dir, name);
+                return f.isDirectory() && !f.isHidden();
             });
             if (subDirs != null) {
                 for (File subDir : subDirs) {
@@ -635,11 +629,7 @@ public class Repeater implements Cloneable {
             files = new File[] {new File(parent, mask)};
         } else {
             assert parent != null;
-            files = parent.listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
-                    return name.endsWith("." + ext);
-                }
-            });
+            files = parent.listFiles((dir, name) -> name.endsWith("." + ext));
         }
         if (files != null) {
             for (File file : files) {

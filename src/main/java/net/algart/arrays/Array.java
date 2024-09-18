@@ -357,9 +357,9 @@ public interface Array {
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
-     * for this array, or any modification of this or returned array in a case when
+     * for this array, or any modification of this or returned array in the case when
      * this array is {@link #asCopyOnNextWrite() copy-on-next-write}.
-     * Also, if the length of this array will be reduced,
+     * Also, if the length of this array is reduced,
      * it can lead to clearing some elements in returned array:
      * see comments to {@link MutableArray#length(long)} method.
      *
@@ -494,7 +494,7 @@ public interface Array {
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
-     * for this array, or any modification of this or returned array in a case when
+     * for this array, or any modification of this or returned array in the case when
      * this array is {@link #asCopyOnNextWrite() copy-on-next-write}.
      *
      * <p>By default, the array factories ({@link MemoryModel memory models}) create mutable arrays,
@@ -585,7 +585,7 @@ public interface Array {
      * to this array.
      *
      * <p>The only standard way allowing to change elements of the returned array
-     * is using {@link DirectAccessible#javaArray()} method, in a case when the array is backed
+     * is using {@link DirectAccessible#javaArray()} method, in the case when the array is backed
      * by an accessible array.
      * But the Java code, processing the trusted immutable array,
      * must use this method <i>only for quick reading</i> elements and <i>not try to change</i> them.
@@ -608,7 +608,7 @@ public interface Array {
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
      * {@link MutableArray#ensureCapacity(long)} or {@link MutableArray#trim()} methods
-     * for this array, or any modification of this or returned array in a case when
+     * for this array, or any modification of this or returned array in the case when
      * this array is {@link #asCopyOnNextWrite() copy-on-next-write}.
      *
      * <p>Trusted immutable view is a compromise between absolute safety, provided by
@@ -851,7 +851,7 @@ public interface Array {
      * {@link LargeMemoryModel#asLongArray(Object, long, long, java.nio.ByteOrder) asLongArray},
      * {@link LargeMemoryModel#asFloatArray(Object, long, long, java.nio.ByteOrder) asFloatArray},
      * {@link LargeMemoryModel#asDoubleArray(Object, long, long, java.nio.ByteOrder) asDoubleArray}
-     * in a case of the same condition: their <code>filePosition</code> argument is zero;
+     * in the case of the same condition: their <code>filePosition</code> argument is zero;
      * </li>
      * <li>{@link LargeMemoryModel#asMatrix(Object filePath, MatrixInfo matrixInfo)} method
      * in a case when the {@link MatrixInfo#dataOffset() data offset}, stored in its {@link MatrixInfo} argument,

@@ -824,25 +824,19 @@ public abstract class MatrixInfo {
             try {
                 dataOffset = Long.parseLong(chars.substring(32, 48), 16);
                 String tn = chars.substring(48, 56);
-                if (tn.equals("    bit[")) {
-                    elementType = boolean.class;
-                } else if (tn.equals("   char[")) {
-                    elementType = char.class;
-                } else if (tn.equals("   byte[")) {
-                    elementType = byte.class;
-                } else if (tn.equals("  short[")) {
-                    elementType = short.class;
-                } else if (tn.equals("    int[")) {
-                    elementType = int.class;
-                } else if (tn.equals("   long[")) {
-                    elementType = long.class;
-                } else if (tn.equals("  float[")) {
-                    elementType = float.class;
-                } else if (tn.equals(" double[")) {
-                    elementType = double.class;
-                } else {
-                    throw new IllegalInfoSyntaxException("The char sequence does not contain valid element type");
-                }
+                elementType = switch (tn) {
+                    case "    bit[" -> boolean.class;
+                    case "   char[" -> char.class;
+                    case "   byte[" -> byte.class;
+                    case "  short[" -> short.class;
+                    case "    int[" -> int.class;
+                    case "   long[" -> long.class;
+                    case "  float[" -> float.class;
+                    case " double[" -> double.class;
+                    default ->
+                            throw new IllegalInfoSyntaxException(
+                                    "The char sequence does not contain valid element type");
+                };
                 length = Long.parseLong(chars.substring(56, 72), 16);
                 if (!chars.substring(72, 75).equals("] [")) {
                     throw new IllegalInfoSyntaxException("The char sequence does not contain \"] [\" after the length");
@@ -1015,100 +1009,100 @@ public abstract class MatrixInfo {
                 String name = line.substring(0, r).trim();
                 String value = line.substring(r + 1).trim();
                 try {
-                    if (name.equals(SIGNATURE_NAME_1_2)) {
-                        if (!value.equals(SIGNATURE_VALUE_1_2)) {
-                            throw new IllegalInfoSyntaxException("Illegal signature in the line #"
-                                + lineIndex + ": \"" + line + "\"");
+                    switch (name) {
+                        case SIGNATURE_NAME_1_2 -> {
+                            if (!value.equals(SIGNATURE_VALUE_1_2)) {
+                                throw new IllegalInfoSyntaxException("Illegal signature in the line #"
+                                        + lineIndex + ": \"" + line + "\"");
+                            }
                         }
-                    } else if (name.equals(ELEMENT_TYPE_PROPERTY_NAME)) {
-                        if (elementType != null) {
-                            continue; // ignore extra properties with this name to avoid possible syntax errors
+                        case ELEMENT_TYPE_PROPERTY_NAME -> {
+                            if (elementType != null) {
+                                continue; // ignore extra properties with this name to avoid possible syntax errors
+                            }
+                            elementType = switch (value) {
+                                case "bit" -> boolean.class;
+                                case "char" -> char.class;
+                                case "byte" -> byte.class;
+                                case "short" -> short.class;
+                                case "int" -> int.class;
+                                case "long" -> long.class;
+                                case "float" -> float.class;
+                                case "double" -> double.class;
+                                default -> throw new IllegalInfoSyntaxException(
+                                        "Unsupported element type in the line #" + lineIndex + ": \"" + line + "\"");
+                            };
                         }
-                        if (value.equals("bit")) {
-                            elementType = boolean.class;
-                        } else if (value.equals("char")) {
-                            elementType = char.class;
-                        } else if (value.equals("byte")) {
-                            elementType = byte.class;
-                        } else if (value.equals("short")) {
-                            elementType = short.class;
-                        } else if (value.equals("int")) {
-                            elementType = int.class;
-                        } else if (value.equals("long")) {
-                            elementType = long.class;
-                        } else if (value.equals("float")) {
-                            elementType = float.class;
-                        } else if (value.equals("double")) {
-                            elementType = double.class;
-                        } else {
-                            throw new IllegalInfoSyntaxException("Unsupported element type in the line #"
-                                + lineIndex + ": \"" + line + "\"");
+                        case BYTE_ORDER_PROPERTY_NAME -> {
+                            if (byteOrder != null) {
+                                continue; // ignore extra properties with this name to avoid possible syntax errors
+                            }
+                            if (value.equals("BE")) {
+                                byteOrder = ByteOrder.BIG_ENDIAN;
+                            } else if (value.equals("LE")) {
+                                byteOrder = ByteOrder.LITTLE_ENDIAN;
+                            } else {
+                                throw new IllegalInfoSyntaxException("Unsupported byte order (not \"BE\" or \"LE\") "
+                                        + "in the line #" + lineIndex + ": \"" + line + "\"");
+                            }
                         }
-                    } else if (name.equals(BYTE_ORDER_PROPERTY_NAME)) {
-                        if (byteOrder != null) {
-                            continue; // ignore extra properties with this name to avoid possible syntax errors
+                        case SIZE_PROPERTY_NAME -> {
+                            if (length != -1) {
+                                continue; // ignore extra properties with this name to avoid possible syntax errors
+                            }
+                            length = Long.parseLong(value);
+                            if (length < 0) // necessary check to provide correct error message
+                            {
+                                throw new IllegalInfoSyntaxException("Negative array length in the line #"
+                                        + lineIndex + ": \"" + line + "\"");
+                            }
                         }
-                        if (value.equals("BE")) {
-                            byteOrder = ByteOrder.BIG_ENDIAN;
-                        } else if (value.equals("LE")) {
-                            byteOrder = ByteOrder.LITTLE_ENDIAN;
-                        } else {
-                            throw new IllegalInfoSyntaxException("Unsupported byte order (not \"BE\" or \"LE\") "
-                                + "in the line #" + lineIndex + ": \"" + line + "\"");
+                        case DIMENSIONS_PROPERTY_NAME -> {
+                            if (dimensions != null) {
+                                continue; // ignore extra properties with this name to avoid possible syntax errors
+                            }
+                            String[] dimValues = value.split("x", Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + 1);
+                            if (dimValues.length > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
+                                throw new IllegalInfoSyntaxException("Too many matrix dimensions in the line #"
+                                        + lineIndex + ": \"" + line + "\" (maximal allowed number of dimensions is "
+                                        + Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + ")");
+                            }
+                            dimensions = new long[dimValues.length];
+                            for (int k = 0; k < dimValues.length; k++) {
+                                dimensions[k] = Long.parseLong(dimValues[k]);
+                            }
                         }
-                    } else if (name.equals(SIZE_PROPERTY_NAME)) {
-                        if (length != -1) {
-                            continue; // ignore extra properties with this name to avoid possible syntax errors
+                        case DATA_OFFSET_PROPERTY_NAME -> {
+                            if (dataOffset != -1) {
+                                continue; // ignore extra properties with this name to avoid possible syntax errors
+                            }
+                            dataOffset = Long.parseLong(value);
+                            if (dataOffset < 0) {
+                                throw new IllegalInfoSyntaxException("Negative data offset in the line #"
+                                        + lineIndex + ": \"" + line + "\"");
+                            }
                         }
-                        length = Long.parseLong(value);
-                        if (length < 0) // necessary check to provide correct error message
-                        {
-                            throw new IllegalInfoSyntaxException("Negative array length in the line #"
-                                + lineIndex + ": \"" + line + "\"");
+                        default -> {
+                            if (!isCorrectAdditionalPropertyName(name)) {
+                                throw new IllegalInfoSyntaxException("Illegal additional property name (empty "
+                                        + "or containing unallowed characters) in the line #"
+                                        + lineIndex + ": \"" + line + "\"");
+                            }
+                            if (additional.containsKey(name)) {
+                                continue; // ignore extra properties with this name
+                            }
+                            String decodedValue;
+                            try {
+                                decodedValue = URLDecoder.decode(value, StandardCharsets.UTF_8);
+                            } catch (IllegalArgumentException e) {
+                                IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(
+                                        "URLDecoder cannot decode additional property value in the line #"
+                                                + lineIndex + ": \"" + line + "\"");
+                                ex.initCause(e);
+                                throw ex;
+                            }
+                            additional.put(name, decodedValue);
                         }
-                    } else if (name.equals(DIMENSIONS_PROPERTY_NAME)) {
-                        if (dimensions != null) {
-                            continue; // ignore extra properties with this name to avoid possible syntax errors
-                        }
-                        String[] dimValues = value.split("x", Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + 1);
-                        if (dimValues.length > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
-                            throw new IllegalInfoSyntaxException("Too many matrix dimensions in the line #"
-                                + lineIndex + ": \"" + line + "\" (maximal allowed number of dimensions is "
-                                + Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS + ")");
-                        }
-                        dimensions = new long[dimValues.length];
-                        for (int k = 0; k < dimValues.length; k++) {
-                            dimensions[k] = Long.parseLong(dimValues[k]);
-                        }
-                    } else if (name.equals(DATA_OFFSET_PROPERTY_NAME)) {
-                        if (dataOffset != -1) {
-                            continue; // ignore extra properties with this name to avoid possible syntax errors
-                        }
-                        dataOffset = Long.parseLong(value);
-                        if (dataOffset < 0) {
-                            throw new IllegalInfoSyntaxException("Negative data offset in the line #"
-                                + lineIndex + ": \"" + line + "\"");
-                        }
-                    } else {
-                        if (!isCorrectAdditionalPropertyName(name)) {
-                            throw new IllegalInfoSyntaxException("Illegal additional property name (empty "
-                                + "or containing unallowed characters) in the line #"
-                                + lineIndex + ": \"" + line + "\"");
-                        }
-                        if (additional.containsKey(name)) {
-                            continue; // ignore extra properties with this name
-                        }
-                        String decodedValue;
-                        try {
-                            decodedValue = URLDecoder.decode(value, StandardCharsets.UTF_8);
-                        } catch (IllegalArgumentException e) {
-                            IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(
-                                "URLDecoder cannot decode additional property value in the line #"
-                                    + lineIndex + ": \"" + line + "\"");
-                            ex.initCause(e);
-                            throw ex;
-                        }
-                        additional.put(name, decodedValue);
                     }
                 } catch (NumberFormatException e) {
                     IllegalInfoSyntaxException ex = new IllegalInfoSyntaxException(

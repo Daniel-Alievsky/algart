@@ -172,101 +172,99 @@ class SpectraOfConvolution {
                     dRe = fast2D ? null : Conversions.newArr(mm, cRe, layerLen),
                     dIm = fast2D ? null : Conversions.newArr(mm, cIm != null ? cIm : cRe, layerLen);
             final int ti = threadIndex;
-            tasks[ti] = new Runnable() {
-                public void run() {
-                    final long layerStep = tasks.length * layerLen;
-                    for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
-                        long disp2 = k1 == 0 ? 0 : totalLen - disp1;
-                        PNumberArray
-                                pRe1Local = Conversions.subArrOrCopy(pqDirect ? null : pRe1, pRe, disp1, layerLen),
-                                pIm1Local = Conversions.subArrOrCopy(pqDirect ? null : pIm1, pIm, disp1, layerLen),
-                                pRe2Local = Conversions.subArrOrCopy(pqDirect ? null : pRe2, pRe, disp2, layerLen),
-                                pIm2Local = Conversions.subArrOrCopy(pqDirect ? null : pIm2, pIm, disp2, layerLen),
-                                qRe1Local = Conversions.subArrOrCopy(pqDirect ? null : qRe1, qRe, disp1, layerLen),
-                                qIm1Local = Conversions.subArrOrCopy(pqDirect ? null : qIm1, qIm, disp1, layerLen),
-                                qRe2Local = Conversions.subArrOrCopy(pqDirect ? null : qRe2, qRe, disp2, layerLen),
-                                qIm2Local = Conversions.subArrOrCopy(pqDirect ? null : qIm2, qIm, disp2, layerLen);
-                        if (fast2D) {
-                            if (cDirect) {
-                                if (cIm == null) {
-                                    separableHartleySpectrumOfConvolutionOfDirectReal2D(
-                                            cRe.subArr(disp1, layerLen), cRe.subArr(disp2, layerLen),
-                                            pRe1Local, pRe2Local, qRe1Local, qRe2Local, cRe.elementType());
-                                } else {
-                                    separableHartleySpectrumOfConvolutionOfDirectComplex2D(
-                                            cRe.subArr(disp1, layerLen), cIm.subArr(disp1, layerLen),
-                                            cRe.subArr(disp2, layerLen), cIm.subArr(disp2, layerLen),
-                                            pRe1Local, pIm1Local, pRe2Local, pIm2Local,
-                                            qRe1Local, qIm1Local, qRe2Local, qIm2Local, cRe.elementType());
-                                }
+            tasks[ti] = () -> {
+                final long layerStep = tasks.length * layerLen;
+                for (long k1 = ti, disp1 = ti * layerLen; k1 <= nDiv2; k1 += tasks.length, disp1 += layerStep) {
+                    long disp2 = k1 == 0 ? 0 : totalLen - disp1;
+                    PNumberArray
+                            pRe1Local = Conversions.subArrOrCopy(pqDirect ? null : pRe1, pRe, disp1, layerLen),
+                            pIm1Local = Conversions.subArrOrCopy(pqDirect ? null : pIm1, pIm, disp1, layerLen),
+                            pRe2Local = Conversions.subArrOrCopy(pqDirect ? null : pRe2, pRe, disp2, layerLen),
+                            pIm2Local = Conversions.subArrOrCopy(pqDirect ? null : pIm2, pIm, disp2, layerLen),
+                            qRe1Local = Conversions.subArrOrCopy(pqDirect ? null : qRe1, qRe, disp1, layerLen),
+                            qIm1Local = Conversions.subArrOrCopy(pqDirect ? null : qIm1, qIm, disp1, layerLen),
+                            qRe2Local = Conversions.subArrOrCopy(pqDirect ? null : qRe2, qRe, disp2, layerLen),
+                            qIm2Local = Conversions.subArrOrCopy(pqDirect ? null : qIm2, qIm, disp2, layerLen);
+                    if (fast2D) {
+                        if (cDirect) {
+                            if (cIm == null) {
+                                separableHartleySpectrumOfConvolutionOfDirectReal2D(
+                                        cRe.subArr(disp1, layerLen), cRe.subArr(disp2, layerLen),
+                                        pRe1Local, pRe2Local, qRe1Local, qRe2Local, cRe.elementType());
                             } else {
-                                if (cIm == null) {
-                                    separableHartleySpectrumOfConvolutionOfDirectReal2D(wcRe1, wcRe2,
-                                            pRe1Local, pRe2Local, qRe1Local, qRe2Local, cRe.elementType());
-                                } else {
-                                    separableHartleySpectrumOfConvolutionOfDirectComplex2D(wcRe1, wcIm1, wcRe2, wcIm2,
-                                            pRe1Local, pIm1Local, pRe2Local, pIm2Local,
-                                            qRe1Local, qIm1Local, qRe2Local, qIm2Local, cRe.elementType());
-                                }
-                                cRe.subArr(disp1, layerLen).copy(wcRe1);
-                                cRe.subArr(disp2, layerLen).copy(wcRe2);
-                                if (cIm != null) {
-                                    cIm.subArr(disp1, layerLen).copy(wcIm1);
-                                    cIm.subArr(disp2, layerLen).copy(wcIm2);
-                                }
+                                separableHartleySpectrumOfConvolutionOfDirectComplex2D(
+                                        cRe.subArr(disp1, layerLen), cIm.subArr(disp1, layerLen),
+                                        cRe.subArr(disp2, layerLen), cIm.subArr(disp2, layerLen),
+                                        pRe1Local, pIm1Local, pRe2Local, pIm2Local,
+                                        qRe1Local, qIm1Local, qRe2Local, qIm2Local, cRe.elementType());
                             }
                         } else {
-                            Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wpRe1, wpIm1, pRe1Local, pIm1Local, layerDims, 1);
-                            Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wpRe2, wpIm2, pRe2Local, pIm2Local, layerDims, 1);
-                            Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wqRe1, wqIm1, qRe1Local, qIm1Local, layerDims, 1);
-                            Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
-                                    wqRe2, wqIm2, qRe2Local, qIm2Local, layerDims, 1);
-                            // Below we calculate
-                            //     c1 = wq1 * (wp1+wp2)/2 + wq2 * (wp1-wp2)/2 =
-                            //        = (wqRe1*sRe - wqIm1*sIm + wqRe2*dRe - wqIm2*dIm,
-                            //           wqRe1*sIm + wqIm1*sRe + wqRe2*dIm + wqIm2*dRe)
-                            //     c2 = wq2 * (wp1+wp2)/2 - wq1 * (wp1-wp2)/2 =
-                            //        = (wqRe2*sRe - wqIm2*sIm - wqRe1*dRe + wqIm1*dIm,
-                            //           wqRe2*sIm + wqIm2*sRe - wqRe1*dIm - wqIm1*dRe)
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wpRe1, wpRe2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wpIm1, wpIm2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wpRe1, wpRe2);
-                            Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wpIm1, wpIm2);
-                            Arrays.applyFunc(null, false, 1, true, XY_MINUS_XY_PLUS_XY_MINUS_XY,
-                                    wcRe1, wqRe1, sRe, wqIm1, sIm, wqRe2, dRe, wqIm2, dIm);
-                            Arrays.applyFunc(null, false, 1, true, XY_MINUS_XY_MINUS_XY_PLUS_XY,
-                                    wcRe2, wqRe2, sRe, wqIm2, sIm, wqRe1, dRe, wqIm1, dIm);
-                            Arrays.applyFunc(null, false, 1, true, XY_PLUS_XY_PLUS_XY_PLUS_XY,
-                                    wcIm1, wqRe1, sIm, wqIm1, sRe, wqRe2, dIm, wqIm2, dRe);
-                            Arrays.applyFunc(null, false, 1, true, XY_PLUS_XY_MINUS_XY_MINUS_XY,
-                                    wcIm2, wqRe2, sIm, wqIm2, sRe, wqRe1, dIm, wqIm1, dRe);
-                            UpdatablePNumberArray
-                                    cRe1 = cDirect ? (UpdatablePNumberArray) cRe.subArr(disp1, layerLen) : wcRe1,
-                                    cRe2 = cDirect ? (UpdatablePNumberArray) cRe.subArr(disp2, layerLen) : wcRe2,
-                                    cIm1 = cIm == null ? null :
-                                            cDirect ? (UpdatablePNumberArray) cIm.subArr(disp1, layerLen) : wcIm1,
-                                    cIm2 = cIm == null ? null :
-                                            cDirect ? (UpdatablePNumberArray) cIm.subArr(disp2, layerLen) : wcIm2;
-                            Conversions.fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
-                                    cRe1, cIm1, wcRe1, wcIm1, layerDims, 1);
-                            Conversions.fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
-                                    cRe2, cIm2, wcRe2, wcIm2, layerDims, 1);
-                            if (!cDirect) {
-                                cRe.subArr(disp1, layerLen).copy(wcRe1);
-                                cRe.subArr(disp2, layerLen).copy(wcRe2);
-                                if (cIm != null) {
-                                    cIm.subArr(disp1, layerLen).copy(wcIm1);
-                                    cIm.subArr(disp2, layerLen).copy(wcIm2);
-                                }
+                            if (cIm == null) {
+                                separableHartleySpectrumOfConvolutionOfDirectReal2D(wcRe1, wcRe2,
+                                        pRe1Local, pRe2Local, qRe1Local, qRe2Local, cRe.elementType());
+                            } else {
+                                separableHartleySpectrumOfConvolutionOfDirectComplex2D(wcRe1, wcIm1, wcRe2, wcIm2,
+                                        pRe1Local, pIm1Local, pRe2Local, pIm2Local,
+                                        qRe1Local, qIm1Local, qRe2Local, qIm2Local, cRe.elementType());
+                            }
+                            cRe.subArr(disp1, layerLen).copy(wcRe1);
+                            cRe.subArr(disp2, layerLen).copy(wcRe2);
+                            if (cIm != null) {
+                                cIm.subArr(disp1, layerLen).copy(wcIm1);
+                                cIm.subArr(disp2, layerLen).copy(wcIm2);
                             }
                         }
-                        long rl = context == null ? 0 : readyLayers.getAndIncrement();
-                        if (context != null && (rl & progressMask) == 0) {
-                            context.checkInterruptionAndUpdateProgress(cRe.elementType(), rl + 1, nDiv2 + 1);
+                    } else {
+                        Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wpRe1, wpIm1, pRe1Local, pIm1Local, layerDims, 1);
+                        Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wpRe2, wpIm2, pRe2Local, pIm2Local, layerDims, 1);
+                        Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wqRe1, wqIm1, qRe1Local, qIm1Local, layerDims, 1);
+                        Conversions.separableHartleyToFourierRecoursive(null, maxTempJavaMemory,
+                                wqRe2, wqIm2, qRe2Local, qIm2Local, layerDims, 1);
+                        // Below we calculate
+                        //     c1 = wq1 * (wp1+wp2)/2 + wq2 * (wp1-wp2)/2 =
+                        //        = (wqRe1*sRe - wqIm1*sIm + wqRe2*dRe - wqIm2*dIm,
+                        //           wqRe1*sIm + wqIm1*sRe + wqRe2*dIm + wqIm2*dRe)
+                        //     c2 = wq2 * (wp1+wp2)/2 - wq1 * (wp1-wp2)/2 =
+                        //        = (wqRe2*sRe - wqIm2*sIm - wqRe1*dRe + wqIm1*dIm,
+                        //           wqRe2*sIm + wqIm2*sRe - wqRe1*dIm - wqIm1*dRe)
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sRe, wpRe1, wpRe2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_PLUS_Y, sIm, wpIm1, wpIm2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dRe, wpRe1, wpRe2);
+                        Arrays.applyFunc(null, false, 1, true, Func.HALF_X_MINUS_Y, dIm, wpIm1, wpIm2);
+                        Arrays.applyFunc(null, false, 1, true, XY_MINUS_XY_PLUS_XY_MINUS_XY,
+                                wcRe1, wqRe1, sRe, wqIm1, sIm, wqRe2, dRe, wqIm2, dIm);
+                        Arrays.applyFunc(null, false, 1, true, XY_MINUS_XY_MINUS_XY_PLUS_XY,
+                                wcRe2, wqRe2, sRe, wqIm2, sIm, wqRe1, dRe, wqIm1, dIm);
+                        Arrays.applyFunc(null, false, 1, true, XY_PLUS_XY_PLUS_XY_PLUS_XY,
+                                wcIm1, wqRe1, sIm, wqIm1, sRe, wqRe2, dIm, wqIm2, dRe);
+                        Arrays.applyFunc(null, false, 1, true, XY_PLUS_XY_MINUS_XY_MINUS_XY,
+                                wcIm2, wqRe2, sIm, wqIm2, sRe, wqRe1, dIm, wqIm1, dRe);
+                        UpdatablePNumberArray
+                                cRe1 = cDirect ? (UpdatablePNumberArray) cRe.subArr(disp1, layerLen) : wcRe1,
+                                cRe2 = cDirect ? (UpdatablePNumberArray) cRe.subArr(disp2, layerLen) : wcRe2,
+                                cIm1 = cIm == null ? null :
+                                        cDirect ? (UpdatablePNumberArray) cIm.subArr(disp1, layerLen) : wcIm1,
+                                cIm2 = cIm == null ? null :
+                                        cDirect ? (UpdatablePNumberArray) cIm.subArr(disp2, layerLen) : wcIm2;
+                        Conversions.fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
+                                cRe1, cIm1, wcRe1, wcIm1, layerDims, 1);
+                        Conversions.fourierToSeparableHartleyRecursive(null, maxTempJavaMemory,
+                                cRe2, cIm2, wcRe2, wcIm2, layerDims, 1);
+                        if (!cDirect) {
+                            cRe.subArr(disp1, layerLen).copy(wcRe1);
+                            cRe.subArr(disp2, layerLen).copy(wcRe2);
+                            if (cIm != null) {
+                                cIm.subArr(disp1, layerLen).copy(wcIm1);
+                                cIm.subArr(disp2, layerLen).copy(wcIm2);
+                            }
                         }
+                    }
+                    long rl = context == null ? 0 : readyLayers.getAndIncrement();
+                    if (context != null && (rl & progressMask) == 0) {
+                        context.checkInterruptionAndUpdateProgress(cRe.elementType(), rl + 1, nDiv2 + 1);
                     }
                 }
             };

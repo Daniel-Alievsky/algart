@@ -40,13 +40,13 @@ public final class CoordinateFreeStitchingMethod<P extends FramePosition> implem
     }
 
     public static <P extends FramePosition> CoordinateFreeStitchingMethod<P> getInstance(Func combiningFunc) {
-        return new CoordinateFreeStitchingMethod<P>(combiningFunc, true);
+        return new CoordinateFreeStitchingMethod<>(combiningFunc, true);
     }
 
     public static <P extends FramePosition> CoordinateFreeStitchingMethod<P> getInstance(
         Func combiningFunc, boolean standardBehaviorForSingleFrame)
     {
-        return new CoordinateFreeStitchingMethod<P>(combiningFunc, standardBehaviorForSingleFrame);
+        return new CoordinateFreeStitchingMethod<>(combiningFunc, standardBehaviorForSingleFrame);
     }
 
     public Func combiningFunc() {

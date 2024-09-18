@@ -517,8 +517,8 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
         Matrix<? extends UpdatablePArray> dest, // maybe null
         List<Matrix<? extends PArray>> src)
     {
-        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<Integer, Matrix<?>>();
-        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<Integer, Matrix<?>>();
+        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<>();
+        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<>();
         destMatrices.put(0, dest);
         for (int i = 0, n = src.size(); i < n; i++) {
             srcMatrices.put(i, src.get(i));
@@ -547,7 +547,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
         public void process(Map<Integer, Matrix<?>> dest, Map<Integer, Matrix<?>> src) {
             assert src.size() <= 3;
             assert dest.size() == 1;
-            List<Matrix<? extends PArray>> srcMatrices = new ArrayList<Matrix<? extends PArray>>();
+            List<Matrix<? extends PArray>> srcMatrices = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 Matrix<?> m = src.get(i);
                 if (m != null) {
@@ -585,7 +585,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
         public void process(Map<Integer, Matrix<?>> dest, Map<Integer, Matrix<?>> src) {
             assert src.size() <= 3;
             assert dest.size() == 1;
-            List<Matrix<? extends PArray>> srcMatrices = new ArrayList<Matrix<? extends PArray>>();
+            List<Matrix<? extends PArray>> srcMatrices = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 Matrix<?> m = src.get(i);
                 if (m != null) {

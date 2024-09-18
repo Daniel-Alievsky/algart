@@ -73,11 +73,7 @@ public abstract class InterruptibleAction<T> {
      */
     public T doInterruptibly() throws InterruptionException {
         final Thread currentThread = Thread.currentThread();
-        InterruptionContext.Listener listener = new InterruptionContext.Listener() {
-            public void interruptionRequested(InterruptionContext.Event event) {
-                currentThread.interrupt();
-            }
-        };
+        InterruptionContext.Listener listener = event -> currentThread.interrupt();
         context.addInterruptionListener(listener);
         try {
             return run();

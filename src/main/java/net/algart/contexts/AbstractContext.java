@@ -179,8 +179,8 @@ public abstract class AbstractContext implements Context {
         lock.lock();
         try {
             if (ALL_CONTEXTS == null) {
-                ALL_CONTEXTS = new HashSet<Context>();
-                ACTIVE_CONTEXTS = new HashMap<Class<? extends Context>, Context>();
+                ALL_CONTEXTS = new HashSet<>();
+                ACTIVE_CONTEXTS = new HashMap<>();
                 try {
                     Iterator<?> iterator = null;
                     try { // try ServiceLoader (Java 1.6+)

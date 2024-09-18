@@ -110,6 +110,7 @@ public abstract class AbstractQuickFilter3x3 extends Abstract2DProcessor {
     }
 
     protected void initialize() {
+        // nothing to do in default implementation
     }
 
     protected abstract void process3Lines(

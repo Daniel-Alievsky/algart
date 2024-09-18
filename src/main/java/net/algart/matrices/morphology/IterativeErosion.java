@@ -107,7 +107,7 @@ public class IterativeErosion extends AbstractIterativeArrayProcessor<Matrix<? e
     private final Morphology morphology;
     private final Pattern[] patterns;
     private final Matrix<? extends UpdatablePArray> result, temp1, temp2;
-    private final List<Matrix<? extends UpdatablePArray>> store = new ArrayList<Matrix<? extends UpdatablePArray>>();
+    private final List<Matrix<? extends UpdatablePArray>> store = new ArrayList<>();
     private int patternIndex = 0;
     private int storeSize = 0;
     private boolean firstIteration = true;

@@ -703,7 +703,7 @@ public abstract class StreamingApertureProcessor extends AbstractArrayProcessorW
         layerDimensions[dimensions.length - 1] = nBuf;
         Matrix<UpdatablePArray> buf = Arrays.SMM.newMatrix(UpdatablePArray.class, sa.elementType(), layerDimensions);
         final UpdatablePArray ba = buf.array();
-        ArrayList<Matrix<? extends PArray>> additionalBuf = new ArrayList<Matrix<? extends PArray>>();
+        ArrayList<Matrix<? extends PArray>> additionalBuf = new ArrayList<>();
         PArray[] additionalArrays = Matrices.arraysOfParallelMatrices(PArray.class, additionalMatrices);
 //        System.out.println("ITERATIVE by " + nPerLoop + "/" + nBuf + " from " + lastDim);
         for (long i = 0; i < lastDim; ) {

@@ -228,8 +228,8 @@ public class TiledConvolution implements Convolution {
         Matrix<? extends UpdatablePArray> dest, // maybe null
         Matrix<? extends PArray> src)
     {
-        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<Integer, Matrix<?>>();
-        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<Integer, Matrix<?>>();
+        Map<Integer, Matrix<?>> destMatrices = new LinkedHashMap<>();
+        Map<Integer, Matrix<?>> srcMatrices = new LinkedHashMap<>();
         destMatrices.put(0, dest);
         srcMatrices.put(0, src);
         tiler.tile(processor).process(destMatrices, srcMatrices);

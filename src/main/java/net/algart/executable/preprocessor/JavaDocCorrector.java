@@ -81,7 +81,7 @@ public class JavaDocCorrector {
     private void processFile(File f) throws IOException {
         final String data = readUTF8(f);
         StringBuilder sb = new StringBuilder();
-        final Set<String> alreadyAppeared = new HashSet<String>();
+        final Set<String> alreadyAppeared = new HashSet<>();
         final Matcher m = PATTERN.matcher(data);
         int p = 0;
         while (m.find()) {
@@ -114,17 +114,14 @@ public class JavaDocCorrector {
 
     private static String readUTF8(File file) throws IOException {
         InputStream inputStream = new FileInputStream(file);
-        Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        StringBuilder sb = new StringBuilder();
-        try {
+        try (Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+            StringBuilder sb = new StringBuilder();
             char[] buf = new char[65536];
             int len;
             while ((len = reader.read(buf)) >= 0) {
                 sb.append(buf, 0, len);
             }
             return sb.toString();
-        } finally {
-            reader.close();
         }
     }
 

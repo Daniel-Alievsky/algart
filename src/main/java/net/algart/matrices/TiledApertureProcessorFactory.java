@@ -894,7 +894,7 @@ public final class TiledApertureProcessorFactory {
      * @throws NullPointerException if the argument is {@code null}.
      */
     public <K> ApertureProcessor<K> tile(ApertureProcessor<K> oneTileProcessor) {
-        return new BasicTilingProcessor<K>(oneTileProcessor);
+        return new BasicTilingProcessor<>(oneTileProcessor);
     }
 
     /**
@@ -925,8 +925,7 @@ public final class TiledApertureProcessorFactory {
         public void process(Map<K, Matrix<?>> dest, Map<K, Matrix<?>> src) {
             Objects.requireNonNull(src, "Null table of source matrices");
             Objects.requireNonNull(dest, "Null table of destination matrices");
-            final Map<K, Matrix<? extends UpdatableArray>> destCopy =
-                    new LinkedHashMap<K, Matrix<? extends UpdatableArray>>();
+            final Map<K, Matrix<? extends UpdatableArray>> destCopy = new LinkedHashMap<>();
             for (Map.Entry<K, Matrix<?>> e : dest.entrySet()) {
                 K key = e.getKey();
                 Matrix<?> m = e.getValue();
@@ -936,7 +935,7 @@ public final class TiledApertureProcessorFactory {
                 }
                 destCopy.put(key, m == null ? null : m.cast(UpdatableArray.class));
             }
-            final Map<K, Matrix<?>> srcCopy = new LinkedHashMap<K, Matrix<?>>();
+            final Map<K, Matrix<?>> srcCopy = new LinkedHashMap<>();
             for (Map.Entry<K, Matrix<?>> e : src.entrySet()) {
                 K key = e.getKey();
                 Matrix<?> m = e.getValue();
@@ -1015,28 +1014,24 @@ public final class TiledApertureProcessorFactory {
                 final Map<K, Matrix<?>> destTile = prepareDestTile(
                         destTileMem.get(taskIndex), destCopy.keySet(), extTileDim);
                 final int ti = taskIndex;
-                tasks[taskIndex] = new Runnable() {
-                    public void run() {
-                        ArrayContext tileContext = switchingContextSupported() ?
-                                ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(
-                                        new TileInformation(
-                                                IRectangularArea.valueOf(
-                                                        IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
-                                                IRectangularArea.valueOf(
-                                                        IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
-                                ac;
-                        subtaskTileProcessor(tileContext).process(destTile, srcTile);
-                        // additional matrices CAN appear in destTile
-                    }
+                tasks[taskIndex] = () -> {
+                    ArrayContext tileContext = switchingContextSupported() ?
+                            ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(
+                                    new TileInformation(
+                                            IRectangularArea.valueOf(
+                                                    IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
+                                            IRectangularArea.valueOf(
+                                                    IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
+                            ac;
+                    subtaskTileProcessor(tileContext).process(destTile, srcTile);
+                    // additional matrices CAN appear in destTile
                 };
-                postprocessing[taskIndex] = new Runnable() {
-                    public void run() {
-                        allocateDestMatricesIfNecessary(dim, destCopy, destTile);
-                        // - synchronization is not necessary, because we call postprocessing in a single thread
-                        saveDestTile(ac.part(0.95, 1.0), maxAperture, destCopy, destTile, tilePos, tileDim);
-                        freeResources(destTile);
-                        // maybe, destTile was created by the parent processor in some file, which should be released
-                    }
+                postprocessing[taskIndex] = () -> {
+                    allocateDestMatricesIfNecessary(dim, destCopy, destTile);
+                    // - synchronization is not necessary, because we call postprocessing in a single thread
+                    saveDestTile(ac.part(0.95, 1.0), maxAperture, destCopy, destTile, tilePos, tileDim);
+                    freeResources(destTile);
+                    // maybe, destTile was created by the parent processor in some file, which should be released
                 };
                 taskIndex++;
                 readyElementsCount += tileSize;
@@ -1155,9 +1150,9 @@ public final class TiledApertureProcessorFactory {
                 long extendedTileSize,
                 Map<K, ? extends Matrix<?>> processorArguments,
                 int numberOfTasks) {
-            List<Map<K, UpdatableArray>> result = new ArrayList<Map<K, UpdatableArray>>();
+            List<Map<K, UpdatableArray>> result = new ArrayList<>();
             for (int taskIndex = 0; taskIndex < numberOfTasks; taskIndex++) {
-                Map<K, UpdatableArray> tileMemory = new LinkedHashMap<K, UpdatableArray>();
+                Map<K, UpdatableArray> tileMemory = new LinkedHashMap<>();
                 for (Map.Entry<K, ? extends Matrix<?>> e : processorArguments.entrySet()) {
                     Matrix<?> m = e.getValue();
                     if (m != null) {
@@ -1178,7 +1173,7 @@ public final class TiledApertureProcessorFactory {
                 Map<K, Matrix<?>> src,
                 long[] tilePos, long[] tileDim, long[] extTileDim) {
             long len = Arrays.longMul(extTileDim);
-            Map<K, Matrix<?>> srcTile = new LinkedHashMap<K, Matrix<?>>();
+            Map<K, Matrix<?>> srcTile = new LinkedHashMap<>();
             long[] inTilePos = new long[dimCount];
             long[] preciseTileDim = new long[dimCount];
             long[] preciseTilePos = new long[dimCount];
@@ -1206,7 +1201,7 @@ public final class TiledApertureProcessorFactory {
                 Set<K> destKeys,
                 long[] extTileDim) {
             long len = Arrays.longMul(extTileDim);
-            Map<K, Matrix<?>> destTile = new LinkedHashMap<K, Matrix<?>>();
+            Map<K, Matrix<?>> destTile = new LinkedHashMap<>();
             for (K key : destKeys) {
                 UpdatableArray a = destTileMem.get(key);
                 destTile.put(key, a == null ? null : Matrices.matrix(a.subArr(0, len), extTileDim));

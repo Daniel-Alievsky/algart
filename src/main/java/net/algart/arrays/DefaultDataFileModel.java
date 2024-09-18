@@ -33,7 +33,6 @@ import java.nio.ByteOrder;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 
@@ -91,84 +90,98 @@ import java.util.logging.Level;
  */
 public class DefaultDataFileModel extends AbstractDataFileModel implements DataFileModel<File> {
     private static final int DEFAULT_NUMBER_OF_BANKS =
-        MappedDataStorages.MappingSettings.nearestCorrectNumberOfBanks(
-            Math.max(0, (int) Math.min((long) Integer.MAX_VALUE,
-                (long) InternalUtils.getIntProperty("net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU", 3)
-                    * (long) InternalUtils.availableProcessors())));
+            MappedDataStorages.MappingSettings.nearestCorrectNumberOfBanks(
+                    Math.max(0, (int) Math.min(Integer.MAX_VALUE,
+                            (long) InternalUtils.getIntProperty(
+                                    "net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU",
+                                    3)
+                                    * (long) InternalUtils.availableProcessors())));
 
     private static final int DEFAULT_BANK_SIZE =
-        InternalUtils.JAVA_32 ?
-            MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.bankSize32", 4194304)) : // 4M: for 4 kernels, up to 48M/array
-            MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.bankSize", 16777216)); // 16M: for 12 kernels, up to 576M/array
+            InternalUtils.JAVA_32 ?
+                    MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.bankSize32", 4194304)) :
+                    // 4M: for 4 kernels, up to 48M/array
+                    MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.bankSize", 16777216));
+    // 16M: for 12 kernels, up to 576M/array
 
     private static final int DEFAULT_RESIZABLE_BANK_SIZE =
-        InternalUtils.JAVA_32 ?
-            MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.resizableBankSize32", 2097152)) : // 2M
-            MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.resizableBankSize", 4194304)); // 4M
+            InternalUtils.JAVA_32 ?
+                    MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.resizableBankSize32",
+                            2097152)) : // 2M
+                    MappedDataStorages.MappingSettings.nearestCorrectBankSize(InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.resizableBankSize",
+                            4194304)); // 4M
     // These values must be not too high: for resizable arrays, it is a granularity of growing large files
 
     private static final int DEFAULT_SINGLE_MAPPING_LIMIT =
-        InternalUtils.JAVA_32 ?
-            Math.max(0, InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.singleMappingLimit32", 4194304)) : // 4M: up to 4M/array
-            Math.max(0, InternalUtils.getIntProperty(
-                "net.algart.arrays.DefaultDataFileModel.singleMappingLimit", 268435456)); // 256M: up to 256M/array
+            InternalUtils.JAVA_32 ?
+                    Math.max(0, InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.singleMappingLimit32",
+                            4194304)) : // 4M: up to
+                    // 4M/array
+                    Math.max(0, InternalUtils.getIntProperty(
+                            "net.algart.arrays.DefaultDataFileModel.singleMappingLimit",
+                            268435456)); // 256M: up to
+    // 256M/array
 
 
     private static final boolean DEFAULT_AUTO_RESIZING_ON_MAPPING = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping", false);
+            "net.algart.arrays.DefaultDataFileModel.autoResizingOnMapping", false);
 
     private static final boolean DEFAULT_LAZY_WRITING = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.lazyWriting", InternalUtils.JAVA_7);
+            "net.algart.arrays.DefaultDataFileModel.lazyWriting", InternalUtils.JAVA_7);
 
     private static final String DEFAULT_FILE_WRITE_MODE = InternalUtils.getStringProperty(
-        "net.algart.arrays.DefaultDataFileModel.fileWriteMode", "rwd");
+            "net.algart.arrays.DefaultDataFileModel.fileWriteMode", "rwd");
     // used also in StandardIODataFileModel
 
     private static final long DEFAULT_PREFIX_SIZE = Math.max(0L,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.prefixSize", 0)); // for debugging only
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.prefixSize", 0));
+    // for debugging only
 
     private static final int OPEN_SLEEP_DELAY = 200; // ms
     private static final int OPEN_TIMEOUT = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.openTimeout", 5000));
-        // 5 sec sleeping time
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.openTimeout", 5000));
+    // 5 sec sleeping time
 
     private static final int MAP_SLEEP_DELAY = 200; // ms
     private static final int MAP_TIMEOUT = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.mapTimeout", 600));
-        // 0.6 sec sleeping time
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.mapTimeout", 600));
+    // 0.6 sec sleeping time
     private static final int MAP_TIMEOUT_WITH_GC = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.mapTimeoutWithGc", 400));
-        // and 0.4 sec sleeping time with gc
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.mapTimeoutWithGc", 400));
+    // and 0.4 sec sleeping time with gc
 
     private static final int FORCE_SLEEP_DELAY = 250; // ms
     private static final int FORCE_TIMEOUT = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.forceTimeout", 15000));
-        // 15 sec sleeping time (40 attempts)
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.forceTimeout", 15000));
+    // 15 sec sleeping time (40 attempts)
     private static final int MEMORY_UTILIZATION_FORCE_TIMEOUT = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.memoryUtilizationForceTimeout", 1000));
-        // 1 sec sleeping time
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.memoryUtilizationForceTimeout",
+                    1000));
+    // 1 sec sleeping time
     private static final int WRITE_THROUGH_FORCE_TIMEOUT = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.writeThroughForceTimeout", 500));  // 0.5 sec sleeping time
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.writeThroughForceTimeout",
+                    500));  // 0.5 sec sleeping time
 
     private static final int NEXT_RELOAD_MIN_DELAY = Math.max(0,
-        InternalUtils.getIntProperty(
-            "net.algart.arrays.DefaultDataFileModel.nextReloadMinDelay", 2000));  // 2 sec
+            InternalUtils.getIntProperty(
+                    "net.algart.arrays.DefaultDataFileModel.nextReloadMinDelay",
+                    2000));  // 2 sec
 
     private static final long MAX_MAPPED_MEMORY = Math.min(1L << 56, Math.max(0L,
-        InternalUtils.getLongPropertyWithImportant(
-            "net.algart.arrays.maxMappedMemory", 536870912L))); // 512 MB
+            InternalUtils.getLongPropertyWithImportant(
+                    "net.algart.arrays.maxMappedMemory", 536870912L))); // 512 MB
 
     static final boolean UNSAFE_UNMAP_ON_EXIT = false;
 //    InternalUtils.getBooleanProperty(
@@ -178,15 +191,16 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     static final boolean UNSAFE_UNMAP_ON_DISPOSE = false;
 //    InternalUtils.getBooleanProperty(
 //        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnDispose", false);
-        // false by default; not used now; DOES NOT WORK since Java 9!
+    // false by default; not used now; DOES NOT WORK since Java 9!
 
     static final boolean UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExceedingMaxMappedMemory", false);
-        // false by default
+            "net.algart.arrays.DefaultDataFileModel.unsafeUnmapOnExceedingMaxMappedMemory",
+            false);
+    // false by default
 
     static final boolean GC_ON_EXCEEDING_MAX_MAPPED_MEMORY = InternalUtils.getBooleanProperty(
-        "net.algart.arrays.DefaultDataFileModel.gcOnExceedingMaxMappedMemory",
-        !UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY); // !UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY by default
+            "net.algart.arrays.DefaultDataFileModel.gcOnExceedingMaxMappedMemory",
+            !UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY); // !UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY by default
 
     private static final boolean CACHE_MAPPINGS = true;
     // This flag may be set to false for debug goals only!
@@ -283,9 +297,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * Equivalent to <code>new {@link #DefaultDataFileModel(File, long, boolean)
      * DefaultDataFileModel}(tempPath, 0, {@link #defaultLazyWriting()})</code>.
      *
-     * @param tempPath    the path where new temporary files will be created
-     *                    by {@link #createTemporaryFile(boolean)} method
-     *                    or {@code null} if the default temporary-file directory is to be used.
+     * @param tempPath the path where new temporary files will be created
+     *                 by {@link #createTemporaryFile(boolean)} method
+     *                 or {@code null} if the default temporary-file directory is to be used.
      */
     public DefaultDataFileModel(File tempPath) {
         this(tempPath, DEFAULT_PREFIX_SIZE, defaultLazyWriting());
@@ -377,7 +391,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      *
      * @param path      the path to disk file (as the argument of <code>new java.io.File(path)</code>).
      * @param byteOrder the byte order that will be always used for mapping this file.
-     * @return          new instance of {@link DataFile} object.
+     * @return new instance of {@link DataFile} object.
      * @throws NullPointerException if one of the passed arguments is {@code null}.
      */
     public DataFile getDataFile(File path, ByteOrder byteOrder) {
@@ -393,13 +407,13 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * <p>This method never throws <code>java.io.IOError</code>.
      *
      * @param dataFile the data file.
-     * @return         the absolute path to the disk file.
+     * @return the absolute path to the disk file.
      * @throws NullPointerException if the argument is {@code null}.
      * @throws ClassCastException   if the data file was created by data file model, other than
      *                              {@link DefaultDataFileModel} or {@link StandardIODataFileModel}.
      */
     public File getPath(DataFile dataFile) {
-        return ((MappableFile)dataFile).file;
+        return ((MappableFile) dataFile).file;
     }
 
     /**
@@ -422,15 +436,15 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * If this value is less than 2, returns 2.
      * If "net.algart.arrays.DefaultDataFileModel.numberOfBanksPerCPU" property contains negative or zero integer,
      * returns 2.
-     *
-     <!--Repeat(INCLUDE_FROM_FILE, DataFileModel.java, recommendedNumberOfBanks_multiprocessor)   !! Auto-generated: NOT EDIT !! -->
+     * <!--Repeat(INCLUDE_FROM_FILE, DataFileModel.java, recommendedNumberOfBanks_multiprocessor) !! Auto-generated: NOT EDIT !! -->
      * <p>Please note that many algorithms, on multiprocessor or multicore systems,
      * use several parallel threads for processing arrays: see {@link Arrays.ParallelExecutor}.
-     * So, the number of banks should be enough for parallel using by all CPU units,
-     * to avoid frequently bank swapping.
+     * So, the number of banks should be enough for parallel using by all CPU units
+     * to avoid frequent bank swapping.
      * There should be at least 2 banks per each CPU unit,
      * better 3-4 banks (for complex random-access algorithms).
      <!--Repeat.IncludeEnd-->
+     *
      * @return the recommended number of memory banks.
      */
     @Override
@@ -462,7 +476,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * and has no 32-bit limitations for the address space.
      *
      * @param unresizable <code>true</code> if this bank size will be used for unresizable arrays only.
-     * @return            the recommended size of every memory bank in bytes.
+     * @return the recommended size of every memory bank in bytes.
      */
     @Override
     public int recommendedBankSize(boolean unresizable) {
@@ -484,7 +498,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      * and has no 32-bit limitations for the address space.
      *
      * @return the recommended limit for file size, in bytes, so that less files, if they are unresizable,
-     *         should be mapped only once by single call of {@link DataFile#map} method.
+     * should be mapped only once by single call of {@link DataFile#map} method.
      */
     @Override
     public int recommendedSingleMappingLimit() {
@@ -524,10 +538,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
      */
     public String toString() {
         return "default data file model: " + recommendedNumberOfBanks()
-            + " banks per " + recommendedBankSize(true) + "/" + recommendedBankSize(false) + " bytes, "
-            + (recommendedSingleMappingLimit() > 0 ?
-            "single mapping until " + recommendedSingleMappingLimit() + " bytes, " : "")
-            + (lazyWriting ? "lazy-writing" : "write-through");
+                + " banks per " + recommendedBankSize(true) + "/" + recommendedBankSize(false) + " bytes, "
+                + (recommendedSingleMappingLimit() > 0 ?
+                "single mapping until " + recommendedSingleMappingLimit() + " bytes, " : "")
+                + (lazyWriting ? "lazy-writing" : "write-through");
     }
 
     // The reasons of this method are analogous to mapWithSeveralAttempts and forceWithSeveralAttempts:
@@ -566,9 +580,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         if (result == null) {
             assert exception != null;
             LargeMemoryModel.LOGGER.warning(String.format(Locale.US,
-                "MMMM open: cannot open file in %.2f sec, "
-                + numberOfAttempts + " attempts (%s; %s)",
-                (t2 - t1) * 1e-9, file, exception));
+                    "MMMM open: cannot open file in %.2f sec, "
+                            + numberOfAttempts + " attempts (%s; %s)",
+                    (t2 - t1) * 1e-9, file, exception));
             throw exception;
         }
         return result;
@@ -576,10 +590,11 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     // The following method is useful to avoid a bug in 32-bit Java:
     // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6776490
-    private static MappedByteBuffer mapWithSeveralAttempts(String fileName,
-        final FileChannel fileChannel, final FileChannel.MapMode mode,
-        final long position, final long size) throws IOException
-    {
+    private static MappedByteBuffer mapWithSeveralAttempts(
+            String fileName,
+            final FileChannel fileChannel,
+            final FileChannel.MapMode mode,
+            final long position, final long size) throws IOException {
         // We should not use System.currentTimeMillis() below, but need to count calls of Thread.sleep:
         // the system time, theoretically, can be changed during this loop
 //        System.out.print("Mapping " + Long.toHexString(position) + "...");
@@ -588,8 +603,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         IOException exception = null;
         MappedByteBuffer result = null;
         for (int timeoutInMilliseconds = MAP_TIMEOUT + MAP_TIMEOUT_WITH_GC; ;
-             timeoutInMilliseconds -= MAP_SLEEP_DELAY)
-        {
+             timeoutInMilliseconds -= MAP_SLEEP_DELAY) {
             try {
                 result = Arrays.SystemSettings.globalDiskSynchronizer().doSynchronously(fileName,
                         () -> fileChannel.map(mode, position, size));
@@ -598,7 +612,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 if (!(ex instanceof IOException)) {
                     throw new AssertionError("Unexpected exception type: " + ex);
                 }
-                exception = (IOException)ex;
+                exception = (IOException) ex;
             }
             numberOfAttempts++;
             if (timeoutInMilliseconds <= 0) {
@@ -606,7 +620,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
             boolean doGc = timeoutInMilliseconds <= MAP_TIMEOUT_WITH_GC;
             LargeMemoryModel.LOGGER.config("MMMM map: problem with mapping data, new attempt #"
-                + numberOfAttempts + (doGc ? " with gc" : ""));
+                    + numberOfAttempts + (doGc ? " with gc" : ""));
             if (doGc) {
                 System.gc();
                 numberOfGc++;
@@ -622,10 +636,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         if (result == null) {
             assert exception != null;
             LargeMemoryModel.LOGGER.warning(String.format(Locale.US,
-                "MMMM map: cannot map data in %.2f sec, "
-                + numberOfAttempts + " attempts" + (numberOfGc > 0 ? ", " + numberOfGc + " with gc" : "")
-                + " (%s; %s)",
-                (t2 - t1) * 1e-9, fileName, exception));
+                    "MMMM map: cannot map data in %.2f sec, "
+                            + numberOfAttempts + " attempts" + (numberOfGc > 0 ? ", " + numberOfGc + " with gc" : "")
+                            + " (%s; %s)",
+                    (t2 - t1) * 1e-9, fileName, exception));
             throw exception;
         }
 //        System.out.println(" done: " + size + " bytes, "
@@ -636,12 +650,12 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     // The following method is useful to avoid a bug in Java 1.6:
     // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6539707
-    private static Error forceWithSeveralAttempts(String fileName,
-        final MappedByteBuffer mbb,
-        DataFile.Range range, // for logging only
-        boolean memoryUtilization,
-        int timeoutInMillis)
-    {
+    private static Error forceWithSeveralAttempts(
+            String fileName,
+            final MappedByteBuffer mbb,
+            DataFile.Range range, // for logging only
+            boolean memoryUtilization,
+            int timeoutInMillis) {
         Error resultError; // will be not null in a case of some exception inside mbb.force() method
         // We should not use System.currentTimeMillis() below, but need to count calls of Thread.sleep:
         // the system time, theoretically, can be changed during this loop
@@ -657,7 +671,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 });
             } catch (Throwable ex) {
                 if (ex instanceof Error) {
-                    resultError = (Error)ex;
+                    resultError = (Error) ex;
                 } else if (ex instanceof Exception) {
                     resultError = new IOError(ex);
                 } else {
@@ -682,9 +696,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         if (resultError != null) {
             long t2 = System.currentTimeMillis();
             LargeMemoryModel.LOGGER.warning(String.format(Locale.US,
-                "MMMM " + (memoryUtilization ? "memory utilization" : "flush")
-                    + ": cannot force data at %s in %.2f sec, %d attempts (%s; %s)",
-                range, (t2 - t1) * 1e-3, attemptCount, fileName, resultError));
+                    "MMMM " + (memoryUtilization ? "memory utilization" : "flush")
+                            + ": cannot force data at %s in %.2f sec, %d attempts (%s; %s)",
+                    range, (t2 - t1) * 1e-3, attemptCount, fileName, resultError));
         }
         return resultError;
     }
@@ -693,11 +707,11 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
     private static void unsafeUnmap(final MappedByteBuffer mbb) throws Exception {
 //        AccessController.doPrivileged(new PrivilegedExceptionAction<Object>() {
 //            public Object run() throws Exception {
-                Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
-                getCleanerMethod.setAccessible(true);
-                Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
-                Method cleanMethod = cleaner.getClass().getMethod("clean");
-                cleanMethod.invoke(cleaner);
+        Method getCleanerMethod = mbb.getClass().getMethod("cleaner");
+        getCleanerMethod.setAccessible(true);
+        Object cleaner = getCleanerMethod.invoke(mbb); // sun.misc.Cleaner instance
+        Method cleanMethod = cleaner.getClass().getMethod("clean");
+        cleanMethod.invoke(cleaner);
 //                return null;
 //            }
 //        });
@@ -711,6 +725,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
         final DataFile.Range key;
         volatile boolean unused = false;
         volatile boolean errorWhileForcing = false; // if true, will not try force again without necessity
+
         RangeWeakReference(T referent, Long fileIndex, String fileName, DataFile.Range key, ReferenceQueue<T> q) {
             super(referent, q);
             assert fileIndex != null;
@@ -722,13 +737,13 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
         public int compareTo(RangeWeakReference<T> o) {
             return this.fileIndex < o.fileIndex ? -1 :
-                this.fileIndex > o.fileIndex ? 1 :
-                    key.compareTo(o.key);
+                    this.fileIndex > o.fileIndex ? 1 :
+                            key.compareTo(o.key);
         }
 
         @Override
         public String toString() {
-            return (unused ? "unused ": "") + "weak mapping " + key + " (file #" + fileIndex + ")";
+            return (unused ? "unused " : "") + "weak mapping " + key + " (file #" + fileIndex + ")";
         }
 
         @Override
@@ -749,9 +764,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
     static class UnmappableRangeWeakReference extends RangeWeakReference<ByteBuffer> {
         private boolean unmapped = false;
-        UnmappableRangeWeakReference(MappedByteBuffer referent, Long fileIndex, String fileName,
-            DataFile.Range key, ReferenceQueue<ByteBuffer> q)
-        {
+
+        UnmappableRangeWeakReference(
+                MappedByteBuffer referent, Long fileIndex, String fileName,
+                DataFile.Range key, ReferenceQueue<ByteBuffer> q) {
             super(referent, fileIndex, fileName, key, q);
         }
 
@@ -762,7 +778,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             if (unmapped) {
                 return;
             }
-            MappedByteBuffer mbb = (MappedByteBuffer)super.get();
+            MappedByteBuffer mbb = (MappedByteBuffer) super.get();
             unmapped = true;
             try {
                 DefaultDataFileModel.unsafeUnmap(mbb);
@@ -865,7 +881,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 if (br == null) {
                     continue;
                 }
-                MappedByteBuffer mbb = (MappedByteBuffer)br.get();
+                MappedByteBuffer mbb = (MappedByteBuffer) br.get();
                 if (mbb == null) {
                     continue;
                 }
@@ -880,9 +896,9 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
             long t2 = System.nanoTime();
             LargeMemoryModel.LOGGER.fine(String.format(Locale.US,
-                "MMMM flush: %d blocks (%.2f MB, %.3f ms, %.3f MB/sec) are forced for %s",
-                count, totalBytes / 1048576.0, (t2 - t1) * 1e-6,
-                totalBytes / 1048576.0 / ((t2 - t1) * 1e-9), this));
+                    "MMMM flush: %d blocks (%.2f MB, %.3f ms, %.3f MB/sec) are forced for %s",
+                    count, totalBytes / 1048576.0, (t2 - t1) * 1e-6,
+                    totalBytes / 1048576.0 / ((t2 - t1) * 1e-9), this));
             if (raf != null) {
                 try {
                     t1 = System.nanoTime();
@@ -892,7 +908,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     // (Usually this method is useful only in StandardIODataFileModel.)
                     t2 = System.nanoTime();
                     LargeMemoryModel.LOGGER.fine(String.format(Locale.US,
-                        "MMMM flush: forcing FileChannel (%.3f ms) for %s", (t2 - t1) * 1e-6, this));
+                            "MMMM flush: forcing FileChannel (%.3f ms) for %s", (t2 - t1) * 1e-6, this));
                 } catch (IOException ex) {
                     throw new IOError(ex);
                 }
@@ -911,7 +927,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 RangeWeakReference<ByteBuffer> br;
                 if (CACHE_MAPPINGS) {
                     br = mappingCache.get(range);
-                    mbb = br == null ? null : (MappedByteBuffer)br.get();
+                    mbb = br == null ? null : (MappedByteBuffer) br.get();
                 } else {
                     mbb = null;
                     br = null;
@@ -932,7 +948,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     mbb.order(byteOrder);
                     if (CACHE_MAPPINGS) {
                         br = UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ?
-                            new UnmappableRangeWeakReference(mbb, fileIndex, file.getPath(), range, reaped) :
+                                new UnmappableRangeWeakReference(mbb, fileIndex, file.getPath(), range, reaped) :
                                 new RangeWeakReference<>(mbb, fileIndex, file.getPath(), range, reaped);
                         mappingCache.put(range, br);
                         if (MAX_MAPPED_MEMORY > 0) {
@@ -973,7 +989,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
         void reap() {
             RangeWeakReference<?> br;
-            while ((br = (RangeWeakReference<?>)reaped.poll()) != null) {
+            while ((br = (RangeWeakReference<?>) reaped.poll()) != null) {
                 if (MAX_MAPPED_MEMORY > 0) {
                     ALL_WRITABLE_MAPPINGS.remove(br);
                 }
@@ -1003,7 +1019,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 
             boolean result = true;
             for (RangeWeakReference<?> br : ranges) {
-                MappedByteBuffer mbb = br == null ? null : (MappedByteBuffer)br.get();
+                MappedByteBuffer mbb = br == null ? null : (MappedByteBuffer) br.get();
                 if (mbb != null) {
                     if (br.unused) {
                         unsafeUnmap(mbb); // and we clear all mappingCache above
@@ -1054,7 +1070,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                 Collections.sort(ranges);
                 // sorting allows better force() method: buffers will be written in the position increasing order
                 LargeMemoryModel.LOGGER.fine("MMMM memory utilization: forcing all cache ("
-                    + ranges.size() + " blocks)");
+                        + ranges.size() + " blocks)");
                 t2 = System.nanoTime();
                 for (RangeWeakReference<ByteBuffer> br : ranges) {
                     if (br == null || br.errorWhileForcing) {
@@ -1066,7 +1082,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
                     }
                     LargeMemoryModel.LOGGER.finer("MMMM memory utilization: forcing " + br);
                     Error e = forceWithSeveralAttempts(br.fileName, mbb, br.key, true,
-                        MEMORY_UTILIZATION_FORCE_TIMEOUT);
+                            MEMORY_UTILIZATION_FORCE_TIMEOUT);
                     if (e != null) {
                         br.errorWhileForcing = true;
                     }
@@ -1104,20 +1120,21 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             }
             if (GC_ON_EXCEEDING_MAX_MAPPED_MEMORY) {
                 LargeMemoryModel.LOGGER.log(Arrays.SystemSettings.profilingMode() ? Level.CONFIG : Level.FINE,
-                    String.format(Locale.US, "MMMM memory utilization"
-                        + (UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ? " with unmapping: " : ": ")
-                        + "%.4f sec, %d blocks are forced "
-                        + "(%.2f MB, %.3f ms preparing + %.3f ms + %.3f ms gc, %.3f MB/sec)",
-                        (t4 - t1) * 1e-9, count, totalBytes / 1048576.0, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6, (t4 - t3) * 1e-6,
-                        totalBytes / 1048576.0 / ((t3 - t2) * 1e-9)));
+                        String.format(Locale.US, "MMMM memory utilization"
+                                        + (UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ? " with unmapping: " : ": ")
+                                        + "%.4f sec, %d blocks are forced "
+                                        + "(%.2f MB, %.3f ms preparing + %.3f ms + %.3f ms gc, %.3f MB/sec)",
+                                (t4 - t1) * 1e-9, count, totalBytes / 1048576.0, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6,
+                                (t4 - t3) * 1e-6,
+                                totalBytes / 1048576.0 / ((t3 - t2) * 1e-9)));
             } else {
                 LargeMemoryModel.LOGGER.log(Arrays.SystemSettings.profilingMode() ? Level.CONFIG : Level.FINE,
-                    String.format(Locale.US, "MMMM memory utilization"
-                        + (UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ? " with unmapping: " : ": ")
-                        + "%.4f sec, %d blocks are forced "
-                        + "(%.2f MB, %.3f ms preparing + %.3f ms, %.3f MB/sec)",
-                        (t4 - t1) * 1e-9, count, totalBytes / 1048576.0, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6,
-                        totalBytes / 1048576.0 / ((t3 - t2) * 1e-9)));
+                        String.format(Locale.US, "MMMM memory utilization"
+                                        + (UNSAFE_UNMAP_ON_EXCEEDING_MAX_MAPPED_MEMORY ? " with unmapping: " : ": ")
+                                        + "%.4f sec, %d blocks are forced "
+                                        + "(%.2f MB, %.3f ms preparing + %.3f ms, %.3f MB/sec)",
+                                (t4 - t1) * 1e-9, count, totalBytes / 1048576.0, (t2 - t1) * 1e-6, (t3 - t2) * 1e-6,
+                                totalBytes / 1048576.0 / ((t3 - t2) * 1e-9)));
             }
         }
 
@@ -1131,10 +1148,10 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             private final boolean lazyWriting;
             private final boolean fromCache;
 
-            MappedByteBufferHolder(MappedByteBuffer mbb, RangeWeakReference<?> br,
-                String fileName, Range range,
-                boolean lazyWriting, boolean fromCache)
-            {
+            MappedByteBufferHolder(
+                    MappedByteBuffer mbb, RangeWeakReference<?> br,
+                    String fileName, Range range,
+                    boolean lazyWriting, boolean fromCache) {
                 this.mbb = mbb;
                 this.br = br;
                 this.fileName = fileName;
@@ -1189,7 +1206,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
 //                    System.out.print("Flushing " + range + (forcePhysicalWriting ? " (forced)..." : "..."));
 //                    long t1 = System.nanoTime();
                     Error e = forceWithSeveralAttempts(fileName, mbb, range, false,
-                        forcePhysicalWriting ? FORCE_TIMEOUT : WRITE_THROUGH_FORCE_TIMEOUT);
+                            forcePhysicalWriting ? FORCE_TIMEOUT : WRITE_THROUGH_FORCE_TIMEOUT);
                     if (e != null) {
                         br.errorWhileForcing = true;
                         if (forcePhysicalWriting) {

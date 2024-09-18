@@ -442,7 +442,8 @@ import static net.algart.matrices.skeletons.SkeletonPixelClassifier.*;
  * You can change this behavior by appending the source matrix with zero elements
  * by calling {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
  * where the dimensions of the "submatrix" are greater than dimensions of the source one by 1
- * and the <code>continuationMode</code> argument is {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
+ * and the <code>continuationMode</code> argument is
+ * {@link net.algart.arrays.Matrix.ContinuationMode#ZERO_CONSTANT}.</p>
  *
  * <h2>Multithreading compatibility</h2>
  *
@@ -845,14 +846,12 @@ public final class SkeletonScanner implements ArrayProcessor {
     public Matrix<? extends PIntegerArray> asPixelTypes(
             SkeletonPixelClassifier.AttachmentInformation attachmentInformation) {
         Objects.requireNonNull(attachmentInformation, "Null attachmentInformation");
-        switch (attachmentInformation) {
-            case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH:
-                return this.pixelTypesOrAttachingBranches;
-            case NEIGHBOUR_INDEX_OF_ATTACHED_NODE:
-                return this.pixelTypesOrAttachedNodes;
-            default:
-                throw new AssertionError("Unknown attachmentInformation: " + attachmentInformation);
-        }
+        return switch (attachmentInformation) {
+            case NEIGHBOUR_INDEX_OF_ATTACHING_BRANCH -> this.pixelTypesOrAttachingBranches;
+            case NEIGHBOUR_INDEX_OF_ATTACHED_NODE -> this.pixelTypesOrAttachedNodes;
+            default -> throw new AssertionError("Unknown attachmentInformation: " +
+                    attachmentInformation);
+        };
     }
 
     /**
@@ -1441,7 +1440,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * by {@link #adjacentBranches()} method, which returns indexes of all corresponding neighbours.
      * Then you can scan all these branches in a loop, starting the scanning of each branch by<br>
      * &nbsp;&nbsp;&nbsp;&nbsp;{@link #firstStep(int neighbourIndex, boolean onlyToUnvisited)}<br>
-     * method, where <code>neighbourIndex</code> is an element of the array &mdash; result of {@link #adjacentBranches()}.
+     * method, where <code>neighbourIndex</code> is an element of the array &mdash; result of
+     * {@link #adjacentBranches()}.
      * If necessary, you can scan each branch until its end by a loop of {@link #nextStep()} calls,
      * like in {@link #scanBranch(int, boolean, boolean)} method, and, if the end will be
      * a {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node} again, for example,
@@ -1460,7 +1460,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end}
      * and all other variants (usual branch elements and attachable branch ends).
      * The first situation is similar to the first case (a&nbsp;node): it is a node of the skeleton
-     * nonoriented graph (see the {@link SkeletonScanner comments to this class}), having only one incident edge (branch).
+     * nonoriented graph (see the {@link SkeletonScanner comments to this class}), having only one incident edge
+     * (branch).
      * In the second situation, you can try to move to some {@link SkeletonPixelClassifier#TYPE_USUAL_NODE node}
      * / {@link SkeletonPixelClassifier#TYPE_FREE_BRANCH_END free branch end} (one of 2 ends of this branch),
      * for example, by {@link #scanBranchFromBranch(boolean, boolean) scanBranchFromBranch} method with
@@ -1640,7 +1641,8 @@ public final class SkeletonScanner implements ArrayProcessor {
      * &mdash; see the description of group 5 of pixel types in the
      * {@link SkeletonPixelClassifier comments to SkeletonPixelClassifier}.
      * If one of pixels <i>A</i> or <i>B</i> is the current node, this method moves the current position to
-     * this neighbour and returns <code>true</code>, in another case if does nothing and returns <code>false</code>.</li>
+     * this neighbour and returns <code>true</code>, in another case if does nothing
+     * and returns <code>false</code>.</li>
      *
      * <li>In all other situations (the given neighbour is zero or
      * "{@link SkeletonPixelClassifier#TYPE_ILLEGAL illegal}" unit element),
@@ -1926,24 +1928,22 @@ public final class SkeletonScanner implements ArrayProcessor {
             shiftAlongBranch(pixelType != reverseStepDirection ? pixelType : currentPixelTypeOrAttachedNode());
             return true;
         }
-        switch (pixelType) {
-            case TYPE_USUAL_NODE:
-                return false;
-            case TYPE_ISOLATED:
-                throw new AssertionError("Illegal detection of an isolated pixel at a branch: " + this);
-            case TYPE_FREE_BRANCH_END:
-                throw new AssertionError("Illegal detection of TYPE_FREE_BRANCH_END: "
-                        + "here is at least " + neighbourCount + " neighbours in " + this);
-            case TYPE_USUAL_BRANCH:
-                throw new AssertionError("Illegal detection of TYPE_USUAL_BRANCH: "
-                        + "here is at least " + neighbourCount + " neighbours in " + this);
-            case TYPE_ILLEGAL:
-                return false;
-            case TYPE_ZERO:
-                throw new AssertionError("Illegal detection of a zero pixel at a branch: " + this);
-            default:
-                throw new AssertionError("Unknown pixel type " + pixelType + " detected at a branch: " + this);
-        }
+        return switch (pixelType) {
+            case TYPE_USUAL_NODE -> false;
+            case TYPE_ISOLATED -> throw new AssertionError(
+                    "Illegal detection of an isolated pixel at a branch: " + this);
+            case TYPE_FREE_BRANCH_END -> throw new AssertionError(
+                    "Illegal detection of TYPE_FREE_BRANCH_END: "
+                            + "here is at least " + neighbourCount + " neighbours in " + this);
+            case TYPE_USUAL_BRANCH -> throw new AssertionError(
+                    "Illegal detection of TYPE_USUAL_BRANCH: "
+                            + "here is at least " + neighbourCount + " neighbours in " + this);
+            case TYPE_ILLEGAL -> false;
+            case TYPE_ZERO -> throw new AssertionError(
+                    "Illegal detection of a zero pixel at a branch: " + this);
+            default -> throw new AssertionError("Unknown pixel type " + pixelType +
+                    " detected at a branch: " + this);
+        };
     }
 
     /**

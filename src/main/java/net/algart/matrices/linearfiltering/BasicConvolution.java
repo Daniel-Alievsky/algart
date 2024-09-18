@@ -79,7 +79,7 @@ public class BasicConvolution extends AbstractConvolution implements Convolution
         Objects.requireNonNull(src, "Null src argument");
         Objects.requireNonNull(pattern, "Null pattern argument");
         Set<IPoint> points = pattern.roundedPoints();
-        List<Matrix<? extends PArray>> shifted = new ArrayList<Matrix<? extends PArray>>();
+        List<Matrix<? extends PArray>> shifted = new ArrayList<>();
         double[] weights = new double[points.size()];
         for (IPoint ip : points) {
             double w = pattern.weight(ip);

@@ -519,19 +519,18 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
             final AtomicLong readyLayers = new AtomicLong(0);
             for (int threadIndex = 0; threadIndex < tasks.length; threadIndex++) {
                 final int ti = threadIndex;
-                tasks[ti] = new Runnable() {
-                    public void run() {
-                        final long layerStep = tasks.length * layerLen;
-                        for (long k = ti, disp = ti * layerLen; k < lastDim; k += tasks.length, disp += layerStep) {
-                            transformMatrixRecursively(null,
-                                    Matrices.matrix((UpdatablePNumberArray) arrayRe.subArr(disp, layerLen), layerDims),
-                                    arrayIm == null ? null :
-                                            Matrices.matrix((UpdatablePNumberArray) arrayIm.subArr(disp, layerLen), layerDims),
-                                    inverse, 1);
-                            if (context != null) {
-                                context.checkInterruptionAndUpdateProgress(null,
-                                        readyLayers.incrementAndGet(), lastDim);
-                            }
+                tasks[ti] = () -> {
+                    final long layerStep = tasks.length * layerLen;
+                    for (long k = ti, disp = ti * layerLen; k < lastDim; k += tasks.length, disp += layerStep) {
+                        transformMatrixRecursively(null,
+                                Matrices.matrix((UpdatablePNumberArray) arrayRe.subArr(disp, layerLen), layerDims),
+                                arrayIm == null ? null :
+                                        Matrices.matrix(
+                                                (UpdatablePNumberArray) arrayIm.subArr(disp, layerLen), layerDims),
+                                inverse, 1);
+                        if (context != null) {
+                            context.checkInterruptionAndUpdateProgress(null,
+                                    readyLayers.incrementAndGet(), lastDim);
                         }
                     }
                 };
@@ -631,11 +630,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
                                 (UpdatablePNumberArray) arrayRe.subArray(layerFrom, arrayRe.length()),
                                 (UpdatablePNumberArray) arrayIm.subArray(layerFrom, arrayIm.length()),
                                 layerTo - layerFrom, layerLen, lastDim);
-                tasks[threadIndex] = new Runnable() {
-                    public void run() {
-                        transform(contextNoProgress, samples, inverse);
-                    }
-                };
+                tasks[threadIndex] = () -> transform(contextNoProgress, samples, inverse);
             }
             Arrays.getThreadPoolFactory(context).performTasks(tasks);
             if (context != null) {

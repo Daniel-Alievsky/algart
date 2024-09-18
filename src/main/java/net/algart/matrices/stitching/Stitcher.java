@@ -53,14 +53,14 @@ public class Stitcher<P extends FramePosition> {
         }
         this.dimCount = dimCount;
         this.stitchingMethod = stitchingMethod;
-        this.frames = new ArrayList<Frame<P>>(frames);
+        this.frames = new ArrayList<>(frames);
         checkFrameDimensions(dimCount, this.frames);
     }
 
     public static <P extends FramePosition> Stitcher<P> getInstance(int dimCount,
         StitchingMethod<P> stitchingMethod, List<? extends Frame<P>> frames)
     {
-        return new Stitcher<P>(dimCount, stitchingMethod, frames);
+        return new Stitcher<>(dimCount, stitchingMethod, frames);
     }
 
     public final int dimCount() {
@@ -76,7 +76,7 @@ public class Stitcher<P extends FramePosition> {
     }
 
     public Stitcher<P> frames(List<? extends Frame<P>> newFrames) {
-        return new Stitcher<P>(dimCount, stitchingMethod, newFrames);
+        return new Stitcher<>(dimCount, stitchingMethod, newFrames);
     }
 
     public List<Frame<P>> actualFrames(RectangularArea area) {
@@ -85,7 +85,7 @@ public class Stitcher<P extends FramePosition> {
             throw new IllegalArgumentException("Illegal number of dimensions in area argument: "
                 + area.coordCount() + " instead of " + dimCount);
         }
-        List<Frame<P>> result = new ArrayList<Frame<P>>();
+        List<Frame<P>> result = new ArrayList<>();
         for (Frame<P> frame : frames) {
             if (frame.position().area().overlaps(area)) {
                 result.add(frame);
@@ -103,7 +103,7 @@ public class Stitcher<P extends FramePosition> {
 
         if (shiftPositions) {
             // optimization: instead of shifting results by area.min(), we just subtract area.min() from all positions
-            List<Frame<P>> shiftedFrames = new ArrayList<Frame<P>>();
+            List<Frame<P>> shiftedFrames = new ArrayList<>();
             for (Frame<P> frame : actualFrames) {
                 Matrix<? extends PArray> m = frame.matrix();
                 RectangularArea shiftedArea = frame.position().area().shift(area.min().symmetric());
@@ -138,10 +138,9 @@ public class Stitcher<P extends FramePosition> {
                     Matrix.ContinuationMode.getConstantMode(outsideValue(actualFrames)));
             }
             if (p instanceof UniversalFramePosition
-                && ((UniversalFramePosition)p).inverseTransform() instanceof LinearOperator)
+                && ((UniversalFramePosition) p).inverseTransform() instanceof LinearOperator inverseTransform)
             {
-                LinearOperator inverseTransform = (LinearOperator)((UniversalFramePosition)p).inverseTransform();
-//                System.out.println("1 frame branch: linear operator " + inverseTransform);
+                //                System.out.println("1 frame branch: linear operator " + inverseTransform);
                 LinearOperator shift = LinearOperator.getShiftInstance(area.min().coordinates());
                 LinearOperator lo = shift.superposition(inverseTransform);
                 Func f = Matrices.asInterpolationFunc(m, Matrices.InterpolationMethod.POLYLINEAR_FUNCTION,
@@ -154,7 +153,7 @@ public class Stitcher<P extends FramePosition> {
 //            System.out.println("coordinate free branch: combining submatrices");
             // optimization: here we can just create corresponded submatrices
             List<Matrix<? extends PArray>> expandedMatrices =
-                new ArrayList<Matrix<? extends PArray>>(actualFrames.size());
+                    new ArrayList<>(actualFrames.size());
             for (Frame<P> localFrame : actualFrames) {
                 Point o = localFrame.position().area().min();
                 IPoint localOffset = o.toRoundedPoint();
@@ -297,7 +296,7 @@ public class Stitcher<P extends FramePosition> {
     public static <P extends FramePosition> List<Frame<P>> cloneIntoJavaMemory(
         ArrayContext arrayContext, List<Frame<P>> frames, boolean freeSourceResources)
     {
-        List<Frame<P>> result = new ArrayList<Frame<P>>(frames.size());
+        List<Frame<P>> result = new ArrayList<>(frames.size());
         for (int k = 0, n = frames.size(); k < n; k++) {
             ArrayContext ac = arrayContext == null ? null : arrayContext.part(k, k + 1, n);
             Frame<P> frame = frames.get(k);

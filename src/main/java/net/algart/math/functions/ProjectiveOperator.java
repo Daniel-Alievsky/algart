@@ -605,8 +605,7 @@ public class ProjectiveOperator
         result = 37 * result + (diagonal != null ? Arrays.hashCode(diagonal) : 0);
         result = 37 * result + Arrays.hashCode(b);
         result = 37 * result + (c != null ? Arrays.hashCode(c) : 0);
-        long temp = Double.doubleToLongBits(d);
-        result = 37 * result + (int) (temp ^ (temp >>> 32));
+        result = 37 * result + Double.hashCode(d);
         return result;
     }
 

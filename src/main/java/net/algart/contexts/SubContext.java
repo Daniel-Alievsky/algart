@@ -108,7 +108,7 @@ public class SubContext extends AbstractContext implements Context {
             }
         }
         this.superContext = superContext;
-        this.allowedClassesSet = new HashSet<Class<?>>(Arrays.asList(allowedClasses));
+        this.allowedClassesSet = new HashSet<>(Arrays.asList(allowedClasses));
         this.memoryModel = null;
     }
 

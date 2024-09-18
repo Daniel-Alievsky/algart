@@ -82,7 +82,6 @@ import java.util.Objects;
  * <caption>
  *     <b>Definition of floating-point summing functions <i>S</i>(<i>r</i>) and <i>s</i>(<i>v</i>)</b>
  * </caption>
- *
  * <tr><td style="padding:8px">
  * <p>Let <b>b</b>[0..<i>M</i>&minus;1] be an array of non-negative integer numbers, called
  * the <i>histogram</i> (and stored by this class), and let <i>N</i> be the sum of all these elements
@@ -368,7 +367,8 @@ public abstract class SummingHistogram extends Histogram {
          * methods at least once
          * and that method was successfully finished.
          * If the object is not initialized, then all its methods, excepting
-         * this one and methods of the basic <code>Object</code> class (<code>toString</code>, <code>equals</code>, etc.)
+         * this one and methods of the basic <code>Object</code> class (<code>toString</code>, <code>equals</code>,
+         * etc.)
          * throw <code>IllegalStateException</code>.
          *
          * @return whether this object is <i>initialized</i>.
@@ -1031,7 +1031,8 @@ public abstract class SummingHistogram extends Histogram {
                 assert b1 == r - r1;
                 assert currentNumberOfDifferentValues() == ndv - 1;
                 v1 = currentValue; // right boundary of the corresponding bar
-                sum1 = currentSum() + 0.5 * r1 + 0.5 * (currentIValue - ndv + 1) + (b1 - 1) * 0.5 * (currentIValue + v1);
+                sum1 = currentSum() + 0.5 * r1 + 0.5 * (currentIValue - ndv + 1) +
+                        (b1 - 1) * 0.5 * (currentIValue + v1);
                 // sum1 is the integral (area left from) v(x) until x=r-1, v(x)=v1
                 // (b1 - 1) * 0.5 * (currentIValue + v1) is the area of the additional trapezoid
             }
@@ -1178,7 +1179,8 @@ public abstract class SummingHistogram extends Histogram {
      * in another case, this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
+     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following
+     * operators:
      *
      * <pre>
      * &#32;   {@link SummingHistogram} hist = {@link SummingHistogram}.{@link #newSummingLongHistogram(long[], int...)
@@ -1270,8 +1272,8 @@ public abstract class SummingHistogram extends Histogram {
      * Precise equivalent of {@link #integralBetweenRanks(long[], double, double)} for a case
      * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
-     *                  that are equal to <i>k</i>.
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source
+     *                  array that are equal to <i>k</i>.
      *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
@@ -1356,7 +1358,8 @@ public abstract class SummingHistogram extends Histogram {
      * in another case, this method returns 0.0.
      * See the {@link SummingHistogram comments to this class} for more details.
      *
-     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following operators:
+     * <p>If <code>fromRank&lt;=toRank</code>, the result of this method is equal to the result of the following
+     * operators:
      *
      * <pre>
      * &#32;   {@link SummingHistogram} hist = {@link SummingHistogram}.{@link #newSummingLongHistogram(long[], int...)
@@ -1402,8 +1405,8 @@ public abstract class SummingHistogram extends Histogram {
      * Precise equivalent of {@link #preciseIntegralBetweenRanks(long[], double, double)} for a case
      * of <code>int[]</code> type of the histogram.
      *
-     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source array
-     *                  that are equal to <i>k</i>.
+     * @param histogram <code>histogram</code>[<i>k</i>]=<b>b</b>[<i>k</i>] is the number of elements in the source
+     *                  array that are equal to <i>k</i>.
      *                  All <code>histogram[k]</code> must be non-negative; in another case,
      *                  <code>IllegalArgumentException</code> can be thrown (but also can be not thrown).
      * @param fromRank  the start rank.
@@ -2602,8 +2605,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingLongHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    new double[bitLevels.length + 1][], // sums: removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -3649,7 +3652,8 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -3804,7 +3808,7 @@ public abstract class SummingHistogram extends Histogram {
     //[[Repeat(INCLUDE_FROM_FILE, THIS_FILE, SummingLongHistogram)
     //        SummingLongHistogram ==> SummingLong1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>   !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class SummingLong1LevelHistogram extends SummingHistogram {
         private final long[][] histogram;
         private final long[] histogram0;
@@ -3877,8 +3881,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingLong1LevelHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    new double[bitLevels.length + 1][], // sums: removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -4634,8 +4638,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingIntHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    new long[bitLevels.length + 1][], // sums: removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -5681,7 +5685,8 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -5841,7 +5846,7 @@ public abstract class SummingHistogram extends Histogram {
     //        0\.0 ==> 0;;
     //        SummingIntHistogram ==> SummingInt1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>   !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class SummingInt1LevelHistogram extends SummingHistogram {
         private final int[][] histogram;
         private final int[] histogram0;
@@ -5914,8 +5919,8 @@ public abstract class SummingHistogram extends Histogram {
 
         SummingInt1LevelHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
-                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: this line will be removed by preprocessor
+                    new long[bitLevels.length + 1][], // sums: removed by preprocessor
+                    new int[bitLevels.length + 1][], // numbersOfDifferentValues: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -6661,7 +6666,7 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingLongHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new double[bitLevels.length + 1][], // sums: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -7534,7 +7539,8 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -7684,7 +7690,7 @@ public abstract class SummingHistogram extends Histogram {
     //        [ \t]*[^\n\r]*DifferentValues(?!\(\)).*?(?:\r(?!\n)|\n|\r\n) ==> ;;
     //        SummingLongHistogram ==> SummingLong1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>   !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class SimplifiedSummingLong1LevelHistogram extends SummingHistogram {
         private final long[][] histogram;
         private final long[] histogram0;
@@ -7747,7 +7753,7 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingLong1LevelHistogram(long[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new double[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new double[bitLevels.length + 1][], // sums: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -8404,7 +8410,7 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingIntHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new long[bitLevels.length + 1][], // sums: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];
@@ -9277,7 +9283,8 @@ public abstract class SummingHistogram extends Histogram {
                 if (m > 1) {
                     int k = 0;
                     while (k + 1 < m && total > currentIRanks[k + 1]
-                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that histogram[m][0]==total
+                            + histogram[k + 1][currentIValue >> bitLevels[k + 1]]) {   // here we can suppose that
+                        // histogram[m][0]==total
                         k++;
                     }
                     while (k > 0) {
@@ -9432,7 +9439,7 @@ public abstract class SummingHistogram extends Histogram {
     //        0\.0 ==> 0;;
     //        SummingIntHistogram ==> SummingInt1LevelHistogram;;
     //        (dec|inc)reasingRank\: ==> ;;
-    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==>   !! Auto-generated: NOT EDIT !! ]]
+    //        [ \t]*\/\/\s+multilevel\s+start.*?\/\/\s+multilevel\s+end.*?(?:\r(?!\n)|\n|\r\n) ==> !! Auto-generated: NOT EDIT !! ]]
     static class SimplifiedSummingInt1LevelHistogram extends SummingHistogram {
         private final int[][] histogram;
         private final int[] histogram0;
@@ -9495,7 +9502,7 @@ public abstract class SummingHistogram extends Histogram {
 
         SimplifiedSummingInt1LevelHistogram(int[] histogram, int[] bitLevels, boolean histogramIsZeroFilled) {
             this(newMultilevelHistogram(histogram, bitLevels.length + 1),
-                    new long[bitLevels.length + 1][], // sums: this line will be removed by preprocessor
+                    new long[bitLevels.length + 1][], // sums: removed by preprocessor
                     histogramIsZeroFilled ? 0 : sumOfAndCheck(histogram, 0, Integer.MAX_VALUE), bitLevels);
             for (int k = 1; k < this.bitLevels.length; k++) {
                 int levelLen = 1 << this.bitLevels[k];

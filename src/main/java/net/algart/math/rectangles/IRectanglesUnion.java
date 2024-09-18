@@ -200,13 +200,7 @@ public class IRectanglesUnion {
             }
             final long thisTo = this.to();
             final long otherTo = o.to();
-            if (thisTo < otherTo) {
-                return -1;
-            }
-            if (thisTo > otherTo) {
-                return 1;
-            }
-            return 0;
+            return Long.compare(thisTo, otherTo);
         }
 
         @Override
@@ -240,9 +234,9 @@ public class IRectanglesUnion {
             final long coord = coord();
             final long from = from();
             final long to = to();
-            result = 31 * result + (int) (coord ^ (coord >>> 32));
-            result = 31 * result + (int) (from ^ (from >>> 32));
-            result = 31 * result + (int) (to ^ (to >>> 32));
+            result = 31 * result + Long.hashCode(coord);
+            result = 31 * result + Long.hashCode(from);
+            result = 31 * result + Long.hashCode(to);
             return result;
         }
 
@@ -475,8 +469,8 @@ public class IRectanglesUnion {
         @Override
         public int hashCode() {
             int result = parentSeries.hashCode();
-            result = 31 * result + (int) (from ^ (from >>> 32));
-            result = 31 * result + (int) (to ^ (to >>> 32));
+            result = 31 * result + Long.hashCode(from);
+            result = 31 * result + Long.hashCode(to);
             return result;
         }
 

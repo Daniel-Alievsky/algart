@@ -224,7 +224,7 @@ public abstract class AbstractDerivator extends AbstractArrayProcessorWithContex
     public <T extends PArray> Matrix<T> asModuleOfVector(Class<? extends T> requiredType,
         List<? extends Matrix<? extends PArray>> vectorComponents)
     {
-        ArrayList<Matrix<? extends PArray>> list = new ArrayList<Matrix<? extends PArray>>(vectorComponents);
+        ArrayList<Matrix<? extends PArray>> list = new ArrayList<>(vectorComponents);
         Matrices.checkDimensionEquality(list);
         int n = list.size();
         if (n == 0) {

@@ -2090,18 +2090,17 @@ public abstract class Boundary2DScanner {
     public double area(ContourLineType contourLineType) {
         final long orientedArea = orientedArea();
         switch (contourLineType) {
-            case STRICT_BOUNDARY: {
+            case STRICT_BOUNDARY -> {
                 return orientedArea;
             }
-            case PIXEL_CENTERS_POLYLINE: {
+            case PIXEL_CENTERS_POLYLINE -> {
                 final long straightStepCount = straightStepCount();
                 return orientedArea - 0.5 * straightStepCount - 0.25 * (stepCount() - straightStepCount);
             }
-            case SEGMENT_CENTERS_POLYLINE: {
+            case SEGMENT_CENTERS_POLYLINE -> {
                 return orientedArea > 0 ? orientedArea - 0.5 : orientedArea + 0.5;
             }
-            default:
-                throw new AssertionError("Unsupported contourLineType=" + contourLineType);
+            default -> throw new AssertionError("Unsupported contourLineType=" + contourLineType);
         }
     }
 
@@ -2132,19 +2131,18 @@ public abstract class Boundary2DScanner {
     public double perimeter(ContourLineType contourLineType) {
         final long stepCount = stepCount();
         switch (contourLineType) {
-            case STRICT_BOUNDARY: {
+            case STRICT_BOUNDARY -> {
                 return stepCount;
             }
-            case PIXEL_CENTERS_POLYLINE: {
+            case PIXEL_CENTERS_POLYLINE -> {
                 final long diagonalStepCount = diagonalStepCount();
                 return stepCount - diagonalStepCount - rotationStepCount() + Step.DIAGONAL_LENGTH * diagonalStepCount;
             }
-            case SEGMENT_CENTERS_POLYLINE: {
+            case SEGMENT_CENTERS_POLYLINE -> {
                 final long nonStraightStepCount = diagonalStepCount() + rotationStepCount();
                 return stepCount - nonStraightStepCount + Step.HALF_DIAGONAL_LENGTH * nonStraightStepCount;
             }
-            default:
-                throw new AssertionError("Unsupported contourLineType=" + contourLineType);
+            default -> throw new AssertionError("Unsupported contourLineType=" + contourLineType);
         }
     }
 
