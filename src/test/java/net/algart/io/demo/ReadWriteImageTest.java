@@ -38,10 +38,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.*;
 
 public class ReadWriteImageTest {
-    public static void main(String[] args) throws IOException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws IOException, NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException {
         int startArgIndex = 0;
         boolean monochrome = false;
         if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-mono")) {
@@ -53,10 +54,15 @@ public class ReadWriteImageTest {
             reduce4ChannelsTo2 = true;
             startArgIndex++;
         }
+        boolean addAlpha = false;
+        if (startArgIndex < args.length && args[startArgIndex].equalsIgnoreCase("-addAlpha")) {
+            addAlpha = true;
+            startArgIndex++;
+        }
         if (args.length < startArgIndex + 3) {
             System.out.printf("Usage: %s [-mono] [-reduce4ChannelsTo2] source_image.jpg/png/bmp " +
                             "copy_1.jpg/png/bmp copy_2.jpg/png/bmp copy_3.jpg/png/bmp " +
-                            "[RGBToPacked|BGRToPacked|RGBToInterleaved|BGRToInterleaved]%n",
+                            "[ALL|RGBToPacked|BGRToPacked|RGBToInterleaved|BGRToInterleaved]%n",
                     ReadWriteImageTest.class.getName());
             return;
         }
@@ -64,23 +70,36 @@ public class ReadWriteImageTest {
         final Path targetFile1 = Paths.get(args[startArgIndex + 1]);
         final Path targetFile2 = Paths.get(args[startArgIndex + 2]);
         final Path targetFile3 = Paths.get(args[startArgIndex + 3]);
-        Class<? extends MatrixToImage> matrixToBufferedImageClass =
-                MatrixToImage.InterleavedRGBToPacked.class;
-        if (args.length > startArgIndex + 4) {
-            matrixToBufferedImageClass = switch (args[startArgIndex + 4]) {
-                case "RGBToPacked" -> MatrixToImage.InterleavedRGBToPacked.class;
-                case "BGRToPacked" -> MatrixToImage.InterleavedBGRToPacked.class;
-                case "RGBToInterleaved" -> MatrixToImage.InterleavedRGBToInterleaved.class;
-                case "BGRToInterleaved" -> MatrixToImage.InterleavedBGRToInterleaved.class;
-                case "RGBToBanded" -> MatrixToImage.InterleavedRGBToBanded.class;
-                case "BGRToBanded" -> MatrixToImage.InterleavedBGRToBanded.class;
-                default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 4]);
-            };
-        }
+        final String mode = args.length <= startArgIndex + 4 ? "ALL" : args[startArgIndex + 4];
 
-        for (int test = 1; test <= 10; test++) {
-            System.out.printf("%nTest #%d%n", test);
-            var toBufferedImage = matrixToBufferedImageClass.getConstructor().newInstance();
+        final Map<Object, Class<? extends MatrixToImage>> matrixToBufferedImageClassMap = new LinkedHashMap<>();
+        matrixToBufferedImageClassMap.put("RGBToPacked", MatrixToImage.InterleavedRGBToPacked.class);
+        matrixToBufferedImageClassMap.put("BGRToPacked", MatrixToImage.InterleavedBGRToPacked.class);
+        matrixToBufferedImageClassMap.put("RGBToInterleaved", MatrixToImage.InterleavedRGBToInterleaved.class);
+        matrixToBufferedImageClassMap.put("BGRToInterleaved", MatrixToImage.InterleavedBGRToInterleaved.class);
+        matrixToBufferedImageClassMap.put("RGBToBanded", MatrixToImage.InterleavedRGBToBanded.class);
+        matrixToBufferedImageClassMap.put("BGRToBanded", MatrixToImage.InterleavedBGRToBanded.class);
+        final var matrixToBufferedImageClasses = new ArrayList<>(matrixToBufferedImageClassMap.values());
+
+        for (int test = 0; test < 12; test++) {
+            System.out.printf("%nTest #%d%n", test + 1);
+            final Class<? extends MatrixToImage> matrixToBufferedImageClass =
+                    mode.equalsIgnoreCase("ALL") ?
+                            matrixToBufferedImageClasses.get(test % matrixToBufferedImageClasses.size()) :
+                            matrixToBufferedImageClassMap.get(mode);
+            if (matrixToBufferedImageClass == null) {
+                throw new IllegalArgumentException("Unknown mode: " + mode);
+            }
+            final MatrixToImage toBufferedImage = matrixToBufferedImageClass.getConstructor().newInstance();
+            if (addAlpha) {
+                if (toBufferedImage instanceof MatrixToImage.InterleavedRGBToPacked c) {
+                    c.setAlwaysAddAlpha(true);
+                } else if (toBufferedImage instanceof MatrixToImage.InterleavedRGBToBanded c) {
+                    c.setAlwaysAddAlpha(true);
+                } else {
+                    addAlpha = false;
+                }
+            }
             System.out.printf("Channel order: %s%n", toBufferedImage.channelOrder());
             var toMatrix = toBufferedImage.channelOrder() == ColorChannelOrder.RGB ?
                     new ImageToMatrix.ToInterleavedRGB() :
@@ -116,6 +135,9 @@ public class ReadWriteImageTest {
             t2 = System.nanoTime();
             System.out.printf("Call separate() method: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
+            if (image.size() != toMatrix.resultNumberOfChannels(bi1)) {
+                throw new AssertionError(image.size() + "!=" + toMatrix.resultNumberOfChannels(bi1));
+            }
 
             if (reduce4ChannelsTo2 && image.size() >= 4) {
                 image.subList(1, 3).clear();
@@ -136,6 +158,12 @@ public class ReadWriteImageTest {
             System.out.printf("Call MatrixToImage.toBufferedImage() method: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
             System.out.println("Result of this conversion (1): " + AWT2MatrixTest.toString(bi2));
+            if (addAlpha && toBufferedImage.resultNumberOfChannels(image.size()) != 4) {
+                throw new AssertionError("Invalid resultNumberOfChannels(" + image.size() + ")");
+            }
+            if (bi2.getColorModel().getNumComponents() != toBufferedImage.resultNumberOfChannels(image.size())) {
+                throw new AssertionError("Invalid " + bi2.getColorModel().getNumComponents());
+            }
 
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> matrix2 = toMatrix.toMatrix(bi2);
@@ -157,7 +185,7 @@ public class ReadWriteImageTest {
             MatrixIO.writeBufferedImage(targetFile1, bi2);
             t2 = System.nanoTime();
             System.out.printf("Call writeBufferedImage() method: %.3f ms, %.3f MB/sec%n",
-                (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
+                    (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
 
             // Testing toMatrix via ColorModel
             toMatrix.setReadingViaColorModel(true);
