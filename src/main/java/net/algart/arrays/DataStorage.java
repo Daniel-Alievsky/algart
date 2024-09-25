@@ -24,10 +24,10 @@
 
 package net.algart.arrays;
 
+import java.nio.ByteOrder;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.HashSet;
-import java.nio.ByteOrder;
 
 /**
  * <p>Data storage: low-level analog of {@link MutableArray},

@@ -24,11 +24,12 @@
 
 package net.algart.arrays.demo;
 
-import java.util.zip.*;
-import java.util.Random;
-import java.util.Locale;
-
 import net.algart.arrays.*;
+
+import java.util.Locale;
+import java.util.Random;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * <p>Simple test for AlgART array hashCode and equals methods.</p>

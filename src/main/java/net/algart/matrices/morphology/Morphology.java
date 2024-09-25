@@ -25,9 +25,10 @@
 package net.algart.matrices.morphology;
 
 import net.algart.arrays.*;
+import net.algart.math.IPoint;
 import net.algart.math.functions.Func;
-import net.algart.math.patterns.*;
-import net.algart.math.IPoint;  // for Javadoc only
+import net.algart.math.patterns.Pattern;
+import net.algart.math.patterns.UniformGridPattern;
 
 /**
  * <p>Mathematical morphology over {@link Matrix <i>n</i>-dimensional matrices} with a random

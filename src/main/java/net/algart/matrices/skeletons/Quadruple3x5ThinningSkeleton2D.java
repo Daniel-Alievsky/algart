@@ -25,6 +25,7 @@
 package net.algart.matrices.skeletons;
 
 import net.algart.arrays.*;
+
 import static net.algart.matrices.skeletons.ThinningTools.*;
 
 /**

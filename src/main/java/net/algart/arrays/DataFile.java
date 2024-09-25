@@ -24,7 +24,8 @@
 
 package net.algart.arrays;
 
-import java.nio.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * <p>Some "data file" (usually disk file) that supports file-mapping operation.

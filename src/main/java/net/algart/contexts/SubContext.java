@@ -24,12 +24,12 @@
 
 package net.algart.contexts;
 
-import java.util.HashSet;
-import java.util.Arrays;
-import java.util.Objects;
-
 import net.algart.arrays.MemoryModel;
 import net.algart.arrays.SimpleMemoryModel;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * <p>A tool allowing to build a new context, called "sub-context",

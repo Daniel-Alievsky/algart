@@ -26,9 +26,9 @@ package net.algart.arrays;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.logging.Logger;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * <p>Some internal service functions for this package.

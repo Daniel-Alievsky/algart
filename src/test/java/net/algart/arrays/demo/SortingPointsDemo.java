@@ -24,7 +24,7 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.ArraySorter;
 
 /**
  * <p>Sorting points: an example from comments to {@link net.algart.arrays.ArraySorter} class</p>

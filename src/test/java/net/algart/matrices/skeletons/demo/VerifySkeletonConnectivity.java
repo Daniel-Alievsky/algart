@@ -31,7 +31,7 @@ import net.algart.math.patterns.Patterns;
 import net.algart.matrices.morphology.BasicMorphology;
 import net.algart.matrices.scanning.ConnectedObjectScanner;
 import net.algart.matrices.scanning.ConnectivityType;
-import net.algart.matrices.skeletons.*;
+import net.algart.matrices.skeletons.ThinningSkeleton;
 
 import java.util.HashSet;
 import java.util.Locale;

@@ -24,15 +24,15 @@
 
 package net.algart.arrays.demo;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Locale;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-
 import net.algart.arrays.*;
 import net.algart.math.functions.LinearFunc;
+
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * <p>Demo of using combined arrays: filling and sorting.</p>

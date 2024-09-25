@@ -24,13 +24,17 @@
 
 package net.algart.arrays.demo;
 
-import java.lang.reflect.Field;
-import java.io.*;
-import java.util.Locale;
-
 import net.algart.arrays.*;
-import net.algart.contexts.*;
-import net.algart.math.functions.*;
+import net.algart.contexts.DefaultArrayContext;
+import net.algart.contexts.DefaultContext;
+import net.algart.math.functions.ConstantFunc;
+import net.algart.math.functions.Func;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.util.Locale;
 
 /**
  * <p>The test illustrating performance of lazy filling of file-based AlgART arrays.</p>

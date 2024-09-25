@@ -24,10 +24,10 @@
 
 package net.algart.math.patterns;
 
-import java.util.Set;
-import java.util.List;
-
 import net.algart.math.*;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p><i>Pattern</i>: non-empty set of {@link Point real points} in multidimensional space

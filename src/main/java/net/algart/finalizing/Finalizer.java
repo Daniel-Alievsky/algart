@@ -24,8 +24,11 @@
 
 package net.algart.finalizing;
 
-import java.lang.ref.*;
-import java.util.*;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p><i>Finalizer</i>: an universal tool allowing to perform any task on deallocation of some object.</p>

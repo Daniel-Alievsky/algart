@@ -24,8 +24,8 @@
 
 package net.algart.arrays;
 
-import net.algart.math.functions.ConstantFunc;
 import net.algart.math.Range;
+import net.algart.math.functions.ConstantFunc;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;

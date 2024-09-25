@@ -24,9 +24,11 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.BufferMemoryModel;
+import net.algart.arrays.UpdatableIntArray;
 
-import java.nio.*;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.Locale;
 
 /**

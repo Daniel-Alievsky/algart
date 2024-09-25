@@ -27,7 +27,7 @@ package net.algart.matrices.morphology;
 import net.algart.arrays.*;
 import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
-import net.algart.math.patterns.*;
+import net.algart.math.patterns.Pattern;
 
 import java.util.Objects;
 

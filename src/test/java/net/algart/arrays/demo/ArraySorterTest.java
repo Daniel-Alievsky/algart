@@ -24,7 +24,9 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.ArrayComparator32;
+import net.algart.arrays.ArrayExchanger32;
+import net.algart.arrays.ArraySorter;
 
 import java.util.Locale;
 

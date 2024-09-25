@@ -24,10 +24,13 @@
 
 package net.algart.arrays.demo;
 
-import java.util.Random;
-import java.util.Locale;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.LargeMemoryModel;
+import net.algart.arrays.MemoryModel;
+import net.algart.arrays.UpdatablePFixedArray;
 
-import net.algart.arrays.*;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * <p>Speed random read/write operations.

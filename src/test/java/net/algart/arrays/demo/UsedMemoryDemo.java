@@ -24,7 +24,9 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.CombinedMemoryModel;
+import net.algart.arrays.UpdatableArray;
 
 import java.util.ArrayList;
 import java.util.List;

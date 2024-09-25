@@ -25,8 +25,10 @@
 package net.algart.matrices.morphology;
 
 import net.algart.arrays.*;
-import net.algart.math.functions.*;
-import net.algart.math.patterns.*;
+import net.algart.math.functions.Func;
+import net.algart.math.functions.LinearFunc;
+import net.algart.math.patterns.Pattern;
+import net.algart.math.patterns.Patterns;
 
 import java.util.ArrayList;
 import java.util.List;

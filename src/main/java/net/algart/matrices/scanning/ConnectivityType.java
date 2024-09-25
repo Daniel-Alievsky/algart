@@ -24,7 +24,8 @@
 
 package net.algart.matrices.scanning;
 
-import net.algart.arrays.*;
+import net.algart.arrays.JArrays;
+import net.algart.arrays.Matrix;
 
 /**
  * <p>Connectivity kind of connected objects in the matrix.

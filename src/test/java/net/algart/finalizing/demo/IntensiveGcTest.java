@@ -24,7 +24,7 @@
 
 package net.algart.finalizing.demo;
 
-import java.io.*;
+import java.io.IOException;
 
 /**
  * <p>Test for very intensive calls of <code>System.gc()</code> methods.</p>

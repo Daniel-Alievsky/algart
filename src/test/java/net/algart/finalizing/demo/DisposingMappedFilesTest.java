@@ -24,10 +24,12 @@
 
 package net.algart.finalizing.demo;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
 import net.algart.finalizing.Finalizer;
+
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 /**
  * <p>Test for close, resize and delete operations together with file mapping.</p>

@@ -24,11 +24,16 @@
 
 package net.algart.finalizing.demo;
 
-import java.lang.ref.*;
-import java.util.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.lang.ref.PhantomReference;
+import java.lang.ref.ReferenceQueue;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>Common test for finalization via reference queues an <code>finalize()</code> method.</p>

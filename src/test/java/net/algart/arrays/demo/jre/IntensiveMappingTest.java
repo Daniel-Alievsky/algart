@@ -24,11 +24,15 @@
 
 package net.algart.arrays.demo.jre;
 
-import java.io.*;
-import java.nio.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>Test for intensive multithreading mapping, that can lead to "Map failed" exception.

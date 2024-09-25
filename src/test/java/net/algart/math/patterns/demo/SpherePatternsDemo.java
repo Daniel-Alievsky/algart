@@ -24,7 +24,6 @@
 
 package net.algart.math.patterns.demo;
 
-import net.algart.math.IPoint;
 import net.algart.math.Point;
 import net.algart.math.patterns.Pattern;
 import net.algart.math.patterns.Patterns;

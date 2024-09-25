@@ -24,10 +24,11 @@
 
 package net.algart.contexts;
 
-import java.util.*;
-import java.util.logging.*;
-import java.util.concurrent.locks.ReentrantLock;
 import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <p>A skeletal implementation of the {@link Context} interface to minimize

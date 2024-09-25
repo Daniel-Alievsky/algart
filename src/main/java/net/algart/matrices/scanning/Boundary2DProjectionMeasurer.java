@@ -24,7 +24,7 @@
 
 package net.algart.matrices.scanning;
 
-import net.algart.arrays.*;
+import net.algart.arrays.JArrays;
 
 import java.util.Objects;
 

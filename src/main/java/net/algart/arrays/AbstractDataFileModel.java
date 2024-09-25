@@ -24,9 +24,9 @@
 
 package net.algart.arrays;
 
+import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
-import java.io.File;
 import java.nio.ByteOrder;
 import java.util.*;
 

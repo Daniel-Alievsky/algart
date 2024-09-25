@@ -25,12 +25,12 @@
 package net.algart.matrices;
 
 import net.algart.arrays.*;
+import net.algart.math.IPoint;
 import net.algart.math.Point;
 import net.algart.math.patterns.Pattern;
-import net.algart.math.IPoint;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 

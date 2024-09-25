@@ -24,8 +24,8 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.finalizing.Finalizer;
 import net.algart.arrays.*;
+import net.algart.finalizing.Finalizer;
 
 /**
  * <p>The main 5 ways of protecting AlgART arrays against illegal changes.</p>

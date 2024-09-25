@@ -24,8 +24,8 @@
 
 package net.algart.arrays;
 
-import java.util.EmptyStackException;
 import java.nio.ByteBuffer;
+import java.util.EmptyStackException;
 import java.util.Objects;
 
 /**

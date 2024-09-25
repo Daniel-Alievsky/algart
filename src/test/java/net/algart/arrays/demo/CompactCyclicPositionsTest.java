@@ -24,8 +24,11 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.Arrays;
+import net.algart.arrays.JArrays;
+import net.algart.arrays.SimpleMemoryModel;
+
 import java.util.Random;
-import net.algart.arrays.*;
 
 /**
  * <p>Test for {@link Arrays#compactCyclicPositions} method.</p>

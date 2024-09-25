@@ -24,7 +24,10 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.PArray;
+import net.algart.arrays.PFixedArray;
+import net.algart.arrays.SimpleMemoryModel;
 
 import java.util.Locale;
 

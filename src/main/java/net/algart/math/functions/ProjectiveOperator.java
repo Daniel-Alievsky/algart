@@ -26,10 +26,10 @@ package net.algart.math.functions;
 
 import net.algart.math.Point;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Arrays;
 
 /**
  * <p>Projective operator (projective transformation):

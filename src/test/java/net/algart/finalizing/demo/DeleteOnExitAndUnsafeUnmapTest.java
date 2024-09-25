@@ -24,11 +24,13 @@
 
 package net.algart.finalizing.demo;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
-import java.lang.reflect.*;
-import java.security.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 /**
  * <p>Simplest test for <code>File.deleteOnExit()</code> method.</p>

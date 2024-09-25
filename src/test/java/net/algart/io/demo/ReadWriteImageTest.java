@@ -24,11 +24,7 @@
 
 package net.algart.io.demo;
 
-import net.algart.arrays.ColorMatrices;
-import net.algart.arrays.ColorChannelOrder;
-import net.algart.arrays.Matrices;
-import net.algart.arrays.Matrix;
-import net.algart.arrays.UpdatablePArray;
+import net.algart.arrays.*;
 import net.algart.io.MatrixIO;
 import net.algart.io.awt.ImageToMatrix;
 import net.algart.io.awt.MatrixToImage;
@@ -38,7 +34,10 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ReadWriteImageTest {
     public static void main(String[] args) throws IOException, NoSuchMethodException, InvocationTargetException,

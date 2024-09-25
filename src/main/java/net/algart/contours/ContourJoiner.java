@@ -24,10 +24,10 @@
 
 package net.algart.contours;
 
-import net.algart.math.rectangles.IRectangleFinder;
 import net.algart.arrays.*;
 import net.algart.contexts.InterruptionException;
 import net.algart.math.IRectangularArea;
+import net.algart.math.rectangles.IRectangleFinder;
 
 import java.util.Locale;
 import java.util.Objects;

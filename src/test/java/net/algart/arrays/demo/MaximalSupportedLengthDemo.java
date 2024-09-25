@@ -24,7 +24,8 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.MemoryModel;
 
 import java.util.Locale;
 

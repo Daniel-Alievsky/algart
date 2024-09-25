@@ -24,8 +24,11 @@
 
 package net.algart.finalizing.demo;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p><i>TempFiles</i>: a tool for creating temporary files and deleting them before exiting program.</p>

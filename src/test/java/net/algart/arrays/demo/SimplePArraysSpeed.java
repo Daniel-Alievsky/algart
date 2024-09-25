@@ -24,11 +24,11 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.*;
+import net.algart.math.functions.LinearFunc;
+
 import java.nio.IntBuffer;
 import java.util.Locale;
-
-import net.algart.arrays.*;
-import net.algart.math.functions.*;
 
 /**
  * <p>Speed of primitive arrays: simplest speed test</p>

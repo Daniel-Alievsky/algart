@@ -24,8 +24,8 @@
 
 package net.algart.matrices.spectra.demo;
 
-import net.algart.matrices.spectra.*;
 import net.algart.arrays.*;
+import net.algart.matrices.spectra.*;
 
 public class FourierHartleyTest {
     static final long MAX_CHECKED_LENGTH = 2048; // maximal length to be compare with slow "discreteXxxTransform"

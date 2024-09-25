@@ -28,7 +28,7 @@ import net.algart.arrays.BitArray;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.SimpleMemoryModel;
 import net.algart.arrays.UpdatableBitArray;
-import net.algart.matrices.skeletons.*;
+import net.algart.matrices.skeletons.ThinningSkeleton;
 
 import java.util.Locale;
 

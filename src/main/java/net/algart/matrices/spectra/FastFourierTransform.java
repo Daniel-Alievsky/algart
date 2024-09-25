@@ -25,7 +25,10 @@
 package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
-import net.algart.matrices.spectra.ComplexScalarSampleArray.*;
+import net.algart.matrices.spectra.ComplexScalarSampleArray.DirectComplexDoubleSampleArray;
+import net.algart.matrices.spectra.ComplexScalarSampleArray.DirectComplexFloatSampleArray;
+import net.algart.matrices.spectra.ComplexScalarSampleArray.DirectZeroOffsetsComplexDoubleSampleArray;
+import net.algart.matrices.spectra.ComplexScalarSampleArray.DirectZeroOffsetsComplexFloatSampleArray;
 
 import java.util.Objects;
 

@@ -24,11 +24,13 @@
 
 package net.algart.matrices.skeletons;
 
-import net.algart.arrays.*;
-import net.algart.matrices.morphology.IterativeErosion;
-import net.algart.math.patterns.Patterns;
+import net.algart.arrays.BitArray;
+import net.algart.arrays.Matrices;
+import net.algart.arrays.Matrix;
 import net.algart.math.IPoint;
 import net.algart.math.functions.Func;
+import net.algart.math.patterns.Patterns;
+import net.algart.matrices.morphology.IterativeErosion;
 
 /**
  * Helper class (collection of functions) to simplify implementation of skeletization classes.

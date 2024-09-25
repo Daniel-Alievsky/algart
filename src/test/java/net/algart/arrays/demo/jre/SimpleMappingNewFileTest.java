@@ -24,14 +24,12 @@
 
 package net.algart.arrays.demo.jre;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.FileChannel;
-import java.security.*;
+import java.io.File;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
-import java.lang.ref.*;
-import java.util.List;
-import java.util.ArrayList;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 /**
  * <p>Simple test for intensive mapping for filling a large file, that can lead to RAM leak.

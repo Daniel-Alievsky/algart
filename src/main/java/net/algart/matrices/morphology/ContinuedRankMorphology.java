@@ -24,9 +24,12 @@
 
 package net.algart.matrices.morphology;
 
-import net.algart.arrays.*;
+import net.algart.arrays.ArrayContext;
+import net.algart.arrays.Matrix;
+import net.algart.arrays.PArray;
+import net.algart.arrays.UpdatablePArray;
 import net.algart.math.functions.Func;
-import net.algart.math.patterns.*;
+import net.algart.math.patterns.Pattern;
 
 /**
  * <p>The filter allowing to transform any {@link RankMorphology} object to another instance of that interface,

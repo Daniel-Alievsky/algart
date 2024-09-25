@@ -24,8 +24,10 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.Arrays;
+import net.algart.arrays.MutableCharArray;
+
 import java.util.Random;
-import net.algart.arrays.*;
 
 /**
  * <p>Test for inserting and removing AlgART array elements.</p>

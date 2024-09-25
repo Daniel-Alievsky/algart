@@ -24,12 +24,15 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.Array;
+import net.algart.arrays.LargeMemoryModel;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
-import java.util.*;
-
-import net.algart.arrays.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * <p>Simple test that calculates check sum of a file or all files in a directory via AlgART arrays.</p>

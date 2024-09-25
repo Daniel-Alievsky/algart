@@ -24,10 +24,10 @@
 
 package net.algart.arrays;
 
+import java.nio.ByteOrder;
 import java.util.EmptyStackException;
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
-import java.nio.ByteOrder;
 
 /**
  * <p>Implementations of arrays for {@link BufferMemoryModel} and {@link LargeMemoryModel}.

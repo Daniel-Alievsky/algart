@@ -24,9 +24,12 @@
 
 package net.algart.arrays.demo.jre;
 
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 
 /**
  * <p>Test for very intensive file mappings. See JVM bugs in comments at the end of the source file.</p>

@@ -33,10 +33,10 @@ package net.algart.arrays;
   256 ==> 65536
      !! Auto-generated: NOT EDIT !! */
 
+import net.algart.math.functions.Func;
+
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
-
-import net.algart.math.functions.Func;
 
 /**
  * <p>Implementation of {@link Array#getData(long, Object, int, int)} methods

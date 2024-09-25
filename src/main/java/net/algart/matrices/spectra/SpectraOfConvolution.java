@@ -25,8 +25,8 @@
 package net.algart.matrices.spectra;
 
 import net.algart.arrays.*;
-import net.algart.math.functions.Func;
 import net.algart.math.functions.AbstractFunc;
+import net.algart.math.functions.Func;
 
 import java.util.concurrent.atomic.AtomicLong;
 

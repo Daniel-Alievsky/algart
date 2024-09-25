@@ -24,7 +24,9 @@
 
 package net.algart.math.patterns;
 
-import net.algart.math.*;
+import net.algart.math.Point;
+import net.algart.math.Range;
+import net.algart.math.RectangularArea;
 
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;

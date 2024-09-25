@@ -24,8 +24,13 @@
 
 package net.algart.arrays;
 
-import java.lang.ref.*;
-import java.util.*;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**

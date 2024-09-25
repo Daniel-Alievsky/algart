@@ -24,9 +24,13 @@
 
 package net.algart.arrays;
 
-import net.algart.math.functions.*;
+import net.algart.math.functions.ConstantFunc;
+import net.algart.math.functions.Func;
+import net.algart.math.functions.LinearFunc;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>Implementations of {@link Arrays} methods making functional arrays.</p>

@@ -24,8 +24,8 @@
 
 package net.algart.matrices.morphology;
 
-import net.algart.arrays.*;
 import net.algart.arrays.Arrays;
+import net.algart.arrays.*;
 import net.algart.math.IPoint;
 import net.algart.math.Point;
 import net.algart.math.functions.Func;

@@ -26,9 +26,9 @@ package net.algart.matrices.morphology;
 
 import net.algart.arrays.*;
 import net.algart.math.IRectangularArea;
+import net.algart.math.patterns.Pattern;
 import net.algart.matrices.ApertureProcessor;
 import net.algart.matrices.DependenceApertureBuilder;
-import net.algart.math.patterns.Pattern;
 import net.algart.matrices.TiledApertureProcessorFactory;
 
 import java.util.LinkedHashMap;

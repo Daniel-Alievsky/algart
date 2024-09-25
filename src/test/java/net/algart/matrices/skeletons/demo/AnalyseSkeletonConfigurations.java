@@ -40,7 +40,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AnalyseSkeletonConfigurations {
     private static final boolean CHECK_ONLY_8_CONNECTED = false; // usually don't increase speed essentially

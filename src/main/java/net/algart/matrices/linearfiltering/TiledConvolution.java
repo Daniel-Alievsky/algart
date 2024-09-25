@@ -35,7 +35,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static net.algart.matrices.DependenceApertureBuilder.*;
+import static net.algart.matrices.DependenceApertureBuilder.SUM;
+import static net.algart.matrices.DependenceApertureBuilder.SUM_MAX_0;
 
 /**
  * <p>The filter allowing to transform any {@link Convolution} object to another instance of that interface,

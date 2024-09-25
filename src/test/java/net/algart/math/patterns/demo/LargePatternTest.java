@@ -24,12 +24,12 @@
 
 package net.algart.math.patterns.demo;
 
+import net.algart.math.IPoint;
 import net.algart.math.patterns.Pattern;
 import net.algart.math.patterns.Patterns;
-import net.algart.math.IPoint;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * <p>Simple test illustrating operations with very large patterns (geometrically).

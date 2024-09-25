@@ -24,8 +24,8 @@
 
 package net.algart.arrays;
 
-import net.algart.math.functions.*;
 import net.algart.math.IRange;
+import net.algart.math.functions.*;
 
 import java.util.Objects;
 

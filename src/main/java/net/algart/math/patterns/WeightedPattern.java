@@ -24,10 +24,10 @@
 
 package net.algart.math.patterns;
 
-import java.util.List;
-
 import net.algart.math.IPoint;
 import net.algart.math.Range;
+
+import java.util.List;
 
 public interface WeightedPattern extends Pattern {
     /**

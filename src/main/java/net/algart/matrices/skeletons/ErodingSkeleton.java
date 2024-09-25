@@ -25,9 +25,11 @@
 package net.algart.matrices.skeletons;
 
 import net.algart.arrays.*;
-import net.algart.matrices.morphology.*;
-import net.algart.math.patterns.*;
-import net.algart.math.functions.*;
+import net.algart.math.functions.Func;
+import net.algart.math.patterns.Pattern;
+import net.algart.matrices.morphology.BasicMorphology;
+import net.algart.matrices.morphology.IterativeErosion;
+import net.algart.matrices.morphology.Morphology;
 
 import java.util.Objects;
 

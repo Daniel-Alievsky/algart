@@ -24,9 +24,9 @@
 
 package net.algart.math.patterns;
 
-import java.util.*;
-
 import net.algart.math.*;
+
+import java.util.*;
 
 /**
  * <p>A skeletal implementation of the {@link Pattern} interface to minimize

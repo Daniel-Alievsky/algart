@@ -24,11 +24,12 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.*;
+import net.algart.contexts.DefaultArrayContext;
+import net.algart.contexts.DefaultContext;
+
 import java.io.File;
 import java.util.Locale;
-
-import net.algart.arrays.*;
-import net.algart.contexts.*;
 
 /**
  * <p>Simple test that creates one zero-filled file via AlgART arrays.</p>

@@ -24,8 +24,8 @@
 
 package net.algart.matrices;
 
-import net.algart.arrays.*;
 import net.algart.arrays.Arrays;
+import net.algart.arrays.*;
 import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 

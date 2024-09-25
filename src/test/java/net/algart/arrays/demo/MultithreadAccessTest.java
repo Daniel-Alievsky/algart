@@ -24,10 +24,13 @@
 
 package net.algart.arrays.demo;
 
-import java.util.Random;
-import java.util.Locale;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.ByteArray;
+import net.algart.arrays.MemoryModel;
+import net.algart.arrays.UpdatableByteArray;
 
-import net.algart.arrays.*;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * <p>Simple access to large array from several threads.</p>

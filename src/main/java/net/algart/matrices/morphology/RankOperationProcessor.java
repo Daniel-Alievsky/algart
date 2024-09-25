@@ -30,8 +30,8 @@ import net.algart.math.patterns.Pattern;
 import net.algart.math.patterns.UniformGridPattern;
 import net.algart.matrices.StreamingApertureProcessor;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 abstract class RankOperationProcessor extends StreamingApertureProcessor {

@@ -24,7 +24,10 @@
 
 package net.algart.io.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.ByteArray;
+import net.algart.arrays.Matrices;
+import net.algart.arrays.Matrix;
+import net.algart.arrays.PArray;
 import net.algart.io.MatrixIO;
 import net.algart.io.awt.MatrixToImage;
 import net.algart.math.functions.Func2;

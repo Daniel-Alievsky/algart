@@ -24,11 +24,14 @@
 
 package net.algart.arrays.demo;
 
-import java.util.Random;
-import java.util.Locale;
-import java.nio.*;
+import net.algart.arrays.JArrays;
+import net.algart.arrays.PackedBitArrays;
+import net.algart.arrays.PackedBitBuffers;
 
-import net.algart.arrays.*;
+import java.nio.ByteBuffer;
+import java.nio.LongBuffer;
+import java.util.Locale;
+import java.util.Random;
 
 /**
  * <p>Basic test for {@link PackedBitBuffers} class</p>

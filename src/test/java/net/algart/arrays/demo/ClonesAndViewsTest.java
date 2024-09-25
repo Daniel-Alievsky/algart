@@ -24,7 +24,10 @@
 
 package net.algart.arrays.demo;
 
-import net.algart.arrays.*;
+import net.algart.arrays.Array;
+import net.algart.arrays.Arrays;
+import net.algart.arrays.MutableArray;
+import net.algart.arrays.UpdatableArray;
 
 /**
  * <p>Simple test for AlgART array clones and views.</p>

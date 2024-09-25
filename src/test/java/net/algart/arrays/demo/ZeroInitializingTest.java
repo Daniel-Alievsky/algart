@@ -24,10 +24,10 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.*;
+
 import java.lang.reflect.Field;
 import java.util.Locale;
-
-import net.algart.arrays.*;
 
 /**
  * <p>The test illustrating that all AlgART arrays, including file-based, are initialized by zeros.</p>

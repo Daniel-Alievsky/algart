@@ -24,12 +24,12 @@
 
 package net.algart.arrays.demo;
 
+import net.algart.arrays.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteOrder;
 import java.util.Locale;
-
-import net.algart.arrays.*;
 
 /**
  * <p>The test of accessing the region of file via AlgART array.</p>

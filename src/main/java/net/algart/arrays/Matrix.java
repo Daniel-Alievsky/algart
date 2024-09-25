@@ -24,7 +24,8 @@
 
 package net.algart.arrays;
 
-import net.algart.math.*;
+import net.algart.math.IPoint;
+import net.algart.math.IRectangularArea;
 
 import java.util.List;
 import java.util.Objects;

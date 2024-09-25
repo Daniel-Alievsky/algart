@@ -29,8 +29,8 @@ import net.algart.math.IPoint;
 import net.algart.math.IRectangularArea;
 import net.algart.math.functions.Func;
 import net.algart.math.patterns.Pattern;
-import net.algart.matrices.DependenceApertureBuilder;
 import net.algart.matrices.ApertureProcessor;
+import net.algart.matrices.DependenceApertureBuilder;
 import net.algart.matrices.TiledApertureProcessorFactory;
 
 import java.util.ArrayList;

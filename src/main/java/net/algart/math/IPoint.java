@@ -27,7 +27,8 @@ package net.algart.math;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
-import java.util.zip.*;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * <p>Point in multidimensional space with integer coordinates.

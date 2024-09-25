@@ -29,8 +29,8 @@ import net.algart.math.functions.LinearFunc;
 
 import java.awt.*;
 import java.awt.color.ColorSpace;
-import java.awt.image.*;
 import java.awt.image.DataBuffer;
+import java.awt.image.*;
 import java.util.Locale;
 import java.util.Objects;
 
