@@ -54,9 +54,9 @@ public abstract class ImageToMatrix {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         final int dimX = bufferedImage.getWidth();
         final int dimY = bufferedImage.getHeight();
-        final int bandCount = getNumberOfChannels(bufferedImage);
-        final long[] dimensions = getResultMatrixDimensions(dimX, dimY, bandCount);
-        final Class<?> elementType = getResultElementType(bufferedImage);
+        final int bandCount = resultNumberOfChannels(bufferedImage);
+        final long[] dimensions = resultMatrixDimensions(dimX, dimY, bandCount);
+        final Class<?> elementType = resultElementType(bufferedImage);
         final long size = Arrays.longMul(dimensions);
         if (size > Integer.MAX_VALUE || size == Long.MIN_VALUE) {
             throw new AssertionError("Illegal getResultMatrixDimensions implementation: too large results");
@@ -66,7 +66,7 @@ public abstract class ImageToMatrix {
         return SimpleMemoryModel.asMatrix(resultData, dimensions);
     }
 
-    public final int getNumberOfChannels(BufferedImage bufferedImage) {
+    public final int resultNumberOfChannels(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         ColorModel cm = bufferedImage.getColorModel();
         boolean gray = cm.getNumComponents() == 1;
@@ -86,17 +86,17 @@ public abstract class ImageToMatrix {
     public abstract ColorChannelOrder channelOrder();
 
     // must be primitive and not boolean
-    public abstract Class<?> getResultElementType(BufferedImage bufferedImage);
+    public abstract Class<?> resultElementType(BufferedImage bufferedImage);
 
-    public final long[] getResultMatrixDimensions(BufferedImage bufferedImage) {
+    public final long[] resultMatrixDimensions(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-        return getResultMatrixDimensions(
+        return resultMatrixDimensions(
                 bufferedImage.getWidth(),
                 bufferedImage.getHeight(),
-                getNumberOfChannels(bufferedImage));
+                resultNumberOfChannels(bufferedImage));
     }
 
-    public abstract long[] getResultMatrixDimensions(int width, int height, int bandCount);
+    public abstract long[] resultMatrixDimensions(int width, int height, int bandCount);
 
     public static Class<?> tryToDetectElementType(SampleModel sampleModel) {
         return switch (sampleModel.getDataType()) {
@@ -111,8 +111,8 @@ public abstract class ImageToMatrix {
 
     protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
 
-    Class<?> getResultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
-        final int numberOfChannels = getNumberOfChannels(bufferedImage);
+    Class<?> resultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
+        final int numberOfChannels = resultNumberOfChannels(bufferedImage);
         final ColorModel colorModel = bufferedImage.getColorModel();
         final SampleModel sampleModel = bufferedImage.getSampleModel();
         final int colorComponentsCount = colorModel.getNumComponents();
@@ -207,17 +207,17 @@ public abstract class ImageToMatrix {
         }
 
         @Override
-        public Class<?> getResultElementType(BufferedImage bufferedImage) {
+        public Class<?> resultElementType(BufferedImage bufferedImage) {
             Objects.requireNonNull(bufferedImage, "Null bufferedImage");
             if (readingViaColorModel || readingViaGraphics) {
                 return byte.class;
             }
-            Class<?> result = getResultElementTypeOrNullForUnsupported(bufferedImage);
+            final Class<?> result = resultElementTypeOrNullForUnsupported(bufferedImage);
             return result == null ? byte.class : result;
         }
 
         @Override
-        public long[] getResultMatrixDimensions(int width, int height, int bandCount) {
+        public long[] resultMatrixDimensions(int width, int height, int bandCount) {
             return new long[]{bandCount, width, height};
         }
 
@@ -238,7 +238,7 @@ public abstract class ImageToMatrix {
             }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
-            final int bandCount = getNumberOfChannels(bufferedImage);
+            final int bandCount = resultNumberOfChannels(bufferedImage);
             assert bandCount <= 4;
             if (java.lang.reflect.Array.getLength(resultJavaArray) < dimX * dimY * bandCount) {
                 throw new IllegalArgumentException("resultJavaArray too small for " +
@@ -339,7 +339,7 @@ public abstract class ImageToMatrix {
             }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
-            final int bandCount = getNumberOfChannels(bufferedImage);
+            final int bandCount = resultNumberOfChannels(bufferedImage);
             final boolean gray = bandCount == 1;
             final boolean invertBandOrder = bgrOrder && (bandCount == 3 || bandCount == 4);
             final boolean banded = bufferedImage.getSampleModel() instanceof BandedSampleModel;
@@ -392,7 +392,7 @@ public abstract class ImageToMatrix {
             }
             final int dimX = bufferedImage.getWidth();
             final int dimY = bufferedImage.getHeight();
-            final int bandCount = getNumberOfChannels(bufferedImage);
+            final int bandCount = resultNumberOfChannels(bufferedImage);
             final ColorModel colorModel = bufferedImage.getColorModel();
             final Raster r = bufferedImage.getRaster();
             Object outData = null;
@@ -400,7 +400,7 @@ public abstract class ImageToMatrix {
             final int gIndex = 1;
             final int bIndex = bgrOrder ? 0 : 2;
             switch (bandCount) {
-                case 4:
+                case 4 -> {
                     for (int y = 0, disp = 0; y < dimY; y++) {
                         for (int x = 0; x < dimX; x++) {
                             outData = r.getDataElements(x, y, outData);
@@ -411,8 +411,8 @@ public abstract class ImageToMatrix {
                             disp += 4;
                         }
                     }
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     for (int y = 0, disp = 0; y < dimY; y++) {
                         for (int x = 0; x < dimX; x++) {
                             outData = r.getDataElements(x, y, outData);
@@ -422,8 +422,8 @@ public abstract class ImageToMatrix {
                             disp += 3;
                         }
                     }
-                    break;
-                case 1:
+                }
+                case 1 -> {
                     for (int y = 0, disp = 0; y < dimY; y++) {
                         for (int x = 0; x < dimX; x++) {
                             outData = r.getDataElements(x, y, outData);
@@ -431,14 +431,13 @@ public abstract class ImageToMatrix {
                             // - note: little other results for grayscale image
                         }
                     }
-                    break;
-                default:
-                    throw new AssertionError("Illegal bandCount = " + bandCount);
+                }
+                default -> throw new AssertionError("Illegal bandCount = " + bandCount);
             }
         }
 
         private boolean isSupportedStructure(BufferedImage bufferedImage) {
-            return getResultElementTypeOrNullForUnsupported(bufferedImage) != null;
+            return resultElementTypeOrNullForUnsupported(bufferedImage) != null;
         }
     }
 

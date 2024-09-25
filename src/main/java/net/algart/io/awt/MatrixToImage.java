@@ -92,10 +92,11 @@ public abstract class MatrixToImage {
         if (dataBuffer == null) {
             dataBuffer = toDataBuffer(interleavedMatrix);
         }
-        final int dimX = getDimX(interleavedMatrix);
-        final int dimY = getDimY(interleavedMatrix);
-        final int bandCount = getNumberOfChannels(interleavedMatrix);
-        byte[][] palette = palette();
+        final int dimX = dimX(interleavedMatrix);
+        final int dimY = dimY(interleavedMatrix);
+        final int bandCount = numberOfChannels(interleavedMatrix);
+        final int resultNumberOfChannels = resultNumberOfChannels(bandCount);
+        final byte[][] palette = palette();
         if (palette != null) {
             if (bandCount != 1) {
                 throw new AssertionError(bandCount + " > 1 bands must not be allowed when " +
@@ -113,24 +114,28 @@ public abstract class MatrixToImage {
         }
         final int[] bandMasks = packedSamplesRGBAMasks(bandCount);
         if (bandMasks != null) {
+            if (resultNumberOfChannels != bandMasks.length) {
+                throw new AssertionError("packedSamplesRGBAMasks() array must contain " +
+                        resultNumberOfChannels + " elements");
+            }
             WritableRaster wr = Raster.createPackedRaster(dataBuffer, dimX, dimY, dimX, bandMasks, null);
             DirectColorModel cm = bandMasks.length > 3 ?
                     new DirectColorModel(32, bandMasks[0], bandMasks[1], bandMasks[2], bandMasks[3]) :
                     new DirectColorModel(24, bandMasks[0], bandMasks[1], bandMasks[2], 0);
             return new BufferedImage(cm, wr, false, null);
         }
-        final int[] sampleOffsets = interleavedSamplesRGBAOffsets(bandCount);
-        if (sampleOffsets == null || sampleOffsets.length == 0) {
-            throw new AssertionError("interleavedSamplesRGBAOffsets() must return non-empty array, " +
-                    "but it returns " + java.util.Arrays.toString(sampleOffsets));
+        final int[] sampleOffsets = interleavedSamplesRGBAOffsets(resultNumberOfChannels);
+        if (sampleOffsets == null || sampleOffsets.length != resultNumberOfChannels) {
+            throw new AssertionError("interleavedSamplesRGBAOffsets() must return non-empty array " +
+                    "with " + resultNumberOfChannels + " elements, but it returns " +
+                    java.util.Arrays.toString(sampleOffsets));
         }
-        final int numberOfChannels = sampleOffsets.length;
         final int numberOfBanks = dataBuffer.getNumBanks();
         final WritableRaster wr;
         if (numberOfBanks == 1) {
             wr = Raster.createInterleavedRaster(
-                    dataBuffer, dimX, dimY, dimX * numberOfChannels,
-                    numberOfChannels, sampleOffsets, null);
+                    dataBuffer, dimX, dimY, dimX * resultNumberOfChannels,
+                    resultNumberOfChannels, sampleOffsets, null);
         } else {
             final int[] indexes = bandedSamplesRGBABankIndexes(numberOfBanks);
             final int[] offsets = new int[numberOfBanks];
@@ -142,7 +147,7 @@ public abstract class MatrixToImage {
         // - Important! Even for monochrome case (numberOfChannels == 1), we must use createInterleavedRaster!
         // If we try to call createBandedRaster in this case,
         // createGraphics().drawXxx method will use incorrect (translated) intensity
-        ComponentColorModel cm = getComponentColorModel(dataBuffer, numberOfChannels);
+        final ComponentColorModel cm = componentColorModel(dataBuffer, resultNumberOfChannels);
         return new BufferedImage(cm, wr, false, null);
     }
 
@@ -153,7 +158,7 @@ public abstract class MatrixToImage {
      * @param interleavedMatrix the interleaved matrix.
      * @return the width of the corresponding image.
      */
-    public int getDimX(Matrix<? extends PArray> interleavedMatrix) {
+    public int dimX(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 2);
     }
@@ -165,7 +170,7 @@ public abstract class MatrixToImage {
      * @param interleavedMatrix the interleaved matrix.
      * @return the height of the corresponding image.
      */
-    public int getDimY(Matrix<? extends PArray> interleavedMatrix) {
+    public int dimY(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return (int) interleavedMatrix.dim(interleavedMatrix.dimCount() - 1);
     }
@@ -177,7 +182,7 @@ public abstract class MatrixToImage {
      * @param interleavedMatrix the interleaved matrix.
      * @return the corresponding number of color bands.
      */
-    public int getNumberOfChannels(Matrix<? extends PArray> interleavedMatrix) {
+    public int numberOfChannels(Matrix<? extends PArray> interleavedMatrix) {
         checkMatrix(interleavedMatrix);
         return interleavedMatrix.dimCount() == 2 ? 1 : (int) interleavedMatrix.dim(0);
     }
@@ -252,7 +257,7 @@ public abstract class MatrixToImage {
      * <p>The default implementation is suitable for monochrome, indexed and multi-bank data buffers.</p>
      *
      * <p>Note: if the interleaved matrix is monochrome or indexed, i.e.
-     * <code>{@link #getNumberOfChannels(Matrix) getBandCount}(interleavedMatrix)==1</code>,
+     * <code>{@link #numberOfChannels(Matrix) getBandCount}(interleavedMatrix)==1</code>,
      * this method returns
      * <pre>
      * Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue())
@@ -270,7 +275,7 @@ public abstract class MatrixToImage {
      * depending on the structure of the data buffer.
      */
     public long colorValue(Matrix<? extends PArray> interleavedMatrix, Color color, int bankIndex) {
-        final int bandCount = getNumberOfChannels(interleavedMatrix);
+        final int bandCount = numberOfChannels(interleavedMatrix);
         if (bandCount == 1) {
             return Math.round(0.3 * color.getRed() + 0.59 * color.getGreen() + 0.11 * color.getBlue());
         }
@@ -310,6 +315,27 @@ public abstract class MatrixToImage {
     protected abstract java.awt.image.DataBuffer toDataBuffer(PArray interleavedArray, int bandCount);
 
     /**
+     * Returns the number of channels in the resulting buffered image if the number of source channels is specified
+     * in the argument.
+     *
+     * <p>Usually this method returns <code>sourceNumberOfChannels</code> without change,
+     * but may differ if {@link #toDataBuffer(PArray, int)} method performs some correction of the image structure,
+     * for example, adds some channels. This is true for the classes
+     * {@link InterleavedRGBToBanded}, {@link InterleavedBGRToBanded},
+     * {@link InterleavedRGBToPacked}, {@link InterleavedBGRToPacked},
+     * when <code>sourceNumberOfChannels==2</code> and also
+     * when automatic adding the alpha-channel is turned on
+     * using their method <code>setAlwaysAddAlpha(true)</code>:
+     * in both cases this method returns 4 (RGBA or BGRA image).
+     *
+     * @param sourceNumberOfChannels the number of channels in the source image.
+     * @return the actual number of channels in the created <code>BufferedImage</code>.
+     */
+    public int resultNumberOfChannels(int sourceNumberOfChannels) {
+        return sourceNumberOfChannels;
+    }
+
+    /**
      * Returns the band masks, which will be passed to {@link
      * Raster#createPackedRaster(java.awt.image.DataBuffer, int, int, int, int[], Point)} method,
      * if you want to convert data into a packed <code>BufferedImage</code>.
@@ -333,15 +359,11 @@ public abstract class MatrixToImage {
      * Returns the band offsets inside the single pixel, which will be passed to {@link
      * Raster#createInterleavedRaster(java.awt.image.DataBuffer, int, int, int, int, int[], Point)} method,
      * if you want to convert data into an interleaved <code>BufferedImage</code>.
-     * The resulting array must contain at least one element.
-     *
-     * <p>Note that actual number of color channels will be equal to the length of the returned array,
-     * not to the original <code>bandCount</code>; for example, this allows to automatically add
-     * an alpha-channel to a monochrome image (with automatic conversion into 4-channel RGBA image).
-     * But this feature is not used by the classes in this package.
+     * The length of resulting array must be equal to <code>bandCount</code> argument.
      *
      * @param bandCount the number of bands (color channels) in the source matrix; always &ge;1.
      * @return the band offsets for storing bands of the single pixel.
+     * @throws IllegalArgumentException if the argument is zero or negative.
      */
     protected int[] interleavedSamplesRGBAOffsets(int bandCount) {
         return increasedIndexes(bandCount);
@@ -351,10 +373,11 @@ public abstract class MatrixToImage {
      * Returns the bank indexes, which will be passed to {@link
      * Raster#createBandedRaster(DataBuffer, int, int, int, int[], int[], Point)} method,
      * if you want to convert data into a banded <code>BufferedImage</code>.
-     * The resulting array must contain at least one element.
+     * The length of resulting array must be equal to <code>bandCount</code> argument.
      *
      * @param bankCount the number of banks in the data buffer.
      * @return the bank indexes for each band.
+     * @throws IllegalArgumentException if the argument is zero or negative.
      */
     protected int[] bandedSamplesRGBABankIndexes(int bankCount) {
         return increasedIndexes(bankCount);
@@ -368,7 +391,7 @@ public abstract class MatrixToImage {
      * @param bankIndex  the band index.
      * @return the data array for the specified bank.
      */
-    public static Object getDataArray(java.awt.image.DataBuffer dataBuffer, int bankIndex) {
+    public static Object dataArray(java.awt.image.DataBuffer dataBuffer, int bankIndex) {
         if (dataBuffer instanceof java.awt.image.DataBufferByte) {
             return ((java.awt.image.DataBufferByte) dataBuffer).getData(bankIndex);
         } else if (dataBuffer instanceof java.awt.image.DataBufferShort) {
@@ -399,9 +422,11 @@ public abstract class MatrixToImage {
         return len;
     }
 
-    private static ComponentColorModel getComponentColorModel(DataBuffer dataBuffer, int numberOfChannels) {
-        ColorSpace cs = ColorSpace.getInstance(numberOfChannels == 1 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
-        boolean hasAlpha = numberOfChannels > 3;
+    private static ComponentColorModel componentColorModel(DataBuffer dataBuffer, int numberOfChannels) {
+        ColorSpace cs = ColorSpace.getInstance(numberOfChannels < 3 ? ColorSpace.CS_GRAY : ColorSpace.CS_sRGB);
+        boolean hasAlpha = numberOfChannels == 2 || numberOfChannels > 3;
+        // - note: 2-channel image is a possible case, but we must interpret this as CS_GRAY with alpha,
+        // because we need to create a 2-component color model, compatible with 2-channel raster
         return new ComponentColorModel(cs, null,
                 hasAlpha,
                 false,
@@ -409,7 +434,19 @@ public abstract class MatrixToImage {
                 dataBuffer.getDataType());
     }
 
+    private static int increaseNumberOfChannelsTo4(int sourceNumberOfChannels, boolean alwaysAddAlpha) {
+        return switch (sourceNumberOfChannels) {
+            case 1, 3 -> alwaysAddAlpha ? 4 : sourceNumberOfChannels;
+            case 2, 4 -> 4;
+            default -> throw new IllegalArgumentException("Illegal sourceNumberOfChannels = " +
+                    sourceNumberOfChannels);
+        };
+    }
+
     private static int[] increasedIndexes(int length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("Zero or negative number of channels: " + length);
+        }
         int[] result = new int[length];
         for (int k = 0; k < result.length; k++) {
             result[k] = k;
@@ -431,9 +468,10 @@ public abstract class MatrixToImage {
         if (interleavedMatrix.dimCount() != 3 && interleavedMatrix.dimCount() != 2) {
             throw new IllegalArgumentException("Interleaved matrix must be 2- or 3-dimensional");
         }
-        long bandCount = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
-        if (bandCount < 1 || bandCount > 4) {
-            throw new IllegalArgumentException("The number of color channels(RGBA) must be in 1..4 range");
+        final long numberOfChannels = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
+        if (numberOfChannels < 1 || numberOfChannels > 4) {
+            throw new IllegalArgumentException("Invalid number " + numberOfChannels +
+                    " of color channels (RGBA): it must be in 1..4 range");
         }
         if (interleavedMatrix.size() > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large interleaved matrix " + interleavedMatrix
@@ -475,7 +513,7 @@ public abstract class MatrixToImage {
             final int len = checkArray(interleavedArray, bandCount);
             final byte[] ja = interleavedArray.jaByte();
             switch (bandCount) {
-                case 1: {
+                case 1 -> {
                     if (alwaysAddAlpha) {
                         int[] result = new int[len];
                         for (int j = 0, disp = 0; j < len; j++, disp++) {
@@ -484,14 +522,14 @@ public abstract class MatrixToImage {
                                     | (ja[disp] & 0xFF)
                                     | 0xFF000000;
                         }
-                        return new java.awt.image.DataBufferInt(result, len);
+                        return new DataBufferInt(result, len);
                     } else {
                         byte[] result = new byte[len];
                         System.arraycopy(ja, 0, result, 0, result.length);
-                        return new java.awt.image.DataBufferByte(result, len);
+                        return new DataBufferByte(result, len);
                     }
                 }
-                case 2: {
+                case 2 -> {
                     int[] result = new int[len];
                     for (int j = 0, disp = 0; j < len; j++, disp += 2) {
                         result[j] = (ja[disp] & 0xFF) << 16
@@ -499,9 +537,9 @@ public abstract class MatrixToImage {
                                 | (ja[disp] & 0xFF)
                                 | (ja[disp + 1] & 0xFF) << 24;
                     }
-                    return new java.awt.image.DataBufferInt(result, len);
+                    return new DataBufferInt(result, len);
                 }
-                case 3: {
+                case 3 -> {
                     int[] result = new int[len];
                     for (int j = 0, disp = 0; j < len; j++, disp += 3) {
                         result[j] = (ja[disp] & 0xFF) << 16
@@ -509,9 +547,9 @@ public abstract class MatrixToImage {
                                 | (ja[disp + 2] & 0xFF)
                                 | 0xFF000000;
                     }
-                    return new java.awt.image.DataBufferInt(result, len);
+                    return new DataBufferInt(result, len);
                 }
-                case 4: {
+                case 4 -> {
                     int[] result = new int[len];
                     for (int j = 0, disp = 0; j < len; j++, disp += 4) {
                         result[j] = (ja[disp] & 0xFF) << 16
@@ -519,16 +557,20 @@ public abstract class MatrixToImage {
                                 | (ja[disp + 2] & 0xFF)
                                 | (ja[disp + 3] & 0xFF) << 24;
                     }
-                    return new java.awt.image.DataBufferInt(result, len);
+                    return new DataBufferInt(result, len);
                 }
-                default:
-                    throw new IllegalArgumentException("Illegal bandCount = " + bandCount);
+                default -> throw new IllegalArgumentException("Illegal bandCount = " + bandCount);
             }
         }
 
         @Override
+        public int resultNumberOfChannels(int sourceNumberOfChannels) {
+            return increaseNumberOfChannelsTo4(sourceNumberOfChannels, alwaysAddAlpha);
+        }
+
+        @Override
         protected int[] packedSamplesRGBAMasks(int bandCount) {
-            if (alwaysAddAlpha || bandCount == 4 || bandCount == 2) {
+            if (bandCount == 4 || bandCount == 2 || isAlwaysAddAlpha()) {
                 return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000};
             } else if (bandCount == 3) {
                 return new int[]{0x00ff0000, 0x0000ff00, 0x000000ff};
@@ -540,13 +582,19 @@ public abstract class MatrixToImage {
 
     public static class InterleavedBGRToPacked extends InterleavedRGBToPacked {
         @Override
+        public InterleavedBGRToPacked setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+            super.setAlwaysAddAlpha(alwaysAddAlpha);
+            return this;
+        }
+
+        @Override
         public ColorChannelOrder channelOrder() {
             return ColorChannelOrder.BGR;
         }
 
         @Override
         protected int[] packedSamplesRGBAMasks(int bandCount) {
-            if (bandCount == 4 || bandCount == 2) {
+            if (bandCount == 4 || bandCount == 2 || isAlwaysAddAlpha()) {
                 return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000};
             } else if (bandCount == 3) {
                 return new int[]{0x000000ff, 0x0000ff00, 0x00ff0000};
@@ -634,21 +682,21 @@ public abstract class MatrixToImage {
             final int len = checkArray(interleavedArray, bandCount);
             final byte[] ja = interleavedArray.jaByte();
             switch (bandCount) {
-                case 1: {
+                case 1 -> {
                     if (alwaysAddAlpha) {
                         byte[][] result = new byte[4][len];
                         System.arraycopy(ja, 0, result[0], 0, len);
                         System.arraycopy(ja, 0, result[1], 0, len);
                         System.arraycopy(ja, 0, result[2], 0, len);
                         JArrays.fill(result[3], (byte) 0xFF);
-                        return new java.awt.image.DataBufferByte(result, len);
+                        return new DataBufferByte(result, len);
                     } else {
                         byte[] result = new byte[len];
                         System.arraycopy(ja, 0, result, 0, len);
-                        return new java.awt.image.DataBufferByte(result, len);
+                        return new DataBufferByte(result, len);
                     }
                 }
-                case 2: {
+                case 2 -> {
                     byte[][] result = new byte[4][len];
                     for (int j = 0, disp = 0; j < len; j++, disp += 2) {
                         result[0][j] = ja[disp];
@@ -656,9 +704,9 @@ public abstract class MatrixToImage {
                         result[2][j] = ja[disp];
                         result[3][j] = ja[disp + 1];
                     }
-                    return new java.awt.image.DataBufferByte(result, len);
+                    return new DataBufferByte(result, len);
                 }
-                case 3: {
+                case 3 -> {
                     byte[][] result;
                     if (alwaysAddAlpha) {
                         result = new byte[4][len];
@@ -676,9 +724,9 @@ public abstract class MatrixToImage {
                             result[2][j] = ja[disp + 2];
                         }
                     }
-                    return new java.awt.image.DataBufferByte(result, len);
+                    return new DataBufferByte(result, len);
                 }
-                case 4: {
+                case 4 -> {
                     byte[][] result = new byte[4][len];
                     for (int j = 0, disp = 0; j < len; j++, disp += 4) {
                         result[0][j] = ja[disp];
@@ -686,15 +734,25 @@ public abstract class MatrixToImage {
                         result[2][j] = ja[disp + 2];
                         result[3][j] = ja[disp + 3];
                     }
-                    return new java.awt.image.DataBufferByte(result, len);
+                    return new DataBufferByte(result, len);
                 }
-                default:
-                    throw new IllegalArgumentException("Illegal bandCount = " + bandCount);
+                default -> throw new IllegalArgumentException("Illegal bandCount = " + bandCount);
             }
+        }
+
+        @Override
+        public int resultNumberOfChannels(int sourceNumberOfChannels) {
+            return increaseNumberOfChannelsTo4(sourceNumberOfChannels, alwaysAddAlpha);
         }
     }
 
     public static class InterleavedBGRToBanded extends InterleavedRGBToBanded {
+        @Override
+        public InterleavedBGRToBanded setAlwaysAddAlpha(boolean alwaysAddAlpha) {
+            super.setAlwaysAddAlpha(alwaysAddAlpha);
+            return this;
+        }
+
         @Override
         public ColorChannelOrder channelOrder() {
             return ColorChannelOrder.BGR;

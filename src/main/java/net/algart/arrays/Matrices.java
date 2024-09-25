@@ -2143,7 +2143,7 @@ public class Matrices {
         }
         final List<Matrix<? extends PArray>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty separated list");
+            throw new IllegalArgumentException("Empty separated matrix list");
         }
         final PArray[] arrays = arraysOfParallelMatrices(PArray.class, list, true);
         assert arrays.length > 0;
@@ -2227,7 +2227,7 @@ public class Matrices {
         }
         final List<Matrix<? extends T>> list = new ArrayList<>(separated);
         if (list.isEmpty()) {
-            throw new IllegalArgumentException("Empty separated list");
+            throw new IllegalArgumentException("Empty separated matrix list");
         }
         final PArray[] arrays = arraysOfParallelMatrices(PArray.class, list, true);
         final Matrix<?> m0 = list.get(0);

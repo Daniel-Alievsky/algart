@@ -32,6 +32,7 @@ import net.algart.io.awt.ImageToMatrix;
 import net.algart.io.awt.MatrixToImage;
 
 import java.awt.*;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.SampleModel;
@@ -95,11 +96,13 @@ public class AWT2MatrixTest {
 
     static String toString(BufferedImage bi) {
         final SampleModel sm = bi.getSampleModel();
+        final ColorSpace cs = bi.getColorModel().getColorSpace();
         final DataBuffer db = bi.getData().getDataBuffer();
         return bi +
                 "; sample model: " + sm + " " +
                 sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands() +
                 " type " + sm.getDataType() + " (" + ImageToMatrix.tryToDetectElementType(sm) + ")" +
-                "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";
+                "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks" +
+                "; color space: numComponents " + cs.getNumComponents() + ", type " + cs.getType();
     }
 }

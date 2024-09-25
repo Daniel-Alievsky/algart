@@ -74,7 +74,7 @@ public class ReadWriteImageTest {
                 case "BGRToInterleaved" -> MatrixToImage.InterleavedBGRToInterleaved.class;
                 case "RGBToBanded" -> MatrixToImage.InterleavedRGBToBanded.class;
                 case "BGRToBanded" -> MatrixToImage.InterleavedBGRToBanded.class;
-                default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 3]);
+                default -> throw new IllegalArgumentException("Unknown mode: " + args[startArgIndex + 4]);
             };
         }
 
@@ -119,6 +119,7 @@ public class ReadWriteImageTest {
 
             if (reduce4ChannelsTo2 && image.size() >= 4) {
                 image.subList(1, 3).clear();
+                System.out.println("Reducing 4-channel image to 2-channel image");
             }
             t1 = System.nanoTime();
             final Matrix<UpdatablePArray> interleave = Matrices.interleave(image);
@@ -151,13 +152,12 @@ public class ReadWriteImageTest {
             t2 = System.nanoTime();
             System.out.printf("Drawing text: %.3f ms%n", (t2 - t1) * 1e-6);
 
-            System.out.println("Writing " + targetFile1 + "...");
+            System.out.println("Writing result of the conversion (1) into " + targetFile1 + "...");
             t1 = System.nanoTime();
             MatrixIO.writeBufferedImage(targetFile1, bi2);
             t2 = System.nanoTime();
             System.out.printf("Call writeBufferedImage() method: %.3f ms, %.3f MB/sec%n",
                 (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
-
 
             // Testing toMatrix via ColorModel
             toMatrix.setReadingViaColorModel(true);
@@ -175,7 +175,7 @@ public class ReadWriteImageTest {
             System.out.println("Result of this conversion (2): " + AWT2MatrixTest.toString(bi3));
 
             AWT2MatrixTest.drawTextOnImage(bi3);
-            System.out.println("Writing " + targetFile2 + "...");
+            System.out.println("Writing result of this conversion (2) into " + targetFile2 + "...");
             MatrixIO.writeBufferedImage(targetFile2, bi3);
 
             if (!matrix1.equals(matrix3)) {
@@ -200,7 +200,7 @@ public class ReadWriteImageTest {
             System.out.println("Result of this conversion (3): " + AWT2MatrixTest.toString(bi4));
 
             AWT2MatrixTest.drawTextOnImage(bi4);
-            System.out.println("Writing " + targetFile3 + "...");
+            System.out.println("Writing result of the conversion (3) into " + targetFile3 + "...");
             MatrixIO.writeBufferedImage(targetFile3, bi4);
 
             if (!matrix1.equals(matrix4)) {
