@@ -191,7 +191,7 @@ public class ARTTI {
     return loadClass(name,false,loaderId);
   }
   /**
-   * Loads a .class file by DCO system; allows to specify whether static
+   * Loads a .class file by DCO system; allows specifying whether static
    * initializing is required.
    * @param name      Full class name (with package)
    * @param initialize whether the class must be initialized

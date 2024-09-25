@@ -2027,10 +2027,14 @@ public class Matrices {
      * of color channels in RGBRGB... interleaving format &mdash; so it makes sense to limit
      * this value, because too large first dimension (millions) usually means incorrect usage of this function.
      * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
-     * <code>OutOfMemoryError</code>.
+     * <code>OutOfMemoryError</code>.</p>
+     *
+     * <p>Note that the result of this method is a newly created
+     * modifiable <code>List</code> (probable {@link ArrayList}):
+     * you can modify it, in particular remove or add new elements.</p>
      *
      * @param <T>         the generic type of the built-in AlgART arrays.
-     * @param context     the context; allows to specify (in particular)
+     * @param context     the context; allows specifying (in particular)
      *                    the memory model for creating returned matrices;
      *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
@@ -2198,7 +2202,7 @@ public class Matrices {
      * will return <code>true</code> for the {@link Matrix#array() built-in array}.</p>
      *
      * @param <T>       the generic type of the built-in AlgART arrays.
-     * @param context   the context; allows to specify (in particular)
+     * @param context   the context; allows specifying (in particular)
      *                  the memory model for creating returned matrix;
      *                  can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
@@ -2275,9 +2279,13 @@ public class Matrices {
      * In any case, the number of returned matrices, greater than {@code Integer.MAX_VALUE}, usually leads to
      * <code>OutOfMemoryError</code>.</p>
      *
-     * <p>Note that the matrices in the returned list are <i>views</i> of the corresponding regions
-     * of the source matrix: modification in the source matrix will affect the returned matrices,
-     * and vice versa.</p>
+     * <p>Note that the result of this method is a newly created
+     * modifiable <code>List</code> (probable {@link ArrayList}):
+     * you can modify it, in particular remove or add new elements.</p>
+     *
+     * <p>At the same time, the <i>elements</i> of the returned list are the <i>views</i>
+     * of the corresponding regions of the source matrix:
+     * modification in the source matrix will affect the returned matrices, and vice versa.</p>
      *
      * @param <T>    the generic type of the built-in AlgART arrays.
      * @param merged the source merged matrix.
@@ -2311,7 +2319,7 @@ public class Matrices {
      * mergeLayers(Arrays.SMM, matrices)}.
      *
      * @param <T>      the generic type of the built-in AlgART arrays.
-     * @param matrices list of the source matrices; must be non-empty.
+     * @param matrices the list of the source matrices; must be non-empty.
      * @return result merged matrix.
      * @throws NullPointerException     if <code>matrices</code> list or
      *                                  one of its elements is {@code null}.
@@ -3933,7 +3941,7 @@ public class Matrices {
      * but by {@link ApertureFilterOperator#getInstance(Func func, long... apertureDim)} method,
      * where the first argument is the result of {@link ResizingMethod.Averaging#getAveragingFunc(long[])
      * resizingMethod.getAveragingFunc(apertureDim)}.
-     * It allows to specify non-standard averaging algorithm.
+     * This allows specifying non-standard averaging algorithm.
      * For example, for binary matrices, containing a little number of unit elements, {@link Func#MAX} can be
      * a better choice than the usual linear averaging.
      * </ol>

@@ -137,7 +137,7 @@ public abstract class AbstractSpectralTransform implements SpectralTransform {
      * that can be used by methods of this class for internal needs.
      * If this class was created by {@link #AbstractSpectralTransform() the costructor without argument},
      * then the standard value {@link net.algart.arrays.Arrays.SystemSettings#maxTempJavaMemory()} will be used.
-     * This constructor allows to specify this amount manually, usually larger than that standard value.
+     * This constructor allows specifying this amount manually, usually larger than that standard value.
      * Java memory is very useful for improving performance of {@link #transformMatrix transformMatrix} method
      * (and {@link #directTransformMatrix directTransformMatrix} /
      * {@link #inverseTransformMatrix inverseTransformMatrix} methods),

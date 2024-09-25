@@ -96,8 +96,8 @@ public class AWT2MatrixTest {
     static String toString(BufferedImage bi) {
         final SampleModel sm = bi.getSampleModel();
         final DataBuffer db = bi.getData().getDataBuffer();
-        return bi
-                + "; sample model: " + sm + " " +
+        return bi +
+                "; sample model: " + sm + " " +
                 sm.getWidth() + "x" + sm.getHeight() + "x" + sm.getNumBands() +
                 " type " + sm.getDataType() + " (" + ImageToMatrix.tryToDetectElementType(sm) + ")" +
                 "; data buffer: " + db + " type " + db.getDataType() + ", " + db.getNumBanks() + " banks";

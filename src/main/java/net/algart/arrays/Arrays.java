@@ -2474,7 +2474,7 @@ public class Arrays {
 
     /**
      * The version of {@link #nObjectCopies(long, Object) nObjectCopies(n, element)} method
-     * with <code>element=null</code> that allows to specify the {@link Array#elementType() element type}
+     * with <code>element=null</code> that allows specifying the {@link Array#elementType() element type}
      * of the returned array. (For that method, the element type will be <code>element.getClass()</code>,
      * but if <code>element</code> is {@code null}, the element type is always <code>Object.class</code>,
      * that leads to problems while copying the created array to another object arrays.)
@@ -3653,7 +3653,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -3815,7 +3815,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -3960,11 +3960,11 @@ public class Arrays {
      *
      * <p>Please draw attention to the formula at the step 2. It differs from the more obvious formula
      * <code>(int)((v-from)/(to-from)*histogram.length)</code>
-     * and theoretically can lead to little other results.
+     * and theoretically, it can lead to a few other results.
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4025,7 +4025,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4079,7 +4079,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4134,7 +4134,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4188,7 +4188,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4251,7 +4251,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4338,7 +4338,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,
@@ -4397,7 +4397,7 @@ public class Arrays {
      *
      * <p>The <code>context</code> argument is used in the same manner as in
      * {@link #copy(ArrayContext, UpdatableArray, Array)} method.
-     * Namely, the context allows to specify the desired number of parallel tasks,
+     * Namely, the context allows specifying the desired number of parallel tasks,
      * provide the pool factory, interrupt this method and show its progress.
      * If the <code>context</code> argument is {@code null},
      * then this method still may use several threads,

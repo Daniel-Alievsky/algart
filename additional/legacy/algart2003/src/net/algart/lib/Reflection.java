@@ -231,7 +231,7 @@ public final class Reflection implements TrueStatic {
     }
 
     /**
-     * Loads a .class file by DCO system; allows to specify whether static
+     * Loads a .class file by DCO system; allows specifying whether static
      * initializing is required.
      *
      * <p><b>Do not use this method</b> for true-static classes!
