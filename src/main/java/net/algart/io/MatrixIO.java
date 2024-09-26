@@ -324,17 +324,20 @@ public class MatrixIO {
     }
 
     public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
-        writeImage(file, image, null);
+        writeImage(file, image, true, null);
     }
 
     public static void writeImage(
             Path file,
             List<? extends Matrix<? extends PArray>> image,
+            boolean convertAllElementTypeToByte,
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
         Objects.requireNonNull(image, "Null image");
         final Matrix<PArray> matrix = Matrices.interleave(image);
-        final BufferedImage bi = new MatrixToImage.InterleavedRGBToInterleaved().toBufferedImage(matrix);
+        final MatrixToImage.InterleavedRGBToInterleaved converter = new MatrixToImage.InterleavedRGBToInterleaved();
+        converter.setBytesRequired(convertAllElementTypeToByte);
+        final BufferedImage bi = converter.toBufferedImage(matrix);
         writeBufferedImage(file, bi, customizer);
     }
 

@@ -42,6 +42,7 @@ import java.util.Objects;
  */
 public abstract class MatrixToImage {
     private boolean unsignedInt32 = false;
+    private boolean bytesRequired = false;
 
     public boolean isUnsignedInt32() {
         return unsignedInt32;
@@ -59,6 +60,27 @@ public abstract class MatrixToImage {
      */
     public MatrixToImage setUnsignedInt32(boolean unsignedInt32) {
         this.unsignedInt32 = unsignedInt32;
+        return this;
+    }
+
+    public boolean isBytesRequired() {
+        return bytesRequired;
+    }
+
+    /**
+     * Sets a flag that ensures that the element types of AlgART arrays or matrices
+     * passed to methods of this class are automatically converted to <code>byte</code> values
+     * (if they are not bytes).
+     * If the argument is <code>true</code>, you can be sure that
+     * {@link #elementTypeSupported(Class)} method will return <code>true</code> for <code>byte.class</code> only.
+     * This can be useful before writing the result <code>BufferedImage</code> into a file,
+     * because some formats like JPEG support only <code>byte</code> (8-bit) precision.
+     *
+     * @param bytesRequired whether we need to restrict the passed data by <code>byte</code> values.
+     * @return a reference to this object.
+     */
+    public MatrixToImage setBytesRequired(boolean bytesRequired) {
+        this.bytesRequired = bytesRequired;
         return this;
     }
 
@@ -244,8 +266,12 @@ public abstract class MatrixToImage {
      * <p>The default implementation returns <code>elementType == byte.class</code>.
      * Implementation in {@link InterleavedRGBToInterleaved} and {@link InterleavedBGRToInterleaved} classes
      * returns <code>true</code> also for <code>short.class</code> (which is interpreted
-     * as <code>DataBuffer.TYPE_USHORT</code>);
-     * other classes in this package preserves default implementation.
+     * as <code>DataBuffer.TYPE_USHORT</code>), unless you disabled this by calling
+     * {@link InterleavedRGBToInterleaved#setBytesRequired(boolean) setBytesRequired(true)}.
+     * Other classes in this package preserve the default implementation.
+     *
+     * @param elementType some primitive type.
+     * @return whether this element type of AlgART arrays or matrix is supported.
      */
     public boolean elementTypeSupported(Class<?> elementType) {
         return elementType == byte.class;
@@ -470,8 +496,9 @@ public abstract class MatrixToImage {
         }
         final long numberOfChannels = interleavedMatrix.dimCount() == 2 ? 1 : interleavedMatrix.dim(0);
         if (numberOfChannels < 1 || numberOfChannels > 4) {
-            throw new IllegalArgumentException("Invalid number " + numberOfChannels +
-                    " of color channels (RGBA): it must be in 1..4 range");
+            throw new IllegalArgumentException("Unsupported number " + numberOfChannels +
+                    " of color channels: it must be in range from 1 (monochrome)" +
+                    " to 4 (usually red, green, blue, alpha)");
         }
         if (interleavedMatrix.size() > Integer.MAX_VALUE) {
             throw new TooLargeArrayException("Too large interleaved matrix " + interleavedMatrix
@@ -612,7 +639,9 @@ public abstract class MatrixToImage {
     public static class InterleavedRGBToInterleaved extends MatrixToImage {
         @Override
         public boolean elementTypeSupported(Class<?> elementType) {
-            return elementType == byte.class || elementType == short.class;
+            return isBytesRequired() ?
+                    elementType == byte.class :
+                    elementType == byte.class || elementType == short.class;
         }
 
         @Override
