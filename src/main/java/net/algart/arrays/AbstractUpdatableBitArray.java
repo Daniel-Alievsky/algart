@@ -105,7 +105,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * Creates an updatable array with the given initial capacity and length.
      *
      * <p>This array is not <i>{@link #isNew() new}</i> by default.
-     * This is correct usually, because this class is often used
+     * This is usually correct because this class is often used
      * for creating a view of another data. However, if the instance
      * of this class does not depend on any other data sources,
      * you may call {@link #setNewStatus(boolean) setNewStatus(true)} in
@@ -125,7 +125,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @throws IllegalArgumentException if the <code>initialCapacity</code> or <code>initialLength</code> arguments
      *                                  are illegal (negative, or capacity &lt; length).
      * @throws SizeMismatchException    if <code>underlyingArraysAreParallel=true</code>,
-     *                                  <code>underlyingArrays.length&gt;1</code> and some of passed arrays
+     *                                  <code>underlyingArrays.length&gt;1</code> and some of the passed arrays
      *                                  have different lengths.
      */
     protected AbstractUpdatableBitArray(
@@ -144,7 +144,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      *                                    #AbstractUpdatableBitArray(long, long, boolean, Array...)}.
      * @param underlyingArrays            see {@link
      *                                    #AbstractUpdatableBitArray(long, long, boolean, Array...)}
-     * @throws IllegalArgumentException if the passed argument are illegal (negative).
+     * @throws IllegalArgumentException if the passed arguments are illegal (negative).
      */
     protected AbstractUpdatableBitArray(
             long initialCapacityAndLength,
@@ -160,13 +160,13 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * {@link #setData(long, Object, int, int)}
      * calling the same methods of this instance with corresponding corrections of the arguments.
      *
-     * <p>The returned instance also have overridden methods {@link #loadResources(ArrayContext, long, long)},
+     * <p>The returned instance also has overridden methods {@link #loadResources(ArrayContext, long, long)},
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)},
      * that also call the same methods of this instance with corresponding correction of their <code>fromIndex</code>
      * argument.
      *
-     * <p>The returned instance also have overridden method {@link #isLazy()},
+     * <p>The returned instance also has overridden method {@link #isLazy()},
      * that just calls the same methods of this instance with the same arguments.
      *
      * @param fromIndex low endpoint (inclusive) of the subarray.
@@ -453,7 +453,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * {@link #flushResources(ArrayContext, long, long, boolean)} and
      * {@link #freeResources(ArrayContext, long, long, boolean)}.
      *
-     * <p>The returned instance also have overridden method {@link #isLazy()},
+     * <p>The returned instance also has overridden method {@link #isLazy()},
      * that just calls the same methods of this instance with the same arguments.
      *
      * @return an immutable view of this array.
@@ -568,7 +568,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @return a reference to this AlgART array.
      * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType() elementType()}.
      * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
@@ -603,7 +603,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
      * @return a reference to this AlgART array.
      * @throws NullPointerException      if <code>srcArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>srcArray</code> argument is not an array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or source Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside this array or source Java array.
      * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
      * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
@@ -739,7 +739,7 @@ public abstract class AbstractUpdatableBitArray extends AbstractBitArray impleme
 
     /**
      * This implementation returns this object.
-     * Should be overridden if the inheritor is resizable.
+     * Should be overridden if the inheritor is resizeable.
      *
      * @return an unresizable view of this array.
      */

@@ -89,7 +89,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * </ol>
      *
      * <p>The created array is not <i>{@link #isNew() new}</i> by default.
-     * This is usually correct, because this class is often used
+     * This is usually correct because this class is often used
      * for creating a view of another data. However, if the instance
      * of this class does not depend on any other data sources,
      * you may call {@link #setNewStatus(boolean) setNewStatus(true)} in
@@ -194,7 +194,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * @param count           the number of elements to be copied.
      * @throws NullPointerException      if <code>destArray</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>destArray</code> argument is not an array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside this array or target array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside this array or target array.
      * @throws ArrayStoreException       if <code>destArray</code> element type mismatches with this array
      *                                   {@link #elementType()}.
      * @throws ClassCastException        if <code>destArray</code> element type mismatches with this array
