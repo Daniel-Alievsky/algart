@@ -63,10 +63,6 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author Daniel Alievsky
  */
 public class MainOperationsTest implements Cloneable {
-    private static boolean objectEquals(Object o1, Object o2) {
-        return o1 == null ? o2 == null : o1.equals(o2);
-    }
-
     private static void myFill(Object javaArray, int from, int to, int startValue, boolean packedBits) {
         if (packedBits) {
             long[] ja = (long[]) javaArray;
@@ -515,7 +511,7 @@ public class MainOperationsTest implements Cloneable {
                 work2.setElement(destPos + k, a.getElement(srcPos + k));
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -557,7 +553,7 @@ public class MainOperationsTest implements Cloneable {
                 work2.setElement(destPos + k, a.getElement(srcPos + k));
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -598,7 +594,7 @@ public class MainOperationsTest implements Cloneable {
                 work2.setElement(destPos + k, a.getElement(srcPos + k));
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = workStdIO.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = workStdIO.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -648,12 +644,12 @@ public class MainOperationsTest implements Cloneable {
                 }
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work3.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work3.getElement(k))) {
                     throw new AssertionError("The bug in fill(double) found in test #" + testCount + ": "
                             + "destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
                 }
-                if (!objectEquals(e1 = work2.getElement(k), e2)) {
+                if (!Objects.equals(e1 = work2.getElement(k), e2)) {
                     throw new AssertionError("The bug in fill(long, long, double) found in test #" + testCount + ": "
                             + "destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -677,12 +673,12 @@ public class MainOperationsTest implements Cloneable {
                     ((UpdatablePArray) work3).setLong(destPos + k, longFiller);
                 }
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work3.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work3.getElement(k))) {
                         throw new AssertionError("The bug in fill(long) found in test #" + testCount + ": "
                                 + "destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
                     }
-                    if (!objectEquals(e1 = work2.getElement(k), e2)) {
+                    if (!Objects.equals(e1 = work2.getElement(k), e2)) {
                         throw new AssertionError("The bug in fill(long, long, long) found in test #"
                                 + testCount + ": "
                                 + "destPos = " + destPos + ", count = " + count
@@ -974,7 +970,7 @@ public class MainOperationsTest implements Cloneable {
                 }
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = a.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = a.getElement(k))) {
                     throw new AssertionError("The bug B in asCopyOnNextWrite found in test #" +
                             testCount + ": "
                             + "srcPos = " + srcPos + ", count = " + count + (doSwap ? " (swapping)" : "")
@@ -986,7 +982,7 @@ public class MainOperationsTest implements Cloneable {
                         testCount);
             }
             for (int k = 0; k < count; k++) {
-                if (!objectEquals(e1 = conw.getElement(mutable ? k + 100 : k),
+                if (!Objects.equals(e1 = conw.getElement(mutable ? k + 100 : k),
                         e2 = work2.getElement(srcPos + k))) {
                     throw new AssertionError("The bug D in asCopyOnNextWrite found in test #" +
                             testCount + ": " + "srcPos = " + srcPos + ", count = " +
@@ -1044,7 +1040,7 @@ public class MainOperationsTest implements Cloneable {
                 }
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug C in get/setBits or copy found in test #"
                             + testCount + ": destPos = " + destPos + ", count = " + count + ", "
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1099,7 +1095,7 @@ public class MainOperationsTest implements Cloneable {
             work1.copy(a);
             work2.copy(a);
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = a.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = a.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug full copy found in test #"
                             + testCount + ": destPos = " + destPos + ", count = " + count + ", " + buf
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1157,7 +1153,7 @@ public class MainOperationsTest implements Cloneable {
                 }
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in map, get/setData or full copy found in test #"
                             + testCount + ": destPos = " + destPos + ", count = " + count + ", " + buf
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1217,7 +1213,7 @@ public class MainOperationsTest implements Cloneable {
                         int k = rnd.nextInt(lazyLen);
                         e1 = work1.getElement(k);
                         e2 = lazy.getElement(k);
-                        if (!objectEquals(e1, e2)) {
+                        if (!Objects.equals(e1, e2)) {
                             // random access + actualization: the current version
                             // actualizes banks while reading 1 element
                             throw new AssertionError("The bug B in new" + (m < 2 ? "Unresizable" : "")
@@ -1231,7 +1227,7 @@ public class MainOperationsTest implements Cloneable {
                         if (m >= 6 && i < 20) {
                             lazy.setElement(k, zero);
                             work1.setElement(k, zero);
-                            if (!objectEquals(zero, e2 = lazy.getElement(k))) {
+                            if (!Objects.equals(zero, e2 = lazy.getElement(k))) {
                                 throw new AssertionError("The bug C in new" + (m < 2 ? "Unresizable" : "")
                                         + "LazyCopy" + (doFlush ? "+flushResources" : "") + " found in test #"
                                         + testCount
@@ -1287,7 +1283,7 @@ public class MainOperationsTest implements Cloneable {
             }
             work2.subArr(destPos, count).copy(a.subArr(srcPos, count));
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1320,7 +1316,7 @@ public class MainOperationsTest implements Cloneable {
             work1.copy(destPos, srcPos, count);
             work2.subArr(destPos, count).copy(a.subArr(srcPos, count));
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1350,7 +1346,7 @@ public class MainOperationsTest implements Cloneable {
                 work1.subArr(destPos, count).copy(work1.subArr(srcPos, count));
                 work2.subArr(destPos, count).copy(a.subArr(srcPos, count));
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1386,7 +1382,7 @@ public class MainOperationsTest implements Cloneable {
                 }
                 work2.subArr(destPos, count).copy(a.subArr(srcPos, count));
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug in copy found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1422,7 +1418,7 @@ public class MainOperationsTest implements Cloneable {
                 work4.setElement(srcPos + k, temp);
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug A in swap found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1432,7 +1428,7 @@ public class MainOperationsTest implements Cloneable {
                 throw new AssertionError("The bug A in equals found in test #" + testCount);
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work3.getElement(k), e2 = work4.getElement(k))) {
+                if (!Objects.equals(e1 = work3.getElement(k), e2 = work4.getElement(k))) {
                     throw new AssertionError("The bug B in swap found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1467,7 +1463,7 @@ public class MainOperationsTest implements Cloneable {
             }
             work2.subArr(destPos, count).swap(work4.subArr(srcPos, count));
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug A in swap found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1477,7 +1473,7 @@ public class MainOperationsTest implements Cloneable {
                 throw new AssertionError("The bug A in equals found in test #" + testCount);
             }
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = work3.getElement(k), e2 = work4.getElement(k))) {
+                if (!Objects.equals(e1 = work3.getElement(k), e2 = work4.getElement(k))) {
                     throw new AssertionError("The bug B in swap found in test #" + testCount + ": "
                             + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                             + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1512,7 +1508,7 @@ public class MainOperationsTest implements Cloneable {
                     work2.setElement(srcPos + k, temp);
                 }
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug in swap found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1543,7 +1539,7 @@ public class MainOperationsTest implements Cloneable {
                 work1.subArr(destPos, count).swap(work1.subArr(srcPos, count));
                 work2.swap(destPos, srcPos, count);
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug in swap found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1579,7 +1575,7 @@ public class MainOperationsTest implements Cloneable {
                 }
                 work2.swap(destPos, srcPos, count);
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug in swap found in test #" + testCount + ": "
                                 + "srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", error found at " + k + ": " + e1 + " instead of " + e2);
@@ -1717,7 +1713,7 @@ public class MainOperationsTest implements Cloneable {
                 Arrays.unpackBits((UpdatablePArray) work1.subArr(destPos, count),
                         (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0, filler1);
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", filler0 = " + filler0 + ", filler1 = " + filler1 + ", error found at " + k + ": " +
@@ -1736,7 +1732,7 @@ public class MainOperationsTest implements Cloneable {
                 Arrays.unpackUnitBits((UpdatablePArray) work1.subArr(destPos, count),
                         (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler1);
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackUnitBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count +
                                 ", filler1 = " + filler1 + ", error found at " + k + ": " +
@@ -1755,7 +1751,7 @@ public class MainOperationsTest implements Cloneable {
                 Arrays.unpackZeroBits((UpdatablePArray) work1.subArr(destPos, count),
                         (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0);
                 for (int k = 0; k < len; k++) {
-                    if (!objectEquals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
+                    if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackZeroBits found in test #" +
                                 testCount + ": srcPos = " + srcPos + ", destPos = " + destPos + ", count = " + count
                                 + ", filler0 = " + filler0
@@ -2136,13 +2132,13 @@ public class MainOperationsTest implements Cloneable {
                 }
                 UpdatableArray sacClone = Arrays.clone(cmm, sac);
                 for (int k = 0; k < count; k++) {
-                    if (!objectEquals(e1 = sac.getElement(k), e2 = swork.getElement(k))) {
+                    if (!Objects.equals(e1 = sac.getElement(k), e2 = swork.getElement(k))) {
                         throw new AssertionError("The bug D in asConcatenation found in test #" +
                                 testCount
                                 + " (m=" + m + ") at " + k + ": " + e1 + " instead of " + e2
                                 + " (" + sac + ")");
                     }
-                    if (!objectEquals(e1 = sacClone.getElement(k), e2)) {
+                    if (!Objects.equals(e1 = sacClone.getElement(k), e2)) {
                         throw new AssertionError("The bug E in asConcatenation found in test #" +
                                 testCount
                                 + " (m=" + m + ") at " + k + ": " + e1 + " instead of " + e2
@@ -2198,11 +2194,11 @@ public class MainOperationsTest implements Cloneable {
                         kShifted += count;
                     }
                     e2 = a.getElement(kShifted);
-                    if (!objectEquals(e1, e2)) {
+                    if (!Objects.equals(e1, e2)) {
                         throw new AssertionError("The bug B in asShifted found in test #" + testCount
                                 + " (m=" + m + "): srcPos = " + srcPos + ", count = " + count);
                     }
-                    if (!objectEquals(sasClone.getElement(k - pos), e1)) {
+                    if (!Objects.equals(sasClone.getElement(k - pos), e1)) {
                         throw new AssertionError("The bug C in asShifted found in test #" + testCount
                                 + " (m=" + m + "): srcPos = " + srcPos + ", count = " + count);
                     }
@@ -2306,7 +2302,7 @@ public class MainOperationsTest implements Cloneable {
                 long index = previousVolume + inTileIndexer.index(coordsInTile);
                 e1 = tileMatr.array().getElement(k);
                 e2 = matr.array().getElement(index);
-                if (!objectEquals(e1, e2)) {
+                if (!Objects.equals(e1, e2)) {
                     throw new AssertionError("The bug A in tiling found in test #" + testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", tileDim = " + JArrays.toString(tileDim, ";", 100)
@@ -2319,7 +2315,7 @@ public class MainOperationsTest implements Cloneable {
                 }
                 tileMatr.array().setElement(k, a.getElement(0));
                 e2 = matr.array().getElement(index);
-                if (!objectEquals(a.getElement(0), e2)) {
+                if (!Objects.equals(a.getElement(0), e2)) {
                     throw new AssertionError("The bug B in tiling found in test #" + testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", tileDim = " + JArrays.toString(tileDim, ";", 100)
@@ -2332,7 +2328,7 @@ public class MainOperationsTest implements Cloneable {
                 }
                 tileMatr.array().setElement(k, e1);
                 e2 = matr.array().getElement(index);
-                if (!objectEquals(e1, e2)) {
+                if (!Objects.equals(e1, e2)) {
                     throw new AssertionError("The bug C in tiling found in test #" + testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", tileDim = " + JArrays.toString(tileDim, ";", 100)
@@ -2348,7 +2344,7 @@ public class MainOperationsTest implements Cloneable {
             int cnt = rnd.nextInt((int) matr.size() + 1 - pos) / blockSize * blockSize;
             work2.copy(tileMatr.array().subArr(pos, cnt)); // block copying into tiled matrix
             for (int k = 0; k < cnt; k++) {
-                if (!objectEquals(e1 = work2.getElement(k), e2 = tileMatr.array().getElement(pos + k))) {
+                if (!Objects.equals(e1 = work2.getElement(k), e2 = tileMatr.array().getElement(pos + k))) {
                     throw new AssertionError("The bug D in tiling found in test #" + testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", tileDim = " + JArrays.toString(tileDim, ";", 100)
@@ -2359,7 +2355,7 @@ public class MainOperationsTest implements Cloneable {
             }
             tileMatr.array().subArr(pos, cnt).copy(a); // block copying from tiled matrix
             for (int k = 0; k < cnt; k++) {
-                if (!objectEquals(e1 = tileMatr.array().getElement(pos + k), e2 = a.getElement(k))) {
+                if (!Objects.equals(e1 = tileMatr.array().getElement(pos + k), e2 = a.getElement(k))) {
                     throw new AssertionError("The bug E in tiling found in test #" + testCount + ": "
                             + "dim = " + JArrays.toString(dim, ";", 100)
                             + ", tileDim = " + JArrays.toString(tileDim, ";", 100)
@@ -2526,7 +2522,7 @@ public class MainOperationsTest implements Cloneable {
                 System.arraycopy(coords, 1, separatedCoords, 0, dim.length - 1);
                 e1 = matr.array().getElement(k);
                 e2 = separated.get(channel).array().getElement(channel0.index(separatedCoords));
-                if (!objectEquals(e1, e2)) {
+                if (!Objects.equals(e1, e2)) {
                     throw new AssertionError("The bug A in Matrices.separate found in test #" +
                             testCount + ": dim = " + JArrays.toString(dim, ";", 100)
                             + ", k = " + k
@@ -2799,7 +2795,7 @@ public class MainOperationsTest implements Cloneable {
                                 ": " + v1 + " instead of " + v2);
                     }
                 } else {
-                    if (!objectEquals(e1, e2)) {
+                    if (!Objects.equals(e1, e2)) {
                         throw new AssertionError("The bug A in subMatr found in test #" + testCount + ": "
                                 + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                                 + ", destPos = " + JArrays.toString(destPos, ";", 100)
@@ -2827,7 +2823,7 @@ public class MainOperationsTest implements Cloneable {
                 }
             } // checking indexing + get/setElement: manual copying destSubMatr <- srcSubMatr
             for (int k = 0; k < destMatr.size(); k++) {
-                if (!objectEquals(e1 = destMatr.array().getElement(k), e2 = work2.getElement(k))) {
+                if (!Objects.equals(e1 = destMatr.array().getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug B in subMatr found in test #" + testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", destPos = " + JArrays.toString(destPos, ";", 100)
@@ -2857,7 +2853,7 @@ public class MainOperationsTest implements Cloneable {
             destSubMatr.array().copy(srcSubMatr.array().asImmutable().updatableClone(cmm));
             // - quick copying destSubMatr <- srcSubMatr
             for (int k = 0; k < len; k++) {
-                if (!objectEquals(e1 = (k < destMatr.size() ? destMatr.array() : work1) // not the same when tiled
+                if (!Objects.equals(e1 = (k < destMatr.size() ? destMatr.array() : work1) // not the same when tiled
                         .getElement(k), e2 = work2.getElement(k))) {
                     throw new AssertionError("The bug D in subMatr found in test #" + testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
