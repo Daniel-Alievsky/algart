@@ -1913,11 +1913,7 @@ class ArraysTileMatrixImpl {
                 long cStart = coordinate - coordinate % tileDim[k]; // cStart[k]: starting coordinate in this tile
                 previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                 long rest = baseDim[k] - cStart;
-                if (tileDim[k] <= rest) {
-                    currentTileDimMul *= tileDim[k];
-                } else {
-                    currentTileDimMul *= rest;
-                }
+                currentTileDimMul *= Math.min(tileDim[k], rest);
             }
             // now "a" is coordinate #0
             previousVolume += (a - a % tileDim0) * currentTileDimMul;
@@ -1940,11 +1936,7 @@ class ArraysTileMatrixImpl {
                 indexInTile += coordInTile * currentTileDimMul;
                 long cStart = coordinate - coordInTile; // cStart[k]: starting coordinate in this tile
                 long rest = dim - cStart;
-                if (tileDim[k] <= rest) {
-                    currentTileDimMul *= tileDim[k];
-                } else {
-                    currentTileDimMul *= rest;
-                }
+                currentTileDimMul *= Math.min(tileDim[k], rest);
                 a = b;
             }
             // now "a" is coordinate #n-1, coord[n-1] in terms above
@@ -1984,11 +1976,7 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k]; // cStart[k]: starting coordinate in this tile
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 // now "a" is coordinate #0
                 final long coord0InTile = a % tileDim0;
@@ -1997,7 +1985,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? (int)restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -2010,11 +1998,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile; // cStart[k]: starting coordinate in this tile
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 // now "a" is coordinate #n-1
@@ -2070,11 +2054,7 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k]; // cStart[k]: starting coordinate in this tile
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 // now "a" is coordinate #0
                 final long coord0InTile = a % tileDim0;
@@ -2083,7 +2063,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? (int)restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -2096,11 +2076,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile; // cStart[k]: starting coordinate in this tile
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 // now "a" is coordinate #n-1
@@ -2156,11 +2132,7 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k]; // cStart[k]: starting coordinate in this tile
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 // now "a" is coordinate #0
                 final long coord0InTile = a % tileDim0;
@@ -2169,7 +2141,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -2182,11 +2154,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile; // cStart[k]: starting coordinate in this tile
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 // now "a" is coordinate #n-1
@@ -2244,11 +2212,7 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k]; // cStart[k]: starting coordinate in this tile
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 // now "a" is coordinate #0
                 final long coord0InTile = a % tileDim0;
@@ -2257,7 +2221,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -2270,11 +2234,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile; // cStart[k]: starting coordinate in this tile
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 // now "a" is coordinate #n-1
@@ -2324,20 +2284,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2348,11 +2304,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2403,19 +2355,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2426,11 +2374,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2469,20 +2413,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2493,11 +2433,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2544,20 +2480,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2568,11 +2500,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2623,19 +2551,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2646,11 +2570,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2689,20 +2609,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2713,11 +2629,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2763,20 +2675,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2787,11 +2695,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2842,19 +2746,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2865,11 +2765,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2908,20 +2804,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -2932,11 +2824,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -2982,20 +2870,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3006,11 +2890,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3061,19 +2941,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3084,11 +2960,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3127,20 +2999,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3151,11 +3019,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3201,20 +3065,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3225,11 +3085,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3280,19 +3136,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3303,11 +3155,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3346,20 +3194,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3370,11 +3214,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3420,20 +3260,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3444,11 +3280,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3499,19 +3331,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3522,11 +3350,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3565,20 +3389,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3589,11 +3409,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3639,20 +3455,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3663,11 +3475,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3718,19 +3526,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3741,11 +3545,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3784,20 +3584,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3808,11 +3604,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3858,20 +3650,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3882,11 +3670,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -3937,19 +3721,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -3960,11 +3740,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -4003,20 +3779,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -4027,11 +3799,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -4077,20 +3845,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -4101,11 +3865,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -4156,19 +3916,15 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -4179,11 +3935,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -4222,20 +3974,16 @@ class ArraysTileMatrixImpl {
                     long cStart = coord - coord % tileDim[k];
                     previousVolume += cStart * baseDimMul[k] * currentTileDimMul;
                     long rest = baseDim[k] - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                 }
                 final long coord0InTile = a % tileDim0;
                 previousVolume += (a - coord0InTile) * currentTileDimMul;
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -4246,11 +3994,7 @@ class ArraysTileMatrixImpl {
                     indexInTile += coordInTile * currentTileDimMul;
                     long cStart = coord - coordInTile;
                     long rest = dim - cStart;
-                    if (tileDim[k] <= rest) {
-                        currentTileDimMul *= tileDim[k];
-                    } else {
-                        currentTileDimMul *= rest;
-                    }
+                    currentTileDimMul *= Math.min(tileDim[k], rest);
                     a = b;
                 }
                 indexInTile += (a % tileDimLast) * currentTileDimMul;
@@ -4462,9 +4206,9 @@ class ArraysTileMatrixImpl {
             long cStartX = coordX - coordX % tileDim0;
             long cStartY = coordY - coordY % tileDimLast;
             long restX = baseDim0 - cStartX;
-            long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+            long currentTileDimX = Math.min(tileDim0, restX);
             long restY = baseDimLast - cStartY;
-            long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+            long currentTileDimY = Math.min(tileDimLast, restY);
             long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
             long indexInTile = (coordY - cStartY) * currentTileDimX + (coordX - cStartX);
             long indexInBase = previousVolume + indexInTile;
@@ -4498,15 +4242,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4546,14 +4290,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4581,15 +4325,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4625,15 +4369,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4673,14 +4417,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4708,15 +4452,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4751,15 +4495,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4799,14 +4543,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4834,15 +4578,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4877,15 +4621,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4925,14 +4669,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -4960,15 +4704,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5003,15 +4747,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5051,14 +4795,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5086,15 +4830,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5129,15 +4873,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5177,14 +4921,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5212,15 +4956,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5255,15 +4999,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5303,14 +5047,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5338,15 +5082,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5381,15 +5125,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5429,14 +5173,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5464,15 +5208,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5507,15 +5251,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5555,14 +5299,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5590,15 +5334,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX - coordX % tileDim0;
                 long cStartY = coordY - coordY % tileDimLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -5636,11 +5380,11 @@ class ArraysTileMatrixImpl {
             long cStartY = coordY - coordY % tileDim[1];
             long cStartZ = coordZ - coordZ % tileDim[2];
             long restX = baseDim[0] - cStartX;
-            long currentTileDimX = tileDim[0] <= restX ? tileDim[0] : restX;
+            long currentTileDimX = Math.min(tileDim[0], restX);
             long restY = baseDim[1] - cStartY;
-            long currentTileDimY = tileDim[1] <= restY ? tileDim[1] : restY;
+            long currentTileDimY = Math.min(tileDim[1], restY);
             long restZ = baseDim[2] - cStartZ;
-            long currentTileDimZ = tileDim[2] <= restZ ? tileDim[2] : restZ;
+            long currentTileDimZ = Math.min(tileDim[2], restZ);
             long previousVolume = baseDimXY * cStartZ
                 + baseDim[0] * cStartY * currentTileDimZ
                 + cStartX * currentTileDimY * currentTileDimZ;
@@ -5812,7 +5556,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? (int)restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -5899,7 +5643,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? (int)restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -5986,7 +5730,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -6075,7 +5819,7 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile; // cStart[0]: starting coordinate in this tile
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0; // now it is the tile x-dimension
+                currentTileDimMul = Math.min(tileDim0, rest0); // now it is the tile x-dimension
                 final long restInTile0 = currentTileDimMul - coord0InTile;
                 len = restInTile0 < count ? restInTile0 : count;
                 assert len > 0 : "Zero len";
@@ -6154,9 +5898,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6234,8 +5978,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6301,9 +6045,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6377,9 +6121,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6457,8 +6201,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6524,9 +6268,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6599,9 +6343,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6679,8 +6423,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6746,9 +6490,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6821,9 +6565,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6901,8 +6645,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -6968,9 +6712,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7043,9 +6787,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7123,8 +6867,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7190,9 +6934,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7265,9 +7009,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7345,8 +7089,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7412,9 +7156,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7487,9 +7231,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7567,8 +7311,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7634,9 +7378,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7709,9 +7453,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7789,8 +7533,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7856,9 +7600,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -7931,9 +7675,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = lowIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -8011,8 +7755,8 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
-                len = coord0InTile + 1 < count ? coord0InTile + 1 : count;
+                currentTileDimMul = Math.min(tileDim0, rest0);
+                len = Math.min(coord0InTile + 1, count);
                 assert len > 0 : "Zero len";
                 a = highIndex / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -8078,9 +7822,9 @@ class ArraysTileMatrixImpl {
                 final long c0Start = a - coord0InTile;
                 long indexInTile = coord0InTile;
                 final long rest0 = baseDim0 - c0Start;
-                currentTileDimMul = tileDim0 < rest0 ? tileDim0 : rest0;
+                currentTileDimMul = Math.min(tileDim0, rest0);
                 final long restInTile0 = currentTileDimMul - coord0InTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 a = position / baseDim0;
                 for (int k = 1; k < n - 1; k++) {
@@ -8135,9 +7879,9 @@ class ArraysTileMatrixImpl {
             long cStartX = coordX & ~tileDimMask0;
             long cStartY = coordY & ~tileDimMaskLast;
             long restX = baseDim0 - cStartX;
-            long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+            long currentTileDimX = Math.min(tileDim0, restX);
             long restY = baseDimLast - cStartY;
-            long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+            long currentTileDimY = Math.min(tileDimLast, restY);
             long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
             long indexInTile = (coordY - cStartY) * currentTileDimX + (coordX - cStartX);
             long indexInBase = previousVolume + indexInTile;
@@ -8171,15 +7915,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8219,14 +7963,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8254,15 +7998,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8298,15 +8042,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8346,14 +8090,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8381,15 +8125,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8424,15 +8168,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8472,14 +8216,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8507,15 +8251,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8550,15 +8294,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8598,14 +8342,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8633,15 +8377,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8676,15 +8420,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8724,14 +8468,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8759,15 +8503,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8802,15 +8546,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8850,14 +8594,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8885,15 +8629,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8928,15 +8672,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -8976,14 +8720,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9011,15 +8755,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9054,15 +8798,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9102,14 +8846,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9137,15 +8881,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9180,15 +8924,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9228,14 +8972,14 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
-                len = coordXInTile + 1 < count ? coordXInTile + 1 : count;
+                len = Math.min(coordXInTile + 1, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9263,15 +9007,15 @@ class ArraysTileMatrixImpl {
                 long cStartX = coordX & ~tileDimMask0;
                 long cStartY = coordY & ~tileDimMaskLast;
                 long restX = baseDim0 - cStartX;
-                long currentTileDimX = tileDim0 <= restX ? tileDim0 : restX;
+                long currentTileDimX = Math.min(tileDim0, restX);
                 long restY = baseDimLast - cStartY;
-                long currentTileDimY = tileDimLast <= restY ? tileDimLast : restY;
+                long currentTileDimY = Math.min(tileDimLast, restY);
                 long previousVolume = baseDim0 * cStartY + cStartX * currentTileDimY;
 
                 long coordXInTile = coordX - cStartX;
                 long coordYInTile = coordY - cStartY;
                 final long restInTile0 = currentTileDimX - coordXInTile;
-                len = restInTile0 < count ? restInTile0 : count;
+                len = Math.min(restInTile0, count);
                 assert len > 0 : "Zero len";
                 long indexInTile = coordYInTile * currentTileDimX + coordXInTile;
                 long indexInBase = previousVolume + indexInTile;
@@ -9309,11 +9053,11 @@ class ArraysTileMatrixImpl {
             long cStartY = coordY & ~tileDimMask[1];
             long cStartZ = coordZ & ~tileDimMask[2];
             long restX = baseDim[0] - cStartX;
-            long currentTileDimX = tileDim[0] <= restX ? tileDim[0] : restX;
+            long currentTileDimX = Math.min(tileDim[0], restX);
             long restY = baseDim[1] - cStartY;
-            long currentTileDimY = tileDim[1] <= restY ? tileDim[1] : restY;
+            long currentTileDimY = Math.min(tileDim[1], restY);
             long restZ = baseDim[2] - cStartZ;
-            long currentTileDimZ = tileDim[2] <= restZ ? tileDim[2] : restZ;
+            long currentTileDimZ = Math.min(tileDim[2], restZ);
             long previousVolume = baseDimXY * cStartZ
                 + baseDim[0] * cStartY * currentTileDimZ
                 + cStartX * currentTileDimY * currentTileDimZ;

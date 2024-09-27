@@ -285,7 +285,7 @@ abstract class ArraysSubMatrixCopier {
                 if (i == tileCounts[k] - 1) {
                     // "tileFrom + tileDimensions[k]" can lead partTo positive overflow in this case
                     partTo = positionInTiled[k] + dimensions[k];
-                    tileTo = tileTo < dim ? tileTo : dim; // stays unchanged in a case of overflow
+                    tileTo = Math.min(tileTo, dim); // stays unchanged in a case of overflow
                     if (k < n - 1 && partTo != tileTo) {
                         continuousSubArray = false;
                     }

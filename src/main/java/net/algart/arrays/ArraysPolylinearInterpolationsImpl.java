@@ -59,7 +59,7 @@ class ArraysPolylinearInterpolationsImpl {
             if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
             }
-            return get(x, dim.length < x.length ? dim.length  : x.length, 0);
+            return get(x, Math.min(dim.length, x.length), 0);
         }
 
         public double get(double x) {
@@ -133,7 +133,7 @@ class ArraysPolylinearInterpolationsImpl {
             if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
             }
-            return get(x, dim.length < x.length ? dim.length  : x.length, 0);
+            return get(x, Math.min(dim.length, x.length), 0);
         }
 
         public double get(double x) {
@@ -214,7 +214,7 @@ class ArraysPolylinearInterpolationsImpl {
             if (x.length == 0) {
                 throw new IndexOutOfBoundsException("At least 1 argument required");
             }
-            return get(x, dim.length < x.length ? dim.length  : x.length, 0);
+            return get(x, Math.min(dim.length, x.length), 0);
         }
 
         public double get(double x) {
