@@ -91,10 +91,6 @@ public abstract class ArraySorter {
     private ArraySorter() {
     }
 
-    private static final ArraySorter INSERTION_SORTER = new InsertionSorter();
-    private static final ArraySorter SHELL_SORTER = new ShellSorter();
-    private static final ArraySorter QUICK_SORTER = new QuickSorter();
-
     /**
      * Returns an instance of this class that implements insertion sorting algorithm.
      * Do not use this algorithm for sorting large arrays - it will be very slow.
@@ -102,7 +98,7 @@ public abstract class ArraySorter {
      * @return implementation of insertion sorting algorithm.
      */
     public static ArraySorter getInsertionSorter() {
-        return INSERTION_SORTER;
+        return InsertionSorter.INSERTION_SORTER;
     }
 
     /**
@@ -111,7 +107,7 @@ public abstract class ArraySorter {
      * @return implementation of Shell sorting algorithm.
      */
     public static ArraySorter getShellSorter() {
-        return SHELL_SORTER;
+        return ShellSorter.SHELL_SORTER;
     }
 
     /**
@@ -120,7 +116,7 @@ public abstract class ArraySorter {
      * @return implementation of Quick-Sort sorting algorithm.
      */
     public static ArraySorter getQuickSorter() {
-        return QUICK_SORTER;
+        return QuickSorter.QUICK_SORTER;
     }
 
     /**
@@ -328,6 +324,8 @@ public abstract class ArraySorter {
     }
 
     static class InsertionSorter extends ArraySorter {
+        static final ArraySorter INSERTION_SORTER = new InsertionSorter();
+
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             Objects.requireNonNull(comparator, "Null comparator argument");
             check(indexes, from, to);
@@ -368,6 +366,8 @@ public abstract class ArraySorter {
     }
 
     static class ShellSorter extends ArraySorter {
+        static final ArraySorter SHELL_SORTER = new ShellSorter();
+
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             Objects.requireNonNull(comparator, "Null comparator argument");
             check(indexes, from, to);
@@ -405,7 +405,8 @@ public abstract class ArraySorter {
     }
 
     static class QuickSorter extends ArraySorter {
-        static final long THRESHOLD = 10; // shorter sub-arrays are sorted by insertion algorithm
+        static final ArraySorter QUICK_SORTER = new QuickSorter();
+        static final long THRESHOLD = 10; // shorter subarrays are sorted by insertion algorithm
 
         public void sortIndexes(int[] indexes, int from, int to, ArrayComparator comparator) {
             Objects.requireNonNull(comparator, "Null comparator argument");

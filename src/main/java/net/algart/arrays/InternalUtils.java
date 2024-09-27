@@ -466,8 +466,7 @@ class InternalUtils {
                 try {
                     task.run();
                 } catch (Throwable ex) {
-                    System.err.println("Unexpected error while AlgART arrays shutdown hook!");
-                    ex.printStackTrace();
+                    System.err.println("Unexpected error while AlgART arrays shutdown hook! " + ex);
                 }
             }
         }

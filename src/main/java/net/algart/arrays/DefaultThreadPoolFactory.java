@@ -259,12 +259,9 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      * @see #getThreadPool(Array, ThreadFactory)
      */
     public ExecutorService getThreadPool(ThreadFactory threadFactory) {
-        if (persistentThreadPool != null) {
-            return persistentThreadPool;
-        } else {
-            return Executors.newFixedThreadPool(recommendedNumberOfTasks(),
-                    threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
-        }
+        return persistentThreadPool != null ? persistentThreadPool :
+                Executors.newFixedThreadPool(recommendedNumberOfTasks(),
+                        threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
     }
 
     /**
@@ -283,12 +280,9 @@ public class DefaultThreadPoolFactory extends AbstractThreadPoolFactory implemen
      */
     public ExecutorService getThreadPool(Array sourceArray, ThreadFactory threadFactory) {
         Objects.requireNonNull(sourceArray, "Null sourceArray argument");
-        if (persistentThreadPool != null) {
-            return persistentThreadPool;
-        } else {
-            return Executors.newFixedThreadPool(recommendedNumberOfTasks(sourceArray),
-                    threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
-        }
+        return persistentThreadPool != null ? persistentThreadPool :
+                Executors.newFixedThreadPool(recommendedNumberOfTasks(sourceArray),
+                        threadFactory == null ? Executors.defaultThreadFactory() : threadFactory);
     }
 
     /**

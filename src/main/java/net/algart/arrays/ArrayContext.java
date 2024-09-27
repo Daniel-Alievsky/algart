@@ -570,7 +570,7 @@ public interface ArrayContext {
         }
 
         /**
-         * Returns the number of elements, that was already processed until this moment
+         * Returns the number of the elements that were already processed until this moment
          * per each of parallel tasks, which the algorithm is split into.
          * (So, the number of parallel tasks is equal to the length of the returned array.)
          * These elements are usually located in several ranges in the array,
@@ -579,7 +579,7 @@ public interface ArrayContext {
          * <p>The returned array is a clone of the internal array stored in this object.
          * The returned array is never empty (its length cannot be zero).
          *
-         * @return the number of elements, that was already processed until this moment
+         * @return the numbers of the elements that were already processed until this moment
          *         per each of parallel tasks, which the algorithm is split into.
          */
         public long[] readyCountPerTask() {

@@ -60,7 +60,8 @@ class MappedDataStorages {
             LargeMemoryModel.LOGGER.log(Level.SEVERE, msg, thrown);
         }
         System.err.println("SEVERE: " + msg); // to be on the safe side, always double the message on console
-        thrown.printStackTrace();
+        //noinspection ThrowablePrintedToSystemOut
+        System.err.println(thrown);
     }
 
     private static final boolean configLoggable = LargeMemoryModel.LOGGER.isLoggable(Level.CONFIG);

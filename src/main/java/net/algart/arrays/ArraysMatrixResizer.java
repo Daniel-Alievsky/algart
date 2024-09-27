@@ -678,8 +678,8 @@ class ArraysMatrixResizer {
                     if (context == null) {
                         return;
                     }
-                    progressCount += resultElementsCount * scalesProduct;
-                    long newReadyElements = readyElements.addAndGet(resultElementsCount * scalesProduct);
+                    progressCount += (long) resultElementsCount * scalesProduct;
+                    long newReadyElements = readyElements.addAndGet((long) resultElementsCount * scalesProduct);
                     if (progressCount - lastProgressCount >= 262144) {
                         assert newReadyElements <= src.size();
                         lastProgressCount = progressCount;

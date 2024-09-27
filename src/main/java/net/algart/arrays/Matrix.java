@@ -547,7 +547,7 @@ public interface Matrix<T extends Array> extends Cloneable {
             private final Object continuationConstant;
             private final boolean primitiveTypeOrNullConstant;
 
-            private ConstantImpl(Object continuationConstant) {
+            ConstantImpl(Object continuationConstant) {
                 super("constantly-continued (by " + continuationConstant + ") mode");
                 this.continuationConstant = continuationConstant;
                 this.primitiveTypeOrNullConstant = continuationConstant == null

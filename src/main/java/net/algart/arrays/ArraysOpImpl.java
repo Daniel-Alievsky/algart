@@ -2359,13 +2359,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 BitArray[] a = new BitArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<BitArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<BitArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedBitArray(a);
             }
         }
@@ -2493,13 +2493,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 CharArray[] a = new CharArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<CharArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<CharArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedCharArray(a);
             }
         }
@@ -2599,13 +2599,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 ByteArray[] a = new ByteArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<ByteArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<ByteArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedByteArray(a);
             }
         }
@@ -2705,13 +2705,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 ShortArray[] a = new ShortArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<ShortArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<ShortArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedShortArray(a);
             }
         }
@@ -2811,13 +2811,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 IntArray[] a = new IntArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<IntArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<IntArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedIntArray(a);
             }
         }
@@ -2917,13 +2917,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 LongArray[] a = new LongArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<LongArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<LongArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedLongArray(a);
             }
         }
@@ -3023,13 +3023,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 FloatArray[] a = new FloatArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<FloatArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<FloatArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedFloatArray(a);
             }
         }
@@ -3129,13 +3129,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 DoubleArray[] a = new DoubleArray[k2 - k1 + 1];
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<DoubleArray>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<DoubleArray>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedDoubleArray(a);
             }
         }
@@ -3235,13 +3235,13 @@ class ArraysOpImpl {
                 long len2 = arrays[k2].length();
                 ObjectArray<E>[] a = InternalUtils.cast(new ObjectArray<?>[k2 - k1 + 1]);
                 a[0] = p1 == 0 ? arrays[k1] :
-                    InternalUtils.<ObjectArray<E>>cast(arrays[k1].subArray(p1, len1));
+                    InternalUtils.cast(arrays[k1].subArray(p1, len1));
                 // InternalUtils.cast is necessary in auto-generated code of ConcatenatedObjectArray<E>
                 for (int k = k1 + 1; k < k2; k++) {
                     a[k - k1] = arrays[k];
                 }
                 a[a.length - 1] = p2 == len2 - 1 ? arrays[k2] :
-                    InternalUtils.<ObjectArray<E>>cast(arrays[k2].subArray(0, p2 + 1));
+                    InternalUtils.cast(arrays[k2].subArray(0, p2 + 1));
                 return new ConcatenatedObjectArray<E>(a);
             }
         }
