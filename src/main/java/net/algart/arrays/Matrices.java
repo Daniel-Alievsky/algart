@@ -130,20 +130,21 @@ public class Matrices {
          * Resizing with averaging (while compression), but without interpolation.
          * See details in comments to {@link Matrices#asResized Matrices.asResized}.
          */
-        public static final Averaging AVERAGING = new Averaging(InterpolationMethod.STEP_FUNCTION);
+        public static final ResizingMethod AVERAGING = newAveraging(InterpolationMethod.STEP_FUNCTION);
 
         /**
-         * Resizing with polylinear interpolation (useful for expanding), but without interpolation.
+         * Resizing with poly linear interpolation (useful for expanding), but without interpolation.
          * See details in comments to {@link Matrices#asResized Matrices.asResized}.
          */
         public static final ResizingMethod POLYLINEAR_INTERPOLATION = new ResizingMethod(
                 InterpolationMethod.POLYLINEAR_FUNCTION);
 
         /**
-         * Resizing with polylinear interpolation and averaging while compression.
+         * Resizing with poly-linear interpolation and averaging while compression.
          * See details in comments to {@link Matrices#asResized Matrices.asResized}.
          */
-        public static final Averaging POLYLINEAR_AVERAGING = new Averaging(InterpolationMethod.POLYLINEAR_FUNCTION);
+        public static final ResizingMethod POLYLINEAR_AVERAGING =
+                newAveraging(InterpolationMethod.POLYLINEAR_FUNCTION);
 
         final InterpolationMethod interpolationMethod;
 
@@ -225,6 +226,18 @@ public class Matrices {
             protected Func getAveragingFunc(long[] apertureDim) {
                 return null;
             }
+        }
+
+
+        // This function helps to avoid the following IntelliJ IDEA warning:
+        //     Referencing subclass ConstantImpl from superclass ContinuationMode initializer
+        //     might lead to class loading deadlock
+        //     Inspection info: Reports classes that refer to their subclasses
+        //     in static initializers or static fields.
+        //     Such references can cause JVM-level deadlocks in multithreaded environment,
+        //     when one thread tries to load the superclass and another thread tries to load the subclass at the same time.
+        private static ResizingMethod newAveraging(InterpolationMethod interpolationMethod) {
+            return new Averaging(interpolationMethod);
         }
     }
 

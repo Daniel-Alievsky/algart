@@ -77,19 +77,17 @@ public class WriteProtectionTest {
                 : null;
             final Array dup = aR.shallowClone();
             // - must be here, not inside the following inner class, to allow deallocation of aR
-            fin.invokeOnDeallocation(aR, new Runnable() {
-                public void run() {
-                    System.out.println("~~~ Checking array @"
-                        + Integer.toHexString(identityHashCode) + " while finalization...");
-                    long t = System.currentTimeMillis();
-                    while (System.currentTimeMillis() - t < 750) ; //emulation of long calculations
-                    try {
-                        dup.checkUnallowedMutation();
-                        System.out.println("~~~ Finalization OK");
-                    } catch (UnallowedMutationError ex) {
-                        System.out.println("~~~ UnallowedMutationError CAUGHT while finalization:");
-                        System.out.println("    \"" + ex.getMessage() + "\"");
-                    }
+            fin.invokeOnDeallocation(aR, () -> {
+                System.out.println("~~~ Checking array @"
+                    + Integer.toHexString(identityHashCode) + " while finalization...");
+                long t = System.currentTimeMillis();
+                while (System.currentTimeMillis() - t < 750) ; //emulation of long calculations
+                try {
+                    dup.checkUnallowedMutation();
+                    System.out.println("~~~ Finalization OK");
+                } catch (UnallowedMutationError ex) {
+                    System.out.println("~~~ UnallowedMutationError CAUGHT while finalization:");
+                    System.out.println("    \"" + ex.getMessage() + "\"");
                 }
             });
             DemoUtils.showArray("The original array:  ", aSource);

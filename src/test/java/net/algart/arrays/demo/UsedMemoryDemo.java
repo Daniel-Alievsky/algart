@@ -42,7 +42,7 @@ public class UsedMemoryDemo {
     private static void test(String elementTypeName, long len, int numberOfArrays) {
         Runtime rt = Runtime.getRuntime();
         long m1 = rt.totalMemory() - rt.freeMemory();
-        List<UpdatableArray> arrays = new ArrayList<UpdatableArray>();
+        List<UpdatableArray> arrays = new ArrayList<>();
         long t1 = System.nanoTime();
         long summaryLength = 0;
         long summarySizeOf = 0;

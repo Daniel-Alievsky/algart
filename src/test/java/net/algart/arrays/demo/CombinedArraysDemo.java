@@ -281,7 +281,7 @@ public class CombinedArraysDemo {
             // Creation
             switch (mode) {
                 case 0:
-                    list = new ArrayList<Circle>(n);
+                    list = new ArrayList<>(n);
                     for (int k = 0; k < n; k++) {
                         list.add(new Circle());
                     }
@@ -382,23 +382,17 @@ public class CombinedArraysDemo {
             } else {
                 final int[] arr = ja;
                 ArraySorter.getQuickSorter().sort(0, n,
-                        new ArrayComparator() {
-                            public boolean less(long i, long j) {
-                                return arr[3 * (int) i] < arr[3 * (int) j];
-                            }
-                        },
-                        new ArrayExchanger() {
-                            public void swap(long i, long j) {
-                                int temp = arr[3 * (int) i];
-                                arr[3 * (int) i] = arr[3 * (int) j];
-                                arr[3 * (int) j] = temp;
-                                temp = arr[3 * (int) i + 1];
-                                arr[3 * (int) i + 1] = arr[3 * (int) j + 1];
-                                arr[3 * (int) j + 1] = temp;
-                                temp = arr[3 * (int) i + 2];
-                                arr[3 * (int) i + 2] = arr[3 * (int) j + 2];
-                                arr[3 * (int) j + 2] = temp;
-                            }
+                        (i, j) -> arr[3 * (int) i] < arr[3 * (int) j],
+                        (ArrayExchanger) (i, j) -> {
+                            int temp = arr[3 * (int) i];
+                            arr[3 * (int) i] = arr[3 * (int) j];
+                            arr[3 * (int) j] = temp;
+                            temp = arr[3 * (int) i + 1];
+                            arr[3 * (int) i + 1] = arr[3 * (int) j + 1];
+                            arr[3 * (int) j + 1] = temp;
+                            temp = arr[3 * (int) i + 2];
+                            arr[3 * (int) i + 2] = arr[3 * (int) j + 2];
+                            arr[3 * (int) j + 2] = temp;
                         });
             }
 

@@ -60,7 +60,7 @@ public class FileCheckSumDemo {
             files = new File[]{fileOrDir};
         }
         int count = 0;
-        List<Array> arrayList = new ArrayList<Array>();
+        List<Array> arrayList = new ArrayList<>();
         for (File f : files) {
             if (!f.isFile()) {
                 continue;

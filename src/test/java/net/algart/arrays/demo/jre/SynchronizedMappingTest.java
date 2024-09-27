@@ -61,63 +61,61 @@ public class SynchronizedMappingTest {
             final int ti = threadIndex;
             final ByteBuffer globalBuffer = ByteBuffer.allocateDirect(BLOCK_SIZE);
             // - some global memory, requiring synchronization
-            threads[threadIndex] = new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        for (long pos = ti * BLOCK_SIZE; pos < len; pos += threads.length * BLOCK_SIZE) {
-                            String msg = String.format(Locale.US, "%d: %.0f%% %d", ti, pos * 100.0 / len, pos);
-                            System.out.println(msg + ": waiting...");
-                            synchronized (synchronizer) {
-                                long startPosInThisSeries = pos - ti * BLOCK_SIZE;
-                                // we start new series per numberOfTasks ranges simultaneously
-                                while (readyLen.get() < startPosInThisSeries) {
-                                    try {
-                                        synchronizer.wait();
-                                    } catch (InterruptedException ex) {
-                                        ex.printStackTrace();
-                                        return;
-                                    }
-                                }
-                            }
-                            System.out.println(msg + ": started");
-                            synchronized (lock) {
-                                int sum = 0;
-                                for (int k = 0, n = globalBuffer.limit(); k < n; k++) {
-                                    sum += globalBuffer.get(k); // access to the synchronized memory
-                                }
-                                System.out.println(msg + ": calculated sum = " + sum);
-                            }
-                            MappedByteBuffer bb;
-                            synchronized (lock) {
-                                bb = fc.map(FileChannel.MapMode.READ_WRITE, pos, BLOCK_SIZE);
-                                System.out.println(ti + ": mapped");
-                            }
-                            synchronized (lock) {
-                                bb.load();
-                                System.out.println(msg + " loaded");
-                            }
-                            for (int k = 0, n = bb.limit(); k < n; k++) {
-                                bb.put(k, (byte)(bb.get(k) + 65));
-                            }
-                            synchronized (lock) {
-                                globalBuffer.rewind();
-                                globalBuffer.put(bb); // modification of the synchronized memory
+            threads[threadIndex] = new Thread(() -> {
+                try {
+                    for (long pos = ti * BLOCK_SIZE; pos < len; pos += threads.length * BLOCK_SIZE) {
+                        String msg = String.format(Locale.US, "%d: %.0f%% %d", ti, pos * 100.0 / len, pos);
+                        System.out.println(msg + ": waiting...");
+                        synchronized (synchronizer) {
+                            long startPosInThisSeries = pos - ti * BLOCK_SIZE;
+                            // we start new series per numberOfTasks ranges simultaneously
+                            while (readyLen.get() < startPosInThisSeries) {
                                 try {
-                                    bb.force();
-                                } catch (Exception e) {
-                                    e.printStackTrace(); // sometimes possible in usual situation
+                                    synchronizer.wait();
+                                } catch (InterruptedException ex) {
+                                    ex.printStackTrace();
+                                    return;
                                 }
-                                System.out.println(msg + " corrected and saved");
-                            }
-                            synchronized (synchronizer) {
-                                readyLen.addAndGet(BLOCK_SIZE);
-                                synchronizer.notifyAll();
                             }
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        System.exit(1);
+                        System.out.println(msg + ": started");
+                        synchronized (lock) {
+                            int sum = 0;
+                            for (int k = 0, n = globalBuffer.limit(); k < n; k++) {
+                                sum += globalBuffer.get(k); // access to the synchronized memory
+                            }
+                            System.out.println(msg + ": calculated sum = " + sum);
+                        }
+                        MappedByteBuffer bb;
+                        synchronized (lock) {
+                            bb = fc.map(FileChannel.MapMode.READ_WRITE, pos, BLOCK_SIZE);
+                            System.out.println(ti + ": mapped");
+                        }
+                        synchronized (lock) {
+                            bb.load();
+                            System.out.println(msg + " loaded");
+                        }
+                        for (int k = 0, n = bb.limit(); k < n; k++) {
+                            bb.put(k, (byte)(bb.get(k) + 65));
+                        }
+                        synchronized (lock) {
+                            globalBuffer.rewind();
+                            globalBuffer.put(bb); // modification of the synchronized memory
+                            try {
+                                bb.force();
+                            } catch (Exception e) {
+                                e.printStackTrace(); // sometimes possible in usual situation
+                            }
+                            System.out.println(msg + " corrected and saved");
+                        }
+                        synchronized (synchronizer) {
+                            readyLen.addAndGet(BLOCK_SIZE);
+                            synchronizer.notifyAll();
+                        }
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
                 }
             });
         }

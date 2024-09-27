@@ -234,7 +234,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * of the source matrix <code>m</code>.
          *
          * <p>In other words, in this mode you can consider that the resulting matrix
-         * is a submatrix of an infinite "matrix", which is come out from the original matrix
+         * is a submatrix of an infinite "matrix", which is coming out from the original matrix
          * by infinite periodical repeating along all coordinate axes.
          */
         public static final ContinuationMode CYCLIC = new ContinuationMode(
@@ -260,7 +260,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * of the source matrix <code>m</code>.
          *
          * <p>In other words, in this mode you can consider that the resulting matrix
-         * is a submatrix of an infinite "matrix", which is come out from the original matrix
+         * is a submatrix of an infinite "matrix", which is coming out from the original matrix
          * by infinite periodical repeating its {@link Matrix#array() built-in array}.
          * It is the most natural mode for many image processing algorithms,
          * which work directly with the built-in array instead of working with coordinates of matrix elements.
@@ -288,7 +288,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * of the source matrix <code>m</code>.
          *
          * <p>In other words, in this mode you can consider that the resulting matrix
-         * is a submatrix of an infinite "matrix", which is come out from the original matrix
+         * is a submatrix of an infinite "matrix", which is coming out from the original matrix
          * by infinite periodical repeating along all coordinate axes, if, while every "odd" repeating,
          * the matrix is symmetrically reflected along the corresponding coordinate.
          * In other words, it's possible to say that the matrix is infinitely reflected in each its bound as
@@ -306,7 +306,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * including non-primitive objects. For matrices with primitive element type, this mode is equivalent
          * to {@link #ZERO_CONSTANT}.
          */
-        public static final ContinuationMode NULL_CONSTANT = new ConstantImpl(null);
+        public static final ContinuationMode NULL_CONSTANT = newConstantImpl(null);
 
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by <code>0.0d</code>
@@ -317,7 +317,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
          * some primitive type, i.e. with <code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code>.
          */
-        public static final ContinuationMode ZERO_CONSTANT = new ConstantImpl(0.0d);
+        public static final ContinuationMode ZERO_CONSTANT = newConstantImpl(0.0d);
 
         /**
          * The special popular case of constant continuation mode, corresponding to continuing by
@@ -328,7 +328,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * <p>Note: unlike {@link #NULL_CONSTANT}, this mode can be used only with matrices, containing elements of
          * some primitive type, i.e. with <code>{@link Matrix}&lt;? extends {@link PArray}&gt;</code>.
          */
-        public static final ContinuationMode NAN_CONSTANT = new ConstantImpl(Double.NaN);
+        public static final ContinuationMode NAN_CONSTANT = newConstantImpl(Double.NaN);
 
         /**
          * Creates an instance of this class for <i>constant</i> continuation mode.
@@ -354,7 +354,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * an attempt to write into this element is just ignored.
          *
          * <p>In other words, in this mode, you can consider that the resulting matrix
-         * is a submatrix of an infinite "matrix", which is come out from the original matrix
+         * is a submatrix of an infinite "matrix", which is coming out from the original matrix
          * by infinite appending it along all coordinates with the specified continuation constant.
          *
          * <p>The argument <code>continuationConstant</code> of this method is automatically cast to the type of
@@ -541,6 +541,17 @@ public interface Matrix<T extends Array> extends Cloneable {
             Object constant = continuationConstant();
             return constant == null ? ((ContinuationMode) o).continuationConstant() == null :
                     constant.equals(((ContinuationMode) o).continuationConstant());
+        }
+
+        // This function helps to avoid the following IntelliJ IDEA warning:
+        //     Referencing subclass ConstantImpl from superclass ContinuationMode initializer
+        //     might lead to class loading deadlock
+        //     Inspection info: Reports classes that refer to their subclasses
+        //     in static initializers or static fields.
+        //     Such references can cause JVM-level deadlocks in multithreaded environment,
+        //     when one thread tries to load the superclass and another thread tries to load the subclass at the same time.
+        private static ContinuationMode newConstantImpl(Object continuationConstant) {
+            return new ConstantImpl(continuationConstant);
         }
 
         private static class ConstantImpl extends ContinuationMode {

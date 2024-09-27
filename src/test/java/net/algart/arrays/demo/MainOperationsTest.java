@@ -417,12 +417,12 @@ public class MainOperationsTest implements Cloneable {
                         test.testCopyAlternateDestModel(++testIndex);
                         test.testFill(++testIndex);
                         test.testIndexOf(++testIndex);
-                        test.testAsCopyOnNextWrite(++testIndex, elementTypeName.indexOf("Packed") != -1);
+                        test.testAsCopyOnNextWrite(++testIndex, elementTypeName.contains("Packed"));
                         // CombinedArraysDemo.MyCombinerPacked does not support resizable arrays
                         test.testGetSetBits(++testIndex);
                         test.testBufferMapping(++testIndex);
                         test.testLazyCopy(++testIndex, DemoUtils.memoryModel(elementTypeName),
-                                elementTypeName.indexOf("Packed") != -1);
+                                elementTypeName.contains("Packed"));
                         test.testDefaultCopy(++testIndex);
                         test.testCopyInside(++testIndex);
                         test.testCopySameArrayNoOverlap(++testIndex);
