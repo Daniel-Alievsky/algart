@@ -133,7 +133,7 @@ public class Matrices {
         public static final ResizingMethod AVERAGING = newAveraging(InterpolationMethod.STEP_FUNCTION);
 
         /**
-         * Resizing with poly linear interpolation (useful for expanding), but without interpolation.
+         * Resizing with poly-linear interpolation (useful for expanding), but without interpolation.
          * See details in comments to {@link Matrices#asResized Matrices.asResized}.
          */
         public static final ResizingMethod POLYLINEAR_INTERPOLATION = new ResizingMethod(

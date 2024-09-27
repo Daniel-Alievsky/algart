@@ -1035,7 +1035,7 @@ public class DefaultDataFileModel extends AbstractDataFileModel implements DataF
             if (bb == null) {
                 return "no buffer";
             }
-            StringBuilder sb = new StringBuilder("");
+            StringBuilder sb = new StringBuilder();
             int len = bb.limit();
             for (int k = 0; k < len; k++) {
                 if (k > 0) {
