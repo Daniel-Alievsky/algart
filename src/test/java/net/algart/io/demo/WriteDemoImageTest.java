@@ -53,8 +53,8 @@ public class WriteDemoImageTest {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 5) {
-            System.out.printf("Usage: [-imageIOWrite] [-formatName=XXX] " +
-                            "%s target_image.jpg/png/bmp byte|short|int|long|float|double " +
+            System.out.printf("Usage: %s [-imageIOWrite] [-formatName=XXX] " +
+                            "target_image.jpg/png/bmp byte|short|int|long|float|double " +
                             "channels dimX dimY [quality]%n",
                     WriteDemoImageTest.class);
             return;
@@ -86,16 +86,18 @@ public class WriteDemoImageTest {
         System.out.println(AWT2MatrixTest.toString(bi));
         final String fileSuffix = MatrixIO.extension(targetFile);
         if (imageIOWrite) {
-            System.out.println("Writing " + targetFile + " via ImageIO.write...");
+            System.out.printf("Writing %s via ImageIO.write...%n", targetFile);
             if (!ImageIO.write(bi, fileSuffix, targetFile.toFile())) {
                 throw new IOException("Failed to write image " + targetFile);
             }
         } else if (formatName != null) {
-            System.out.println("Writing " + targetFile +  " by format name \"" + formatName + "\"...");
-            MatrixIO.writeBufferedImageByFormatName(targetFile, bi, formatName, p -> MatrixIO.setQuality(p, quality));
+            System.out.printf("Writing %s  by format name \"%s\", quality %.2f...%n", targetFile, formatName, quality);
+            MatrixIO.writeBufferedImageByFormatName(
+                    targetFile, bi, formatName, p -> MatrixIO.setQuality(p, quality));
         } else {
-            System.out.println("Writing " + targetFile + " by file suffix...");
-            MatrixIO.writeBufferedImage(targetFile, bi, p -> MatrixIO.setQuality(p, quality));
+            System.out.printf("Writing %s by file suffix, quality %.2f...%n", targetFile, quality);
+            MatrixIO.writeBufferedImage(
+                    targetFile, bi, p -> MatrixIO.setQuality(p, quality));
         }
     }
 

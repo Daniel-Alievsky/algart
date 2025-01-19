@@ -404,7 +404,7 @@ public class ArraySelectorTest {
             startArgIndex++;
         }
         if (args.length < startArgIndex + 2) {
-            System.out.printf("Usage: [-skipMeasuring] %s numberOfElements numberOfTests%n", ArraySelectorTest.class);
+            System.out.printf("Usage: %s [-skipMeasuring] numberOfElements numberOfTests%n", ArraySelectorTest.class);
             return;
         }
         final int numberOfElements = Integer.parseInt(args[startArgIndex]);

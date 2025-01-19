@@ -301,6 +301,10 @@ public class MatrixIO {
         // - the same operation is performed in ImageIO class;
         // without this, an existing file will not be truncated: only its start part will be overwritten
         try (ImageOutputStream ios = ImageIO.createImageOutputStream(output)) {
+            if (ios == null) {
+                throw new IIOException("Cannot write image to " + file +
+                        ", possibly because the containing folder is invalid or not permitted for writing");
+            }
             writer.setOutput(ios);
             final ImageWriteParam writeParam = writer.getDefaultWriteParam();
             if (customizer != null) {
