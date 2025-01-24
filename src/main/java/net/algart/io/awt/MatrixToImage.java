@@ -44,18 +44,43 @@ public abstract class MatrixToImage {
     private boolean unsignedInt32 = false;
     private boolean bytesRequired = false;
 
+    /**
+     * Equivalent to <code>{@link #toBufferedImage(java.util.List, boolean)
+     * toBufferedImage}(channels, true)</code>.
+     *
+     * @param channels some multichannel image.
+     * @return the equivalent <code>BufferedImage</code>.
+     */
     public static BufferedImage toBufferedImage(java.util.List<? extends Matrix<? extends PArray>> channels) {
         return toBufferedImage(channels, true);
 
     }
+
+    /**
+     * Converts multichannel AlgART image (list of matrices) to <code>BufferedImage</code>.
+     * Equivalent to
+     * <pre>
+     *     new {@link InterleavedRGBToInterleaved MatrixToImage.InterleavedRGBToInterleaved}()
+     *                 .{@link #setBytesRequired}(convertAllElementTypesToByte)
+     *                 .{@link #toBufferedImage}({@link Matrices#interleave Matrices.interleave}(channels))
+     * </pre>
+     * This is the simplest way to convert the list channels in a form of AlgART matrices to
+     * <code>BufferedImage</code>.
+     * Note that sometimes this is not the best solution: for example, you may prefer to
+     * call {@link #setUnsignedInt32(boolean) setUnsignedInt32(true)} before conversion
+     * if you process 32-bit matrices built with other libraries (like 32-bit grayscale TIFF images).
+     *
+     * @param channels                     some multichannel image.
+     * @param convertAllElementTypesToByte whether we need to convert non-byte data to <code>byte</code> values.
+     * @return the equivalent <code>BufferedImage</code>.
+     */
     public static BufferedImage toBufferedImage(
             java.util.List<? extends Matrix<? extends PArray>> channels,
             boolean convertAllElementTypesToByte) {
         Objects.requireNonNull(channels, "Null channels");
-        final Matrix<PArray> matrix = Matrices.interleave(channels);
-        final MatrixToImage.InterleavedRGBToInterleaved converter = new MatrixToImage.InterleavedRGBToInterleaved();
-        converter.setBytesRequired(convertAllElementTypesToByte);
-        return converter.toBufferedImage(matrix);
+        return new MatrixToImage.InterleavedRGBToInterleaved()
+                .setBytesRequired(convertAllElementTypesToByte)
+                .toBufferedImage(Matrices.interleave(channels));
     }
 
     public boolean isUnsignedInt32() {
@@ -92,7 +117,7 @@ public abstract class MatrixToImage {
      *
      * <p>This flag is used by {@link #elementTypeSupported(Class)} method.
      *
-     * @param bytesRequired whether we need to restrict the passed data by <code>byte</code> values.
+     * @param bytesRequired whether we need to convert the passed data to <code>byte</code> values.
      * @return a reference to this object.
      */
     public MatrixToImage setBytesRequired(boolean bytesRequired) {

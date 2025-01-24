@@ -42,10 +42,20 @@ public abstract class ImageToMatrix {
     // if true and if BufferedImage contains an alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
 
+    /**
+     * Converts <code>BufferedImage</code> to multichannel AlgART image (list of matrices).
+     * Equivalent to
+     * <pre>
+     *     {@link Matrices#separate Matrices.separate}(new {@link ToInterleavedRGB
+     *     ImageToMatrix.ToInterleavedRGB}().{@link #toMatrix toMatrix}(bufferedImage))
+     * </pre>
+     *
+     * @param bufferedImage some buffered image.
+     * @return the list of color channels if this image.
+     */
     public static List<Matrix<UpdatablePArray>> toChannels(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
-        return Matrices.separate(matrix);
+        return Matrices.separate(new ToInterleavedRGB().toMatrix(bufferedImage));
     }
 
     public boolean isEnableAlpha() {
