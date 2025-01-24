@@ -44,6 +44,20 @@ public abstract class MatrixToImage {
     private boolean unsignedInt32 = false;
     private boolean bytesRequired = false;
 
+    public static BufferedImage toBufferedImage(java.util.List<? extends Matrix<? extends PArray>> channels) {
+        return toBufferedImage(channels, true);
+
+    }
+    public static BufferedImage toBufferedImage(
+            java.util.List<? extends Matrix<? extends PArray>> channels,
+            boolean convertAllElementTypesToByte) {
+        Objects.requireNonNull(channels, "Null channels");
+        final Matrix<PArray> matrix = Matrices.interleave(channels);
+        final MatrixToImage.InterleavedRGBToInterleaved converter = new MatrixToImage.InterleavedRGBToInterleaved();
+        converter.setBytesRequired(convertAllElementTypesToByte);
+        return converter.toBufferedImage(matrix);
+    }
+
     public boolean isUnsignedInt32() {
         return unsignedInt32;
     }
@@ -75,6 +89,8 @@ public abstract class MatrixToImage {
      * {@link #elementTypeSupported(Class)} method will return <code>true</code> for <code>byte.class</code> only.
      * This can be useful before writing the result <code>BufferedImage</code> into a file,
      * because some formats like JPEG support only <code>byte</code> (8-bit) precision.
+     *
+     * <p>This flag is used by {@link #elementTypeSupported(Class)} method.
      *
      * @param bytesRequired whether we need to restrict the passed data by <code>byte</code> values.
      * @return a reference to this object.

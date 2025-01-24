@@ -36,25 +36,36 @@ import java.nio.file.Path;
 
 public class AWTNewBufferedImageTest {
     public static void main(String[] args) throws IOException {
-        if (args.length < 3) {
+        if (args.length < 4) {
             System.out.printf("Usage: " +
                             "%s result_1.jpeg/png/bmp/... " +
-                    "result_2.jpeg/png/bmp/... result_3.jpeg/png/bmp/... ",
+                            "result_2.jpeg/png/bmp/... " +
+                            "result_3.jpeg/png/bmp/... " +
+                            "result_4.jpeg/png/bmp/... ",
                     AWTNewBufferedImageTest.class);
             return;
         }
         Path resultFile1 = Path.of(args[0]);
         Path resultFile2 = Path.of(args[1]);
         Path resultFile3 = Path.of(args[2]);
+        Path resultFile4 = Path.of(args[3]);
 
+        System.out.println("Testing 3-byte RGB...");
         BufferedImage bi1 = new BufferedImage(1000, 1000, BufferedImage.TYPE_INT_RGB);
         checkBufferedImage(bi1, resultFile1);
 
+        System.out.println("Testing 4-byte ABGR...");
         BufferedImage bi2 = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
         checkBufferedImage(bi2, resultFile2);
 
+        System.out.println("Testing HiColor 5+6+5 bits...");
         BufferedImage bi3 = new BufferedImage(1000, 1000, BufferedImage.TYPE_USHORT_565_RGB);
         checkBufferedImage(bi3, resultFile3);
+
+        System.out.println("Testing 16-bit grayscale...");
+        BufferedImage bi4 = new BufferedImage(1000, 1000, BufferedImage.TYPE_USHORT_GRAY);
+        checkBufferedImage(bi4, resultFile4);
+
     }
 
     private static void checkBufferedImage(BufferedImage bi1, Path file) throws IOException {

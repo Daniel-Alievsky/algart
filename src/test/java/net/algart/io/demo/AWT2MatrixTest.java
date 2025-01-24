@@ -62,21 +62,19 @@ public class AWT2MatrixTest {
         System.out.printf("Writing BufferedImage to %s...%n", resultFile1);
         MatrixIO.writeBufferedImage(resultFile1, bi1);
 
-        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bi1);
-        List<Matrix<UpdatablePArray>> matrices = Matrices.separate(matrix);
-        final int dimX = matrices.get(0).dimX32();
-        final int dimY = matrices.get(0).dimY32();
+        List<Matrix<UpdatablePArray>> channels = ImageToMatrix.toChannels(bi1);
+        final int dimX = channels.get(0).dimX32();
+        final int dimY = channels.get(0).dimY32();
 
-        BufferedImage bi2 = new MatrixToImage.InterleavedRGBToInterleaved().toBufferedImage(
-                Matrices.interleave(matrices));
+        BufferedImage bi2 = MatrixToImage.toBufferedImage(channels, false);
         System.out.printf("BufferedImage: %s%n", bi2);
-        System.out.printf("Writing AlgART InterleavedRGBToInterleavedSamples to %s...%n", resultFile2);
+        System.out.printf("Writing AlgART InterleavedRGBToInterleaved to %s...%n", resultFile2);
         MatrixIO.writeBufferedImage(resultFile2, bi2);
 
         BufferedImage bi3 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(
-                Matrices.interleave(matrices));
+                Matrices.interleave(channels));
         System.out.printf("BufferedImage: %s%n", bi3);
-        System.out.printf("Writing AlgART InterleavedRGBToPackedSamples to %s...%n", resultFile3);
+        System.out.printf("Writing AlgART InterleavedRGBToPacked to %s...%n", resultFile3);
         MatrixIO.writeBufferedImage(resultFile3, bi3);
 
         BufferedImage bi4 = new BufferedImage(dimX, dimY, BufferedImage.TYPE_INT_BGR);

@@ -327,28 +327,23 @@ public class MatrixIO {
         return image;
     }
 
-    public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> image) throws IOException {
-        writeImage(file, image, true, null);
+    public static void writeImage(Path file, List<? extends Matrix<? extends PArray>> channels) throws IOException {
+        writeImage(file, channels, true, null);
     }
 
     public static void writeImage(
             Path file,
-            List<? extends Matrix<? extends PArray>> image,
+            List<? extends Matrix<? extends PArray>> channels,
             boolean convertAllElementTypesToByte,
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
-        Objects.requireNonNull(image, "Null image");
-        final Matrix<PArray> matrix = Matrices.interleave(image);
-        final MatrixToImage.InterleavedRGBToInterleaved converter = new MatrixToImage.InterleavedRGBToInterleaved();
-        converter.setBytesRequired(convertAllElementTypesToByte);
-        final BufferedImage bi = converter.toBufferedImage(matrix);
+        final BufferedImage bi = MatrixToImage.toBufferedImage(channels, convertAllElementTypesToByte);
         writeBufferedImage(file, bi, customizer);
     }
 
     public static List<Matrix<UpdatablePArray>> readImage(Path file) throws IOException {
         final BufferedImage bi = readBufferedImage(file);
-        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bi);
-        return Matrices.separate(matrix);
+        return ImageToMatrix.toChannels(bi);
     }
 
     /**
@@ -356,11 +351,11 @@ public class MatrixIO {
      * with <code>allowReferencesToStandardLargeFiles=true</code> from an external algorithm before its finishing
      * (to return its results).
      *
-     * @param image matrices, for built-in arrays of which you want to clear the temporary status
+     * @param channels matrices, for built-in arrays of which you want to clear the temporary status.
      */
     public static void clearImageFolderTemporaryStatus(
-            List<Matrix<? extends PArray>> image) {
-        for (Matrix<? extends PArray> m : image) {
+            List<Matrix<? extends PArray>> channels) {
+        for (Matrix<? extends PArray> m : channels) {
             PArray a = m.array();
             if (LargeMemoryModel.isLargeArray(a)) {
                 LargeMemoryModel.setTemporary(a, false);
@@ -369,36 +364,36 @@ public class MatrixIO {
         }
     }
 
-    public static void writeImageFolder(Path folder, List<? extends Matrix<? extends PArray>> image)
+    public static void writeImageFolder(Path folder, List<? extends Matrix<? extends PArray>> channels)
             throws IOException {
-        writeImageFolder(folder, image, false);
+        writeImageFolder(folder, channels, false);
     }
 
     /**
-     * Saves the multichannel <code>image</code> (list of matrices) in the specified folder.
+     * Saves the multichannel image (list of matrices) in the specified folder.
      * Matrices are saved in several files in very simple format without any compression.
      * If this folder already contains an image, saved by previous call of this method,
      * it is automatically deleted (replaced with the new one).
      *
      * @param folder                              folder to save the image.
-     * @param image                               some multichannel image
+     * @param channels                            some multichannel image.
      * @param allowReferencesToStandardLargeFiles if <code>true</code>, and if one of passed matrices is
      *                                            mapped to some file F by {@link LargeMemoryModel},
      *                                            this method does not write the matrix content and
      *                                            saves a little text "reference" file with information about
      *                                            the path to this file F.
      * @throws IOException          in the case of I/O error.
-     * @throws NullPointerException if one of the arguments or elements of <code>image</code> list is {@code null}.
+     * @throws NullPointerException if one of the arguments or elements of <code>channels</code> list is {@code null}.
      */
     public static void writeImageFolder(
             Path folder,
-            List<? extends Matrix<? extends PArray>> image,
+            List<? extends Matrix<? extends PArray>> channels,
             boolean allowReferencesToStandardLargeFiles) throws IOException {
         Objects.requireNonNull(folder, "Null folder");
-        Objects.requireNonNull(image, "Null image");
-        image = new ArrayList<Matrix<? extends PArray>>(image);
+        Objects.requireNonNull(channels, "Null channels");
+        channels = new ArrayList<Matrix<? extends PArray>>(channels);
         // cloning before checking guarantees correct check while multithreading
-        if (image.isEmpty()) {
+        if (channels.isEmpty()) {
             throw new IllegalArgumentException("Empty list of image bands");
         }
         if (!Files.exists(folder)) {
@@ -407,7 +402,7 @@ public class MatrixIO {
         File f = folder.toFile();
         Files.writeString(new File(f, "version").toPath(), "1.0");
         int index = 0;
-        for (Matrix<? extends PArray> m : image) {
+        for (Matrix<? extends PArray> m : channels) {
             DataFileModel<?> dataFileModel;
             if (allowReferencesToStandardLargeFiles
                     && LargeMemoryModel.isLargeArray(m.array())

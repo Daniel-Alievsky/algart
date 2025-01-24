@@ -29,6 +29,7 @@ import net.algart.arrays.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.DataBuffer;
 import java.awt.image.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -40,6 +41,12 @@ public abstract class ImageToMatrix {
     private boolean enableAlpha = true;
     // if true and if BufferedImage contains an alpha-channel, the matrix 4xMxN will be returned
     // if false, but the source has alpha, it may be interpreted, not ignored
+
+    public static List<Matrix<UpdatablePArray>> toChannels(BufferedImage bufferedImage) {
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
+        final Matrix<UpdatablePArray> matrix = new ImageToMatrix.ToInterleavedRGB().toMatrix(bufferedImage);
+        return Matrices.separate(matrix);
+    }
 
     public boolean isEnableAlpha() {
         return enableAlpha;
