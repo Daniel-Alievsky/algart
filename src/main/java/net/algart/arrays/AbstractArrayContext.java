@@ -353,7 +353,7 @@ public abstract class AbstractArrayContext implements ArrayContext {
         private final int numberOfThreads;
 
         private MultithreadingVersion(int currentThreadIndex, int numberOfThreads) {
-            assert numberOfThreads > 0 && currentThreadIndex >= 0 && currentThreadIndex < numberOfThreads;
+            assert currentThreadIndex >= 0 && currentThreadIndex < numberOfThreads;
             this.currentThreadIndex = currentThreadIndex;
             this.numberOfThreads = numberOfThreads;
         }

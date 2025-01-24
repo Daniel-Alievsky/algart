@@ -79,7 +79,7 @@ class ArraysComparisonWithThresholdGetBitsOp {
         if (arrayPos > x0.length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x0.length(), getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len;
             boolean usePool = false;
             Object data = null;

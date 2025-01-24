@@ -130,20 +130,20 @@ public class ReadWriteImageTest {
             System.out.printf("Result matrix (1): %s%n", matrix1);
 
             t1 = System.nanoTime();
-            final List<Matrix<UpdatablePArray>> image = Matrices.separate(matrix1);
+            final List<Matrix<UpdatablePArray>> channels = Matrices.separate(matrix1);
             t2 = System.nanoTime();
             System.out.printf("Call separate() method: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
-            if (image.size() != toMatrix.resultNumberOfChannels(bi1)) {
-                throw new AssertionError(image.size() + "!=" + toMatrix.resultNumberOfChannels(bi1));
+            if (channels.size() != toMatrix.resultNumberOfChannels(bi1)) {
+                throw new AssertionError(channels.size() + "!=" + toMatrix.resultNumberOfChannels(bi1));
             }
 
-            if (reduce4ChannelsTo2 && image.size() >= 4) {
-                image.subList(1, 3).clear();
+            if (reduce4ChannelsTo2 && channels.size() >= 4) {
+                channels.subList(1, 3).clear();
                 System.out.println("Reducing 4-channel image to 2-channel image");
             }
             t1 = System.nanoTime();
-            final Matrix<UpdatablePArray> interleave = Matrices.interleave(image);
+            final Matrix<UpdatablePArray> interleave = Matrices.interleave(channels);
             t2 = System.nanoTime();
             System.out.printf("Call interleave() method: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(matrix1) / ((t2 - t1) * 1e-9));
@@ -157,10 +157,10 @@ public class ReadWriteImageTest {
             System.out.printf("Call MatrixToImage.toBufferedImage() method: %.3f ms, %.3f MB/sec%n",
                     (t2 - t1) * 1e-6, Matrices.sizeOfMB(interleave) / ((t2 - t1) * 1e-9));
             System.out.println("Result of this conversion (1): " + AWT2MatrixTest.toString(bi2));
-            if (addAlpha && toBufferedImage.resultNumberOfChannels(image.size()) != 4) {
-                throw new AssertionError("Invalid resultNumberOfChannels(" + image.size() + ")");
+            if (addAlpha && toBufferedImage.resultNumberOfChannels(channels.size()) != 4) {
+                throw new AssertionError("Invalid resultNumberOfChannels(" + channels.size() + ")");
             }
-            if (bi2.getColorModel().getNumComponents() != toBufferedImage.resultNumberOfChannels(image.size())) {
+            if (bi2.getColorModel().getNumComponents() != toBufferedImage.resultNumberOfChannels(channels.size())) {
                 throw new AssertionError("Invalid " + bi2.getColorModel().getNumComponents());
             }
 

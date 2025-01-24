@@ -47,19 +47,19 @@ public class ColorMatrices {
     public static final double INTENSITY_B_WEIGHT = 0.114;
     public static final double INTENSITY_G_WEIGHT = 1.0 - (INTENSITY_R_WEIGHT + INTENSITY_B_WEIGHT); // ~0.587
 
-    public static Matrix<? extends PArray> toRGBIntensity(List<? extends Matrix<? extends PArray>> colorChannels) {
-        Objects.requireNonNull(colorChannels, "Null color channels");
-        return colorChannels.size() < 3 ?
-                colorChannels.get(0) :
-                asRGBIntensity(colorChannels.get(0), colorChannels.get(1), colorChannels.get(2))
+    public static Matrix<? extends PArray> toRGBIntensity(List<? extends Matrix<? extends PArray>> channels) {
+        Objects.requireNonNull(channels, "Null color channels");
+        return channels.size() < 3 ?
+                channels.get(0) :
+                asRGBIntensity(channels.get(0), channels.get(1), channels.get(2))
                         .clone(ArrayContext.DEFAULT_SINGLE_THREAD);
     }
 
-    public static Matrix<? extends PArray> asRGBIntensity(List<? extends Matrix<? extends PArray>> colorChannels) {
-        Objects.requireNonNull(colorChannels, "Null color channels");
-        return colorChannels.size() < 3 ?
-                colorChannels.get(0) :
-                asRGBIntensity(colorChannels.get(0), colorChannels.get(1), colorChannels.get(2));
+    public static Matrix<? extends PArray> asRGBIntensity(List<? extends Matrix<? extends PArray>> channels) {
+        Objects.requireNonNull(channels, "Null color channels");
+        return channels.size() < 3 ?
+                channels.get(0) :
+                asRGBIntensity(channels.get(0), channels.get(1), channels.get(2));
     }
 
     public static Matrix<? extends PArray> asRGBIntensity(

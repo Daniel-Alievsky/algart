@@ -5868,7 +5868,7 @@ public class Arrays {
             if (mmInfo.min() == mmInfo.max()) {
                 return; // nothing to do: constant array
             }
-            boolean lessElement = comparator.less(mmInfo.indexOfMin(), mmInfo.indexOfMax()) ? false : true;
+            boolean lessElement = !comparator.less(mmInfo.indexOfMin(), mmInfo.indexOfMax());
             boolean greaterElement = !lessElement;
             long len = bitArray.length();
             long cardinality = Arrays.cardinality(bitArray);

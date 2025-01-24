@@ -171,7 +171,7 @@ class ArraysLinearGetDataOp {
         if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len = Math.min(count, LINEAR_BUFFER_LENGTH);
             int[] intBuf = null;
             double[] doubleBuf = null;

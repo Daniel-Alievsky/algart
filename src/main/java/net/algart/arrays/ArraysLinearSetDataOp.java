@@ -110,7 +110,7 @@ class ArraysLinearSetDataOp {
         if (arrayPos > length - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, length, x.getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len = Math.min(count, ArraysLinearGetDataOp.LINEAR_BUFFER_LENGTH);
             boolean optimizeJArray = ja != null;
             int[] intBuf = null;
@@ -351,7 +351,7 @@ class ArraysLinearSetDataOp {
                                 if (truncateOverflows) {
                                     for (int j = 0; j < len; j++, destOffset++) {
                                         int v = intBuf[j];
-                                        dest[destOffset] = (byte)(v < 0 ? 0 : v > 0xFF ? 0xFF : v);
+                                        dest[destOffset] = (byte)(v < 0 ? 0 : Math.min(v, 0xFF));
                                     }
                                 } else {
                                     for (int j = 0; j < len; j++, destOffset++) {
@@ -362,7 +362,7 @@ class ArraysLinearSetDataOp {
                                 if (truncateOverflows) {
                                     for (int j = 0; j < len; j++, destOffset++) {
                                         int v = (int)doubleBuf[j];
-                                        dest[destOffset] = (byte)(v < 0 ? 0 : v > 0xFF ? 0xFF : v);
+                                        dest[destOffset] = (byte)(v < 0 ? 0 : Math.min(v, 0xFF));
                                     }
                                 } else {
                                     for (int j = 0; j < len; j++, destOffset++) {
@@ -377,7 +377,7 @@ class ArraysLinearSetDataOp {
                                     if (truncateOverflows) {
                                         for (int j = 0; j < len; j++) {
                                             int v = intBuf[j];
-                                            dest[j] = (byte)(v < 0 ? 0 : v > 0xFF ? 0xFF : v);
+                                            dest[j] = (byte)(v < 0 ? 0 : Math.min(v, 0xFF));
                                         }
                                     } else {
                                         for (int j = 0; j < len; j++) {
@@ -388,7 +388,7 @@ class ArraysLinearSetDataOp {
                                     if (truncateOverflows) {
                                         for (int j = 0; j < len; j++) {
                                             int v = (int)doubleBuf[j];
-                                            dest[j] = (byte)(v < 0 ? 0 : v > 0xFF ? 0xFF : v);
+                                            dest[j] = (byte)(v < 0 ? 0 : Math.min(v, 0xFF));
                                         }
                                     } else {
                                         for (int j = 0; j < len; j++) {
@@ -412,7 +412,7 @@ class ArraysLinearSetDataOp {
                                 if (truncateOverflows) {
                                     for (int j = 0; j < len; j++, destOffset++) {
                                         int v = intBuf[j];
-                                        dest[destOffset] = (short)(v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v);
+                                        dest[destOffset] = (short)(v < 0 ? 0 : Math.min(v, 0xFFFF));
                                     }
                                 } else {
                                     for (int j = 0; j < len; j++, destOffset++) {
@@ -423,7 +423,7 @@ class ArraysLinearSetDataOp {
                                 if (truncateOverflows) {
                                     for (int j = 0; j < len; j++, destOffset++) {
                                         int v = (int)doubleBuf[j];
-                                        dest[destOffset] = (short)(v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v);
+                                        dest[destOffset] = (short)(v < 0 ? 0 : Math.min(v, 0xFFFF));
                                     }
                                 } else {
                                     for (int j = 0; j < len; j++, destOffset++) {
@@ -438,7 +438,7 @@ class ArraysLinearSetDataOp {
                                     if (truncateOverflows) {
                                         for (int j = 0; j < len; j++) {
                                             int v = intBuf[j];
-                                            dest[j] = (short)(v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v);
+                                            dest[j] = (short)(v < 0 ? 0 : Math.min(v, 0xFFFF));
                                         }
                                     } else {
                                         for (int j = 0; j < len; j++) {
@@ -449,7 +449,7 @@ class ArraysLinearSetDataOp {
                                     if (truncateOverflows) {
                                         for (int j = 0; j < len; j++) {
                                             int v = (int)doubleBuf[j];
-                                            dest[j] = (short)(v < 0 ? 0 : v > 0xFFFF ? 0xFFFF : v);
+                                            dest[j] = (short)(v < 0 ? 0 : Math.min(v, 0xFFFF));
                                         }
                                     } else {
                                         for (int j = 0; j < len; j++) {

@@ -42,11 +42,11 @@ public class ReadWriteImageSimpleDemo {
         }
         final Path sourceFile = Path.of(args[0]);
         final Path targetFile = Path.of(args[1]);
-        List<Matrix<UpdatablePArray>> image = MatrixIO.readImage(sourceFile);
+        List<Matrix<UpdatablePArray>> channels = MatrixIO.readImage(sourceFile);
         System.out.printf("Reading %s:%n    %s%n",
                 sourceFile,
-                image.stream().map(Matrix::toString).collect(Collectors.joining(String.format("%n    "))));
-        MatrixIO.writeImage(targetFile, image);
+                channels.stream().map(Matrix::toString).collect(Collectors.joining(String.format("%n    "))));
+        MatrixIO.writeImage(targetFile, channels);
         System.out.printf("Writing %s%n", targetFile);
     }
 }

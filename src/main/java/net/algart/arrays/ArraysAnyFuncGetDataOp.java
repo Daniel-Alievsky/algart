@@ -128,7 +128,7 @@ class ArraysAnyFuncGetDataOp {
         if (arrayPos > x[0].length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x[0].length(), x[0].getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len = Math.min(count, ANY_FUNC_BUFFER_LENGTH);
             double[] args = (double[])argsPool.requestArray();
             double[][] doubleBufs = (double[][])arrayOfDoubleBuffersPool.requestArray();

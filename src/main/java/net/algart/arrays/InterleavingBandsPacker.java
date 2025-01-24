@@ -487,7 +487,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -513,7 +513,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -542,7 +542,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -621,7 +621,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -647,7 +647,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -676,7 +676,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -753,7 +753,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -779,7 +779,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -808,7 +808,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -885,7 +885,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -911,7 +911,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -940,7 +940,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1017,7 +1017,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -1043,7 +1043,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1072,7 +1072,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1149,7 +1149,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -1175,7 +1175,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1204,7 +1204,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1281,7 +1281,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p1 = (int) position + bandArraysOffsets[1];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                 }
@@ -1307,7 +1307,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p2 = (int) position + bandArraysOffsets[2];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];
@@ -1336,7 +1336,7 @@ abstract class InterleavingBandsPacker extends AbstractInterleavingBandsOperatio
                 int p3 = (int) position + bandArraysOffsets[3];
                 final int p0To = p0 + count;
                 int disp = 0;
-                for (; p0 < p0To; ) {
+                while (p0 < p0To) {
                     packedArray[disp++] = band0[p0++];
                     packedArray[disp++] = band1[p1++];
                     packedArray[disp++] = band2[p2++];

@@ -998,13 +998,13 @@ public final class CombinedMemoryModel<E> extends AbstractMemoryModel {
             // warning: highIndex-1 can be invalid value Long.MAX_VALUE
             long low = Math.max(lowIndex, 0);
             if (value == null) {
-                for (; k > low; ) {
+                while (k > low) {
                     if (get(--k) == null) {
                         return k;
                     }
                 }
             } else {
-                for (; k > low; ) {
+                while (k > low) {
                     if (value.equals(get(--k))) {
                         return k;
                     }

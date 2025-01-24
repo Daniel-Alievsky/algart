@@ -176,7 +176,7 @@ class ArraysBitTableGetDataOp {
         if (arrayPos > x0.length() - count) {
             throw AbstractArray.rangeException(arrayPos + count - 1, x0.length(), x0.getClass());
         }
-        for (; count > 0; ) {
+        while (count > 0) {
             int len;
             if (dbuf != null) {
                 final long[] data;
