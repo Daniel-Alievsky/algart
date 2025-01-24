@@ -58,6 +58,21 @@ public abstract class ImageToMatrix {
         return Matrices.separate(new ToInterleavedRGB().toMatrix(bufferedImage));
     }
 
+    public static int defaultNumberOfChannels(BufferedImage bufferedImage) {
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
+        ColorModel cm = bufferedImage.getColorModel();
+        boolean gray = cm.getNumComponents() == 1;
+        // ...SampleModel sm = bufferedImage.getSampleModel();...
+        // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
+        // In some TIFF we have only 1 band, but RGB color model, because it uses palette; so, the result must be 3.
+        return cm.hasAlpha() ? 4 : gray ? 1 : 3;
+    }
+
+    public static Class<?> defaultElementType(BufferedImage bufferedImage) {
+        final Class<?> result = resultElementTypeOrNullForUnsupported(bufferedImage);
+        return result == null ? byte.class : result;
+    }
+
     public boolean isEnableAlpha() {
         return enableAlpha;
     }
@@ -84,13 +99,8 @@ public abstract class ImageToMatrix {
     }
 
     public final int resultNumberOfChannels(BufferedImage bufferedImage) {
-        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-        ColorModel cm = bufferedImage.getColorModel();
-        boolean gray = cm.getNumComponents() == 1;
-        // ...SampleModel sm = bufferedImage.getSampleModel();...
-        // || (sm.getNumBands() == 1 && sm.getNumDataElements() == 1) - not correct!
-        // In some TIFF we have only 1 band, but RGB color model, because it uses palette; so, the result must be 3.
-        return cm.hasAlpha() && enableAlpha ? 4 : gray ? 1 : 3;
+        final int result = defaultNumberOfChannels(bufferedImage);
+        return !enableAlpha && result > 3 ? 3 : result;
     }
 
     /**
@@ -128,14 +138,14 @@ public abstract class ImageToMatrix {
 
     protected abstract void toJavaArray(Object resultJavaArray, BufferedImage bufferedImage);
 
-    Class<?> resultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
-        final int numberOfChannels = resultNumberOfChannels(bufferedImage);
+    private static Class<?> resultElementTypeOrNullForUnsupported(BufferedImage bufferedImage) {
+        final int numberOfChannels = defaultNumberOfChannels(bufferedImage);
         final ColorModel colorModel = bufferedImage.getColorModel();
         final SampleModel sampleModel = bufferedImage.getSampleModel();
         final int colorComponentsCount = colorModel.getNumComponents();
         if (numberOfChannels > colorComponentsCount || colorComponentsCount != sampleModel.getNumBands()) {
             return null;
-            // - excluding images with palette (getNumberOfChannels will be 3, but only 1 band in getNumBands())
+            // - excluding images with palette (defaultNumberOfChannels will be 3, but only 1 band in getNumBands())
             // but numberOfChannels=3 and colorComponentsCount=4 case is allowed
         }
         if (!(colorModel instanceof ComponentColorModel && sampleModel instanceof ComponentSampleModel)) {
@@ -229,8 +239,7 @@ public abstract class ImageToMatrix {
             if (readingViaColorModel || readingViaGraphics) {
                 return byte.class;
             }
-            final Class<?> result = resultElementTypeOrNullForUnsupported(bufferedImage);
-            return result == null ? byte.class : result;
+            return defaultElementType(bufferedImage);
         }
 
         @Override

@@ -29,6 +29,7 @@ import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
 import net.algart.arrays.PArray;
 import net.algart.io.MatrixIO;
+import net.algart.io.awt.ImageToMatrix;
 import net.algart.io.awt.MatrixToImage;
 import net.algart.math.functions.Func2;
 
@@ -53,6 +54,8 @@ public class WritePaletteImageTest {
         final BufferedImage bi = new MatrixToImage.MonochromeToIndexed(Color.BLUE, Color.RED)
                 .toBufferedImage(m);
         System.out.println(AWT2MatrixTest.toString(bi));
+        System.out.println(ImageToMatrix.defaultNumberOfChannels(bi) + " channels, " +
+                ImageToMatrix.defaultElementType(bi) + " elements");
 
         System.out.println("Writing " + targetFile + "...");
         MatrixIO.writeBufferedImage(targetFile, bi);
