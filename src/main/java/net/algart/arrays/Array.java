@@ -239,19 +239,19 @@ public interface Array {
 
     /**
      * Copies <code>count</code> elements of this array, starting from <code>arrayPos</code> index,
-     * into the specified Java array of corresponding type, starting from <code>destArrayOffset</code> index.
+     * into the specified Java array of the corresponding type, starting from <code>destArrayOffset</code> index.
      *
      * <p>For non-primitive element type ({@link ObjectArray}, {@link UpdatableObjectArray},
      * {@link MutableObjectArray} subinterfaces), this method may allocate new instances
      * for Java array elements <code>destArray[destArrayOffset]..destArray[destArrayOffset+count-1]</code>,
      * but also may change the state of already existing non-null elements: it depends on implementation.
      * In any case, you can be sure that if some of the target elements <code>destArray[k]==null</code>,
-     * this method always allocate new element.
+     * this method always allocate a new element.
      *
      * <p>Note: if <code>IndexOutOfBoundsException</code> occurs due to attempt to write data outside the passed
      * Java array, the target Java array can be partially filled.
      * In other words, this method <b>can be non-atomic regarding this failure</b>.
-     * All other possible exceptions are checked in the very beginning of this method
+     * All other possible exceptions are checked at the very beginning of this method
      * before any other actions (the standard way for checking exceptions).
      *
      * @param arrayPos        starting position in this AlgART array.
