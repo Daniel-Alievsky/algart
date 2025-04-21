@@ -109,7 +109,7 @@ public final class ContourJoiner {
     // - affects only to the order of resulting contours; non-trivial order usually decrease performance
     private boolean packResultContours = true;
     private int measureTimingLevel = 0;
-    private BooleanSupplier interrupter = null;
+    private BooleanSupplier interruptionChecker = null;
 
     private final Contours contours;
     private final Contours result;
@@ -447,12 +447,12 @@ public final class ContourJoiner {
         return this;
     }
 
-    public BooleanSupplier getInterrupter() {
-        return interrupter;
+    public BooleanSupplier getInterruptionChecker() {
+        return interruptionChecker;
     }
 
-    public ContourJoiner setInterrupter(BooleanSupplier interrupter) {
-        this.interrupter = interrupter;
+    public ContourJoiner setInterruptionChecker(BooleanSupplier interruptionChecker) {
+        this.interruptionChecker = interruptionChecker;
         return this;
     }
 
@@ -957,9 +957,9 @@ public final class ContourJoiner {
                 do {
                     joiningCount++;
 //                    if ((joiningCount & 0xFFF) == 0) System.out.printf("\r%d...    ", joiningCount);
-                    if (interrupter != null
+                    if (interruptionChecker != null
                             && (joiningCount % CHECK_INTERRUPTION_STEP) == 0
-                            && interrupter.getAsBoolean()) {
+                            && interruptionChecker.getAsBoolean()) {
                         throw new InterruptionException("Contours joiner was interrupted while processing contour #"
                                 + indexesOfClusterContours[0] + "/" + numberOfContours + " after "
                                 + joiningCount + " joining actions");
@@ -1058,7 +1058,8 @@ public final class ContourJoiner {
 //                    long tQuick1 = nanoTime();
                     joiningCount++;
 //                    if ((joiningCount & 0xFFF) == 0) System.out.printf("\r%d...    ", joiningCount);
-                    if (interrupter != null && (joiningCount & 0xFF) == 0 && interrupter.getAsBoolean()) {
+                    if (interruptionChecker != null && (joiningCount & 0xFF) == 0
+                    && interruptionChecker.getAsBoolean()) {
                         throw new InterruptionException("Contours joiner was interrupted while processing contour #"
                                 + indexesOfClusterContours[0] + "/" + numberOfContours + " after "
                                 + joiningCount + " joining actions");
