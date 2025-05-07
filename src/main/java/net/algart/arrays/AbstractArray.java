@@ -415,12 +415,12 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * This implementation performs the following code:
      * <pre>
-     *     return this instanceof DirectAccessible da &amp;&amp;
+     *     return this instanceof {@link DirectAccessible} da &amp;&amp;
      *                 da.hasJavaArray() &amp;&amp;
      *                 da.javaArrayOffset() == 0 &amp;&amp;
      *                 java.lang.reflect.Array.getLength(da.javaArray()) == this.length() ?
      *                 da.javaArray() :
-     *                 this.toJavaArray();
+     *                 this.{@link #toJavaArray()};
      * </pre>
      *
      * @return Java array, equivalent to this AlgART array.
