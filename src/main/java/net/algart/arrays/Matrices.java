@@ -1904,22 +1904,21 @@ public class Matrices {
 
     /**
      * Applies the specified function to each matrix in the <code>channels</code> collection
-     * and returns an {@link ArrayList} consisting of the results.
+     * and returns an {@link ArrayList} consisting of the results in the same order.
      *
      * <p>The same results can be obtained using the following code:
      *
      * <pre>
      *     channels.stream().map(function::apply).collect(Collectors.toCollection(ArrayList::new));
      * </pre>
-     * <p>In addition, at the beginning, this method calls the check
+     * <p>Before processing, this method also performs the check
      * <code>{@link #checkDimensionEquality(Collection) Matrices.checkDimensionEquality}(channels)</code>
      * .
-     *
      * @param function some function applied to each matrix.
-     * @param channels collections of matrices, probably channels of some color image.
-     * @return the list containing results of the function for each channel in the same order.
+     * @param channels a collection of matrices (e.g., image color channels).
+     * @return the list containing results of the function for each channel, in the same order.
      */
-    public static List<Matrix<? extends PArray>> applyProcessing(
+    public static List<Matrix<? extends PArray>> applyToChannels(
             Function<Matrix<? extends PArray>, Matrix<? extends PArray>> function,
             Collection<? extends Matrix<? extends PArray>> channels) {
         Objects.requireNonNull(function, "Null function argument");

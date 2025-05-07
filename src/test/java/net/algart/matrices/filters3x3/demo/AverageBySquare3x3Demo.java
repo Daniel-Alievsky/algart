@@ -54,7 +54,7 @@ public class AverageBySquare3x3Demo {
         }
         System.out.printf("Averaging %d times...%n", numberOfIterations);
         for (int i = 0; i < numberOfIterations; i++) {
-            matrices = Matrices.applyProcessing(AverageBySquare3x3::apply, matrices);
+            matrices = Matrices.applyToChannels(AverageBySquare3x3::apply, matrices);
         }
         MatrixIO.writeImage(resultFile, matrices);
         System.out.printf("Result image is saved in %s%n", resultFile);
