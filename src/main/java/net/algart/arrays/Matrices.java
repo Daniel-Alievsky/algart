@@ -235,8 +235,9 @@ public class Matrices {
         //     might lead to class loading deadlock
         //     Inspection info: Reports classes that refer to their subclasses
         //     in static initializers or static fields.
-        //     Such references can cause JVM-level deadlocks in multithreaded environment,
-        //     when one thread tries to load the superclass and another thread tries to load the subclass at the same time.
+        //     Such references can cause JVM-level deadlocks in a multithreaded environment,
+        //     when one thread tries to load the superclass and another thread tries
+        //     to load the subclass at the same time.
         private static ResizingMethod newAveraging(InterpolationMethod interpolationMethod) {
             return new Averaging(interpolationMethod);
         }
@@ -1913,10 +1914,14 @@ public class Matrices {
      * </pre>
      * <p>Before processing, this method also performs the check
      * <code>{@link #checkDimensionEquality(Collection) Matrices.checkDimensionEquality}(channels)</code>
-     * .
+     *
      * @param function some function applied to each matrix.
      * @param channels a collection of matrices (e.g., image color channels).
      * @return the list containing results of the function for each channel, in the same order.
+     * @throws NullPointerException  if the <code>function</code> argument,
+     *                               the <code>channels</code> list or one of its elements is {@code null}.
+     * @throws SizeMismatchException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
+     *                               different dimensions.
      */
     public static List<Matrix<? extends PArray>> applyToChannels(
             Function<Matrix<? extends PArray>, Matrix<? extends PArray>> function,
