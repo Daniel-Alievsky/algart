@@ -1796,6 +1796,31 @@ public class JArrays {
     /**
      * Equivalent to
      * <pre>{@link #copyAndSwapByteOrder(byte[], byte[], int, Class)
+     * copyAndSwapByteOrder}(null, src, src.length, elementType)
+     * </pre>
+     *
+     * @param src         the source <code>byte[]</code> array.
+     * @param elementType the primitive type of words in which the byte order needs to be changed,
+     *                    usually <code>short.class</code>, <code>int.class</code> or <code>long.class</code>
+     *                    (<code>char</code>, <code>float</code> and <code>double</code> types are also
+     *                    possible, but lead to the same behavior); <code>byte.class</code> means
+     *                    simple copying.
+     * @return array with resulting data;
+     * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
+     * @throws NullPointerException     if <code>src</code> or <code>elementType</code> argument is {@code null}.
+     * @throws IllegalArgumentException if <code>elementType</code> is not <code>byte.class</code>,
+     *                                  <code>char.class</code>, <code>short.class</code>,
+     *                                  <code>int.class</code>, <code>long.class</code>,
+     *                                  <code>float.class</code> or <code>double.class</code>.
+     */
+    public static byte[] copyAndSwapByteOrder(byte[] src, Class<?> elementType) {
+        Objects.requireNonNull(src, "Null src argument");
+        return copyAndSwapByteOrder(null, src, src.length, elementType);
+    }
+
+    /**
+     * Equivalent to
+     * <pre>{@link #copyAndSwapByteOrder(byte[], byte[], int, Class)
      * copyAndSwapByteOrder}(dest, src, src.length, elementType)
      * </pre>
      *
@@ -1814,9 +1839,7 @@ public class JArrays {
      *                                  <code>char.class</code>, <code>short.class</code>,
      *                                  <code>int.class</code>, <code>long.class</code>,
      *                                  <code>float.class</code> or <code>double.class</code>,
-     *                                  or if <code>length</code> is negative or too large:
-     *                                  greater than <code>src.length</code>
-     *                                  or greater than <code>dest.length</code>
+     *                                  or if <code>src.length</code> is greater than <code>dest.length</code>
      *                                  (when <code>dest&nbsp;!=&nbsp;null</code>).
      */
     public static byte[] copyAndSwapByteOrder(byte[] dest, byte[] src, Class<?> elementType) {

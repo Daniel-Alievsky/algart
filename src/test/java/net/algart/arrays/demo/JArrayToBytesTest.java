@@ -523,7 +523,7 @@ public class JArrayToBytesTest {
         byte[] bytes4 = JArrays.copy(null, bytes1, bytes1.length);
         assert java.util.Arrays.equals(bytes4, bytes1);
 
-        bytes4 = JArrays.copyAndSwapByteOrder(null, bytes1, byte.class);
+        bytes4 = JArrays.copyAndSwapByteOrder(bytes1, byte.class);
         assert java.util.Arrays.equals(bytes4, bytes1);
 
         boolean[] booleans = JArrays.bytesToBooleanArray(bytes1);
