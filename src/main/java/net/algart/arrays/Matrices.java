@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * <p>Utilities useful for working with {@link Matrix AlgART matrices}.</p>
@@ -1897,6 +1898,36 @@ public class Matrices {
             }
             result[k] = InternalUtils.cast(m.array());
             k++;
+        }
+        return result;
+    }
+
+    /**
+     * Applies the specified function to each matrix in the <code>channels</code> collection
+     * and returns an {@link ArrayList} consisting of the results.
+     *
+     * <p>The same results can be obtained using the following code:
+     *
+     * <pre>
+     *     channels.stream().map(function::apply).collect(Collectors.toCollection(ArrayList::new));
+     * </pre>
+     * <p>In addition, at the beginning, this method calls the check
+     * <code>{@link #checkDimensionEquality(Collection) Matrices.checkDimensionEquality}(channels)</code>
+     * .
+     *
+     * @param function some function applied to each matrix.
+     * @param channels collections of matrices, probably channels of some color image.
+     * @return the list containing results of the function for each channel in the same order.
+     */
+    public static List<Matrix<? extends PArray>> applyProcessing(
+            Function<Matrix<? extends PArray>, Matrix<? extends PArray>> function,
+            Collection<? extends Matrix<? extends PArray>> channels) {
+        Objects.requireNonNull(function, "Null function argument");
+        Objects.requireNonNull(channels, "Null list of channels");
+        Matrices.checkDimensionEquality(channels);
+        final List<Matrix<? extends PArray>> result = new ArrayList<>();
+        for (Matrix<? extends PArray> channel : channels) {
+            result.add(function.apply(channel));
         }
         return result;
     }

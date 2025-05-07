@@ -24,6 +24,12 @@
 
 package net.algart.matrices.filters3x3;
 
+import net.algart.arrays.Matrix;
+import net.algart.arrays.PArray;
+import net.algart.arrays.UpdatablePArray;
+
+import java.util.Objects;
+
 public abstract class AverageBySquare3x3 extends AbstractQuickFilter3x3 {
     private AverageBySquare3x3(Class<?> elementType, long[] dimensions) {
         super(elementType, dimensions);
@@ -59,6 +65,10 @@ public abstract class AverageBySquare3x3 extends AbstractQuickFilter3x3 {
         }
     }
 
+    public static Matrix<? extends UpdatablePArray> apply(Matrix<? extends PArray> source) {
+        Objects.requireNonNull(source, "Null source matrix");
+        return newInstance(source.elementType(), source.dimensions()).filter(source);
+    }
 
     /*Repeat() Char                 ==> Byte,,Short,,Int,,Long,,Float,,Double;;
                char                 ==> byte,,short,,int,,long,,float,,double;;

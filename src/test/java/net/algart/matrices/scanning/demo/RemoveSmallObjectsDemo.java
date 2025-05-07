@@ -57,10 +57,10 @@ public class RemoveSmallObjectsDemo {
         final long minArea = Long.parseLong(args[startArgIndex + 3]);
         final int numberOfTests = startArgIndex + 4 >= args.length ? 1 : Integer.parseInt(args[startArgIndex + 4]);
         System.out.printf("Loading image %s...%n", sourceFile.toAbsolutePath().normalize());
-        List<Matrix<UpdatablePArray>> matrices = MatrixIO.readImage(sourceFile);
-        Matrix<? extends PArray> intensity = ColorMatrices.toRGBIntensity(matrices);
-        Matrix<UpdatableBitArray> binary = Matrix.newBitMatrix(intensity.dimensions());
-        Matrix<UpdatableBitArray> result = Matrix.newBitMatrix(intensity.dimensions());
+        final List<Matrix<UpdatablePArray>> matrices = MatrixIO.readImage(sourceFile);
+        final Matrix<? extends PArray> intensity = ColorMatrices.toRGBIntensity(matrices);
+        final Matrix<UpdatableBitArray> binary = Matrix.newBitMatrix(intensity.dimensions());
+        final Matrix<UpdatableBitArray> result = Matrix.newBitMatrix(intensity.dimensions());
         Matrices.applyFunc(
                 RectangularFunc.getInstance(0, threshold * intensity.maxPossibleValue(), 0, 1),
                 binary, intensity);

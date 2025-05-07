@@ -24,7 +24,12 @@
 
 package net.algart.matrices.filters3x3;
 
+import net.algart.arrays.Matrix;
+import net.algart.arrays.PArray;
+import net.algart.arrays.UpdatablePArray;
+
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
@@ -62,6 +67,10 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
         }
     }
 
+    public static Matrix<? extends UpdatablePArray> apply(Matrix<? extends PArray> source) {
+        Objects.requireNonNull(source, "Null source matrix");
+        return newInstance(source.elementType(), source.dimensions()).filter(source);
+    }
 
     // For char type we also can use optimization based on antiDozNoOverflow, but it is not important:
     // this type is almost never used
