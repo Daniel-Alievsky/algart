@@ -195,13 +195,13 @@ public class Matrices {
          * the averaging function: to do this, please override {@link #getAveragingFunc(long[])} method.
          *
          * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-         * there are no ways to modify settings of the created instance.
+         * there are no ways to modify the settings of the created instance.
          * Any possible inheritors of this class also must be <b>immutable</b>
          * and <b>thread-safe</b>.</p>
          */
         public static class Averaging extends ResizingMethod {
             /**
-             * Creates new instance of this class.
+             * Creates a new instance of this class.
              *
              * @param interpolationMethod interpolation that should be used while resizing.
              * @throws NullPointerException if the argument is {@code null}.
@@ -230,7 +230,7 @@ public class Matrices {
         }
 
 
-        // This function helps to avoid the following IntelliJ IDEA warning:
+        // This private function helps to avoid the following IntelliJ IDEA warning:
         //     Referencing subclass ConstantImpl from superclass ContinuationMode initializer
         //     might lead to class loading deadlock
         //     Inspection info: Reports classes that refer to their subclasses
@@ -1800,7 +1800,7 @@ public class Matrices {
      */
     public static <T extends Array> List<Matrix<? extends T>> several(Class<T> arrayClass, Matrix<?>... matrices) {
         // Note: we don't need @SafeVarargs annotation, because we use non-reifiable type Matrix<?>
-        // and avoid warnings by other way: explicit check of classes and InternalUtils.cast
+        // and avoid warnings by another way: explicit check of classes and InternalUtils.cast
         Objects.requireNonNull(arrayClass, "Null arrayClass argument");
         if (matrices.length == 0) {
             return java.util.Collections.emptyList();
@@ -1813,7 +1813,7 @@ public class Matrices {
                         + "; required array class is " + arrayClass.getName() + ")");
             }
         }
-        Matrix<? extends T>[] cast = InternalUtils.cast(matrices);
+        Matrix<T>[] cast = InternalUtils.cast(matrices);
         return java.util.Arrays.asList(cast);
     }
 
@@ -1923,15 +1923,18 @@ public class Matrices {
      * @throws SizeMismatchException if <code>matrices.size()&gt;1</code> and some of the passed matrices have
      *                               different dimensions.
      */
-    public static List<Matrix<? extends PArray>> applyToChannels(
-            Function<Matrix<? extends PArray>, Matrix<? extends PArray>> function,
-            Collection<? extends Matrix<? extends PArray>> channels) {
+    public static <R extends Array, T extends Array> List<Matrix<R>> apply(
+            Function<? super Matrix<T>, ? extends Matrix<R>> function,
+            Collection<? extends Matrix<? extends T>> channels) {
         Objects.requireNonNull(function, "Null function argument");
         Objects.requireNonNull(channels, "Null list of channels");
         Matrices.checkDimensionEquality(channels);
-        final List<Matrix<? extends PArray>> result = new ArrayList<>();
-        for (Matrix<? extends PArray> channel : channels) {
-            result.add(function.apply(channel));
+        final List<Matrix<R>> result = new ArrayList<>();
+        for (Matrix<? extends T> channel : channels) {
+            final Matrix<T> castChannel = new MatrixImpl<>(channel.array(), channel.dimensions());
+            // - the same matrix, but with a strict generic type T
+            final Matrix<R> applied = function.apply(castChannel);
+            result.add(applied);
         }
         return result;
     }
@@ -4098,7 +4101,7 @@ public class Matrices {
      *
      * <p>Please draw attention to the argument <code>strictMode=false</code> of <code>Matrices.copy</code> method:
      * it is important for providing good performance for resizing large matrices.
-     * This argument specifies, that the precise results of this method may little differ from
+     * This argument specifies that the precise results of this method may little differ from
      * the elements of the {@link #asResized(Matrices.ResizingMethod, Matrix, long...) asResized} result
      * (the "<code>lazy</code>" matrix above).
      *
@@ -4106,7 +4109,7 @@ public class Matrices {
      * (calling <code>Matrices.copy</code> method).
      *
      * <p>Usually the differences are little numeric errors,
-     * connected with limited precision of floating-point calculations of the coordinates.
+     * connected with limited precision of floating-point calculating the coordinates.
      * For example, it is possible that the coordinates of the set of points,
      * the values of which are averaged in {@link ResizingMethod#AVERAGING} resizing method,
      * will be slightly different in this method and in the precise specification of
@@ -4117,8 +4120,8 @@ public class Matrices {
      * For more accurate {@link ResizingMethod#POLYLINEAR_AVERAGING}) mode the result of averaging will
      * be almost the same.
      *
-     * <p>By the way, in a case of such differences the results of this method usually better correspond
-     * to intuitive expectations of the results of resizing.
+     * <p>By the way, in a case of such differences, the results of this method usually better correspond
+     * to intuitive expectations of the resizing results.
      *
      * @param context        the context of resizing; can be {@code null}, then it will be ignored.
      * @param resizingMethod the algorithm of resizing.
@@ -4140,7 +4143,7 @@ public class Matrices {
      * Addition: equivalent to
      * <code>{@link #addToOther(Matrix, Matrix, Matrix) addToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with elementwise sum <b>a + b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the elementwise sum <b>a + b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void add(
@@ -4170,7 +4173,7 @@ public class Matrices {
      * Subtraction: equivalent to
      * <code>{@link #subtractToOther(Matrix, Matrix, Matrix) subtractToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with elementwise difference <b>a &minus; b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the difference <b>a &minus; b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void subtract(
@@ -4200,7 +4203,7 @@ public class Matrices {
      * Binary OR: equivalent to
      * <code>{@link #bitOrToOther(Matrix, Matrix, Matrix) bitOrToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with binary OR <b>a | b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the binary OR <b>a | b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void bitOr(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
@@ -4227,7 +4230,7 @@ public class Matrices {
      * Binary AND: equivalent to
      * <code>{@link #bitAndToOther(Matrix, Matrix, Matrix) bitAndToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with binary AND <b>a &amp; b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the binary AND <b>a &amp; b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void bitAnd(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
@@ -4255,7 +4258,7 @@ public class Matrices {
      * Binary XOR: equivalent to
      * <code>{@link #bitXorToOther(Matrix, Matrix, Matrix) bitXorToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with binary XOR <b>a ^ b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the binary XOR <b>a ^ b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void bitXor(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
@@ -4284,7 +4287,7 @@ public class Matrices {
      * Binary AND-NOT: equivalent to
      * <code>{@link #bitDiffToOther(Matrix, Matrix, Matrix) bitDiffToOther}(result, result, other)</code>.
      *
-     * @param result matrix <b>a</b>, will be replaced with binary AND-NOT <b>a &amp; ~b</b>.
+     * @param result matrix <b>a</b> that will be replaced with the binary AND-NOT <b>a &amp; ~b</b>.
      * @param other  matrix <b>b</b>.
      */
     public static void bitDiff(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
@@ -4311,7 +4314,7 @@ public class Matrices {
      * Binary NOT: equivalent to
      * <code>{@link #bitNotToOther(Matrix, Matrix) bitNotToOther}(bitMatrix, bitMatrix)</code>.
      *
-     * @param bitMatrix matrix <b>a</b>, will be replaced with binary NOT <b>~a</b>.
+     * @param bitMatrix matrix <b>a</b> that will be replaced with the binary NOT <b>~a</b>.
      */
     public static void bitNot(Matrix<? extends UpdatableBitArray> bitMatrix) {
         bitNotToOther(bitMatrix, bitMatrix);

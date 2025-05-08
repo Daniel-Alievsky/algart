@@ -99,13 +99,13 @@ public class JArrays {
                *
      * <p>Note: elements of <code>float[]</code> are compared by <code>Float.compare(float, float)</code>
      * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
-     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0</code> is considered
      * be greater than <code>-0.0</code>.</p>
      * ,,
                *
      * <p>Note: elements of <code>double[]</code> are compared by <code>Double.compare(double, double)</code>
-     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double alues
-     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0</code> is considered
      * be greater than <code>-0.0</code>.</p>
      *
      */
@@ -659,7 +659,7 @@ public class JArrays {
      *
      * <p>Note: elements of <code>float[]</code> are compared by <code>Float.compare(float, float)</code>
      * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other float values
-     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0</code> is considered
      * be greater than <code>-0.0</code>.</p>
      **/
     public static class FloatArrayComparator implements ArrayComparator32 {
@@ -770,8 +770,8 @@ public class JArrays {
      * Simple implementation of {@link ArrayComparator}, comparing elements of <code>double[]</code> array.
      *
      * <p>Note: elements of <code>double[]</code> are compared by <code>Double.compare(double, double)</code>
-     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double alues
-     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0 </code>is considered
+     * method. So, <code>NaN</code> is considered to be equal to itself and greater than all other double values
+     * (including <code>POSITIVE_INFINITY</code>), and <code>0.0</code> is considered
      * be greater than <code>-0.0</code>.</p>
      **/
     public static class DoubleArrayComparator implements ArrayComparator32 {

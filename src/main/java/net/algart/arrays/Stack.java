@@ -39,8 +39,8 @@ package net.algart.arrays;
  * }</pre>
  *
  * <p>Of course, it is not an example of good programming style, and there are no guarantees
- * that such operator will not throw <code>ClassCastException</code>.
- * But such an operation is usually posssible. Please compare:</p><pre>
+ * that such an operator will not throw <code>ClassCastException</code>.
+ * But such an operation is usually possible. Please compare:</p><pre>
  * void someMyMethod(Array readOnlyArray) {
  * &#32;   MutableArray a = (MutableArray)readOnlyArray;
  * &#32;   ... // attempt to modify elements

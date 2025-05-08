@@ -67,7 +67,7 @@ public abstract class MedianBySquare3x3 extends PercentileBySquare3x3 {
         }
     }
 
-    public static Matrix<? extends UpdatablePArray> apply(Matrix<? extends PArray> source) {
+    public static Matrix<UpdatablePArray> apply(Matrix<? extends PArray> source) {
         Objects.requireNonNull(source, "Null source matrix");
         return newInstance(source.elementType(), source.dimensions()).filter(source);
     }

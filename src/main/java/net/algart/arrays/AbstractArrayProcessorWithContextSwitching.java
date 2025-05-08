@@ -123,7 +123,7 @@ public abstract class AbstractArrayProcessorWithContextSwitching
      *                 of the total algorithm at the finish of the subtask:
      *                 see {@link ArrayContext#updateProgress(net.algart.arrays.ArrayContext.Event)} method;
      *                 must be not less than <code>fromPart</code> range.
-     * @return         new context, describing the execution of the subtask of the current task.
+     * @return         new context, describing the executing the subtask of the current task.
      * @throws IllegalArgumentException if <code>fromPart</code> or <code>toPart</code> is not in
      *                                  <code>0.0..1.0</code> range or if <code>fromPart&gt;toPart</code>.
      */

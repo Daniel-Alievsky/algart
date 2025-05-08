@@ -72,8 +72,8 @@ public abstract class AbstractQuickFilter3x3 extends Abstract2DProcessor {
         return numberOfRanges;
     }
 
-    public Matrix<? extends UpdatablePArray> filter(Matrix<? extends PArray> source) {
-        final Matrix<? extends UpdatablePArray> result = Arrays.SMM.newMatrix(UpdatablePArray.class, source);
+    public Matrix<UpdatablePArray> filter(Matrix<? extends PArray> source) {
+        final Matrix<UpdatablePArray> result = Arrays.SMM.newMatrix(UpdatablePArray.class, source);
         filter(result, source);
         return result;
     }

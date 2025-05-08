@@ -274,8 +274,8 @@ public interface UpdatableArray extends Array, ArrayExchanger {
      * but also may swap the content of elements: it depends on implementation.
      *
      * <p>Please note: this method is a good choice for swapping little arrays (thousands,
-     * maybe hundreds of thousands elementthousands elements). If you swap large arrays by this method,
-     * the user, in particular, has no ways to view the progress of copying or to interrupt copying.
+     * maybe hundreds of thousands of elements). If you swap large arrays by this method,
+     * the user, in particular, has no way to view the progress of copying or to interrupt copying.
      * To swap large arrays, you can split them to little regions and swap the regions in a loop by this method,
      * with calling {@link ArrayContext} methods to allow interruption and showing progress.
      *

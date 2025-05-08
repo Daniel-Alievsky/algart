@@ -26,7 +26,7 @@ package net.algart.matrices.filters3x3.demo;
 
 import net.algart.arrays.Matrices;
 import net.algart.arrays.Matrix;
-import net.algart.arrays.PArray;
+import net.algart.arrays.UpdatablePArray;
 import net.algart.io.MatrixIO;
 import net.algart.matrices.filters3x3.AverageBySquare3x3;
 
@@ -47,14 +47,14 @@ public class AverageBySquare3x3Demo {
         final Path resultFile = Paths.get(args[1]);
         final int numberOfIterations = args.length < 3 ? 1 : Integer.parseInt(args[2]);
         System.out.printf("Loading image %s...%n", sourceFile.toAbsolutePath().normalize());
-        List<? extends Matrix<? extends PArray>> matrices = MatrixIO.readImage(sourceFile);
+        List<Matrix<UpdatablePArray>> matrices = MatrixIO.readImage(sourceFile);
         if (matrices.size() > 3) {
             matrices = matrices.subList(0, 3);
             // - AWT cannot write images with > 3 channels in some formats
         }
         System.out.printf("Averaging %d times...%n", numberOfIterations);
         for (int i = 0; i < numberOfIterations; i++) {
-            matrices = Matrices.applyToChannels(AverageBySquare3x3::apply, matrices);
+            matrices = Matrices.apply(AverageBySquare3x3::apply, matrices);
         }
         MatrixIO.writeImage(resultFile, matrices);
         System.out.printf("Result image is saved in %s%n", resultFile);

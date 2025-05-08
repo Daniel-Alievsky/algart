@@ -39,7 +39,7 @@ public class JBuffers {
     private static final int FILL_NON_BLOCKED_LEN = 256; // must be 2^k
     private static final int FILL_BLOCK_LEN = 4 * 1024; // must be 2^k
     private static final int ZERO_FILL_BLOCK_LEN = 4 * 1024; // must be 2^k
-    private static final boolean OPTIMIZE_BYTE_MIN_MAX_BY_TABLES = false; // antioptimization under Java 1.6+
+    private static final boolean OPTIMIZE_BYTE_MIN_MAX_BY_TABLES = false; // anti-optimization under Java 1.6+
 
     private JBuffers() {
     }
