@@ -27,6 +27,7 @@ package net.algart.arrays.demo;
 import net.algart.arrays.JArrays;
 
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -95,13 +96,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToCharArray(chars, serialized, m / 2, order);
         byte[] checkSwapped = JArrays.charArrayToBytes(null, chars, m / 2,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 2) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, char.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 2) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 2 * (m / 2))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }
@@ -161,13 +164,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToShortArray(shorts, serialized, m / 2, order);
         byte[] checkSwapped = JArrays.shortArrayToBytes(null, shorts, m / 2,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 2) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, short.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 2) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 2 * (m / 2))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }
@@ -226,13 +231,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToIntArray(ints, serialized, m / 4, order);
         byte[] checkSwapped = JArrays.intArrayToBytes(null, ints, m / 4,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 4) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, int.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 4) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 4 * (m / 4))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }
@@ -291,13 +298,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToLongArray(longs, serialized, m / 8, order);
         byte[] checkSwapped = JArrays.longArrayToBytes(null, longs, m / 8,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 8) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, long.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 8) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 8 * (m / 8))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }
@@ -356,13 +365,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToFloatArray(floats, serialized, m / 4, order);
         byte[] checkSwapped = JArrays.floatArrayToBytes(null, floats, m / 4,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 4) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, float.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 4) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 4 * (m / 4))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }
@@ -421,13 +432,15 @@ public class JArrayToBytesTest {
         JArrays.bytesToDoubleArray(doubles, serialized, m / 8, order);
         byte[] checkSwapped = JArrays.doubleArrayToBytes(null, doubles, m / 8,
                 order == ByteOrder.BIG_ENDIAN ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
-        if (!JArrays.arrayEquals(swapped, 0, checkSwapped, 0, (m / 8) * 2)) {
+        assert swapped.length == checkSwapped.length || swapped.length == checkSwapped.length + 1;
+        checkSwapped = Arrays.copyOf(checkSwapped, swapped.length);
+        if (!Arrays.equals(swapped, checkSwapped)) {
             throw new AssertionError("Bug H in copyAndSwapByteOrder");
         }
 
         newBack1 = JArrays.copyAndSwapByteOrder(back, swapped, m, double.class);
         assert newBack1 == back;
-        if (!JArrays.arrayEquals(back, 0, serialized, 0, (m / 8) * 2)) {
+        if (!JArrays.arrayEquals(back, 0, serialized, 0, 8 * (m / 8))) {
             throw new AssertionError("Bug I in copyAndSwapByteOrder");
         }
     }

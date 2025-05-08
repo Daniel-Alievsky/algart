@@ -1815,7 +1815,7 @@ public class JArrays {
      */
     public static byte[] copyAndSwapByteOrder(byte[] src, Class<?> elementType) {
         Objects.requireNonNull(src, "Null src argument");
-        return copyAndSwapByteOrder(null, src, src.length, elementType);
+        return copyAndSwapByteOrder(null, src, elementType);
     }
 
     /**
