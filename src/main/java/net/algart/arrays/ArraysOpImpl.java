@@ -2294,7 +2294,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2325,7 +2325,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 long len = Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getBits(p, destArray, destArrayOffset, len);
@@ -2458,7 +2458,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2564,7 +2564,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2670,7 +2670,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2776,7 +2776,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2882,7 +2882,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -2988,7 +2988,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -3094,7 +3094,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);
@@ -3200,7 +3200,7 @@ class ArraysOpImpl {
             long p = arrayPos - startPos;
             assert p >= 0;
             do {
-                assert k < startPositions.length : "startPositions array exchausted";
+                assert k < startPositions.length : "startPositions array exhausted";
                 long nextStartPos = k == startPositions.length - 1 ? this.length : startPositions[k + 1];
                 int len = (int)Math.min(count, nextStartPos - startPos - p);
                 arrays[k].getData(p, destArray, destArrayOffset, len);

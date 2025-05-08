@@ -603,10 +603,10 @@ class ArraysBufferedCopier {
          * preloading the area in the parent matrix, corresponding to every tile, into RAM
          * and processing it in RAM by {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method.
          * Can be used only for affine transformations:
-         * they transform equal tiles to equal figures (parallelograms, parallelepipeds,&nbsp;...),
+         * they transform equal tiles to equal figures (parallelogram, parallelepiped, ...),
          * unlike, for example, projective transformations.
          *
-         * @return the logical OR of results of all calls
+         * @return the logical OR of the results of all calls
          *         of the {@link #copy(ArrayContext, UpdatableArray, Array, boolean)} method,
          *         or {@code null} if copying by this algorithm is impossible.
          */

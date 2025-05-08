@@ -3676,7 +3676,7 @@ public class Arrays {
      * the indexes of the minimum / maximum, stored in this object, will be equal to <code>-1</code>.
      *
      * <p>If the passed array is {@link PFloatingArray}, please note that <code>NaN</code> values are
-     * exlcuded from comparison: this method finds minimums and maximum among all elements, excepting
+     * excluded from comparison: this method finds minimums and maximum among all elements, excepting
      * <code>NaN</code>. If all elements of the array are <code>NaN</code>, it is a special case:
      * this method returns <code>Range.valueOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)</code>.
      * You can detect this situation with help of {@link MinMaxInfo#allNaN() allNaN()} method of
