@@ -31,7 +31,7 @@ import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 /**
- * <p>Point in multidimensional space with integer coordinates.
+ * <p>Point in a multidimensional space with integer coordinates.
  * Represented as an array of <code>long</code> numbers.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:

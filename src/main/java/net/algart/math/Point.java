@@ -32,7 +32,7 @@ import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 /**
- * <p>Point in multidimensional space with real coordinates.
+ * <p>Point in a multidimensional space with real coordinates.
  * Represented as an array of <code>double</code> numbers.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
