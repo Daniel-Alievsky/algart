@@ -90,6 +90,7 @@ public class Point implements Comparable<Point> {
             for (double coord : coordinates) {
                 if (coord != 0) {
                     origin = false;
+                    break;
                 }
             }
             if (origin) {
