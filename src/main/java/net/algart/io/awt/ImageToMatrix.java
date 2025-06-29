@@ -46,16 +46,31 @@ public abstract class ImageToMatrix {
      * Converts <code>BufferedImage</code> to multichannel AlgART image (list of matrices).
      * Equivalent to
      * <pre>
-     *     {@link Matrices#separate Matrices.separate}(new {@link ToInterleavedRGB
-     *     ImageToMatrix.ToInterleavedRGB}().{@link #toMatrix toMatrix}(bufferedImage))
+     *     {@link Matrices#separate Matrices.separate}({@link #toInterleavedRGB
+     *     toInterleavedMatrix}(bufferedImage))
      * </pre>
      *
      * @param bufferedImage some buffered image.
      * @return the list of color channels if this image.
      */
     public static List<Matrix<UpdatablePArray>> toChannels(BufferedImage bufferedImage) {
+        return Matrices.separate(toInterleavedRGB(bufferedImage));
+    }
+
+    /**
+     * Converts <code>BufferedImage</code> to interleaved AlgART matrix.
+     * Equivalent to
+     * <pre>
+     *     new {@link ToInterleavedRGB
+     *     ImageToMatrix.ToInterleavedRGB}().{@link #toMatrix toMatrix}(bufferedImage)
+     * </pre>
+     *
+     * @param bufferedImage some buffered image.
+     * @return the interleaved matrix.
+     */
+    public static Matrix<UpdatablePArray> toInterleavedRGB(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
-        return Matrices.separate(new ToInterleavedRGB().toMatrix(bufferedImage));
+        return new ToInterleavedRGB().toMatrix(bufferedImage);
     }
 
     public static int defaultNumberOfChannels(BufferedImage bufferedImage) {

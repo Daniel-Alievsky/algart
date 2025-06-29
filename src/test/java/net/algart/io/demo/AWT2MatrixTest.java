@@ -63,8 +63,8 @@ public class AWT2MatrixTest {
         MatrixIO.writeBufferedImage(resultFile1, bi1);
 
         List<Matrix<UpdatablePArray>> channels = ImageToMatrix.toChannels(bi1);
-        final int dimX = channels.get(0).dimX32();
-        final int dimY = channels.get(0).dimY32();
+        final int dimX = channels.getFirst().dimX32();
+        final int dimY = channels.getFirst().dimY32();
 
         BufferedImage bi2 = MatrixToImage.toBufferedImage(channels, false);
         System.out.printf("BufferedImage: %s%n", bi2);
