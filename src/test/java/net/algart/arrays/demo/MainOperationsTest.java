@@ -1711,7 +1711,7 @@ public class MainOperationsTest implements Cloneable {
             for (char m = 'A'; m <= 'B'; m++) {
                 work1.copy(a);
                 Arrays.unpackBits((UpdatablePArray) work1.subArr(destPos, count),
-                        (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0, filler1);
+                        (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0, filler1);
                 for (int k = 0; k < len; k++) {
                     if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackBits found in test #" +
@@ -1730,7 +1730,7 @@ public class MainOperationsTest implements Cloneable {
             for (char m = 'A'; m <= 'B'; m++) {
                 work1.copy(a);
                 Arrays.unpackUnitBits((UpdatablePArray) work1.subArr(destPos, count),
-                        (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler1);
+                        (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler1);
                 for (int k = 0; k < len; k++) {
                     if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackUnitBits found in test #" +
@@ -1749,7 +1749,7 @@ public class MainOperationsTest implements Cloneable {
             for (char m = 'A'; m <= 'B'; m++) {
                 work1.copy(a);
                 Arrays.unpackZeroBits((UpdatablePArray) work1.subArr(destPos, count),
-                        (BitArray) (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0);
+                        (m == 'A' ? bits : bitsSimple).subArr(srcPos, count), filler0);
                 for (int k = 0; k < len; k++) {
                     if (!Objects.equals(e1 = work1.getElement(k), e2 = work2.getElement(k))) {
                         throw new AssertionError("The bug " + m + " in unpackZeroBits found in test #" +
@@ -2235,7 +2235,7 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                dim[i] = (rnd.nextInt(3) > 0 &&
+                dim[i] = (long) (rnd.nextInt(3) > 0 &&
                         lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= (int) dim[i];
@@ -2596,7 +2596,7 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                dim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                dim[i] = (long) (rnd.nextInt(3) > 0 && lim > 10 ?
                         lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= (int) dim[i];
@@ -2620,9 +2620,9 @@ public class MainOperationsTest implements Cloneable {
             for (int i = 0; i < dim.length; i++) {
                 int min = fullyInside ? 0 : -(int) dim[i] / 2;
                 int max = fullyInside ? (int) dim[i] : (int) (3 * dim[i] / 2);
-                srcPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
-                destPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
-                count[i] = rnd.nextInt((int)
+                srcPos[i] = min + (long) rnd.nextInt(max - min + 1) / blockSize * blockSize;
+                destPos[i] = min + (long) rnd.nextInt(max - min + 1) / blockSize * blockSize;
+                count[i] = (long) rnd.nextInt((int)
                         (fullyInside ? dim[i] - Math.max(srcPos[i], destPos[i]) : dim[i]) + 1)
                         / blockSize * blockSize;
             }
@@ -2891,6 +2891,7 @@ public class MainOperationsTest implements Cloneable {
             } else {
                 Object value = work3.getElement(rnd.nextInt(Math.max(checkedLen, 1)));
                 if (value instanceof String) {
+                    //noinspection StringOperationCanBeSimplified
                     value = new String((String) value); // new instance, to check "==" or "equals" in indexOf
                 }
                 ObjectArray<?> oa = ((ObjectArray<?>) srcSubMatr.array().subArr(0, checkedLen));
@@ -2981,7 +2982,7 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                         rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                srcDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                srcDim[i] = (long) (rnd.nextInt(3) > 0 && lim > 10 ?
                         lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
                 product *= (int) srcDim[i];
@@ -2996,7 +2997,7 @@ public class MainOperationsTest implements Cloneable {
                     // - at least one zero dimension should lead to trivial results
                     lim = Math.min(lim, rnd.nextInt(4) == 0 ? len :
                             rnd.nextBoolean() ? (int) Math.sqrt(len) : (int) Math.cbrt(len));
-                    destDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
+                    destDim[i] = (long) (rnd.nextInt(3) > 0 && lim > 10 ?
                             lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                             / blockSize * blockSize;
                     product *= (int) destDim[i];
@@ -3025,11 +3026,11 @@ public class MainOperationsTest implements Cloneable {
             for (int i = 0; i < srcDim.length; i++) {
                 int min = -(int) srcDim[i] / 4;
                 int max = (int) (5 * srcDim[i] / 4);
-                srcPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
+                srcPos[i] = min + (long) rnd.nextInt(max - min + 1) / blockSize * blockSize;
                 min = -(int) destDim[i] / 4;
                 max = (int) (5 * destDim[i] / 4);
-                destPos[i] = min + rnd.nextInt(max - min + 1) / blockSize * blockSize;
-                count[i] = rnd.nextInt((int) (Math.max(1,
+                destPos[i] = min + (long) rnd.nextInt(max - min + 1) / blockSize * blockSize;
+                count[i] = (long) rnd.nextInt((int) (Math.max(1,
                         3 * Math.min(srcDim[i] - srcPos[i], destDim[i] - destPos[i]) / 2))) / blockSize * blockSize;
                 if (count[i] == 0) {
                     trivial = true;
@@ -4286,9 +4287,7 @@ public class MainOperationsTest implements Cloneable {
         double result = c == 1.0 ? scale * x : c == 2.0 ? scale * x * x : c == 3.0 ? scale * x * x * x :
                 c == 0.5 ? scale * Math.sqrt(x) : c == 1.0 / 3.0 ? scale * Math.cbrt(x) :
                         scale * Math.pow(x, c);
-        if (x > 0.0 && x < 2000) {
-            assert Math.abs(result - scale * Math.pow(x, c)) <= 0.1;
-        }
+        assert !(x > 0.0) || !(x < 2000) || Math.abs(result - scale * Math.pow(x, c)) <= 0.1;
         return result;
     }
 
@@ -4297,9 +4296,7 @@ public class MainOperationsTest implements Cloneable {
         double result = c == 1.0 ? scale * x : c == 2.0 ? scale * x * x : c == 3.0 ? scale * x * x * x :
                 c == 0.5 ? scale * StrictMath.sqrt(x) : c == 1.0 / 3.0 ? scale * StrictMath.cbrt(x) :
                         scale * StrictMath.pow(x, c);
-        if (x > 0.0 && x < 2000) {
-            assert Math.abs(result - scale * Math.pow(x, c)) <= 0.1;
-        }
+        assert !(x > 0.0) || !(x < 2000) || Math.abs(result - scale * Math.pow(x, c)) <= 0.1;
         return result;
     }
 
@@ -4602,7 +4599,7 @@ public class MainOperationsTest implements Cloneable {
                 int lim = product == 0 ? len + 1 : len / product + 1;
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, (int) Math.cbrt(len));
-                dim[i] = rnd.nextInt(lim) / blockSize * blockSize;
+                dim[i] = (long) rnd.nextInt(lim) / blockSize * blockSize;
                 product *= (int) dim[i];
                 assert product <= len;
             }
@@ -4716,7 +4713,7 @@ public class MainOperationsTest implements Cloneable {
                 int lim = product == 0 ? len + 1 : len / product + 1;
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, (int) Math.cbrt(len));
-                dim[i] = rnd.nextInt(lim) / blockSize * blockSize;
+                dim[i] = (long) rnd.nextInt(lim) / blockSize * blockSize;
                 if (compressionIn2Times) {
                     if (rMethod.interpolation()
                             // in this case, the simple algorithm below will not work
@@ -4730,14 +4727,14 @@ public class MainOperationsTest implements Cloneable {
                     apertureSize *= 2;
                 } else if (compressionInIntegerNumberOfTimes) {
                     dim[i] = Math.max(dim[i], 1);
-                    newDim[i] = (1 + rnd.nextInt((int) dim[i])) / blockSize * blockSize;
+                    newDim[i] = (long) (1 + rnd.nextInt((int) dim[i])) / blockSize * blockSize;
                     if (newDim[i] > 0) {
                         dim[i] -= dim[i] % newDim[i];
                     }
                 } else {
-                    newDim[i] = rnd.nextInt(lim) / blockSize * blockSize;
+                    newDim[i] = (long) rnd.nextInt(lim) / blockSize * blockSize;
                 }
-                product *= Math.max(dim[i], newDim[i]);
+                product *= (int) Math.max(dim[i], newDim[i]);
                 assert product <= len;
             }
             Matrix<? extends PArray> pm = Matrices.matrixAtSubArray((PArray) a, 0, dim);
