@@ -68,7 +68,7 @@ class ArraysMatrixResizer {
         int dimMul = 1;
         while (m < n && scales[m] == 1) {
             assert resultingDimensions[m] == sourceDimensions[m];
-            dimMul *= resultingDimensions[m];
+            dimMul *= (int) resultingDimensions[m];
             m++;
         }
         this.numberOfConsecutive = dimMul;

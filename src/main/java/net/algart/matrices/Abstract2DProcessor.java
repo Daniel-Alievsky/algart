@@ -71,19 +71,19 @@ public abstract class Abstract2DProcessor {
         }
     }
 
-    public Class<?> elementType() {
+    public final Class<?> elementType() {
         return elementType;
     }
 
-    public int dimX() {
+    public final int dimX() {
         return dimX;
     }
 
-    public long dimY() {
+    public final long dimY() {
         return dimY;
     }
 
-    public long matrixSize() {
+    public final long matrixSize() {
         return matrixSize;
     }
 

@@ -43,9 +43,11 @@ public abstract class AbstractQuickFilter3x3 extends Abstract2DProcessor {
 
     private boolean multithreading = Arrays.SystemSettings.cpuCount() > 1;
 
+    @SuppressWarnings("this-escape")
     protected AbstractQuickFilter3x3(Class<?> elementType, long[] dimensions) {
         super(elementType, dimensions, Integer.MAX_VALUE / 3);
         this.dimX = dimX();
+        // - "this-escape" warning is suppressed: dimX() is a final method returning the "super.dimX" field
         this.dimXm1 = this.dimX - 1;
         this.rem1ForDimX = rem(1, dimX);
         this.dimXMul2 = 2 * dimX;

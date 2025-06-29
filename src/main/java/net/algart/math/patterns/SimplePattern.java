@@ -70,14 +70,17 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
      *                                  or if some points have different number of coordinates.
      * @see Patterns#newPattern(java.util.Collection)
      */
+    @SuppressWarnings("this-escape")
     public SimplePattern(Collection<Point> points) {
         super(getDimCountAndCheck(points));
-        HashSet<Point> pointSet = new HashSet<>(points);
+        final HashSet<Point> pointSet = new HashSet<>(points);
         if (getDimCountAndCheck(pointSet) != dimCount) {
             throw new IllegalArgumentException("Points dimensions were changed in a parallel thread");
         }
         this.points = pointSet;
-        fillCoordRangesWithCheck(this.points);
+        this.fillCoordRangesWithCheck(this.points);
+        // - "this-escape" warning is suppressed: fillCoordRangesWithCheck() is a final method,
+        // and the object is already fully constructed
     }
 
     @Override
@@ -139,7 +142,8 @@ public class SimplePattern extends AbstractPattern implements DirectPointSetPatt
 
     /**
      * This method is implemented here by scaling all points in the point set, stored in this object and
-     * returned by {@link #points()} method, by the call <code>p.{@link Point#scale(double...) scale}(multipliers)</code>.
+     * returned by {@link #points()} method, by the call
+     * <code>p.{@link Point#scale(double...) scale}(multipliers)</code>.
      *
      * @param multipliers the multipliers for all coordinates.
      * @return the scaled pattern.

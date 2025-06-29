@@ -2,7 +2,7 @@
   <configuration default="false" name="AverageBySquare3x3Demo" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="net.algart.matrices.filters3x3.demo.AverageBySquare3x3Demo" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="src/test/resources/demo/images/thin_lines.bmp /tmp/filtered.bmp 5" />
+    <option name="PROGRAM_PARAMETERS" value="src/test/resources/demo/images/thin_lines.bmp /tmp/filtered.bmp 15" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="net.algart.matrices.filters3x3.demo.*" />
