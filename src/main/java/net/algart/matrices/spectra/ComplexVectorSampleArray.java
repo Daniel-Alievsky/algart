@@ -534,7 +534,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
                 samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0; i < vectorLen2; i++) {
-                    buf[i] *= a;
+                    buf[i] = (float) (buf[i] * a);
                 }
                 samplesRe.setData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.setData(index * vectorStep, buf, vectorLen, vectorLen);
@@ -569,7 +569,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
                     samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                     for (int i = 0; i < vectorLen2; i++) {
-                        buf[i] *= a;
+                        buf[i] = (float) (buf[i] * a);
                     }
                     samplesRe.setData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.setData(index * vectorStep, buf, vectorLen, vectorLen);
@@ -746,7 +746,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
                 samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0; i < vectorLen2; i++) {
-                    buf[i] *= a;
+                    buf[i] = buf[i] * a;
                 }
                 samplesRe.setData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.setData(index * vectorStep, buf, vectorLen, vectorLen);
@@ -781,7 +781,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
                     samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                     for (int i = 0; i < vectorLen2; i++) {
-                        buf[i] *= a;
+                        buf[i] = buf[i] * a;
                     }
                     samplesRe.setData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.setData(index * vectorStep, buf, vectorLen, vectorLen);
