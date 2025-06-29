@@ -61,18 +61,19 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
     private static final int NUMBER_OF_BUFFERS = 4; // maximal number of simultaneous buffers in methods below
 
     private static final JArrayPool FLOAT_BUFFERS =
-        JArrayPool.getInstance(float.class, NUMBER_OF_BUFFERS * BUFFER_LENGTH);
+            JArrayPool.getInstance(float.class, NUMBER_OF_BUFFERS * BUFFER_LENGTH);
     private static final JArrayPool DOUBLE_BUFFERS =
-        JArrayPool.getInstance(double.class, NUMBER_OF_BUFFERS * BUFFER_LENGTH);
+            JArrayPool.getInstance(double.class, NUMBER_OF_BUFFERS * BUFFER_LENGTH);
 
     final long vectorLength;
     final long vectorStep;
     final long length;
     final UpdatablePNumberArray samplesRe, samplesIm;
 
-    ComplexVectorSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-        long vectorLength, long vectorStep, long length)
-    // Besides more clarity, "length" argument allows processing a case vectorLength=vectorStep=0
+    ComplexVectorSampleArray(
+            UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+            long vectorLength, long vectorStep, long length)
+    // Besides more clarity, the "length" argument allows processing a case vectorLength=vectorStep=0
     {
         Objects.requireNonNull(samplesRe, "Null samplesRe");
         Objects.requireNonNull(samplesIm, "Null samplesIm");
@@ -80,7 +81,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             throw new IllegalArgumentException("Negative vectorLength = " + vectorLength);
         }
         if (vectorStep < vectorLength) {
-            throw new IllegalArgumentException("vectorStep = "+ vectorStep + " < vectorLength = " + vectorLength);
+            throw new IllegalArgumentException("vectorStep = " + vectorStep + " < vectorLength = " + vectorLength);
         }
         if (length < 0) {
             throw new IllegalArgumentException("Negative length = " + length);
@@ -88,14 +89,14 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         long m = samplesRe.length() - vectorLength;
         if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep)) {
             throw new IllegalArgumentException("samplesRe is too short: its length " + samplesRe.length()
-                + " < (length - 1) * vectorStep + vectorLength = "
-                + (length - 1) + " * " + vectorStep + " + " + vectorLength);
+                    + " < (length - 1) * vectorStep + vectorLength = "
+                    + (length - 1) + " * " + vectorStep + " + " + vectorLength);
         }
         m = samplesIm.length() - vectorLength;
         if ((length > 0 && m < 0) || (vectorStep > 0 && (length - 1) > m / vectorStep)) {
             throw new IllegalArgumentException("samplesIm is too short: its length " + samplesIm.length()
-                + " < (length - 1) * vectorStep + vectorLength = "
-                + (length - 1) + " * " + vectorStep + " + " + vectorLength);
+                    + " < (length - 1) * vectorStep + vectorLength = "
+                    + (length - 1) + " * " + vectorStep + " + " + vectorLength);
         }
         this.samplesRe = samplesRe;
         this.samplesIm = samplesIm;
@@ -135,8 +136,8 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      * @param vectorLength the length of each complex vector.
      * @param vectorStep   the step of storing vectors in <code>samplesRe</code> and <code>samplesIm</code> arrays.
      * @param length       the length of the returned sample array.
-     * @return             the array of vector complex samples, represented by corresponding ranges (subarrays)
-     *                     of these two arrays.
+     * @return the array of vector complex samples, represented by corresponding ranges (subarrays)
+     * of these two arrays.
      * @throws NullPointerException     if <code>samplesRe</code> or <code>samplesIm</code> is {@code null}.
      * @throws IllegalArgumentException if <code>vectorLength&lt;0</code>, <code>vectorStep&lt;vectorLength</code>,
      *                                  <code>length&lt;0</code> or
@@ -154,26 +155,24 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
      *                                  <code>samplesIm.elementType()</code>.
      */
     public static ComplexVectorSampleArray asSampleArray(
-        MemoryModel memoryModel,
-        UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-        long vectorLength, long vectorStep, long length)
-    {
+            MemoryModel memoryModel,
+            UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+            long vectorLength, long vectorStep, long length) {
         Objects.requireNonNull(samplesRe, "Null samplesRe");
         Objects.requireNonNull(samplesIm, "Null samplesIm");
-        samplesRe = (UpdatablePNumberArray)samplesRe.asUnresizable(); // to be sure that its length will not be changed
-        samplesIm = (UpdatablePNumberArray)samplesIm.asUnresizable(); // to be sure that its length will not be changed
+        samplesRe = (UpdatablePNumberArray) samplesRe.asUnresizable(); // to be sure that its length will not be changed
+        samplesIm = (UpdatablePNumberArray) samplesIm.asUnresizable(); // to be sure that its length will not be changed
         if (samplesRe instanceof DirectAccessible && ((DirectAccessible) samplesRe).hasJavaArray()
-            && samplesIm instanceof DirectAccessible && ((DirectAccessible) samplesIm).hasJavaArray()
-            && vectorLength <= Arrays.SMM.maxSupportedLength(samplesRe.elementType())
-            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH)
-        {
+                && samplesIm instanceof DirectAccessible && ((DirectAccessible) samplesIm).hasJavaArray()
+                && vectorLength <= Arrays.SMM.maxSupportedLength(samplesRe.elementType())
+                / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH) {
             if (samplesRe instanceof FloatArray && samplesIm instanceof FloatArray) {
                 return new DirectComplexFloatVectorSampleArray(samplesRe, samplesIm,
-                    vectorLength, vectorStep, length);
+                        vectorLength, vectorStep, length);
             }
             if (samplesRe instanceof DoubleArray && samplesIm instanceof DoubleArray) {
                 return new DirectComplexDoubleVectorSampleArray(samplesRe, samplesIm,
-                    vectorLength, vectorStep, length);
+                        vectorLength, vectorStep, length);
             }
         }
         if (vectorLength < BUFFER_LENGTH) {
@@ -188,12 +187,12 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             memoryModel = Arrays.SMM;
         }
         if (vectorLength > Math.min(
-            memoryModel.maxSupportedLength(samplesRe.elementType()),
-            memoryModel.maxSupportedLength(samplesIm.elementType()))
-            / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH) {
+                memoryModel.maxSupportedLength(samplesRe.elementType()),
+                memoryModel.maxSupportedLength(samplesIm.elementType()))
+                / GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH) {
             throw new TooLargeArrayException("Too large samples for the given memory model " + memoryModel
-                + ": it cannot allocate " + GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH
-                + " samples (each sample is a vector of " + vectorLength + " numbers");
+                    + ": it cannot allocate " + GUARANTEED_COMPATIBLE_SAMPLES_ARRAY_LENGTH
+                    + " samples (each sample is a vector of " + vectorLength + " numbers");
         }
         return new CommonComplexVectorSampleArray(memoryModel, samplesRe, samplesIm, vectorLength, vectorStep, length);
     }
@@ -209,7 +208,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
     public abstract ComplexVectorSampleArray newCompatibleSamplesArray(long length);
 
     public void copy(long destIndex, SampleArray src, long srcIndex) {
-        ComplexVectorSampleArray a = (ComplexVectorSampleArray)src;
+        ComplexVectorSampleArray a = (ComplexVectorSampleArray) src;
         re(destIndex).copy(a.re(srcIndex));
         im(destIndex).copy(a.im(srcIndex));
     }
@@ -233,8 +232,9 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
     public abstract void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm);
 
-    public abstract void combineWithRealMultipliers(long destIndex,
-        long srcIndex1, double a1, long srcIndex2, double a2);
+    public abstract void combineWithRealMultipliers(
+            long destIndex,
+            long srcIndex1, double a1, long srcIndex2, double a2);
 
     public abstract void multiplyByRealScalar(long index, double a);
 
@@ -251,7 +251,8 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         format = "(" + format + " " + format + ")";
         for (long i = 0, disp = 0; i < length; i++, disp += vectorStep) {
             if (sb.length() >= maxStringLength) {
-                sb.append(separator).append("..."); break;
+                sb.append(separator).append("...");
+                break;
             }
             if (i > 0) {
                 sb.append(" ").append(separator);
@@ -280,11 +281,11 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
     static class CommonComplexVectorSampleArray extends ComplexVectorSampleArray {
         final MemoryModel mm;
+
         CommonComplexVectorSampleArray(
-            MemoryModel memoryModel,
-            UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-            long vectorLength, long vectorStep, long length)
-        {
+                MemoryModel memoryModel,
+                UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+                long vectorLength, long vectorStep, long length) {
             super(samplesRe, samplesIm, vectorLength, vectorStep, length);
             assert memoryModel != null;
             this.mm = memoryModel;
@@ -293,34 +294,34 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
             if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
-                    + length + " vectors of " + vectorLength + " numbers");
+                        + length + " vectors of " + vectorLength + " numbers");
             }
             return new CommonComplexVectorSampleArray(mm,
-                (UpdatablePNumberArray) mm.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
-                (UpdatablePNumberArray) mm.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
-                vectorLength, vectorLength, length);
+                    (UpdatablePNumberArray) mm.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
+                    (UpdatablePNumberArray) mm.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
+                    vectorLength, vectorLength, length);
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray)src;
+            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray) src;
             Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, re(destIndex), a.re(srcIndex1), a.re(srcIndex2));
             Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, im(destIndex), a.im(srcIndex1), a.im(srcIndex2));
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray)src;
+            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray) src;
             Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, re(destIndex), a.re(srcIndex1), a.re(srcIndex2));
             Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, im(destIndex), a.im(srcIndex1), a.im(srcIndex2));
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            CommonComplexVectorSampleArray a2 = (CommonComplexVectorSampleArray)src2;
+            CommonComplexVectorSampleArray a2 = (CommonComplexVectorSampleArray) src2;
             Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, re(destIndex), re(srcIndex1), a2.re(srcIndex2));
             Arrays.applyFunc(null, false, 1, true, Func.X_PLUS_Y, im(destIndex), im(srcIndex1), a2.im(srcIndex2));
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            CommonComplexVectorSampleArray a2 = (CommonComplexVectorSampleArray)src2;
+            CommonComplexVectorSampleArray a2 = (CommonComplexVectorSampleArray) src2;
             Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, re(destIndex), re(srcIndex1), a2.re(srcIndex2));
             Arrays.applyFunc(null, false, 1, true, Func.X_MINUS_Y, im(destIndex), im(srcIndex1), a2.im(srcIndex2));
         }
@@ -336,7 +337,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray)src;
+            CommonComplexVectorSampleArray a = (CommonComplexVectorSampleArray) src;
             PArray re = a.re(srcIndex);
             PArray im = a.im(srcIndex);
             Arrays.applyFunc(null, false, 1, true, LinearFunc.getInstance(0.0, aRe, -aIm), re(destIndex), re, im);
@@ -345,9 +346,9 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
             Arrays.applyFunc(null, false, 1, true, LinearFunc.getInstance(0.0, a1, a2),
-                re(destIndex), re(srcIndex1), re(srcIndex2));
+                    re(destIndex), re(srcIndex1), re(srcIndex2));
             Arrays.applyFunc(null, false, 1, true, LinearFunc.getInstance(0.0, a1, a2),
-                im(destIndex), im(srcIndex1), im(srcIndex2));
+                    im(destIndex), im(srcIndex1), im(srcIndex2));
         }
 
         public void multiplyByRealScalar(long index, double a) {
@@ -371,31 +372,34 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
     static class ComplexFloatVectorSampleArray extends ComplexVectorSampleArray {
         final int vectorLen;
         final int vectorLen2;
-        ComplexFloatVectorSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-            long vectorLength, long vectorStep, long length)
-        {
+
+        ComplexFloatVectorSampleArray(
+                UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+                long vectorLength, long vectorStep, long length) {
             super(samplesRe, samplesIm, vectorLength, vectorStep, length);
             assert length <= BUFFER_LENGTH;
-            vectorLen = (int)vectorLength;
+            vectorLen = (int) vectorLength;
             vectorLen2 = 2 * vectorLen;
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
             if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
-                    + length + " vectors of " + vectorLength + " numbers");
+                        + length + " vectors of " + vectorLength + " numbers");
             }
             return new ComplexFloatVectorSampleArray(
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
-                vectorLength, vectorLength, length);
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(),
+                            length * vectorLength),
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(),
+                            length * vectorLength),
+                    vectorLength, vectorLength, length);
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray)src;
+            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray) src;
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -411,10 +415,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray)src;
+            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray) src;
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -430,10 +434,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            ComplexFloatVectorSampleArray a2 = (ComplexFloatVectorSampleArray)src2;
+            ComplexFloatVectorSampleArray a2 = (ComplexFloatVectorSampleArray) src2;
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a2.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -449,10 +453,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            ComplexFloatVectorSampleArray a2 = (ComplexFloatVectorSampleArray)src2;
+            ComplexFloatVectorSampleArray a2 = (ComplexFloatVectorSampleArray) src2;
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a2.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -470,7 +474,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -488,7 +492,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -504,15 +508,15 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray)src;
+            ComplexFloatVectorSampleArray a = (ComplexFloatVectorSampleArray) src;
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0, j = vectorLen; i < vectorLen; i++, j++) {
-                    float re = (float)(buf[i] * aRe - buf[j] * aIm);
-                    float im = (float)(buf[i] * aIm + buf[j] * aRe);
+                    float re = (float) (buf[i] * aRe - buf[j] * aIm);
+                    float im = (float) (buf[i] * aIm + buf[j] * aRe);
                     buf[i] = re;
                     buf[j] = im;
                 }
@@ -526,7 +530,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void multiplyByRealScalar(long index, double a) {
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0; i < vectorLen2; i++) {
@@ -542,13 +546,13 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
                 samplesIm.getData(srcIndex2 * vectorStep, buf, 3 * vectorLen, vectorLen);
                 for (int i = 0, j = vectorLen2; i < vectorLen2; i++, j++) {
-                    buf[i] = (float)(buf[i] * a1 + buf[j] * a2);
+                    buf[i] = (float) (buf[i] * a1 + buf[j] * a2);
                 }
                 samplesRe.setData(destIndex * vectorStep, buf, 0, vectorLen);
                 samplesIm.setData(destIndex * vectorStep, buf, vectorLen, vectorLen);
@@ -560,7 +564,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             float[] buf = null;
             try {
-                buf = (float[])FLOAT_BUFFERS.requestArray();
+                buf = (float[]) FLOAT_BUFFERS.requestArray();
                 for (long index = fromIndex; index < toIndex; index++) {
                     samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
@@ -575,35 +579,39 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             }
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
     static class ComplexDoubleVectorSampleArray extends ComplexVectorSampleArray {
         final int vectorLen;
         final int vectorLen2;
-        ComplexDoubleVectorSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-            long vectorLength, long vectorStep, long length)
-        {
+
+        ComplexDoubleVectorSampleArray(
+                UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+                long vectorLength, long vectorStep, long length) {
             super(samplesRe, samplesIm, vectorLength, vectorStep, length);
             assert length <= BUFFER_LENGTH;
-            vectorLen = (int)vectorLength;
+            vectorLen = (int) vectorLength;
             vectorLen2 = 2 * vectorLen;
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
             if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
-                    + length + " vectors of " + vectorLength + " numbers");
+                        + length + " vectors of " + vectorLength + " numbers");
             }
             return new ComplexDoubleVectorSampleArray(
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(), length * vectorLength),
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(), length * vectorLength),
-                vectorLength, vectorLength, length);
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe.elementType(),
+                            length * vectorLength),
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm.elementType(),
+                            length * vectorLength),
+                    vectorLength, vectorLength, length);
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray)src;
+            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray) src;
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -619,10 +627,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray)src;
+            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray) src;
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -638,10 +646,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            ComplexDoubleVectorSampleArray a2 = (ComplexDoubleVectorSampleArray)src2;
+            ComplexDoubleVectorSampleArray a2 = (ComplexDoubleVectorSampleArray) src2;
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a2.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -657,10 +665,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            ComplexDoubleVectorSampleArray a2 = (ComplexDoubleVectorSampleArray)src2;
+            ComplexDoubleVectorSampleArray a2 = (ComplexDoubleVectorSampleArray) src2;
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 a2.samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -678,7 +686,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -696,7 +704,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -712,10 +720,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray)src;
+            ComplexDoubleVectorSampleArray a = (ComplexDoubleVectorSampleArray) src;
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 a.samplesRe.getData(srcIndex * vectorStep, buf, 0, vectorLen);
                 a.samplesIm.getData(srcIndex * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0, j = vectorLen; i < vectorLen; i++, j++) {
@@ -734,7 +742,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void multiplyByRealScalar(long index, double a) {
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
                 for (int i = 0; i < vectorLen2; i++) {
@@ -750,7 +758,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 samplesRe.getData(srcIndex1 * vectorStep, buf, 0, vectorLen);
                 samplesIm.getData(srcIndex1 * vectorStep, buf, vectorLen, vectorLen);
                 samplesRe.getData(srcIndex2 * vectorStep, buf, 2 * vectorLen, vectorLen);
@@ -768,7 +776,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             double[] buf = null;
             try {
-                buf = (double[])DOUBLE_BUFFERS.requestArray();
+                buf = (double[]) DOUBLE_BUFFERS.requestArray();
                 for (long index = fromIndex; index < toIndex; index++) {
                     samplesRe.getData(index * vectorStep, buf, 0, vectorLen);
                     samplesIm.getData(index * vectorStep, buf, vectorLen, vectorLen);
@@ -783,181 +791,183 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             }
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
     //           FLOAT ==> DOUBLE;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s?\(([^)]+)\) ==> $1 ]]
     static class DirectComplexFloatVectorSampleArray extends ComplexVectorSampleArray {
         final float[] samplesRe;
         final int ofsRe;
         final float[] samplesIm;
         final int ofsIm;
         final int vectorLen;
+
         // ofsRe==ofsIm can lead to simpler code, but it will be anti-optimization:
         // a single array is processed faster than two "parallel" arrays due to better CPU cache usage
-        DirectComplexFloatVectorSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-            long vectorLength, long vectorStep, long length)
-        {
+        DirectComplexFloatVectorSampleArray(
+                UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+                long vectorLength, long vectorStep, long length) {
             super(samplesRe, samplesIm, vectorLength, vectorStep, length);
-            DirectAccessible daRe = (DirectAccessible)super.samplesRe;
-            this.samplesRe = (float[])daRe.javaArray();
+            DirectAccessible daRe = (DirectAccessible) super.samplesRe;
+            this.samplesRe = (float[]) daRe.javaArray();
             this.ofsRe = daRe.javaArrayOffset();
-            DirectAccessible daIm = (DirectAccessible)super.samplesIm;
-            this.samplesIm = (float[])daIm.javaArray();
+            DirectAccessible daIm = (DirectAccessible) super.samplesIm;
+            this.samplesIm = (float[]) daIm.javaArray();
             this.ofsIm = daIm.javaArrayOffset();
             assert length <= Integer.MAX_VALUE;
-            this.vectorLen = (int)vectorLength;
+            this.vectorLen = (int) vectorLength;
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
             if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
-                    + length + " vectors of " + vectorLength + " numbers");
+                        + length + " vectors of " + vectorLength + " numbers");
             }
             return new DirectComplexFloatVectorSampleArray(
-                Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
-                Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
-                vectorLength, vectorLength, length);
+                    Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
+                    Arrays.SMM.newUnresizableFloatArray(length * vectorLength),
+                    vectorLength, vectorLength, length);
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray)src;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsRe + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsRe + (int)(srcIndex2 * a.vectorStep);
+            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray) src;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsRe + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsRe + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = a.samplesRe[i] + a.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsIm + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsIm + (int)(srcIndex2 * a.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsIm + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsIm + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = a.samplesIm[i] + a.samplesIm[j];
             }
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray)src;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsRe + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsRe + (int)(srcIndex2 * a.vectorStep);
+            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray) src;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsRe + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsRe + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = a.samplesRe[i] - a.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsIm + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsIm + (int)(srcIndex2 * a.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsIm + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsIm + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = a.samplesIm[i] - a.samplesIm[j];
             }
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexFloatVectorSampleArray a2 = (DirectComplexFloatVectorSampleArray)src2;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsRe + (int)(srcIndex2 * a2.vectorStep);
+            DirectComplexFloatVectorSampleArray a2 = (DirectComplexFloatVectorSampleArray) src2;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsRe + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] + a2.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsIm + (int)(srcIndex2 * a2.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsIm + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] + a2.samplesIm[j];
             }
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexFloatVectorSampleArray a2 = (DirectComplexFloatVectorSampleArray)src2;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsRe + (int)(srcIndex2 * a2.vectorStep);
+            DirectComplexFloatVectorSampleArray a2 = (DirectComplexFloatVectorSampleArray) src2;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsRe + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] - a2.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsIm + (int)(srcIndex2 * a2.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsIm + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] - a2.samplesIm[j];
             }
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] + samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] + samplesIm[j];
             }
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] - samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] - samplesIm[j];
             }
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray)src;
-            for (int kRe = ofsRe + (int)(destIndex * vectorStep), kReMax = kRe + vectorLen,
-                kIm = ofsIm + (int)(destIndex * vectorStep),
-                iRe = a.ofsRe + (int)(srcIndex * a.vectorStep),
-                iIm = a.ofsIm + (int)(srcIndex * a.vectorStep);
+            DirectComplexFloatVectorSampleArray a = (DirectComplexFloatVectorSampleArray) src;
+            for (int kRe = ofsRe + (int) (destIndex * vectorStep), kReMax = kRe + vectorLen,
+                 kIm = ofsIm + (int) (destIndex * vectorStep),
+                 iRe = a.ofsRe + (int) (srcIndex * a.vectorStep),
+                 iIm = a.ofsIm + (int) (srcIndex * a.vectorStep);
                  kRe < kReMax; kRe++, kIm++, iRe++, iIm++) {
                 float re = a.samplesRe[iRe];
                 float im = a.samplesIm[iIm];
-                samplesRe[kRe] = (float)(re * aRe - im * aIm);
-                samplesIm[kIm] = (float)(re * aIm + im * aRe);
+                samplesRe[kRe] = (float) (re * aRe - im * aIm);
+                samplesIm[kIm] = (float) (re * aIm + im * aRe);
             }
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
-                samplesRe[k] = (float)(a1 * samplesRe[i] + a2 * samplesRe[j]);
+                samplesRe[k] = (float) (a1 * samplesRe[i] + a2 * samplesRe[j]);
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
-                samplesIm[k] = (float)(a1 * samplesIm[i] + a2 * samplesIm[j]);
+                samplesIm[k] = (float) (a1 * samplesIm[i] + a2 * samplesIm[j]);
             }
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            for (int k = ofsRe + (int)(index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
+            for (int k = ofsRe + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
                 samplesRe[k] *= a;
             }
-            for (int k = ofsIm + (int)(index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
+            for (int k = ofsIm + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
                 samplesIm[k] *= a;
             }
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            int dispRe = ofsRe + (int)(fromIndex * vectorStep);
-            int dispIm = ofsIm + (int)(fromIndex * vectorStep);
-            int dispReMax = dispRe + (int)((toIndex - fromIndex) * vectorStep);
+            int dispRe = ofsRe + (int) (fromIndex * vectorStep);
+            int dispIm = ofsIm + (int) (fromIndex * vectorStep);
+            int dispReMax = dispRe + (int) ((toIndex - fromIndex) * vectorStep);
             for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
                     samplesRe[k] *= a;
@@ -968,6 +978,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             }
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
     static class DirectComplexDoubleVectorSampleArray extends ComplexVectorSampleArray {
         final double[] samplesRe;
@@ -975,133 +986,134 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         final double[] samplesIm;
         final int ofsIm;
         final int vectorLen;
+
         // ofsRe==ofsIm can lead to simpler code, but it will be anti-optimization:
         // a single array is processed faster than two "parallel" arrays due to better CPU cache usage
-        DirectComplexDoubleVectorSampleArray(UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
-            long vectorLength, long vectorStep, long length)
-        {
+        DirectComplexDoubleVectorSampleArray(
+                UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm,
+                long vectorLength, long vectorStep, long length) {
             super(samplesRe, samplesIm, vectorLength, vectorStep, length);
-            DirectAccessible daRe = (DirectAccessible)super.samplesRe;
-            this.samplesRe = (double[])daRe.javaArray();
+            DirectAccessible daRe = (DirectAccessible) super.samplesRe;
+            this.samplesRe = (double[]) daRe.javaArray();
             this.ofsRe = daRe.javaArrayOffset();
-            DirectAccessible daIm = (DirectAccessible)super.samplesIm;
-            this.samplesIm = (double[])daIm.javaArray();
+            DirectAccessible daIm = (DirectAccessible) super.samplesIm;
+            this.samplesIm = (double[]) daIm.javaArray();
             this.ofsIm = daIm.javaArrayOffset();
             assert length <= Integer.MAX_VALUE;
-            this.vectorLen = (int)vectorLength;
+            this.vectorLen = (int) vectorLength;
         }
 
         public ComplexVectorSampleArray newCompatibleSamplesArray(long length) {
             if (length > Long.MAX_VALUE / vectorLength) {
                 throw new TooLargeArrayException("Too large sample array: "
-                    + length + " vectors of " + vectorLength + " numbers");
+                        + length + " vectors of " + vectorLength + " numbers");
             }
             return new DirectComplexDoubleVectorSampleArray(
-                Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
-                Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
-                vectorLength, vectorLength, length);
+                    Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
+                    Arrays.SMM.newUnresizableDoubleArray(length * vectorLength),
+                    vectorLength, vectorLength, length);
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray)src;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsRe + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsRe + (int)(srcIndex2 * a.vectorStep);
+            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray) src;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsRe + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsRe + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = a.samplesRe[i] + a.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsIm + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsIm + (int)(srcIndex2 * a.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsIm + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsIm + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = a.samplesIm[i] + a.samplesIm[j];
             }
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray)src;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsRe + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsRe + (int)(srcIndex2 * a.vectorStep);
+            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray) src;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsRe + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsRe + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = a.samplesRe[i] - a.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = a.ofsIm + (int)(srcIndex1 * a.vectorStep),
-                j = a.ofsIm + (int)(srcIndex2 * a.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = a.ofsIm + (int) (srcIndex1 * a.vectorStep),
+                 j = a.ofsIm + (int) (srcIndex2 * a.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = a.samplesIm[i] - a.samplesIm[j];
             }
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexDoubleVectorSampleArray a2 = (DirectComplexDoubleVectorSampleArray)src2;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsRe + (int)(srcIndex2 * a2.vectorStep);
+            DirectComplexDoubleVectorSampleArray a2 = (DirectComplexDoubleVectorSampleArray) src2;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsRe + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] + a2.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsIm + (int)(srcIndex2 * a2.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsIm + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] + a2.samplesIm[j];
             }
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexDoubleVectorSampleArray a2 = (DirectComplexDoubleVectorSampleArray)src2;
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsRe + (int)(srcIndex2 * a2.vectorStep);
+            DirectComplexDoubleVectorSampleArray a2 = (DirectComplexDoubleVectorSampleArray) src2;
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsRe + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] - a2.samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = a2.ofsIm + (int)(srcIndex2 * a2.vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = a2.ofsIm + (int) (srcIndex2 * a2.vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] - a2.samplesIm[j];
             }
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] + samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] + samplesIm[j];
             }
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = samplesRe[i] - samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = samplesIm[i] - samplesIm[j];
             }
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray)src;
-            for (int kRe = ofsRe + (int)(destIndex * vectorStep), kReMax = kRe + vectorLen,
-                kIm = ofsIm + (int)(destIndex * vectorStep),
-                iRe = a.ofsRe + (int)(srcIndex * a.vectorStep),
-                iIm = a.ofsIm + (int)(srcIndex * a.vectorStep);
+            DirectComplexDoubleVectorSampleArray a = (DirectComplexDoubleVectorSampleArray) src;
+            for (int kRe = ofsRe + (int) (destIndex * vectorStep), kReMax = kRe + vectorLen,
+                 kIm = ofsIm + (int) (destIndex * vectorStep),
+                 iRe = a.ofsRe + (int) (srcIndex * a.vectorStep),
+                 iIm = a.ofsIm + (int) (srcIndex * a.vectorStep);
                  kRe < kReMax; kRe++, kIm++, iRe++, iIm++) {
                 double re = a.samplesRe[iRe];
                 double im = a.samplesIm[iIm];
@@ -1111,33 +1123,33 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            for (int k = ofsRe + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsRe + (int)(srcIndex1 * vectorStep),
-                j = ofsRe + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsRe + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsRe + (int) (srcIndex1 * vectorStep),
+                 j = ofsRe + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesRe[k] = a1 * samplesRe[i] + a2 * samplesRe[j];
             }
-            for (int k = ofsIm + (int)(destIndex * vectorStep), kMax = k + vectorLen,
-                i = ofsIm + (int)(srcIndex1 * vectorStep),
-                j = ofsIm + (int)(srcIndex2 * vectorStep);
+            for (int k = ofsIm + (int) (destIndex * vectorStep), kMax = k + vectorLen,
+                 i = ofsIm + (int) (srcIndex1 * vectorStep),
+                 j = ofsIm + (int) (srcIndex2 * vectorStep);
                  k < kMax; k++, i++, j++) {
                 samplesIm[k] = a1 * samplesIm[i] + a2 * samplesIm[j];
             }
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            for (int k = ofsRe + (int)(index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
+            for (int k = ofsRe + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
                 samplesRe[k] *= a;
             }
-            for (int k = ofsIm + (int)(index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
+            for (int k = ofsIm + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
                 samplesIm[k] *= a;
             }
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            int dispRe = ofsRe + (int)(fromIndex * vectorStep);
-            int dispIm = ofsIm + (int)(fromIndex * vectorStep);
-            int dispReMax = dispRe + (int)((toIndex - fromIndex) * vectorStep);
+            int dispRe = ofsRe + (int) (fromIndex * vectorStep);
+            int dispIm = ofsIm + (int) (fromIndex * vectorStep);
+            int dispReMax = dispRe + (int) ((toIndex - fromIndex) * vectorStep);
             for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
                     samplesRe[k] *= a;
@@ -1148,5 +1160,6 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             }
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 }
