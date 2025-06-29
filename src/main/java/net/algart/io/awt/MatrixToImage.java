@@ -84,7 +84,7 @@ public abstract class MatrixToImage {
      * Equivalent to <code>{@link #interleavedRGBToBufferedImage(Matrix, boolean)
      * interleavedRGBToBufferedImage}(interleavedMatrix, true)</code>.
      *
-     * @param interleavedMatrix the interleaved matrix.
+     * @param interleavedMatrix the interleaved RGB matrix.
      * @return the equivalent <code>BufferedImage</code>.
      */
     public static BufferedImage interleavedRGBToBufferedImage(
@@ -93,7 +93,7 @@ public abstract class MatrixToImage {
     }
 
     /**
-     * Converts the interleaved matrix to <code>BufferedImage</code>.
+     * Converts the interleaved RGB matrix to <code>BufferedImage</code>.
      * Equivalent to
      * <pre>
      *     new {@link InterleavedRGBToInterleaved MatrixToImage.InterleavedRGBToInterleaved}()
@@ -101,7 +101,7 @@ public abstract class MatrixToImage {
      *                 .{@link #toBufferedImage}(interleavedMatrix)
      * </pre>
      *
-     * @param interleavedMatrix            the interleaved matrix.
+     * @param interleavedMatrix            the interleaved RGB matrix.
      * @param convertAllElementTypesToByte whether we need to convert non-byte data to <code>byte</code> values.
      * @return the equivalent <code>BufferedImage</code>.
      */
@@ -109,6 +109,39 @@ public abstract class MatrixToImage {
             Matrix<? extends PArray> interleavedMatrix,
             boolean convertAllElementTypesToByte) {
         return new InterleavedRGBToInterleaved()
+                .setBytesRequired(convertAllElementTypesToByte)
+                .toBufferedImage(interleavedMatrix);
+    }
+
+    /**
+     * Equivalent to <code>{@link #interleavedBGRToBufferedImage(Matrix, boolean)
+     * interleavedBGRToBufferedImage}(interleavedMatrix, true)</code>.
+     *
+     * @param interleavedMatrix the interleaved BGR matrix.
+     * @return the equivalent <code>BufferedImage</code>.
+     */
+    public static BufferedImage interleavedBGRToBufferedImage(
+            Matrix<? extends PArray> interleavedMatrix) {
+        return interleavedBGRToBufferedImage(interleavedMatrix, true);
+    }
+
+    /**
+     * Converts the interleaved BGR matrix to <code>BufferedImage</code>.
+     * Equivalent to
+     * <pre>
+     *     new {@link InterleavedBGRToInterleaved MatrixToImage.InterleavedBGRToInterleaved}()
+     *                 .{@link #setBytesRequired}(convertAllElementTypesToByte)
+     *                 .{@link #toBufferedImage}(interleavedMatrix)
+     * </pre>
+     *
+     * @param interleavedMatrix            the interleaved BGR matrix.
+     * @param convertAllElementTypesToByte whether we need to convert non-byte data to <code>byte</code> values.
+     * @return the equivalent <code>BufferedImage</code>.
+     */
+    public static BufferedImage interleavedBGRToBufferedImage(
+            Matrix<? extends PArray> interleavedMatrix,
+            boolean convertAllElementTypesToByte) {
+        return new InterleavedBGRToInterleaved()
                 .setBytesRequired(convertAllElementTypesToByte)
                 .toBufferedImage(interleavedMatrix);
     }

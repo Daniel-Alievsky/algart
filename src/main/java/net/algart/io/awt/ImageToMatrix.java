@@ -58,7 +58,7 @@ public abstract class ImageToMatrix {
     }
 
     /**
-     * Converts <code>BufferedImage</code> to interleaved AlgART matrix.
+     * Converts <code>BufferedImage</code> to interleaved RGB AlgART matrix.
      * Equivalent to
      * <pre>
      *     new {@link ToInterleavedRGB
@@ -66,11 +66,27 @@ public abstract class ImageToMatrix {
      * </pre>
      *
      * @param bufferedImage some buffered image.
-     * @return the interleaved matrix.
+     * @return the interleaved RGB matrix.
      */
     public static Matrix<UpdatablePArray> toInterleavedRGB(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         return new ToInterleavedRGB().toMatrix(bufferedImage);
+    }
+
+    /**
+     * Converts <code>BufferedImage</code> to interleaved BGR AlgART matrix.
+     * Equivalent to
+     * <pre>
+     *     new {@link ToInterleavedRGB
+     *     ImageToMatrix.ToInterleavedBGR}().{@link #toMatrix toMatrix}(bufferedImage)
+     * </pre>
+     *
+     * @param bufferedImage some buffered image.
+     * @return the interleaved BGR matrix.
+     */
+    public static Matrix<UpdatablePArray> toInterleavedBGR(BufferedImage bufferedImage) {
+        Objects.requireNonNull(bufferedImage, "Null bufferedImage");
+        return new ToInterleavedBGR().toMatrix(bufferedImage);
     }
 
     public static int defaultNumberOfChannels(BufferedImage bufferedImage) {
