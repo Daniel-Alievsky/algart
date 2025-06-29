@@ -2238,7 +2238,7 @@ public class MainOperationsTest implements Cloneable {
                 dim[i] = (rnd.nextInt(3) > 0 &&
                         lim > 10 ? lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
-                product *= dim[i];
+                product *= (int) dim[i];
                 assert product <= len;
             }
             Matrix<? extends UpdatableArray> matr = Matrices.matrix(work1.subArr(0, product), dim);
@@ -2599,7 +2599,7 @@ public class MainOperationsTest implements Cloneable {
                 dim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
                         lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
-                product *= dim[i];
+                product *= (int) dim[i];
                 assert product <= len;
             }
             Matrix<? extends Array> srcMatr = Matrices.matrix(a.subArr(0, product), dim);
@@ -2984,7 +2984,7 @@ public class MainOperationsTest implements Cloneable {
                 srcDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
                         lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                         / blockSize * blockSize;
-                product *= srcDim[i];
+                product *= (int) srcDim[i];
                 assert product <= len;
             }
             Matrix<? extends Array> srcMatr = Matrices.matrix(a.subArr(0, product), srcDim);
@@ -2999,7 +2999,7 @@ public class MainOperationsTest implements Cloneable {
                     destDim[i] = (rnd.nextInt(3) > 0 && lim > 10 ?
                             lim - 1 - rnd.nextInt(lim / 10) : rnd.nextInt(lim))
                             / blockSize * blockSize;
-                    product *= destDim[i];
+                    product *= (int) destDim[i];
                     assert product <= len;
                 }
             }
@@ -4603,7 +4603,7 @@ public class MainOperationsTest implements Cloneable {
                 // - at least one zero dimension should lead to trivial results
                 lim = Math.min(lim, (int) Math.cbrt(len));
                 dim[i] = rnd.nextInt(lim) / blockSize * blockSize;
-                product *= dim[i];
+                product *= (int) dim[i];
                 assert product <= len;
             }
             Class<?> eType = rnd.nextBoolean() ? a.elementType() :

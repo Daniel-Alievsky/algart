@@ -183,7 +183,7 @@ public class MutableInt128ShiftRightRoundingTest {
                     continue;
                 }
                 long t1 = System.nanoTime();
-                int sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
+                long sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
                 for (int k = -n; k < n; k++) {
                     sum1 += MutableInt128.shiftRightRounding(k, shift);
                 }
@@ -202,7 +202,7 @@ public class MutableInt128ShiftRightRoundingTest {
                     for (int i = 0; i < n2; i++) {
                         b.setTo(a).shiftRightRounding(shift);
                     }
-                    sum4 += b.toDouble(); // some usage of b
+                    sum4 += (long) b.toDouble(); // some usage of b
                 }
                 long t5 = System.nanoTime();
                 if (sum3 != sum1) {
