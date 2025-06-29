@@ -70,43 +70,41 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
      *
      * @param samplesRe the real parts of all samples.
      * @param samplesIm the imaginary parts of all samples.
-     * @return          the array of scalar complex samples, represented by these two arrays.
+     * @return the array of scalar complex samples, represented by these two arrays.
      * @throws NullPointerException  if <code>samplesRe</code> or <code>samplesIm</code> is {@code null}.
      * @throws SizeMismatchException if <code>samplesRe.length() != samplesIm.length()</code>.
      */
     public static ComplexScalarSampleArray asSampleArray(
-        UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm)
-    {
+            UpdatablePNumberArray samplesRe, UpdatablePNumberArray samplesIm) {
         Objects.requireNonNull(samplesRe, "Null samplesRe");
         Objects.requireNonNull(samplesIm, "Null samplesIm");
-        samplesRe = (UpdatablePNumberArray)samplesRe.asUnresizable(); // to be sure that its length will not be changed
-        samplesIm = (UpdatablePNumberArray)samplesIm.asUnresizable(); // to be sure that its length will not be changed
+        samplesRe = (UpdatablePNumberArray) samplesRe.asUnresizable(); // to be sure that its length will not be changed
+        samplesIm = (UpdatablePNumberArray) samplesIm.asUnresizable(); // to be sure that its length will not be changed
         if (samplesRe.length() != samplesIm.length()) {
             throw new SizeMismatchException("Different lengths of samplesRe and samplesIm");
         }
-        if (samplesRe instanceof DirectAccessible && ((DirectAccessible)samplesRe).hasJavaArray()
-            && samplesIm instanceof DirectAccessible && ((DirectAccessible)samplesIm).hasJavaArray())
-        {
-            Object arrRe = ((DirectAccessible)samplesRe).javaArray();
-            int ofsRe = ((DirectAccessible)samplesRe).javaArrayOffset();
-            Object arrIm = ((DirectAccessible)samplesIm).javaArray();
-            int ofsIm = ((DirectAccessible)samplesIm).javaArrayOffset();
+        if (samplesRe instanceof DirectAccessible daRe && daRe.hasJavaArray()
+                && samplesIm instanceof DirectAccessible daIm && daIm.hasJavaArray()) {
+            Object arrRe = daRe.javaArray();
+            int ofsRe = daRe.javaArrayOffset();
+            Object arrIm = daIm.javaArray();
+            int ofsIm = daIm.javaArrayOffset();
             if (arrRe instanceof float[] && arrIm instanceof float[]) {
                 if (ofsRe == 0 && ofsIm == 0) {
                     return new DirectZeroOffsetsComplexFloatSampleArray(
-                        (float[])arrRe, (float[])arrIm, (int)samplesRe.length());
+                            (float[]) arrRe, (float[]) arrIm, (int) samplesRe.length());
                 } else {
                     return new DirectComplexFloatSampleArray(
-                        (float[])arrRe, ofsRe, (float[])arrIm, ofsIm, (int)samplesRe.length());
+                            (float[]) arrRe, ofsRe, (float[]) arrIm, ofsIm, (int) samplesRe.length());
                 }
             }
             if (arrRe instanceof double[] && arrIm instanceof double[]) {
                 if (ofsRe == 0 && ofsIm == 0) {
                     return new DirectZeroOffsetsComplexDoubleSampleArray(
-                        (double[])arrRe, (double[])arrIm, (int)samplesRe.length());
+                            (double[]) arrRe, (double[]) arrIm, (int) samplesRe.length());
                 } else {
                     return new DirectComplexDoubleSampleArray(
-                        (double[])arrRe, ofsRe, (double[])arrIm, ofsIm, (int)samplesRe.length());
+                            (double[]) arrRe, ofsRe, (double[]) arrIm, ofsIm, (int) samplesRe.length());
                 }
             }
         }
@@ -142,7 +140,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
     public abstract void multiplyByRealScalar(long index, double a);
 
     public abstract void combineWithRealMultipliers(long destIndex,
-        long srcIndex1, double a1, long srcIndex2, double a2);
+                                                    long srcIndex1, double a1, long srcIndex2, double a2);
 
     public abstract void multiplyRangeByRealScalar(long from, long to, double a);
 
@@ -167,12 +165,12 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
 
         public ComplexScalarSampleArray newCompatibleSamplesArray(long length) {
             return new CommonComplexScalarSampleArray(
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe),
-                (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm));
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesRe),
+                    (UpdatablePNumberArray) Arrays.SMM.newUnresizableArray(samplesIm));
         }
 
         public void copy(long destIndex, SampleArray src, long srcIndex) {
-            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray)src;
+            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray) src;
             samplesRe.setDouble(destIndex, a.samplesRe.getDouble(srcIndex));
             samplesIm.setDouble(destIndex, a.samplesIm.getDouble(srcIndex));
         }
@@ -183,25 +181,25 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray)src;
+            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray) src;
             samplesRe.setDouble(destIndex, a.samplesRe.getDouble(srcIndex1) + a.samplesRe.getDouble(srcIndex2));
             samplesIm.setDouble(destIndex, a.samplesIm.getDouble(srcIndex1) + a.samplesIm.getDouble(srcIndex2));
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray)src;
+            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray) src;
             samplesRe.setDouble(destIndex, a.samplesRe.getDouble(srcIndex1) - a.samplesRe.getDouble(srcIndex2));
             samplesIm.setDouble(destIndex, a.samplesIm.getDouble(srcIndex1) - a.samplesIm.getDouble(srcIndex2));
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            CommonComplexScalarSampleArray a2 = (CommonComplexScalarSampleArray)src2;
+            CommonComplexScalarSampleArray a2 = (CommonComplexScalarSampleArray) src2;
             samplesRe.setDouble(destIndex, samplesRe.getDouble(srcIndex1) + a2.samplesRe.getDouble(srcIndex2));
             samplesIm.setDouble(destIndex, samplesIm.getDouble(srcIndex1) + a2.samplesIm.getDouble(srcIndex2));
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            CommonComplexScalarSampleArray a2 = (CommonComplexScalarSampleArray)src2;
+            CommonComplexScalarSampleArray a2 = (CommonComplexScalarSampleArray) src2;
             samplesRe.setDouble(destIndex, samplesRe.getDouble(srcIndex1) - a2.samplesRe.getDouble(srcIndex2));
             samplesIm.setDouble(destIndex, samplesIm.getDouble(srcIndex1) - a2.samplesIm.getDouble(srcIndex2));
         }
@@ -217,7 +215,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray)src;
+            CommonComplexScalarSampleArray a = (CommonComplexScalarSampleArray) src;
             double re = a.samplesRe.getDouble(srcIndex);
             double im = a.samplesIm.getDouble(srcIndex);
             samplesRe.setDouble(destIndex, re * aRe - im * aIm);
@@ -256,7 +254,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             sb.append(String.format(format, samplesRe.getDouble(0), samplesIm.getDouble(0)));
             for (long k = 1; k < n; k++) {
                 if (sb.length() >= maxStringLength) {
-                    sb.append(separator).append("..."); break;
+                    sb.append(separator).append("...");
+                    break;
                 }
                 sb.append(separator).append(String.format(format, samplesRe.getDouble(k), samplesIm.getDouble(k)));
             }
@@ -298,73 +297,77 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
             }
-            int len = (int)length;
+            int len = (int) length;
             return new DirectComplexFloatSampleArray(new float[len], 0, new float[len], 0, len);
         }
 
         public void copy(long destIndex, SampleArray src, long srcIndex) {
-            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] = a.samplesRe[a.ofsRe + (int)srcIndex];
-            samplesIm[ofsIm + (int)destIndex] = a.samplesIm[a.ofsIm + (int)srcIndex];
+            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] = a.samplesRe[a.ofsRe + (int) srcIndex];
+            samplesIm[ofsIm + (int) destIndex] = a.samplesIm[a.ofsIm + (int) srcIndex];
         }
 
         public void swap(long firstIndex, long secondIndex) {
-            float temp = samplesRe[ofsRe + (int)firstIndex];
-            samplesRe[ofsRe + (int)firstIndex] = samplesRe[ofsRe + (int)secondIndex];
-            samplesRe[ofsRe + (int)secondIndex] = temp;
-            temp = samplesIm[ofsIm + (int)firstIndex];
-            samplesIm[ofsIm + (int)firstIndex] = samplesIm[ofsIm + (int)secondIndex];
-            samplesIm[ofsIm + (int)secondIndex] = temp;
+            float temp = samplesRe[ofsRe + (int) firstIndex];
+            samplesRe[ofsRe + (int) firstIndex] = samplesRe[ofsRe + (int) secondIndex];
+            samplesRe[ofsRe + (int) secondIndex] = temp;
+            temp = samplesIm[ofsIm + (int) firstIndex];
+            samplesIm[ofsIm + (int) firstIndex] = samplesIm[ofsIm + (int) secondIndex];
+            samplesIm[ofsIm + (int) secondIndex] = temp;
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] =
-                a.samplesRe[a.ofsRe + (int)srcIndex1] + a.samplesRe[a.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                a.samplesIm[a.ofsIm + (int)srcIndex1] + a.samplesIm[a.ofsIm + (int)srcIndex2];
+            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] =
+                    a.samplesRe[a.ofsRe + (int) srcIndex1] + a.samplesRe[a.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    a.samplesIm[a.ofsIm + (int) srcIndex1] + a.samplesIm[a.ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] =
-                a.samplesRe[a.ofsRe + (int)srcIndex1] - a.samplesRe[a.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                a.samplesIm[a.ofsIm + (int)srcIndex1] - a.samplesIm[a.ofsIm + (int)srcIndex2];
+            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] =
+                    a.samplesRe[a.ofsRe + (int) srcIndex1] - a.samplesRe[a.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    a.samplesIm[a.ofsIm + (int) srcIndex1] - a.samplesIm[a.ofsIm + (int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexFloatSampleArray a2 = (DirectComplexFloatSampleArray)src2;
-            samplesRe[ofsRe + (int)destIndex] =
-                samplesRe[ofsRe + (int)srcIndex1] + a2.samplesRe[a2.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                samplesIm[ofsIm + (int)srcIndex1] + a2.samplesIm[a2.ofsIm + (int)srcIndex2];
+            DirectComplexFloatSampleArray a2 = (DirectComplexFloatSampleArray) src2;
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] + a2.samplesRe[a2.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] + a2.samplesIm[a2.ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexFloatSampleArray a2 = (DirectComplexFloatSampleArray)src2;
-            samplesRe[ofsRe + (int)destIndex] =
-                samplesRe[ofsRe + (int)srcIndex1] - a2.samplesRe[a2.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                samplesIm[ofsIm + (int)srcIndex1] - a2.samplesIm[a2.ofsIm + (int)srcIndex2];
+            DirectComplexFloatSampleArray a2 = (DirectComplexFloatSampleArray) src2;
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] - a2.samplesRe[a2.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] - a2.samplesIm[a2.ofsIm + (int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[ofsRe + (int)destIndex] = samplesRe[ofsRe + (int)srcIndex1] + samplesRe[ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] = samplesIm[ofsIm + (int)srcIndex1] + samplesIm[ofsIm + (int)srcIndex2];
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] + samplesRe[ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] + samplesIm[ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[ofsRe + (int)destIndex] = samplesRe[ofsRe + (int)srcIndex1] - samplesRe[ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] = samplesIm[ofsIm + (int)srcIndex1] - samplesIm[ofsIm + (int)srcIndex2];
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] - samplesRe[ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] - samplesIm[ofsIm + (int) srcIndex2];
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray)src;
-            double re = a.samplesRe[a.ofsRe + (int)srcIndex];
-            double im = a.samplesIm[a.ofsIm + (int)srcIndex];
-            samplesRe[ofsRe + (int)destIndex] = (float)(re * aRe - im * aIm);
-            samplesIm[ofsIm + (int)destIndex] = (float)(re * aIm + im * aRe);
+            DirectComplexFloatSampleArray a = (DirectComplexFloatSampleArray) src;
+            double re = a.samplesRe[a.ofsRe + (int) srcIndex];
+            double im = a.samplesIm[a.ofsIm + (int) srcIndex];
+            samplesRe[ofsRe + (int) destIndex] = (float) (re * aRe - im * aIm);
+            samplesIm[ofsIm + (int) destIndex] = (float) (re * aIm + im * aRe);
         }
 
         public void multiplyByRealScalar(long index, double a) {
@@ -375,15 +378,14 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            int destI = (int)destIndex, srcI1 = (int)srcIndex1, srcI2 = (int)srcIndex2;
-            samplesRe[ofsRe + destI] = (float)(samplesRe[ofsRe + srcI1] * a1 + samplesRe[ofsRe + srcI2] * a2);
-            samplesIm[ofsIm + destI] = (float)(samplesIm[ofsIm + srcI1] * a1 + samplesIm[ofsIm + srcI2] * a2);
+            int destI = (int) destIndex, srcI1 = (int) srcIndex1, srcI2 = (int) srcIndex2;
+            samplesRe[ofsRe + destI] = (float) (samplesRe[ofsRe + srcI1] * a1 + samplesRe[ofsRe + srcI2] * a2);
+            samplesIm[ofsIm + destI] = (float) (samplesIm[ofsIm + srcI1] * a1 + samplesIm[ofsIm + srcI2] * a2);
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            for (int indexRe = ofsRe + (int)fromIndex, indexIm = ofsIm + (int)fromIndex,
-                indexReMax = indexRe + (int)(toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++)
-            {
+            for (int indexRe = ofsRe + (int) fromIndex, indexIm = ofsIm + (int) fromIndex,
+                 indexReMax = indexRe + (int) (toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++) {
                 samplesRe[indexRe] *= a;
                 samplesIm[indexIm] *= a;
             }
@@ -403,7 +405,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             sb.append(String.format(format, samplesRe[ofsRe], samplesIm[ofsIm]));
             for (int k = 1; k < length; k++) {
                 if (sb.length() >= maxStringLength) {
-                    sb.append(separator).append("..."); break;
+                    sb.append(separator).append("...");
+                    break;
                 }
                 sb.append(separator).append(String.format(format, samplesRe[ofsRe + k], samplesIm[ofsIm + k]));
             }
@@ -436,81 +439,81 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
             }
-            int len = (int)length;
+            int len = (int) length;
             return new DirectZeroOffsetsComplexFloatSampleArray(new float[len], new float[len], len);
         }
 
         public void copy(long destIndex, SampleArray src, long srcIndex) {
-            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex];
+            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex];
         }
 
         public void swap(long firstIndex, long secondIndex) {
-            float temp = samplesRe[(int)firstIndex];
-            samplesRe[(int)firstIndex] = samplesRe[(int)secondIndex];
-            samplesRe[(int)secondIndex] = temp;
-            temp = samplesIm[(int)firstIndex];
-            samplesIm[(int)firstIndex] = samplesIm[(int)secondIndex];
-            samplesIm[(int)secondIndex] = temp;
+            float temp = samplesRe[(int) firstIndex];
+            samplesRe[(int) firstIndex] = samplesRe[(int) secondIndex];
+            samplesRe[(int) secondIndex] = temp;
+            temp = samplesIm[(int) firstIndex];
+            samplesIm[(int) firstIndex] = samplesIm[(int) secondIndex];
+            samplesIm[(int) secondIndex] = temp;
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex1] + a.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex1] + a.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex1] + a.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex1] + a.samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex1] - a.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex1] - a.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex1] - a.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex1] - a.samplesIm[(int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectZeroOffsetsComplexFloatSampleArray a2 = (DirectZeroOffsetsComplexFloatSampleArray)src2;
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] + a2.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] + a2.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexFloatSampleArray a2 = (DirectZeroOffsetsComplexFloatSampleArray) src2;
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] + a2.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] + a2.samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectZeroOffsetsComplexFloatSampleArray a2 = (DirectZeroOffsetsComplexFloatSampleArray)src2;
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] - a2.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] - a2.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexFloatSampleArray a2 = (DirectZeroOffsetsComplexFloatSampleArray) src2;
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] - a2.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] - a2.samplesIm[(int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] + samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] + samplesIm[(int)srcIndex2];
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] + samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] + samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] - samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] - samplesIm[(int)srcIndex2];
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] - samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] - samplesIm[(int) srcIndex2];
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray)src;
-            double re = a.samplesRe[(int)srcIndex];
-            double im = a.samplesIm[(int)srcIndex];
-            samplesRe[(int)destIndex] = (float)(re * aRe - im * aIm);
-            samplesIm[(int)destIndex] = (float)(re * aIm + im * aRe);
+            DirectZeroOffsetsComplexFloatSampleArray a = (DirectZeroOffsetsComplexFloatSampleArray) src;
+            double re = a.samplesRe[(int) srcIndex];
+            double im = a.samplesIm[(int) srcIndex];
+            samplesRe[(int) destIndex] = (float) (re * aRe - im * aIm);
+            samplesIm[(int) destIndex] = (float) (re * aIm + im * aRe);
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samplesRe[(int)index] *= a;
-            samplesIm[(int)index] *= a;
+            samplesRe[(int) index] *= a;
+            samplesIm[(int) index] *= a;
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            int destI = (int)destIndex, srcI1 = (int)srcIndex1, srcI2 = (int)srcIndex2;
-            samplesRe[destI] = (float)(samplesRe[srcI1] * a1 + samplesRe[srcI2] * a2);
-            samplesIm[destI] = (float)(samplesIm[srcI1] * a1 + samplesIm[srcI2] * a2);
+            int destI = (int) destIndex, srcI1 = (int) srcIndex1, srcI2 = (int) srcIndex2;
+            samplesRe[destI] = (float) (samplesRe[srcI1] * a1 + samplesRe[srcI2] * a2);
+            samplesIm[destI] = (float) (samplesIm[srcI1] * a1 + samplesIm[srcI2] * a2);
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            int from = (int)fromIndex;
-            int to = (int)toIndex;
+            int from = (int) fromIndex;
+            int to = (int) toIndex;
             for (int index = from; index < to; index++) {
                 samplesRe[index] *= a;
                 samplesIm[index] *= a;
@@ -531,13 +534,15 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             sb.append(String.format(format, samplesRe[0], samplesIm[0]));
             for (int k = 1; k < samplesRe.length; k++) {
                 if (sb.length() >= maxStringLength) {
-                    sb.append(separator).append("..."); break;
+                    sb.append(separator).append("...");
+                    break;
                 }
                 sb.append(separator).append(String.format(format, samplesRe[k], samplesIm[k]));
             }
             return sb.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! ]]
     static final class DirectComplexDoubleSampleArray extends ComplexScalarSampleArray {
         final double[] samplesRe;
@@ -570,73 +575,77 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
             }
-            int len = (int)length;
+            int len = (int) length;
             return new DirectComplexDoubleSampleArray(new double[len], 0, new double[len], 0, len);
         }
 
         public void copy(long destIndex, SampleArray src, long srcIndex) {
-            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] = a.samplesRe[a.ofsRe + (int)srcIndex];
-            samplesIm[ofsIm + (int)destIndex] = a.samplesIm[a.ofsIm + (int)srcIndex];
+            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] = a.samplesRe[a.ofsRe + (int) srcIndex];
+            samplesIm[ofsIm + (int) destIndex] = a.samplesIm[a.ofsIm + (int) srcIndex];
         }
 
         public void swap(long firstIndex, long secondIndex) {
-            double temp = samplesRe[ofsRe + (int)firstIndex];
-            samplesRe[ofsRe + (int)firstIndex] = samplesRe[ofsRe + (int)secondIndex];
-            samplesRe[ofsRe + (int)secondIndex] = temp;
-            temp = samplesIm[ofsIm + (int)firstIndex];
-            samplesIm[ofsIm + (int)firstIndex] = samplesIm[ofsIm + (int)secondIndex];
-            samplesIm[ofsIm + (int)secondIndex] = temp;
+            double temp = samplesRe[ofsRe + (int) firstIndex];
+            samplesRe[ofsRe + (int) firstIndex] = samplesRe[ofsRe + (int) secondIndex];
+            samplesRe[ofsRe + (int) secondIndex] = temp;
+            temp = samplesIm[ofsIm + (int) firstIndex];
+            samplesIm[ofsIm + (int) firstIndex] = samplesIm[ofsIm + (int) secondIndex];
+            samplesIm[ofsIm + (int) secondIndex] = temp;
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] =
-                a.samplesRe[a.ofsRe + (int)srcIndex1] + a.samplesRe[a.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                a.samplesIm[a.ofsIm + (int)srcIndex1] + a.samplesIm[a.ofsIm + (int)srcIndex2];
+            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] =
+                    a.samplesRe[a.ofsRe + (int) srcIndex1] + a.samplesRe[a.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    a.samplesIm[a.ofsIm + (int) srcIndex1] + a.samplesIm[a.ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray)src;
-            samplesRe[ofsRe + (int)destIndex] =
-                a.samplesRe[a.ofsRe + (int)srcIndex1] - a.samplesRe[a.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                a.samplesIm[a.ofsIm + (int)srcIndex1] - a.samplesIm[a.ofsIm + (int)srcIndex2];
+            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray) src;
+            samplesRe[ofsRe + (int) destIndex] =
+                    a.samplesRe[a.ofsRe + (int) srcIndex1] - a.samplesRe[a.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    a.samplesIm[a.ofsIm + (int) srcIndex1] - a.samplesIm[a.ofsIm + (int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexDoubleSampleArray a2 = (DirectComplexDoubleSampleArray)src2;
-            samplesRe[ofsRe + (int)destIndex] =
-                samplesRe[ofsRe + (int)srcIndex1] + a2.samplesRe[a2.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                samplesIm[ofsIm + (int)srcIndex1] + a2.samplesIm[a2.ofsIm + (int)srcIndex2];
+            DirectComplexDoubleSampleArray a2 = (DirectComplexDoubleSampleArray) src2;
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] + a2.samplesRe[a2.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] + a2.samplesIm[a2.ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectComplexDoubleSampleArray a2 = (DirectComplexDoubleSampleArray)src2;
-            samplesRe[ofsRe + (int)destIndex] =
-                samplesRe[ofsRe + (int)srcIndex1] - a2.samplesRe[a2.ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] =
-                samplesIm[ofsIm + (int)srcIndex1] - a2.samplesIm[a2.ofsIm + (int)srcIndex2];
+            DirectComplexDoubleSampleArray a2 = (DirectComplexDoubleSampleArray) src2;
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] - a2.samplesRe[a2.ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] - a2.samplesIm[a2.ofsIm + (int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[ofsRe + (int)destIndex] = samplesRe[ofsRe + (int)srcIndex1] + samplesRe[ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] = samplesIm[ofsIm + (int)srcIndex1] + samplesIm[ofsIm + (int)srcIndex2];
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] + samplesRe[ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] + samplesIm[ofsIm + (int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[ofsRe + (int)destIndex] = samplesRe[ofsRe + (int)srcIndex1] - samplesRe[ofsRe + (int)srcIndex2];
-            samplesIm[ofsIm + (int)destIndex] = samplesIm[ofsIm + (int)srcIndex1] - samplesIm[ofsIm + (int)srcIndex2];
+            samplesRe[ofsRe + (int) destIndex] =
+                    samplesRe[ofsRe + (int) srcIndex1] - samplesRe[ofsRe + (int) srcIndex2];
+            samplesIm[ofsIm + (int) destIndex] =
+                    samplesIm[ofsIm + (int) srcIndex1] - samplesIm[ofsIm + (int) srcIndex2];
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray)src;
-            double re = a.samplesRe[a.ofsRe + (int)srcIndex];
-            double im = a.samplesIm[a.ofsIm + (int)srcIndex];
-            samplesRe[ofsRe + (int)destIndex] = re * aRe - im * aIm;
-            samplesIm[ofsIm + (int)destIndex] = re * aIm + im * aRe;
+            DirectComplexDoubleSampleArray a = (DirectComplexDoubleSampleArray) src;
+            double re = a.samplesRe[a.ofsRe + (int) srcIndex];
+            double im = a.samplesIm[a.ofsIm + (int) srcIndex];
+            samplesRe[ofsRe + (int) destIndex] = re * aRe - im * aIm;
+            samplesIm[ofsIm + (int) destIndex] = re * aIm + im * aRe;
         }
 
         public void multiplyByRealScalar(long index, double a) {
@@ -647,15 +656,14 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            int destI = (int)destIndex, srcI1 = (int)srcIndex1, srcI2 = (int)srcIndex2;
+            int destI = (int) destIndex, srcI1 = (int) srcIndex1, srcI2 = (int) srcIndex2;
             samplesRe[ofsRe + destI] = samplesRe[ofsRe + srcI1] * a1 + samplesRe[ofsRe + srcI2] * a2;
             samplesIm[ofsIm + destI] = samplesIm[ofsIm + srcI1] * a1 + samplesIm[ofsIm + srcI2] * a2;
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            for (int indexRe = ofsRe + (int)fromIndex, indexIm = ofsIm + (int)fromIndex,
-                indexReMax = indexRe + (int)(toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++)
-            {
+            for (int indexRe = ofsRe + (int) fromIndex, indexIm = ofsIm + (int) fromIndex,
+                 indexReMax = indexRe + (int) (toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++) {
                 samplesRe[indexRe] *= a;
                 samplesIm[indexIm] *= a;
             }
@@ -675,7 +683,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             sb.append(String.format(format, samplesRe[ofsRe], samplesIm[ofsIm]));
             for (int k = 1; k < length; k++) {
                 if (sb.length() >= maxStringLength) {
-                    sb.append(separator).append("..."); break;
+                    sb.append(separator).append("...");
+                    break;
                 }
                 sb.append(separator).append(String.format(format, samplesRe[ofsRe + k], samplesIm[ofsIm + k]));
             }
@@ -708,81 +717,81 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             if (length > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("length must be less than 2^31");
             }
-            int len = (int)length;
+            int len = (int) length;
             return new DirectZeroOffsetsComplexDoubleSampleArray(new double[len], new double[len], len);
         }
 
         public void copy(long destIndex, SampleArray src, long srcIndex) {
-            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex];
+            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex];
         }
 
         public void swap(long firstIndex, long secondIndex) {
-            double temp = samplesRe[(int)firstIndex];
-            samplesRe[(int)firstIndex] = samplesRe[(int)secondIndex];
-            samplesRe[(int)secondIndex] = temp;
-            temp = samplesIm[(int)firstIndex];
-            samplesIm[(int)firstIndex] = samplesIm[(int)secondIndex];
-            samplesIm[(int)secondIndex] = temp;
+            double temp = samplesRe[(int) firstIndex];
+            samplesRe[(int) firstIndex] = samplesRe[(int) secondIndex];
+            samplesRe[(int) secondIndex] = temp;
+            temp = samplesIm[(int) firstIndex];
+            samplesIm[(int) firstIndex] = samplesIm[(int) secondIndex];
+            samplesIm[(int) secondIndex] = temp;
         }
 
         public void add(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex1] + a.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex1] + a.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex1] + a.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex1] + a.samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, SampleArray src, long srcIndex1, long srcIndex2) {
-            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray)src;
-            samplesRe[(int)destIndex] = a.samplesRe[(int)srcIndex1] - a.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = a.samplesIm[(int)srcIndex1] - a.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray) src;
+            samplesRe[(int) destIndex] = a.samplesRe[(int) srcIndex1] - a.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = a.samplesIm[(int) srcIndex1] - a.samplesIm[(int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectZeroOffsetsComplexDoubleSampleArray a2 = (DirectZeroOffsetsComplexDoubleSampleArray)src2;
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] + a2.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] + a2.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexDoubleSampleArray a2 = (DirectZeroOffsetsComplexDoubleSampleArray) src2;
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] + a2.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] + a2.samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, SampleArray src2, long srcIndex2) {
-            DirectZeroOffsetsComplexDoubleSampleArray a2 = (DirectZeroOffsetsComplexDoubleSampleArray)src2;
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] - a2.samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] - a2.samplesIm[(int)srcIndex2];
+            DirectZeroOffsetsComplexDoubleSampleArray a2 = (DirectZeroOffsetsComplexDoubleSampleArray) src2;
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] - a2.samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] - a2.samplesIm[(int) srcIndex2];
         }
 
         public void add(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] + samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] + samplesIm[(int)srcIndex2];
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] + samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] + samplesIm[(int) srcIndex2];
         }
 
         public void sub(long destIndex, long srcIndex1, long srcIndex2) {
-            samplesRe[(int)destIndex] = samplesRe[(int)srcIndex1] - samplesRe[(int)srcIndex2];
-            samplesIm[(int)destIndex] = samplesIm[(int)srcIndex1] - samplesIm[(int)srcIndex2];
+            samplesRe[(int) destIndex] = samplesRe[(int) srcIndex1] - samplesRe[(int) srcIndex2];
+            samplesIm[(int) destIndex] = samplesIm[(int) srcIndex1] - samplesIm[(int) srcIndex2];
         }
 
         public void multiplyByScalar(long destIndex, SampleArray src, long srcIndex, double aRe, double aIm) {
-            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray)src;
-            double re = a.samplesRe[(int)srcIndex];
-            double im = a.samplesIm[(int)srcIndex];
-            samplesRe[(int)destIndex] = re * aRe - im * aIm;
-            samplesIm[(int)destIndex] = re * aIm + im * aRe;
+            DirectZeroOffsetsComplexDoubleSampleArray a = (DirectZeroOffsetsComplexDoubleSampleArray) src;
+            double re = a.samplesRe[(int) srcIndex];
+            double im = a.samplesIm[(int) srcIndex];
+            samplesRe[(int) destIndex] = re * aRe - im * aIm;
+            samplesIm[(int) destIndex] = re * aIm + im * aRe;
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samplesRe[(int)index] *= a;
-            samplesIm[(int)index] *= a;
+            samplesRe[(int) index] *= a;
+            samplesIm[(int) index] *= a;
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
-            int destI = (int)destIndex, srcI1 = (int)srcIndex1, srcI2 = (int)srcIndex2;
+            int destI = (int) destIndex, srcI1 = (int) srcIndex1, srcI2 = (int) srcIndex2;
             samplesRe[destI] = samplesRe[srcI1] * a1 + samplesRe[srcI2] * a2;
             samplesIm[destI] = samplesIm[srcI1] * a1 + samplesIm[srcI2] * a2;
         }
 
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
-            int from = (int)fromIndex;
-            int to = (int)toIndex;
+            int from = (int) fromIndex;
+            int to = (int) toIndex;
             for (int index = from; index < to; index++) {
                 samplesRe[index] *= a;
                 samplesIm[index] *= a;
@@ -803,12 +812,14 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             sb.append(String.format(format, samplesRe[0], samplesIm[0]));
             for (int k = 1; k < samplesRe.length; k++) {
                 if (sb.length() >= maxStringLength) {
-                    sb.append(separator).append("..."); break;
+                    sb.append(separator).append("...");
+                    break;
                 }
                 sb.append(separator).append(String.format(format, samplesRe[k], samplesIm[k]));
             }
             return sb.toString();
         }
     }
+
     //[[Repeat.AutoGeneratedEnd]]
 }
