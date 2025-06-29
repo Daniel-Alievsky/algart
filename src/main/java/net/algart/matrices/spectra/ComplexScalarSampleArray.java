@@ -517,8 +517,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             int from = (int) fromIndex;
             int to = (int) toIndex;
             for (int index = from; index < to; index++) {
-                samplesRe[index] *= a;
-                samplesIm[index] *= a;
+                samplesRe[index] = (float) (samplesRe[index] * a);
+                samplesIm[index] = (float) (samplesIm[index] * a);
             }
         }
 
@@ -797,8 +797,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
             int from = (int) fromIndex;
             int to = (int) toIndex;
             for (int index = from; index < to; index++) {
-                samplesRe[index] *= a;
-                samplesIm[index] *= a;
+                samplesRe[index] = samplesRe[index] * a;
+                samplesIm[index] = samplesIm[index] * a;
             }
         }
 

@@ -315,7 +315,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             for (int index = ofs + (int) fromIndex,
                  indexMax = index + (int) (toIndex - fromIndex); index < indexMax; index++) {
-                samples[index] *= a;
+                samples[index] = (float) (samples[index] * a);
             }
         }
 
@@ -541,7 +541,7 @@ public abstract class RealScalarSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             for (int index = ofs + (int) fromIndex,
                  indexMax = index + (int) (toIndex - fromIndex); index < indexMax; index++) {
-                samples[index] *= a;
+                samples[index] = samples[index] * a;
             }
         }
 
