@@ -487,7 +487,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
                 for (long index = fromIndex; index < toIndex; index++) {
                     samples.getData(index * vectorStep, buf, 0, vectorLen);
                     for (int i = 0; i < vectorLen; i++) {
-                        buf[i] *= a;
+                        buf[i] = (float) (buf[i] * a);
                     }
                     samples.setData(index * vectorStep, buf, 0, vectorLen);
                 }
@@ -660,7 +660,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
                 for (long index = fromIndex; index < toIndex; index++) {
                     samples.getData(index * vectorStep, buf, 0, vectorLen);
                     for (int i = 0; i < vectorLen; i++) {
-                        buf[i] *= a;
+                        buf[i] = buf[i] * a;
                     }
                     samples.setData(index * vectorStep, buf, 0, vectorLen);
                 }
@@ -674,7 +674,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
     //           FLOAT ==> DOUBLE;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s?\(([^)]+)\) ==> $1 ]]
     static class DirectRealFloatVectorSampleArray extends RealVectorSampleArray {
         final float[] samples;
         final int ofs;
@@ -896,7 +896,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
 
         public void multiplyByRealScalar(long index, double a) {
             for (int k = ofs + (int)(index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
-                samples[k] = (double) (samples[k] * a);
+                samples[k] = samples[k] * a;
             }
         }
 
@@ -905,7 +905,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
             int dispMax = disp + (int)((toIndex - fromIndex) * vectorStep);
             for (; disp < dispMax; disp += (int) vectorStep) {
                 for (int k = disp, kMax = k + vectorLen; k < kMax; k++) {
-                    samples[k] = (double) (samples[k] * a);
+                    samples[k] = samples[k] * a;
                 }
             }
         }
