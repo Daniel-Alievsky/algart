@@ -958,7 +958,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             int dispRe = ofsRe + (int)(fromIndex * vectorStep);
             int dispIm = ofsIm + (int)(fromIndex * vectorStep);
             int dispReMax = dispRe + (int)((toIndex - fromIndex) * vectorStep);
-            for (; dispRe < dispReMax; dispRe += vectorStep, dispIm += vectorStep) {
+            for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
                     samplesRe[k] *= a;
                 }
@@ -1138,7 +1138,7 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             int dispRe = ofsRe + (int)(fromIndex * vectorStep);
             int dispIm = ofsIm + (int)(fromIndex * vectorStep);
             int dispReMax = dispRe + (int)((toIndex - fromIndex) * vectorStep);
-            for (; dispRe < dispReMax; dispRe += vectorStep, dispIm += vectorStep) {
+            for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
                     samplesRe[k] *= a;
                 }

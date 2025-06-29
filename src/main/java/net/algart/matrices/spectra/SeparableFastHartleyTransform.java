@@ -1354,8 +1354,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                     values[k + 2 * step] = ds0123 + ds4567; // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
                     //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
-                    d45 *= SQRT2;
-                    d67 *= SQRT2;
+                    d45 = (float) (d45 * SQRT2);
+                    d67 = (float) (d67 * SQRT2);
                     values[k + 5 * step] = sd0123 - d45;    // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
                     //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                     values[k + step] = sd0123 + d45;        // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
@@ -1535,8 +1535,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                     //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                     values[k + 2 * step] = ds0123 + ds4567; // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
                     //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
-                    d45 *= SQRT2;
-                    d67 *= SQRT2;
+                    d45 = d45 * SQRT2;
+                    d67 = d67 * SQRT2;
                     values[k + 5 * step] = sd0123 - d45;    // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
                     //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                     values[k + step] = sd0123 + d45;        // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5

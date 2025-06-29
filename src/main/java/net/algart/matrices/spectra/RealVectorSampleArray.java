@@ -323,7 +323,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
     //           FLOAT ==> DOUBLE;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s?\(([^)]+)\) ==> $1 ]]
     static class RealFloatVectorSampleArray extends RealVectorSampleArray {
         final int vectorLen;
         RealFloatVectorSampleArray(UpdatablePNumberArray samples,  long vectorLength, long vectorStep, long length) {
@@ -616,7 +616,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
                 buf = (double[])DOUBLE_BUFFERS.requestArray();
                 a.samples.getData(srcIndex * vectorStep, buf, 0, vectorLen);
                 for (int i = 0; i < vectorLen; i++) {
-                    buf[i] = (double) (buf[i] * aRe);
+                    buf[i] = buf[i] * aRe;
                 }
                 samples.setData(destIndex * vectorStep, buf, 0, vectorLen);
             } finally {
@@ -630,7 +630,7 @@ public abstract class RealVectorSampleArray implements SampleArray {
                 buf = (double[])DOUBLE_BUFFERS.requestArray();
                 samples.getData(index * vectorStep, buf, 0, vectorLen);
                 for (int i = 0; i < vectorLen; i++) {
-                    buf[i] = (double) (buf[i] * a);
+                    buf[i] = buf[i] * a;
                 }
                 samples.setData(index * vectorStep, buf, 0, vectorLen);
             } finally {
