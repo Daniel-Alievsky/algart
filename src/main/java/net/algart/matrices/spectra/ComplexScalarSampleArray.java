@@ -266,7 +266,7 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
 
     //[[Repeat() Float ==> Double;;
     //           float ==> double;;
-    //           \(double\)\(([^)]+)\) ==> $1 ]]
+    //           \(double\)\s?\(([^)]+)\) ==> $1 ]]
     static final class DirectComplexFloatSampleArray extends ComplexScalarSampleArray {
         final float[] samplesRe;
         final int ofsRe;
@@ -368,8 +368,10 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samplesRe[ofsRe + (int)index] *= a;
-            samplesIm[ofsIm + (int)index] *= a;
+            double re = samplesRe[ofsRe + (int) index];
+            double im = samplesIm[ofsIm + (int) index];
+            samplesRe[ofsRe + (int) index] = (float) (re * a);
+            samplesIm[ofsIm + (int) index] = (float) (im * a);
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
@@ -638,8 +640,10 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samplesRe[ofsRe + (int)index] *= a;
-            samplesIm[ofsIm + (int)index] *= a;
+            double re = samplesRe[ofsRe + (int) index];
+            double im = samplesIm[ofsIm + (int) index];
+            samplesRe[ofsRe + (int) index] = re * a;
+            samplesIm[ofsIm + (int) index] = im * a;
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
