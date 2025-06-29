@@ -957,10 +957,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
         public void multiplyByRealScalar(long index, double a) {
             for (int k = ofsRe + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
-                samplesRe[k] *= a;
+                samplesRe[k] = (float) (samplesRe[k] * a);
             }
             for (int k = ofsIm + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
-                samplesIm[k] *= a;
+                samplesIm[k] = (float) (samplesIm[k] * a);
             }
         }
 
@@ -970,10 +970,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             int dispReMax = dispRe + (int) ((toIndex - fromIndex) * vectorStep);
             for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
-                    samplesRe[k] *= a;
+                    samplesRe[k] = (float) (samplesRe[k] * a);
                 }
                 for (int k = dispIm, kMax = k + vectorLen; k < kMax; k++) {
-                    samplesIm[k] *= a;
+                    samplesIm[k] = (float) (samplesIm[k] * a);
                 }
             }
         }
@@ -1139,10 +1139,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
 
         public void multiplyByRealScalar(long index, double a) {
             for (int k = ofsRe + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
-                samplesRe[k] *= a;
+                samplesRe[k] = samplesRe[k] * a;
             }
             for (int k = ofsIm + (int) (index * vectorStep), kMax = k + vectorLen; k < kMax; k++) {
-                samplesIm[k] *= a;
+                samplesIm[k] = samplesIm[k] * a;
             }
         }
 
@@ -1152,10 +1152,10 @@ public abstract class ComplexVectorSampleArray implements SampleArray {
             int dispReMax = dispRe + (int) ((toIndex - fromIndex) * vectorStep);
             for (; dispRe < dispReMax; dispRe += (int) vectorStep, dispIm += (int) vectorStep) {
                 for (int k = dispRe, kMax = k + vectorLen; k < kMax; k++) {
-                    samplesRe[k] *= a;
+                    samplesRe[k] = samplesRe[k] * a;
                 }
                 for (int k = dispIm, kMax = k + vectorLen; k < kMax; k++) {
-                    samplesIm[k] *= a;
+                    samplesIm[k] = samplesIm[k] * a;
                 }
             }
         }
