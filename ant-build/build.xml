@@ -18,7 +18,7 @@
         <echo>Executing in ${basedir}</echo>
         <delete dir="../target/classes"/>
         <mkdir dir="../target/classes"/>
-        <javac srcdir="../src/main/java/" source="17" target="17" destdir="../target/classes" includeAntRuntime="false">
+        <javac srcdir="../src/main/java/" source="21" target="21" destdir="../target/classes" includeAntRuntime="false">
             <compilerarg value="-version"/>
             <compilerarg value="-Xlint"/>
             <compilerarg value="-Xlint:-options"/>
@@ -28,7 +28,7 @@
     <target name="compile-test">
         <delete dir="../target/test-classes"/>
         <mkdir dir="../target/test-classes"/>
-        <javac srcdir="../src/test/java/" source="17" target="17" classpath="../target/classes" destdir="../target/test-classes" includeAntRuntime="false">
+        <javac srcdir="../src/test/java/" source="21" target="21" classpath="../target/classes" destdir="../target/test-classes" includeAntRuntime="false">
             <compilerarg value="-Xlint"/>
             <compilerarg value="-Xlint:-options"/>
         </javac>

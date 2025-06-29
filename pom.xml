@@ -6,7 +6,7 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.4.25</version>
+    <version>1.5.0</version>
     <!--
     Please remember that you Arrays.SystemSettings.VERSION constant must be equal to this value!
     This condition is checked automatically in the "release-maven-central" profile below.
@@ -43,8 +43,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
     <!-- You may uncomment the following dependence for testing file writing, for example, WriteDemoImageTest -->
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -110,8 +110,9 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.5.0</version>
+                        <version>3.11.2</version>
                         <configuration>
+                            <release>${maven.compiler.source}</release>
                             <encoding>UTF-8</encoding>
                             <doclint>none</doclint>
                             <excludePackageNames>
