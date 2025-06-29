@@ -386,8 +386,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             for (int indexRe = ofsRe + (int) fromIndex, indexIm = ofsIm + (int) fromIndex,
                  indexReMax = indexRe + (int) (toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++) {
-                samplesRe[indexRe] *= a;
-                samplesIm[indexIm] *= a;
+                samplesRe[indexRe] = (float) (samplesRe[indexRe] * a);
+                samplesIm[indexIm] = (float) (samplesIm[indexIm] * a);
             }
         }
 
@@ -664,8 +664,8 @@ public abstract class ComplexScalarSampleArray implements SampleArray {
         public void multiplyRangeByRealScalar(long fromIndex, long toIndex, double a) {
             for (int indexRe = ofsRe + (int) fromIndex, indexIm = ofsIm + (int) fromIndex,
                  indexReMax = indexRe + (int) (toIndex - fromIndex); indexRe < indexReMax; indexRe++, indexIm++) {
-                samplesRe[indexRe] *= a;
-                samplesIm[indexIm] *= a;
+                samplesRe[indexRe] = samplesRe[indexRe] * a;
+                samplesIm[indexIm] = samplesIm[indexIm] * a;
             }
         }
 
