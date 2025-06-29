@@ -987,7 +987,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 if (isBankLazyAndNotFilledYet(pos)) {
                     getUninitializedLazyDataFromBank(pos, destArray, destArrayOffset, len);
@@ -1044,7 +1044,7 @@ class MappedDataStorages {
                 pos += len;
                 count -= len;
             }
-            for (; count > 0; pos += bse, srcArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, srcArrayOffset += (int) bse, count -= (int) bse) {
                 incrementMappingInUseCounter();
                 try {
                     Buffer buf;
@@ -1351,7 +1351,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
@@ -1409,7 +1409,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
@@ -1468,7 +1468,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
@@ -1529,7 +1529,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
@@ -1589,7 +1589,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
@@ -1649,7 +1649,7 @@ class MappedDataStorages {
             destArrayOffset += len;
             pos += len;
             count -= len;
-            for (; count > 0; pos += bse, destArrayOffset += bse, count -= bse) {
+            for (; count > 0; pos += bse, destArrayOffset += (int) bse, count -= (int) bse) {
                 len = (int)Math.min(count, bse);
                 {
                     incrementMappingInUseCounter();
