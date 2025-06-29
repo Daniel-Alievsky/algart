@@ -411,7 +411,8 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samples[(int)index] *= a;
+            float v = samples[(int) index];
+            samples[(int) index] = (float) (v * a);
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
@@ -423,7 +424,8 @@ public abstract class RealScalarSampleArray implements SampleArray {
             int from = (int)fromIndex;
             int to = (int)toIndex;
             for (int index = from; index < to; index++) {
-                samples[index] *= a;
+                float v = samples[index];
+                samples[index] = (float) (v * a);
             }
         }
 
@@ -632,7 +634,8 @@ public abstract class RealScalarSampleArray implements SampleArray {
         }
 
         public void multiplyByRealScalar(long index, double a) {
-            samples[(int)index] *= a;
+            double v = samples[(int) index];
+            samples[(int) index] = v * a;
         }
 
         public void combineWithRealMultipliers(long destIndex, long srcIndex1, double a1, long srcIndex2, double a2) {
@@ -644,7 +647,8 @@ public abstract class RealScalarSampleArray implements SampleArray {
             int from = (int)fromIndex;
             int to = (int)toIndex;
             for (int index = from; index < to; index++) {
-                samples[index] *= a;
+                double v = samples[index];
+                samples[index] = v * a;
             }
         }
 

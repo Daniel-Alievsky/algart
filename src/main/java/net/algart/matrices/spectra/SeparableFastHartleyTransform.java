@@ -1009,8 +1009,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                 values[ofs + 2] = ds0123 + ds4567;          // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
                 //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
-                d45 *= SQRT2;
-                d67 *= SQRT2;
+                d45 = (float) (d45 * SQRT2);
+                d67 = (float) (d67 * SQRT2);
                 values[ofs + 5] = sd0123 - d45;             // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
                 //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                 values[ofs + 1] = sd0123 + d45;             // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
@@ -1124,7 +1124,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 values[ofs + nDiv2 + nDiv4] = temp;                         // r[n/4] - r[3*n/4]
             }
 
-            if (context != null && (pos + (1 << logN) == samples.length())) {
+            if (context != null && (pos + (1L << logN) == samples.length())) {
                 context.checkInterruptionAndUpdateProgress(null, logN, originalLogN);
             }
         }
@@ -1178,8 +1178,8 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 //    = x0 + x4 - x2 - x6 - x1 - x5 + x3 + x7
                 values[ofs + 2] = ds0123 + ds4567;          // y2 = r0 + r1 - r2 - r3 + r4 + r5 - r6 - r7
                 //    = x0 + x4 - x2 - x6 + x1 + x5 - x3 - x7
-                d45 *= SQRT2;
-                d67 *= SQRT2;
+                d45 = d45 * SQRT2;
+                d67 = d67 * SQRT2;
                 values[ofs + 5] = sd0123 - d45;             // y5 = r0 - r1 + r2 - r3 - sqrt(2)*r4 + sqrt(2)*r5
                 //    = x0 - x4 + x2 - x6 - sqrt(2)*x1 + sqrt(2)*x5
                 values[ofs + 1] = sd0123 + d45;             // y1 = r0 - r1 + r2 - r3 + sqrt(2)*r4 - sqrt(2)*r5
@@ -1290,7 +1290,7 @@ public class SeparableFastHartleyTransform extends AbstractSpectralTransform imp
                 values[ofs + nDiv2 + nDiv4] = temp;                         // r[n/4] - r[3*n/4]
             }
 
-            if (context != null && (pos + (1 << logN) == samples.length())) {
+            if (context != null && (pos + (1L << logN) == samples.length())) {
                 context.checkInterruptionAndUpdateProgress(null, logN, originalLogN);
             }
         }
