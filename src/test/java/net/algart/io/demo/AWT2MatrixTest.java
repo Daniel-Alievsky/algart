@@ -66,7 +66,7 @@ public class AWT2MatrixTest {
         final int dimX = channels.getFirst().dimX32();
         final int dimY = channels.getFirst().dimY32();
 
-        BufferedImage bi2 = MatrixToImage.toBufferedImage(channels, false);
+        BufferedImage bi2 = MatrixToImage.ofChannels(channels, false);
         System.out.printf("BufferedImage: %s%n", bi2);
         System.out.printf("Writing AlgART InterleavedRGBToInterleaved to %s...%n", resultFile2);
         MatrixIO.writeBufferedImage(resultFile2, bi2);

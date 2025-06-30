@@ -46,35 +46,35 @@ public abstract class ImageToMatrix {
      * Converts <code>BufferedImage</code> to multichannel AlgART image (list of matrices).
      * Equivalent to
      * <pre>
-     *     {@link Matrices#separate Matrices.separate}({@link #toInterleavedRGB
-     *     toInterleavedMatrix}(bufferedImage))
+     *     {@link Matrices#separate Matrices.separate}({@link #toInterleaved toInterleaved}(bufferedImage))
      * </pre>
      *
      * @param bufferedImage some buffered image.
      * @return the list of color channels if this image.
      */
     public static List<Matrix<UpdatablePArray>> toChannels(BufferedImage bufferedImage) {
-        return Matrices.separate(toInterleavedRGB(bufferedImage));
+        return Matrices.separate(toInterleaved(bufferedImage));
     }
 
     /**
-     * Converts <code>BufferedImage</code> to interleaved RGB AlgART matrix.
+     * Converts <code>BufferedImage</code> to interleaved AlgART matrix;
+     * for multichannel matrices, the standard RGB/RGBA sample order is assumed.
      * Equivalent to
      * <pre>
-     *     new {@link ToInterleavedRGB
-     *     ImageToMatrix.ToInterleavedRGB}().{@link #toMatrix toMatrix}(bufferedImage)
+     *     new {@link ToInterleavedRGB ImageToMatrix.ToInterleavedRGB}().{@link #toMatrix toMatrix}(bufferedImage)
      * </pre>
      *
      * @param bufferedImage some buffered image.
      * @return the interleaved RGB matrix.
      */
-    public static Matrix<UpdatablePArray> toInterleavedRGB(BufferedImage bufferedImage) {
+    public static Matrix<UpdatablePArray> toInterleaved(BufferedImage bufferedImage) {
         Objects.requireNonNull(bufferedImage, "Null bufferedImage");
         return new ToInterleavedRGB().toMatrix(bufferedImage);
     }
 
     /**
-     * Converts <code>BufferedImage</code> to interleaved BGR AlgART matrix.
+     * Converts <code>BufferedImage</code> to interleaved AlgART matrix;
+     * for multichannel matrices, BGR/BGRA sample order is assumed.
      * Equivalent to
      * <pre>
      *     new {@link ToInterleavedRGB

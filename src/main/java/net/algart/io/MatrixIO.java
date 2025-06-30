@@ -337,7 +337,7 @@ public class MatrixIO {
             boolean convertAllElementTypesToByte,
             Consumer<ImageWriteParam> customizer) throws IOException {
         Objects.requireNonNull(file, "Null file");
-        final BufferedImage bi = MatrixToImage.toBufferedImage(channels, convertAllElementTypesToByte);
+        final BufferedImage bi = MatrixToImage.ofChannels(channels, convertAllElementTypesToByte);
         writeBufferedImage(file, bi, customizer);
     }
 
