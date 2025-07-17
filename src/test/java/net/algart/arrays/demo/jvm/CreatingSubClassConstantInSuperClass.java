@@ -22,9 +22,18 @@
  * SOFTWARE.
  */
 
-/**
- Tests and demos for some JRE functionality, necessary for {@link net.algart.arrays} package.
+package net.algart.arrays.demo.jvm;
 
- @author Daniel Alievsky
- */
-package net.algart.arrays.demo.jre;
+public class CreatingSubClassConstantInSuperClass {
+    public static final CreatingSubClassConstantInSuperClass CONST = makeConstant();
+
+    // public static final CreatingSubClassConstantInSuperClass CONST = new SubConstant();
+    // - leads to a warning in IntelliJ IDEA
+
+    public static CreatingSubClassConstantInSuperClass makeConstant() {
+        return new SubConstant();
+    }
+    public static class SubConstant extends CreatingSubClassConstantInSuperClass {
+
+    }
+}

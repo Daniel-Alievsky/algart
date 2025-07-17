@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.arrays.demo.jre;
+package net.algart.arrays.demo.jvm;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

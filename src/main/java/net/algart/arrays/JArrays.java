@@ -4618,7 +4618,7 @@ public class JArrays {
      * <code>JArrays.arrayHashCode(a1, pos1, pos1 + count) == JArrays.arrayHashCode(a2, pos2, pos2 + count)</code>.
      *
      * <p>This method is an extended analog of <code>java.util.Arrays.hashCode</code> methods,
-     * compatible with JRE 1.1 and using more safe algorithm, based on
+     * compatible with JDK 1.1 and using more safe algorithm, based on
      * {@link java.util.zip.CRC32}.</p>
      *
      * @param array     the array whose content-based hash code to compute.

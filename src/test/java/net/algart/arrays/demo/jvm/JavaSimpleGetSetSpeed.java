@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.arrays.demo.jre;
+package net.algart.arrays.demo.jvm;
 
 /**
  * <p>Speed of get/set methods in comparison with direct field access</p>
