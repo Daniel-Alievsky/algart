@@ -105,7 +105,7 @@ public class DeleteOnExitAndUnsafeUnmapTest {
                 }
                 System.out.println("Unsafe call of " + bb.getClass());
                 unsafeUnmap(bb);
-                // System.out.println(bb.get(0)); // internal JRE error here: EXCEPTION_ACCESS_VIOLATION
+                // System.out.println(bb.get(0)); // internal JVM error here: EXCEPTION_ACCESS_VIOLATION
             }
             // absolutely necessary to delete file on exit:
             // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4171239

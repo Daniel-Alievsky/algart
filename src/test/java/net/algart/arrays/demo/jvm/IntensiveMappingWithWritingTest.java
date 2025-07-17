@@ -173,7 +173,7 @@ public class IntensiveMappingWithWritingTest {
 /*
 *******************************
 **** Execution example #1: ****
-"D:\Program Files\Java\jdk1.6.0\jre\bin\java" net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 >log1.txt 2>&1
+java net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 >log1.txt 2>&1
 
 Mapping the file D:\TMP\test.dat
 It is a new file
@@ -203,7 +203,7 @@ Caused by: java.io.IOException: The process cannot access the file because anoth
 
 *******************************
 **** Execution example #2: ****
-"D:\Program Files\Java\jdk1.6.0\jre\bin\java" -Xmx500m net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc >log2.txt 2>&1
+java -Xmx500m net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc >log2.txt 2>&1
 
 Mapping the file D:\TMP\test.dat
 It is a new file
@@ -246,7 +246,7 @@ Caused by: java.io.IOException: The process cannot access the file because anoth
 
 *******************************
 **** Execution example #3: ****
-"D:\Program Files\Java\jdk1.6.0\jre\bin\java" -Xmx500m net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc -runFinalization >log3.txt 2>&1
+java -Xmx500m net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc -runFinalization >log3.txt 2>&1
 
 Mapping the file D:\TMP\test.dat
 It is a new file
@@ -295,7 +295,7 @@ Caused by: java.io.IOException: The process cannot access the file because anoth
 
 *******************************
 **** Execution example #4: ****
-"D:\Program Files\Java\jdk1.6.0\jre\bin\java" -Xmx500m net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc -runFinalization >log4.txt 2>&1
+java -Xmx500m net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -gc -runFinalization >log4.txt 2>&1
 
 Mapping the file D:\TMP\test.dat
 It is an existing file
@@ -458,12 +458,12 @@ System.runFinalization()...Exception in thread "main" java.lang.OutOfMemoryError
      at java.lang.Runtime.runFinalization0(Native Method)
      at java.lang.Runtime.runFinalization(Runtime.java:688)
      at java.lang.System.runFinalization(System.java:950)
-     at net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest.main(IntensiveMapping.java:62)
+     at net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest.main(IntensiveMapping.java:62)
 *****************************
 
 *******************************
 **** Execution example #5: ****
-"D:\Program Files\Java\jdk1.6.0\jre\bin\java" -Xmx500m net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -runFinalization >log5.txt 2>&1
+java -Xmx500m net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest \TMP\test.dat 8192 4096 1 50 -runFinalization >log5.txt 2>&1
 Mapping the file D:\TMP\test.dat
 It is an existing file
 Block size: 8192 bytes
@@ -520,7 +520,7 @@ System.runFinalization()...Exception in thread "main" java.lang.OutOfMemoryError
      at java.lang.Runtime.runFinalization0(Native Method)
      at java.lang.Runtime.runFinalization(Runtime.java:688)
      at java.lang.System.runFinalization(System.java:950)
-     at net.algart.arrays.demo.jre.IntensiveMappingWithWritingTest.main(IntensiveMapping.java:62)
+     at net.algart.arrays.demo.jvm.IntensiveMappingWithWritingTest.main(IntensiveMapping.java:62)
 *******************************
 
 */

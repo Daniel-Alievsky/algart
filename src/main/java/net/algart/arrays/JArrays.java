@@ -4827,7 +4827,7 @@ public class JArrays {
      * <i>equal</i> if <code>(e1==null ? e2==null : e1.equals(e2))</code>.
      *
      * <p>This method is an extended analog of <code>java.util.Arrays.equals</code> methods,
-     * compatible with JRE 1.1.
+     * compatible with JDK 1.1.
      *
      * @param array1 one array to be tested for equality.
      * @param pos1   the initial index of the checked fragment in the first array.

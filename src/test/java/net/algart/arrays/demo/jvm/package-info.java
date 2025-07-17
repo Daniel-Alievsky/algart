@@ -23,7 +23,7 @@
  */
 
 /**
- Tests and demos for some JRE functionality, necessary for {@link net.algart.arrays} package.
+ Tests and demos for some JVM functionality, necessary for {@link net.algart.arrays} package.
 
  @author Daniel Alievsky
  */

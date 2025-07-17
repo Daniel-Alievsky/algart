@@ -338,9 +338,9 @@ public interface DataFileModel<P> {
      * the Sun's bug in Java 1.5 and 1.6:
      * "<a href="http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6521677"
      * >(fc)&nbsp;"Cleaner terminated abnormally" error in simple mapping test</a>".
-     * In modern 32-bit JRE, the value about 16-32 MB looks suitable.
+     * In modern 32-bit JVM, the value about 16-32 MB looks suitable.
      *
-     * <p>We don't recommend to set this limit too large in 32-bit JRE:
+     * <p>We don't recommend setting this limit too large in 32-bit JVM:
      * every mapping reduces available address space, that is limited by 1.0-1.5 GB only.
      *
      * <p>If the result of this method is zero or negative, this behavior is not used.

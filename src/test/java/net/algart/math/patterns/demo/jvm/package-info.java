@@ -23,8 +23,8 @@
  */
 
 /**
- Tests and demos for some JRE functionality, necessary for {@link net.algart.math.patterns} package.
+ Tests and demos for some JVM functionality, necessary for {@link net.algart.math.patterns} package.
 
  @author Daniel Alievsky
  */
-package net.algart.math.patterns.demo.jre;
+package net.algart.math.patterns.demo.jvm;

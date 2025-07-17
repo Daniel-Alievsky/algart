@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.patterns.demo.jre;
+package net.algart.math.patterns.demo.jvm;
 
 import java.util.Collection;
 import java.util.Locale;
