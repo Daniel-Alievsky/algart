@@ -309,7 +309,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
 //                                isumYSqr += y * (y + 1);
 //                                break;
 //                        }
-//                    } else {... - does not help in JRE-32
+//                    } else {... - does not help in JVM-32
                     //[[Repeat.SectionStart STRICT_BOUNDARY_centroid]]
                     switch (parent.side().code) {
                         case X_MINUS_CODE:
