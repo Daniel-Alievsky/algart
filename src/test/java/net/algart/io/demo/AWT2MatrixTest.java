@@ -42,19 +42,23 @@ import java.util.List;
 
 public class AWT2MatrixTest {
     public static void main(String[] args) throws IOException {
-        if (args.length < 5) {
+        if (args.length < 2) {
             System.out.println("Usage:");
             System.out.println("    " + AWT2MatrixTest.class.getName()
                     + " some_image.jpeg/png/bmp/... result_1.jpeg/png/bmp/... " +
-                    "result_2.jpeg/png/bmp/... result_3.jpeg/png/bmp/... result_4.jpeg/png/bmp/... ");
+                    "result_2.jpeg/png/bmp/... result_3.jpeg/png/bmp/... " +
+                    "result_4.jpeg/png/bmp/... result_5BGR.jpeg/png/bmp/... " +
+                    "result_6.jpeg/png/bmp/...");
             return;
         }
 
         final Path srcFile = Path.of(args[0]);
         final Path resultFile1 = Path.of(args[1]);
-        final Path resultFile2 = Path.of(args[2]);
-        final Path resultFile3 = Path.of(args[3]);
-        final Path resultFile4 = Path.of(args[4]);
+        final Path resultFile2 = args.length <= 2 ? null : Path.of(args[2]);
+        final Path resultFile3 = args.length <= 3 ? null : Path.of(args[3]);
+        final Path resultFile4 = args.length <= 4 ? null : Path.of(args[4]);
+        final Path resultFile5BGR = args.length <= 5 ? null : Path.of(args[5]);
+        final Path resultFile6 = args.length <= 6 ? null : Path.of(args[6]);
 
         System.out.printf("Reading %s...%n", srcFile);
         BufferedImage bi1 = MatrixIO.readBufferedImage(srcFile);
@@ -62,27 +66,50 @@ public class AWT2MatrixTest {
         System.out.printf("Writing BufferedImage to %s...%n", resultFile1);
         MatrixIO.writeBufferedImage(resultFile1, bi1);
 
+        final Matrix<UpdatablePArray> interleaved1 = ImageToMatrix.toInterleaved(bi1);
         List<Matrix<UpdatablePArray>> channels = ImageToMatrix.toChannels(bi1);
         final int dimX = channels.getFirst().dimX32();
         final int dimY = channels.getFirst().dimY32();
+        final Matrix<UpdatablePArray> interleaved2 = Matrices.interleave(channels);
+        if (!interleaved1.equals(interleaved2)) {
+            throw new AssertionError("separate/interleave mismatch");
+        }
 
-        BufferedImage bi2 = MatrixToImage.ofChannels(channels, false);
+        BufferedImage bi2 = MatrixToImage.ofInterleaved(interleaved2, false);
         System.out.printf("BufferedImage: %s%n", bi2);
-        System.out.printf("Writing AlgART InterleavedRGBToInterleaved to %s...%n", resultFile2);
-        MatrixIO.writeBufferedImage(resultFile2, bi2);
+        if (resultFile2 != null) {
+            System.out.printf("Writing AlgART MatrixToImage.ofInterleaved to %s...%n", resultFile2);
+            MatrixIO.writeBufferedImage(resultFile2, bi2);
+        }
 
-        BufferedImage bi3 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(
-                Matrices.interleave(channels));
+        BufferedImage bi3 = new MatrixToImage.InterleavedRGBToPacked().toBufferedImage(interleaved2);
         System.out.printf("BufferedImage: %s%n", bi3);
-        System.out.printf("Writing AlgART InterleavedRGBToPacked to %s...%n", resultFile3);
-        MatrixIO.writeBufferedImage(resultFile3, bi3);
+        if (resultFile3 != null) {
+            System.out.printf("Writing AlgART InterleavedRGBToPacked to %s...%n", resultFile3);
+            MatrixIO.writeBufferedImage(resultFile3, bi3);
+        }
 
         BufferedImage bi4 = new BufferedImage(dimX, dimY, BufferedImage.TYPE_INT_BGR);
         drawTextOnImage(bi4);
         System.out.printf("BufferedImage: %s%n", bi4);
-        System.out.printf("Writing new test image to %s...%n", resultFile4);
-        MatrixIO.writeBufferedImage(resultFile4, bi4);
-        // Note: JPEG2000 will be written incorrectly in jai-imageio-jpeg2000 1.4.0!
+        if (resultFile4 != null) {
+            System.out.printf("Writing new test image to %s...%n", resultFile4);
+            MatrixIO.writeBufferedImage(resultFile4, bi4);
+            // Note: JPEG2000 will be written incorrectly in jai-imageio-jpeg2000 1.4.0!
+        }
+
+        final Matrix<UpdatablePArray> interleavedBGR = ImageToMatrix.toInterleavedBGR(bi1);
+        final List<Matrix<UpdatablePArray>> channelsBGR = Matrices.separate(interleavedBGR);
+        if (resultFile5BGR != null) {
+            System.out.printf("Writing AlgART inverted R-B channels to %s...%n", resultFile5BGR);
+            MatrixIO.writeImage(resultFile5BGR, channelsBGR);
+        }
+        BufferedImage bi6 = MatrixToImage.ofInterleavedBGR(interleavedBGR);
+        if (resultFile6 != null) {
+            System.out.printf("Writing AlgART MatrixToImage.ofInterleavedBGR to %s...%n", resultFile6);
+            MatrixIO.writeBufferedImage(resultFile6, bi6);
+        }
+
     }
 
     static void drawTextOnImage(BufferedImage bufferedImage) {
