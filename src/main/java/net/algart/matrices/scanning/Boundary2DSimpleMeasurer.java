@@ -312,60 +312,44 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
 //                    } else {... - does not help in JVM-32
                     //[[Repeat.SectionStart STRICT_BOUNDARY_centroid]]
                     switch (parent.side().code) {
-                        case X_MINUS_CODE:
-                            integralXSqr -= (x - 0.5) * (x - 0.5);
-                            break;
-                        case X_PLUS_CODE:
-                            integralXSqr += (x + 0.5) * (x + 0.5);
-                            break;
-                        case Y_MINUS_CODE:
-                            integralYSqr -= (y - 0.5) * (y - 0.5);
-                            break;
-                        case Y_PLUS_CODE:
-                            integralYSqr += (y + 0.5) * (y + 0.5);
-                            break;
+                        case X_MINUS_CODE -> integralXSqr -= (x - 0.5) * (x - 0.5);
+                        case X_PLUS_CODE -> integralXSqr += (x + 0.5) * (x + 0.5);
+                        case Y_MINUS_CODE -> integralYSqr -= (y - 0.5) * (y - 0.5);
+                        case Y_PLUS_CODE -> integralYSqr += (y + 0.5) * (y + 0.5);
                     }
                     //[[Repeat.SectionEnd STRICT_BOUNDARY_centroid]]
                     break;
                 case ContourLineType.PIXEL_CENTERS_POLYLINE_CODE:
                     //[[Repeat.SectionStart PIXEL_CENTERS_centroid]]
                     switch (step.code) {
-                        case Step.Y_MINUS_CODE:
-                            integralXSqr -= 3.0 * (double) x * (double) x;
-                            break;
-                        case Step.X_PLUS_CODE:
-                            integralYSqr -= 3.0 * (double) y * (double) y;
-                            break;
-                        case Step.Y_PLUS_CODE:
-                            integralXSqr += 3.0 * (double) x * (double) x;
-                            break;
-                        case Step.X_MINUS_CODE:
-                            integralYSqr += 3.0 * (double) y * (double) y;
-                            break;
-                        case Step.X_MINUS_Y_MINUS_CODE:
+                        case Step.Y_MINUS_CODE -> integralXSqr -= 3.0 * (double) x * (double) x;
+                        case Step.X_PLUS_CODE -> integralYSqr -= 3.0 * (double) y * (double) y;
+                        case Step.Y_PLUS_CODE -> integralXSqr += 3.0 * (double) x * (double) x;
+                        case Step.X_MINUS_CODE -> integralYSqr += 3.0 * (double) y * (double) y;
+                        case Step.X_MINUS_Y_MINUS_CODE -> {
                             // 3* 0..1-integral (x0+y)^2*dy = (x0+1)^3-x0^3 = 1 + 3*x0*(1 + x0)
                             integralXSqr -= 1.0 + 3.0 * x * (1.0 + x);
                             // 3* 0..1-integral (y0+x)^2*dx = (y0+1)^3-y0^3 = 1 + 3*y0*(1 + y0)
                             integralYSqr += 1.0 + 3.0 * y * (1.0 + y);
-                            break;
-                        case Step.X_PLUS_Y_MINUS_CODE:
+                        }
+                        case Step.X_PLUS_Y_MINUS_CODE -> {
                             // 3* 0..1-integral (x0-1+y)^2*dy = x0^3-(x0-1)^3 = 1 - 3*x0*(1 - x0)
                             integralXSqr -= 1.0 - 3.0 * x * (1.0 - x);
                             // 3* 0..1-integral (y0+x)^2*dx = (y0+1)^3-y0^3 = 1 + 3*y0*(1 + y0)
                             integralYSqr -= 1.0 + 3.0 * y * (1.0 + y);
-                            break;
-                        case Step.X_MINUS_Y_PLUS_CODE:
+                        }
+                        case Step.X_MINUS_Y_PLUS_CODE -> {
                             // 3* 0..1-integral (x0+y)^2*dy = (x0+1)^3-x0^3 = 1 + 3*x0*(1 + x0)
                             integralXSqr += 1.0 + 3.0 * x * (1.0 + x);
                             // 3* 0..1-integral (y0-1+x)^2*dx = y0^3-(y0-1)^3 = 1 - 3*y0*(1 - y0)
                             integralYSqr += 1.0 - 3.0 * y * (1.0 - y);
-                            break;
-                        case Step.X_PLUS_Y_PLUS_CODE:
+                        }
+                        case Step.X_PLUS_Y_PLUS_CODE -> {
                             // 3* 0..1-integral (x0-1+y)^2*dy = x0^3-(x0-1)^3 = 1 - 3*x0*(1 - x0)
                             integralXSqr += 1.0 - 3.0 * x * (1.0 - x);
                             // 3* 0..1-integral (y0-1+x)^2*dx = y0^3-(y0-1)^3 = 1 - 3*y0*(1 - y0)
                             integralYSqr -= 1.0 - 3.0 * y * (1.0 - y);
-                            break;
+                        }
                     }
                     //[[Repeat.SectionEnd PIXEL_CENTERS_centroid]]
                     if (DEBUG_MODE) {
@@ -399,66 +383,58 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
                 case ContourLineType.SEGMENT_CENTERS_POLYLINE_CODE:
                     //[[Repeat.SectionStart SEGMENT_CENTERS_centroid]]
                     switch (step.code) {
-                        case Step.Y_MINUS_CODE:
-                            integralXSqr -= 3.0 * (x - 0.5) * (x - 0.5);
-                            break;
-                        case Step.X_PLUS_CODE:
-                            integralYSqr -= 3.0 * (y - 0.5) * (y - 0.5);
-                            break;
-                        case Step.Y_PLUS_CODE:
-                            integralXSqr += 3.0 * (x + 0.5) * (x + 0.5);
-                            break;
-                        case Step.X_MINUS_CODE:
-                            integralYSqr += 3.0 * (y + 0.5) * (y + 0.5);
-                            break;
-                        case Step.X_MINUS_Y_MINUS_CODE:
+                        case Step.Y_MINUS_CODE -> integralXSqr -= 3.0 * (x - 0.5) * (x - 0.5);
+                        case Step.X_PLUS_CODE -> integralYSqr -= 3.0 * (y - 0.5) * (y - 0.5);
+                        case Step.Y_PLUS_CODE -> integralXSqr += 3.0 * (x + 0.5) * (x + 0.5);
+                        case Step.X_MINUS_CODE -> integralYSqr += 3.0 * (y + 0.5) * (y + 0.5);
+                        case Step.X_MINUS_Y_MINUS_CODE -> {
                             // 3* 0..0.5-integral (x0+y)^2*dy = (x0+0.5)^3-x0^3 = 0.125 + 3*0.5*x0*(0.5 + x0)
                             integralXSqr -= 0.125 + 1.5 * x * (0.5 + x);
                             // 3* 0..0.5-integral (y0+0.5+x)^2*dx = (y0+1)^3-(y0+0.5)^3 = 0.875 + 3*0.5*y0*(1.5 + y0)
                             integralYSqr += 0.875 + 1.5 * y * (1.5 + y);
-                            break;
-                        case Step.X_PLUS_Y_MINUS_CODE:
+                        }
+                        case Step.X_PLUS_Y_MINUS_CODE -> {
                             // 3* 0..0.5-integral (x0-1+y)^2*dy = (x0-0.5)^3-(x0-1)^3 = 0.875 - 3*0.5*x0*(1.5 - x0)
                             integralXSqr -= 0.875 - 1.5 * x * (1.5 - x);
                             // 3* 0..0.5-integral (y0+x)^2*dx = (y0+0.5)^3-y0^3 = 0.125 + 3*0.5*y0*(0.5 + y0)
                             integralYSqr -= 0.125 + 1.5 * y * (0.5 + y);
-                            break;
-                        case Step.X_MINUS_Y_PLUS_CODE:
+                        }
+                        case Step.X_MINUS_Y_PLUS_CODE -> {
                             // 3* 0..0.5-integral (x0+0.5+y)^2*dy = (x0+1)^3-(x0+0.5)^3 = 0.875 + 3*0.5*x0*(1.5 + x0)
                             integralXSqr += 0.875 + 1.5 * x * (1.5 + x);
                             // 3* 0..0.5-integral (y0-0.5+x)^2*dx = y0^3-(y0-0.5)^3 = 0.125 - 3*0.5*y0*(0.5 - y0)
                             integralYSqr += 0.125 - 1.5 * y * (0.5 - y);
-                            break;
-                        case Step.X_PLUS_Y_PLUS_CODE:
+                        }
+                        case Step.X_PLUS_Y_PLUS_CODE -> {
                             // 3* 0..0.5-integral (x0-0.5+y)^2*dy = x0^3-(x0-0.5)^3 = 0.125 - 3*0.5*x0*(0.5 - x0)
                             integralXSqr += 0.125 - 1.5 * x * (0.5 - x);
                             // 3* 0..0.5-integral (y0-1+x)^2*dx = (y0-0.5)^3-(y0-1)^3 = 0.875 - 3*0.5*y0*(1.5 - y0)
                             integralYSqr -= 0.875 - 1.5 * y * (1.5 - y);
-                            break;
-                        case Step.ROTATION_X_MINUS_TO_Y_MINUS_CODE:
+                        }
+                        case Step.ROTATION_X_MINUS_TO_Y_MINUS_CODE -> {
                             // 3* 0..0.5-integral (x0-0.5+y)^2*dy = x0^3-(x0-0.5)^3 = 0.125 - 3*0.5*x0*(0.5 - x0)
                             integralXSqr -= 0.125 - 1.5 * x * (0.5 - x);
                             // 3* 0..0.5-integral (y0-0.5+x)^2*dx = y0^3-(y0-0.5)^3 = 0.125 - 3*0.5*y0*(0.5 - y0)
                             integralYSqr -= 0.125 - 1.5 * y * (0.5 - y);
-                            break;
-                        case Step.ROTATION_Y_MINUS_TO_X_PLUS_CODE:
+                        }
+                        case Step.ROTATION_Y_MINUS_TO_X_PLUS_CODE -> {
                             // 3* 0..0.5-integral (x0+y)^2*dy = (x0+0.5)^3-x0^3 = 0.125 + 3*0.5*x0*(0.5 + x0)
                             integralXSqr += 0.125 + 1.5 * x * (0.5 + x);
                             // 3* 0..0.5-integral (y0-0.5+x)^2*dx = y0^3-(y0-0.5)^3 = 0.125 - 3*0.5*y0*(0.5 - y0)
                             integralYSqr -= 0.125 - 1.5 * y * (0.5 - y);
-                            break;
-                        case Step.ROTATION_X_PLUS_TO_Y_PLUS_CODE:
+                        }
+                        case Step.ROTATION_X_PLUS_TO_Y_PLUS_CODE -> {
                             // 3* 0..0.5-integral (x0+y)^2*dy = (x0+0.5)^3-x0^3 = 0.125 + 3*0.5*x0*(0.5 + x0)
                             integralXSqr += 0.125 + 1.5 * x * (0.5 + x);
                             // 3* 0..0.5-integral (y0+x)^2*dx = (y0+0.5)^3-y0^3 = 0.125 + 3*0.5*y0*(0.5 + y0)
                             integralYSqr += 0.125 + 1.5 * y * (0.5 + y);
-                            break;
-                        case Step.ROTATION_Y_PLUS_TO_X_MINUS_CODE:
+                        }
+                        case Step.ROTATION_Y_PLUS_TO_X_MINUS_CODE -> {
                             // 3* 0..0.5-integral (x0-0.5+y)^2*dy = x0^3-(x0-0.5)^3 = 0.125 - 3*0.5*x0*(0.5 - x0)
                             integralXSqr -= 0.125 - 1.5 * x * (0.5 - x);
                             // 3* 0..0.5-integral (y0+x)^2*dx = (y0+0.5)^3-y0^3 = 0.125 + 3*0.5*y0*(0.5 + y0)
                             integralYSqr += 0.125 + 1.5 * y * (0.5 + y);
-                            break;
+                        }
                     }
                     //[[Repeat.SectionEnd SEGMENT_CENTERS_centroid]]
                     if (DEBUG_MODE) {
