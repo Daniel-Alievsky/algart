@@ -111,7 +111,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <version>3.11.2</version>
                         <configuration>
-                            <release>${maven.compiler.source}</release>
+                            <release>${maven.compiler.release}</release>
                             <encoding>UTF-8</encoding>
                             <doclint>none</doclint>
                             <excludePackageNames>
@@ -132,8 +132,8 @@
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>3.1.0</version>
                         <!--
-                        Sometimes we need to clarify the nome of gpg executable file; for example,
-                        some old configuration required to specify here "gpg2.exe" for Windows platform.
+                        Sometimes we need to clarify the nome of the gpg executable file; for example,
+                        some old configuration required to specify here "gpg2.exe" for the Windows platform.
                         It can be made via settings.xml, as described at
                         https://central.sonatype.org/publish/publish-maven/#gpg-signed-components
                         -->
