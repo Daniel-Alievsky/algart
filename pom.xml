@@ -152,18 +152,18 @@
                     </plugin>
                 </plugins>
             </build>
+            <distributionManagement>
+                <repository>
+                    <id>central</id>
+                    <name>Central Publishing Portal Releases</name>
+                    <url>https://central.sonatype.com/api/v1/publisher/upload</url>
+                </repository>
+                <snapshotRepository>
+                    <id>central</id>
+                    <name>Central Publishing Portal Snapshots</name>
+                    <url>https://central.sonatype.com/api/v1/publisher/upload</url>
+                </snapshotRepository>
+            </distributionManagement>
         </profile>
     </profiles>
-    <distributionManagement>
-        <repository>
-            <id>central</id>
-            <name>Central Publishing Portal Releases</name>
-            <url>https://central.sonatype.com/api/v1/publisher/upload</url>
-        </repository>
-        <snapshotRepository>
-            <id>central</id>
-            <name>Central Publishing Portal Snapshots</name>
-            <url>https://central.sonatype.com/api/v1/publisher/upload</url>
-        </snapshotRepository>
-    </distributionManagement>
 </project>
