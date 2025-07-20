@@ -47,13 +47,13 @@
     </properties>
 
     <!-- You may uncomment the following dependence for testing file writing, for example, WriteDemoImageTest -->
-<!--    <dependencies>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.jai-imageio</groupId>-->
-<!--            <artifactId>jai-imageio-jpeg2000</artifactId>-->
-<!--            <version>1.4.0</version>-->
-<!--        </dependency>-->
-<!--    </dependencies>-->
+    <!--    <dependencies>-->
+    <!--        <dependency>-->
+    <!--            <groupId>com.github.jai-imageio</groupId>-->
+    <!--            <artifactId>jai-imageio-jpeg2000</artifactId>-->
+    <!--            <version>1.4.0</version>-->
+    <!--        </dependency>-->
+    <!--    </dependencies>-->
 
     <build>
         <plugins>
@@ -130,13 +130,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <!--
-                        Sometimes we need to clarify the nome of the gpg executable file; for example,
-                        some old configuration required to specify here "gpg2.exe" for the Windows platform.
-                        It can be made via settings.xml, as described at
-                        https://central.sonatype.org/publish/publish-maven/#gpg-signed-components
-                        -->
+                        <version>3.2.8</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -148,25 +142,28 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.13</version>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.8.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <publishingServerId>central</publishingServerId>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-            </distributionManagement>
         </profile>
     </profiles>
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>Central Publishing Portal Releases</name>
+            <url>https://central.sonatype.com/api/v1/publisher/upload</url>
+        </repository>
+        <snapshotRepository>
+            <id>central</id>
+            <name>Central Publishing Portal Snapshots</name>
+            <url>https://central.sonatype.com/api/v1/publisher/upload</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
