@@ -163,9 +163,8 @@ public class IntensiveMappingWithWritingTest {
         System.out.print("*");
     }
 
-    @SuppressWarnings("removal")
     private static void finalization() {
-        System.runFinalization();
+        // System.runFinalization(); // - deprecated
         System.out.print("&");
     }
 }
