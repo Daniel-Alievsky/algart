@@ -274,7 +274,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
             {
                 ugPattern = new BasicRectangularPattern(ugPattern.originOfGrid(), ugPattern.stepsOfGrid(),
                     ugPattern.gridIndexArea().ranges());
-                Point steps = Point.valueOf(ugPattern.stepsOfGrid());
+                Point steps = Point.of(ugPattern.stepsOfGrid());
                 UniformGridPattern previousSummand = rectangularSummands.get(steps);
                 pattern = previousSummand == null ? ugPattern : previousSummand.minkowskiAdd(ugPattern);
                 if (!(pattern instanceof BasicRectangularPattern)) {

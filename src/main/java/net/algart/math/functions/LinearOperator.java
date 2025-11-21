@@ -674,7 +674,7 @@ public final class LinearOperator extends ProjectiveOperator {
                 q[k] = p[k];
                 lo.map(destPoint, srcPoint);
                 lo.inverseMap(srcPoint, destPoint);
-                r[k] = Point.valueOf(srcPoint);
+                r[k] = Point.of(srcPoint);
             }
             double error = maxDiff();
             System.out.println("Difference for \"bad\" equation set " + dimCount + "*" + dimCount + " = " + error);

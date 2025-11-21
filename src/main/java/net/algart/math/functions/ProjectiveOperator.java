@@ -768,11 +768,11 @@ public class ProjectiveOperator
                 for (int j = 0; j < dimCount; j++) {
                     coordinates[j] = rnd.nextDouble() - 0.5;
                 }
-                p[k] = Point.valueOf(coordinates);
+                p[k] = Point.of(coordinates);
                 for (int j = 0; j < dimCount; j++) {
                     coordinates[j] = rnd.nextDouble() - 0.5;
                 }
-                q[k] = Point.valueOf(coordinates);
+                q[k] = Point.of(coordinates);
             }
         }
 
@@ -781,7 +781,7 @@ public class ProjectiveOperator
                 double[] srcPoint = p[k].coordinates();
                 double[] destPoint = new double[srcPoint.length];
                 o.map(destPoint, srcPoint);
-                r[k] = Point.valueOf(destPoint);
+                r[k] = Point.of(destPoint);
             }
         }
 

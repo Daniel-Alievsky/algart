@@ -300,7 +300,7 @@ public class Patterns {
             projectionPoint.coordinates(coordinates);
             System.arraycopy(coordinates, 0, resultPoint, 0, dimCount);
             resultPoint[dimCount] = surface.get(coordinates);
-            resultPoints.add(Point.valueOf(resultPoint));
+            resultPoints.add(Point.of(resultPoint));
         }
         return new SimplePattern(resultPoints) {
             public String toString() {
@@ -355,7 +355,7 @@ public class Patterns {
             throw new IllegalArgumentException("Empty pattern: in all points of the projection pattern "
                     + "the minimal surface is above the maximal surface");
         }
-        return new BasicDirectPointSetUniformGridPattern(Point.valueOf(origin), steps, resultIndexes) {
+        return new BasicDirectPointSetUniformGridPattern(Point.of(origin), steps, resultIndexes) {
             public String toString() {
                 return super.toString() + " (segment between surfaces " + minSurface + " and " + maxSurface + ")";
             }

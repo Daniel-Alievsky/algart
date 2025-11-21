@@ -920,7 +920,7 @@ public final class UniversalStitchingMethod<P extends UniversalFramePosition> im
                 if (shiftMinus05 == null) {
                     double[] shift = new double[area.coordCount()];
                     JArrays.fill(shift, -0.5);
-                    shiftMinus05 = Point.valueOf(shift);
+                    shiftMinus05 = Point.of(shift);
                 }
                 this.areasInMatrices[n] = area.shift(shiftMinus05);
                 this.inverseTransforms[n] = p.inverseTransform();

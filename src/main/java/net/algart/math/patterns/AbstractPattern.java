@@ -144,7 +144,7 @@ public abstract class AbstractPattern implements Pattern {
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = coordRange(k).min();
         }
-        return Point.valueOf(coordinates);
+        return Point.of(coordinates);
     }
 
     /**
@@ -158,7 +158,7 @@ public abstract class AbstractPattern implements Pattern {
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = coordRange(k).max();
         }
-        return Point.valueOf(coordinates);
+        return Point.of(coordinates);
     }
 
 

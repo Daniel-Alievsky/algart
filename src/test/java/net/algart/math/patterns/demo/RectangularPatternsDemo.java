@@ -63,7 +63,7 @@ public class RectangularPatternsDemo {
         double step = Double.parseDouble(args[++argIndex]);
         int minimalPointCountForDecomposition = Integer.parseInt(args[++argIndex]);
         UniformGridPattern p = Patterns.newRectangularIntegerPattern(ranges)
-            .multiply(step).shift(Point.valueOf(origin));
+            .multiply(step).shift(Point.of(origin));
         System.out.println("Created pattern: " + p);
         System.out.println("Integer number of points: " + p.pointCount());
         System.out.println("Approximate number of points: " + p.largePointCount());
@@ -90,7 +90,7 @@ public class RectangularPatternsDemo {
             }
         }
         System.out.println("Grid origin: " + p.originOfGrid());
-        System.out.println("Grid steps vector: " + Point.valueOf(p.stepsOfGrid()));
+        System.out.println("Grid steps vector: " + Point.of(p.stepsOfGrid()));
         System.out.println("Minimal coordinates: " + p.coordMin());
         System.out.println("Maximal coordinates: " + p.coordMax());
         System.out.println("Minimal grid indexes: " + p.gridIndexMin());

@@ -55,9 +55,9 @@ public class SpherePatternsDemo {
             center[k] = Double.parseDouble(args[2 + k]);
         int minimalPointCountForDecomposition = Integer.parseInt(args[2 + center.length]);
         int numberOfIterations = args.length > 3 + center.length ? Integer.parseInt(args[3 + center.length]) : 1;
-        System.out.println("Sphere with center " + Point.valueOf(center) + " and radius " + r);
+        System.out.println("Sphere with center " + Point.of(center) + " and radius " + r);
         long t1 = System.nanoTime();
-        Pattern p = Patterns.newSphereIntegerPattern(Point.valueOf(center), r);
+        UniformGridPattern p = Patterns.newSphereIntegerPattern(Point.of(center), r);
         long t2 = System.nanoTime();
         System.out.printf(Locale.US, "Pattern created in %.3f ms: %s%n", (t2 - t1) * 1e-6, p);
         Set<Point> points = p.points();
@@ -67,7 +67,7 @@ public class SpherePatternsDemo {
         for (int iterationIndex = 1; iterationIndex <= numberOfIterations; iterationIndex++) {
             System.out.println();
             System.out.println("Iteration #" + iterationIndex);
-            if (((UniformGridPattern)p).isActuallyRectangular()) {
+            if (p.isActuallyRectangular()) {
                 System.out.println("It is rectangular");
             }
             if (p.isSurelySinglePoint()) {

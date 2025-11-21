@@ -214,7 +214,7 @@ public class Stitcher<P extends FramePosition> {
                 subMin[k] = offset.coord(k) + subPos[k];
                 subMax[k] = subMin[k] + subDim[k];
             }
-            final RectangularArea subArea = RectangularArea.valueOf(Point.valueOf(subMin), Point.valueOf(subMax));
+            final RectangularArea subArea = RectangularArea.valueOf(Point.of(subMin), Point.of(subMax));
             final Matrix<? extends UpdatablePArray> subResult = result.subMatr(subPos, subDim);
             final List<Frame<P>> localFrames = actualFrames(subArea);
             Stitcher<P> localStitcher = frames(localFrames);
