@@ -179,7 +179,7 @@ public interface UniformGridPattern extends Pattern {
      * <p>Equality of grid steps is important, for example, while calculation of a Minkowski sum
      * of this and another patterns by {@link #minkowskiAdd(Pattern)} method.
      * If two uniform-grid patterns have identical grid steps, then a Minkowski sum of them
-     * can be also represented by uniform-grid pattern (with same grid steps).
+     * can be also represented by a uniform-grid pattern (with the same grid steps).
      * In another case, it is usually impossible &mdash; the Minkowski sum, returned by
      * {@link #minkowskiAdd(Pattern)}, will not implement {@link UniformGridPattern}.
      *

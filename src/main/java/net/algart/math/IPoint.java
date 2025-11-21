@@ -1215,10 +1215,10 @@ public class IPoint implements Comparable<IPoint> {
     /**
      * Equivalent to <code>{@link Point#of(IPoint) Point.of}(thisInstance)</code>.
      *
-     * @return the real point with same coordinates.
+     * @return the real point with the same coordinates.
      */
     public Point toPoint() {
-        return Point.valueOf(this);
+        return Point.of(this);
     }
 
     private static void getBytes(long[] array, byte[] result) {
@@ -1286,7 +1286,7 @@ public class IPoint implements Comparable<IPoint> {
                     IPoint.of(new long[18]),
                     IPoint.of(new long[18]),
                     IPoint.of(13, 0),
-                    IPoint.valueOf(-13, 0),
+                    IPoint.of(-13, 0),
                     IPoint.of(13, 0, 1),
                     IPoint.of(3, 4, 0),
                     IPoint.of(13),
@@ -1335,12 +1335,12 @@ public class IPoint implements Comparable<IPoint> {
             System.out.println();
             for (int k = 0; k < p.length - 1; k += 2) {
                 try {
-                    IRectangularArea ra = IRectangularArea.valueOf(p[k], p[k + 1]);
-                    assert IRectangularArea.valueOf(ra.ranges()).equals(ra);
+                    IRectangularArea ra = IRectangularArea.of(p[k], p[k + 1]);
+                    assert IRectangularArea.of(ra.ranges()).equals(ra);
                     System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                             + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))
                             + "; expand(origin): " + ra.expand(IPoint.origin(ra.coordCount()))
-                            + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.valueOf(
+                            + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.of(
                             ofEqualCoordinates(ra.coordCount(), -1),
                             ofEqualCoordinates(ra.coordCount(), 2)))
                             + " hash: " + ra.hashCode());

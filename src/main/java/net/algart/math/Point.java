@@ -241,7 +241,7 @@ public class Point implements Comparable<Point> {
      * Java typecast <code>(double)longValue</code>.
      *
      * @param iPoint the integer point.
-     * @return the real point with same coordinates.
+     * @return the real point with the same coordinates.
      * @throws NullPointerException if the passed integer point is {@code null}.
      */
     public static Point of(IPoint iPoint) {
@@ -986,9 +986,9 @@ public class Point implements Comparable<Point> {
     }
 
     /**
-     * Equivalent to <code>{@link IPoint#valueOf(Point) IPoint.valueOf}(thisInstance)</code>.
+     * Equivalent to <code>{@link IPoint#of(Point) IPoint.valueOf}(thisInstance)</code>.
      *
-     * @return the integer point with same (cast) coordinates.
+     * @return the integer point with the same (cast) coordinates.
      */
     public IPoint toIntegerPoint() {
         return IPoint.valueOf(this);

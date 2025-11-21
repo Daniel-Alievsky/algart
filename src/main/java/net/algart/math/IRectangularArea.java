@@ -246,7 +246,7 @@ public class IRectangularArea {
      * IPoint.valueOf}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
-     * @return the integer rectangular area with same (cast) coordinates.
+     * @return the integer rectangular area with the same (cast) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
      * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
      *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
@@ -1461,7 +1461,7 @@ public class IRectangularArea {
      * Equivalent to
      * <code>{@link RectangularArea#valueOf(IRectangularArea) RectangularArea.valueOf}(thisInstance)</code>.
      *
-     * @return the rectangular area with same real coordinates as this one.
+     * @return the rectangular area with the same real coordinates as this one.
      */
     public RectangularArea toRectangularArea() {
         return RectangularArea.valueOf(this);

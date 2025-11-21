@@ -201,7 +201,7 @@ public final class Range {
      * with the only difference that <code>IllegalStateException</code> is thrown instead of
      * <code>IllegalArgumentException</code> for unallowed range.
      *
-     * @return the integer range with same (cast) bounds.
+     * @return the integer range with the same (cast) bounds.
      * @throws IllegalStateException in the same situations when
      *                               {@link IRange#of(Range)} method throws <code>IllegalArgumentException</code>.
      */

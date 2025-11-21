@@ -101,7 +101,7 @@ public final class IRange {
      * min()}, (long)range.{@link Range#max() max())}</pre>
      *
      * @param range the real range.
-     * @return the integer range with same (cast) bounds.
+     * @return the integer range with the same (cast) bounds.
      * @throws NullPointerException     if the passed range is {@code null}.
      * @throws IllegalArgumentException if the desired range does not match requirements of
      *                                  {@link #of(long, long)} method.
