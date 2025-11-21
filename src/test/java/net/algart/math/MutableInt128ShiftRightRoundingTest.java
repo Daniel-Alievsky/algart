@@ -115,7 +115,7 @@ public class MutableInt128ShiftRightRoundingTest {
                         "Invalid shiftRightRounding(%d) for 0x%s: 0x%s = %.1f instead of %.1f = 0x%s (%s)",
                         shift, a.toString(16),
                         a.clone().shiftRightRounding(shift).toString(16),
-                        v, d, MutableInt128.valueOfDouble(d).toString(16),
+                        v, d, MutableInt128.ofDouble(d).toString(16),
                         a.isConvertibleToLong() ?
                                 Long.toHexString(MutableInt128.shiftRightRounding(
                                         Math.abs(a.toLongExact()), shift)) : "n/a"));
@@ -154,18 +154,18 @@ public class MutableInt128ShiftRightRoundingTest {
             assert MutableInt128.shiftRightRounding(k + 2, 1) == k / 2 + 1;
             assert MutableInt128.shiftRightRounding(k + 3, 1) == k / 2 + 2;
         }
-        testRightShiftRounding(MutableInt128.valueOf(-21320308303474571L), 3, true);
-        testRightShiftRounding(MutableInt128.valueOfBits(
+        testRightShiftRounding(MutableInt128.of(-21320308303474571L), 3, true);
+        testRightShiftRounding(MutableInt128.ofBits(
                 0, 0, true), 1000, true);
-        testRightShiftRounding(MutableInt128.valueOfBits(
+        testRightShiftRounding(MutableInt128.ofBits(
                 Long.MAX_VALUE, Long.MAX_VALUE, false), 50, true);
-        testRightShiftRounding(MutableInt128.valueOfBits(
+        testRightShiftRounding(MutableInt128.ofBits(
                 0, 512, false), 70, true);
-        testRightShiftRounding(MutableInt128.valueOfBits(
+        testRightShiftRounding(MutableInt128.ofBits(
                 Long.MAX_VALUE, Long.MAX_VALUE, true), 150, true);
-        testRightShiftRounding(MutableInt128.valueOfBits(
+        testRightShiftRounding(MutableInt128.ofBits(
                 Long.MAX_VALUE, Long.MIN_VALUE, true), 150, true);
-        testRightShiftRounding(MutableInt128.valueOf(
+        testRightShiftRounding(MutableInt128.of(
                 0x8000000000000000L), 40, true);
 
         Random rnd = new Random(11);

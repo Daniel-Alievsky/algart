@@ -51,7 +51,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     private boolean negative = false;
 
     /**
-     * Creates new instance of this class, containing integer value 0.
+     * Creates a new instance of this class, containing integer value 0.
      */
     public MutableInt128() {
     }
@@ -63,58 +63,58 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Creates new instance of this class with given bits of stored integer value.
+     * Creates a new instance of this class with given bits of stored integer value.
      *
      * @param high64Bits high 64 bits of the absolute value of the created integer value (unsigned value).
      * @param low64Bits  low 64 bits of the absolute value of the created integer value (unsigned value).
      * @param negative   the sign of the created integer value.
      * @throws IllegalArgumentException if <code>high64Bits&le;0</code>.
      */
-    static MutableInt128 valueOfBits(long high64Bits, long low64Bits, boolean negative) {
+    static MutableInt128 ofBits(long high64Bits, long low64Bits, boolean negative) {
         return new MutableInt128(high64Bits, low64Bits, negative);
     }
 
     /**
-     * Creates new instance of this class, equal to the passed <code>long</code> value.
+     * Creates a new instance of this class, equal to the passed <code>long</code> value.
      *
      * <p>This method is equivalent to <code>new MutableInt128().setToLong(value)</code>.</p>
      *
      * @param value some <code>long</code> value.
      * @return newly created object, containing this value.
      */
-    public static MutableInt128 valueOf(long value) {
+    public static MutableInt128 of(long value) {
         return new MutableInt128().setToLong(value);
     }
 
     /**
-     * Creates new instance of this class, equal to the passed <code>long</code> value, interpreted
+     * Creates a new instance of this class, equal to the passed <code>long</code> value, interpreted
      * as unsigned 64-bit value. The result is always non-negative.
      *
      * <p>This method is equivalent to <code>new MutableInt128().setToUnsignedLong(value)</code>.</p>
      *
      * @param value some <code>long</code> value.
-     * @return newly created object, containing this value, interpreted as unsigned 64-bit integer.
+     * @return a newly created object, containing this value, interpreted as unsigned 64-bit integer.
      */
-    public static MutableInt128 valueOfUnsigned(long value) {
+    public static MutableInt128 ofUnsigned(long value) {
         return new MutableInt128().setToUnsignedLong(value);
     }
 
     /**
-     * Creates new instance of this class, equal to the truncated 128-bit long approximation
+     * Creates a new instance of this class, equal to the truncated 128-bit long approximation
      * of the passed <code>double</code> value.
      * This conversion is similar to the <i>narrowing primitive conversion</i> <code>(long)value</code>.
      *
      * <p>This method is equivalent to <code>new MutableInt128().setToDouble(value)</code>.</p>
      *
      * @param value some <code>long</code> value.
-     * @return newly created object, containing the passed value, truncated to 128-bit integer.
+     * @return a newly created object, containing the passed value, truncated to 128-bit integer.
      */
-    public static MutableInt128 valueOfDouble(double value) {
+    public static MutableInt128 ofDouble(double value) {
         return new MutableInt128().setToDouble(value);
     }
 
     /**
-     * Creates new instance of this class, containing 0.
+     * Creates a new instance of this class, containing 0.
      *
      * <p>Note: this is just another form of calling the {@link #MutableInt128() constructor}.
      *
@@ -125,7 +125,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Creates new instance of this class, containing +1.
+     * Creates a new instance of this class, containing +1.
      *
      * @return newly created object, containing +1 value.
      */
@@ -134,7 +134,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Creates new instance of this class, containing the minimal possible value (&minus;2<sup>128</sup>).
+     * Creates a new instance of this class, containing the minimal possible value (&minus;2<sup>128</sup>).
      *
      * @return newly created object, containing &minus;2<sup>128</sup> value.
      */
@@ -143,7 +143,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Creates new instance of this class, containing the maxnimal possible value (+2<sup>128</sup>).
+     * Creates a new instance of this class, containing the maxnimal possible value (+2<sup>128</sup>).
      *
      * @return newly created object, containing +2<sup>128</sup> value.
      */

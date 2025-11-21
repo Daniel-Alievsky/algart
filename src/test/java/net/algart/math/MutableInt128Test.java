@@ -158,7 +158,7 @@ public class MutableInt128Test {
             throw new AssertionError("Error in subtract");
         }
         if (a.isConvertibleToLong()) {
-            if (!MutableInt128.valueOf(a.toLongExact()).equals(a)) {
+            if (!MutableInt128.of(a.toLongExact()).equals(a)) {
                 throw new AssertionError("Error in toLongExact");
             }
         }
@@ -173,7 +173,7 @@ public class MutableInt128Test {
         if (!a.clone().xor(b).abs().toBigInteger().equals(aAbs.xor(bAbs))) {
             throw new AssertionError("Error in xorAbsoluteValue");
         }
-        final MutableInt128 xorWithUnits = MutableInt128.valueOfBits(-1, -1, false)
+        final MutableInt128 xorWithUnits = MutableInt128.ofBits(-1, -1, false)
                 .xor(a);
         final MutableInt128 not = a.clone().not().abs();
         if (!not.equals(xorWithUnits)) {
@@ -216,7 +216,7 @@ public class MutableInt128Test {
             throw new AssertionError("Error in adding long-int product: " + b + "*" + a + " = " + s);
         }
         try {
-            d = c.clone().add(MutableInt128.valueOf(a));
+            d = c.clone().add(MutableInt128.of(a));
             s = c.clone().addLong(a);
         } catch (ArithmeticException e) {
             if (print) {
@@ -260,8 +260,8 @@ public class MutableInt128Test {
                     + a + "*" + b + " = " + q + " != " + b + "*" + a);
         }
         q = new MutableInt128().setToUnsignedLongLongProduct(a, b);
-        if (!q.toBigInteger().equals(MutableInt128.valueOfUnsigned(a).toBigInteger().multiply(
-                MutableInt128.valueOfUnsigned(b).toBigInteger()))) {
+        if (!q.toBigInteger().equals(MutableInt128.ofUnsigned(a).toBigInteger().multiply(
+                MutableInt128.ofUnsigned(b).toBigInteger()))) {
             throw new AssertionError("Error in unsigned product " + a + "*" + b);
         }
         if (a >= 0 && b >= 0 && !q.equals(p)) {
@@ -362,13 +362,13 @@ public class MutableInt128Test {
         if (mode == 1) {
             switch (rnd.nextInt(4)) {
                 case 0:
-                    return MutableInt128.valueOf(0);
+                    return MutableInt128.of(0);
                 case 1:
-                    return MutableInt128.valueOf(Long.MIN_VALUE);
+                    return MutableInt128.of(Long.MIN_VALUE);
                 case 2:
-                    return MutableInt128.valueOf(Long.MAX_VALUE);
+                    return MutableInt128.of(Long.MAX_VALUE);
                 case 3:
-                    return MutableInt128.valueOf(rnd.nextLong());
+                    return MutableInt128.of(rnd.nextLong());
                 default:
                     throw new AssertionError("Impossible");
             }
@@ -386,7 +386,7 @@ public class MutableInt128Test {
     static MutableInt128 randomInt128WithoutSpecialValues(Random rnd) {
         final long high = randomLong(rnd);
         final long low = randomLong(rnd);
-        return MutableInt128.valueOfBits(high, low, rnd.nextBoolean());
+        return MutableInt128.ofBits(high, low, rnd.nextBoolean());
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -394,45 +394,45 @@ public class MutableInt128Test {
 //        long b = 1L << 32;
 //        System.out.println(Long.toString(a * b));
 
-        testEquality(MutableInt128.valueOfBits(1234, 33, true),
-                MutableInt128.valueOfBits(1234, 33, false), true);
+        testEquality(MutableInt128.ofBits(1234, 33, true),
+                MutableInt128.ofBits(1234, 33, false), true);
         testEquality(MutableInt128.newOne().negate(), MutableInt128.newOne(), true);
-        testEquality(MutableInt128.valueOfBits(157, 0, true),
-                MutableInt128.valueOfBits(157, 0, true), true);
-        testEquality(MutableInt128.valueOfBits(0, 0, true),
-                MutableInt128.valueOfBits(0, 0, false), true);
-        testBitAndShift(MutableInt128.valueOfBits(0, 0, true), 1000, true);
-        testBitAndShift(MutableInt128.valueOfBits(Long.MAX_VALUE, Long.MAX_VALUE, false), 50, true);
-        testBitAndShift(MutableInt128.valueOfBits(0, 512, false), 70, true);
-        testBitAndShift(MutableInt128.valueOfBits(Long.MAX_VALUE, Long.MAX_VALUE, true), 150, true);
-        testBitAndShift(MutableInt128.valueOfBits(Long.MAX_VALUE, Long.MIN_VALUE, true), 150, true);
-        testBitAndShift(MutableInt128.valueOf(0x8000000000000000L), 40, true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOf(Long.MAX_VALUE - 1),
-                MutableInt128.valueOf(Long.MAX_VALUE), true);
+        testEquality(MutableInt128.ofBits(157, 0, true),
+                MutableInt128.ofBits(157, 0, true), true);
+        testEquality(MutableInt128.ofBits(0, 0, true),
+                MutableInt128.ofBits(0, 0, false), true);
+        testBitAndShift(MutableInt128.ofBits(0, 0, true), 1000, true);
+        testBitAndShift(MutableInt128.ofBits(Long.MAX_VALUE, Long.MAX_VALUE, false), 50, true);
+        testBitAndShift(MutableInt128.ofBits(0, 512, false), 70, true);
+        testBitAndShift(MutableInt128.ofBits(Long.MAX_VALUE, Long.MAX_VALUE, true), 150, true);
+        testBitAndShift(MutableInt128.ofBits(Long.MAX_VALUE, Long.MIN_VALUE, true), 150, true);
+        testBitAndShift(MutableInt128.of(0x8000000000000000L), 40, true);
+        testSumAndDifferenceAndToLong(MutableInt128.of(Long.MAX_VALUE - 1),
+                MutableInt128.of(Long.MAX_VALUE), true);
         testSumAndDifferenceAndToLong(new MutableInt128().setToUnsignedLong(-1),
-                MutableInt128.valueOf(1), true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOf(10),
-                MutableInt128.valueOf(20), true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOf((long) 8e18),
-                MutableInt128.valueOf((long) 8e18), true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOf(Long.MAX_VALUE),
-                MutableInt128.valueOf(Long.MIN_VALUE), true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOf((long) 8e18),
-                MutableInt128.valueOf((long) 8e18), true);
+                MutableInt128.of(1), true);
+        testSumAndDifferenceAndToLong(MutableInt128.of(10),
+                MutableInt128.of(20), true);
+        testSumAndDifferenceAndToLong(MutableInt128.of((long) 8e18),
+                MutableInt128.of((long) 8e18), true);
+        testSumAndDifferenceAndToLong(MutableInt128.of(Long.MAX_VALUE),
+                MutableInt128.of(Long.MIN_VALUE), true);
+        testSumAndDifferenceAndToLong(MutableInt128.of((long) 8e18),
+                MutableInt128.of((long) 8e18), true);
         testSumAndDifferenceAndToLong(new MutableInt128().setToDouble(2e24),
                 new MutableInt128().setToDouble(1e25), true);
-        testSumAndDifferenceAndToLong(MutableInt128.valueOfBits(Long.MAX_VALUE, Long.MIN_VALUE, true),
-                MutableInt128.valueOfBits(Long.MAX_VALUE, Long.MAX_VALUE, false), true);
+        testSumAndDifferenceAndToLong(MutableInt128.ofBits(Long.MAX_VALUE, Long.MIN_VALUE, true),
+                MutableInt128.ofBits(Long.MAX_VALUE, Long.MAX_VALUE, false), true);
         testSumAndDifferenceAndToLong(MutableInt128.newMaxValue(),
-                MutableInt128.valueOfBits(0, 0, false), true);
+                MutableInt128.ofBits(0, 0, false), true);
         testSumAndDifferenceAndToLong(MutableInt128.newMaxValue(), MutableInt128.newMinValue(), true);
-        testLongIntProduct(1000000, 1000000, MutableInt128.valueOf(-1), true);
-        testLongIntProduct(1000000, -1000000, MutableInt128.valueOf(1000000), true);
+        testLongIntProduct(1000000, 1000000, MutableInt128.of(-1), true);
+        testLongIntProduct(1000000, -1000000, MutableInt128.of(1000000), true);
         testLongIntProduct(1000000, 0, new MutableInt128(), true);
         testLongIntProduct(new Random().nextLong(), 0, new MutableInt128(), true);
-        testLongIntProduct(Long.MAX_VALUE, 256, MutableInt128.valueOf(Long.MAX_VALUE), true);
+        testLongIntProduct(Long.MAX_VALUE, 256, MutableInt128.of(Long.MAX_VALUE), true);
         testLongIntProduct(Long.MAX_VALUE, 1000, randomInt128(new Random()).shiftRight(1), true);
-        testLongIntProduct(Long.MIN_VALUE, -2, MutableInt128.valueOf(Long.MAX_VALUE).addLong(1), true);
+        testLongIntProduct(Long.MIN_VALUE, -2, MutableInt128.of(Long.MAX_VALUE).addLong(1), true);
         testLongIntProduct((long) 10e18, Integer.MAX_VALUE, new MutableInt128(), true);
         testLongIntProduct((long) 1e18, Integer.MIN_VALUE, new MutableInt128(), true);
         testLongIntProduct(Long.MAX_VALUE, Integer.MAX_VALUE, new MutableInt128(), true);
@@ -440,9 +440,9 @@ public class MutableInt128Test {
         testLongIntProduct(0x7fffffffffff0000L, 0x7fff0000, new MutableInt128(), true);
         testLongLongProduct(Long.MAX_VALUE, Long.MAX_VALUE, new MutableInt128(), true);
         testLongLongProduct(Long.MIN_VALUE, Long.MAX_VALUE,
-                MutableInt128.valueOf(Long.MAX_VALUE - 1), true);
+                MutableInt128.of(Long.MAX_VALUE - 1), true);
         testLongLongProduct(1000000000000000L, 2000000000000000L,
-                MutableInt128.valueOf(2000000000000000L), true);
+                MutableInt128.of(2000000000000000L), true);
         System.out.println();
         Thread.sleep(100);
 
@@ -569,7 +569,7 @@ public class MutableInt128Test {
                 if (b == Long.MIN_VALUE) {
                     b = Long.MAX_VALUE;
                 }
-                MutableInt128 longProduct = MutableInt128.valueOf(0);
+                MutableInt128 longProduct = MutableInt128.of(0);
                 for (int i = 0; i < n2; i++) {
                     longProduct = new MutableInt128().setToLongLongProduct(a, b);
                 }

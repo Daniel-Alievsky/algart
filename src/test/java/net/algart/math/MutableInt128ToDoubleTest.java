@@ -41,7 +41,7 @@ public class MutableInt128ToDoubleTest {
                     + " instead of " + standard
                     + " for " + a + " = " + a.toString(16).toUpperCase() + "h");
         }
-        final MutableInt128 b = MutableInt128.valueOfDouble(v);
+        final MutableInt128 b = MutableInt128.ofDouble(v);
         if (b.toDouble() != v) {
             throw new AssertionError("Error in toDouble()/valueOfDouble() for " + b
                     + ": " + b.toDouble() + " != " + v);
@@ -61,7 +61,7 @@ public class MutableInt128ToDoubleTest {
         if (standard != 0.0) {
             maxToDoubleByAddingError = Math.max(maxToDoubleByAddingError, error / standard);
         }
-        a = a.clone().abs().and(MutableInt128.valueOfUnsigned(-1L));
+        a = a.clone().abs().and(MutableInt128.ofUnsigned(-1L));
         standard = a.toBigInteger().doubleValue();
         if (a.toDouble() != standard) {
             throw new AssertionError("Error in 64-bit toDouble(): " + a.toDouble()
@@ -75,16 +75,16 @@ public class MutableInt128ToDoubleTest {
     }
 
     public static void main(String[] args) {
-        testToDouble(MutableInt128.valueOfBits(0xFFFFFFFFFFFFF4B0L, 0xF59F874F3F287DFL,
+        testToDouble(MutableInt128.ofBits(0xFFFFFFFFFFFFF4B0L, 0xF59F874F3F287DFL,
                 false), true);
-        testToDouble(MutableInt128.valueOfBits(0x17E7C76D0A7E5280L, 0,
+        testToDouble(MutableInt128.ofBits(0x17E7C76D0A7E5280L, 0,
                 false), true);
-        testToDouble(MutableInt128.valueOfBits(0,0xFFFFFFFFFFFFF4D0L, true), true);
-        testToDouble(MutableInt128.valueOfBits(-1, -1, false), true);
-        testToDouble(MutableInt128.valueOfBits(1, 0, true), true);
-        testToDouble(MutableInt128.valueOfBits(0x7FFFFFFFFFFFFFFDL, 0x7FFFFFFFFFFFFFFEL,
+        testToDouble(MutableInt128.ofBits(0,0xFFFFFFFFFFFFF4D0L, true), true);
+        testToDouble(MutableInt128.ofBits(-1, -1, false), true);
+        testToDouble(MutableInt128.ofBits(1, 0, true), true);
+        testToDouble(MutableInt128.ofBits(0x7FFFFFFFFFFFFFFDL, 0x7FFFFFFFFFFFFFFEL,
                 false), true);
-        testToDouble(MutableInt128.valueOfBits(-1, Long.MIN_VALUE, false), true);
+        testToDouble(MutableInt128.ofBits(-1, Long.MIN_VALUE, false), true);
 
         Random rnd = new Random();
         long seed = rnd.nextLong();

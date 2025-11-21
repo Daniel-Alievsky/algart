@@ -991,7 +991,7 @@ public class Point implements Comparable<Point> {
      * @return the integer point with the same (cast) coordinates.
      */
     public IPoint toIntegerPoint() {
-        return IPoint.valueOf(this);
+        return IPoint.of(this);
     }
 
     /**
