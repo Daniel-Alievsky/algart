@@ -96,7 +96,7 @@ class BasicDirectPointSetUniformGridPattern
 //            for (int coordIndex = 0; coordIndex < dimCount; coordIndex++) {
 //                long[] shiftCoordinates = new long[dimCount];
 //                shiftCoordinates[coordIndex] = -1;
-//                IPoint shift = IPoint.valueOf(shiftCoordinates);
+//                IPoint shift = IPoint.of(shiftCoordinates);
 //                int checkCount = 0;
 //                long minCoord = Long.MAX_VALUE;
 //                for (IPoint p : gridIndexes) {
@@ -209,7 +209,7 @@ class BasicDirectPointSetUniformGridPattern
                         coordinates[k] = 0;
                     }
                 }
-                newIndexes.add(IPoint.valueOf(coordinates));
+                newIndexes.add(IPoint.of(coordinates));
             }
         }
         return new BasicDirectPointSetUniformGridPattern(

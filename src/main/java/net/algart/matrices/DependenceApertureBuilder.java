@@ -121,10 +121,10 @@ public enum DependenceApertureBuilder {
      *     allMin[k] -= additionalSpace;
      *     allMax[k] += additionalSpace;
      * }
-     * return {@link IRectangularArea#valueOf(IPoint, IPoint)
-     * IRectangularArea.valueOf}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMin), {@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMax));
+     * return {@link IRectangularArea#of(IPoint, IPoint)
+     * IRectangularArea.of}({@link IPoint#of(long...)
+     * IPoint.of}(allMin), {@link IPoint#of(long...)
+     * IPoint.of}(allMax));
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
@@ -172,10 +172,10 @@ public enum DependenceApertureBuilder {
      *     allMin[k] -= additionalSpace;
      *     allMax[k] += additionalSpace;
      * }
-     * return {@link IRectangularArea#valueOf(IPoint, IPoint)
-     * IRectangularArea.valueOf}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMin), {@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMax));
+     * return {@link IRectangularArea#of(IPoint, IPoint)
+     * IRectangularArea.of}({@link IPoint#of(long...)
+     * IPoint.of}(allMin), {@link IPoint#of(long...)
+     * IPoint.of}(allMax));
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
@@ -224,10 +224,10 @@ public enum DependenceApertureBuilder {
      *     allMin[k] -= additionalSpace;
      *     allMax[k] += additionalSpace;
      * }
-     * return {@link IRectangularArea#valueOf(IPoint, IPoint)
-     * IRectangularArea.valueOf}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMin), {@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(allMax));
+     * return {@link IRectangularArea#of(IPoint, IPoint)
+     * IRectangularArea.of}({@link IPoint#of(long...)
+     * IPoint.of}(allMin), {@link IPoint#of(long...)
+     * IPoint.of}(allMax));
      * </pre>
      *
      * <p>The only difference from this code is that this class checks possible overflow before every usage of
@@ -419,7 +419,7 @@ public enum DependenceApertureBuilder {
             allMin[k] = safelyAdd(allMin[k], -additionalSpace);
             allMax[k] = safelyAdd(allMax[k], additionalSpace);
         }
-        return IRectangularArea.valueOf(IPoint.valueOf(allMin), IPoint.valueOf(allMax));
+        return IRectangularArea.of(IPoint.of(allMin), IPoint.of(allMax));
     }
 
     /**

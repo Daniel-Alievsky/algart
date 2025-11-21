@@ -192,7 +192,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = gridIndexRange(k).min();
         }
-        return IPoint.valueOf(coordinates);
+        return IPoint.of(coordinates);
     }
 
     /**

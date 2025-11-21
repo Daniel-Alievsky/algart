@@ -280,14 +280,14 @@ public interface Func {
      * Vectors, corresponding to 8 directions recognized by {@link #SELECT_FROM_8_DIRECTIONS_2D} function.
      * More precisely, if is an unmodifiable list consisting of the following elements:
      * <ol start="0">
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(1,0)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(1,1)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(0,1)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(-1,1)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(-1,0)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(-1,-1)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(0,-1)},</li>
-     * <li>{@link IPoint#valueOf(long...) IPoint.valueOf(1,-1)}.</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(1,0)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(1,1)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(0,1)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(-1,1)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(-1,0)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(-1,-1)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(0,-1)},</li>
+     * <li>{@link IPoint#of(long...) IPoint.of(1,-1)}.</li>
      * </ol>
      *
      * <p>So, if the direction returned by {@link #SELECT_FROM_8_DIRECTIONS_2D} is <i>n</i>, then the corresponding
@@ -298,14 +298,14 @@ public interface Func {
      */
     List<IPoint> SHIFTS_ALONG_8_DIRECTIONS_2D = Collections.unmodifiableList(
             java.util.Arrays.asList(
-                    IPoint.valueOf(1, 0),
-                    IPoint.valueOf(1, 1),
-                    IPoint.valueOf(0, 1),
-                    IPoint.valueOf(-1, 1),
-                    IPoint.valueOf(-1, 0),
-                    IPoint.valueOf(-1, -1),
-                    IPoint.valueOf(0, -1),
-                    IPoint.valueOf(1, -1)));
+                    IPoint.of(1, 0),
+                    IPoint.of(1, 1),
+                    IPoint.of(0, 1),
+                    IPoint.of(-1, 1),
+                    IPoint.of(-1, 0),
+                    IPoint.of(-1, -1),
+                    IPoint.of(0, -1),
+                    IPoint.of(1, -1)));
 
     /**
      * <p>"Updatable" mathematical function: an extension of {@link Func} interface
