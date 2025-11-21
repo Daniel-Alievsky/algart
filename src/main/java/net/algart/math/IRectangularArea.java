@@ -188,9 +188,9 @@ public class IRectangularArea {
      * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(IPoint, IPoint) valueOf}(
-     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(minX, minY),
-     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(maxX, maxY));
+     * {@link #of(IPoint, IPoint) of}(
+     *      {@link IPoint#of(long...) IPoint.of}(minX, minY),
+     *      {@link IPoint#of(long...) IPoint.of}(maxX, maxY));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
@@ -198,7 +198,7 @@ public class IRectangularArea {
      * @param maxX the maximal <i>x</i>-coordinate, inclusive.
      * @param maxY the maximal <i>y</i>-coordinate, inclusive.
      * @return the new 2-dimensional rectangle.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(IPoint, IPoint)} method.
      */
     public static IRectangularArea of(long minX, long minY, long maxX, long maxY) {
         return of(IPoint.of(minX, minY), IPoint.of(maxX, maxY));
@@ -241,18 +241,18 @@ public class IRectangularArea {
      * All <code>double</code> coordinates of the passed area are converted
      * to <code>long</code> coordinates of the returned area by standard
      * Java typecast <code>(long)doubleValue</code>.
-     * Equivalent to <code>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#valueOf(Point)
-     * IPoint.valueOf}(area.{@link #min() min()}),&nbsp;{@link IPoint#valueOf(Point)
-     * IPoint.valueOf}(area.{@link #max() max()}))</code>.
+     * Equivalent to <code>{@link #of(IPoint, IPoint) of}({@link IPoint#of(Point)
+     * IPoint.of}(area.{@link #min() min()}),&nbsp;{@link IPoint#of(Point)
+     * IPoint.of}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
      * @return the integer rectangular area with the same (cast) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
-     * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
-     *                                  and <code>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #max() max()})</code>
-     *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
+     * @throws IllegalArgumentException if the points <code>{@link IPoint#of(Point)
+     *                                  IPoint.of}(area.{@link #min() min()})</code>
+     *                                  and <code>{@link IPoint#of(Point)
+     *                                  IPoint.of}(area.{@link #max() max()})</code>
+     *                                  do not match requirements of {@link #of(IPoint, IPoint)} method.
      */
     public static IRectangularArea of(RectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
@@ -269,22 +269,22 @@ public class IRectangularArea {
      * All <code>double</code> coordinates of the passed area are converted
      * to <code>long</code> coordinates of the returned area by <code>StrictMath.round</code> method.
      * Java typecast <code>(long)doubleValue</code>.
-     * Equivalent to <code>{@link #valueOf(IPoint, IPoint) valueOf}({@link IPoint#roundOf(Point)
+     * Equivalent to <code>{@link #of(IPoint, IPoint) of}({@link IPoint#roundOf(Point)
      * IPoint.roundOf}(area.{@link #min() min()}),&nbsp;{@link IPoint#roundOf(Point)
      * IPoint.roundOf}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
      * @return the integer rectangular area with the same (rounded) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
-     * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
-     *                                  and <code>{@link IPoint#valueOf(Point)
-     *                                  IPoint.valueOf}(area.{@link #max() max()})</code>
-     *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
+     * @throws IllegalArgumentException if the points <code>{@link IPoint#of(Point)
+     *                                  IPoint.of}(area.{@link #min() min()})</code>
+     *                                  and <code>{@link IPoint#of(Point)
+     *                                  IPoint.of}(area.{@link #max() max()})</code>
+     *                                  do not match requirements of {@link #of(IPoint, IPoint)} method.
      */
     public static IRectangularArea roundOf(RectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
-        return valueOf(IPoint.roundOf(area.min), IPoint.roundOf(area.max));
+        return of(IPoint.roundOf(area.min), IPoint.roundOf(area.max));
     }
 
     /**
@@ -324,7 +324,7 @@ public class IRectangularArea {
 
     /**
      * Returns all sizes of this rectangular area in a form of {@link IPoint}.
-     * Equivalent to <code>{@link IPoint#valueOf(long...) IPoint.valueOf}({@link #sizes()})</code>.
+     * Equivalent to <code>{@link IPoint#of(long...) IPoint.of}({@link #sizes()})</code>.
      * The coordinates of the returned point are greater by 1 than coordinates of
      * <code>{@link #max()}.{@link IPoint#subtract(IPoint) subtract}({@link #min()})</code>.
      *
@@ -336,7 +336,7 @@ public class IRectangularArea {
 
     /**
      * Returns all sizes of this rectangular area, decreased by 1, in a form of {@link IPoint}.
-     * Equivalent to <code>{@link IPoint#valueOf(long...) IPoint.valueOf}({@link #widths()})</code>.
+     * Equivalent to <code>{@link IPoint#of(long...) IPoint.of}({@link #widths()})</code>.
      * The coordinates of the returned point are equal to coordinates of
      * <code>{@link #max()}.{@link IPoint#subtract(IPoint) subtract}({@link #min()})</code>.
      *
@@ -579,12 +579,12 @@ public class IRectangularArea {
     }
 
     /**
-     * Returns <code>{@link IRange}.{@link IRange#valueOf(long, long)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
+     * Returns <code>{@link IRange}.{@link IRange#of(long, long)
+     * of}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return <code>{@link IRange}.{@link IRange#valueOf(long, long)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
+     * @return <code>{@link IRange}.{@link IRange#of(long, long)
+     * of}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      */
     public IRange range(int coordIndex) {
         return new IRange(min.coordinates[coordIndex], max.coordinates[coordIndex]);
@@ -600,7 +600,7 @@ public class IRectangularArea {
     public IRange[] ranges() {
         IRange[] ranges = new IRange[min.coordinates.length];
         for (int k = 0; k < ranges.length; k++) {
-            ranges[k] = IRange.valueOf(min.coordinates[k], max.coordinates[k]);
+            ranges[k] = IRange.of(min.coordinates[k], max.coordinates[k]);
         }
         return ranges;
     }
@@ -741,8 +741,8 @@ public class IRectangularArea {
      * do not {@link #intersects(IRectangularArea) intersect}
      * (<b>A</b>&nbsp;&cap;&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;).
      * Equivalent to
-     * <pre>thisInstance.{@link #intersects(IRectangularArea) intersects}(area) ? {@link #valueOf(IPoint, IPoint)
-     * IRectangularArea.valueOf}(
+     * <pre>thisInstance.{@link #intersects(IRectangularArea) intersects}(area) ? {@link #of(IPoint, IPoint)
+     * IRectangularArea.of}(
      * thisInstance.{@link #min()}.{@link IPoint#max(IPoint) max}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link IPoint#min(IPoint) min}(area.{@link #max()})) :
      * null</pre>.
@@ -855,12 +855,12 @@ public class IRectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k] - 1;
-                results.add(new IRectangularArea(IPoint.valueOf(min), IPoint.valueOf(max)));
+                results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k] + 1;
                 max[k] = this.max.coordinates[k];
-                results.add(new IRectangularArea(IPoint.valueOf(min), IPoint.valueOf(max)));
+                results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
             min[k] = Math.max(area.min.coordinates[k], this.min.coordinates[k]);
             max[k] = Math.min(area.max.coordinates[k], this.max.coordinates[k]);
@@ -994,7 +994,7 @@ public class IRectangularArea {
      *                                  <code>thisInstance.{@link #min()}.{@link IPoint#min(IPoint) min}(point)</code>
      *                                  and
      *                                  <code>thisInstance.{@link #max()}.{@link IPoint#max(IPoint) max}(point)</code>
-     *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
+     *                                  do not match requirements of {@link #of(IPoint, IPoint)} method.
      */
     public IRectangularArea expand(IPoint point) {
         if (contains(point)) {
@@ -1007,13 +1007,13 @@ public class IRectangularArea {
             newMin[k] = Math.min(min.coordinates[k], point.coordinates[k]);
             newMax[k] = Math.max(max.coordinates[k], point.coordinates[k]);
         }
-        return valueOf(new IPoint(newMin), new IPoint(newMax));
+        return of(new IPoint(newMin), new IPoint(newMax));
     }
 
     /**
      * Returns the minimal rectangular area, containing this and the passed area.
      * Equivalent to
-     * <pre>{@link #valueOf(IPoint, IPoint) IRectangularArea.valueOf}(
+     * <pre>{@link #of(IPoint, IPoint) IRectangularArea.of}(
      * thisInstance.{@link #min()}.{@link IPoint#min(IPoint) min}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link IPoint#max(IPoint) max}(area.{@link #max()}))</pre>.
      *
@@ -1069,24 +1069,24 @@ public class IRectangularArea {
                 max[k] = Math.max(max[k], area.max(k));
             }
         }
-        return IRectangularArea.valueOf(new IPoint(min), new IPoint(max));
+        return of(new IPoint(min), new IPoint(max));
     }
 
     /**
      * Returns the <i>parallel distance</i> from the given point to this rectangular area.
      * The parallel distance is a usual distance, with plus or minus sign,
-     * from the point to some of hyperplanes, containing the hyperfacets of this hyperparallelepiped,
+     * from the point to some of the hyperplanes, containing the hyper-facets of this hyper-parallelepiped,
      * chosen so that:
      *
      * <ol>
-     * <li>the parallel distance is zero at the hyperfacets, negative inside the rectangular area and
+     * <li>the parallel distance is zero at the hyper-facets, negative inside the rectangular area and
      * positive outside it;</li>
      * <li>for any constant <i>c</i>,
      * the set of all such points, that the parallel distance from them to this rectangular area &le;<i>c</i>,
-     * is also hyperparallelepiped (rectangular area) wich hyperfacets,
-     * parallel to the the coordinate hyperplanes,
+     * is also hyper-parallelepiped (rectangular area) with hyper-facets
+     * parallel to the coordinate hyperplanes,
      * or an empty set if <i>c</i>&lt;<i>c</i><sub>0</sub>, where <i>c</i><sub>0</sub> is the (negative)
-     * parallel distance from the geometrical center of this hyperparallelepiped.</li>
+     * parallel distance from the geometrical center of this hyper-parallelepiped.</li>
      * </ol>
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
@@ -1114,8 +1114,8 @@ public class IRectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(coordinates)), but works faster because does not require creating an instance
+     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#of(long...)
+     * IPoint.of}(coordinates)), but works faster because does not require creating an instance
      * of {@link IPoint} class.
      *
      * @param coordinates coordinates of some point.
@@ -1148,8 +1148,8 @@ public class IRectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(x, y)), but works faster because does not require allocating any objects.
+     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#of(long...)
+     * IPoint.of}(x, y)), but works faster because does not require allocating any objects.
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1176,8 +1176,8 @@ public class IRectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(x, y, z)), but works faster because does not require allocating any objects.
+     * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#of(long...)
+     * IPoint.of}(x, y, z)), but works faster because does not require allocating any objects.
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1214,8 +1214,8 @@ public class IRectangularArea {
     /**
      * Shifts this rectangular area by the specified vector and returns the shifted area.
      * Equivalent to
-     * <pre>{@link #valueOf(IPoint, IPoint)
-     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#addExact(IPoint)
+     * <pre>{@link #of(IPoint, IPoint)
+     * of}(thisInstance.{@link #min()}.{@link IPoint#addExact(IPoint)
      * addExact}(vector), thisInstance.{@link #max()}.{@link IPoint#addExact(IPoint) addExact}(vector))</pre>
      *
      * <p>Note: the coordinates of new areas are calculated with overflow control.
@@ -1237,15 +1237,15 @@ public class IRectangularArea {
         if (vector.isOrigin()) {
             return this;
         }
-        return IRectangularArea.valueOf(min.addExact(vector), max.addExact(vector));
+        return of(min.addExact(vector), max.addExact(vector));
     }
 
     /**
      * Shifts this rectangular area by <code>vector.{@link IPoint#symmetric() symmetric()}</code>
      * and returns the shifted area.
      * Equivalent to
-     * <pre>{@link #valueOf(IPoint, IPoint)
-     * valueOf}(thisInstance.{@link #min()}.{@link IPoint#subtractExact(IPoint)
+     * <pre>{@link #of(IPoint, IPoint)
+     * of}(thisInstance.{@link #min()}.{@link IPoint#subtractExact(IPoint)
      * subtractExact}(vector), thisInstance.{@link #max()}.{@link IPoint#subtractExact(IPoint) subtractExact}(vector))</pre>
      *
      * <p>Note: the coordinates of new areas are calculated with overflow control.
@@ -1267,13 +1267,13 @@ public class IRectangularArea {
         if (vector.isOrigin()) {
             return this;
         }
-        return IRectangularArea.valueOf(min.subtractExact(vector), max.subtractExact(vector));
+        return of(min.subtractExact(vector), max.subtractExact(vector));
     }
 
     /**
      * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
      * returns
-     * <pre>IRectangularArea.valueOf(
+     * <pre>IRectangularArea.of(
      * thisInstance.{@link #min() min()}.{@link IPoint#subtractExact(IPoint) subtractExact}(expansion),
      * thisInstance.{@link #max() max()}.{@link IPoint#addExact(IPoint) addExact}(expansion))</pre>
      *
@@ -1286,7 +1286,7 @@ public class IRectangularArea {
      * @throws IllegalArgumentException if <code>expansion.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     *                                  {@link #of(IPoint, IPoint)} method).
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public IRectangularArea dilate(IPoint expansion) {
@@ -1298,18 +1298,18 @@ public class IRectangularArea {
         if (expansion.isOrigin()) {
             return this;
         }
-        return IRectangularArea.valueOf(min().subtractExact(expansion), max().addExact(expansion));
+        return of(min().subtractExact(expansion), max().addExact(expansion));
     }
 
     /**
-     * Equivalent to <code>3{@link #dilate(IPoint) dilate}(IPoint.valueOfEqualCoordinates(thisObjects.{@link
+     * Equivalent to <code>3{@link #dilate(IPoint) dilate}(IPoint.ofEqualCoordinates(thisObjects.{@link
      * #coordCount() coordCount()}, expansion)</code>.
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     *                                  {@link #of(IPoint, IPoint)} method).
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public IRectangularArea dilate(long expansion) {
@@ -1330,7 +1330,7 @@ public class IRectangularArea {
      *     ddddddddddd
      * </pre>
      * This figure shows dilation of some 2-dimensional rectangle <code><b>R</b></code> by
-     * expansion=<code>IPoint.valueOf(2,1)</code>:
+     * expansion=<code>IPoint.of(2,1)</code>:
      * the results consist of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
      * <code>c</code>, <code>d</code> (width 2).
      *
@@ -1354,7 +1354,7 @@ public class IRectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if one of coordinates of <code>expansion</code> is negative,
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     *                                  {@link #of(IPoint, IPoint)} method).
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, IPoint expansion) {
@@ -1380,10 +1380,10 @@ public class IRectangularArea {
             final long saveMax = max[k];
             min[k] = IPoint.subtractExact(saveMin, delta);
             max[k] = IPoint.subtractExact(saveMin, 1);
-            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
+            results.add(of(IPoint.of(min), IPoint.of(max)));
             min[k] = IPoint.addExact(saveMax, 1);
             max[k] = IPoint.addExact(saveMax, delta);
-            results.add(IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max)));
+            results.add(of(IPoint.of(min), IPoint.of(max)));
             min[k] = saveMin;
             max[k] = saveMax;
         }
@@ -1392,7 +1392,7 @@ public class IRectangularArea {
 
     /**
      * Equivalent to <code>{@link #dilateStraightOnly(List, IPoint)
-     * dilateStraightOnly}(results, IPoint.valueOfEqualCoordinates(thisObjects.{@link
+     * dilateStraightOnly}(results, IPoint.ofEqualCoordinates(thisObjects.{@link
      * #coordCount() coordCount()}, expansion)</code>.
      *
      * @param results   the list to store results (new areas will be added to the end of this list).
@@ -1401,7 +1401,7 @@ public class IRectangularArea {
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>expansion &lt; 0</code>
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     *                                  {@link #of(IPoint, IPoint)} method).
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, long expansion) {
@@ -1438,7 +1438,7 @@ public class IRectangularArea {
      *                                  of <code>expansion</code>
      *                                  is negative (and collection of areas is not empty),
      *                                  or if one of the result areas will be incorrect (see comments to
-     *                                  {@link #valueOf(IPoint, IPoint)} method).
+     *                                  {@link #of(IPoint, IPoint)} method).
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public static List<IRectangularArea> dilate(
@@ -1459,12 +1459,12 @@ public class IRectangularArea {
 
     /**
      * Equivalent to
-     * <code>{@link RectangularArea#valueOf(IRectangularArea) RectangularArea.valueOf}(thisInstance)</code>.
+     * <code>{@link RectangularArea#of(IRectangularArea) RectangularArea.of}(thisInstance)</code>.
      *
      * @return the rectangular area with the same real coordinates as this one.
      */
     public RectangularArea toRectangularArea() {
-        return RectangularArea.valueOf(this);
+        return RectangularArea.of(this);
     }
 
     /**

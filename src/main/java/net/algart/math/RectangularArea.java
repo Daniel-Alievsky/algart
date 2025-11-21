@@ -155,6 +155,7 @@ public class RectangularArea {
         return new RectangularArea(new Point(min), new Point(max));
     }
 
+    @Deprecated
     public static RectangularArea valueOf(Range... coordRanges) {
         return of(coordRanges);
     }
@@ -163,15 +164,15 @@ public class RectangularArea {
      * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(Point, Point) valueOf}(
-     *      {@link Point#valueOf(double) Point.valueOf}(minX),
-     *      {@link Point#valueOf(double) Point.valueOf}(maxX));
+     * {@link #of(Point, Point) of}(
+     *      {@link Point#of(double) Point.of}(minX),
+     *      {@link Point#of(double) Point.of}(maxX));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
      * @param maxX the maximal <i>x</i>-coordinate, inclusive.
      * @return the new 1-dimensional rectangular area.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(Point, Point)} method.
      */
     public static RectangularArea of(double minX, double maxX) {
         return of(Point.of(minX), Point.of(maxX));
@@ -678,8 +679,8 @@ public class RectangularArea {
      * do not {@link #intersects(RectangularArea) intersect}
      * (<b>A</b>&nbsp;&cap;&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;).
      * Equivalent to
-     * <pre>thisInstance.{@link #intersects(RectangularArea) intersects}(area) ? {@link #valueOf(Point, Point)
-     * RectangularArea.valueOf}(
+     * <pre>thisInstance.{@link #intersects(RectangularArea) intersects}(area) ? {@link #of(Point, Point)
+     * RectangularArea.of}(
      * thisInstance.{@link #min()}.{@link Point#max(Point) max}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link Point#min(Point) min}(area.{@link #max()})) :
      * null</pre>.
@@ -792,12 +793,12 @@ public class RectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k];
-                results.add(new RectangularArea(Point.valueOf(min), Point.valueOf(max)));
+                results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k];
                 max[k] = this.max.coordinates[k];
-                results.add(new RectangularArea(Point.valueOf(min), Point.valueOf(max)));
+                results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             min[k] = Math.max(area.min.coordinates[k], this.min.coordinates[k]);
             max[k] = Math.min(area.max.coordinates[k], this.max.coordinates[k]);
@@ -931,7 +932,7 @@ public class RectangularArea {
      *                                  <code>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</code>
      *                                  and
      *                                  <code>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</code>
-     *                                  do not match requirements of {@link #valueOf(Point, Point)} method.
+     *                                  do not match requirements of {@link #of(Point, Point)} method.
      */
     public RectangularArea expand(Point point) {
         if (contains(point)) {
@@ -944,13 +945,13 @@ public class RectangularArea {
             newMin[k] = Math.min(min.coordinates[k], point.coordinates[k]);
             newMax[k] = Math.max(max.coordinates[k], point.coordinates[k]);
         }
-        return valueOf(new Point(newMin), new Point(newMax));
+        return of(new Point(newMin), new Point(newMax));
     }
 
     /**
      * Returns the minimal rectangular area, containing this and the passed area.
      * Equivalent to
-     * <pre>{@link #valueOf(Point, Point) RectangularArea.valueOf}(
+     * <pre>{@link #of(Point, Point) RectangularArea.of}(
      * thisInstance.{@link #min()}.{@link Point#min(Point) min}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link Point#max(Point) max}(area.{@link #max()}))</pre>.
      *
@@ -1006,24 +1007,24 @@ public class RectangularArea {
                 max[k] = Math.max(max[k], area.max(k));
             }
         }
-        return RectangularArea.valueOf(new Point(min), new Point(max));
+        return of(new Point(min), new Point(max));
     }
 
     /**
      * Returns the <i>parallel distance</i> from the given point to this rectangular area.
      * The parallel distance is a usual distance, with plus or minus sign,
-     * from the point to some of hyperplanes, containing the hyperfacets of this hyperparallelepiped,
+     * from the point to some of the hyperplanes, containing the hyper-facets of this hyper-parallelepiped,
      * chosen so that:
      *
      * <ol>
-     * <li>the parallel distance is zero at the hyperfacets, negative inside the rectangular area and
+     * <li>the parallel distance is zero at the hyper-facets, negative inside the rectangular area and
      * positive outside it;</li>
      * <li>for any constant <i>c</i>,
      * the set of all such points, that the parallel distance from them to this rectangular area &le;<i>c</i>,
-     * is also hyperparallelepiped (rectangular area) wich hyperfacets,
-     * parallel to the the coordinate hyperplanes,
+     * is also hyper-parallelepiped (rectangular area) with hyper-facets
+     * parallel to the coordinate hyperplanes,
      * or an empty set if <i>c</i>&lt;<i>c</i><sub>0</sub>, where <i>c</i><sub>0</sub> is the (negative)
-     * parallel distance from the geometrical center of this hyperparallelepiped.</li>
+     * parallel distance from the geometrical center of this hyper-parallelepiped.</li>
      * </ol>
      *
      * <p>Formally, let <b>p</b> is any point with coordinates
@@ -1051,8 +1052,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(coordinates)), but works faster because does not require creating an instance
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(coordinates)), but works faster because does not require creating an instance
      * of {@link Point} class.
      *
      * @param coordinates coordinates of some point.
@@ -1085,8 +1086,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(x, y)), but works faster because does not require allocating any objects.
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(x, y)), but works faster because does not require allocating any objects.
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1113,8 +1114,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(x, y, z)), but works faster because does not require allocating any objects.
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(x, y, z)), but works faster because does not require allocating any objects.
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1359,7 +1360,7 @@ public class RectangularArea {
      *                                  of <code>expansion</code>
      *                                  is negative (and collection of areas is not empty),
      *                                  or if one of the result areas will be incorrect (see comments to
-     *                                  {@link #valueOf(Point, Point)} method).
+     *                                  {@link #of(Point, Point)} method).
      */
     public static List<RectangularArea> dilate(
             Collection<RectangularArea> areas,
