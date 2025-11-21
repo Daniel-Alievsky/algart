@@ -147,9 +147,9 @@ public class IRectanglesUnion {
             if (from == to) {
                 return null;
             } else if (isHorizontal()) {
-                return IRectangularArea.valueOf(from, coord, to - 1, coord);
+                return IRectangularArea.of(from, coord, to - 1, coord);
             } else {
-                return IRectangularArea.valueOf(coord, from, coord, to - 1);
+                return IRectangularArea.of(coord, from, coord, to - 1);
             }
         }
 
@@ -516,9 +516,9 @@ public class IRectanglesUnion {
 
         @Override
         public IRectangularArea equivalentRectangle() {
-            return IRectangularArea.valueOf(
-                from, parentSeries.frameSideCoord(),
-                to - 1, parentSeries.frameSideCoord());
+            final long minY = parentSeries.frameSideCoord();
+            final long maxY = parentSeries.frameSideCoord();
+            return IRectangularArea.of(from, minY, to - 1, maxY);
         }
 
         void setNeighbour(VerticalBoundaryLink neighbour) {
@@ -563,9 +563,9 @@ public class IRectanglesUnion {
 
         @Override
         public IRectangularArea equivalentRectangle() {
-            return IRectangularArea.valueOf(
-                parentSeries.frameSideCoord(), from,
-                parentSeries.frameSideCoord(), to - 1);
+            final long minX = parentSeries.frameSideCoord();
+            final long maxX = parentSeries.frameSideCoord();
+            return IRectangularArea.of(minX, from, maxX, to - 1);
         }
     }
 
@@ -603,7 +603,7 @@ public class IRectanglesUnion {
                 maxX = Math.max(maxX, frame.toX - 1);
                 maxY = Math.max(maxY, frame.toY - 1);
             }
-            circumscribedRectangle = IRectangularArea.valueOf(minX, minY, maxX, maxY);
+            circumscribedRectangle = IRectangularArea.of(minX, minY, maxX, maxY);
         }
     }
 
@@ -928,7 +928,7 @@ public class IRectanglesUnion {
                     queue.add(r);
                     for (Frame frame : frames) {
                         IRectangularArea.subtractCollection(queue,
-                            IRectangularArea.valueOf(frame.fromX, frame.fromY, frame.toX - 1, frame.toY));
+                                IRectangularArea.of(frame.fromX, frame.fromY, frame.toX - 1, frame.toY));
                         // Note: we need to use toY instead of toY-1, because the section lies BETWEEN pixels
                     }
                     if (!queue.isEmpty()) {
@@ -1008,7 +1008,7 @@ public class IRectanglesUnion {
             for (BoundaryLink link : boundary) {
                 final IPoint v1 = result.get(k);
                 final IPoint v2 = result.get(k == n - 1 ? 0 : k + 1);
-                final IRectangularArea onVertices = IRectangularArea.valueOf(v1.min(v2), v1.max(v2));
+                final IRectangularArea onVertices = IRectangularArea.of(v1.min(v2), v1.max(v2));
                 final IRectangularArea onLink = link.equivalentRectangle();
                 if (!onVertices.contains(onLink)) {
                     throw new AssertionError("Boundary rectangle does not contain the link #"

@@ -285,7 +285,7 @@ public abstract class IRectangleFinder {
                     containingMaxY = rMaxY;
                 }
             }
-            return IRectangularArea.valueOf(containingMinX, containingMinY, containingMaxX, containingMaxY);
+            return IRectangularArea.of(containingMinX, containingMinY, containingMaxX, containingMaxY);
         }).reduce(IRectangularArea::expand).orElse(null);
     }
 

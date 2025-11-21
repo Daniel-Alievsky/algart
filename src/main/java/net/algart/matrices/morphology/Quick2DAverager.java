@@ -120,7 +120,7 @@ public abstract class Quick2DAverager extends Abstract2DProcessor {
         if (sizeX < 0 || sizeY < 0) {
             throw new IllegalArgumentException("Negative sizeX=" + sizeX + " or sizeY=" + sizeY);
         }
-        filter(result, source, IRectangularArea.valueOf(minX, minY, minX + sizeX - 1, minY + sizeY - 1));
+        filter(result, source, IRectangularArea.of(minX, minY, minX + sizeX - 1, minY + sizeY - 1));
     }
 
     public void filter(

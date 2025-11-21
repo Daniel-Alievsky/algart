@@ -178,7 +178,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         for (int k = 0; k < result.length; k++) {
             result[k] = gridIndexRange(k);
         }
-        return IRectangularArea.valueOf(result);
+        return IRectangularArea.of(result);
     }
 
     /**

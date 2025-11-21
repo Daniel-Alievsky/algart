@@ -80,7 +80,7 @@ public class IRectangleUnionTest {
             System.out.println("Reading rectangles...");
             for (int k = 1; k < description.length; k++) {
                 final String[] rectangle = description[k].split("[\\s,]+");
-                rectangles.add(IRectangularArea.valueOf(
+                rectangles.add(IRectangularArea.of(
                         IPoint.of(Integer.parseInt(rectangle[0]), Integer.parseInt(rectangle[1])),
                         IPoint.of(Integer.parseInt(rectangle[2]), Integer.parseInt(rectangle[3]))));
             }
@@ -121,8 +121,7 @@ public class IRectangleUnionTest {
                             (j + 1) * (averageWidth - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
                         final long y = Math.max(5,
                             (i + 1) * (averageHeight - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
-                        final IRectangularArea r = IRectangularArea.valueOf(
-                            x, y, x + frameWidth - 1, y + frameHeight - 1);
+                        final IRectangularArea r = IRectangularArea.of(x, y, x + frameWidth - 1, y + frameHeight - 1);
                         if (rectangles.size() < 10) {
                             System.out.printf("Frame #%d %dx%d: %s%n", rectangles.size(), r.size(0), r.size(1), r);
                         } else if (rectangles.size() == 10) {
@@ -445,7 +444,8 @@ public class IRectangleUnionTest {
             IPoint v1, v2;
             v1 = vertices.get(k);
             v2 = vertices.get(k == boundary.size() - 1 ? 0 : k + 1);
-            draw(result, IRectangularArea.valueOf(v1.min(v2), v1.max(v2)), divider, new Color(value, 0, 0), null);
+            draw(result, IRectangularArea.of(v1.min(v2), v1.max(v2)),
+                    divider, new Color(value, 0, 0), null);
             if (!precise) {
                 draw(result, link.equivalentRectangle(), divider, new Color(value, value, 0), null);
             }
@@ -475,7 +475,7 @@ public class IRectangleUnionTest {
         if (area == null) {
             return;
         }
-        final IRectangularArea divided = IRectangularArea.valueOf(
+        final IRectangularArea divided = IRectangularArea.of(
             area.min().multiply(1.0 / divider),
             area.max().multiply(1.0 / divider));
         for (int k = chosenColorComponent == null ? 0 : chosenColorComponent;
@@ -485,7 +485,7 @@ public class IRectangleUnionTest {
             demo.get(k).subMatrix(divided, Matrix.ContinuationMode.NULL_CONSTANT).array().fill(borderValue);
             if (divided.size(0) > 2 && divided.size(1) > 2) {
                 int innerValue = k == 0 ? innerColor.getRed() : k == 1 ? innerColor.getGreen() : innerColor.getBlue();
-                final IRectangularArea inner = IRectangularArea.valueOf(
+                final IRectangularArea inner = IRectangularArea.of(
                     divided.min().addToAllCoordinates(1),
                     divided.max().addToAllCoordinates(-1));
                 demo.get(k).subMatrix(inner, Matrix.ContinuationMode.NULL_CONSTANT).array().fill(innerValue);

@@ -537,7 +537,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
         private RankMorphologyProcessor(int dimCount, Pattern pattern) {
             super(null); // will be replaced by the tiler
             this.dependenceAperture = DependenceApertureBuilder.SUM_MAX_0.getAperture(dimCount, pattern, false);
-            this.emptyAperture = IRectangularArea.valueOf(IPoint.origin(dimCount), IPoint.origin(dimCount));
+            this.emptyAperture = IRectangularArea.of(IPoint.origin(dimCount), IPoint.origin(dimCount));
         }
 
         public RankMorphology parent() { // parent with the correct sub-task context
@@ -575,7 +575,7 @@ public class TiledRankMorphology extends TiledMorphology implements RankMorpholo
         private RankMorphologyInPlaceProcessor(int dimCount, Pattern pattern) {
             super(null); // will be replaced by the tiler
             this.dependenceAperture = DependenceApertureBuilder.SUM_MAX_0.getAperture(dimCount, pattern, false);
-            this.emptyAperture = IRectangularArea.valueOf(IPoint.origin(dimCount), IPoint.origin(dimCount));
+            this.emptyAperture = IRectangularArea.of(IPoint.origin(dimCount), IPoint.origin(dimCount));
         }
 
         public RankMorphology parent() { // parent with the correct sub-task context

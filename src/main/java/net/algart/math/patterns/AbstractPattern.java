@@ -187,7 +187,7 @@ public abstract class AbstractPattern implements Pattern {
         for (int k = 0; k < result.length; k++) {
             result[k] = roundedCoordRange(k);
         }
-        return IRectangularArea.valueOf(result);
+        return IRectangularArea.of(result);
     }
 
     public abstract boolean isSurelySinglePoint();

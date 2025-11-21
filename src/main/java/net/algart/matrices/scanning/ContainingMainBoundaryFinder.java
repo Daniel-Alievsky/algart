@@ -51,7 +51,7 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
 
     private ContainingMainBoundaryFinder(long[] dimensions) {
         super(boolean.class, dimensions);
-        this.matrixRectangle = IRectangularArea.valueOf(0, 0, dimX() - 1, dimY() - 1);
+        this.matrixRectangle = IRectangularArea.of(0, 0, dimX() - 1, dimY() - 1);
         this.brackets = new byte[this.dimX() + 1];
         this.matrixSize = matrixSize();
     }
@@ -258,7 +258,7 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
             minY = Math.min(minY, y);
             maxY = Math.max(maxY, y);
         }
-        return IRectangularArea.valueOf(minX, minY, maxX, maxY);
+        return IRectangularArea.of(minX, minY, maxX, maxY);
     }
 
     public void clear() {

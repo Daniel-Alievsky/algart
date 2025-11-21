@@ -3067,7 +3067,7 @@ public class MainOperationsTest implements Cloneable {
                 }
 
                 Matrices.Region region = rnd.nextBoolean() ?
-                        Matrices.Region.getHyperparallelepiped(IRectangularArea.valueOf(destRanges).ranges()) :
+                        Matrices.Region.getHyperparallelepiped(IRectangularArea.of(destRanges).ranges()) :
                         // simple additional check of IRectangularArea
                         Matrices.Region.getConvexHyperpolyhedron(new double[0], new double[0], destRanges);
                 if (srcDim.length == 2 && rnd.nextBoolean()) {

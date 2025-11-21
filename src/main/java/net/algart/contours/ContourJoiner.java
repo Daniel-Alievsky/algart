@@ -492,7 +492,7 @@ public final class ContourJoiner {
                 }
 
             }
-            this.containingRectangle = containingRectangle = IRectangularArea.valueOf(
+            this.containingRectangle = containingRectangle = IRectangularArea.of(
                     containingMinX, containingMinY, containingMaxX, containingMaxY);
         }
         return containingRectangle;

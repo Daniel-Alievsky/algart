@@ -72,7 +72,7 @@ class SearchIRectangleInHypograph {
     public IRectangularArea largestRectangle() {
         assert largestRectangleFromX < largestRectangleToX;
         assert largestRectangleFromY < largestRectangleToY;
-        return IRectangularArea.valueOf(
+        return IRectangularArea.of(
             largestRectangleFromX, largestRectangleFromY,
             largestRectangleToX - 1, largestRectangleToY - 1);
     }

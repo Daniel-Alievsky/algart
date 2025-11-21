@@ -207,7 +207,7 @@ public final class ContourHeader {
 
     public IRectangularArea containingRectangle() {
         checkContainingRectangle();
-        return IRectangularArea.valueOf(minX, minY, maxX, maxY);
+        return IRectangularArea.of(minX, minY, maxX, maxY);
     }
 
     public void removeContainingRectangle() {
