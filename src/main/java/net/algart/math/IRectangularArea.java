@@ -288,13 +288,13 @@ public class IRectangularArea {
     }
 
     /**
-     * Returns the number of dimensions of this rectangular area.
+     * Returns the number of dimensions.
      * Equivalent to <code>{@link #min()}.{@link IPoint#coordCount() coordCount()}</code>
      * or <code>{@link #max()}.{@link IPoint#coordCount() coordCount()}</code>, but works faster.
      *
      * <p>The result of this method is always positive (&gt;0).
      *
-     * @return the number of dimensions of this rectangular area.
+     * @return the number of dimensions.
      */
     public int coordCount() {
         return min.coordinates.length;

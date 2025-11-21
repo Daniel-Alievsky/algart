@@ -419,7 +419,7 @@ public class Patterns {
      * Equivalent to {@link #newRectangularIntegerPattern newRectangularIntegerPattern(ranges)},
      * where <code>ranges[k]</code> is <code>{@link IRange#valueOf(long, long)
      * IRange.valueOf}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</code>.
-     * The number of dimensions of the created pattern is equal to the number of coordinates
+     * The number of the created pattern dimensions is equal to the number of coordinates
      * of <code>min</code> and <code>max</code> points.
      *
      * <p>The number of coordinates of <code>min</code> and <code>max</code> points must be the same.

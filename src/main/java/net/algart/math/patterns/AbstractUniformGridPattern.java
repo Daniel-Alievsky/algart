@@ -98,7 +98,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         Objects.requireNonNull(stepsOfGrid, "Null stepsOfGrid");
         if (stepsOfGrid.length != originOfGrid.coordCount()) {
             throw new IllegalArgumentException("The number of steps of the grid is not equal "
-                + "to the number of dimensions of the origin");
+                + "to the number of the origin dimensions");
         }
         this.trivialUnionDecomposition = trivialUnionDecomposition;
         this.originOfGrid = originOfGrid;
@@ -1025,9 +1025,9 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
     }
 
     Range coordRange(int coordIndex, IRange gridIndexRange) {
-        return Range.valueOf(
-            gridIndexRange.min() * stepsOfGrid[coordIndex] + originOfGrid.coord(coordIndex),
-            gridIndexRange.max() * stepsOfGrid[coordIndex] + originOfGrid.coord(coordIndex));
+        return Range.of(
+                gridIndexRange.min() * stepsOfGrid[coordIndex] + originOfGrid.coord(coordIndex),
+                gridIndexRange.max() * stepsOfGrid[coordIndex] + originOfGrid.coord(coordIndex));
     }
 
     DirectPointSetUniformGridPattern newCompatiblePattern(Collection<IPoint> gridIndexes) {

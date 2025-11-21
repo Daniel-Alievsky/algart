@@ -3643,7 +3643,7 @@ public class Arrays {
     }
 
     /**
-     * Returns a {@link Range#valueOf(double, double) Range.valueOf(min, max)},
+     * Returns a {@link Range#of(double, double) Range.of(min, max)},
      * where <code>min</code> is equal to the minimal array element
      * and <code>min</code> is equal to the maximal array element.
      * The elements are extracted by <code>array.{@link PArray#getDouble(long)
@@ -3671,14 +3671,14 @@ public class Arrays {
      * the index of maximum, stored in this object, may contain an index of the <b>first</b> such element.
      *
      * <p>If the passed array is empty (its length is 0), the method returns <code>0..0</code> range
-     * ({@link Range#valueOf(double, double) Range.valueOf(0.0, 0.0)}). In this case,
+     * ({@link Range#of(double, double) Range.of(0.0, 0.0)}). In this case,
      * if the <code>minMaxInfo</code> argument is not {@code null},
      * the indexes of the minimum / maximum, stored in this object, will be equal to <code>-1</code>.
      *
      * <p>If the passed array is {@link PFloatingArray}, please note that <code>NaN</code> values are
      * excluded from comparison: this method finds minimums and maximum among all elements, excepting
      * <code>NaN</code>. If all elements of the array are <code>NaN</code>, it is a special case:
-     * this method returns <code>Range.valueOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)</code>.
+     * this method returns <code>Range.of(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)</code>.
      * You can detect this situation with help of {@link MinMaxInfo#allNaN() allNaN()} method of
      * <code>minMaxInfo</code> argument.
      *
@@ -4438,9 +4438,9 @@ public class Arrays {
      * the <code>array</code> argument without changes, in another case it is equivalent to the following operators:
      * <pre>
      *     final Class&lt;PArray&gt; newType = Arrays.type(PArray.class, newElementType);
-     *     final Range destRange = Range.valueOf(0.0, {@link Arrays#maxPossibleValue(Class)
+     *     final Range destRange = Range.of(0.0, {@link Arrays#maxPossibleValue(Class)
      *     Arrays.maxPossibleValue}(newType));
-     *     final Range srcRange = Range.valueOf(0.0, array.{@link PArray#maxPossibleValue(double)
+     *     final Range srcRange = Range.of(0.0, array.{@link PArray#maxPossibleValue(double)
      *     maxPossibleValue(1.0)});
      *     return {@link Arrays#asFuncArray(Func, Class, PArray...)
      *     Arrays.asFuncArray}(LinearFunc.getInstance(destRange, srcRange), newType, array);
@@ -4465,8 +4465,8 @@ public class Arrays {
             return array;
         }
         final Class<PArray> newType = Arrays.type(PArray.class, newElementType);
-        final Range destRange = Range.valueOf(0.0, Arrays.maxPossibleValue(newType));
-        final Range srcRange = Range.valueOf(0.0, array.maxPossibleValue(1.0));
+        final Range destRange = Range.of(0.0, Arrays.maxPossibleValue(newType));
+        final Range srcRange = Range.of(0.0, array.maxPossibleValue(1.0));
         // Note: ranges may be identical for some element type like boolean/float/double
         return asFuncArray(LinearFunc.getInstance(destRange, srcRange), newType, array);
     }
@@ -6981,7 +6981,7 @@ public class Arrays {
             synchronized (lock) {
                 this.indexOfMin = -1;
                 this.indexOfMax = -1;
-                this.range = Range.valueOf(0.0, 0.0);
+                this.range = Range.of(0.0, 0.0);
                 this.allNaN = false;
                 this.initialized = true;
             }
@@ -7007,7 +7007,7 @@ public class Arrays {
                 if (indexOfMin == -1 && indexOfMax == -1) {
                     // case 5): all NaN
                     this.indexOfMin = this.indexOfMax = 0;
-                    this.range = Range.valueOf(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+                    this.range = Range.of(Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
                     // - special "strange" range (Range class does not allow to use NaN)
                     this.allNaN = true;
                 } else {
@@ -7031,7 +7031,7 @@ public class Arrays {
                     }
                     this.indexOfMin = indexOfMin;
                     this.indexOfMax = indexOfMax;
-                    this.range = Range.valueOf(min, max);
+                    this.range = Range.of(min, max);
                     this.allNaN = false;
                 }
                 this.initialized = true;

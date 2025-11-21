@@ -65,7 +65,7 @@ final class MinkowskiSum extends AbstractPattern implements Pattern {
             }
         }
         for (int k = 0; k < dimCount; k++) {
-            this.coordRanges[k] = Range.valueOf(minCoord[k], maxCoord[k]);
+            this.coordRanges[k] = Range.of(minCoord[k], maxCoord[k]);
             checkCoordRange(this.coordRanges[k]);
         }
         this.summands = allSummands.toArray(new Pattern[0]);

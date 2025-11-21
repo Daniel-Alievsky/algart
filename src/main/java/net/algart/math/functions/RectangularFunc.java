@@ -90,7 +90,7 @@ public final class RectangularFunc implements Func {
      *                                  <code>max</code> is <code>NaN</code>.
      */
     public static RectangularFunc getInstance(double min, double max, double in, double out) {
-        return new RectangularFunc(Range.valueOf(min, max), in, out);
+        return new RectangularFunc(Range.of(min, max), in, out);
     }
 
     /**

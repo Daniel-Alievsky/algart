@@ -299,7 +299,7 @@ public class Point implements Comparable<Point> {
      * Copies all coordinates of this point into <code>result</code> array.
      * The element <code>#0</code> of this array will contain <i>x</i>-coordinate,
      * the element <code>#1</code> will contain <i>y</i>-coordinate, etc.
-     * The length of the passed array must be not less than the number of dimensions of this point.
+     * The length of the passed array must be not less than the number of the point dimensions.
      *
      * @param result the array where you want to store results.
      * @return a reference to the passed <code>result</code> array.

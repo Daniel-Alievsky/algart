@@ -195,7 +195,7 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
                 }
             }
         }
-        return weightRange = Range.valueOf(min, max);
+        return weightRange = Range.of(min, max);
     }
 
     int weightIndex(IPoint point) {

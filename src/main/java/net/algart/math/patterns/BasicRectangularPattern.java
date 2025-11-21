@@ -53,7 +53,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         Objects.requireNonNull(gridIndexRanges, "Null coordinate ranges argument");
         if (gridIndexRanges.length != originOfGrid.coordCount()) {
             throw new IllegalArgumentException("The number of coordinate ranges is not equal "
-                + "to the number of dimensions of the origin");
+                + "to the number of origin dimensions");
         }
         System.arraycopy(gridIndexRanges, 0, this.gridIndexRanges, 0, gridIndexRanges.length);
         long count = 1;
@@ -68,7 +68,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             }
             largeCount *= size;
         }
-        this.gridIndexArea = IRectangularArea.valueOf(this.gridIndexRanges);
+        this.gridIndexArea = IRectangularArea.of(this.gridIndexRanges);
         this.pointCount = count == Long.MIN_VALUE ? Long.MAX_VALUE : count;
         this.largePointCount = count == Long.MIN_VALUE ? largeCount : count;
         this.veryLarge = count == Long.MIN_VALUE;

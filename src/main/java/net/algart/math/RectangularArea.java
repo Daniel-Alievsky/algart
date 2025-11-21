@@ -186,9 +186,9 @@ public class RectangularArea {
      * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(Point, Point) valueOf}(
-     *      {@link Point#valueOf(double...) Point.valueOf}(minX, minY),
-     *      {@link Point#valueOf(double...) Point.valueOf}(maxX, maxY));
+     * {@link #of(Point, Point) of}(
+     *      {@link Point#of(double...) Point.of}(minX, minY),
+     *      {@link Point#of(double...) Point.of}(maxX, maxY));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
@@ -196,12 +196,10 @@ public class RectangularArea {
      * @param maxX the maximal <i>x</i>-coordinate, inclusive.
      * @param maxY the maximal <i>y</i>-coordinate, inclusive.
      * @return the new 2-dimensional rectangle.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(Point, Point)} method.
      */
     public static RectangularArea of(double minX, double minY, double maxX, double maxY) {
-        return valueOf(
-                Point.valueOf(minX, minY),
-                Point.valueOf(maxX, maxY));
+        return of(Point.of(minX, minY), Point.of(maxX, maxY));
     }
 
     @Deprecated
@@ -213,9 +211,9 @@ public class RectangularArea {
      * Returns a 3-dimensional parallelepiped with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(Point, Point) valueOf}(
-     *      {@link Point#valueOf(double...) Point.valueOf}(minX, minY, minZ),
-     *      {@link Point#valueOf(double...) Point.valueOf}(maxX, maxY, maxZ));
+     * {@link #of(Point, Point) of}(
+     *      {@link Point#of(double...) Point.of}(minX, minY, minZ),
+     *      {@link Point#of(double...) Point.of}(maxX, maxY, maxZ));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
@@ -225,12 +223,10 @@ public class RectangularArea {
      * @param maxY the maximal <i>y</i>-coordinate, inclusive.
      * @param maxZ the maximal <i>z</i>-coordinate, inclusive.
      * @return the new 3-dimensional parallelepiped.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(Point, Point)} method.
      */
     public static RectangularArea of(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-        return valueOf(
-                Point.valueOf(minX, minY, minZ),
-                Point.valueOf(maxX, maxY, maxZ));
+        return of(Point.of(minX, minY, minZ), Point.of(maxX, maxY, maxZ));
     }
 
     @Deprecated
@@ -248,9 +244,9 @@ public class RectangularArea {
      * All <code>long</code> coordinates of the passed area are converted
      * to <code>double</code> coordinates of the returned area by standard
      * Java typecast <code>(double)longValue</code>.
-     * Equivalent to <code>{@link #valueOf(Point, Point) valueOf}({@link Point#valueOf(IPoint)
-     * Point.valueOf}(iArea.{@link #min() min()}),&nbsp;{@link Point#valueOf(IPoint)
-     * Point.valueOf}(iArea.{@link #max() max()}))</code>.
+     * Equivalent to <code>{@link #of(Point, Point) of}({@link Point#of(IPoint)
+     * Point.of}(iArea.{@link #min() min()}),&nbsp;{@link Point#of(IPoint)
+     * Point.of}(iArea.{@link #max() max()}))</code>.
      *
      * @param iArea the integer rectangular area.
      * @return the real rectangular area with same coordinates.
@@ -258,8 +254,8 @@ public class RectangularArea {
      */
     public static RectangularArea of(IRectangularArea iArea) {
         Objects.requireNonNull(iArea, "Null iArea argument");
-        return new RectangularArea(Point.valueOf(iArea.min), Point.valueOf(iArea.max));
-        // integer min and max, converted to real, are always acceptable for valueOf(Point min, Point max) method
+        return new RectangularArea(Point.of(iArea.min), Point.of(iArea.max));
+        // integer min and max, converted to real, are always acceptable for of(Point min, Point max) method
     }
 
     @Deprecated
@@ -268,13 +264,13 @@ public class RectangularArea {
     }
 
     /**
-     * Returns the number of dimensions of this rectangular area.
+     * Returns the number of dimensions.
      * Equivalent to <code>{@link #min()}.{@link Point#coordCount() coordCount()}</code>
      * or <code>{@link #max()}.{@link Point#coordCount() coordCount()}</code>, but works faster.
      *
      * <p>The result of this method is always positive (&gt;0).
      *
-     * @return the number of dimensions of this rectangular area.
+     * @return the number of dimensions.
      */
     public int coordCount() {
         return min.coordinates.length;

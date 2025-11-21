@@ -137,7 +137,7 @@ public final class ApertureFilterOperator implements Operator {
      *
      * <p>The aperture {<b>a</b><sub><i>i</i></sub>}, <i>i</i>=0,1,...,<i>m</i>-1 is defined by
      * <code>apertureDim</code>, <code>apertureFrom</code>, <code>apertureSteps</code> arguments. Namely,
-     * the number of dimensions of the space for the new operator will be equal to <code>apertureDim.length</code>,
+     * the number of the space dimensions for the new operator will be equal to <code>apertureDim.length</code>,
      * and the aperture will consist of the following points
      * <b>a</b><sub><i>i</i></sub> = (<i>a</i><sub><i>i</i>0</sub>, <i>a</i><sub><i>i</i>1</sub>,
      * ..., <i>a</i><sub><i>i</i>,<i>n</i>-1</sub>):
@@ -301,23 +301,23 @@ public final class ApertureFilterOperator implements Operator {
     }
 
     /**
-     * Returns the number of dimensions of the aperture of this filter.
+     * Returns the number of dimensions in the aperture of this filter.
      * The result is equal to the length of <code>apertureDim</code> array, passed to all generation methods.
      *
-     * @return the number of dimensions of the aperture of this filter.
+     * @return the number of dimensions in the aperture of this filter.
      */
     public int n() {
         return apertureDim.length;
     }
 
     /**
-     * Returns the dimensions of the aperture of this filter.
+     * Returns the dimensions in the aperture of this filter.
      * The result is equal to <code>apertureDim</code> array, passed to all generation methods.
      *
      * <p>The returned array is a clone of the internal dimension array stored in this object.
      * The returned array is never empty (its length cannot be zero).
      *
-     * @return the dimensions of the aperture of this filter.
+     * @return the dimensions in the aperture of this filter.
      */
     public long[] apertureDim() {
         return apertureDim.clone();

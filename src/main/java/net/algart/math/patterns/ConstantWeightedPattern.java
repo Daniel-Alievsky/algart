@@ -55,6 +55,6 @@ class ConstantWeightedPattern extends AbstractWeightedPattern implements Weighte
     }
 
     public Range weightRange() {
-        return Range.valueOf(constantWeight, constantWeight);
+        return Range.of(constantWeight, constantWeight);
     }
 }
