@@ -39,12 +39,12 @@ import java.util.Set;
  */
 public class LargePatternTest {
     public static void main(String[] args) {
-        Pattern p1 = Patterns.newRectangularIntegerPattern(IPoint.valueOf(0, 0), IPoint.valueOf(20, 20));
+        Pattern p1 = Patterns.newRectangularIntegerPattern(IPoint.of(0, 0), IPoint.of(20, 20));
         Set<IPoint> points = new HashSet<IPoint>();
         for (int k = 0; k < 1000; k++) {
-            points.add(IPoint.valueOf(k, k));
-            points.add(IPoint.valueOf(2000000000 + k, k));
-            points.add(IPoint.valueOf(k, 2000000000 + k));
+            points.add(IPoint.of(k, k));
+            points.add(IPoint.of(2000000000 + k, k));
+            points.add(IPoint.of(k, 2000000000 + k));
         }
         Pattern p2 = Patterns.newIntegerPattern(points);
         Pattern pSum = Patterns.newMinkowskiSum(p1, p2);

@@ -970,8 +970,8 @@ public class IRectanglesUnion {
             // Note: in boundaries, built by this class, last.isHorizontal() != link.isHorizontal(),
             // but this may be not so in third-party boundaries.
             result.add(link.isHorizontal() ?
-                IPoint.valueOf(secondCoord, coord) :
-                IPoint.valueOf(coord, secondCoord));
+                    IPoint.of(secondCoord, coord) :
+                    IPoint.of(coord, secondCoord));
             last = link;
         }
         if (DEBUG_LEVEL >= 3) {
@@ -999,8 +999,8 @@ public class IRectanglesUnion {
                     ? lastFirst ? link.to : link.to - 1
                     : lastFirst ? link.from : link.from - 1;
             result.add(link.isHorizontal() ?
-                IPoint.valueOf(secondCoord, coord) :
-                IPoint.valueOf(coord, secondCoord));
+                    IPoint.of(secondCoord, coord) :
+                    IPoint.of(coord, secondCoord));
             last = link;
         }
         if (DEBUG_LEVEL >= 1) {

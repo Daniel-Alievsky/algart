@@ -38,9 +38,9 @@ import java.util.Objects;
 
 public final class MatrixPairMorphology {
     private static final Pattern CROSS = Patterns.newIntegerPattern(
-            IPoint.valueOf(0, 0),
-            IPoint.valueOf(1, 0), IPoint.valueOf(0, 1),
-            IPoint.valueOf(-1, 0), IPoint.valueOf(0, -1));
+            IPoint.of(0, 0),
+            IPoint.of(1, 0), IPoint.of(0, 1),
+            IPoint.of(-1, 0), IPoint.of(0, -1));
 
     private static final Morphology MULTITHREADING_MORPHOLOGY =
             BasicMorphology.getInstance(null);
@@ -183,21 +183,21 @@ public final class MatrixPairMorphology {
             dilationBySquare3x3.filter(work, result);
             swap();
         } else {
-            shiftAndSwap(IPoint.valueOf(minX, minY));
-            final IPoint origin = IPoint.valueOf(0, 0);
+            shiftAndSwap(IPoint.of(minX, minY));
+            final IPoint origin = IPoint.of(0, 0);
             long i = 1;
             for (; 2 * i <= sizeX; i *= 2) {
-                dilationAndSwap(origin, IPoint.valueOf(i, 0));
+                dilationAndSwap(origin, IPoint.of(i, 0));
             }
             if (i < sizeX) {
-                dilationAndSwap(origin, IPoint.valueOf(sizeX - i, 0));
+                dilationAndSwap(origin, IPoint.of(sizeX - i, 0));
             }
             i = 1;
             for (; 2 * i <= sizeY; i *= 2) {
-                dilationAndSwap(origin, IPoint.valueOf(0, i));
+                dilationAndSwap(origin, IPoint.of(0, i));
             }
             if (i < sizeY) {
-                dilationAndSwap(origin, IPoint.valueOf(0, sizeY - i));
+                dilationAndSwap(origin, IPoint.of(0, sizeY - i));
             }
         }
         if (provideResult) {
@@ -279,21 +279,21 @@ public final class MatrixPairMorphology {
             erosionBySquare3x3.filter(work, result);
             swap();
         } else {
-            shiftBackAndSwap(IPoint.valueOf(minX, minY));
-            final IPoint origin = IPoint.valueOf(0, 0);
+            shiftBackAndSwap(IPoint.of(minX, minY));
+            final IPoint origin = IPoint.of(0, 0);
             long i = 1;
             for (; 2 * i <= sizeX; i *= 2) {
-                erosionAndSwap(origin, IPoint.valueOf(i, 0));
+                erosionAndSwap(origin, IPoint.of(i, 0));
             }
             if (i < sizeX) {
-                erosionAndSwap(origin, IPoint.valueOf(sizeX - i, 0));
+                erosionAndSwap(origin, IPoint.of(sizeX - i, 0));
             }
             i = 1;
             for (; 2 * i <= sizeY; i *= 2) {
-                erosionAndSwap(origin, IPoint.valueOf(0, i));
+                erosionAndSwap(origin, IPoint.of(0, i));
             }
             if (i < sizeY) {
-                erosionAndSwap(origin, IPoint.valueOf(0, sizeY - i));
+                erosionAndSwap(origin, IPoint.of(0, sizeY - i));
             }
         }
         if (provideResult) {

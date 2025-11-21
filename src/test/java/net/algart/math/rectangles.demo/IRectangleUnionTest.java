@@ -81,12 +81,8 @@ public class IRectangleUnionTest {
             for (int k = 1; k < description.length; k++) {
                 final String[] rectangle = description[k].split("[\\s,]+");
                 rectangles.add(IRectangularArea.valueOf(
-                    IPoint.valueOf(
-                        Integer.parseInt(rectangle[0]),
-                        Integer.parseInt(rectangle[1])),
-                    IPoint.valueOf(
-                        Integer.parseInt(rectangle[2]),
-                        Integer.parseInt(rectangle[3]))));
+                        IPoint.of(Integer.parseInt(rectangle[0]), Integer.parseInt(rectangle[1])),
+                        IPoint.of(Integer.parseInt(rectangle[2]), Integer.parseInt(rectangle[3]))));
             }
         } else {
             System.out.println("Creating rectangles...");

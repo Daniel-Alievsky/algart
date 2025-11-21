@@ -127,10 +127,10 @@ public class AnalyseSkeletonConfigurations {
     private static final int BUFFER_LENGTH = 16384;
 
     private static final Pattern SQUARE_3X3 = Patterns.newRectangularIntegerPattern(
-        IPoint.valueOf(-1, -1), IPoint.valueOf(1, 1));
+            IPoint.of(-1, -1), IPoint.of(1, 1));
     private static final Pattern TWO_RECTANGLES_3X5 = Patterns.newUnion(
-        Patterns.newRectangularIntegerPattern(IPoint.valueOf(-2, -1), IPoint.valueOf(2, 1)),
-        Patterns.newRectangularIntegerPattern(IPoint.valueOf(-1, -2), IPoint.valueOf(1, 2)));
+        Patterns.newRectangularIntegerPattern(IPoint.of(-2, -1), IPoint.of(2, 1)),
+        Patterns.newRectangularIntegerPattern(IPoint.of(-1, -2), IPoint.of(1, 2)));
 
     // C C C C C C C D
     // C B B B B B C D

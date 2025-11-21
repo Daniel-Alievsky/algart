@@ -886,8 +886,8 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         if (!(allShiftsAreZero && originOfGrid.isOrigin())) {
             result.add(new OnePointPattern(IPoint.of(shifts).scaleAndShift(stepsOfGrid, originOfGrid)));
             // It's better than correction of the last pattern:
-            // one-point pattens may be usually processed very quickly (lazily),
-            // and two-point pattern are usually processed better if they have positive points only.
+            // one-point pattens may usually be processed very quickly (lazily),
+            // and two-point patterns are usually processed better if they have positive points only.
         }
         result = Collections.unmodifiableList(result);
         if (minimalPointCount < minkowskiDecompositions.size()) {

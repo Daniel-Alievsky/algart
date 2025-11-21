@@ -365,7 +365,7 @@ public class VerifySkeletonConnectivity {
             throw new AssertionError(exception.get());
         }
         Set<IPoint> points = new HashSet<IPoint>();
-        points.add(IPoint.valueOf(0, 0));
+        points.add(IPoint.of(0, 0));
         for (int bitIndex = 0; bitIndex < 24; bitIndex++) {
             boolean dependent = false;
             int mask = 1 << bitIndex;
@@ -377,7 +377,7 @@ public class VerifySkeletonConnectivity {
             }
             if (dependent) {
                 int matrixIndex = bitIndex < 12 ? bitIndex : bitIndex + 1;
-                points.add(IPoint.valueOf(matrixIndex % 5 - 2, matrixIndex / 5 - 2));
+                points.add(IPoint.of(matrixIndex % 5 - 2, matrixIndex / 5 - 2));
             }
         }
         long t2 = System.nanoTime();

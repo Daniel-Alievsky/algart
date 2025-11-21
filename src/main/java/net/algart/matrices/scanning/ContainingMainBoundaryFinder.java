@@ -327,7 +327,7 @@ public class ContainingMainBoundaryFinder extends Abstract2DProcessor {
             clearBitsOutside(result);
             subResult.array().copy(source.subMatrix(r).array());
         }
-        return IPoint.valueOf(found, r.minY());
+        return IPoint.of(found, r.minY());
     }
 
     private long findUnsortedVerticalSegmentsAndReturnLeftX(long x, long y) {
