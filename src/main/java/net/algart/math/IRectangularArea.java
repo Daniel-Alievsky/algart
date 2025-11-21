@@ -110,7 +110,7 @@ public class IRectangularArea {
      *                                  coord}(<i>i</i>) == Long.MAX_VALUE</code>.
      */
     public static IRectangularArea of(IPoint min, IPoint max) {
-        return valueOf(min, max, false);
+        return of(min, max, false);
     }
 
     @Deprecated
@@ -175,9 +175,7 @@ public class IRectangularArea {
      * @throws IllegalArgumentException in the same situations as {@link #of(IPoint, IPoint)} method.
      */
     public static IRectangularArea of(long minX, long maxX) {
-        return valueOf(
-                IPoint.valueOf(minX),
-                IPoint.valueOf(maxX));
+        return of(IPoint.of(minX), IPoint.of(maxX));
     }
 
     @Deprecated
@@ -203,9 +201,7 @@ public class IRectangularArea {
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
      */
     public static IRectangularArea of(long minX, long minY, long maxX, long maxY) {
-        return valueOf(
-                IPoint.valueOf(minX, minY),
-                IPoint.valueOf(maxX, maxY));
+        return of(IPoint.of(minX, minY), IPoint.of(maxX, maxY));
     }
 
     @Deprecated
@@ -217,9 +213,9 @@ public class IRectangularArea {
      * Returns a 3-dimensional parallelepiped with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(IPoint, IPoint) valueOf}(
-     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(minX, minY, minZ),
-     *      {@link IPoint#valueOf(long...) IPoint.valueOf}(maxX, maxY, maxZ));
+     * {@link #of(IPoint, IPoint) of}(
+     *      {@link IPoint#of(long...) IPoint.of}(minX, minY, minZ),
+     *      {@link IPoint#of(long...) IPoint.of}(maxX, maxY, maxZ));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
@@ -229,12 +225,10 @@ public class IRectangularArea {
      * @param maxY the maximal <i>y</i>-coordinate, inclusive.
      * @param maxZ the maximal <i>z</i>-coordinate, inclusive.
      * @return the new 3-dimensional parallelepiped.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(IPoint, IPoint)} method.
      */
     public static IRectangularArea of(long minX, long minY, long minZ, long maxX, long maxY, long maxZ) {
-        return valueOf(
-                IPoint.valueOf(minX, minY, minZ),
-                IPoint.valueOf(maxX, maxY, maxZ));
+        return of(IPoint.of(minX, minY, minZ), IPoint.of(maxX, maxY, maxZ));
     }
 
     @Deprecated
@@ -262,7 +256,7 @@ public class IRectangularArea {
      */
     public static IRectangularArea of(RectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
-        return of(IPoint.valueOf(area.min), IPoint.valueOf(area.max));
+        return of(IPoint.of(area.min), IPoint.of(area.max));
     }
 
     @Deprecated
@@ -280,7 +274,7 @@ public class IRectangularArea {
      * IPoint.roundOf}(area.{@link #max() max()}))</code>.
      *
      * @param area the real rectangular area.
-     * @return the integer rectangular area with same (rounded) coordinates.
+     * @return the integer rectangular area with the same (rounded) coordinates.
      * @throws NullPointerException     if the passed area is {@code null}.
      * @throws IllegalArgumentException if the points <code>{@link IPoint#valueOf(Point)
      *                                  IPoint.valueOf}(area.{@link #min() min()})</code>
@@ -1121,7 +1115,7 @@ public class IRectangularArea {
 
     /**
      * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(coordinates)), but works faster because does not require to create an instance
+     * IPoint.valueOf}(coordinates)), but works faster because does not require creating an instance
      * of {@link IPoint} class.
      *
      * @param coordinates coordinates of some point.
@@ -1155,7 +1149,7 @@ public class IRectangularArea {
 
     /**
      * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(x, y)), but works faster because does not require to allocate any objects.
+     * IPoint.valueOf}(x, y)), but works faster because does not require allocating any objects.
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1183,7 +1177,7 @@ public class IRectangularArea {
 
     /**
      * Equivalent to {@link #parallelDistance(IPoint) parallelDistance}({@link IPoint#valueOf(long...)
-     * IPoint.valueOf}(x, y, z)), but works faster because does not require to allocate any objects.
+     * IPoint.valueOf}(x, y, z)), but works faster because does not require allocating any objects.
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1512,7 +1506,7 @@ public class IRectangularArea {
                 && ((IRectangularArea) obj).min.equals(this.min) && ((IRectangularArea) obj).max.equals(this.max);
     }
 
-    static IRectangularArea valueOf(IPoint min, IPoint max, boolean ise) {
+    static IRectangularArea of(IPoint min, IPoint max, boolean ise) {
         Objects.requireNonNull(min, "Null min vertex");
         Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;

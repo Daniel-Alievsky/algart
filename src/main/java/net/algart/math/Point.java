@@ -997,7 +997,7 @@ public class Point implements Comparable<Point> {
     /**
      * Equivalent to <code>{@link IPoint#roundOf(Point) IPoint.roundOf}(thisInstance)</code>.
      *
-     * @return the integer point with same (rounded) coordinates.
+     * @return the integer point with the same (rounded) coordinates.
      */
     public IPoint toRoundedPoint() {
         return IPoint.roundOf(this);

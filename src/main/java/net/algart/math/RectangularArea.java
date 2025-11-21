@@ -90,7 +90,7 @@ public class RectangularArea {
      *                                  &gt; max.{@link Point#coord(int) coord}(<i>i</i>)</code>,
      *                                  or if one of these coordinates is <code>Double.NaN</code>.
      */
-    public static RectangularArea valueOf(Point min, Point max) {
+    public static RectangularArea of(Point min, Point max) {
         Objects.requireNonNull(min, "Null min vertex");
         Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;
@@ -113,6 +113,11 @@ public class RectangularArea {
         return new RectangularArea(min, max);
     }
 
+    @Deprecated
+    public static RectangularArea valueOf(Point min, Point max) {
+        return of(min, max);
+    }
+
     /**
      * Returns the Cartesian product of the specified coordinate ranges.
      * More precisely, return an <i>n</i>-dimensional {@link RectangularArea rectangular area}
@@ -130,7 +135,7 @@ public class RectangularArea {
      *                                  or if one of specified <code>coordRanges</code> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
-    public static RectangularArea valueOf(Range... coordRanges) {
+    public static RectangularArea of(Range... coordRanges) {
         Objects.requireNonNull(coordRanges, "Null coordRanges argument");
         int n = coordRanges.length;
         if (n == 0) {
@@ -150,6 +155,10 @@ public class RectangularArea {
         return new RectangularArea(new Point(min), new Point(max));
     }
 
+    public static RectangularArea valueOf(Range... coordRanges) {
+        return of(coordRanges);
+    }
+
     /**
      * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
      * Equivalent to
@@ -164,10 +173,13 @@ public class RectangularArea {
      * @return the new 1-dimensional rectangular area.
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
      */
+    public static RectangularArea of(double minX, double maxX) {
+        return of(Point.of(minX), Point.of(maxX));
+    }
+
+    @Deprecated
     public static RectangularArea valueOf(double minX, double maxX) {
-        return valueOf(
-                Point.valueOf(minX),
-                Point.valueOf(maxX));
+        return of(minX, maxX);
     }
 
     /**
@@ -186,10 +198,15 @@ public class RectangularArea {
      * @return the new 2-dimensional rectangle.
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
      */
-    public static RectangularArea valueOf(double minX, double minY, double maxX, double maxY) {
+    public static RectangularArea of(double minX, double minY, double maxX, double maxY) {
         return valueOf(
                 Point.valueOf(minX, minY),
                 Point.valueOf(maxX, maxY));
+    }
+
+    @Deprecated
+    public static RectangularArea valueOf(double minX, double minY, double maxX, double maxY) {
+        return of(minX, minY, maxX, maxY);
     }
 
     /**
@@ -210,6 +227,13 @@ public class RectangularArea {
      * @return the new 3-dimensional parallelepiped.
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(Point, Point)} method.
      */
+    public static RectangularArea of(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+        return valueOf(
+                Point.valueOf(minX, minY, minZ),
+                Point.valueOf(maxX, maxY, maxZ));
+    }
+
+    @Deprecated
     public static RectangularArea valueOf(
             double minX,
             double minY,
@@ -217,11 +241,8 @@ public class RectangularArea {
             double maxX,
             double maxY,
             double maxZ) {
-        return valueOf(
-                Point.valueOf(minX, minY, minZ),
-                Point.valueOf(maxX, maxY, maxZ));
+        return of(minX, minY, minZ, maxX, maxY, maxZ);
     }
-
     /**
      * Returns a new rectangular area with the same coordinates as the given area.
      * All <code>long</code> coordinates of the passed area are converted
@@ -235,10 +256,15 @@ public class RectangularArea {
      * @return the real rectangular area with same coordinates.
      * @throws NullPointerException if the passed area is {@code null}.
      */
-    public static RectangularArea valueOf(IRectangularArea iArea) {
+    public static RectangularArea of(IRectangularArea iArea) {
         Objects.requireNonNull(iArea, "Null iArea argument");
         return new RectangularArea(Point.valueOf(iArea.min), Point.valueOf(iArea.max));
         // integer min and max, converted to real, are always acceptable for valueOf(Point min, Point max) method
+    }
+
+    @Deprecated
+    public static RectangularArea valueOf(IRectangularArea iArea) {
+        return of(iArea);
     }
 
     /**
@@ -278,7 +304,7 @@ public class RectangularArea {
 
     /**
      * Returns all sizes of this rectangular area in a form of {@link Point}.
-     * Equivalent to <code>{@link Point#valueOf(double...) Point.valueOf}({@link #sizes()})</code>.
+     * Equivalent to <code>{@link Point#of(double...) Point.of}({@link #sizes()})</code>.
      * The returned point is equal to
      * <code>{@link #max()}.{@link Point#subtract(Point) subtract}({@link #min()})</code>.
      *
@@ -459,12 +485,12 @@ public class RectangularArea {
     }
 
     /**
-     * Returns <code>{@link Range}.{@link Range#valueOf(double, double)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
+     * Returns <code>{@link Range}.{@link Range#of(double, double)
+     * of}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      *
      * @param coordIndex the index of the coordinate.
-     * @return <code>{@link Range}.{@link Range#valueOf(double, double)
-     * valueOf}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
+     * @return <code>{@link Range}.{@link Range#of(double, double)
+     * of}({@link #min(int) min}(coordIndex), {@link #max(int) max}(coordIndex))</code>.
      */
     public Range range(int coordIndex) {
         return new Range(min.coordinates[coordIndex], max.coordinates[coordIndex]);
@@ -480,7 +506,7 @@ public class RectangularArea {
     public Range[] ranges() {
         Range[] ranges = new Range[min.coordinates.length];
         for (int k = 0; k < ranges.length; k++) {
-            ranges[k] = Range.valueOf(min.coordinates[k], max.coordinates[k]);
+            ranges[k] = Range.of(min.coordinates[k], max.coordinates[k]);
         }
         return ranges;
     }
@@ -656,8 +682,8 @@ public class RectangularArea {
      * do not {@link #intersects(RectangularArea) intersect}
      * (<b>A</b>&nbsp;&cap;&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;).
      * Equivalent to
-     * <pre>thisInstance.{@link #intersects(RectangularArea) intersects}(area) ? {@link #valueOf(Point, Point)
-     * RectangularArea.valueOf}(
+     * <pre>thisInstance.{@link #intersects(RectangularArea) intersects}(area) ? {@link #of(Point, Point)
+     * RectangularArea.of}(
      * thisInstance.{@link #min()}.{@link Point#max(Point) max}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link Point#min(Point) min}(area.{@link #max()})) :
      * null</pre>.
@@ -770,12 +796,12 @@ public class RectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k];
-                results.add(new RectangularArea(Point.valueOf(min), Point.valueOf(max)));
+                results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k];
                 max[k] = this.max.coordinates[k];
-                results.add(new RectangularArea(Point.valueOf(min), Point.valueOf(max)));
+                results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             min[k] = Math.max(area.min.coordinates[k], this.min.coordinates[k]);
             max[k] = Math.min(area.max.coordinates[k], this.max.coordinates[k]);
@@ -909,7 +935,7 @@ public class RectangularArea {
      *                                  <code>thisInstance.{@link #min()}.{@link Point#min(Point) min}(point)</code>
      *                                  and
      *                                  <code>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</code>
-     *                                  do not match requirements of {@link #valueOf(Point, Point)} method.
+     *                                  do not match requirements of {@link #of(Point, Point)} method.
      */
     public RectangularArea expand(Point point) {
         if (contains(point)) {
@@ -922,13 +948,13 @@ public class RectangularArea {
             newMin[k] = Math.min(min.coordinates[k], point.coordinates[k]);
             newMax[k] = Math.max(max.coordinates[k], point.coordinates[k]);
         }
-        return valueOf(new Point(newMin), new Point(newMax));
+        return of(new Point(newMin), new Point(newMax));
     }
 
     /**
      * Returns the minimal rectangular area, containing this and the passed area.
      * Equivalent to
-     * <pre>{@link #valueOf(Point, Point) RectangularArea.valueOf}(
+     * <pre>{@link #of(Point, Point) RectangularArea.of}(
      * thisInstance.{@link #min()}.{@link Point#min(Point) min}(area.{@link #min()}),
      * thisInstance.{@link #max()}.{@link Point#max(Point) max}(area.{@link #max()}))</pre>.
      *
@@ -984,7 +1010,7 @@ public class RectangularArea {
                 max[k] = Math.max(max[k], area.max(k));
             }
         }
-        return RectangularArea.valueOf(new Point(min), new Point(max));
+        return RectangularArea.of(new Point(min), new Point(max));
     }
 
     /**
@@ -1029,8 +1055,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(coordinates)), but works faster because does not require to create an instance
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(coordinates)), but works faster because does not require creating an instance
      * of {@link Point} class.
      *
      * @param coordinates coordinates of some point.
@@ -1063,8 +1089,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(x, y)), but works faster because does not require to allocate any objects.
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(x, y)), but works faster because does not require allocating any objects.
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1091,8 +1117,8 @@ public class RectangularArea {
     }
 
     /**
-     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#valueOf(double...)
-     * Point.valueOf}(x, y, z)), but works faster because does not require to allocate any objects.
+     * Equivalent to {@link #parallelDistance(Point) parallelDistance}({@link Point#of(double...)
+     * Point.of}(x, y, z)), but works faster because does not require allocating any objects.
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
@@ -1129,8 +1155,8 @@ public class RectangularArea {
     /**
      * Shifts this rectangular area by the specified vector and returns the shifted area.
      * Equivalent to
-     * <pre>{@link #valueOf(Point, Point)
-     * valueOf}(thisInstance.{@link #min()}.{@link Point#add(Point)
+     * <pre>{@link #of(Point, Point)
+     * of}(thisInstance.{@link #min()}.{@link Point#add(Point)
      * add}(vector), thisInstance.{@link #max()}.{@link Point#add(Point) add}(vector))</pre>
      *
      * @param vector the vector which is added to all vertices of this area.
@@ -1155,8 +1181,8 @@ public class RectangularArea {
      * Shifts this rectangular area by <code>vector.{@link Point#symmetric() symmetric()}</code>
      * and returns the shifted area.
      * Equivalent to
-     * <pre>{@link #valueOf(Point, Point)
-     * valueOf}(thisInstance.{@link #min()}.{@link Point#subtract(Point)
+     * <pre>{@link #of(Point, Point)
+     * of}(thisInstance.{@link #min()}.{@link Point#subtract(Point)
      * subtract}(vector), thisInstance.{@link #max()}.{@link Point#subtract(Point) subtract}(vector))</pre>
      *
      * @param vector the vector which is subtracted from all vertices of this area.
@@ -1180,7 +1206,7 @@ public class RectangularArea {
     /**
      * Returns this rectangular area, dilated (expanded) according the argument. More precisely, returns
      *
-     * <pre>RectangularArea.valueOf(
+     * <pre>RectangularArea.of(
      * thisInstance.{@link #min() min()}.{@link Point#subtract(Point) subtract}(expansion),
      * thisInstance.{@link #max() max()}.{@link Point#add(Point) add}(expansion))</pre>
      *
@@ -1193,7 +1219,7 @@ public class RectangularArea {
      * @throws IllegalArgumentException if <code>expansion.{@link #coordCount() coordCount()}</code> is not equal to
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(Point, Point)} method).
+     *                                  {@link #of(Point, Point)} method).
      */
     public RectangularArea dilate(Point expansion) {
         Objects.requireNonNull(expansion, "Null expansion");
@@ -1204,18 +1230,18 @@ public class RectangularArea {
         if (expansion.isOrigin()) {
             return this;
         }
-        return RectangularArea.valueOf(min().subtract(expansion), max().add(expansion));
+        return RectangularArea.of(min().subtract(expansion), max().add(expansion));
     }
 
     /**
-     * Equivalent to <code>{@link #dilate(Point) dilate}(Point.valueOfEqualCoordinates(thisObjects.{@link
+     * Equivalent to <code>{@link #dilate(Point) dilate}(Point.ofEqualCoordinates(thisObjects.{@link
      * #coordCount() coordCount()}, expansion)</code>.
      *
      * @param expansion how to dilate this area.
      * @return dilated area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(Point, Point)} method).
+     *                                  {@link #of(Point, Point)} method).
      */
     public RectangularArea dilate(double expansion) {
         return dilate(Point.ofEqualCoordinates(coordCount(), expansion));
@@ -1235,7 +1261,7 @@ public class RectangularArea {
      *     ddddddddddd
      * </pre>
      * This figure shows dilation of some 2-dimensional rectangle <code><b>R</b></code> by
-     * expansion=<code>Point.valueOf(2,1)</code>:
+     * expansion=<code>Point.of(2,1)</code>:
      * the results consist of the original rectangle and 4 rectangles <code>a</code>, <code>b</code> (height 1) and
      * <code>c</code>, <code>d</code> (width 2).
      *
@@ -1255,7 +1281,7 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of this instance,
      *                                  or if one of coordinates of <code>expansion</code> is negative,
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(Point, Point)} method).
+     *                                  {@link #of(Point, Point)} method).
      */
     public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, Point expansion) {
         Objects.requireNonNull(results, "Null results");
@@ -1280,10 +1306,10 @@ public class RectangularArea {
             final double saveMax = max[k];
             min[k] = saveMin - delta;
             max[k] = saveMin;
-            results.add(RectangularArea.valueOf(Point.valueOf(min), Point.valueOf(max)));
+            results.add(RectangularArea.of(Point.of(min), Point.of(max)));
             min[k] = saveMax;
             max[k] = saveMax + delta;
-            results.add(RectangularArea.valueOf(Point.valueOf(min), Point.valueOf(max)));
+            results.add(RectangularArea.of(Point.of(min), Point.of(max)));
             min[k] = saveMin;
             max[k] = saveMax;
         }
@@ -1292,7 +1318,7 @@ public class RectangularArea {
 
     /**
      * Equivalent to <code>{@link #dilateStraightOnly(List, Point)
-     * dilateStraightOnly}(results, Point.valueOfEqualCoordinates(thisObjects.{@link
+     * dilateStraightOnly}(results, Point.ofEqualCoordinates(thisObjects.{@link
      * #coordCount() coordCount()}, expansion)</code>.
      *
      * @param results   the list to store results (new areas will be added to the end of this list).
@@ -1301,7 +1327,7 @@ public class RectangularArea {
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>expansion &lt; 0</code>
      *                                  or if the result area will be incorrect (see comments to
-     *                                  {@link #valueOf(Point, Point)} method).
+     *                                  {@link #of(Point, Point)} method).
      */
     public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, double expansion) {
         return dilateStraightOnly(results, Point.ofEqualCoordinates(coordCount(), expansion));
@@ -1357,16 +1383,16 @@ public class RectangularArea {
 
     /**
      * Equivalent to
-     * <code>{@link IRectangularArea#valueOf(RectangularArea) IRectangularArea.valueOf}(thisInstance)</code>,
+     * <code>{@link IRectangularArea#of(RectangularArea) IRectangularArea.of}(thisInstance)</code>,
      * with the only difference that <code>IllegalStateException</code> is thrown instead of
      * <code>IllegalArgumentException</code> for unallowed rectangular area.
      *
      * @return the integer rectangular area with same (cast) coordinates.
-     * @throws IllegalStateException in the same situation when {@link IRectangularArea#valueOf(RectangularArea)}
+     * @throws IllegalStateException in the same situation when {@link IRectangularArea#of(RectangularArea)}
      *                               method throws <code>IllegalArgumentException</code>.
      */
     public IRectangularArea toIntegerRectangularArea() {
-        return IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max), true);
+        return IRectangularArea.of(IPoint.of(min), IPoint.of(max), true);
     }
 
     /**
@@ -1375,12 +1401,12 @@ public class RectangularArea {
      * with the only difference that <code>IllegalStateException</code> is thrown instead of
      * <code>IllegalArgumentException</code> for unallowed rectangular area.
      *
-     * @return the integer rectangular area with same (rounded) coordinates.
+     * @return the integer rectangular area with the same (rounded) coordinates.
      * @throws IllegalStateException in the same situation when {@link IRectangularArea#roundOf(RectangularArea)}
      *                               method throws <code>IllegalArgumentException</code>.
      */
     public IRectangularArea toRoundedRectangularArea() {
-        return IRectangularArea.valueOf(IPoint.roundOf(min), IPoint.roundOf(max), true);
+        return IRectangularArea.of(IPoint.roundOf(min), IPoint.roundOf(max), true);
     }
 
     /**

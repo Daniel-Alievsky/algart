@@ -214,7 +214,7 @@ public final class Range {
      * with the only difference that <code>IllegalStateException</code> is thrown instead of
      * <code>IllegalArgumentException</code> for unallowed range.
      *
-     * @return the integer range with same (rounded) bounds.
+     * @return the integer range with the same (rounded) bounds.
      * @throws IllegalStateException in the same situations when
      *                               {@link IRange#roundOf(Range)} method throws <code>IllegalArgumentException</code>.
      */
