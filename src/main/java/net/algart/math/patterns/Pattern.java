@@ -186,12 +186,12 @@ import java.util.Set;
  * <p>The second popular basic kind of patterns is <b><i>rectangular patterns</i></b>,
  * represented by the subinterface {@link RectangularPattern}.
  * The pattern is called <i>rectangular</i>, if it is uniform-grid (implements {@link UniformGridPattern} interface),
- * and it consists of all points inside some hyperparallelepiped, the parameters (bounds) of which were
+ * and it consists of all points inside some hyper-parallelepiped, the parameters (bounds) of which were
  * specified while creating the pattern, <i>are stored inside the object and can be quickly read
  * by methods like {@link #coordRange(int)}</i>.</p>
  *
  * <p>Draw attention to the last condition! Of course, you can create also a <i>direct point-set</i> pattern,
- * consisting of all points inside some hyperparallelepiped. The simplest way to do this is
+ * consisting of all points inside some hyper-parallelepiped. The simplest way to do this is
  * the call of the constructor</p>
  *
  * <pre>    new {@link SimplePattern#SimplePattern(java.util.Collection)
@@ -1086,7 +1086,7 @@ public interface Pattern {
      *
      * <p>This method is especially useful for {@link UniformGridPattern uniform-grid} patterns.
      * For example, in {@link RectangularPattern rectangular patterns} this method returns
-     * one of the facets of the hyperparallelepiped.
+     * one of the facets of the hyper-parallelepiped.
      * In most cases (including all {@link RectangularPattern rectangular patterns})
      * this method returns the same result as {@link UniformGridPattern#lowerSurface(int)};
      * but if the figure, described by this pattern, contains some "holes", the result of this method
@@ -1149,7 +1149,7 @@ public interface Pattern {
      *
      * <p>This method is especially useful for {@link UniformGridPattern uniform-grid} patterns.
      * For example, in {@link RectangularPattern rectangular patterns} this method returns
-     * one of the facets of the hyperparallelepiped.
+     * one of the facets of the hyper-parallelepiped.
      * In most cases (including all {@link RectangularPattern rectangular patterns})
      * this method returns the same result as {@link UniformGridPattern#upperSurface(int)};
      * but if the figure, described by this pattern, contains some "holes", the result of this method
@@ -1224,7 +1224,7 @@ public interface Pattern {
      * (The value 2<sup><i>n</i></sup> is called the <i>maximal carcass multiplier</i>
      * and is returned by {@link #maxCarcassMultiplier()} method.)
      * For example, for {@link RectangularPattern rectangular patterns} this method returns
-     * the set of vertices of the hyperparallelepiped (in one-dimensional case, the pair of segment ends),
+     * the set of vertices of the hyper-parallelepiped (in one-dimensional case, the pair of segment ends),
      * and the corresponding <i>n</i>=+&infin;.
      * But this method does not guarantee that the returned result is always the minimal possible carcass
      * and that the found <i>n</i> is really maximal for this carcass.

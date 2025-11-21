@@ -28,8 +28,8 @@ import java.util.*;
 
 /**
  * <p>Rectangular real area, i&#46;e&#46;
- * hyperparallelepiped in multidimensional space with real coordinates of vertices.
- * All edges of the hyperparallelepiped are parallel to coordinate axes.
+ * hyper-parallelepiped in multidimensional space with real coordinates of vertices.
+ * All edges of the hyper-parallelepiped are parallel to coordinate axes.
  * In 1-dimensional case it is an equivalent of {@link Range} class,
  * in 2-dimensional case it is an analog of the standard <code>java.awt.geom.Rectangle2D</code> class.</p>
  *

@@ -306,15 +306,15 @@ public class Matrices {
      * <li>{@link Matrices.Hyperparallelepiped}: the simplest possible region (a segment in 1-dimensional
      * case, a rectangle in 2-dimensional case, a parallelepiped in 3-dimensional case);</li>
      * <li>{@link Matrices.ConvexHyperpolyhedron}: an intersection of several <i>n</i>-dimensional
-     * half-spaces (in other words, a convex hyperpolyhedron);</li>
-     * <li>{@link Matrices.Simplex}: the simplest kind of <i>n</i>-dimensional hyperpolyhedron &mdash;
-     * a hyperpolyhedron with <i>n</i>+1 vertices (a segment in 1-dimensional case,
+     * half-spaces (in other words, a convex hyper-polyhedron);</li>
+     * <li>{@link Matrices.Simplex}: the simplest kind of <i>n</i>-dimensional hyper-polyhedron &mdash;
+     * a hyper-polyhedron with <i>n</i>+1 vertices (a segment in 1-dimensional case,
      * a triangle in 2-dimensional case, a tetrahedron in 3-dimensional case);</li>
      * <li>{@link Matrices.Polygon2D}: a random 2-dimensional polygon, maybe non-convex and even
      * self-intersecting.</li>
      * </ol>
      *
-     * <p>Note that all region types are always restricted by the hyperparallelepiped, defined by the
+     * <p>Note that all region types are always restricted by the hyper-parallelepiped, defined by the
      * {@link #coordRanges() coordinate ranges}, so a region cannot be infinite.</p>
      *
      * <p>Also note: this class and its inheritors from this package do not implement own
@@ -405,7 +405,7 @@ public class Matrices {
         }
 
         /**
-         * Creates <i>n</i>-dimensional {@link Hyperparallelepiped hyperparallelepiped} with edges,
+         * Creates <i>n</i>-dimensional {@link Hyperparallelepiped hyper-parallelepiped} with edges,
          * parallel to coordinate axes, described by the given ranges of coordinates.
          * More precisely, the returned region contains all such points
          * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that
@@ -426,8 +426,8 @@ public class Matrices {
          * <p>The passed <code>coordRanges</code> array is cloned by this method: no references to it
          * are maintained by the created object.
          *
-         * @param coordRanges the ranges of coordinates of the hyperparallelepiped.
-         * @return the hyperparallelepiped <code>coordRanges[0] &times; coordRanges[1] &times; ...</code>
+         * @param coordRanges the ranges of the hyper-parallelepiped coordinates.
+         * @return the hyper-parallelepiped <code>coordRanges[0] &times; coordRanges[1] &times; ...</code>
          * @throws NullPointerException     if the <code>coordRanges</code> array some of its elements
          *                                  is {@code null}.
          * @throws IllegalArgumentException if the passed array is empty (<code>coordRanges.length==0</code>).
@@ -497,7 +497,7 @@ public class Matrices {
 
         /**
          * Creates <i>n</i>-dimensional {@link Simplex simplex} with the specified coordinates of vertices.
-         * More precisely, this method creates a simplex &mdash; the simplest <i>n</i>-dimensional hyperpolyhedron
+         * More precisely, this method creates a simplex &mdash; the simplest <i>n</i>-dimensional hyper-polyhedron
          * with <i>n</i>+1 vertices, where the vertex #<i>k</i> (<i>k</i>=0,1,...,<i>n</i>)
          * has the coordinates <code>vertices[<i>k</i>][0]</code>,
          * <code>vertices[<i>k</i>][1]</code>, ...,
@@ -539,12 +539,12 @@ public class Matrices {
         }
 
         /**
-         * Creates <i>n</i>-dimensional {@link Matrices.ConvexHyperpolyhedron convex hyperpolyhedron},
+         * Creates <i>n</i>-dimensional {@link Matrices.ConvexHyperpolyhedron convex hyper-polyhedron},
          * which is an intersection of <i>m</i> <i>n</i>-dimensional half-spaces,
          * specified by inequalities
          * <b>a</b><sub><i>i</i></sub><b>x</b> &le; <i>b</i><sub><i>i</i></sub>
          * (<i>i</i>=0,1,...,<i>m</i>&minus;1),
-         * and the hyperparallelepiped, built by {@link #getHyperparallelepiped(IRange... coordRanges)} method with
+         * and the hyper-parallelepiped, built by {@link #getHyperparallelepiped(IRange... coordRanges)} method with
          * the same <code>coordRanges</code> argument. Here <b>a</b><sub><i>i</i></sub><b>x</b> means
          * the scalar product of the line #<i>i</i> of the matrix <b>A</b>, passed by the first argument,
          * and the vector of coordinates
@@ -564,7 +564,7 @@ public class Matrices {
          *
          * <p>The number <i>n</i> of dimensions of the created region is equal to <code>coordRanges.length</code>.
          *
-         * <p>The points, lying precisely in the (hyper)facets of the hyperpolyhedron (in particular, the vertices),
+         * <p>The points, lying precisely in the (hyper)facets of the hyper-polyhedron (in particular, the vertices),
          * belong to the resulting region.
          *
          * <p>The created region is defined in terms of real coordinates,
@@ -573,10 +573,10 @@ public class Matrices {
          * <p>The passed Java arrays are cloned by this method: no references to them
          * are maintained by the created object.
          *
-         * @param a           the matrix of coefficients of the left side of inequalities, defining the half-spaces.
+         * @param a           the matrix of the left side coefficients for the inequalities, defining the half-spaces.
          * @param b           the values on the right side of inequalities, defining the half-spaces.
-         * @param coordRanges the ranges of coordinates of the containing hyperparallelepiped.
-         * @return the intersection of the specified half-spaces and hyperparallelepiped.
+         * @param coordRanges the ranges of the containing hyper-parallelepiped coordinates.
+         * @return the intersection of the specified half-spaces and hyper-parallelepiped.
          * @throws NullPointerException     if one of the arguments is {@code null}
          *                                  or if some element of <code>coordRanges</code> array is {@code null}.
          * @throws IllegalArgumentException if <code>coordRanges.length==0</code>,
@@ -669,7 +669,7 @@ public class Matrices {
         /**
          * Returns <code>true</code> if this region is rectangular, that is if it contains the same set of
          * integer points (points with integer coordinates) as some
-         * {@link Matrices.Hyperparallelepiped hyperparallelepiped}.
+         * {@link Matrices.Hyperparallelepiped hyper-parallelepiped}.
          * This method always returns <code>false</code> if this region is not rectangular,
          * but there is no guarantee that it returns <code>true</code> when it is rectangular.
          *
@@ -828,11 +828,11 @@ public class Matrices {
     }
 
     /**
-     * <p>Hyperparallelepiped: the simplest <i>n</i>-dimensional region.
+     * <p>Hyper-parallelepiped: the simplest <i>n</i>-dimensional region.
      * In 1-dimensional case it is a segment,
      * in 2-dimensional case it is a rectangle,
      * in 3-dimensional case it is a parallelepiped.
-     * All edges of the hyperparallelepiped are supposed to be parallel to coordinate axes.</p>
+     * All edges of the hyper-parallelepiped are supposed to be parallel to coordinate axes.</p>
      *
      * <p>More precisely, the region, specified by this class, consists of all such points
      * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
@@ -891,10 +891,10 @@ public class Matrices {
         }
 
         /**
-         * Returns <code>true</code> if and only if the coordinates of all points (with integer coordinates),
-         * belonging to this hyperparallelepiped, lies inside the specified matrix.
+         * Returns <code>true</code> if and only if all points coordinates (with integer coordinates),
+         * belonging to this hyper-parallelepiped, lie inside the specified matrix.
          *
-         * <p>Note: the number of matrix dimensions can differ from the number of dimensions of this region.
+         * <p>Note: the number of matrix dimensions can differ from the number of this region's dimensions.
          * (All matrix dimensions after the first {@link #n()}, as usual, are supposed to be 1.)
          *
          * <p>More precisely, this method returns <code>true</code> if and only if the following 2*{@link #n()}
@@ -924,7 +924,7 @@ public class Matrices {
 
         /**
          * Returns <code>true</code> if and only if the coordinates of all points (with integer coordinates),
-         * belonging to this hyperparallelepiped, will lie inside the specified matrix after subtraction
+         * belonging to this hyper-parallelepiped, will lie inside the specified matrix after subtraction
          * the specified values <code>backShifts</code> from them.
          *
          * <p>Note: the number of matrix dimensions can differ from the number of dimensions of this region.
@@ -999,11 +999,11 @@ public class Matrices {
     }
 
     /**
-     * <p>Convex hyperpolyhedron: an intersection of several <i>n</i>-dimensional
-     * half-spaces and some {@link Matrices.Hyperparallelepiped hyperparallelepiped}.
+     * <p>Convex hyper-polyhedron: an intersection of several <i>n</i>-dimensional
+     * half-spaces and some {@link Matrices.Hyperparallelepiped hyper-parallelepiped}.
      * While creating regions of this class, it is always necessary to specify some containing
-     * hyperparallelepiped. The coordinate ranges, returned by {@link #coordRanges()} method of this class,
-     * are the corresponding ranges of the specified containing hyperparallelepiped.</p>
+     * hyper-parallelepiped. The coordinate ranges, returned by {@link #coordRanges()} method of this class,
+     * are the corresponding ranges of the specified containing hyper-parallelepiped.</p>
      *
      * <p>More precisely, the region, specified by this class, consists of all such points
      * (<i>x</i><sub>0</sub>, <i>x</i><sub>1</sub>, ..., <i>x</i><sub><i>n</i>&minus;1</sub>), that:</p>
@@ -1018,7 +1018,7 @@ public class Matrices {
      * + <i>a</i><sub><i>m</i>&minus;1,1</sub><i>x</i><sub>1</sub> + ...
      * + <i>a</i><sub><i>m</i>&minus;1,<i>n</i>&minus;1</sub><i>x</i><sub><i>n</i>&minus;1</sub> &le;
      * <i>b</i><sub><i>m</i>&minus;1</sub>,<br>
-     * and also this point belongs to the specified containing {@link Hyperparallelepiped hyperparallelepiped}:<br>
+     * and also this point belongs to the specified containing {@link Hyperparallelepiped hyper-parallelepiped}:<br>
      * &nbsp;&nbsp;&nbsp;&nbsp;<code>{@link #coordRange(int)
      * coordRange}(<i>k</i>).{@link IRange#min() min()}</code> &le;
      * <i>x</i><sub><i>k</i></sub> &le;
@@ -1027,9 +1027,9 @@ public class Matrices {
      * </blockquote>
      *
      * <p>The number of inequalities <i>m</i> can be any non-negative integer 0,1,2,...
-     * (the degenerated case <i>m</i>=0 is equivalent to the hyperparallelepiped).</p>
+     * (the degenerated case <i>m</i>=0 is equivalent to the hyper-parallelepiped).</p>
      *
-     * <p>Convex hyperpolyhedrons can be created by the following methods:</p>
+     * <p>Convex hyper-polyhedrons can be created by the following methods:</p>
      *
      * <ul>
      * <li>{@link #getConvexHyperpolyhedron(double[] a, double[] b, IRange... coordRanges)},</li>
@@ -1041,12 +1041,13 @@ public class Matrices {
      * double x4, double y4, double z4)}.</li>
      * </ul>
      *
-     * <p>In first method, you must directly specify the matrix <b>A</b> of coefficients <i>a</i><sub><i>ij</i></sub>,
-     * the vector <b>b</b> of coefficients <i>b</i><sub><i>i</i></sub> and the containing hyperparallelepiped.
-     * (The containing hyperparallelepiped will be identical to the hyperparallelepiped, constructed
+     * <p>In the first method, you must directly specify
+     * the matrix <b>A</b> of coefficients <i>a</i><sub><i>ij</i></sub>,
+     * the vector <b>b</b> of coefficients <i>b</i><sub><i>i</i></sub> and the containing hyper-parallelepiped.
+     * (The containing hyper-parallelepiped will be identical to the hyper-parallelepiped, constructed
      * by {@link #getHyperparallelepiped(IRange... coordRanges)} method with the same <code>coordRanges</code>.)</p>
      *
-     * <p>Other 3 methods build a {@link Simplex simplex} &mdash; a particular case of the convex hyperpolyhedron.
+     * <p>Other 3 methods build a {@link Simplex simplex} &mdash; a particular case of the convex hyper-polyhedron.
      * In these cases you need to specify its vertices only; necessary matrix <b>A</b> and vector <b>b</b>
      * are calculated automatically.</p>
      *
@@ -1209,12 +1210,12 @@ public class Matrices {
     }
 
     /**
-     * <p>Simplex: the simplest <i>n</i>-dimensional hyperpolyhedron with <i>n</i>+1 vertices.
+     * <p>Simplex: the simplest <i>n</i>-dimensional hyper-polyhedron with <i>n</i>+1 vertices.
      * In 1-dimensional case it is a segment,
      * in 2-dimensional case it is a triangle,
      * in 3-dimensional case it is a tetrahedron.</p>
      *
-     * <p>Simplex is a particular case of the {@link Matrices.ConvexHyperpolyhedron convex hyperpolyhedron}.</p>
+     * <p>Simplex is a particular case of the {@link Matrices.ConvexHyperpolyhedron convex hyper-polyhedron}.</p>
      *
      * <p>Simplex is specified by its vertices and can be created by the following methods:</p>
      *
@@ -4837,7 +4838,7 @@ public class Matrices {
      * <p>All other possible exceptions are checked before any other actions. Moreover,
      * if <code>destRegion</code> is {@link Hyperparallelepiped}, then the region is also fully checked
      * before starting the copying, and <code>IndexOutOfBoundsException</code> is thrown if necessary
-     * in the very beginning: so, this method is atomic regarding failures for hyperparallelepipeds.
+     * in the very beginning: so, this method is atomic regarding failures for hyper-parallelepiped.
      *
      * @param context    the context of copying; can be {@code null}.
      * @param dest       the destination matrix.

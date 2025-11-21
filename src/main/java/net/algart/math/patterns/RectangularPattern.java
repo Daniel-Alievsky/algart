@@ -30,7 +30,7 @@ import net.algart.math.Point;
 /**
  * <p>Interface, used by {@link Pattern} implementations to indicate that
  * they are <i>rectangular patterns</i>, i&#46;e&#46;
- * consist of all points of some uniform grid inside some hyperparallelepiped.
+ * consist of all points of some uniform grid inside some hyper-parallelepiped.
  * (For 2D patterns it means a rectangle, for 1D pattern it means an interval.)
  * This interface is a subinterface of {@link UniformGridPattern}: all rectangular patterns
  * are also uniform-grid.
