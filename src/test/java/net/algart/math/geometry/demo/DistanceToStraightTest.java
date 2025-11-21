@@ -53,7 +53,7 @@ public class DistanceToStraightTest {
             }
             StraightLine3D s1 = StraightLine3D.newLineThroughOrigin(rnd(), rnd(), rnd());
             StraightLine3D s2 = StraightLine3D.newLine(rnd(), rnd(), rnd(), rnd(), rnd(), rnd());
-            Point p = Point.valueOf(rnd(), rnd(), rnd());
+            Point p = Point.of(rnd(), rnd(), rnd());
             double x = p.x();
             double y = p.y();
             double z = p.z();

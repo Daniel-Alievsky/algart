@@ -986,7 +986,7 @@ public class Point implements Comparable<Point> {
     }
 
     /**
-     * Equivalent to <code>{@link IPoint#of(Point) IPoint.valueOf}(thisInstance)</code>.
+     * Equivalent to <code>{@link IPoint#of(Point) IPoint.of}(thisInstance)</code>.
      *
      * @return the integer point with the same (cast) coordinates.
      */
@@ -1018,7 +1018,6 @@ public class Point implements Comparable<Point> {
             result[disp++] = (byte) (value >>> 24);
         }
     }
-
 
     /**
      * The simplest test for this class: shows a sorted array of several points.
@@ -1127,17 +1126,17 @@ public class Point implements Comparable<Point> {
                 System.out.print(k + ": ");
                 RectangularArea ra = null;
                 try {
-                    ra = RectangularArea.valueOf(points[k], points[k + 1]);
-                    assert RectangularArea.valueOf(ra.ranges()).equals(ra);
+                    ra = RectangularArea.of(points[k], points[k + 1]);
+                    assert RectangularArea.of(ra.ranges()).equals(ra);
                     Point point = ofEqualCoordinates(ra.coordCount(), -1.5);
-                    RectangularArea test = RectangularArea.valueOf(point, Point.origin(ra.coordCount()));
-                    assert ra.intersects(test) ? ra.intersection(test).equals(RectangularArea.valueOf(
+                    RectangularArea test = RectangularArea.of(point, Point.origin(ra.coordCount()));
+                    assert ra.intersects(test) ? ra.intersection(test).equals(RectangularArea.of(
                             ra.min().max(test.min()), ra.max().min(test.max()))) :
                             ra.intersection(test) == null;
                     System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                             + "; contains(origin): " + ra.contains(Point.origin(ra.coordCount()))
                             + "; expand(origin): " + ra.expand(Point.origin(ra.coordCount()))
-                            + "; expand(-1,-1..2,2): " + ra.expand(RectangularArea.valueOf(
+                            + "; expand(-1,-1..2,2): " + ra.expand(RectangularArea.of(
                             ofEqualCoordinates(ra.coordCount(), -1),
                             ofEqualCoordinates(ra.coordCount(), 2)))
                             + "; parallel distance to (-1.5,-1.5,...): "
@@ -1166,8 +1165,8 @@ public class Point implements Comparable<Point> {
                     rounded = ra.toRoundedRectangularArea();
                     assert IRectangularArea.roundOf(ra).equals(rounded);
                     IPoint point = IPoint.ofEqualCoordinates(ra.coordCount(), 10);
-                    IRectangularArea test = IRectangularArea.valueOf(IPoint.origin(ra.coordCount()), point);
-                    assert rounded.intersects(test) ? rounded.intersection(test).equals(IRectangularArea.valueOf(
+                    IRectangularArea test = IRectangularArea.of(IPoint.origin(ra.coordCount()), point);
+                    assert rounded.intersects(test) ? rounded.intersection(test).equals(IRectangularArea.of(
                             rounded.min().max(test.min()), rounded.max().min(test.max()))) :
                             rounded.intersection(test) == null;
                     System.out.println(ra + " rounded to " + rounded
@@ -1185,7 +1184,7 @@ public class Point implements Comparable<Point> {
                     System.out.println("  Cannot call toRoundedRectangularArea for " + ra + ": " + e);
                 }
                 try {
-                    IRectangularArea ira = IRectangularArea.valueOf(ra);
+                    IRectangularArea ira = IRectangularArea.of(ra);
                     assert ira.equals(cast);
                     System.out.println(ra + " casted to " + ira);
                 } catch (Exception e) {
