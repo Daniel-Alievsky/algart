@@ -365,7 +365,7 @@ public class ContinuedMorphology implements Morphology {
             }
         }
         long[] from = aperture.min().coordinates();
-        long[] to = IPoint.valueOf(m.dimensions()).add(aperture.max()).coordinates();
+        long[] to = IPoint.of(m.dimensions()).add(aperture.max()).coordinates();
         for (int k = 0; k < to.length; k++) {
             if (to[k] < 0 && aperture.max(k) >= 0) {
                 throw new IndexOutOfBoundsException("Too large matrix continuation for morphology: "
@@ -394,7 +394,7 @@ public class ContinuedMorphology implements Morphology {
             }
         }
         long[] from = aperture.min().symmetric().coordinates();
-        long[] to = IPoint.valueOf(continued.dimensions()).subtract(aperture.max()).coordinates();
+        long[] to = IPoint.of(continued.dimensions()).subtract(aperture.max()).coordinates();
         return continued.subMatrix(from, to, Matrix.ContinuationMode.PSEUDO_CYCLIC);
     }
 }

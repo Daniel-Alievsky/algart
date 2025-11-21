@@ -943,7 +943,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         // Now we are sure that the pattern is not greater than the matrix along all coordinates;
         // so, we can be sure that the necessary shift for any its point is not greater than
         // the shift for the "right-bottom corner" of the circumscribed parallelepiped
-        long shift = IPoint.valueOf(rightBottomCorner).toOneDimensional(src.dimensions(), true);
+        long shift = IPoint.of(rightBottomCorner).toOneDimensional(src.dimensions(), true);
         assert shift <= length;
         if (shift >= length / numberOfRanges) {
             return length;
@@ -1174,7 +1174,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
             sameRightEnd &= rightShift[k] == 0;
         }
         if (largerLength == smallerLength) {
-            return Collections.singletonList(Patterns.newIntegerPattern(IPoint.valueOf(rightShift)));
+            return Collections.singletonList(Patterns.newIntegerPattern(IPoint.of(rightShift)));
         }
         ArrayList<Pattern> result = new ArrayList<>();
         long[] leftShift = rightShift; // optimization (no allocation new array): rightShift will not be used below
@@ -1185,7 +1185,7 @@ public class BasicMorphology extends AbstractMorphology implements Morphology {
         }
         boolean negativeSegments = sameRightEnd;
         if (!negativeSegments && !sameLeftEnd) {
-            result.add(Patterns.newIntegerPattern(IPoint.valueOf(leftShift)));
+            result.add(Patterns.newIntegerPattern(IPoint.of(leftShift)));
         }
         // Building Minkowski decomposition of left..0 segment (inclusive), without pairs less than smallLength
         IPoint origin = IPoint.origin(dimCount);

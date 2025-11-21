@@ -91,8 +91,8 @@ public class HugeMatrixIndexesTest {
             Matrix<DoubleArray> cyclic = matrix.subMatr(submatrixPos, submatrixDim,
                 Matrix.ContinuationMode.CYCLIC);
 
-            IPoint from = IPoint.valueOf(cyclic.subMatrixFrom());
-            IPoint to = IPoint.valueOf(cyclic.subMatrixTo());
+            IPoint from = IPoint.of(cyclic.subMatrixFrom());
+            IPoint to = IPoint.of(cyclic.subMatrixTo());
             Matrix<DoubleArray> pseudoCyclic = matrix.subMatrix(from.coordinates(), to.coordinates(),
                 Matrix.ContinuationMode.PSEUDO_CYCLIC);
             System.out.println(testCount + ": testing " + from + ".." + to
@@ -106,7 +106,7 @@ public class HugeMatrixIndexesTest {
                             (cyclic.dim(k) + shiftIndex - 1) % cyclic.dim(k) :
                             Math.round(rnd.nextDouble() * (cyclic.dim(k) - 1));
                 }
-                IPoint p = IPoint.valueOf(shift);
+                IPoint p = IPoint.of(shift);
                 IPoint shifted = from.add(p);
                 long cyclicIndex = matrix.cyclicIndex(shifted.coordinates());
                 long pseudoCyclicIndex = matrix.pseudoCyclicIndex(shifted.coordinates());

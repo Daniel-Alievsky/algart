@@ -408,7 +408,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         if (cIndex == 0) {
             for (long i = gridIndexRanges[0].min(), iMax = gridIndexRanges[0].max(); i <= iMax; i++) {
                 coordinates[0] = i;
-                points.add(IPoint.valueOf(coordinates));
+                points.add(IPoint.of(coordinates));
             }
         } else {
             for (long i = gridIndexRanges[cIndex].min(), iMax = gridIndexRanges[cIndex].max(); i <= iMax; i++) {
@@ -423,7 +423,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         if (cIndex == 0) {
             for (long i = gridIndexRanges[0].min(), iMax = gridIndexRanges[0].max(); i <= iMax; i++) {
                 coordinates[0] = i;
-                points.add(IPoint.valueOf(coordinates).scaleAndShift(stepsOfGrid, originOfGrid));
+                points.add(IPoint.of(coordinates).scaleAndShift(stepsOfGrid, originOfGrid));
             }
         } else {
             for (long i = gridIndexRanges[cIndex].min(), iMax = gridIndexRanges[cIndex].max(); i <= iMax; i++) {

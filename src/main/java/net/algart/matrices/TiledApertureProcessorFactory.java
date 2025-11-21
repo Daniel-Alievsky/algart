@@ -1015,14 +1015,13 @@ public final class TiledApertureProcessorFactory {
                         destTileMem.get(taskIndex), destCopy.keySet(), extTileDim);
                 final int ti = taskIndex;
                 tasks[taskIndex] = () -> {
-                    ArrayContext tileContext = switchingContextSupported() ?
-                            ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(
-                                    new TileInformation(
-                                            IRectangularArea.valueOf(
-                                                    IPoint.valueOf(tilePos), IPoint.valueOf(tileMax)),
-                                            IRectangularArea.valueOf(
-                                                    IPoint.valueOf(extTilePos), IPoint.valueOf(extTileMax)))) :
-                            ac;
+                    ArrayContext tileContext;
+                    tileContext = switchingContextSupported() ? ac.part(0.05, 0.95).multithreadingVersion(ti, nt).customDataVersion(
+                            new TileInformation(
+                                    IRectangularArea.valueOf(
+                                            IPoint.of(tilePos), IPoint.of(tileMax)),
+                                    IRectangularArea.valueOf(
+                                            IPoint.of(extTilePos), IPoint.of(extTileMax)))) : ac;
                     subtaskTileProcessor(tileContext).process(destTile, srcTile);
                     // additional matrices CAN appear in destTile
                 };
@@ -1124,7 +1123,7 @@ public final class TiledApertureProcessorFactory {
                     max[k] = Math.max(max[k], a.max(k));
                 }
             }
-            return IRectangularArea.valueOf(IPoint.valueOf(min), IPoint.valueOf(max));
+            return IRectangularArea.valueOf(IPoint.of(min), IPoint.of(max));
         }
 
         private double estimateWorkMemory(

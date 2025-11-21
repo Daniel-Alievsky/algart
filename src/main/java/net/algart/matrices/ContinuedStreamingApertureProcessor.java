@@ -234,7 +234,7 @@ public class ContinuedStreamingApertureProcessor extends StreamingApertureProces
         List<Matrix<? extends PArray>> continued = new ArrayList<>();
         for (Matrix<? extends PArray> m : matrices) {
             long[] from = aperture.min().coordinates();
-            long[] to = IPoint.valueOf(m.dimensions()).add(aperture.max()).coordinates();
+            long[] to = IPoint.of(m.dimensions()).add(aperture.max()).coordinates();
             continued.add(m.isEmpty() ? m : m.subMatrix(from, to, Matrix.ContinuationMode.ZERO_CONSTANT));
             // outside values are not important
         }

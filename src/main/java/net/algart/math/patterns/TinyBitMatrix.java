@@ -222,7 +222,7 @@ class TinyBitMatrix {
             for (int i = 0; i < n; i++) {
                 if (temp[i]) {
                     coordinates[0] = i;
-                    IPoint p = IPoint.valueOf(coordinates);
+                    IPoint p = IPoint.of(coordinates);
                     if (shift != null) {
                         p = p.add(shift);
                     }

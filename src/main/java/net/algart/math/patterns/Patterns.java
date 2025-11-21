@@ -348,7 +348,7 @@ public class Patterns {
             projectionIndex.coordinates(resultIndex);
             for (long i = minIndex; i <= maxIndex; i++) {
                 resultIndex[dimCount] = i;
-                resultIndexes.add(IPoint.valueOf(resultIndex));
+                resultIndexes.add(IPoint.of(resultIndex));
             }
         }
         if (resultIndexes.isEmpty()) {
@@ -674,7 +674,7 @@ public class Patterns {
                 double diff = i - center[currentCoordIndex];
                 if (rSum + diff * diff <= rSqr) {
                     coordinates[0] = i;
-                    points.add(IPoint.valueOf(coordinates));
+                    points.add(IPoint.of(coordinates));
                 }
             }
         } else {
@@ -702,7 +702,7 @@ public class Patterns {
                 double newSum = sum + ratio * ratio; // x^2/a^2 + y^2/b^2 + ... : it must be <=1.0
                 if (newSum <= 1.000000001) { // theoretically possible that 5 * 1.0/5.0 > 1.0
                     coordinates[0] = i;
-                    points.add(IPoint.valueOf(coordinates));
+                    points.add(IPoint.of(coordinates));
                 }
             }
         } else {

@@ -57,7 +57,7 @@ class ThinningTools {
     }
 
     private static IPoint point(int x, int y, int dimCount) {
-        return IPoint.valueOf(coordinates(x, y, dimCount));
+        return IPoint.of(coordinates(x, y, dimCount));
     }
 
     static Matrix<?>[] shifts(Matrix<? extends BitArray> bitMatrix, int[] xy) {

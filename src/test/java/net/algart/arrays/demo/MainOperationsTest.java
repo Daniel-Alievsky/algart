@@ -2675,7 +2675,7 @@ public class MainOperationsTest implements Cloneable {
                         }
                     }
                 }
-                if (srcMatr.cyclicIndex(coords2) != IPoint.valueOf(coordsCyclic)
+                if (srcMatr.cyclicIndex(coords2) != IPoint.of(coordsCyclic)
                         .toOneDimensional(dim, false)) {
                     throw new AssertionError("The indexing bug 1 in IPoint/Matrix found in test #" +
                             testCount + ": "
@@ -2683,9 +2683,9 @@ public class MainOperationsTest implements Cloneable {
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", cyclicIndex = " + srcMatr.cyclicIndex(coords2)
-                            + " instead of " + IPoint.valueOf(coordsCyclic).toOneDimensional(dim, false));
+                            + " instead of " + IPoint.of(coordsCyclic).toOneDimensional(dim, false));
                 }
-                if (srcMatr.pseudoCyclicIndex(coords2) != IPoint.valueOf(coords2)
+                if (srcMatr.pseudoCyclicIndex(coords2) != IPoint.of(coords2)
                         .toOneDimensional(dim, true)) {
                     throw new AssertionError("The indexing bug 2 in IPoint/Matrix found in test #" +
                             testCount + ": "
@@ -2694,17 +2694,17 @@ public class MainOperationsTest implements Cloneable {
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", pseudoCyclicIndex = " + srcMatr.pseudoCyclicIndex(coords2)
                             + ", but toOneDimensional = "
-                            + IPoint.valueOf(coords2).toOneDimensional(srcMatr.dimensions(), true));
+                            + IPoint.of(coords2).toOneDimensional(srcMatr.dimensions(), true));
                 }
                 if (srcMatr.mirrorCyclicIndex(coords2) !=
-                        IPoint.valueOf(coordsMirrorCyclic).toOneDimensional(dim, false)) {
+                        IPoint.of(coordsMirrorCyclic).toOneDimensional(dim, false)) {
                     throw new AssertionError("The indexing bug 3 in IPoint/Matrix found in test #" +
                             testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
                             + ", dimensions = " + JArrays.toString(dim, ";", 100)
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", mirrorCyclicIndex = " + srcMatr.mirrorCyclicIndex(coords2)
-                            + " instead of " + IPoint.valueOf(coordsMirrorCyclic)
+                            + " instead of " + IPoint.of(coordsMirrorCyclic)
                             .toOneDimensional(dim, false));
                 }
             } // checking indexing only
@@ -2748,7 +2748,7 @@ public class MainOperationsTest implements Cloneable {
                             + " instead of " + srcMatr.index(coordsCyclic));
                 }
                 long pseudoCyclicIndex = srcMatr.pseudoCyclicIndex(coords2);
-                if (pseudoCyclicIndex != IPoint.valueOf(coords2).toOneDimensional(dim, true)) {
+                if (pseudoCyclicIndex != IPoint.of(coords2).toOneDimensional(dim, true)) {
                     throw new AssertionError("The indexing bug 6 in IPoint/Matrix found in test #" +
                             testCount + ": "
                             + "srcPos = " + JArrays.toString(srcPos, ";", 100)
@@ -2756,7 +2756,7 @@ public class MainOperationsTest implements Cloneable {
                             + ", coordinates = " + JArrays.toString(coords2, ";", 100)
                             + ", pseudoCyclicIndex = " + pseudoCyclicIndex
                             + ", but toOneDimensional = "
-                            + IPoint.valueOf(coords2).toOneDimensional(srcMatr.dimensions(), true));
+                            + IPoint.of(coords2).toOneDimensional(srcMatr.dimensions(), true));
                 }
                 long mirrorCyclicIndex = srcMatr.mirrorCyclicIndex(coords2);
                 if (mirrorCyclicIndex != srcMatr.index(coordsMirrorCyclic)) {

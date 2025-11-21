@@ -206,7 +206,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = gridIndexRange(k).max();
         }
-        return IPoint.valueOf(coordinates);
+        return IPoint.of(coordinates);
     }
 
     public final boolean isOrdinary() {
@@ -221,7 +221,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
      *
      * <p>This method caches its results: the following calls will work faster.
      *
-     * <p>This method does not provide correct result, if a pattern contains <code>&ge;Long.MAX_VALUE</code> points.
+     * <p>This method does not provide a correct result, if a pattern contains <code>&ge;Long.MAX_VALUE</code> points.
      *
      * <p>This method should be overridden for rectangular patterns, implementing {@link RectangularPattern}
      * interface, or for patterns that surely are not rectangular.
@@ -258,7 +258,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             if (lowerSurface[coordIndex] == null) {
                 long[] shiftCoordinates = new long[dimCount]; // zero-filled
                 shiftCoordinates[coordIndex] = -1;
-                IPoint shift = IPoint.valueOf(shiftCoordinates);
+                IPoint shift = IPoint.of(shiftCoordinates);
                 Set<IPoint> points = gridIndexes();
                 Set<IPoint> resultPoints = new HashSet<>();
                 for (IPoint ip : points) {
@@ -280,7 +280,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             if (upperSurface[coordIndex] == null) {
                 long[] shiftCoordinates = new long[dimCount]; // zero-filled
                 shiftCoordinates[coordIndex] = 1;
-                IPoint shift = IPoint.valueOf(shiftCoordinates);
+                IPoint shift = IPoint.of(shiftCoordinates);
                 Set<IPoint> points = gridIndexes();
                 Set<IPoint> resultPoints = new HashSet<>();
                 for (IPoint ip : points) {
@@ -411,7 +411,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                         assert coord == 0 || coord == 1;
                         vertex[k] = coord == 1 ? area.max(k) : area.min(k);
                     }
-                    resultPoints.add(IPoint.valueOf(vertex));
+                    resultPoints.add(IPoint.of(vertex));
                 }
                 maxCarcassMultiplier = Integer.MAX_VALUE;
                 carcass = newCompatiblePattern(resultPoints);
@@ -870,21 +870,21 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 }
                 // sumLen + m is the new summary length after the adding the summand at this loop iteration
                 if (sumLen + m >= minimalPointCount && joinShortSegments && !startSegmentAdded) {
-                    ranges[k] = IRange.valueOf(0, sumLen - 1);
+                    ranges[k] = IRange.of(0, sumLen - 1);
                     result.add(new BasicRectangularPattern(origin, stepsOfGrid, ranges));
                     startSegmentAdded = true;
                 }
                 sumLen += m;
                 if (!joinShortSegments || sumLen >= minimalPointCount) {
                     coordinates[k] = m * stepsOfGrid[k];
-                    result.add(new TwoPointsPattern(origin, Point.valueOf(coordinates)));
+                    result.add(new TwoPointsPattern(origin, Point.of(coordinates)));
                 }
             }
             coordinates[k] = 0.0; // restoring zero coordinate
-            ranges[k] = IRange.valueOf(0, 0);  // restoring zero range
+            ranges[k] = IRange.of(0, 0);  // restoring zero range
         }
         if (!(allShiftsAreZero && originOfGrid.isOrigin())) {
-            result.add(new OnePointPattern(IPoint.valueOf(shifts).scaleAndShift(stepsOfGrid, originOfGrid)));
+            result.add(new OnePointPattern(IPoint.of(shifts).scaleAndShift(stepsOfGrid, originOfGrid)));
             // It's better than correction of the last pattern:
             // one-point pattens may be usually processed very quickly (lazily),
             // and two-point pattern are usually processed better if they have positive points only.
