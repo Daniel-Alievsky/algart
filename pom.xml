@@ -6,7 +6,7 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <!--
     Please remember that you Arrays.SystemSettings.VERSION constant must be equal to this value!
     This condition is checked automatically in the "release-maven-central" profile below.

@@ -24,10 +24,7 @@
 
 package net.algart.math;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -68,7 +65,7 @@ public class Point implements Comparable<Point> {
 
     /**
      * Returns a new point with the given set of coordinates: <i>x</i>, <i>y</i>, <i>z</i>, ...
-     * For example, <code>valueOf(x,y)</code> returns the 2D point with given coordinates.
+     * For example, <code>of(x,y)</code> returns the 2D point with given coordinates.
      *
      * <p>The <code>coordinates</code> array must contain at least 1 element.
      *
@@ -80,7 +77,7 @@ public class Point implements Comparable<Point> {
      * @throws NullPointerException     if the passed array is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
-    public static Point valueOf(double... coordinates) {
+    public static Point of(double... coordinates) {
         Objects.requireNonNull(coordinates, "Null coordinates argument");
         if (coordinates.length == 0) {
             throw new IllegalArgumentException("Empty coordinates array");
@@ -100,14 +97,24 @@ public class Point implements Comparable<Point> {
         return new Point(coordinates.clone());
     }
 
+    @Deprecated
+    public static Point valueOf(double... coordinates) {
+        return of(coordinates);
+    }
+
     /**
      * Returns a new 1-dimensional point with the given coordinate.
      *
      * @param x cartesian coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static Point valueOf(double x) {
+    public static Point of(double x) {
         return x == 0 ? originsCache[0] : new Point(new double[]{x});
+    }
+
+    @Deprecated
+    public static Point valueOf(double x) {
+        return of(x);
     }
 
     /**
@@ -117,8 +124,13 @@ public class Point implements Comparable<Point> {
      * @param y cartesian y-coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static Point valueOf(double x, double y) {
+    public static Point of(double x, double y) {
         return x == 0 && y == 0 ? originsCache[1] : new Point(new double[]{x, y});
+    }
+
+    @Deprecated
+    public static Point valueOf(double x, double y) {
+        return of(x, y);
     }
 
     /**
@@ -129,22 +141,27 @@ public class Point implements Comparable<Point> {
      * @param z cartesian z-coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static Point valueOf(double x, double y, double z) {
+    public static Point of(double x, double y, double z) {
         return x == 0 && y == 0 && z == 0 ? originsCache[2] : new Point(new double[]{x, y, z});
+    }
+
+    @Deprecated
+    public static Point valueOf(double x, double y, double z) {
+        return of(x, y, z);
     }
 
     /**
      * Returns a new point in <i>n</i>-dimensional space, where <i>n</i><code>=coordCount</code>
      * and all coordinates of the point are equal to the given value <code>filler</code>.
-     * For example, <code>valueOfEqualCoordinates(3, 1)</code> returns the 3D point (1,1,1).
+     * For example, <code>ofEqualCoordinates(3, 1)</code> returns the 3D point (1,1,1).
      * If <code>filler==0</code>, this method is equivalent to {@link #origin(int) origin(coordCount)}.
      *
      * @param coordCount the number of dimensions.
-     * @param filler     the value of each coordinate of the created point.
+     * @param filler     the value of each coordinate in the created point.
      * @return the point with equal coordinates.
      * @throws IllegalArgumentException if the passed number of dimensions is zero or negative.
      */
-    public static Point valueOfEqualCoordinates(int coordCount, double filler) {
+    public static Point ofEqualCoordinates(int coordCount, double filler) {
         if (filler == 0) {
             return origin(coordCount);
         }
@@ -152,10 +169,13 @@ public class Point implements Comparable<Point> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         double[] coordinates = new double[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = filler;
-        }
+        Arrays.fill(coordinates, filler);
         return new Point(coordinates);
+    }
+
+    @Deprecated
+    public static Point valueOfEqualCoordinates(int coordCount, double filler) {
+        return ofEqualCoordinates(coordCount, filler);
     }
 
     /**
@@ -191,9 +211,7 @@ public class Point implements Comparable<Point> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         double[] coordinates = new double[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = Double.NEGATIVE_INFINITY;
-        }
+        Arrays.fill(coordinates, Double.NEGATIVE_INFINITY);
         return new Point(coordinates);
     }
 
@@ -211,9 +229,7 @@ public class Point implements Comparable<Point> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         double[] coordinates = new double[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = Double.POSITIVE_INFINITY;
-        }
+        Arrays.fill(coordinates, Double.POSITIVE_INFINITY);
         return new Point(coordinates);
     }
     /*Repeat.IncludeEnd*/
@@ -228,13 +244,18 @@ public class Point implements Comparable<Point> {
      * @return the real point with same coordinates.
      * @throws NullPointerException if the passed integer point is {@code null}.
      */
-    public static Point valueOf(IPoint iPoint) {
+    public static Point of(IPoint iPoint) {
         Objects.requireNonNull(iPoint, "Null iPoint argument");
         double[] coordinates = new double[iPoint.coordCount()];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = iPoint.coord(k);
         }
         return new Point(coordinates);
+    }
+
+    @Deprecated
+    public static Point valueOf(IPoint iPoint) {
+        return of(iPoint);
     }
 
     /*Repeat(INCLUDE_FROM_FILE, IPoint.java, main)
@@ -249,12 +270,12 @@ public class Point implements Comparable<Point> {
       StrictMath.round ==>   !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Returns the number of dimensions of this point.
+     * Returns the number of dimensions.
      * Equivalent to <code>{@link #coordinates()}.length</code>, but works faster.
      *
      * <p>The result of this method is always positive (&gt;0).
      *
-     * @return the number of dimensions of this point.
+     * @return the number of dimensions.
      */
     public int coordCount() {
         return coordinates.length;
@@ -263,7 +284,7 @@ public class Point implements Comparable<Point> {
     /**
      * Returns all coordinates of this point. The element <code>#0</code> of the returned array
      * is <i>x</i>-coordinate, the element <code>#1</code> is <i>y</i>-coordinate, etc.
-     * The length of the returned array is the number of dimensions of this point.
+     * The length of the returned array is the number of dimensions.
      *
      * <p>The returned array is a clone of the internal coordinates array stored in this object.
      * The returned array is never empty (its length &gt;0 always).
@@ -521,8 +542,8 @@ public class Point implements Comparable<Point> {
      * <code>thisInstance.{@link #coord(int) coord(i)}+increment</code>.
      * In other words, shifts this point along all axes by the given value.
      *
-     * <p>Equivalent to <code>{@link #add(Point) add}({@link Point#valueOfEqualCoordinates(int, double)
-     * Point.valueOfEqualCoordinates}(n,increment))</code>, where <code>n={@link #coordCount()}</code>.
+     * <p>Equivalent to <code>{@link #add(Point) add}({@link Point#ofEqualCoordinates(int, double)
+     * Point.ofEqualCoordinates}(n,increment))</code>, where <code>n={@link #coordCount()}</code>.
      *
      * @param increment the value, which will be added to all coordinates of this point.
      * @return this resulting point.
@@ -684,7 +705,8 @@ public class Point implements Comparable<Point> {
      * @param coordIndex the index of the axis.
      * @param shift      the shift along this axis.
      * @return this point shifted along this axis.
-     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;={@link #coordCount()}</code>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;
+     *                                   ={@link #coordCount()}</code>.
      */
     public Point shiftAlongAxis(int coordIndex, double shift) {
         coord(coordIndex); // check for illegal coordIndex
@@ -1004,22 +1026,22 @@ public class Point implements Comparable<Point> {
     static class Test {
         public static void main(String[] args) {
             Range[] ranges = {
-                    Range.valueOf(1.1, 2.7),
-                    Range.valueOf(1.6, 2.8),
-                    Range.valueOf(-27.1, 24.81),
-                    Range.valueOf(0, Long.MAX_VALUE),
-                    Range.valueOf(Long.MIN_VALUE, -100),
-                    Range.valueOf(Long.MIN_VALUE + 1, -100),
-                    Range.valueOf(Long.MIN_VALUE + 2000000, -100),
-                    Range.valueOf(Long.MIN_VALUE + 2000000, 100),
-                    Range.valueOf(-1e3, 1e8),
-                    Range.valueOf(-4e18, 6e18),
+                    Range.of(1.1, 2.7),
+                    Range.of(1.6, 2.8),
+                    Range.of(-27.1, 24.81),
+                    Range.of(0, Long.MAX_VALUE),
+                    Range.of(Long.MIN_VALUE, -100),
+                    Range.of(Long.MIN_VALUE + 1, -100),
+                    Range.of(Long.MIN_VALUE + 2000000, -100),
+                    Range.of(Long.MIN_VALUE + 2000000, 100),
+                    Range.of(-1e3, 1e8),
+                    Range.of(-4e18, 6e18),
             };
             for (Range r : ranges) {
                 IRange cast = null, rounded = null;
                 try {
                     cast = r.toIntegerRange();
-                    assert IRange.valueOf(r).equals(cast);
+                    assert IRange.of(r).equals(cast);
                     System.out.println(r + " casted to " + cast);
                 } catch (Exception e) {
                     System.out.println("  Cannot call toIntegerRange for " + r + ": " + e);
@@ -1032,7 +1054,7 @@ public class Point implements Comparable<Point> {
                     System.out.println("  Cannot call toRoundedRange for " + r + ": " + e);
                 }
                 try {
-                    IRange ir = IRange.valueOf(r);
+                    IRange ir = IRange.of(r);
                     assert ir.equals(cast);
                     System.out.println(r + " casted to " + ir);
                 } catch (Exception e) {
@@ -1048,43 +1070,43 @@ public class Point implements Comparable<Point> {
             }
             System.out.println();
             Point[] points = {
-                    Point.valueOf(12, 3),
-                    Point.valueOf(1.2, 3, 1),
-                    Point.valueOf(12, 3, 0),
-                    Point.valueOf(1.2, 3, 0, 1.234),
-                    Point.valueOf(12, 3, 0, -21234),
-                    Point.valueOf(-12, 123453, 27182, 821234),
-                    Point.valueOf(14, -3),
-                    Point.valueOf(0),
-                    Point.valueOf(0, 0),
-                    Point.valueOf(-3, -2),
-                    Point.valueOf(-4, 5),
-                    Point.valueOf(15, 20),
-                    Point.valueOf(3, 1.33),
-                    Point.valueOf(4.1, 5),
-                    Point.valueOf(0, 0, 0),
+                    Point.of(12, 3),
+                    Point.of(1.2, 3, 1),
+                    Point.of(12, 3, 0),
+                    Point.of(1.2, 3, 0, 1.234),
+                    Point.of(12, 3, 0, -21234),
+                    Point.of(-12, 123453, 27182, 821234),
+                    Point.of(14, -3),
+                    Point.of(0),
+                    Point.of(0, 0),
+                    Point.of(-3, -2),
+                    Point.of(-4, 5),
+                    Point.of(15, 20),
+                    Point.of(3, 1.33),
+                    Point.of(4.1, 5),
+                    Point.of(0, 0, 0),
                     Point.origin(3),
-                    Point.valueOf(new double[18]),
-                    Point.valueOf(new double[18]),
-                    Point.valueOf(13, 0.0),
-                    Point.valueOf(13, -0.0),
-                    Point.valueOf(4413.1, 0.1),
-                    Point.valueOf(4413.2, -0.8),
-                    Point.valueOf(13, 1, 0),
-                    Point.valueOf(3, 4, 0),
-                    Point.valueOf(13),
-                    Point.valueOf(1e3, 30),
-                    Point.valueOf(1e3, 1e20),
-                    Point.valueOf(-5e18, 30),
-                    Point.valueOf(-5e18, -300),
-                    Point.valueOf(-7e18, -5e18),
-                    Point.valueOf(5e18, 1e20),
+                    Point.of(new double[18]),
+                    Point.of(new double[18]),
+                    Point.of(13, 0.0),
+                    Point.of(13, -0.0),
+                    Point.of(4413.1, 0.1),
+                    Point.of(4413.2, -0.8),
+                    Point.of(13, 1, 0),
+                    Point.of(3, 4, 0),
+                    Point.of(13),
+                    Point.of(1e3, 30),
+                    Point.of(1e3, 1e20),
+                    Point.of(-5e18, 30),
+                    Point.of(-5e18, -300),
+                    Point.of(-7e18, -5e18),
+                    Point.of(5e18, 1e20),
             };
             java.util.Arrays.sort(points);
             for (Point rp : points) {
                 System.out.println(rp + "; symmetric: " + rp.symmetric()
                         + "; distance from origin: " + rp.distanceFromOrigin()
-                        + " = " + rp.distanceFrom(Arrays.asList(Point.origin(rp.coordCount())))
+                        + " = " + rp.distanceFrom(List.of(Point.origin(rp.coordCount())))
                         + (rp.coordCount() > 1 && rp.projectionAlongAxisEquals(0, Point.origin(rp.coordCount() - 1)) ?
                         "; x-projection is origin" : "")
                         + "; x-shift: " + rp.shiftAlongAxis(0, 100.0)
@@ -1093,9 +1115,9 @@ public class Point implements Comparable<Point> {
                         + "; last-axis-projection: "
                         + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(rp.coordCount() - 1))
                         + "; *2: " + rp.multiply(2.0)
-                        + " = " + rp.scale(IPoint.valueOfEqualCoordinates(rp.coordCount(), 2).toPoint().coordinates())
+                        + " = " + rp.scale(IPoint.ofEqualCoordinates(rp.coordCount(), 2).toPoint().coordinates())
                         + " = " + rp.scaleAndShift(
-                        Point.valueOfEqualCoordinates(rp.coordCount(), 2.0).coordinates(),
+                        ofEqualCoordinates(rp.coordCount(), 2.0).coordinates(),
                         Point.origin(rp.coordCount()))
                         + "; sqr: " + rp.scalarProduct(rp)
                         + "; hash: " + rp.hashCode() + "; address: " + System.identityHashCode(rp));
@@ -1107,7 +1129,7 @@ public class Point implements Comparable<Point> {
                 try {
                     ra = RectangularArea.valueOf(points[k], points[k + 1]);
                     assert RectangularArea.valueOf(ra.ranges()).equals(ra);
-                    Point point = Point.valueOfEqualCoordinates(ra.coordCount(), -1.5);
+                    Point point = ofEqualCoordinates(ra.coordCount(), -1.5);
                     RectangularArea test = RectangularArea.valueOf(point, Point.origin(ra.coordCount()));
                     assert ra.intersects(test) ? ra.intersection(test).equals(RectangularArea.valueOf(
                             ra.min().max(test.min()), ra.max().min(test.max()))) :
@@ -1116,8 +1138,8 @@ public class Point implements Comparable<Point> {
                             + "; contains(origin): " + ra.contains(Point.origin(ra.coordCount()))
                             + "; expand(origin): " + ra.expand(Point.origin(ra.coordCount()))
                             + "; expand(-1,-1..2,2): " + ra.expand(RectangularArea.valueOf(
-                            Point.valueOfEqualCoordinates(ra.coordCount(), -1),
-                            Point.valueOfEqualCoordinates(ra.coordCount(), 2)))
+                            ofEqualCoordinates(ra.coordCount(), -1),
+                            ofEqualCoordinates(ra.coordCount(), 2)))
                             + "; parallel distance to (-1.5,-1.5,...): "
                             + (ra.coordCount() == 2 ? ra.parallelDistance(-1.5, -1.5) : ra.coordCount() == 3 ?
                             ra.parallelDistance(-1.5, -1.5, -1.5) :
@@ -1135,7 +1157,7 @@ public class Point implements Comparable<Point> {
                 IRectangularArea cast = null, rounded = null;
                 try {
                     cast = ra.toIntegerRectangularArea();
-                    assert IRectangularArea.valueOf(ra).equals(cast);
+                    assert IRectangularArea.of(ra).equals(cast);
                     System.out.println(ra + " casted to " + cast);
                 } catch (Exception e) {
                     System.out.println("  Cannot call toIntegerRectangularArea for " + ra + ": " + e);
@@ -1143,7 +1165,7 @@ public class Point implements Comparable<Point> {
                 try {
                     rounded = ra.toRoundedRectangularArea();
                     assert IRectangularArea.roundOf(ra).equals(rounded);
-                    IPoint point = IPoint.valueOfEqualCoordinates(ra.coordCount(), 10);
+                    IPoint point = IPoint.ofEqualCoordinates(ra.coordCount(), 10);
                     IRectangularArea test = IRectangularArea.valueOf(IPoint.origin(ra.coordCount()), point);
                     assert rounded.intersects(test) ? rounded.intersection(test).equals(IRectangularArea.valueOf(
                             rounded.min().max(test.min()), rounded.max().min(test.max()))) :

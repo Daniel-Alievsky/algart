@@ -109,8 +109,13 @@ public class IRectangularArea {
      *                                  or if <code>max.{@link IPoint#coord(int)
      *                                  coord}(<i>i</i>) == Long.MAX_VALUE</code>.
      */
-    public static IRectangularArea valueOf(IPoint min, IPoint max) {
+    public static IRectangularArea of(IPoint min, IPoint max) {
         return valueOf(min, max, false);
+    }
+
+    @Deprecated
+    public static IRectangularArea valueOf(IPoint min, IPoint max) {
+        return of(min, max);
     }
 
     /**
@@ -130,7 +135,7 @@ public class IRectangularArea {
      *                                  or if one of specified <code>coordRanges</code> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
-    public static IRectangularArea valueOf(IRange... coordRanges) {
+    public static IRectangularArea of(IRange... coordRanges) {
         Objects.requireNonNull(coordRanges, "Null coordRanges argument");
         int n = coordRanges.length;
         if (n == 0) {
@@ -150,25 +155,36 @@ public class IRectangularArea {
         return new IRectangularArea(new IPoint(min), new IPoint(max));
     }
 
+    @Deprecated
+    public static IRectangularArea valueOf(IRange... coordRanges) {
+        return of(coordRanges);
+    }
+
     /**
      * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
-     * {@link #valueOf(IPoint, IPoint) valueOf}(
-     *      {@link IPoint#valueOf(long) IPoint.valueOf}(minX),
-     *      {@link IPoint#valueOf(long) IPoint.valueOf}(maxX));
+     * {@link #of(IPoint, IPoint) of}(
+     *      {@link IPoint#of(long) IPoint.of}(minX),
+     *      {@link IPoint#of(long) IPoint.of}(maxX));
      * </pre>
      *
      * @param minX the minimal <i>x</i>-coordinate, inclusive.
      * @param maxX the maximal <i>x</i>-coordinate, inclusive.
      * @return the new 1-dimensional rectangular area.
-     * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
+     * @throws IllegalArgumentException in the same situations as {@link #of(IPoint, IPoint)} method.
      */
-    public static IRectangularArea valueOf(long minX, long maxX) {
+    public static IRectangularArea of(long minX, long maxX) {
         return valueOf(
                 IPoint.valueOf(minX),
                 IPoint.valueOf(maxX));
     }
+
+    @Deprecated
+    public static IRectangularArea valueOf(long minX, long maxX) {
+        return of(minX, maxX);
+    }
+
 
     /**
      * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
@@ -186,10 +202,15 @@ public class IRectangularArea {
      * @return the new 2-dimensional rectangle.
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
      */
-    public static IRectangularArea valueOf(long minX, long minY, long maxX, long maxY) {
+    public static IRectangularArea of(long minX, long minY, long maxX, long maxY) {
         return valueOf(
                 IPoint.valueOf(minX, minY),
                 IPoint.valueOf(maxX, maxY));
+    }
+
+    @Deprecated
+    public static IRectangularArea valueOf(long minX, long minY, long maxX, long maxY) {
+        return of(minX, minY, maxX, maxY);
     }
 
     /**
@@ -210,10 +231,15 @@ public class IRectangularArea {
      * @return the new 3-dimensional parallelepiped.
      * @throws IllegalArgumentException in the same situations as {@link #valueOf(IPoint, IPoint)} method.
      */
-    public static IRectangularArea valueOf(long minX, long minY, long minZ, long maxX, long maxY, long maxZ) {
+    public static IRectangularArea of(long minX, long minY, long minZ, long maxX, long maxY, long maxZ) {
         return valueOf(
                 IPoint.valueOf(minX, minY, minZ),
                 IPoint.valueOf(maxX, maxY, maxZ));
+    }
+
+    @Deprecated
+    public static IRectangularArea valueOf(long minX, long minY, long minZ, long maxX, long maxY, long maxZ) {
+        return of(minX, minY, minZ, maxX, maxY, maxZ);
     }
 
     /**
@@ -234,9 +260,14 @@ public class IRectangularArea {
      *                                  IPoint.valueOf}(area.{@link #max() max()})</code>
      *                                  do not match requirements of {@link #valueOf(IPoint, IPoint)} method.
      */
-    public static IRectangularArea valueOf(RectangularArea area) {
+    public static IRectangularArea of(RectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
-        return valueOf(IPoint.valueOf(area.min), IPoint.valueOf(area.max));
+        return of(IPoint.valueOf(area.min), IPoint.valueOf(area.max));
+    }
+
+    @Deprecated
+    public static IRectangularArea valueOf(RectangularArea area) {
+        return of(area);
     }
 
     /**
@@ -1288,7 +1319,7 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public IRectangularArea dilate(long expansion) {
-        return dilate(IPoint.valueOfEqualCoordinates(coordCount(), expansion));
+        return dilate(IPoint.ofEqualCoordinates(coordCount(), expansion));
     }
 
     /**
@@ -1380,7 +1411,7 @@ public class IRectangularArea {
      * @throws ArithmeticException      in a case of <code>long</code> overflow.
      */
     public List<IRectangularArea> dilateStraightOnly(List<IRectangularArea> results, long expansion) {
-        return dilateStraightOnly(results, IPoint.valueOfEqualCoordinates(coordCount(), expansion));
+        return dilateStraightOnly(results, IPoint.ofEqualCoordinates(coordCount(), expansion));
     }
 
     /**

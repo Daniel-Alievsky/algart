@@ -33,7 +33,7 @@ import java.util.function.IntPredicate;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
-// Not too fast version: optimization only by horizontal or vertical
+// Not-too-fast version: optimization only by horizontal or vertical
 public abstract class IRectangleFinder {
     IntUnaryOperator minX = null;
     IntUnaryOperator maxX = null;

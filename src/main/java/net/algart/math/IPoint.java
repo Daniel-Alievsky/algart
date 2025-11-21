@@ -26,6 +26,7 @@ package net.algart.math;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
@@ -63,7 +64,7 @@ public class IPoint implements Comparable<IPoint> {
 
     /**
      * Returns a new point with the given set of coordinates: <i>x</i>, <i>y</i>, <i>z</i>, ...
-     * For example, <code>valueOf(x,y)</code> returns the 2D point with given coordinates.
+     * For example, <code>of(x,y)</code> returns the 2D point with given coordinates.
      *
      * <p>The <code>coordinates</code> array must contain at least 1 element.
      *
@@ -75,7 +76,7 @@ public class IPoint implements Comparable<IPoint> {
      * @throws NullPointerException     if the passed array is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no coordinates are passed).
      */
-    public static IPoint valueOf(long... coordinates) {
+    public static IPoint of(long... coordinates) {
         Objects.requireNonNull(coordinates, "Null coordinates argument");
         if (coordinates.length == 0) {
             throw new IllegalArgumentException("Empty coordinates array");
@@ -95,14 +96,24 @@ public class IPoint implements Comparable<IPoint> {
         return new IPoint(coordinates.clone());
     }
 
+    @Deprecated
+    public static IPoint valueOf(long... coordinates) {
+        return of(coordinates);
+    }
+
     /**
      * Returns a new 1-dimensional point with the given coordinate.
      *
      * @param x cartesian coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static IPoint valueOf(long x) {
+    public static IPoint of(long x) {
         return x == 0 ? originsCache[0] : new IPoint(new long[]{x});
+    }
+
+    @Deprecated
+    public static IPoint valueOf(long x) {
+        return of(x);
     }
 
     /**
@@ -112,8 +123,13 @@ public class IPoint implements Comparable<IPoint> {
      * @param y cartesian y-coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static IPoint valueOf(long x, long y) {
+    public static IPoint of(long x, long y) {
         return x == 0 && y == 0 ? originsCache[1] : new IPoint(new long[]{x, y});
+    }
+
+    @Deprecated
+    public static IPoint valueOf(long x, long y) {
+        return of(x, y);
     }
 
     /**
@@ -124,22 +140,27 @@ public class IPoint implements Comparable<IPoint> {
      * @param z cartesian z-coordinate of the point.
      * @return point with the given coordinates.
      */
-    public static IPoint valueOf(long x, long y, long z) {
+    public static IPoint of(long x, long y, long z) {
         return x == 0 && y == 0 && z == 0 ? originsCache[2] : new IPoint(new long[]{x, y, z});
+    }
+
+    @Deprecated
+    public static IPoint valueOf(long x, long y, long z) {
+        return of(x, y, z);
     }
 
     /**
      * Returns a new point in <i>n</i>-dimensional space, where <i>n</i><code>=coordCount</code>
      * and all coordinates of the point are equal to the given value <code>filler</code>.
-     * For example, <code>valueOfEqualCoordinates(3, 1)</code> returns the 3D point (1,1,1).
+     * For example, <code>ofEqualCoordinates(3, 1)</code> returns the 3D point (1,1,1).
      * If <code>filler==0</code>, this method is equivalent to {@link #origin(int) origin(coordCount)}.
      *
      * @param coordCount the number of dimensions.
-     * @param filler     the value of each coordinate of the created point.
+     * @param filler     the value of each coordinate in the created point.
      * @return the point with equal coordinates.
      * @throws IllegalArgumentException if the passed number of dimensions is zero or negative.
      */
-    public static IPoint valueOfEqualCoordinates(int coordCount, long filler) {
+    public static IPoint ofEqualCoordinates(int coordCount, long filler) {
         if (filler == 0) {
             return origin(coordCount);
         }
@@ -147,10 +168,13 @@ public class IPoint implements Comparable<IPoint> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         long[] coordinates = new long[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = filler;
-        }
+        Arrays.fill(coordinates, filler);
         return new IPoint(coordinates);
+    }
+
+    @Deprecated
+    public static IPoint valueOfEqualCoordinates(int coordCount, long filler) {
+        return ofEqualCoordinates(coordCount, filler);
     }
 
     /**
@@ -186,9 +210,7 @@ public class IPoint implements Comparable<IPoint> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         long[] coordinates = new long[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = Long.MIN_VALUE;
-        }
+        Arrays.fill(coordinates, Long.MIN_VALUE);
         return new IPoint(coordinates);
     }
 
@@ -206,9 +228,7 @@ public class IPoint implements Comparable<IPoint> {
             throw new IllegalArgumentException("Negative or zero number of coordinates: " + coordCount);
         }
         long[] coordinates = new long[coordCount];
-        for (int k = 0; k < coordinates.length; k++) {
-            coordinates[k] = Long.MAX_VALUE;
-        }
+        Arrays.fill(coordinates, Long.MAX_VALUE);
         return new IPoint(coordinates);
     }
     /*Repeat.SectionEnd begin*/
@@ -220,16 +240,21 @@ public class IPoint implements Comparable<IPoint> {
      * Java typecast <code>(long)doubleValue</code>.
      *
      * @param point the real point.
-     * @return the integer point with same (cast) coordinates.
+     * @return the integer point with the same (cast) coordinates.
      * @throws NullPointerException if the passed point is {@code null}.
      */
-    public static IPoint valueOf(Point point) {
+    public static IPoint of(Point point) {
         Objects.requireNonNull(point, "Null point argument");
         long[] coordinates = new long[point.coordCount()];
         for (int k = 0; k < coordinates.length; k++) {
             coordinates[k] = (long) point.coord(k);
         }
         return new IPoint(coordinates);
+    }
+
+    @Deprecated
+    public static IPoint valueOf(Point point) {
+        return of(point);
     }
 
     /**
@@ -239,7 +264,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>StrictMath.round</code> method.
      *
      * @param point the real point.
-     * @return the integer point with same (rounded) coordinates.
+     * @return the integer point with the same (rounded) coordinates.
      * @throws NullPointerException if the passed point is {@code null}.
      */
     public static IPoint roundOf(Point point) {
@@ -254,12 +279,12 @@ public class IPoint implements Comparable<IPoint> {
     /*Repeat.SectionStart main*/
 
     /**
-     * Returns the number of dimensions of this point.
+     * Returns the number of dimensions.
      * Equivalent to <code>{@link #coordinates()}.length</code>, but works faster.
      *
      * <p>The result of this method is always positive (&gt;0).
      *
-     * @return the number of dimensions of this point.
+     * @return the number of dimensions.
      */
     public int coordCount() {
         return coordinates.length;
@@ -268,7 +293,7 @@ public class IPoint implements Comparable<IPoint> {
     /**
      * Returns all coordinates of this point. The element <code>#0</code> of the returned array
      * is <i>x</i>-coordinate, the element <code>#1</code> is <i>y</i>-coordinate, etc.
-     * The length of the returned array is the number of dimensions of this point.
+     * The length of the returned array is the number of dimensions.
      *
      * <p>The returned array is a clone of the internal coordinates array stored in this object.
      * The returned array is never empty (its length &gt;0 always).
@@ -526,8 +551,8 @@ public class IPoint implements Comparable<IPoint> {
      * <code>thisInstance.{@link #coord(int) coord(i)}+increment</code>.
      * In other words, shifts this point along all axes by the given value.
      *
-     * <p>Equivalent to <code>{@link #add(IPoint) add}({@link IPoint#valueOfEqualCoordinates(int, long)
-     * IPoint.valueOfEqualCoordinates}(n,increment))</code>, where <code>n={@link #coordCount()}</code>.
+     * <p>Equivalent to <code>{@link #add(IPoint) add}({@link IPoint#ofEqualCoordinates(int, long)
+     * IPoint.ofEqualCoordinates}(n,increment))</code>, where <code>n={@link #coordCount()}</code>.
      *
      * @param increment the value, which will be added to all coordinates of this point.
      * @return this resulting point.
@@ -689,7 +714,8 @@ public class IPoint implements Comparable<IPoint> {
      * @param coordIndex the index of the axis.
      * @param shift      the shift along this axis.
      * @return this point shifted along this axis.
-     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;={@link #coordCount()}</code>.
+     * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or <code>coordIndex&gt;
+     *                                   ={@link #coordCount()}</code>.
      */
     public IPoint shiftAlongAxis(int coordIndex, long shift) {
         coord(coordIndex); // check for illegal coordIndex
@@ -1066,7 +1092,8 @@ public class IPoint implements Comparable<IPoint> {
      * with given dimensions, corresponding to the position in this matrix, describing
      * by coordinates of this point.
      *
-     * <p>More precisely, if the <code>pseudoCyclicTruncation</code> argument is <code>false</code>, returns the following value:
+     * <p>More precisely, if the <code>pseudoCyclicTruncation</code> argument is <code>false</code>,
+     * returns the following value:
      * <code>
      * shift = {@link #coord(int) coord(0)} +
      * {@link #coord(int) coord(1)}*<i>dim</i><sub>0</sub> +
@@ -1083,7 +1110,8 @@ public class IPoint implements Comparable<IPoint> {
      * <pre>
      * shift%product &gt;= 0 ? shift%product : shift%product&nbsp;+&nbsp;product,
      * </pre>
-     * <code>product&nbsp;=&nbsp;<i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-1</sub></code>.
+     * <code>product&nbsp;=
+     * <i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-1</sub></code>.
      * (In the special case <code>product==0</code>, if <code>pseudoCyclicTruncation</code> is <code>true</code>,
      * this method returns 0 and does not throw "division by zero" exception.)
      *
@@ -1091,7 +1119,8 @@ public class IPoint implements Comparable<IPoint> {
      * All point coordinates are always used, regardless of the length of <code>dimensions</code> array.
      *
      * <p>If <code>pseudoCyclicTruncation</code> is <code>true</code> and the product of all dimensions
-     * <code>product&nbsp;=&nbsp;<i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-1</sub></code>
+     * <code>product&nbsp;=
+     * <i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-1</sub></code>
      * is not greater than <code>Long.MAX_VALUE</code>, then all calculations are performed absolutely precisely,
      * even in a case when the direct calculation according the formulas above leads to overflow (because some
      * values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
@@ -1108,8 +1137,8 @@ public class IPoint implements Comparable<IPoint> {
      *
      * @param dimensions             the dimensions of some <i>n</i>-dimensional matrix, stored in the one-dimensional
      *                               array.
-     * @param pseudoCyclicTruncation if <code>true</code>, the result is replaced with the positive remainder of division
-     *                               by the product of all dimensions.
+     * @param pseudoCyclicTruncation if <code>true</code>, the result is replaced with the positive remainder of
+     *                               division by the product of all dimensions.
      * @return the index in this array, corresponding the position in the matrix,
      * describing by this point.
      * @throws NullPointerException     if <code>dimensions</code> argument is {@code null}.
@@ -1184,7 +1213,7 @@ public class IPoint implements Comparable<IPoint> {
     }
 
     /**
-     * Equivalent to <code>{@link Point#valueOf(IPoint) Point.valueOf}(thisInstance)</code>.
+     * Equivalent to <code>{@link Point#of(IPoint) Point.of}(thisInstance)</code>.
      *
      * @return the real point with same coordinates.
      */
@@ -1235,37 +1264,37 @@ public class IPoint implements Comparable<IPoint> {
     static class Test {
         public static void main(String[] args) {
             IPoint[] p = {
-                    IPoint.valueOf(12, 3),
-                    IPoint.valueOf(12, 3, 1),
-                    IPoint.valueOf(12, 3, 0),
-                    IPoint.valueOf(12, 3, 0, 1234),
-                    IPoint.valueOf(12, 3, 0, -21234),
-                    IPoint.valueOf(-12, 123453, 27182, 821234),
-                    IPoint.valueOf(14, -3),
-                    IPoint.valueOf(0),
-                    IPoint.valueOf(0, 0),
-                    IPoint.valueOf(0, 2),
-                    IPoint.valueOf(0, 1),
-                    IPoint.valueOf(-1, -14),
-                    IPoint.valueOf(-1, 1),
-                    IPoint.valueOf(1, 4),
-                    IPoint.valueOf(1, 1),
-                    IPoint.valueOf(2, 4),
-                    IPoint.valueOf(2, 3),
-                    IPoint.valueOf(0, 0, 0),
+                    IPoint.of(12, 3),
+                    IPoint.of(12, 3, 1),
+                    IPoint.of(12, 3, 0),
+                    IPoint.of(12, 3, 0, 1234),
+                    IPoint.of(12, 3, 0, -21234),
+                    IPoint.of(-12, 123453, 27182, 821234),
+                    IPoint.of(14, -3),
+                    IPoint.of(0),
+                    IPoint.of(0, 0),
+                    IPoint.of(0, 2),
+                    IPoint.of(0, 1),
+                    IPoint.of(-1, -14),
+                    IPoint.of(-1, 1),
+                    IPoint.of(1, 4),
+                    IPoint.of(1, 1),
+                    IPoint.of(2, 4),
+                    IPoint.of(2, 3),
+                    IPoint.of(0, 0, 0),
                     IPoint.origin(3),
-                    IPoint.valueOf(new long[18]),
-                    IPoint.valueOf(new long[18]),
-                    IPoint.valueOf(13, 0),
+                    IPoint.of(new long[18]),
+                    IPoint.of(new long[18]),
+                    IPoint.of(13, 0),
                     IPoint.valueOf(-13, 0),
-                    IPoint.valueOf(13, 0, 1),
-                    IPoint.valueOf(3, 4, 0),
-                    IPoint.valueOf(13),
-                    IPoint.valueOf(Long.MIN_VALUE, Long.MIN_VALUE),
-                    IPoint.valueOf(100, Long.MAX_VALUE),
-                    IPoint.valueOf(Long.MIN_VALUE + 1, -2),
-                    IPoint.valueOf(Long.MIN_VALUE + 1, -2),
-                    IPoint.valueOf(Long.MIN_VALUE + 1, -3),
+                    IPoint.of(13, 0, 1),
+                    IPoint.of(3, 4, 0),
+                    IPoint.of(13),
+                    IPoint.of(Long.MIN_VALUE, Long.MIN_VALUE),
+                    IPoint.of(100, Long.MAX_VALUE),
+                    IPoint.of(Long.MIN_VALUE + 1, -2),
+                    IPoint.of(Long.MIN_VALUE + 1, -2),
+                    IPoint.of(Long.MIN_VALUE + 1, -3),
             };
             java.util.Arrays.sort(p);
             long[] dimensions = {10, 10, 10};
@@ -1278,13 +1307,13 @@ public class IPoint implements Comparable<IPoint> {
                     {Long.MIN_VALUE + 2, 100},
             }) {
                 System.out.println("Range " + ends[0] + ".." + ends[1] + " is "
-                        + (IRange.isAllowedRange(ends[0], ends[1]) ? "allowed: " + IRange.valueOf(ends[0], ends[1])
+                        + (IRange.isAllowedRange(ends[0], ends[1]) ? "allowed: " + IRange.of(ends[0], ends[1])
                         : "not allowed"));
             }
             for (IPoint ip : p) {
                 System.out.println(ip + "; symmetric: " + ip.symmetric()
                         + "; distance from origin: " + ip.distanceFromOrigin()
-                        + " = " + ip.distanceFrom(Arrays.asList(IPoint.origin(ip.coordCount())))
+                        + " = " + ip.distanceFrom(List.of(IPoint.origin(ip.coordCount())))
                         + (ip.coordCount() > 1 && ip.projectionAlongAxisEquals(0, IPoint.origin(ip.coordCount() - 1)) ?
                         "; x-projection is origin" : "")
                         + "; x-shift: " + ip.shiftAlongAxis(0, 100)
@@ -1294,11 +1323,11 @@ public class IPoint implements Comparable<IPoint> {
                         + (ip.coordCount() == 1 ? "impossible" : ip.projectionAlongAxis(ip.coordCount() - 1))
                         + "; shift in 10x10x10: " + ip.toOneDimensional(dimensions, true)
                         + "; *1.1: " + ip.multiply(1.1)
-                        + " = " + ip.scale(Point.valueOfEqualCoordinates(ip.coordCount(), 1.1).coordinates())
+                        + " = " + ip.scale(Point.ofEqualCoordinates(ip.coordCount(), 1.1).coordinates())
                         + "; round *1.1: " + ip.roundedMultiply(1.1)
-                        + " = " + ip.roundedScale(Point.valueOfEqualCoordinates(ip.coordCount(), 1.1).coordinates())
+                        + " = " + ip.roundedScale(Point.ofEqualCoordinates(ip.coordCount(), 1.1).coordinates())
                         + " ~ " + ip.scaleAndShift(
-                        Point.valueOfEqualCoordinates(ip.coordCount(), 1.1).coordinates(),
+                        Point.ofEqualCoordinates(ip.coordCount(), 1.1).coordinates(),
                         Point.origin(ip.coordCount()))
                         + "; sqr: " + ip.scalarProduct(ip)
                         + "; hash: " + ip.hashCode() + "; address: " + System.identityHashCode(ip));
@@ -1312,8 +1341,8 @@ public class IPoint implements Comparable<IPoint> {
                             + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))
                             + "; expand(origin): " + ra.expand(IPoint.origin(ra.coordCount()))
                             + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.valueOf(
-                            IPoint.valueOfEqualCoordinates(ra.coordCount(), -1),
-                            IPoint.valueOfEqualCoordinates(ra.coordCount(), 2)))
+                            ofEqualCoordinates(ra.coordCount(), -1),
+                            ofEqualCoordinates(ra.coordCount(), 2)))
                             + " hash: " + ra.hashCode());
                 } catch (Exception e) {
                     System.out.println("  Cannot create area with " + p[k] + " and " + p[k + 1] + ": " + e);

@@ -1218,7 +1218,7 @@ public class RectangularArea {
      *                                  {@link #valueOf(Point, Point)} method).
      */
     public RectangularArea dilate(double expansion) {
-        return dilate(Point.valueOfEqualCoordinates(coordCount(), expansion));
+        return dilate(Point.ofEqualCoordinates(coordCount(), expansion));
     }
 
     /**
@@ -1304,7 +1304,7 @@ public class RectangularArea {
      *                                  {@link #valueOf(Point, Point)} method).
      */
     public List<RectangularArea> dilateStraightOnly(List<RectangularArea> results, double expansion) {
-        return dilateStraightOnly(results, Point.valueOfEqualCoordinates(coordCount(), expansion));
+        return dilateStraightOnly(results, Point.ofEqualCoordinates(coordCount(), expansion));
     }
 
     /**

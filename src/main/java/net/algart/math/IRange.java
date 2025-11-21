@@ -77,57 +77,67 @@ public final class IRange {
      *
      * @param min the minimum number in the range, inclusive.
      * @param max the maximum number in the range, inclusive.
-     * @return    the new range.
+     * @return the new range.
      * @throws IllegalArgumentException if <code>min &gt; max</code>, or if <code>max-min &gt;= Long.MAX_VALUE</code>
      *                                  (more precisely, if the Java expression <code>max-min+1</code> is nonpositive
      *                                  due to integer overflow),
      *                                  or if <code>min&lt;=-Long.MAX_VALUE</code>,
      *                                  or if <code>max==Long.MAX_VALUE</code>.
      */
+    public static IRange of(long min, long max) {
+        return of(min, max, false);
+    }
+
+    @Deprecated
     public static IRange valueOf(long min, long max) {
-        return valueOf(min, max, false);
+        return of(min, max);
     }
 
     /**
      * Returns an instance of this class describing the same range as the given real range,
      * with bounds, truncated to integers by Java typecast <code>(long)doubleValue</code>.
      * Equivalent to
-     * <pre>{@link #valueOf(long, long) valueOf}((long)range.{@link Range#min()
+     * <pre>{@link #of(long, long) of}((long)range.{@link Range#min()
      * min()}, (long)range.{@link Range#max() max())}</pre>
      *
      * @param range the real range.
-     * @return      the integer range with same (cast) bounds.
+     * @return the integer range with same (cast) bounds.
      * @throws NullPointerException     if the passed range is {@code null}.
      * @throws IllegalArgumentException if the desired range does not match requirements of
-     *                                  {@link #valueOf(long, long)} method.
+     *                                  {@link #of(long, long)} method.
      */
-    public static IRange valueOf(Range range) {
+    public static IRange of(Range range) {
         Objects.requireNonNull(range, "Null range argument");
-        return valueOf((long)range.min, (long)range.max);
+        return of((long) range.min, (long) range.max);
+    }
+
+    @Deprecated
+    public static IRange valueOf(Range range) {
+        return of(range);
     }
 
     /**
      * Returns an instance of this class describing the same range as the given real range,
      * with bounds, rounded to the nearest integers.
      * Equivalent to
-     * <pre>{@link #valueOf(long, long) valueOf}(StrictMath.round(range.{@link Range#min()
+     * <pre>{@link #of(long, long) of}(StrictMath.round(range.{@link Range#min()
      * min()}), StrictMath.round(range.{@link Range#max() max()}))</pre>
      *
      * @param range the real range.
-     * @return      the integer range with same (rounded) bounds.
+     * @return the integer range with the same (rounded) bounds.
      * @throws NullPointerException     if the passed range is {@code null}.
      * @throws IllegalArgumentException if the desired range does not match requirements of
-     *                                  {@link #valueOf(long, long)} method.
+     *                                  {@link #of(long, long)} method.
      */
     public static IRange roundOf(Range range) {
         Objects.requireNonNull(range, "Null range argument");
-        return valueOf(StrictMath.round(range.min), StrictMath.round(range.max));
+        return of(StrictMath.round(range.min), StrictMath.round(range.max));
     }
 
     /**
      * Returns <code>true</code> if and only if the arguments <code>min</code> and <code>max</code> are allowed
      * {@link #min()}/{@link #max()} bounds for some instance of this class. In other words,
-     * this method returns <code>false</code> in the same situations, when {@link #valueOf(long min, long max)}
+     * this method returns <code>false</code> in the same situations, when {@link #of(long min, long max)}
      * method, called with the same arguments, throws <code>IllegalArgumentException</code>.
      *
      * <p>Equivalent to the following check:
@@ -138,7 +148,7 @@ public final class IRange {
      *
      * @param min the minimum number in some range, inclusive.
      * @param max the maximum number in some range, inclusive.
-     * @return    whether these bounds are allowed minimum and maximum for some instance of this class.
+     * @return whether these bounds are allowed minimum and maximum for some instance of this class.
      */
     public static boolean isAllowedRange(long min, long max) {
         return min <= max && min > -Long.MAX_VALUE && max != Long.MAX_VALUE && max - min + 1L > 0L;
@@ -176,7 +186,7 @@ public final class IRange {
      * In other words, returns the passed number if it is in this range or the nearest range bound in other cases.
      *
      * @param value some number.
-     * @return      the passed number if it is in this range or the nearest range bound in other cases.
+     * @return the passed number if it is in this range or the nearest range bound in other cases.
      */
     public long cut(long value) {
         return value < min ? min : Math.min(value, max);
@@ -186,7 +196,7 @@ public final class IRange {
      * Returns <code>true</code> if and only if <code>{@link #min()}&lt;=value&lt;={@link #max()}</code>.
      *
      * @param value the checked value.
-     * @return      <code>true</code> if the value is in this range.
+     * @return <code>true</code> if the value is in this range.
      */
     public boolean contains(long value) {
         return min <= value && value <= max;
@@ -197,7 +207,7 @@ public final class IRange {
      * and <code>range.{@link #max()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <code>true</code> if the checked range is a subset of this range.
+     * @return <code>true</code> if the checked range is a subset of this range.
      */
     public boolean contains(IRange range) {
         return min <= range.min && range.max <= max;
@@ -208,7 +218,7 @@ public final class IRange {
      * and <code>range.{@link #min()}&lt;={@link #max()}</code>.
      *
      * @param range the checked range.
-     * @return      <code>true</code> if the checked range overlaps with this range.
+     * @return <code>true</code> if the checked range overlaps with this range.
      */
     public boolean intersects(IRange range) {
         return min <= range.max && range.min <= max;
@@ -221,7 +231,7 @@ public final class IRange {
      * In other words, expands the current range to include the given value.
      *
      * @param value some value that should belong to the new range.
-     * @return      the expanded range.
+     * @return the expanded range.
      * @throws IllegalArgumentException if <code>value==Long.MAX_VALUE</code>,
      *                                  <code>value&lt;=-Long.MAX_VALUE</code> or
      *                                  if in the resulting range
@@ -236,17 +246,17 @@ public final class IRange {
         long max = Math.max(value, this.max);
         if (max - min + 1L <= 0L)
             throw new IllegalArgumentException("Cannot expand " + this + " until " + value
-                + ", because in the result max - min >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")");
+                    + ", because in the result max - min >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")");
         return new IRange(min, max);
     }
 
     /**
-     * Equivalent to <code>{@link Range#valueOf(IRange) Range.valueOf}(thisInstance)</code>.
+     * Equivalent to <code>{@link Range#of(IRange) Range.of}(thisInstance)</code>.
      *
      * @return the equivalent real range.
      */
     public Range toRange() {
-        return Range.valueOf(this);
+        return Range.of(this);
     }
 
     /**
@@ -267,8 +277,8 @@ public final class IRange {
      * @return the hash code of this range.
      */
     public int hashCode() {
-        int iMin = (int)min * 37 + (int)(min >>> 32);
-        int iMax = (int)max * 37 + (int)(max >>> 32);
+        int iMin = (int) min * 37 + (int) (min >>> 32);
+        int iMax = (int) max * 37 + (int) (max >>> 32);
         return iMin * 37 + iMax;
     }
 
@@ -278,15 +288,15 @@ public final class IRange {
      * <code>((IRange)obj).min()==this.min()</code> and <code>((IRange)obj).max==this.max</code>.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return    <code>true</code> if the specified object is a range equal to this one.
+     * @return <code>true</code> if the specified object is a range equal to this one.
      */
     public boolean equals(Object obj) {
-        return obj instanceof IRange && ((IRange)obj).min == this.min && ((IRange)obj).max == this.max;
+        return obj instanceof IRange && ((IRange) obj).min == this.min && ((IRange) obj).max == this.max;
     }
 
-    static IRange valueOf(long min, long max, boolean ise) {
+    static IRange of(long min, long max, boolean ise) {
         if (min == max && min >= -MAX_CACHED && min <= -MAX_CACHED)
-            return DegenerateIRangeCache.cache[MAX_CACHED + (int)min];
+            return DegenerateIRangeCache.cache[MAX_CACHED + (int) min];
         if (min > max)
             throw new IllegalArgumentException("min > max (min = " + min + ", max = " + max + ")");
         if (max == Long.MAX_VALUE)
@@ -300,16 +310,17 @@ public final class IRange {
 
     static RuntimeException invalidBoundsException(String message, boolean useIllegalStateException) {
         return useIllegalStateException ?
-            new IllegalStateException(message) :
-            new IllegalArgumentException((message));
+                new IllegalStateException(message) :
+                new IllegalArgumentException((message));
     }
 
     private static final int MAX_CACHED = 1024;
+
     private static class DegenerateIRangeCache {
         static final IRange[] cache = new IRange[2 * MAX_CACHED + 1];
 
         static {
-            for(int i = -MAX_CACHED; i <= MAX_CACHED; i++)
+            for (int i = -MAX_CACHED; i <= MAX_CACHED; i++)
                 cache[MAX_CACHED + i] = new IRange(i, i);
         }
     }

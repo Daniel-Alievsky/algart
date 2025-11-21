@@ -158,7 +158,7 @@ public final class Orthonormal3DBasis {
     }
 
     /**
-     * Creates new basis, where <b>i</b> vector has components
+     * Creates a new basis, where <b>i</b> vector has components
      * (<code>ix</code>/d<sub>1</sub>, <code>iy</code>/d<sub>1</sub>, <code>iz</code>/d<sub>1</sub>),
      * d<sub>1</sub>=<code>sqrt</code>(ix<sup>2</sup>+iy<sup>2</sup>+iz<sup>2</sup>),
      * <b>j</b> vector has components

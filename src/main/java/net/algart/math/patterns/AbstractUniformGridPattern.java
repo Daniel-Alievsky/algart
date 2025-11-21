@@ -109,8 +109,8 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             }
         }
         this.zeroOriginOfGrid = this.originOfGrid.isOrigin();
-        this.stepsVector = Point.valueOf(this.stepsOfGrid);
-        this.unitStepsOfGrid = stepsVector.equals(Point.valueOfEqualCoordinates(dimCount, 1.0));
+        this.stepsVector = Point.of(this.stepsOfGrid);
+        this.unitStepsOfGrid = stepsVector.equals(Point.ofEqualCoordinates(dimCount, 1.0));
         this.surelyInteger = this.originOfGrid.isInteger() && stepsVector.isInteger();
         this.iOriginOfGrid = this.surelyInteger ? this.originOfGrid.toIntegerPoint() : null;
         this.iStepsOfGrid = this.surelyInteger ? stepsVector.toIntegerPoint().coordinates() : null;

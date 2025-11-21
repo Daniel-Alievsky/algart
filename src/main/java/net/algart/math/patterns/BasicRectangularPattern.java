@@ -44,7 +44,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
     BasicRectangularPattern(IRange[] gridIndexRanges) {
         this(
             Point.origin(gridIndexRanges.length),
-            Point.valueOfEqualCoordinates(gridIndexRanges.length, 1.0).coordinates(),
+            Point.ofEqualCoordinates(gridIndexRanges.length, 1.0).coordinates(),
             gridIndexRanges);
     }
 

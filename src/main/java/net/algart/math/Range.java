@@ -62,7 +62,7 @@ public final class Range {
      * @return    the new range.
      * @throws IllegalArgumentException if <code>min &gt; max</code> or one of the arguments is <code>Double.NaN</code>.
      */
-    public static Range valueOf(double min, double max) {
+    public static Range of(double min, double max) {
         if (Double.isNaN(min)) {
             throw new IllegalArgumentException("min is NaN");
         }
@@ -75,6 +75,11 @@ public final class Range {
         return new Range(min, max);
     }
 
+    @Deprecated
+    public static Range valueOf(double min, double max) {
+        return of(min, max);
+    }
+
     /**
      * Returns an instance of this class describing the same range as the given integer range.
      * The <code>long</code> boundaries of the passed integer range are converted
@@ -85,9 +90,14 @@ public final class Range {
      * @return       the equivalent real range.
      * @throws NullPointerException if the passed integer range is {@code null}.
      */
-    public static Range valueOf(IRange iRange) {
+    public static Range of(IRange iRange) {
         Objects.requireNonNull(iRange, "Null iRange argument");
         return new Range(iRange.min, iRange.max);
+    }
+
+    @Deprecated
+    public static Range valueOf(IRange iRange) {
+        return of(iRange);
     }
 
     /**
@@ -187,16 +197,16 @@ public final class Range {
     }
 
     /**
-     * Equivalent to <code>{@link IRange#valueOf(Range) IRange.valueOf}(thisInstance)</code>,
+     * Equivalent to <code>{@link IRange#of(Range) IRange.of}(thisInstance)</code>,
      * with the only difference that <code>IllegalStateException</code> is thrown instead of
      * <code>IllegalArgumentException</code> for unallowed range.
      *
      * @return the integer range with same (cast) bounds.
      * @throws IllegalStateException in the same situations when
-     *                               {@link IRange#valueOf(Range)} method throws <code>IllegalArgumentException</code>.
+     *                               {@link IRange#of(Range)} method throws <code>IllegalArgumentException</code>.
      */
     public IRange toIntegerRange() {
-        return IRange.valueOf((long) min, (long) max, true);
+        return IRange.of((long) min, (long) max, true);
     }
 
     /**
@@ -209,7 +219,7 @@ public final class Range {
      *                               {@link IRange#roundOf(Range)} method throws <code>IllegalArgumentException</code>.
      */
     public IRange toRoundedRange() {
-        return IRange.valueOf(StrictMath.round(min), StrictMath.round(max), true);
+        return IRange.of(StrictMath.round(min), StrictMath.round(max), true);
     }
 
     /**

@@ -37,7 +37,7 @@ class BasicDirectPointSetUniformGridPattern
     private final Set<IPoint> gridIndexes;
 
     BasicDirectPointSetUniformGridPattern(int dimCount, Set<IPoint> gridIndexes) {
-        this(Point.origin(dimCount), Point.valueOfEqualCoordinates(dimCount, 1.0).coordinates(), gridIndexes);
+        this(Point.origin(dimCount), Point.ofEqualCoordinates(dimCount, 1.0).coordinates(), gridIndexes);
     }
 
     BasicDirectPointSetUniformGridPattern(Point originOfGrid, double[] stepsOfGrid, Set<IPoint> gridIndexes) {
