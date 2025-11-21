@@ -48,7 +48,7 @@ public final class ShiftFramePosition extends UniversalFramePosition implements 
     }
 
     public static RectangularArea area(Point offset, long[] dimensions) {
-        return RectangularArea.valueOf(offset, offset.add(IPoint.of(dimensions).toPoint()));
+        return RectangularArea.of(offset, offset.add(IPoint.of(dimensions).toPoint()));
     }
 
     @Override

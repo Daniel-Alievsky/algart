@@ -112,7 +112,7 @@ public class Stitcher<P extends FramePosition> {
                 shiftedFrames.add(DefaultFrame.valueOf(m, position));
             }
             actualFrames = shiftedFrames;
-            area = RectangularArea.valueOf(Point.origin(dimCount), area.size());
+            area = RectangularArea.of(Point.origin(dimCount), area.size());
         }
 
         final long[] dimensions = area.size().toIntegerPoint().coordinates(); // truncated area sizes
@@ -214,7 +214,7 @@ public class Stitcher<P extends FramePosition> {
                 subMin[k] = offset.coord(k) + subPos[k];
                 subMax[k] = subMin[k] + subDim[k];
             }
-            final RectangularArea subArea = RectangularArea.valueOf(Point.of(subMin), Point.of(subMax));
+            final RectangularArea subArea = RectangularArea.of(Point.of(subMin), Point.of(subMax));
             final Matrix<? extends UpdatablePArray> subResult = result.subMatr(subPos, subDim);
             final List<Frame<P>> localFrames = actualFrames(subArea);
             Stitcher<P> localStitcher = frames(localFrames);

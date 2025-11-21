@@ -89,7 +89,7 @@ public class UniversalFramePosition implements FramePosition {
             JArrays.minDoubleArray(minDestCoordinates, 0, destCoordinates, 0, n);
             JArrays.maxDoubleArray(maxDestCoordinates, 0, destCoordinates, 0, n);
         }
-        return RectangularArea.valueOf(Point.of(minDestCoordinates), Point.of(maxDestCoordinates));
+        return RectangularArea.of(Point.of(minDestCoordinates), Point.of(maxDestCoordinates));
     }
 
     public RectangularArea area() {

@@ -100,7 +100,7 @@ final class Union extends AbstractPattern implements Pattern {
 
     @Override
     public RectangularArea coordArea() {
-        return RectangularArea.valueOf(coordRanges);
+        return RectangularArea.of(coordRanges);
     }
 
     @Override

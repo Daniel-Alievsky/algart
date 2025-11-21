@@ -130,7 +130,7 @@ public abstract class AbstractPattern implements Pattern {
         for (int k = 0; k < result.length; k++) {
             result[k] = coordRange(k);
         }
-        return RectangularArea.valueOf(result);
+        return RectangularArea.of(result);
     }
 
     /**
