@@ -125,7 +125,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             long newMin = gridIndexRanges[k].min() + sh;
             long newMax = gridIndexRanges[k].max() + sh;
             checkGridIndexRange(newMin, newMax); // for more informative exception in a case of overflow
-            newRanges[k] = IRange.valueOf(newMin, newMax);
+            newRanges[k] = IRange.of(newMin, newMax);
         }
         return new BasicRectangularPattern(originOfGrid, stepsOfGrid, newRanges);
     }
@@ -135,7 +135,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         checkCoordIndex(coordIndex);
         IRange[] surfaceRanges = gridIndexRanges.clone();
         long coord = gridIndexRange(coordIndex).min();
-        surfaceRanges[coordIndex] = IRange.valueOf(coord, coord);
+        surfaceRanges[coordIndex] = IRange.of(coord, coord);
         return Patterns.newRectangularIntegerPattern(surfaceRanges).scale(stepsOfGrid).shift(originOfGrid);
     }
 
@@ -144,7 +144,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         checkCoordIndex(coordIndex);
         IRange[] surfaceRanges = gridIndexRanges.clone();
         long coord = gridIndexRange(coordIndex).max();
-        surfaceRanges[coordIndex] = IRange.valueOf(coord, coord);
+        surfaceRanges[coordIndex] = IRange.of(coord, coord);
         return Patterns.newRectangularIntegerPattern(surfaceRanges).scale(stepsOfGrid).shift(originOfGrid);
     }
 
@@ -155,7 +155,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
         int facetIndex = 0;
         for (int coordIndex = surfaceRanges.length - 1; coordIndex >= 0; coordIndex--) {
             long min = gridIndexRange(coordIndex).min();
-            surfaceRanges[coordIndex] = IRange.valueOf(min, min);
+            surfaceRanges[coordIndex] = IRange.of(min, min);
             facets[facetIndex++] = Patterns.newRectangularIntegerPattern(surfaceRanges)
                 .scale(stepsOfGrid).shift(originOfGrid);
             long max = gridIndexRange(coordIndex).max();
@@ -163,13 +163,13 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             if (max == min) {
                 break;
             }
-            surfaceRanges[coordIndex] = IRange.valueOf(max, max);
+            surfaceRanges[coordIndex] = IRange.of(max, max);
             facets[facetIndex++] = Patterns.newRectangularIntegerPattern(surfaceRanges)
                 .scale(stepsOfGrid).shift(originOfGrid);
             if (max - min == 1) {
                 break;
             }
-            surfaceRanges[coordIndex] = IRange.valueOf(min + 1, max - 1);
+            surfaceRanges[coordIndex] = IRange.of(min + 1, max - 1);
             // removing these 2 facets from the full parallelepiped: no sense to add vertices several times
         }
         Pattern[] result = new Pattern[facetIndex];
@@ -270,9 +270,9 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             newRanges = new IRange[dimCount];
             for (int k = 0; k < dimCount; k++) {
                 if (multipliers[k] < 0.0) {
-                    newRanges[k] = IRange.valueOf(-gridIndexRanges[k].max(), -gridIndexRanges[k].min());
+                    newRanges[k] = IRange.of(-gridIndexRanges[k].max(), -gridIndexRanges[k].min());
                 } else if (multipliers[k] == 0.0) {
-                    newRanges[k] = IRange.valueOf(0, 0);
+                    newRanges[k] = IRange.of(0, 0);
                 } else {
                     newRanges[k] = gridIndexRanges[k];
                 }
@@ -324,7 +324,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             long newMin = gridIndexRanges[k].min() + ugAdded.gridIndexRange(k).min();
             long newMax = gridIndexRanges[k].max() + ugAdded.gridIndexRange(k).max();
             // overflow is impossible: both summands are in -Long.MAX_VALUE/2..Long.MAX_VALUE/2 range
-            sumRanges[k] = IRange.valueOf(newMin, newMax);
+            sumRanges[k] = IRange.of(newMin, newMax);
         }
         return new BasicRectangularPattern(
             originOfGrid.add(ugAdded.originOfGrid()),
@@ -348,7 +348,7 @@ final class BasicRectangularPattern extends AbstractUniformGridPattern implement
             if (newMin > newMax) {
                 return null;
             }
-            diffRanges[k] = IRange.valueOf(newMin, newMax);
+            diffRanges[k] = IRange.of(newMin, newMax);
         }
         return new BasicRectangularPattern(
             originOfGrid.subtract(ugSubtracted.originOfGrid()),

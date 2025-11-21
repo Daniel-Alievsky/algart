@@ -62,14 +62,14 @@ public class Matrices {
          * Java operator. See details in comments to
          * {@link Matrices#asInterpolationFunc(Matrix, InterpolationMethod, boolean)}.
          */
-        STEP_FUNCTION(IRange.valueOf(0, 0)),
+        STEP_FUNCTION(IRange.of(0, 0)),
 
         /**
          * Polylinear interpolation method: the function value is calculated as a polylinear interpolation of
          * 2<sup><i>n</i></sup> neighbour matrix elements. See details in comments to
          * {@link Matrices#asInterpolationFunc(Matrix, InterpolationMethod, boolean)}.
          */
-        POLYLINEAR_FUNCTION(IRange.valueOf(0, 1));
+        POLYLINEAR_FUNCTION(IRange.of(0, 1));
 
         private final IRange dependenceCoordRange;
 
@@ -94,13 +94,13 @@ public class Matrices {
          * </code></p>
          * <p>This method allows to get the dependence range for this interpolation algorithm.
          * In particular, for the {@link #STEP_FUNCTION}, representing some matrix,
-         * the returned range is always <code>0..0</code> ({@link IRange#valueOf(long, long) IRange.valueOf(0, 0)}).
+         * the returned range is always <code>0..0</code> ({@link IRange#of(long, long) IRange.of(0, 0)}).
          * For the case of {@link #POLYLINEAR_FUNCTION}, the range is little larger:
          * <code>0..1</code>. For more complex interpolation schemes, it could be <code>-1..1</code>,
          * <code>-2..2</code> and so on.
          *
          * <p>In future versions of this package,
-         * if this method will not be able to return a suitable range
+         * if this method is not able to return a suitable range
          * (for example, some value of the returned function depends on all matrix elements),
          * it will return a range, always including all matrix coordinates,
          * for example, <code>Long.MIN_VALUE..Long.MAX_VALUE</code>.
@@ -1120,7 +1120,7 @@ public class Matrices {
                 if (!segmentSectionAtLastCoordinate(xRange, sectionCoordinateValue)) {
                     return EMPTY_REGIONS;
                 }
-                return new Region[]{new Hyperparallelepiped(IRange.valueOf(xRange.min, xRange.max))};
+                return new Region[]{new Hyperparallelepiped(IRange.of(xRange.min, xRange.max))};
             }
         }
 
@@ -1420,7 +1420,7 @@ public class Matrices {
                 long minX = (long) StrictMath.ceil(sectionX[k]);
                 long maxX = (long) StrictMath.floor(sectionX[k + 1]);
                 if (minX <= maxX) {
-                    result[resultCount++] = getSegment(IRange.valueOf(minX, maxX));
+                    result[resultCount++] = getSegment(IRange.of(minX, maxX));
                 }
             }
             if (horizontalCount > 0) { // second scanning in this rare situation
@@ -1432,7 +1432,7 @@ public class Matrices {
                             long minX = (long) StrictMath.ceil(StrictMath.min(vx[k], vxPrev));
                             long maxX = (long) StrictMath.floor(StrictMath.max(vx[k], vxPrev));
                             if (minX <= maxX) {
-                                result[resultCount++] = getSegment(IRange.valueOf(minX, maxX));
+                                result[resultCount++] = getSegment(IRange.of(minX, maxX));
                             }
                         }
                     }
@@ -5306,13 +5306,13 @@ public class Matrices {
         }
         IRange[] result = new IRange[vertices[0].length];
         for (int j = 0; j < result.length; j++) {
-            result[j] = IRange.valueOf(
+            result[j] = IRange.of(
                     (long) StrictMath.floor(vertices[0][j]),
                     (long) StrictMath.ceil(vertices[0][j]));
         }
         for (int k = 1; k < vertices.length; k++) {
             for (int j = 0; j < result.length; j++) {
-                result[j] = IRange.valueOf(
+                result[j] = IRange.of(
                         Math.min(result[j].min(), (long) StrictMath.floor(vertices[k][j])),
                         Math.max(result[j].max(), (long) StrictMath.ceil(vertices[k][j])));
             }

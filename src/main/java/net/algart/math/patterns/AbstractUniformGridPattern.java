@@ -401,7 +401,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
             if (isActuallyRectangular()) { // uniform-grid rectangular pattern
                 IRectangularArea area = gridIndexArea();
                 long[] vertex = new long[dimCount];
-                IRange[] r01 = Collections.nCopies(dimCount, IRange.valueOf(0, 1)).toArray(new IRange[dimCount]);
+                IRange[] r01 = Collections.nCopies(dimCount, IRange.of(0, 1)).toArray(new IRange[dimCount]);
                 Set<IPoint> vertices01 = new BasicRectangularPattern(r01).roundedPoints();
                 // - all vertices of [0..1]^dimCount parallelepiped
                 Set<IPoint> resultPoints = new HashSet<>();
@@ -421,7 +421,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 //TODO!! shiftGridIndexes is still dangerous for extremely large patterns
                 // provides non-negative coordinates only
 
-                IRange[] r3x3 = Collections.nCopies(dimCount, IRange.valueOf(-2, 2)).toArray(new IRange[dimCount]);
+                IRange[] r3x3 = Collections.nCopies(dimCount, IRange.of(-2, 2)).toArray(new IRange[dimCount]);
                 Set<IPoint> shifts = new BasicRectangularPattern(r3x3).roundedPoints();
                 // - all shifts inside of [-2..2]^dimCount parallelepiped
                 Set<IPoint> bestBoundaryForDirection = null;
@@ -466,7 +466,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                 // Now we are sure that we have from 2 to 16 dimensions: it will be used by the algorithm
                 IRange[] ranges = p.gridIndexArea().ranges(); //32bit ranges
                 for (int k = 0; k < ranges.length; k++) {
-                    ranges[k] = IRange.valueOf(2 * ranges[k].min(), 2 * ranges[k].max()); //maximally 33bit ranges
+                    ranges[k] = IRange.of(2 * ranges[k].min(), 2 * ranges[k].max()); //maximally 33bit ranges
                 }
                 AbstractUniformGridPattern circumscribed2P = new BasicRectangularPattern(ranges);
                 // Now "circumscribed" contains 2(x)P; scaling and shifting is not necessary for further needs
@@ -483,7 +483,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
                     // Let's check the volume of the circumscribed of 4m(x)P
                     long newVolume = 1;
                     for (int k = 0; k < ranges.length; k++) {
-                        ranges[k] = IRange.valueOf(2 * ranges[k].min(), 2 * ranges[k].max());
+                        ranges[k] = IRange.of(2 * ranges[k].min(), 2 * ranges[k].max());
                         newVolume *= ranges[k].size();
                         // Overflow impossible: the volume at the previous step was 31-bit value,
                         // and now it is increased less than in 2^dimCount()<=2^16 times.
@@ -857,7 +857,7 @@ public abstract class AbstractUniformGridPattern extends AbstractPattern impleme
         long[] shifts = new long[dimCount];
         double[] coordinates = new double[dimCount]; // zero-filled
         IRange[] ranges = new IRange[dimCount];
-        Arrays.fill(ranges, IRange.valueOf(0, 0));
+        Arrays.fill(ranges, IRange.of(0, 0));
         boolean allShiftsAreZero = true;
         for (int k = 0; k < dimCount; k++) {
             shifts[k] = gridIndexArea.min(k);

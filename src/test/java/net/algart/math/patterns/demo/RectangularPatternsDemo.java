@@ -58,7 +58,7 @@ public class RectangularPatternsDemo {
         }
         IRange[] ranges = new IRange[dimCount];
         for (int k = 0; k < ranges.length; k++) {
-            ranges[k] = IRange.valueOf(Long.parseLong(args[++argIndex]), Long.parseLong(args[++argIndex]));
+            ranges[k] = IRange.of(Long.parseLong(args[++argIndex]), Long.parseLong(args[++argIndex]));
         }
         double step = Double.parseDouble(args[++argIndex]);
         int minimalPointCountForDecomposition = Integer.parseInt(args[++argIndex]);

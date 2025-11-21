@@ -64,7 +64,7 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
         final IRange[] ranges = new IRange[n];
         long count = 1;
         for (int k = 0; k < n; k++) {
-            IRange range = IRange.valueOf(weightCoordMin.coord(k), weightCoordMax.coord(k));
+            IRange range = IRange.of(weightCoordMin.coord(k), weightCoordMax.coord(k));
             ranges[k] = range;
             if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large desired weight matrix: more than 2^31-1 elements");
@@ -108,7 +108,7 @@ class BasicWeightedPattern extends AbstractWeightedPattern implements WeightedPa
         IPoint newMax = weightCoordMin.roundedScale(multipliers);
         long count = 1;
         for (int k = 0; k < n; k++) {
-            IRange range = IRange.valueOf(newMin.coord(k), newMax.coord(k));
+            IRange range = IRange.of(newMin.coord(k), newMax.coord(k));
             if (range.size() >= Integer.MAX_VALUE || (count *= range.size()) >= Integer.MAX_VALUE) {
                 throw new IllegalArgumentException("Too large desired weight matrix after resizing: "
                     + "more than 2^31-1 elements");

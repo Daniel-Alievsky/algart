@@ -248,9 +248,11 @@ public class Patterns {
             semiAxesInv[k] = 1.0 / semiAxis; // maybe Infinity
         }
         if (n == 1) {
-            return newIntegerPattern(newRectangularIntegerPattern(IRange.valueOf(
-                    StrictMath.round(StrictMath.ceil(center.coord(0) - semiAxesClone[0])),
-                    StrictMath.round(StrictMath.floor(center.coord(0) + semiAxesClone[0])))).roundedPoints());
+            return newIntegerPattern(newRectangularIntegerPattern(IRange.of(
+                    StrictMath.round(
+                            StrictMath.ceil(center.coord(0) - semiAxesClone[0])),
+                    StrictMath.round(
+                            StrictMath.floor(center.coord(0) + semiAxesClone[0])))).roundedPoints());
         }
         final IRange[] oneSegmentCoordRanges = new IRange[n];
         HashSet<IPoint> points = new HashSet<>();
@@ -261,7 +263,8 @@ public class Patterns {
                     new double[]{semiAxesInv[k]},
                     new long[]{0}, 0, 0.0);
             // 1-dimensional "ellipsoid" to get maximal radius by common algorithm
-            oneSegmentCoordRanges[k] = new BasicDirectPointSetUniformGridPattern(1, points).gridIndexRange(0);
+            oneSegmentCoordRanges[k] = new BasicDirectPointSetUniformGridPattern(
+                    1, points).gridIndexRange(0);
             points.clear();
         }
         addPointsToEllipsoid(points, center.coordinates(), semiAxesUpperBounds, semiAxesInv,
@@ -417,8 +420,8 @@ public class Patterns {
 
     /**
      * Equivalent to {@link #newRectangularIntegerPattern newRectangularIntegerPattern(ranges)},
-     * where <code>ranges[k]</code> is <code>{@link IRange#valueOf(long, long)
-     * IRange.valueOf}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</code>.
+     * where <code>ranges[k]</code> is <code>{@link IRange#of(long, long)
+     * IRange.of}(min.{@link IPoint#coord(int) coord(k)}, max.{@link IPoint#coord(int) coord(k)})</code>.
      * The number of the created pattern dimensions is equal to the number of coordinates
      * of <code>min</code> and <code>max</code> points.
      *
@@ -445,7 +448,7 @@ public class Patterns {
         }
         IRange[] ranges = new IRange[n];
         for (int k = 0; k < n; k++) {
-            ranges[k] = IRange.valueOf(min.coord(k), max.coord(k));
+            ranges[k] = IRange.of(min.coord(k), max.coord(k));
         }
         return new BasicRectangularPattern(ranges);
     }

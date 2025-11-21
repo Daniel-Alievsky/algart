@@ -3035,7 +3035,7 @@ public class MainOperationsTest implements Cloneable {
                 if (count[i] == 0) {
                     trivial = true;
                 } else {
-                    destRanges[i] = IRange.valueOf(destPos[i], destPos[i] + count[i] - 1);
+                    destRanges[i] = IRange.of(destPos[i], destPos[i] + count[i] - 1);
                 }
                 shifts[i] = destPos[i] - srcPos[i];
             }

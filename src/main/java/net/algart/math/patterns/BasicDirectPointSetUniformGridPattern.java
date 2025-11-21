@@ -71,7 +71,7 @@ class BasicDirectPointSetUniformGridPattern
         }
         this.gridIndexes = gridIndexes;
         for (int k = 0; k < dimCount; k++) {
-            this.gridIndexRanges[k] = IRange.valueOf(minIndex[k], maxIndex[k]);
+            this.gridIndexRanges[k] = IRange.of(minIndex[k], maxIndex[k]);
             checkGridIndexRange(this.gridIndexRanges[k]);
             checkCoordRange(coordRange(k, gridIndexRanges[k]));
         }
