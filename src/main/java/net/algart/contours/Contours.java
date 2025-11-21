@@ -962,7 +962,7 @@ public final class Contours {
     public Point findSomePointInside(int contourIndex, boolean surelyUnpacked) {
         final Point2D result = new Point2D.Double();
         if (findSomePointInside(result, contourIndex, surelyUnpacked)) {
-            return Point.valueOf(result.getX(), result.getY());
+            return Point.of(result.getX(), result.getY());
         } else {
             return null;
         }

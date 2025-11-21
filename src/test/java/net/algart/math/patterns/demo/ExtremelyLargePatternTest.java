@@ -264,20 +264,21 @@ public class ExtremelyLargePatternTest {
         Pattern pattern;
         try {
             pattern = new SimplePattern(java.util.Arrays.asList(
-                Point.valueOf(Pattern.MAX_COORDINATE - 0.5, 0),
-                Point.valueOf(-0.5001, 0)));
+                    Point.of(Pattern.MAX_COORDINATE - 0.5, 0),
+                    Point.of(-0.5001, 0)));
             try {
                 System.out.println(pattern.round()); // should not work due to exception in the previous constructor
             } catch (Exception e) {
                 System.out.println("Unexpected error!");
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         } catch (Exception e) {
             System.out.println("Cannot create a pattern: " + e);
         }
+        double x = -Pattern.MAX_COORDINATE + 0.5;
         pattern = new SimplePattern(java.util.Arrays.asList(
-            Point.valueOf(-Pattern.MAX_COORDINATE + 0.5, 0),
-            Point.valueOf(StrictMath.nextAfter(0.5, 0.0), 0)));
+                Point.of(x, 0),
+                Point.of(StrictMath.nextAfter(0.5, 0.0), 0)));
         System.out.printf("Large pattern: %s, x-range 0x%x..0x%x%n",
             pattern,
             StrictMath.round(pattern.coordRange(0).min()),
@@ -289,9 +290,9 @@ public class ExtremelyLargePatternTest {
             rounded.gridIndexRange(0).max());
 
         SimplePattern patternA = new SimplePattern(Arrays.asList(
-            Point.valueOf(0.0, 0.0),
-            Point.valueOf(0.0001, 0.0)));
-        DirectPointSetPattern patternB = Patterns.newPattern(Point.valueOf(Pattern.MAX_COORDINATE / 2, 0.0));
+                Point.of(0.0, 0.0),
+                Point.of(0.0001, 0.0)));
+        DirectPointSetPattern patternB = Patterns.newPattern(Point.of((double) (Pattern.MAX_COORDINATE / 2), 0.0));
         pattern = Patterns.newMinkowskiSum(patternA, patternB);
         System.out.printf("Minkowski sum of:%n  %s%n  and %s%n  is %s%n"
             + "  it is %d points {%s}, isSurelySinglePoint()=%s%n",
