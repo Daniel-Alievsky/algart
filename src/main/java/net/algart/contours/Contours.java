@@ -944,7 +944,7 @@ public final class Contours {
     }
 
     public InsideContourStatus pointInsideContourStatus(int contourIndex, double x, double y, boolean surelyUnpacked) {
-        return InsideContourStatus.valueOfInformation(
+        return InsideContourStatus.ofInformation(
                 pointInsideContourInformation(contourIndex, x, y, surelyUnpacked));
     }
 
@@ -1663,7 +1663,7 @@ public final class Contours {
                                 throw new AssertionError("Failure of finding inside point: we find ("
                                         + x + ", " + y + "), starting from ("
                                         + 0.5 * (double) ((long) lastX + (long) pointX) + ", " + y
-                                        + "), but its status is " + InsideContourStatus.valueOfInformation(newInfo)
+                                        + "), but its status is " + InsideContourStatus.ofInformation(newInfo)
                                         + " (information: " + newInfo + ")");
                             }
                         }

@@ -136,7 +136,7 @@ public enum InsideContourStatus {
                 + " - it is not a correct point status");
     }
 
-    public static InsideContourStatus valueOfInformation(double information) {
+    public static InsideContourStatus ofInformation(double information) {
         for (InsideContourStatus status : values()) {
             if (status.matchesStatus(information)) {
                 return status;
