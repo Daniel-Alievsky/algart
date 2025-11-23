@@ -36,13 +36,13 @@ public final class ShiftFramePosition extends UniversalFramePosition implements 
         super(area, LinearOperator.getShiftInstance(area.min().symmetric().coordinates()));
     }
 
-    public static ShiftFramePosition valueOf(Point offset, long... dimensions) {
+    public static ShiftFramePosition of(Point offset, long... dimensions) {
         Objects.requireNonNull(offset, "Null offset argument");
         Objects.requireNonNull(dimensions, "Null dimensions argument");
         return new ShiftFramePosition(area(offset, dimensions));
     }
 
-    public static ShiftFramePosition valueOf(RectangularArea area) {
+    public static ShiftFramePosition of(RectangularArea area) {
         Objects.requireNonNull(area, "Null area argument");
         return new ShiftFramePosition(area);
     }

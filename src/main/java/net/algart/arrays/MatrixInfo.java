@@ -248,15 +248,15 @@ public abstract class MatrixInfo {
      * about the given matrix with the specified {@link #version() version} of serialization format.
      *
      * <p>The specified version must be supported by this class.
-     * Current implementation supports the following versions: "1.1" and "1.2".
-     * There is no guarantee that all previous format versions, that was supported by old implementations
-     * of this class, will be supported by this method.
+     * The current implementation supports the following versions: "1.1" and "1.2".
+     * There is no guarantee that all previous format versions that was supported by old implementations
+     * of this class will be supported by this method.
      * (However, all previous format versions are always supported by deserialization methods
      * {@link #valueOf(byte[])} and {@link #valueOf(String)}.)
      *
      * @param matrix     the matrix.
      * @param dataOffset the value that may be interpreted as an offset of some "main" data and
-     *                   that will be stored in byte array returned by {@link #toBytes()} method.
+     *                   that will be stored in the byte array returned by {@link #toBytes()} method.
      * @param version    the version of the serialization format supported by the created instance.
      * @return full structural information about the matrix.
      * @throws NullPointerException     if the argument is {@code null}.
@@ -297,17 +297,17 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Deserializes the byte array and creates new instance of this class on the base of information,
+     * Deserializes the byte array and creates a new instance of this class on the base of the information
      * stored in this byte array.
      *
-     * <p>The passed data must have format, corresponding to the current
+     * <p>The passed data must have a format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
      * that was somewhere implemented by this class in the past.
      * In another case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed array may contain extra elements after the end of the stored information.
      * All versions of this class guarantee that random bytes after the end of the serialized information
-     * will not lead to problems: the serialization format always allows to detect the end of information
+     * will not lead to problems: the serialization format always allows detecting the end of information
      * in the sequence of bytes.
      *
      * @param bytes the byte array produced by some previous call of {@link #toBytes()} method.
