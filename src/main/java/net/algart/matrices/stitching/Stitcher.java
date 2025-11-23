@@ -109,7 +109,7 @@ public class Stitcher<P extends FramePosition> {
                 RectangularArea shiftedArea = frame.position().area().shift(area.min().symmetric());
                 P position = castPosition(ShiftFramePosition.of(shiftedArea));
                 // here we are sure that P is ShiftFramePosition, in another case shiftPosition(...) cannot return true
-                shiftedFrames.add(DefaultFrame.valueOf(m, position));
+                shiftedFrames.add(DefaultFrame.of(m, position));
             }
             actualFrames = shiftedFrames;
             area = RectangularArea.of(Point.origin(dimCount), area.size());
@@ -311,7 +311,7 @@ public class Stitcher<P extends FramePosition> {
     public static <P extends FramePosition> Frame<P> cloneIntoJavaMemory(ArrayContext arrayContext, Frame<P> frame) {
         Matrix<? extends UpdatablePArray> preloaded = Arrays.SMM.newMatrix(UpdatablePArray.class, frame.matrix());
         Matrices.copy(arrayContext, preloaded, frame.matrix());
-        return DefaultFrame.valueOf(preloaded, frame.position());
+        return DefaultFrame.of(preloaded, frame.position());
     }
 
     private static void checkFrameDimensions(int dimCount, List<? extends Frame<?>> frames) {

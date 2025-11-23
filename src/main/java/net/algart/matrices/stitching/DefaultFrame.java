@@ -45,7 +45,7 @@ public class DefaultFrame<P extends FramePosition> implements Frame<P> {
         this.position = position;
     }
 
-    public static <P extends FramePosition> DefaultFrame<P> valueOf(Matrix<? extends PArray> matrix, P position) {
+    public static <P extends FramePosition> DefaultFrame<P> of(Matrix<? extends PArray> matrix, P position) {
         return new DefaultFrame<>(matrix, position);
     }
 
