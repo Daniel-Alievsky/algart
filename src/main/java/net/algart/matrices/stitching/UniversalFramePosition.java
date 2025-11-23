@@ -44,21 +44,18 @@ public class UniversalFramePosition implements FramePosition {
     UniversalFramePosition(RectangularArea area, CoordinateTransformationOperator inverseTransform) {
         this.area = area;
         this.inverseTransform = inverseTransform;
-        this.isShift = inverseTransform instanceof LinearOperator
-            && ((LinearOperator)inverseTransform).isShift();
+        this.isShift = inverseTransform instanceof LinearOperator linearOperator && linearOperator.isShift();
     }
 
-    public static UniversalFramePosition valueOf(RectangularArea area,
-        CoordinateTransformationOperator inverseTransform)
-    {
+    public static UniversalFramePosition of(RectangularArea area, CoordinateTransformationOperator inverseTransform) {
         Objects.requireNonNull(area, "Null area argument");
         Objects.requireNonNull(inverseTransform, "Null inverseTransform argument");
         return new UniversalFramePosition(area, inverseTransform);
     }
 
-    public static RectangularArea estimateDestinationAreaByVertices(long[] sourceMatrixDimensions,
-        LinearOperator inverseTransform)
-    {
+    public static RectangularArea estimateDestinationAreaByVertices(
+            long[] sourceMatrixDimensions,
+            LinearOperator inverseTransform) {
         Objects.requireNonNull(sourceMatrixDimensions, "Null sourceMatrixDimensions argument");
         final int n = sourceMatrixDimensions.length;
         if (n == 0) {
@@ -100,10 +97,10 @@ public class UniversalFramePosition implements FramePosition {
         Point o = area.min();
         boolean integerShift = isShift && o.equals(o.toRoundedPoint().toPoint());
         Func f = Matrices.asInterpolationFunc(sourceMatrix,
-            integerShift ?
-                Matrices.InterpolationMethod.STEP_FUNCTION :
-                Matrices.InterpolationMethod.POLYLINEAR_FUNCTION,
-            Double.NaN);
+                integerShift ?
+                        Matrices.InterpolationMethod.STEP_FUNCTION :
+                        Matrices.InterpolationMethod.POLYLINEAR_FUNCTION,
+                Double.NaN);
         return inverseTransform.apply(f);
     }
 
