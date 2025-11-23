@@ -2250,20 +2250,21 @@ class MappedDataStorages {
                 for (long p = lazyFillPos, mp = lazyFillPosInBytes;
                     mp < mappingPosition;
                     p += ms.bankSizeInElements, mp += ms.bankSizeInBytes)
-                    // direct filling: cannot do it in future due to too small lazyFillMapOfBanks
+                    // direct filling: cannot do it in the future due to too small lazyFillMapOfBanks
                 {
 //                    System.err.println("Filling " + p + "/" + mp);
                     assert newFillMapSize < needfulFillMapSize : "extra lazy filling loop";
                     assert p < position : "p>=position";
 //                    System.out.printf("\r%d: %d / %d", mp/ms.bankSizeInBytes, mp/1048576, mappingPosition/1048576);
-                    DataFile.BufferHolder tempBh = dataFile.map(DataFile.Range.valueOf(mp, ms.bankSizeInBytes), true);
-                    // this bank was never loaded before; so, we can ignore standard translateFailedIndex logic
+                    DataFile.BufferHolder tempBh = dataFile.map(
+                            DataFile.Range.of(mp, ms.bankSizeInBytes), true);
+                    // this bank was never loaded before; so, we can ignore the standard translateFailedIndex logic
                     scheduleFinalizationForMapping(tempBh);
                     actualizeLazyFillingBank(tempBh.data(), p);
                     // p is passed only for a case of filling by the pattern array,
                     // to inform where the necessary fragment of the pattern begins
                     tempBh.unmap(false);
-                    checkIsDataFileDisposedOrShutdownInProgress(); // we need to leave long synchronized block
+                    checkIsDataFileDisposedOrShutdownInProgress(); // we need to leave a long synchronized block
                 }
                 long t2 = System.nanoTime();
                 if (finerLoggable) {
@@ -2282,7 +2283,7 @@ class MappedDataStorages {
                 (lazyFillBit = thisBankIndex < lazyFillMapOfBanks.length() && lazyFillMapOfBanks.getBit(thisBankIndex)));
             // if ms.temporary, then always lazyFillMapOfBanks != null
             bh[bank] = dataFile.map(
-                DataFile.Range.valueOf(mappingPosition, mappingSize),
+                DataFile.Range.of(mappingPosition, mappingSize),
                 loadingMode == LoadingMode.NOT_LOAD_DATA_FROM_FILE || thisBankMustBeFilled);
             if (loadingMode == LoadingMode.PRELOAD_DATA_FROM_FILE) {
                 bh[bank].load();

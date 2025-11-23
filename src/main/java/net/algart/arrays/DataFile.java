@@ -218,7 +218,7 @@ public interface DataFile {
          * @return         new range instance.
          * @throws IllegalArgumentException of <code>position</code> or <code>length</code> is negative.
          */
-        public static Range valueOf(long position, long length) {
+        public static Range of(long position, long length) {
             return new Range(position, length);
         }
 
