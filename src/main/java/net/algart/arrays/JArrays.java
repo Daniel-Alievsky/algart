@@ -7175,8 +7175,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(boolean[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(boolean[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7213,8 +7213,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(char[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(char[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7250,8 +7250,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(byte[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7287,8 +7287,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(short[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7324,8 +7324,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(int[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7361,8 +7361,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(long[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7398,8 +7398,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(float[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(float[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7435,8 +7435,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(double[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(double[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7472,8 +7472,8 @@ public class JArrays {
      * elements of the Java array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(Object[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(Object[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source Java array.
      * @param separator       the string used for separating elements.
@@ -7515,8 +7515,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(byte[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7562,8 +7562,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(short[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7608,8 +7608,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(int[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7654,8 +7654,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(long[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7700,8 +7700,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(float[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(float[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7746,8 +7746,8 @@ public class JArrays {
      * using <code>format</code> string for formatting numeric elements.
      * Equivalent to
      * <code>{@link Arrays#toString(Array, Locale, String, String, int)
-     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(double[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(double[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param locale          the locale that will be passed to <code>String.format(locale,format,v)</code> call.
@@ -7803,8 +7803,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(boolean[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(boolean[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
@@ -7841,8 +7841,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(char[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(char[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
@@ -7878,8 +7878,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(byte[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(byte[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
@@ -7915,8 +7915,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(short[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(short[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
@@ -7952,8 +7952,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(int[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(int[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
@@ -7989,8 +7989,8 @@ public class JArrays {
      * elements of the AlgART array, separating elements by the given <code>separator</code>.
      * Equivalent to
      * <code>{@link Arrays#toHexString(Array, String, int)
-     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#valueOf(long[])
-     * valueOf}(array), separator, maxStringLength)</code>, but works little faster.
+     * Arrays.toHexString}({@link SimpleMemoryModel#getInstance()}.{@link MemoryModel#of(long[])
+     * of}(array), separator, maxStringLength)</code>, but works little faster.
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.

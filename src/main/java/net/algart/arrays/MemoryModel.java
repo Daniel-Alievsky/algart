@@ -123,7 +123,7 @@ public interface MemoryModel {
 
     /**
      * Allocates a zero-filled resizable array with the specified element type and initial length.
-     * The capacity of new array will be equal to its length.
+     * The capacity of the new array will be equal to its length.
      *
      * <p>This method is equivalent to the following call:
      * <code>{@link #newEmptyArray(Class, long) newEmptyArray(elementType, initialLength)}.{@link
@@ -145,18 +145,18 @@ public interface MemoryModel {
 
     /**
      * Allocates a zero-filled unresizable array with the specified element type and length.
-     * The capacity of new array will be equal to its length.
+     * The capacity of the new array will be equal to its length.
      *
-     * <p>The analogous result may be obtained the following call:
+     * <p>The analogous result may be gotten the following call:
      * <code>{@link #newArray(Class, long) newArray(elementType, length)}.{@link
      * MutableArray#asUnresizable() asUnresizable()}</code>.
-     * However, we don't recommend to use such code.
+     * However, we don't recommend using such code.
      * If you are sure that you will not need to change the array length,
      * please always use this method
      * (or {@link #newUnresizableBitArray(long) newUnresizableBitArray},
      * {@link #newUnresizableByteArray(long) newUnresizableBteArray}, etc.).
-     * In some memory models, creating resizable array with the given length
-     * may require much more resources that creating unresizable one.
+     * In some memory models, creating a resizable array with the given length
+     * may require much more resources than creating an unresizable one.
      * For example, in the {@link LargeMemoryModel large memory model}
      * every resizable array is stored in the file consisting of integer number
      * of blocks per {@link DataFileModel#recommendedBankSize(boolean)
@@ -1315,15 +1315,20 @@ public interface MemoryModel {
      * where <code>elementType</code> is the type of <code>array</code> elements
      * (<code>array.getClass().getComponentType()</code>).
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException  if <code>array</code> argument is not a Java array.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableArray valueOf(Object array, int offset, int count);
+    UpdatableArray of(Object array, int offset, int count);
+
+    @Deprecated
+    default UpdatableArray valueOf(Object array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
      * Allocates an unresizable AlgART array containing all elements of the specified Java array:
@@ -1344,213 +1349,307 @@ public interface MemoryModel {
      * @throws NullPointerException     if <code>array</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>array</code> argument is not a Java array.
      */
-    UpdatableArray valueOf(Object array);
+    UpdatableArray of(Object array);
+
+    @Deprecated
+    default UpdatableArray valueOf(Object array) {
+        return of(array);
+    }
 
     /*Repeat() boolean ==> char,,byte,,short,,int,,long,,float,,double;;
                Bit     ==> Char,,Byte,,Short,,Int,,Long,,Float,,Double */
 
     /**
-     * Equivalent to <code>(UpdatableBitArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableBitArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableBitArray valueOf(boolean[] array, int offset, int count);
+    UpdatableBitArray of(boolean[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableBitArray valueOf(boolean[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableBitArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableBitArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableBitArray valueOf(boolean[] array);
+    UpdatableBitArray of(boolean[] array);
+
+    @Deprecated
+    default UpdatableBitArray valueOf(boolean[] array) {
+        return of(array);
+    }
     /*Repeat.AutoGeneratedStart !! Auto-generated: NOT EDIT !! */
 
     /**
-     * Equivalent to <code>(UpdatableCharArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableCharArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableCharArray valueOf(char[] array, int offset, int count);
+    UpdatableCharArray of(char[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableCharArray valueOf(char[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableCharArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableCharArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableCharArray valueOf(char[] array);
+    UpdatableCharArray of(char[] array);
+
+    @Deprecated
+    default UpdatableCharArray valueOf(char[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableByteArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableByteArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableByteArray valueOf(byte[] array, int offset, int count);
+    UpdatableByteArray of(byte[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableByteArray valueOf(byte[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableByteArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableByteArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableByteArray valueOf(byte[] array);
+    UpdatableByteArray of(byte[] array);
+
+    @Deprecated
+    default UpdatableByteArray valueOf(byte[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableShortArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableShortArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableShortArray valueOf(short[] array, int offset, int count);
+    UpdatableShortArray of(short[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableShortArray valueOf(short[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableShortArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableShortArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableShortArray valueOf(short[] array);
+    UpdatableShortArray of(short[] array);
+
+    @Deprecated
+    default UpdatableShortArray valueOf(short[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableIntArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableIntArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableIntArray valueOf(int[] array, int offset, int count);
+    UpdatableIntArray of(int[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableIntArray valueOf(int[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableIntArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableIntArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableIntArray valueOf(int[] array);
+    UpdatableIntArray of(int[] array);
+
+    @Deprecated
+    default UpdatableIntArray valueOf(int[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableLongArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableLongArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableLongArray valueOf(long[] array, int offset, int count);
+    UpdatableLongArray of(long[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableLongArray valueOf(long[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableLongArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableLongArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableLongArray valueOf(long[] array);
+    UpdatableLongArray of(long[] array);
+
+    @Deprecated
+    default UpdatableLongArray valueOf(long[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableFloatArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableFloatArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableFloatArray valueOf(float[] array, int offset, int count);
+    UpdatableFloatArray of(float[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableFloatArray valueOf(float[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableFloatArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableFloatArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableFloatArray valueOf(float[] array);
+    UpdatableFloatArray of(float[] array);
+
+    @Deprecated
+    default UpdatableFloatArray valueOf(float[] array) {
+        return of(array);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableDoubleArray){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableDoubleArray){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of the constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
      * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    UpdatableDoubleArray valueOf(double[] array, int offset, int count);
+    UpdatableDoubleArray of(double[] array, int offset, int count);
+
+    @Deprecated
+    default UpdatableDoubleArray valueOf(double[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableDoubleArray){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableDoubleArray){@link #of(Object) of}((Object)array)</code>.
      *
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    UpdatableDoubleArray valueOf(double[] array);
+    UpdatableDoubleArray of(double[] array);
+
+    @Deprecated
+    default UpdatableDoubleArray valueOf(double[] array) {
+        return of(array);
+    }
     /*Repeat.AutoGeneratedEnd*/
 
     /**
-     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object, int, int)
-     * valueOf}((Object)array, offset, count)</code>.
+     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #of(Object, int, int)
+     * of}((Object)array, offset, count)</code>.
      *
      * @param <E>    the generic type of array elements.
-     * @param array  the source Java array with elements of constructed AlgART array.
+     * @param array  the source Java array with elements of a constructed AlgART array.
      * @param offset starting position in the source Java array.
      * @param count  the length of returned AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException      if <code>array</code> argument is {@code null}.
-     * @throws IndexOutOfBoundsException if copying would cause access of data outside the passed Java array.
+     * @throws IndexOutOfBoundsException if copying causes access of data outside the passed Java array.
      */
-    <E> UpdatableObjectArray<E> valueOf(E[] array, int offset, int count);
+    <E> UpdatableObjectArray<E> of(E[] array, int offset, int count);
+
+    @Deprecated
+    default <E> UpdatableObjectArray<E> valueOf(E[] array, int offset, int count) {
+        return of(array, offset, count);
+    }
 
     /**
-     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #valueOf(Object) valueOf}((Object)array)</code>.
+     * Equivalent to <code>(UpdatableObjectArray&lt;E&gt;){@link #of(Object) of}((Object)array)</code>.
      *
      * @param <E>   the generic type of array elements.
-     * @param array the source Java array with elements of constructed AlgART array.
+     * @param array the source Java array with elements of the constructed AlgART array.
      * @return created unresizable AlgART array.
      * @throws NullPointerException if <code>array</code> argument is {@code null}.
      */
-    <E> UpdatableObjectArray<E> valueOf(E[] array);
+    <E> UpdatableObjectArray<E> of(E[] array);
 
+    @Deprecated
+    default <E> UpdatableObjectArray<E> valueOf(E[] array) {
+        return of(array);
+    }
 
     /**
      * Returns <code>true</code> if this memory model can create arrays with this element type.

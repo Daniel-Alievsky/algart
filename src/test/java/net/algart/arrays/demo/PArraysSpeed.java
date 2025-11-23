@@ -480,7 +480,7 @@ public class PArraysSpeed {
                             for (int k = 0; k < (int) n; k++) {
                                 sba[k] = (someValue & 1) != 0;
                             }
-                            a3 = (UpdatablePFixedArray) mm.valueOf(sourceArray);
+                            a3 = (UpdatablePFixedArray) mm.of(sourceArray);
                         }
                     } else if (elementType == int.class) {
                         int[] sia = (int[]) sourceArray;
@@ -488,7 +488,7 @@ public class PArraysSpeed {
                             for (int k = 0; k < (int) n; k++) {
                                 sia[k] = someValue;
                             }
-                            a3 = (UpdatablePFixedArray) mm.valueOf(sourceArray);
+                            a3 = (UpdatablePFixedArray) mm.of(sourceArray);
                         }
                     } else {
                         long[] sla = (long[]) sourceArray;
@@ -496,7 +496,7 @@ public class PArraysSpeed {
                             for (int k = 0; k < (int) n; k++) {
                                 sla[k] = someValue;
                             }
-                            a3 = (UpdatablePFixedArray) mm.valueOf(sourceArray);
+                            a3 = (UpdatablePFixedArray) mm.of(sourceArray);
                         }
                     }
                 } else {

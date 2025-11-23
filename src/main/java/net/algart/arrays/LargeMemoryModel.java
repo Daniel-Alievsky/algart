@@ -99,9 +99,9 @@ import java.util.logging.Logger;
  * leads to increasing the underlying data file length ({@link DataFile#length(long)} method).
  * (Please compare: resizing arrays, created by {@link SimpleMemoryModel} / {@link BufferMemoryModel},
  * can lead to reallocation of the Java array / <code>ByteBuffer</code> and copying elements to
- * new array / <code>ByteBuffer</code>.)
+ * a new array / <code>ByteBuffer</code>.)
  * But the contrary assertion <i>is not true</i>: reducing the array size never leads to reducing
- * the data file length. In other words, <i>the data file length only increases, but never decreases</i>.
+ * the data file length. In other words, <i>the data file length only increases but never decreases</i>.
  *
  * <p>Moreover, for a resizable array, the length of the data file is always multiple of
  * {@link DataFileModel#recommendedBankSize(boolean) DataFileModel.recommendedBankSize(false)}
@@ -110,11 +110,11 @@ import java.util.logging.Logger;
  * Unlike this, an unresizable array, created by this memory model
  * ({@link #newUnresizableArray(Class, long)}, {@link #newMatrix(Class, Class, long...)
  * newMatrix(Class, Class, long...)},
- * {@link #valueOf(Object) valueOf(Object)}, etc.),
- * allocates data file with almost minimal length that is enough for storing all array elements.</p>
+ * {@link #of(Object) of(Object)}, etc.),
+ * allocates a data file with almost minimal length that is enough for storing all array elements.</p>
  *
  * <p>When the data file becomes unused, because there are no active AlgART array instances
- * based on it, it is automatically delete by garbage collector
+ * based on it, it is automatically deleted by garbage collector
  * with help of {@link DataFileModel#delete(DataFile)} method.
  * (The only exception is a case if you've called {@link #setTemporary(Array, boolean)
  * setTemporary(largeArray, false)} for this array.)</p>
@@ -171,7 +171,7 @@ import java.util.logging.Logger;
  * there are no ways to modify settings of its instance returned by {@link #getInstance()}
  * or {@link #getInstance(DataFileModel)} methods.</p>
  *
- * @param <P> type of the path to data file.
+ * @param <P> type of the path to the data file.
  * @author Daniel Alievsky
  */
 public final class LargeMemoryModel<P> extends AbstractMemoryModel {

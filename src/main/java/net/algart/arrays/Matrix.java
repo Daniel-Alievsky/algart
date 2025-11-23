@@ -148,10 +148,10 @@ public interface Matrix<T extends Array> extends Cloneable {
      * <p>Continuation mode for submatrices, created by
      * {@link Matrix#subMatrix(long[], long[], ContinuationMode continuationMode)},
      * {@link Matrix#subMatr(long[], long[], ContinuationMode continuationMode)} and similar methods.
-     * The continuation mode is passed to those methods as the last argument and specifies,
-     * what will be the values of elements of the returned submatrix, which lie outside the original matrix.
+     * The continuation mode is passed to those methods as the last argument and specifies
+     * what will be the values of the returned elements, which lie outside the original matrix.
      * (This argument is not important if all submatrix elements belong to the original matrix,
-     * i.e. if the returned matrix is a true sub-matrix of the original one.)</p>
+     * i.e., if the returned matrix is a true submatrix of the original one.)</p>
      *
      * <p>The following continuation modes are possible:</p>
      *
@@ -160,7 +160,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      *     <li>{@link #CYCLIC}: <i>cyclic</i> repetition of the original matrix along all coordinates;</li>
      *     <li>{@link #PSEUDO_CYCLIC}: <i>pseudo-cyclic</i> (<i>toroidal</i>) repetition of the original matrix,
      *     corresponding to the cyclic repetition of its {@link Matrix#array() built-in array};
-     *     most of algorithms of image processing work in accordance with this model;</li>
+     *     most of the algorithms of image processing work in accordance with this model;</li>
      *     <li>{@link #MIRROR_CYCLIC}: improved version of {@link #CYCLIC} model, where the original matrix
      *     is repeated with "mirror reflecting"; this mode provides the best smoothness of continuation;</li>
      *     <li>{@link #getConstantMode(Object) <i>constant</i> continuation}: the space outside the original matrix
@@ -208,7 +208,7 @@ public interface Matrix<T extends Array> extends Cloneable {
          * {@link Matrix#subMatr(long[], long[], ContinuationMode continuationMode)}
          * is strictly equivalent to more simple {@link Matrix#subMatr(long[], long[])}.
          * In other words, all submatrix elements must lie inside the original matrix,
-         * i.e. the returned matrix must be a true sub-matrix of the original one.
+         * i.e. the returned matrix must be a true submatrix of the original one.
          * An attempt to create a submatrix with this continuation mode,
          * which does not lie fully inside the original matrix, leads to <code>IndexOutOfBoundsException</code>.
          */

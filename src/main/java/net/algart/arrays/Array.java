@@ -1115,8 +1115,8 @@ public interface Array {
      * </ul>
      *
      * <p>Reverse operation &mdash; conversion of a Java array into AlgART array &mdash;
-     * can be performed by {@link SimpleMemoryModel#asUpdatableArray(Object)} method,
-     * returning a view of Java array, or by {@link MemoryModel#valueOf(Object)} method
+     * can be performed by {@link SimpleMemoryModel#asUpdatableArray(Object)} method
+     * returning a view of Java array or by {@link MemoryModel#of(Object)} method
      * of any memory model instance, which actually copies data into a newly allocated array.
      *
      * @return Java array containing all the elements in this array.

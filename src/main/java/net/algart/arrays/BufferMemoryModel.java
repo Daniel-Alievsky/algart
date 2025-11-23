@@ -273,7 +273,7 @@ public class BufferMemoryModel extends AbstractMemoryModel {
      * {@link PackedBitBuffers#setBit(java.nio.LongBuffer, long, boolean) setBit(dest,offset+k,value)} methods
      * of that class, where <code>k=0,1,...,bufferArray.{@link Array#length() length()}-1</code>.
      *
-     * <p>If modifications of this AlgART array characteristics lead to reallocation
+     * <p>If modifications of this AlgART array characteristic lead to reallocation
      * of the internal storage, then the returned <code>ByteBuffer</code> ceases to be a view of this array.
      * The only possible reasons for reallocation are the following:
      * calling {@link MutableArray#length(long)},
