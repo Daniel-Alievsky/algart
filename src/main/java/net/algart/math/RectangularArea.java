@@ -69,7 +69,7 @@ public class RectangularArea {
     final Point min;
     final Point max;
 
-    private RectangularArea(Point min, Point max) {
+    RectangularArea(Point min, Point max) {
         this.min = min;
         this.max = max;
     }
@@ -369,6 +369,7 @@ public class RectangularArea {
      * @param iArea the integer rectangular area.
      * @return the real rectangular area with the same coordinates.
      * @throws NullPointerException if the passed area is {@code null}.
+     * @see IRectangularArea#toRectangularArea()
      */
     public static RectangularArea of(IRectangularArea iArea) {
         Objects.requireNonNull(iArea, "Null iArea argument");
@@ -956,7 +957,7 @@ public class RectangularArea {
      * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
-     * @throws IllegalArgumentException if some of the elements of the passed collections
+     * @throws IllegalArgumentException if some elements of the passed collections
      *                                  have different {@link #coordCount()}.
      * @see #subtractCollection(java.util.Queue, RectangularArea...)
      */

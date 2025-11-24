@@ -206,7 +206,7 @@ public class PointDemo {
                 System.out.println("  Cannot cast range " + ra + ": " + e);
             }
             try {
-                IRectangularArea ira = IRectangularArea.roundOf(ra);
+                final IRectangularArea ira = IRectangularArea.roundOf(ra);
                 assert ira.equals(rounded);
                 System.out.println(ra + " rounded to " + ira);
             } catch (Exception e) {

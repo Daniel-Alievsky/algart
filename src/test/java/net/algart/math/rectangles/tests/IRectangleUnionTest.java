@@ -125,8 +125,7 @@ public class IRectangleUnionTest {
                             (j + 1) * (averageWidth - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
                         final long y = Math.max(5,
                             (i + 1) * (averageHeight - overlap) + rnd.nextInt(maxError + 1) - maxError / 2);
-                        final IRectangularArea r = IRectangularArea.of(
-                                x, y, x + frameWidth - 1, y + frameHeight - 1);
+                        final IRectangularArea r = IRectangularArea.ofSize(x, y, frameWidth, frameHeight);
                         if (rectangles.size() < 10) {
                             System.out.printf("Frame #%d %dx%d: %s%n",
                                     rectangles.size(), r.size(0), r.size(1), r);

@@ -79,7 +79,7 @@ public class IRectangularArea {
     final IPoint min;
     final IPoint max;
 
-    private IRectangularArea(IPoint min, IPoint max) {
+    IRectangularArea(IPoint min, IPoint max) {
         this.min = min;
         this.max = max;
     }
@@ -1018,7 +1018,7 @@ public class IRectangularArea {
      * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
-     * @throws IllegalArgumentException if some of the elements of the passed collections
+     * @throws IllegalArgumentException if some elements of the passed collections
      *                                  have different {@link #coordCount()}.
      * @see #subtractCollection(java.util.Queue, IRectangularArea...)
      */
@@ -1392,7 +1392,7 @@ public class IRectangularArea {
     }
 
     /**
-     * Returns this rectangular area, dilated (expanded) according the argument. More precisely,
+     * Returns this rectangular area, dilated (expanded) according to the argument. More precisely,
      * returns
      * <pre>IRectangularArea.of(
      * thisInstance.{@link #min() min()}.{@link IPoint#subtractExact(IPoint) subtractExact}(expansion),
@@ -1583,9 +1583,39 @@ public class IRectangularArea {
      * <code>{@link RectangularArea#of(IRectangularArea) RectangularArea.of}(thisInstance)</code>.
      *
      * @return the rectangular area with the same real coordinates as this one.
+     * @see #toContainingArea()
      */
     public RectangularArea toRectangularArea() {
         return RectangularArea.of(this);
+    }
+
+    /**
+     * Returns a {@link RectangularArea} that fully contains all integer points
+     * of this {@link IRectangularArea}, considering each integer "pixel" as a unit square / cube / hypercube.
+     *
+     * <p>For example, an integer 2D rectangle [5..5]x[5..5], containing a single point (5,5),
+     * will be converted to a rectangle [5.0..6.0]x[5.0..6.0], containing a square 5 &le; x, y &le; 6.
+     *
+     * <p>More precisely, for each coordinate <i>k</i>:</p>
+     * <ul>
+     *   <li>the minimal coordinate is preserved:<br><code>result.{@link RectangularArea#min(int) min}(k) =
+     *   this.{@link IRectangularArea#min(int) min}(k)</code>;</li>
+     *   <li>the maximal coordinate is increased by 1:<br><code>result.{@link RectangularArea#max(int) max}(k) =
+     *   this.{@link IRectangularArea#max(int) max}(k) + 1.0</code>;</li>
+     *   <li>the resulting size equals the integer size (<code>max − min + 1</code>, i.e.,
+     *   the number of integer points along the axis):<br>
+     *   <code>result.{@link RectangularArea#size(int) size}(k) =
+     *   this.{@link IRectangularArea#size(int) size}(k)</code>.</li>
+     * </ul>
+     *
+     * @return a {@link RectangularArea} containing all points of this integer area.
+     */
+    public RectangularArea toContainingArea() {
+        double[] coordinates = new double[max.coordinates.length];
+        for (int k = 0; k < coordinates.length; k++) {
+            coordinates[k] = max.coordinates[k] + 1.0;
+        }
+        return new RectangularArea(Point.of(min), new Point(coordinates));
     }
 
     /**

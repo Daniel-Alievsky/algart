@@ -111,7 +111,7 @@ public class IPointDemo {
         System.out.println();
         for (int k = 0; k < p.length - 1; k += 2) {
             try {
-                IRectangularArea ra = IRectangularArea.of(p[k], p[k + 1]);
+                final IRectangularArea ra = IRectangularArea.of(p[k], p[k + 1]);
                 assert IRectangularArea.of(ra.ranges()).equals(ra);
                 System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                         + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))

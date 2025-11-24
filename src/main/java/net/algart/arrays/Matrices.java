@@ -4286,13 +4286,13 @@ public class Matrices {
 
     /**
      * Binary AND-NOT: equivalent to
-     * <code>{@link #bitDiffToOther(Matrix, Matrix, Matrix) bitDiffToOther}(result, result, other)</code>.
+     * <code>{@link #bitAndNotToOther(Matrix, Matrix, Matrix) bitAndNotToOther}(result, result, other)</code>.
      *
      * @param result matrix <b>a</b> that will be replaced with the binary AND-NOT <b>a &amp; ~b</b>.
      * @param other  matrix <b>b</b>.
      */
-    public static void bitDiff(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
-        bitDiffToOther(result, result, other);
+    public static void bitAndNot(Matrix<? extends UpdatableBitArray> result, Matrix<? extends BitArray> other) {
+        bitAndNotToOther(result, result, other);
     }
 
     /**
@@ -4304,7 +4304,7 @@ public class Matrices {
      * @param a      matrix <b>a</b>.
      * @param b      matrix <b>b</b>.
      */
-    public static void bitDiffToOther(
+    public static void bitAndNotToOther(
             Matrix<? extends UpdatableBitArray> result,
             Matrix<? extends BitArray> a,
             Matrix<? extends BitArray> b) {

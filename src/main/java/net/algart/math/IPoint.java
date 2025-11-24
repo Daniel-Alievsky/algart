@@ -26,7 +26,6 @@ package net.algart.math;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;

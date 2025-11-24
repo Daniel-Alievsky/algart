@@ -69,8 +69,8 @@ public class IRectangleFinderTest {
         final Random rnd = new Random(seed);
         System.out.printf("Testing %d rectangles: %d tests for %d requests/test; start seed %d%n",
                 numberOfRectangles, numberOfTests, numberOfRequests, seed);
-        for (int test = 0; test < numberOfTests; test++) {
-            System.out.printf("Test #%d...\r", test);
+        for (int testIndex = 0; testIndex < numberOfTests; testIndex++) {
+            System.out.printf("Test #%d...\r", testIndex);
             final int[] allMinX = new int[numberOfRectangles];
             final int[] allMaxX = new int[numberOfRectangles];
             final int[] allMinY = new int[numberOfRectangles];
