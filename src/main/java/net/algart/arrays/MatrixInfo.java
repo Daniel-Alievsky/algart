@@ -36,22 +36,22 @@ import java.util.Objects;
 /**
  * <p>Full structural information about the {@link Matrix AlgART matrix}, consisting of elements
  * of some primitive types, in a form convenient for serialization.
- * This class contains information about the matrix element type, matrix dimensions and byte order,
- * and allows to pack this information, with special signature, into a byte array or <code>String</code>
+ * This class contains information about the matrix element type, matrix dimensions and byte order.
+ * It allows to pack this information, with special signature, into a byte array or <code>String</code>
  * (serialize, {@link #toBytes()} / {@link #toChars()} methods) and, vice versa,
- * to convert such byte array or <code>String</code> to an instance
- * of this class (deserialize, {@link #valueOf(byte[])} / {@link #valueOf(String)} methods).</p>
+ * to convert such a byte array or <code>String</code> to an instance
+ * of this class (deserialize, {@link #of(byte[])} / {@link #of(String)} methods).</p>
  *
  * <p>This tool helps to store AlgART matrices in external files.
  * The "raw" matrix data, i.e. elements of the built-in AlgART array,
- * can be stored / loaded via</p>
+ * can be stored / loaded via the methods</p>
  *
  * <ul>
  * <li>{@link LargeMemoryModel#asArray(Object, Class, long, long, ByteOrder)},</li>
  * <li>{@link LargeMemoryModel#asUpdatableArray(Object, Class, long, long, boolean, ByteOrder)}</li>
  * </ul>
  *
- * <p>methods. However, if you want to load a matrix from a file, you need structural information
+ * <p>However, if you want to load a matrix from a file, you need structural information
  * about it, that should be passed to these methods and to {@link Matrices#matrix(Array, long...)}.
  * This class encapsulates all this information and allows to represent it
  * in a form of Java byte array <code>byte[]</code> or in a usual <code>String</code>,
@@ -78,13 +78,13 @@ import java.util.Objects;
  * <p>In addition to this information about a matrix, this class also contains the following data:</p>
  *
  * <ol start="4">
- * <li><i>Version</i>: some string determining the format of conversion of this information
- * to byte array by {@link #toBytes()} method or to <code>String</code> by {@link #toChars()} method.
+ * <li><i>Version</i>: some string determining the format for conversion of this information
+ * to a byte array by {@link #toBytes()} method or to <code>String</code> by {@link #toChars()} method.
  * The version is always stored in the serialized form returned by {@link #toBytes()} / {@link #toChars()} methods.
- * If the instance of this class was created by {@link #valueOf(Matrix, long)} method,
+ * If the instance of this class was created by {@link #of(Matrix, long)} method,
  * its version is equal to the current default version {@link #DEFAULT_VERSION}
- * (but you may specify some older version via {@link #valueOf(Matrix, long, String)} method).
- * If the instance was created by {@link #valueOf(byte[])} or {@link #valueOf(String)},
+ * (but you may specify some older version via {@link #of(Matrix, long, String)} method).
+ * If the instance was created by {@link #of(byte[])} or {@link #of(String)},
  * the version is equal to the version stored in this <code>byte</code>/<code>char</code> sequence.
  * Future implementations of this class will support all old serialization formats.</li>
  *
@@ -94,13 +94,13 @@ import java.util.Objects;
  * (it is their <code>filePosition</code> argument). For example, if you use this class to add
  * a fixed-size prefix to the file containing the matrix, this value may contain the prefix length.
  * You also may ignore this offset and always pass 0 (or any other value) as an argument
- * of {@link #valueOf(Matrix, long)} method.</li>
+ * of {@link #of(Matrix, long)} method.</li>
  *
  * <li>(Since the version 1.2) <i>Additional properties</i>: a map of some strings,
  * that can store some additional information about the matrix,
  * for example, about its {@link Matrix#tile() tiling}.
  * All properties are also serialized by {@link #toBytes()} / {@link #toChars()} methods,
- * deserialized by {@link #valueOf(byte[])} / {@link #valueOf(String)} methods and accessed via
+ * deserialized by {@link #of(byte[])} / {@link #of(String)} methods and accessed via
  * {@link #additionalProperties()} and {@link #cloneWithOtherAdditionalProperties(Map)} methods.</li>
  * </ol>
  *
@@ -122,8 +122,8 @@ import java.util.Objects;
  * LargeMemoryModel.getInstance}(dfm);
  * Class elementType = float.class;
  * Matrix&lt;UpdatablePArray&gt; m = lmm.newMatrix(elementType, 1000, 1000);
- * MatrixInfo mi = MatrixInfo.{@link #valueOf(Matrix, long)
- * valueOf}(m, MatrixInfo.{@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH});
+ * MatrixInfo mi = MatrixInfo.{@link #of(Matrix, long)
+ * of}(m, MatrixInfo.{@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH});
  * {@link UpdatableByteArray} ba = lmm.{@link LargeMemoryModel#asUpdatableByteArray
  * asUpdatableByteArray}(LargeMemoryModel.{@link LargeMemoryModel#getDataFilePath
  * getDataFilePath}(m.array()),
@@ -143,7 +143,7 @@ import java.util.Objects;
  * &#32;   Math.min(file.length(), MatrixInfo.{@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}),
  * &#32;   ByteOrder.nativeOrder());
  * // "min" here is added to be on the safe side: maybe, this file was created by another program with shorter prefix
- * MatrixInfo mi = MatrixInfo.valueOf(ba.{@link Array#toJavaArray() toJavaArray()});
+ * MatrixInfo mi = MatrixInfo.of(ba.{@link Array#toJavaArray() toJavaArray()});
  * {@link UpdatablePArray} pa = lmm.asUpdatableArray(file,
  * &#32;   mi.{@link #elementType()}, mi.{@link #dataOffset()}, LargeMemoryModel.{@link LargeMemoryModel#ALL_FILE
  * ALL_FILE}, false, mi.{@link #byteOrder()});
@@ -155,7 +155,7 @@ import java.util.Objects;
  * </pre>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see DataFileModel#recommendedPrefixSize()
@@ -239,20 +239,25 @@ public abstract class MatrixInfo {
      *                                {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
      * @throws ClassCastException     if the built-in array in the matrix is not {@link PArray}.
      */
+    public static MatrixInfo of(Matrix<? extends PArray> matrix, long dataOffset) {
+        return of(matrix, dataOffset, DEFAULT_VERSION);
+    }
+
+    @Deprecated(forRemoval = true)
     public static MatrixInfo valueOf(Matrix<? extends PArray> matrix, long dataOffset) {
-        return valueOf(matrix, dataOffset, DEFAULT_VERSION);
+        return of(matrix, dataOffset);
     }
 
     /**
      * Creates an instance of this class containing full structural information
      * about the given matrix with the specified {@link #version() version} of serialization format.
      *
-     * <p>The specified version must be supported by this class.
+     * <p>This class must support the specified version.
      * The current implementation supports the following versions: "1.1" and "1.2".
-     * There is no guarantee that all previous format versions that was supported by old implementations
+     * There is no guarantee that all previous format versions that were supported by old implementations
      * of this class will be supported by this method.
      * (However, all previous format versions are always supported by deserialization methods
-     * {@link #valueOf(byte[])} and {@link #valueOf(String)}.)
+     * {@link #of(byte[])} and {@link #of(String)}.)
      *
      * @param matrix     the matrix.
      * @param dataOffset the value that may be interpreted as an offset of some "main" data and
@@ -263,9 +268,9 @@ public abstract class MatrixInfo {
      * @throws TooLargeArrayException   if the number of matrix dimensions is greater than
      *                                  {@link Matrix#MAX_DIM_COUNT_FOR_SOME_ALGORITHMS}.
      * @throws ClassCastException       if the built-in array in the matrix is not {@link PArray}.
-     * @throws IllegalArgumentException if the specified version is not supported by this class.
+     * @throws IllegalArgumentException if this class does not support the specified version.
      */
-    public static MatrixInfo valueOf(Matrix<? extends PArray> matrix, long dataOffset, String version) {
+    public static MatrixInfo of(Matrix<? extends PArray> matrix, long dataOffset, String version) {
         Objects.requireNonNull(version, "Null version argument");
         if (matrix.dimCount() > Matrix.MAX_DIM_COUNT_FOR_SOME_ALGORITHMS) {
             throw new TooLargeArrayException("Too large number of matrix dimensions: " + matrix.dimCount());
@@ -296,6 +301,11 @@ public abstract class MatrixInfo {
         }
     }
 
+    @Deprecated(forRemoval = true)
+    public static MatrixInfo valueOf(Matrix<? extends PArray> matrix, long dataOffset, String version) {
+        return of(matrix, dataOffset, version);
+    }
+
     /**
      * Deserializes the byte array and creates a new instance of this class on the base of the information
      * stored in this byte array.
@@ -315,14 +325,19 @@ public abstract class MatrixInfo {
      * @throws NullPointerException       if the argument is {@code null}.
      * @throws IllegalInfoSyntaxException if the format of <code>bytes</code> argument is illegal.
      * @see #toBytes()
-     * @see #valueOf(String)
+     * @see #of(String)
      */
-    public static MatrixInfo valueOf(byte[] bytes) throws IllegalInfoSyntaxException {
-        char[] chars = new char[Math.min(bytes.length, MAX_SERIALIZED_MATRIX_INFO_LENGTH)];
+    public static MatrixInfo of(byte[] bytes) throws IllegalInfoSyntaxException {
+        final char[] chars = new char[Math.min(bytes.length, MAX_SERIALIZED_MATRIX_INFO_LENGTH)];
         for (int k = 0; k < chars.length; k++) {
             chars[k] = (char) (bytes[k] & 0xFF);
         }
-        return valueOf(String.valueOf(chars));
+        return of(String.valueOf(chars));
+    }
+
+    @Deprecated(forRemoval = true)
+    public static MatrixInfo valueOf(byte[] bytes) throws IllegalInfoSyntaxException {
+        return of(bytes);
     }
 
     /**
@@ -330,14 +345,14 @@ public abstract class MatrixInfo {
      * and creates new instance of this class on the base of information,
      * stored in this char array.
      *
-     * <p>The passed data must have format, corresponding to the current
+     * <p>The passed data must have a format, corresponding to the current
      * {@link #DEFAULT_VERSION default format version} or to any previous format version,
      * that was somewhere implemented by this class in the past.
      * In another case, {@link IllegalInfoSyntaxException} will be thrown.
      *
      * <p>The passed char array may contain extra elements after the end of the stored information.
      * All versions of this class guarantee that random characters after the end of the serialized information
-     * will not lead to problems: the serialization format always allows to detect the end of information
+     * will not lead to problems: the serialization format always allows detecting the end of information
      * in the sequence of characters.
      *
      * @param chars the string produced by some previous call of {@link #toChars()} method.
@@ -345,16 +360,21 @@ public abstract class MatrixInfo {
      * @throws NullPointerException       if the argument is {@code null}.
      * @throws IllegalInfoSyntaxException if the format of <code>chars</code> argument is illegal.
      * @see #toChars()
-     * @see #valueOf(byte[])
+     * @see #of(byte[])
      */
-    public static MatrixInfo valueOf(String chars) throws IllegalInfoSyntaxException {
+    public static MatrixInfo of(String chars) throws IllegalInfoSyntaxException {
         if (Version1_2.isVersion1_2(chars)) {
-            return Version1_2.valueOf(chars);
+            return Version1_2.of(chars);
         } else if (Version1_1.isVersion1_1(chars)) {
-            return Version1_1.valueOf(chars);
+            return Version1_1.of(chars);
         } else {
             throw new IllegalInfoSyntaxException("The char sequence does not contain valid start signature");
         }
+    }
+
+    @Deprecated(forRemoval = true)
+    public static MatrixInfo valueOf(String chars) throws IllegalInfoSyntaxException {
+        return of(chars);
     }
 
     /**
@@ -400,16 +420,16 @@ public abstract class MatrixInfo {
     /**
      * Returns the version of the serialization format implemented by this instance.
      *
-     * <p>If this instance was created by {@link #valueOf(byte[])} or {@link #valueOf(String)} method,
+     * <p>If this instance was created by {@link #of(byte[])} or {@link #of(String)} method,
      * this version corresponds to the format of the data in the argument of that method.
-     * If this instance was created by {@link #valueOf(Matrix, long, String)} method,
+     * If this instance was created by {@link #of(Matrix, long, String)} method,
      * this version is equal to the last argument of that method.
-     * If this instance was created by {@link #valueOf(Matrix, long)} method,
+     * If this instance was created by {@link #of(Matrix, long)} method,
      * this version is equal {@link #DEFAULT_VERSION}.
      *
      * <p>The version format is traditional: "N.N" or "N.N.N" (every "N" is a single digit 0..9).
      *
-     * @return the version of the serialization of the stored data.
+     * @return the version of the serialization.
      */
     public final String version() {
         return this.version;
@@ -426,7 +446,7 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Returns the size in bits, required for each matrix element.
+     * Returns the size in bits required for each matrix element.
      * Equivalent to <code>{@link Arrays#bitsPerElement(Class)
      * Arrays.bitsPerElement}(thisInstance.{@link #elementType()})</code>.
      *
@@ -500,8 +520,8 @@ public abstract class MatrixInfo {
     }
 
     /**
-     * Returns the data offset, passed to {@link #valueOf(Matrix, long)} or {@link #valueOf(Matrix, long, String)}
-     * method or loaded from the serialized form by {@link #valueOf(byte[])} or {@link #valueOf(String)} method.
+     * Returns the data offset, passed to {@link #of(Matrix, long)} or {@link #of(Matrix, long, String)}
+     * method or loaded from the serialized form by {@link #of(byte[])} or {@link #of(String)} method.
      *
      * @return the data offset.
      */
@@ -511,7 +531,7 @@ public abstract class MatrixInfo {
 
     /**
      * Returns additional string properties, stored in this instance.
-     * These properties can be loaded from a serialized form by {@link #valueOf(byte[])} / {@link #valueOf(String)}
+     * These properties can be loaded from a serialized form by {@link #of(byte[])} / {@link #of(String)}
      * methods or added by {@link #cloneWithOtherAdditionalProperties(Map)} method.
      *
      * <p>There is a guarantee that the keys and values, returned by this method,
@@ -523,7 +543,7 @@ public abstract class MatrixInfo {
      * or <code>TreeMap</code> classes.
      * The returned object is never {@code null}.
      *
-     * <p>Note that the first version 1.1 of serialization format does not support this feature.
+     * <p>Note that the first version 1.1 of the serialization format does not support this feature.
      * If the current {@link #version() version} of serialization format of this instance is 1.1,
      * this method always returns an empty map.
      *
@@ -547,8 +567,8 @@ public abstract class MatrixInfo {
      * difference that the new instance have the specified {@link #version() version}
      * of the serialization format.
      *
-     * <p>It is possible that the specified version does not support all features, supported by this object,
-     * and cannot create fully identical instance.
+     * <p>It is possible that the specified version does not support all features supported by this object
+     * and cannot create a fully identical instance.
      * In particular, it is possible if the specified version is 1.1 and the map of properties, returned by
      * {@link #additionalProperties()} method, is not empty.
      * In this case, this method throws <code>UnsupportedOperationException</code>.
@@ -556,7 +576,7 @@ public abstract class MatrixInfo {
      * @param version required version.
      * @return modified instance of this class.
      * @throws NullPointerException          if the argument is {@code null}.
-     * @throws IllegalArgumentException      if the specified version is not supported by this class.
+     * @throws IllegalArgumentException      if this class does not support the specified version.
      * @throws UnsupportedOperationException if the specified version cannot store all information, stored
      *                                       in this object.
      */
@@ -610,12 +630,12 @@ public abstract class MatrixInfo {
      * <p>The values of all specified properties must be non-null <code>String</code> instances,
      * that can contain any characters.
      *
-     * <p>Please avoid very large number or size of properties. There are limits for the number of
-     * properties ({@link #MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO})
+     * <p>Please avoid a very large number or size of properties.
+     * There are limits for the number of properties ({@link #MAX_NUMBER_OF_PROPERTIES_IN_MATRIX_INFO})
      * and for the total size of the data that can be stored while serialization
      * ({@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}).
      *
-     * <p>Note that the first version 1.1 of serialization format does not support this feature.
+     * <p>Note that the first version 1.1 of the serialization format does not support this feature.
      * So, if the current {@link #version() version} of serialization format of this instance is 1.1,
      * this method throws <code>UnsupportedOperationException</code>.
      * The method {@link #additionalProperties()} still works in the version 1.1 and returns an empty map.
@@ -623,12 +643,12 @@ public abstract class MatrixInfo {
      * <p>The passed <code>additionalProperties</code> argument is cloned by this method: no references to it
      * are maintained by the created instance.
      *
-     * @param additionalProperties another additional properties.
+     * @param additionalProperties another additional property.
      * @return modified instance of this class.
      * @throws UnsupportedOperationException if the {@link #version() version} of this instance is 1.1.
      * @throws NullPointerException          if the argument is {@code null}
      *                                       or if some keys or values are {@code null}.
-     * @throws ClassCastException            if some of keys or values are not <code>String</code> instances
+     * @throws ClassCastException            if some keys or values are not <code>String</code> instances
      *                                       (this situation is possible while passing raw <code>Map</code> type
      *                                       without generics).
      * @throws IllegalArgumentException      if one of the passed properties has incorrect name
@@ -644,13 +664,13 @@ public abstract class MatrixInfo {
      * Serializes the content of this instance into a byte array and returns it.
      * The format of serialization depends on the {@link #version() version} of this instance.
      *
-     * <p>The length of returned array never exceeds {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}.
+     * <p>The length of the returned array never exceeds {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH}.
      *
      * @return the content of this instance converted into a byte array.
      * @throws IllegalStateException if the summary size of all {@link #additionalProperties() additional properties}
      *                               is very large and, so, this instance cannot be serialized in
      *                               {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH} bytes.
-     * @see #valueOf(byte[])
+     * @see #of(byte[])
      * @see #toChars()
      */
     public byte[] toBytes() {
@@ -678,7 +698,7 @@ public abstract class MatrixInfo {
      * @throws IllegalStateException if the summary size of all {@link #additionalProperties() additional properties}
      *                               is very large and, so, this instance cannot be serialized in
      *                               {@link #MAX_SERIALIZED_MATRIX_INFO_LENGTH} characters.
-     * @see #valueOf(String)
+     * @see #of(String)
      * @see #toBytes()
      */
     public abstract String toChars();
@@ -778,7 +798,7 @@ public abstract class MatrixInfo {
      * {@link #version() versions} of the objects.
      *
      * @param obj the object to be compared for equality with this instance.
-     * @return <code>true</code> if the specified object is a matrix information equal to this one.
+     * @return <code>true</code> if the specified object is matrix information equal to this one.
      */
     public boolean equals(Object obj) {
         if (!(obj instanceof MatrixInfo mi)) {
@@ -805,7 +825,7 @@ public abstract class MatrixInfo {
                 chars.startsWith(SIGNATURE_LE_1_1);
         }
 
-        public static MatrixInfo valueOf(final String chars) throws IllegalInfoSyntaxException {
+        public static MatrixInfo of(final String chars) throws IllegalInfoSyntaxException {
             final ByteOrder byteOrder;
             if (chars.startsWith(SIGNATURE_BE_1_1 + " OFFSET=")) {
                 byteOrder = ByteOrder.BIG_ENDIAN;
@@ -977,7 +997,7 @@ public abstract class MatrixInfo {
             return name.equals(SIGNATURE_NAME_1_2) && value.equals(SIGNATURE_VALUE_1_2);
         }
 
-        public static MatrixInfo valueOf(final String chars) throws IllegalInfoSyntaxException {
+        public static MatrixInfo of(final String chars) throws IllegalInfoSyntaxException {
             Class<?> elementType = null;
             ByteOrder byteOrder = null;
             long length = -1;
@@ -996,7 +1016,7 @@ public abstract class MatrixInfo {
                 }
                 String line = chars.substring(p, q).trim(); // possible '\r' is also trimmed
                 if (line.isEmpty()) {
-                    break; // an empty or space line, as well as p==len, signals about the end of properties list
+                    break; // an empty or space line, as well as p==len, signals about the end of the property list
                 }
                 if (line.startsWith("#")) {
                     continue;  // a comment: "   # some comment";
@@ -1051,7 +1071,7 @@ public abstract class MatrixInfo {
                                 continue; // ignore extra properties with this name to avoid possible syntax errors
                             }
                             length = Long.parseLong(value);
-                            if (length < 0) // necessary check to provide correct error message
+                            if (length < 0) // necessary check to provide a correct error message
                             {
                                 throw new IllegalInfoSyntaxException("Negative array length in the line #"
                                         + lineIndex + ": \"" + line + "\"");

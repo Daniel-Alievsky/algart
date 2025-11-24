@@ -490,7 +490,7 @@ public class MatrixIO {
             }
             LargeMemoryModel<File> mm = LargeMemoryModel.getInstance(new StandardIODataFileModel());
             try {
-                MatrixInfo matrixInfo = MatrixInfo.valueOf(Files.readString(infFile.toPath()));
+                MatrixInfo matrixInfo = MatrixInfo.of(Files.readString(infFile.toPath()));
                 result.add(mm.asMatrix(rawFile, matrixInfo));
             } catch (IllegalInfoSyntaxException e) {
                 throw new IOException("Invalid meta-information file " + infFile + ": " + e.getMessage());

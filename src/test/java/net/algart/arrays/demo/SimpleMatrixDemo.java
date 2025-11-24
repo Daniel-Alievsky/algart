@@ -81,7 +81,7 @@ public class SimpleMatrixDemo {
             ByteArray ba = lmm.asByteArray(file, 0,
                 Math.min(file.length(), MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH),
                 ByteOrder.nativeOrder());
-            MatrixInfo mi = MatrixInfo.valueOf(ba.toJavaArray());
+            MatrixInfo mi = MatrixInfo.of(ba.toJavaArray());
             System.out.println(lmm.asMatrix(file, mi));
             System.out.println("    - read-only version");
             m = lmm.asUpdatableMatrix(file, mi);
@@ -112,9 +112,8 @@ public class SimpleMatrixDemo {
                 m = m.tile();
             }
             version = args.length > startArgIndex + 4 ? args[startArgIndex + 4] : MatrixInfo.DEFAULT_VERSION;
-            MatrixInfo mi = !version.equals(MatrixInfo.DEFAULT_VERSION) ?
-                MatrixInfo.valueOf(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH, version) :
-                LargeMemoryModel.getMatrixInfoForSavingInFile(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH);
+            MatrixInfo mi;
+            mi = !version.equals(MatrixInfo.DEFAULT_VERSION) ? MatrixInfo.of(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH, version) : LargeMemoryModel.getMatrixInfoForSavingInFile(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH);
             additionalProperties = mi.additionalProperties();
             if (args.length > startArgIndex + 5) {
                 // ((Map)additionalProperties).put(new StringBuilder("additional"), new StringBuilder(args[startArgIndex + 5]));
@@ -188,7 +187,7 @@ public class SimpleMatrixDemo {
         // - BUG AA-158!
         System.out.println("The sum of all elements: " + mySum(mImm));
         System.out.println();
-        MatrixInfo mi = MatrixInfo.valueOf(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH, version);
+        MatrixInfo mi = MatrixInfo.of(m, MatrixInfo.MAX_SERIALIZED_MATRIX_INFO_LENGTH, version);
         if (!additionalProperties.isEmpty()) {
             // avoiding UnsupportedOperationException if no properties specified
             mi = mi.cloneWithOtherAdditionalProperties(additionalProperties);
@@ -200,7 +199,7 @@ public class SimpleMatrixDemo {
         String chars = mi.toChars();
         System.out.println("The serialized representation of the matrix structure (between <<< and >>>):");
         System.out.println("<<<" + chars + ">>>");
-        MatrixInfo mi2 = MatrixInfo.valueOf(chars);
+        MatrixInfo mi2 = MatrixInfo.of(chars);
         if (!mi2.equals(mi))
             throw new AssertionError("Bug 2 in " + MatrixInfo.class);
         byte[] bytes2 = mi2.toBytes();

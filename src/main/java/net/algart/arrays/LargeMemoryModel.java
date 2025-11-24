@@ -1507,7 +1507,7 @@ public final class LargeMemoryModel<P> extends AbstractMemoryModel {
 
     public static MatrixInfo getMatrixInfoForSavingInFile(Matrix<? extends PArray> matrix, long dataOffset) {
         Objects.requireNonNull(matrix, "Null matrix argument");
-        MatrixInfo matrixInfo = MatrixInfo.valueOf(matrix, dataOffset);
+        MatrixInfo matrixInfo = MatrixInfo.of(matrix, dataOffset);
         Map<String, String> properties = new LinkedHashMap<>();
         if (Arrays.isNCopies(matrix.array())) {
             properties.put(CONSTANT_PROPERTY_NAME, getNCopiesArrayDescription(matrix.array()));

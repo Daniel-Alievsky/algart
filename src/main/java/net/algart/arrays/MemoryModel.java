@@ -1325,7 +1325,7 @@ public interface MemoryModel {
      */
     UpdatableArray of(Object array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableArray valueOf(Object array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1351,7 +1351,7 @@ public interface MemoryModel {
      */
     UpdatableArray of(Object array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableArray valueOf(Object array) {
         return of(array);
     }
@@ -1372,7 +1372,7 @@ public interface MemoryModel {
      */
     UpdatableBitArray of(boolean[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableBitArray valueOf(boolean[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1386,7 +1386,7 @@ public interface MemoryModel {
      */
     UpdatableBitArray of(boolean[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableBitArray valueOf(boolean[] array) {
         return of(array);
     }
@@ -1405,7 +1405,7 @@ public interface MemoryModel {
      */
     UpdatableCharArray of(char[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableCharArray valueOf(char[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1419,7 +1419,7 @@ public interface MemoryModel {
      */
     UpdatableCharArray of(char[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableCharArray valueOf(char[] array) {
         return of(array);
     }
@@ -1437,7 +1437,7 @@ public interface MemoryModel {
      */
     UpdatableByteArray of(byte[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableByteArray valueOf(byte[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1451,7 +1451,7 @@ public interface MemoryModel {
      */
     UpdatableByteArray of(byte[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableByteArray valueOf(byte[] array) {
         return of(array);
     }
@@ -1469,7 +1469,7 @@ public interface MemoryModel {
      */
     UpdatableShortArray of(short[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableShortArray valueOf(short[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1483,7 +1483,7 @@ public interface MemoryModel {
      */
     UpdatableShortArray of(short[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableShortArray valueOf(short[] array) {
         return of(array);
     }
@@ -1501,7 +1501,7 @@ public interface MemoryModel {
      */
     UpdatableIntArray of(int[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableIntArray valueOf(int[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1515,7 +1515,7 @@ public interface MemoryModel {
      */
     UpdatableIntArray of(int[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableIntArray valueOf(int[] array) {
         return of(array);
     }
@@ -1533,7 +1533,7 @@ public interface MemoryModel {
      */
     UpdatableLongArray of(long[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableLongArray valueOf(long[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1547,7 +1547,7 @@ public interface MemoryModel {
      */
     UpdatableLongArray of(long[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableLongArray valueOf(long[] array) {
         return of(array);
     }
@@ -1565,7 +1565,7 @@ public interface MemoryModel {
      */
     UpdatableFloatArray of(float[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableFloatArray valueOf(float[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1579,7 +1579,7 @@ public interface MemoryModel {
      */
     UpdatableFloatArray of(float[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableFloatArray valueOf(float[] array) {
         return of(array);
     }
@@ -1597,7 +1597,7 @@ public interface MemoryModel {
      */
     UpdatableDoubleArray of(double[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableDoubleArray valueOf(double[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1611,7 +1611,7 @@ public interface MemoryModel {
      */
     UpdatableDoubleArray of(double[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default UpdatableDoubleArray valueOf(double[] array) {
         return of(array);
     }
@@ -1631,7 +1631,7 @@ public interface MemoryModel {
      */
     <E> UpdatableObjectArray<E> of(E[] array, int offset, int count);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default <E> UpdatableObjectArray<E> valueOf(E[] array, int offset, int count) {
         return of(array, offset, count);
     }
@@ -1646,7 +1646,7 @@ public interface MemoryModel {
      */
     <E> UpdatableObjectArray<E> of(E[] array);
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     default <E> UpdatableObjectArray<E> valueOf(E[] array) {
         return of(array);
     }
