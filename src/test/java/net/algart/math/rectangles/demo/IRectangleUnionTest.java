@@ -73,6 +73,7 @@ public class IRectangleUnionTest {
         final File rectanglesFile = new File(args[startArgIndex + 1]);
         final File demoFolder = new File(args[startArgIndex + 2]);
         final long divider = args.length > startArgIndex + 3 ? Long.parseLong(args[startArgIndex + 3]) : 1;
+        //noinspection ResultOfMethodCallIgnored
         demoFolder.mkdirs();
         String[] description = parseConfigurationFile(rectanglesFile);
         final String algorithm = description[0];

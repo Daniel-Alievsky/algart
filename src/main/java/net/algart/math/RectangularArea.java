@@ -849,8 +849,12 @@ public class RectangularArea {
         Objects.requireNonNull(fromWhatToSubtract, "Null fromWhatToSubtract");
         Objects.requireNonNull(whatToSubtract, "Null whatToSubtract");
         for (RectangularArea area : whatToSubtract) {
-            for (int i = 0, n = fromWhatToSubtract.size(); i < n; i++) {
+            final int n = fromWhatToSubtract.size();
+            for (int i = 0; i < n; i++) {
                 RectangularArea minuend = fromWhatToSubtract.poll();
+                if (minuend == null) {
+                    throw new AssertionError("Null minuend in fromWhatToSubtract at index " + i);
+                }
                 minuend.difference(fromWhatToSubtract, area);
             }
             if (fromWhatToSubtract.isEmpty()) {
