@@ -134,7 +134,7 @@ public class PointDemo {
                     Point.ofEqualCoordinates(rp.coordCount(), 2.0).coordinates(),
                     Point.origin(rp.coordCount()))
                     + "; sqr: " + rp.scalarProduct(rp)
-                    + "; hash: " + rp.hashCode() + "; address: " + System.identityHashCode(rp));
+                    + "; hash: " + rp.hashCode());
         }
         System.out.println();
         for (int k = 0; k < points.length - 1; k += 2) {

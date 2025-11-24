@@ -106,7 +106,7 @@ public class IPointDemo {
                     Point.ofEqualCoordinates(ip.coordCount(), 1.1).coordinates(),
                     Point.origin(ip.coordCount()))
                     + "; sqr: " + ip.scalarProduct(ip)
-                    + "; hash: " + ip.hashCode() + "; address: " + System.identityHashCode(ip));
+                    + "; hash: " + ip.hashCode());
         }
         System.out.println();
         for (int k = 0; k < p.length - 1; k += 2) {
