@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="IRectangleFinderTest" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.math.rectangles.demo.IRectangleFinderTest" />
+    <option name="MAIN_CLASS_NAME" value="net.algart.math.rectangles.tests.IRectangleFinderTest" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="100 1000 100000 10" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="net.algart.math.rectangles.demo.*" />
+        <option name="PATTERN" value="net.algart.math.rectangles.tests.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

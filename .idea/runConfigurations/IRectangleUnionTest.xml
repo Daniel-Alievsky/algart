@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="IRectangleUnionTest" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="net.algart.math.rectangles.demo.IRectangleUnionTest" />
+    <option name="MAIN_CLASS_NAME" value="net.algart.math.rectangles.tests.IRectangleUnionTest" />
     <module name="algart" />
-    <option name="PROGRAM_PARAMETERS" value="10 src/test/java/net/algart/math/rectangles/demo/rectangle-sets/random.txt /tmp/rectangles-demo" />
+    <option name="PROGRAM_PARAMETERS" value="10 src/test/java/net/algart/math/rectangles/tests/rectangle-sets/random.txt /tmp/rectangles-demo" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="net.algart.math.rectangles.demo.*" />
+        <option name="PATTERN" value="net.algart.math.rectangles.tests.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

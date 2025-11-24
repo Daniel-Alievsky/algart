@@ -32,11 +32,11 @@ import java.util.*;
 /**
  * <p>Set-theoretic union of several 2-dimensional {@link IRectangularArea rectangles}
  * with integer coordinates of vertices and sides, parallel to coordinate axes.
- * This class allows to solve the following main tasks:
+ * This class allows solving the following main tasks:
  * <ol>
  * <li>find connected components in this union;</li>
  * <li>find its boundary as a polygon: a sequence of links, where each link is a horizontal or vertical
- * segment (1st link is horizontal, 2nd is vertical, 3rd is horizontal, etc.);</li>
+ * segment (the 1st link is horizontal, 2nd is vertical, 3rd is horizontal, etc.);</li>
  * <li>find the largest rectangle (with sides, parallel to the coordinate axes), which is a subset of this union.</li>
  * </ol>
  *

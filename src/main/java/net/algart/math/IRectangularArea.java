@@ -161,6 +161,35 @@ public class IRectangularArea {
     }
 
     /**
+     * Returns a 1-dimensional rectangular area (range) with the given minimal vertex and size.
+     * Equivalent to
+     * <pre>
+     * {@link #of(long, long) of}(
+     *      minX,
+     *      minX + sizeX - 1);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided size is positive and
+     * the resulting range fits within the {@link Long#MAX_VALUE} limits.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be positive.
+     * @return the new 1-dimensional rectangular area.
+     * @throws IllegalArgumentException if <code>sizeX</code> is zero or negative,
+     *                                  or if the resulting maximal coordinate overflows {@link Long#MAX_VALUE},
+     *                                  or in the same situations as {@link #of(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea ofSize(long minX, long sizeX) {
+        if (sizeX <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeX: " + sizeX);
+        }
+        if (minX > Long.MAX_VALUE - (sizeX - 1)) {
+            throw new IllegalArgumentException("Overflow: minX + sizeX > Long.MAX_VALUE");
+        }
+        return of(minX, minX + sizeX - 1);
+    }
+
+    /**
      * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
@@ -183,6 +212,44 @@ public class IRectangularArea {
         return of(minX, maxX);
     }
 
+    /**
+     * Returns a 2-dimensional rectangle with the given minimal vertex and sizes along each axis.
+     * Equivalent to
+     * <pre>
+     * {@link #of(long, long, long, long) of}(
+     *      minX,
+     *      minY,
+     *      minX + sizeX - 1,
+     *      minY + sizeY - 1);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided sizes are positive and
+     * the resulting rectangle fits within the {@link Long#MAX_VALUE} limits.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY  the minimal <i>y</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be positive.
+     * @param sizeY the size along the <i>y</i>-axis; must be positive.
+     * @return the new 2-dimensional rectangle.
+     * @throws IllegalArgumentException if <code>sizeX</code> or <code>sizeY</code> are zero or negative,
+     *                                  or if the resulting maximal coordinates overflow {@link Long#MAX_VALUE},
+     *                                  or in the same situations as {@link #of(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea ofSize(long minX, long minY, long sizeX, long sizeY) {
+        if (sizeX <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeX: " + sizeX);
+        }
+        if (sizeY <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeY: " + sizeY);
+        }
+        if (minX > Long.MAX_VALUE - (sizeX - 1)) {
+            throw new IllegalArgumentException("Overflow: minX + sizeX > Long.MAX_VALUE");
+        }
+        if (minY > Long.MAX_VALUE - (sizeY - 1)) {
+            throw new IllegalArgumentException("Overflow: minY + sizeY > Long.MAX_VALUE");
+        }
+        return of(minX, minY, minX + sizeX - 1, minY + sizeY - 1);
+    }
 
     /**
      * Returns a 2-dimensional rectangle with the given minimal and maximal vertex.
@@ -207,6 +274,56 @@ public class IRectangularArea {
     @Deprecated
     public static IRectangularArea valueOf(long minX, long minY, long maxX, long maxY) {
         return of(minX, minY, maxX, maxY);
+    }
+
+    /**
+     * Returns a 3-dimensional parallelepiped with the given minimal vertex and sizes along each axis.
+     * Equivalent to
+     * <pre>
+     * {@link #of(long, long, long, long) of}(
+     *      minX,
+     *      minY,
+     *      minZ,
+     *      minX + sizeX - 1,
+     *      minY + sizeY - 1,
+     *      minZ + sizeZ - 1);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided sizes are positive and
+     * the resulting parallelepiped fits within the {@link Long#MAX_VALUE} limits.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY  the minimal <i>y</i>-coordinate, inclusive.
+     * @param minZ  the minimal <i>z</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be positive.
+     * @param sizeY the size along the <i>y</i>-axis; must be positive.
+     * @param sizeZ the size along the <i>z</i>-axis; must be positive.
+     * @return the new 3-dimensional parallelepiped.
+     * @throws IllegalArgumentException if <code>sizeX</code>, <code>sizeY</code> or <code>sizeX </code>
+     *                                  are zero or negative,
+     *                                  or if the resulting maximal coordinates overflow {@link Long#MAX_VALUE},
+     *                                  or in the same situations as {@link #of(IPoint, IPoint)} method.
+     */
+    public static IRectangularArea ofSize(long minX, long minY, long minZ, long sizeX, long sizeY, long sizeZ) {
+        if (sizeX <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeX: " + sizeX);
+        }
+        if (sizeY <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeY: " + sizeY);
+        }
+        if (sizeZ <= 0) {
+            throw new IllegalArgumentException("Zero or negative sizeZ: " + sizeZ);
+        }
+        if (minX > Long.MAX_VALUE - (sizeX - 1)) {
+            throw new IllegalArgumentException("Overflow: minX + sizeX > Long.MAX_VALUE");
+        }
+        if (minY > Long.MAX_VALUE - (sizeY - 1)) {
+            throw new IllegalArgumentException("Overflow: minY + sizeY > Long.MAX_VALUE");
+        }
+        if (minZ > Long.MAX_VALUE - (sizeZ - 1)) {
+            throw new IllegalArgumentException("Overflow: minZ + sizeZ > Long.MAX_VALUE");
+        }
+        return of(minX, minY, minZ, minX + sizeX - 1, minY + sizeY - 1, minZ + sizeZ - 1);
     }
 
     /**

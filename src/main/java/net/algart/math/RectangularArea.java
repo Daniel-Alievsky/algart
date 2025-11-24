@@ -161,6 +161,33 @@ public class RectangularArea {
     }
 
     /**
+     * Returns a 1-dimensional rectangular area (range) with the given minimal vertex and size.
+     * Equivalent to
+     * <pre>
+     * {@link #of(double, double) of}(
+     *      minX,
+     *      minX + sizeX);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided size is non-negative.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be non-negative.
+     * @return the new 1-dimensional rectangular area.
+     * @throws IllegalArgumentException if <code>sizeX</code> is negative,
+     *                                  or in the same situations as {@link #of(Point, Point)} method.
+     */
+    public static RectangularArea ofSize(double minX, double sizeX) {
+        if (sizeX < 0.0) {
+            throw new IllegalArgumentException("Negative sizeX: " + sizeX);
+        }
+        if (Double.isNaN(sizeX)) {
+            throw new IllegalArgumentException("sizeX is NaN");
+        }
+        return of(minX, minX + sizeX);
+    }
+
+    /**
      * Returns a 1-dimensional rectangular area (range) with the given minimal and maximal vertex.
      * Equivalent to
      * <pre>
@@ -181,6 +208,43 @@ public class RectangularArea {
     @Deprecated
     public static RectangularArea valueOf(double minX, double maxX) {
         return of(minX, maxX);
+    }
+
+    /**
+     * Returns a 2-dimensional rectangle with the given minimal vertex and sizes along each axis.
+     * Equivalent to
+     * <pre>
+     * {@link #of(double, double, double, double) of}(
+     *      minX,
+     *      minY,
+     *      minX + sizeX,
+     *      minY + sizeY);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided sizes are non-negative.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY  the minimal <i>y</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be non-negative.
+     * @param sizeY the size along the <i>y</i>-axis; must be non-negative.
+     * @return the new 2-dimensional rectangle.
+     * @throws IllegalArgumentException if <code>sizeX</code> or <code>sizeY</code> are negative,
+     *                                  or in the same situations as {@link #of(Point, Point)} method.
+     */
+    public static RectangularArea ofSize(double minX, double minY, double sizeX, double sizeY) {
+        if (sizeX < 0.0) {
+            throw new IllegalArgumentException("Negative sizeX: " + sizeX);
+        }
+        if (sizeY < 0.0) {
+            throw new IllegalArgumentException("Negative sizeY: " + sizeY);
+        }
+        if (Double.isNaN(sizeX)) {
+            throw new IllegalArgumentException("sizeX is NaN");
+        }
+        if (Double.isNaN(sizeY)) {
+            throw new IllegalArgumentException("sizeY is NaN");
+        }
+        return of(minX, minY, minX + sizeX, minY + sizeY);
     }
 
     /**
@@ -206,6 +270,59 @@ public class RectangularArea {
     @Deprecated
     public static RectangularArea valueOf(double minX, double minY, double maxX, double maxY) {
         return of(minX, minY, maxX, maxY);
+    }
+
+    /**
+     * Returns a 3-dimensional parallelepiped with the given minimal vertex and sizes along each axis.
+     * Equivalent to
+     * <pre>
+     * {@link #of(double, double, double, double, double, double) of}(
+     *      minX,
+     *      minY,
+     *      minZ,
+     *      minX + sizeX,
+     *      minY + sizeY,
+     *      minZ + sizeZ);
+     * </pre>
+     *
+     * <p>with the only exception that this method ensures that the provided sizes are non-negative.</p>
+     *
+     * @param minX  the minimal <i>x</i>-coordinate, inclusive.
+     * @param minY  the minimal <i>y</i>-coordinate, inclusive.
+     * @param minZ  the minimal <i>z</i>-coordinate, inclusive.
+     * @param sizeX the size along the <i>x</i>-axis; must be non-negative.
+     * @param sizeY the size along the <i>y</i>-axis; must be non-negative.
+     * @param sizeZ the size along the <i>z</i>-axis; must be non-negative.
+     * @return the new 3-dimensional parallelepiped.
+     * @throws IllegalArgumentException if <code>sizeX</code>, <code>sizeY</code> or <code>sizeZ</code> are negative,
+     *                                  or in the same situations as {@link #of(Point, Point)} method.
+     */
+    public static RectangularArea ofSize(
+            double minX,
+            double minY,
+            double minZ,
+            double sizeX,
+            double sizeY,
+            double sizeZ) {
+        if (sizeX < 0.0) {
+            throw new IllegalArgumentException("Negative sizeX: " + sizeX);
+        }
+        if (sizeY < 0.0) {
+            throw new IllegalArgumentException("Negative sizeY: " + sizeY);
+        }
+        if (sizeZ < 0.0) {
+            throw new IllegalArgumentException("Negative sizeZ: " + sizeZ);
+        }
+        if (Double.isNaN(sizeX)) {
+            throw new IllegalArgumentException("sizeX is NaN");
+        }
+        if (Double.isNaN(sizeY)) {
+            throw new IllegalArgumentException("sizeY is NaN");
+        }
+        if (Double.isNaN(sizeZ)) {
+            throw new IllegalArgumentException("sizeZ is NaN");
+        }
+        return of(minX, minY, minZ, minX + sizeX, minY + sizeY, minZ + sizeZ);
     }
 
     /**

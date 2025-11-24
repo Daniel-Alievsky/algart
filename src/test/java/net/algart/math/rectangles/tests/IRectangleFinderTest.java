@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.math.rectangles.demo;
+package net.algart.math.rectangles.tests;
 
 import net.algart.arrays.JArrays;
 import net.algart.math.rectangles.IRectangleFinder;
