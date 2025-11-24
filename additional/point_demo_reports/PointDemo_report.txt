@@ -1,0 +1,120 @@
+1.1..2.7 casted to 1..2
+1.1..2.7 rounded to 1..3
+1.1..2.7 casted to 1..2
+1.1..2.7 rounded to 1..3
+1.6..2.8 casted to 1..2
+1.6..2.8 rounded to 2..3
+1.6..2.8 casted to 1..2
+1.6..2.8 rounded to 2..3
+-27.1..24.81 casted to -27..24
+-27.1..24.81 rounded to -27..25
+-27.1..24.81 casted to -27..24
+-27.1..24.81 rounded to -27..25
+  Cannot call toIntegerRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: max == Long.MAX_VALUE
+  Cannot call toRoundedRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: max == Long.MAX_VALUE
+  Cannot cast range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: max == Long.MAX_VALUE
+  Cannot round range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: max == Long.MAX_VALUE
+  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+-9.223372036852776E18..-100.0 casted to -9223372036852775936..-100
+-9.223372036852776E18..-100.0 rounded to -9223372036852775936..-100
+-9.223372036852776E18..-100.0 casted to -9223372036852775936..-100
+-9.223372036852776E18..-100.0 rounded to -9223372036852775936..-100
+-9.223372036852776E18..100.0 casted to -9223372036852775936..100
+-9.223372036852776E18..100.0 rounded to -9223372036852775936..100
+-9.223372036852776E18..100.0 casted to -9223372036852775936..100
+-9.223372036852776E18..100.0 rounded to -9223372036852775936..100
+-1000.0..1.0E8 casted to -1000..100000000
+-1000.0..1.0E8 rounded to -1000..100000000
+-1000.0..1.0E8 casted to -1000..100000000
+-1000.0..1.0E8 rounded to -1000..100000000
+  Cannot call toIntegerRange for -4.0E18..6.0E18: java.lang.IllegalStateException: max - min >= Long.MAX_VALUE (min = -4000000000000000000, max = 6000000000000000000)
+  Cannot call toRoundedRange for -4.0E18..6.0E18: java.lang.IllegalStateException: max - min >= Long.MAX_VALUE (min = -4000000000000000000, max = 6000000000000000000)
+  Cannot cast range -4.0E18..6.0E18: java.lang.IllegalArgumentException: max - min >= Long.MAX_VALUE (min = -4000000000000000000, max = 6000000000000000000)
+  Cannot round range -4.0E18..6.0E18: java.lang.IllegalArgumentException: max - min >= Long.MAX_VALUE (min = -4000000000000000000, max = 6000000000000000000)
+
+(12.0, 3.0, 0.0, -21234.0); symmetric: (-12.0, -3.0, -0.0, 21234.0); distance from origin: 21234.003602712324 = 21234.003602712324; x-shift: (112.0, 3.0, 0.0, -21234.0); x-projection: (3.0, 0.0, -21234.0); last-axis-projection: (12.0, 3.0, 0.0); *2: (24.0, 6.0, 0.0, -42468.0) = (24.0, 6.0, 0.0, -42468.0) = (24.0, 6.0, 0.0, -42468.0); sqr: 4.50882909E8; hash: -19399069; address: 1225358173
+(-7.0E18, -5.0E18); symmetric: (7.0E18, 5.0E18); distance from origin: 8.602325267042627E18 = 8.602325267042627E18; x-shift: (-7.0E18, -5.0E18); x-projection: (-5.0E18); last-axis-projection: (-7.0E18); *2: (-1.4E19, -1.0E19) = (-1.4E19, -1.0E19) = (-1.4E19, -1.0E19); sqr: 7.4E37; hash: 225567745; address: 565760380
+(-5.0E18, -300.0); symmetric: (5.0E18, 300.0); distance from origin: 5.0E18 = 5.0E18; x-shift: (-5.0E18, -300.0); x-projection: (-300.0); last-axis-projection: (-5.0E18); *2: (-1.0E19, -600.0) = (-1.0E19, -600.0) = (-1.0E19, -600.0); sqr: 2.5E37; hash: -1792519874; address: 6566818
+(14.0, -3.0); symmetric: (-14.0, 3.0); distance from origin: 14.317821063276353 = 14.317821063276353; x-shift: (114.0, -3.0); x-projection: (-3.0); last-axis-projection: (14.0); *2: (28.0, -6.0) = (28.0, -6.0) = (28.0, -6.0); sqr: 205.0; hash: -1538829780; address: 1494279232
+(-3.0, -2.0); symmetric: (3.0, 2.0); distance from origin: 3.605551275463989 = 3.605551275463989; x-shift: (97.0, -2.0); x-projection: (-2.0); last-axis-projection: (-3.0); *2: (-6.0, -4.0) = (-6.0, -4.0) = (-6.0, -4.0); sqr: 13.0; hash: 1283292097; address: 1650967483
+(4413.2, -0.8); symmetric: (-4413.2, 0.8); distance from origin: 4413.200072509743 = 4413.200072509743; x-shift: (4513.2, -0.8); x-projection: (-0.8); last-axis-projection: (4413.2); *2: (8826.4, -1.6) = (8826.4, -1.6) = (8826.4, -1.6); sqr: 1.947633488E7; hash: -277908544; address: 87285178
+(0.0); symmetric: (-0.0); distance from origin: 0.0 = 0.0; x-shift: (100.0); x-projection: impossible; last-axis-projection: impossible; *2: (0.0) = (0.0) = (0.0); sqr: 0.0; hash: -447364063; address: 610998173
+(0.0, 0.0); symmetric: (-0.0, -0.0); distance from origin: 0.0 = 0.0; x-projection is origin; x-shift: (100.0, 0.0); x-projection: (0.0); last-axis-projection: (0.0); *2: (0.0, 0.0) = (0.0, 0.0) = (0.0, 0.0); sqr: 0.0; hash: 2081028813; address: 2047329716
+(0.0, 0.0, 0.0); symmetric: (-0.0, -0.0, -0.0); distance from origin: 0.0 = 0.0; x-projection is origin; x-shift: (100.0, 0.0, 0.0); x-projection: (0.0, 0.0); last-axis-projection: (0.0, 0.0); *2: (0.0, 0.0, 0.0) = (0.0, 0.0, 0.0) = (0.0, 0.0, 0.0); sqr: 0.0; hash: -143615743; address: 648129364
+(0.0, 0.0, 0.0); symmetric: (-0.0, -0.0, -0.0); distance from origin: 0.0 = 0.0; x-projection is origin; x-shift: (100.0, 0.0, 0.0); x-projection: (0.0, 0.0); last-axis-projection: (0.0, 0.0); *2: (0.0, 0.0, 0.0) = (0.0, 0.0, 0.0) = (0.0, 0.0, 0.0); sqr: 0.0; hash: -143615743; address: 648129364
+(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); symmetric: (-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0); distance from origin: 0.0 = 0.0; x-projection is origin; x-shift: (100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); x-projection: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); last-axis-projection: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); *2: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); sqr: 0.0; hash: 1376708422; address: 1029991479
+(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); symmetric: (-0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0, -0.0); distance from origin: 0.0 = 0.0; x-projection is origin; x-shift: (100.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); x-projection: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); last-axis-projection: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); *2: (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0) = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0); sqr: 0.0; hash: 1376708422; address: 1104106489
+(13.0); symmetric: (-13.0); distance from origin: 13.0 = 13.0; x-shift: (113.0); x-projection: impossible; last-axis-projection: impossible; *2: (26.0) = (26.0) = (26.0); sqr: 169.0; hash: -52278887; address: 94438417
+(13.0, 0.0); symmetric: (-13.0, -0.0); distance from origin: 13.0 = 13.0; x-projection is origin; x-shift: (113.0, 0.0); x-projection: (0.0); last-axis-projection: (13.0); *2: (26.0, 0.0) = (26.0, 0.0) = (26.0, 0.0); sqr: 169.0; hash: -85693741; address: 787604730
+(13.0, -0.0); symmetric: (-13.0, 0.0); distance from origin: 13.0 = 13.0; x-projection is origin; x-shift: (113.0, -0.0); x-projection: (-0.0); last-axis-projection: (13.0); *2: (26.0, -0.0) = (26.0, -0.0) = (26.0, 0.0); sqr: 169.0; hash: 391965171; address: 812265671
+(4413.1, 0.1); symmetric: (-4413.1, -0.1); distance from origin: 4413.100001132991 = 4413.100001132991; x-shift: (4513.1, 0.1); x-projection: (0.1); last-axis-projection: (4413.1); *2: (8826.2, 0.2) = (8826.2, 0.2) = (8826.2, 0.2); sqr: 1.9475451620000005E7; hash: -923406292; address: 193064360
+(13.0, 1.0, 0.0); symmetric: (-13.0, -1.0, -0.0); distance from origin: 13.038404810405298 = 13.038404810405298; x-shift: (113.0, 1.0, 0.0); x-projection: (1.0, 0.0); last-axis-projection: (13.0, 1.0); *2: (26.0, 2.0, 0.0) = (26.0, 2.0, 0.0) = (26.0, 2.0, 0.0); sqr: 170.0; hash: 70320848; address: 109961541
+(3.0, 1.33); symmetric: (-3.0, -1.33); distance from origin: 3.281600219405161 = 3.281600219405161; x-shift: (103.0, 1.33); x-projection: (1.33); last-axis-projection: (3.0); *2: (6.0, 2.66) = (6.0, 2.66) = (6.0, 2.66); sqr: 10.7689; hash: -688513130; address: 670700378
+(12.0, 3.0); symmetric: (-12.0, -3.0); distance from origin: 12.36931687685298 = 12.36931687685298; x-shift: (112.0, 3.0); x-projection: (3.0); last-axis-projection: (12.0); *2: (24.0, 6.0) = (24.0, 6.0) = (24.0, 6.0); sqr: 153.0; hash: 1075081590; address: 1190654826
+(12.0, 3.0, 0.0); symmetric: (-12.0, -3.0, -0.0); distance from origin: 12.36931687685298 = 12.36931687685298; x-shift: (112.0, 3.0, 0.0); x-projection: (3.0, 0.0); last-axis-projection: (12.0, 3.0); *2: (24.0, 6.0, 0.0) = (24.0, 6.0, 0.0) = (24.0, 6.0, 0.0); sqr: 153.0; hash: 761571642; address: 1109371569
+(3.0, 4.0, 0.0); symmetric: (-3.0, -4.0, -0.0); distance from origin: 5.0 = 5.0; x-shift: (103.0, 4.0, 0.0); x-projection: (4.0, 0.0); last-axis-projection: (3.0, 4.0); *2: (6.0, 8.0, 0.0) = (6.0, 8.0, 0.0) = (6.0, 8.0, 0.0); sqr: 25.0; hash: 1146867734; address: 728890494
+(-4.0, 5.0); symmetric: (4.0, -5.0); distance from origin: 6.4031242374328485 = 6.4031242374328485; x-shift: (96.0, 5.0); x-projection: (5.0); last-axis-projection: (-4.0); *2: (-8.0, 10.0) = (-8.0, 10.0) = (-8.0, 10.0); sqr: 41.0; hash: -1156387160; address: 1558600329
+(4.1, 5.0); symmetric: (-4.1, -5.0); distance from origin: 6.466065264130885 = 6.466065264130884; x-shift: (104.1, 5.0); x-projection: (5.0); last-axis-projection: (4.1); *2: (8.2, 10.0) = (8.2, 10.0) = (8.2, 10.0); sqr: 41.81; hash: 1918160666; address: 636718812
+(15.0, 20.0); symmetric: (-15.0, -20.0); distance from origin: 25.0 = 25.0; x-shift: (115.0, 20.0); x-projection: (20.0); last-axis-projection: (15.0); *2: (30.0, 40.0) = (30.0, 40.0) = (30.0, 40.0); sqr: 625.0; hash: 1056536782; address: 445051633
+(-5.0E18, 30.0); symmetric: (5.0E18, -30.0); distance from origin: 5.0E18 = 5.0E18; x-shift: (-5.0E18, 30.0); x-projection: (30.0); last-axis-projection: (-5.0E18); *2: (-1.0E19, 60.0) = (-1.0E19, 60.0) = (-1.0E19, 60.0); sqr: 2.5E37; hash: -1242348457; address: 1051754451
+(1000.0, 30.0); symmetric: (-1000.0, -30.0); distance from origin: 1000.4498987955369 = 1000.4498987955369; x-shift: (1100.0, 30.0); x-projection: (30.0); last-axis-projection: (1000.0); *2: (2000.0, 60.0) = (2000.0, 60.0) = (2000.0, 60.0); sqr: 1000900.0; hash: 1422190660; address: 1349277854
+(1000.0, 1.0E20); symmetric: (-1000.0, -1.0E20); distance from origin: 1.0E20 = 1.0E20; x-shift: (1100.0, 1.0E20); x-projection: (1.0E20); last-axis-projection: (1000.0); *2: (2000.0, 2.0E20) = (2000.0, 2.0E20) = (2000.0, 2.0E20); sqr: 1.0E40; hash: -1342165112; address: 1775282465
+(5.0E18, 1.0E20); symmetric: (-5.0E18, -1.0E20); distance from origin: 1.0012492197250394E20 = 1.0012492197250392E20; x-shift: (5.0E18, 1.0E20); x-projection: (1.0E20); last-axis-projection: (5.0E18); *2: (1.0E19, 2.0E20) = (1.0E19, 2.0E20) = (1.0E19, 2.0E20); sqr: 1.0025000000000001E40; hash: 929203156; address: 1147985808
+(1.2, 3.0, 1.0); symmetric: (-1.2, -3.0, -1.0); distance from origin: 3.3823069050575527 = 3.3823069050575527; x-shift: (101.2, 3.0, 1.0); x-projection: (3.0, 1.0); last-axis-projection: (1.2, 3.0); *2: (2.4, 6.0, 2.0) = (2.4, 6.0, 2.0) = (2.4, 6.0, 2.0); sqr: 11.44; hash: 988415819; address: 2040495657
+(1.2, 3.0, 0.0, 1.234); symmetric: (-1.2, -3.0, -0.0, -1.234); distance from origin: 3.458721729194183 = 3.458721729194183; x-shift: (101.2, 3.0, 0.0, 1.234); x-projection: (3.0, 0.0, 1.234); last-axis-projection: (1.2, 3.0, 0.0); *2: (2.4, 6.0, 0.0, 2.468) = (2.4, 6.0, 0.0, 2.468) = (2.4, 6.0, 0.0, 2.468); sqr: 11.962755999999999; hash: 709836936; address: 1267032364
+(-12.0, 123453.0, 27182.0, 821234.0); symmetric: (12.0, -123453.0, -27182.0, -821234.0); distance from origin: 830906.0038494125 = 830906.0038494125; x-shift: (88.0, 123453.0, 27182.0, 821234.0); x-projection: (123453.0, 27182.0, 821234.0); last-axis-projection: (-12.0, 123453.0, 27182.0); *2: (-24.0, 246906.0, 54364.0, 1642468.0) = (-24.0, 246906.0, 54364.0, 1642468.0) = (-24.0, 246906.0, 54364.0, 1642468.0); sqr: 6.90404787233E11; hash: -339183655; address: 661672156
+
+0:   Cannot create area with (12.0, 3.0, 0.0, -21234.0) and (-7.0E18, -5.0E18): java.lang.IllegalArgumentException: min.coordCount() = 4 does not match max.coordCount() = 2
+2: [-5.0E18..14.0]x[-300.0..-3.0]; ranges: [-5.0E18..14.0, -300.0..-3.0]; contains(origin): false; expand(origin): [-5.0E18..14.0]x[-300.0..0.0]; expand(-1,-1..2,2): [-5.0E18..14.0]x[-300.0..2.0]; parallel distance to (-1.5,-1.5,...): 1.5; intersection with [-1.5..0.0]x[-1.5..0.0]: null; subtracted [-1.5..0.0]x[-1.5..0.0]: [[-5.0E18..14.0]x[-300.0..-3.0]]; hash: 857411618
+[-5.0E18..14.0]x[-300.0..-3.0] casted to [-5000000000000000000..14]x[-300..-3]
+[-5.0E18..14.0]x[-300.0..-3.0] rounded to [-5000000000000000000..14]x[-300..-3]; parallel distance to (10,10,...): 13; intersection with [0..10]x[0..10]: null; subtracted [0..10]x[0..10]: [[-5000000000000000000..14]x[-300..-3]]; hash: 11705316
+[-5.0E18..14.0]x[-300.0..-3.0] casted to [-5000000000000000000..14]x[-300..-3]
+[-5.0E18..14.0]x[-300.0..-3.0] rounded to [-5000000000000000000..14]x[-300..-3]
+4: [-3.0..4413.2]x[-2.0..-0.8]; ranges: [-3.0..4413.2, -2.0..-0.8]; contains(origin): false; expand(origin): [-3.0..4413.2]x[-2.0..0.0]; expand(-1,-1..2,2): [-3.0..4413.2]x[-2.0..2.0]; parallel distance to (-1.5,-1.5,...): -0.5 (inside); intersection with [-1.5..0.0]x[-1.5..0.0]: [-1.5..0.0]x[-1.5..-0.8]; subtracted [-1.5..0.0]x[-1.5..0.0]: [[-3.0..4413.2]x[-2.0..-1.5], [-3.0..-1.5]x[-1.5..-0.8], [0.0..4413.2]x[-1.5..-0.8]]; hash: -40741211
+[-3.0..4413.2]x[-2.0..-0.8] casted to [-3..4413]x[-2..0]
+[-3.0..4413.2]x[-2.0..-0.8] rounded to [-3..4413]x[-2..-1]; parallel distance to (10,10,...): 11; intersection with [0..10]x[0..10]: null; subtracted [0..10]x[0..10]: [[-3..4413]x[-2..-1]]; hash: 1593970496
+[-3.0..4413.2]x[-2.0..-0.8] casted to [-3..4413]x[-2..0]
+[-3.0..4413.2]x[-2.0..-0.8] rounded to [-3..4413]x[-2..-1]
+6:   Cannot create area with (0.0) and (0.0, 0.0): java.lang.IllegalArgumentException: min.coordCount() = 1 does not match max.coordCount() = 2
+8: [0.0..0.0]x[0.0..0.0]x[0.0..0.0]; ranges: [0.0..0.0, 0.0..0.0, 0.0..0.0]; contains(origin): true; expand(origin): [0.0..0.0]x[0.0..0.0]x[0.0..0.0]; expand(-1,-1..2,2): [-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]; parallel distance to (-1.5,-1.5,...): 1.5; intersection with [-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]: [0.0..0.0]x[0.0..0.0]x[0.0..0.0]; subtracted [-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]: []; hash: -1162430938
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0] casted to [0..0]x[0..0]x[0..0]
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0] rounded to [0..0]x[0..0]x[0..0]; parallel distance to (10,10,...): 10; intersection with [0..10]x[0..10]x[0..10]: [0..0]x[0..0]x[0..0]; subtracted [0..10]x[0..10]x[0..10]: []; hash: 1912110070
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0] casted to [0..0]x[0..0]x[0..0]
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0] rounded to [0..0]x[0..0]x[0..0]
+10: [0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]; ranges: [0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0, 0.0..0.0]; contains(origin): true; expand(origin): [0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]; expand(-1,-1..2,2): [-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]x[-1.0..2.0]; parallel distance to (-1.5,-1.5,...): 1.5; intersection with [-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]: [0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]; subtracted [-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]x[-1.5..0.0]: []; hash: 775312484
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0] casted to [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0] rounded to [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; parallel distance to (10,10,...): 10; intersection with [0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]: [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; subtracted [0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]x[0..10]: []; hash: -1275090784
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0] casted to [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]
+[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0]x[0.0..0.0] rounded to [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]
+12:   Cannot create area with (13.0) and (13.0, 0.0): java.lang.IllegalArgumentException: min.coordCount() = 1 does not match max.coordCount() = 2
+14: [13.0..4413.1]x[-0.0..0.1]; ranges: [13.0..4413.1, -0.0..0.1]; contains(origin): false; expand(origin): [0.0..4413.1]x[-0.0..0.1]; expand(-1,-1..2,2): [-1.0..4413.1]x[-1.0..2.0]; parallel distance to (-1.5,-1.5,...): 14.5; intersection with [-1.5..0.0]x[-1.5..0.0]: null; subtracted [-1.5..0.0]x[-1.5..0.0]: [[13.0..4413.1]x[-0.0..0.1]]; hash: 694403147
+[13.0..4413.1]x[-0.0..0.1] casted to [13..4413]x[0..0]
+[13.0..4413.1]x[-0.0..0.1] rounded to [13..4413]x[0..0]; parallel distance to (10,10,...): 10; intersection with [0..10]x[0..10]: null; subtracted [0..10]x[0..10]: [[13..4413]x[0..0]]; hash: -1237700384
+[13.0..4413.1]x[-0.0..0.1] casted to [13..4413]x[0..0]
+[13.0..4413.1]x[-0.0..0.1] rounded to [13..4413]x[0..0]
+16:   Cannot create area with (13.0, 1.0, 0.0) and (3.0, 1.33): java.lang.IllegalArgumentException: min.coordCount() = 3 does not match max.coordCount() = 2
+18:   Cannot create area with (12.0, 3.0) and (12.0, 3.0, 0.0): java.lang.IllegalArgumentException: min.coordCount() = 2 does not match max.coordCount() = 3
+20:   Cannot create area with (3.0, 4.0, 0.0) and (-4.0, 5.0): java.lang.IllegalArgumentException: min.coordCount() = 3 does not match max.coordCount() = 2
+22: [4.1..15.0]x[5.0..20.0]; ranges: [4.1..15.0, 5.0..20.0]; contains(origin): false; expand(origin): [0.0..15.0]x[0.0..20.0]; expand(-1,-1..2,2): [-1.0..15.0]x[-1.0..20.0]; parallel distance to (-1.5,-1.5,...): 6.5; intersection with [-1.5..0.0]x[-1.5..0.0]: null; subtracted [-1.5..0.0]x[-1.5..0.0]: [[4.1..15.0]x[5.0..20.0]]; hash: -985962608
+[4.1..15.0]x[5.0..20.0] casted to [4..15]x[5..20]
+[4.1..15.0]x[5.0..20.0] rounded to [4..15]x[5..20]; parallel distance to (10,10,...): -5 (inside); intersection with [0..10]x[0..10]: [4..10]x[5..10]; subtracted [0..10]x[0..10]: [[4..15]x[11..20], [11..15]x[5..10]]; hash: 1202133512
+[4.1..15.0]x[5.0..20.0] casted to [4..15]x[5..20]
+[4.1..15.0]x[5.0..20.0] rounded to [4..15]x[5..20]
+24: [-5.0E18..1000.0]x[30.0..30.0]; ranges: [-5.0E18..1000.0, 30.0..30.0]; contains(origin): false; expand(origin): [-5.0E18..1000.0]x[0.0..30.0]; expand(-1,-1..2,2): [-5.0E18..1000.0]x[-1.0..30.0]; parallel distance to (-1.5,-1.5,...): 31.5; intersection with [-1.5..0.0]x[-1.5..0.0]: null; subtracted [-1.5..0.0]x[-1.5..0.0]: [[-5.0E18..1000.0]x[30.0..30.0]]; hash: -1595029289
+[-5.0E18..1000.0]x[30.0..30.0] casted to [-5000000000000000000..1000]x[30..30]
+[-5.0E18..1000.0]x[30.0..30.0] rounded to [-5000000000000000000..1000]x[30..30]; parallel distance to (10,10,...): 20; intersection with [0..10]x[0..10]: null; subtracted [0..10]x[0..10]: [[-5000000000000000000..1000]x[30..30]]; hash: -1332303237
+[-5.0E18..1000.0]x[30.0..30.0] casted to [-5000000000000000000..1000]x[30..30]
+[-5.0E18..1000.0]x[30.0..30.0] rounded to [-5000000000000000000..1000]x[30..30]
+26: [1000.0..5.0E18]x[1.0E20..1.0E20]; ranges: [1000.0..5.0E18, 1.0E20..1.0E20]; contains(origin): false; expand(origin): [0.0..5.0E18]x[0.0..1.0E20]; expand(-1,-1..2,2): [-1.0..5.0E18]x[-1.0..1.0E20]; parallel distance to (-1.5,-1.5,...): 1.0E20; intersection with [-1.5..0.0]x[-1.5..0.0]: null; subtracted [-1.5..0.0]x[-1.5..0.0]: [[1000.0..5.0E18]x[1.0E20..1.0E20]]; hash: -1486265732
+  Cannot call toIntegerRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: max.coord(1) == Long.MAX_VALUE
+  Cannot call toRoundedRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: max.coord(1) == Long.MAX_VALUE
+  Cannot cast range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: max.coord(1) == Long.MAX_VALUE
+  Cannot round range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: max.coord(1) == Long.MAX_VALUE
+28:   Cannot create area with (1.2, 3.0, 1.0) and (1.2, 3.0, 0.0, 1.234): java.lang.IllegalArgumentException: min.coordCount() = 3 does not match max.coordCount() = 4
