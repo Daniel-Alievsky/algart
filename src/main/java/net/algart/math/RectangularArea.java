@@ -758,15 +758,15 @@ public class RectangularArea {
      * (usually it is <code>List</code> or <code>Queue</code>).
      *
      * <p>It is possible that the difference is empty (<b>A</b>&nbsp;\&nbsp;<b>B</b>&nbsp;=&nbsp;&empty;),
-     * i.e. this area <b>A</b> is a subset of the passed one <b>B</b>. In this case, this method does nothing.
+     * i.e., this area <b>A</b> is a subset of the passed one <b>B</b>. In this case, this method does nothing.
      *
      * <p>It is possible that the difference is equal to this area
      * (<b>A</b>&nbsp;\&nbsp;<b>B</b>&nbsp;=&nbsp;<b>A</b>),
-     * i.e. this area <b>A</b> does not intersect the passed one <b>B</b>.
+     * i.e., this area <b>A</b> does not intersect the passed one <b>B</b>.
      * In this case, this method is equivalent to <code>results.add(thisInstance)</code> call.
      *
      * <p>In other cases, there is more than 1 way to represent the resulting difference
-     * in a form of union of several rectangular areas
+     * in the form of several rectangular areas union
      * <b>R</b><sub>1</sub>,<b>R</b><sub>2</sub>,...,<b>R</b><sub><i>N</i></sub>.
      * The precise way, how this method forms this set of rectangular areas <b>R</b><sub><i>i</i></sub>,
      * is not documented, but this method tries to minimize the number <i>N</i> of such areas.
@@ -782,7 +782,7 @@ public class RectangularArea {
      */
     public Collection<RectangularArea> difference(Collection<RectangularArea> results, RectangularArea area) {
         Objects.requireNonNull(results, "Null results argument");
-        if (!intersects(area)) { // also checks number of dimensions
+        if (!intersects(area)) { // also checks the number of dimensions
             results.add(this);
             return results;
         }
@@ -851,7 +851,7 @@ public class RectangularArea {
         for (RectangularArea area : whatToSubtract) {
             final int n = fromWhatToSubtract.size();
             for (int i = 0; i < n; i++) {
-                RectangularArea minuend = fromWhatToSubtract.poll();
+                final RectangularArea minuend = fromWhatToSubtract.poll();
                 if (minuend == null) {
                     throw new AssertionError("Null minuend in fromWhatToSubtract at index " + i);
                 }
