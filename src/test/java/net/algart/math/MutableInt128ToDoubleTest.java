@@ -43,12 +43,12 @@ public class MutableInt128ToDoubleTest {
         }
         final MutableInt128 b = MutableInt128.ofDouble(v);
         if (b.toDouble() != v) {
-            throw new AssertionError("Error in toDouble()/valueOfDouble() for " + b
+            throw new AssertionError("Error in toDouble()/ofDouble() for " + b
                     + ": " + b.toDouble() + " != " + v);
         }
         if (a.isExactlyConvertibleToDouble() && !b.equals(a)) {
             throw new AssertionError("Error in isExactlyConvertibleToDouble() for " + a
-                    + " = " + a.toString(2) + "b: reverse valueOfDouble = "
+                    + " = " + a.toString(2) + "b: reverse ofDouble = "
                     + b.toString(2) + "b");
         }
         double w = a.toDoubleByAdding();

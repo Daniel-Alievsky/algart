@@ -194,7 +194,7 @@ public class Patterns {
 /* OLD ALGORITHM
         final int n = center.coordCount();
         if (n == 1)
-            return newIntegerPattern(newRectangularIntegerPattern(IRange.valueOf(
+            return newIntegerPattern(newRectangularIntegerPattern(IRange.of(
                 StrictMath.round(StrictMath.ceil(center.coord(0) - r)),
                 StrictMath.round(StrictMath.floor(center.coord(0) + r)))).roundedPoints());
         int ir = (int) (r + 2.0);

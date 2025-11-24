@@ -779,7 +779,7 @@ public interface Array {
     /**
      * Returns <code>true</code> if this array instance is <i>new</i>, i&#46;e&#46; it was created
      * by one of {@link MemoryModel} methods, creating an array or a matrix (<code>newXxx</code>
-     * or <code>valueOf</code>), or by fully equivalent methods.
+     * or <code>of</code>), or by fully equivalent methods.
      * All other ways of creating AlgART array instance ({@link #asImmutable()},
      * {@link #shallowClone()}, {@link #subArray(long, long)}, {@link SimpleMemoryModel#asUpdatableArray(Object)}
      * etc.) create <i>non-new</i> arrays.

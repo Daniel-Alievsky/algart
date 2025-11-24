@@ -1814,7 +1814,7 @@ class ArraysOpImpl {
             info = new Arrays.MinMaxInfo();
         if (array.length() == 0) {
             info.setAll(-1, -1, 0.0, 0.0);
-            return Range.valueOf(0.0, 0.0);
+            return Range.of(0.0, 0.0);
         }
 
         long indexOfMin = -1;

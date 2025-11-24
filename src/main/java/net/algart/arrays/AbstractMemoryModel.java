@@ -32,7 +32,7 @@ import java.util.Objects;
  *
  * <p>This class implements all concrete <code>newEmptyXxxArray</code>,
  * <code>newXxxArray</code> and <code>newUnresizableXxxArray</code>
- * methods, and also all <code>valueOf</code> methods
+ * methods, and also all <code>of</code> methods
  * via trivial calls of corresponding <code>newEmptyArray</code> and <code>newArray</code> methods.
  * This class implements all concrete <code>newXxxMatrix</code>
  * via trivial calls of <code>newMatrix</code> method.
