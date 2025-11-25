@@ -789,6 +789,7 @@ public class RectangularArea {
       long ==> double;;
       saveMin\s*-\s*1 ==> saveMin;;
       saveMax\s*\+\s*1 ==> saveMax;;
+      \/\/ - for RectangularArea(.*?)(?:\r(?!\n)|\n|\r\n)\s* ==> ;;
       (\[k\])\s*[+-]\s*1 ==> $1 !! Auto-generated: NOT EDIT !! */
 
     /**
@@ -826,6 +827,7 @@ public class RectangularArea {
             }
         }
         return new RectangularArea(new Point(newMin), new Point(newMax));
+        // - if two rectangular areas are allowed, then their intersection is also allowed
     }
 
     /**
@@ -911,11 +913,13 @@ public class RectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k];
+                // direct using constructor is safe
                 results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k];
                 max[k] = this.max.coordinates[k];
+                // direct using constructor is safe
                 results.add(new RectangularArea(Point.of(min), Point.of(max)));
             }
             min[k] = Math.max(area.min.coordinates[k], this.min.coordinates[k]);
@@ -929,8 +933,8 @@ public class RectangularArea {
      * Calculates the set-theoretical difference <b>A</b>&nbsp;\&nbsp;<b>B</b> of
      * the set-theoretical union <b>A</b> of all elements of the collection <code>fromWhatToSubtract</code>
      * and the set-theoretical union <b>B</b> of all elements of the collection <code>whatToSubtract</code>,
-     * in a form of a union of <i>N</i> rectangular areas, and replaces
-     * the old content of <code>fromWhatToSubtract</code> with the resulting <i>N</i> areas.
+     * and returns the result as a union of <i>N</i> rectangular areas, which replace
+     * the old content of <code>fromWhatToSubtract</code>.
      *
      * <p>More precisely, this method is equivalent to the following loop:
      *
@@ -1081,7 +1085,9 @@ public class RectangularArea {
      * @return the minimal rectangular area, containing this and the passed area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
-     *                                  the {@link #coordCount() number of dimensions} of this instance.
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if the new min/max points
+     *                                  do not match requirements of {@link #of(Point, Point)} method.
      */
     public RectangularArea expand(RectangularArea area) {
         if (contains(area)) {
@@ -1094,7 +1100,7 @@ public class RectangularArea {
             newMin[k] = Math.min(min.coordinates[k], area.min.coordinates[k]);
             newMax[k] = Math.max(max.coordinates[k], area.max.coordinates[k]);
         }
-        return new RectangularArea(new Point(newMin), new Point(newMax));
+        return of(new Point(newMin), new Point(newMax));
     }
 
     /**

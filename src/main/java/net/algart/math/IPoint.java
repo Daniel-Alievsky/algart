@@ -840,10 +840,10 @@ public class IPoint implements Comparable<IPoint> {
      * <i>y</i><sub><i>i</i></sub> is <code>o.{@link #coord(int) coord}(<i>i</i>)</code>
      * for <code>0&lt;=<i>i</i>&lt;o.{@link #coordCount()}</code> and
      * <i>y</i><sub><i>i</i></sub>=0 for <code><i>i</i>&gt;=o.{@link #coordCount()}</code>.
-     * This method returns a negative integer if there is an index <i>k</i> that
+     * This method returns a negative integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&lt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>;
-     * this method returns a positive integer if there is an index <i>k</i> that
+     * this method returns a positive integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&gt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>.
      * If all <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub>,

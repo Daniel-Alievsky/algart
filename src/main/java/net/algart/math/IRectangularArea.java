@@ -973,14 +973,14 @@ public class IRectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k] - 1;
-                // - so, max[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
+                // - for IRectangularArea, max[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
                 // direct using constructor is safe
                 results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k] + 1;
                 max[k] = this.max.coordinates[k];
-                // - so, min[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
+                // - for IRectangularArea, min[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
                 // direct using constructor is safe
                 results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
@@ -995,8 +995,8 @@ public class IRectangularArea {
      * Calculates the set-theoretical difference <b>A</b>&nbsp;\&nbsp;<b>B</b> of
      * the set-theoretical union <b>A</b> of all elements of the collection <code>fromWhatToSubtract</code>
      * and the set-theoretical union <b>B</b> of all elements of the collection <code>whatToSubtract</code>,
-     * in a form of a union of <i>N</i> rectangular areas, and replaces
-     * the old content of <code>fromWhatToSubtract</code> with the resulting <i>N</i> areas.
+     * and returns the result as a union of <i>N</i> rectangular areas, which replace
+     * the old content of <code>fromWhatToSubtract</code>.
      *
      * <p>More precisely, this method is equivalent to the following loop:
      *
