@@ -64,13 +64,14 @@ public final class Range {
      */
     public static Range of(double min, double max) {
         if (Double.isNaN(min)) {
-            throw new IllegalArgumentException("min is NaN");
+            throw new IllegalArgumentException("Cannot create Range: min is NaN");
         }
         if (Double.isNaN(max)) {
-            throw new IllegalArgumentException("max is NaN");
+            throw new IllegalArgumentException("Cannot create Range: max is NaN");
         }
         if (min > max) {
-            throw new IllegalArgumentException("min > max (min = " + min + ", max = " + max + ")");
+            throw new IllegalArgumentException("Cannot create Range: min > max (min = " +
+                    min + ", max = " + max + ")");
         }
         return new Range(min, max);
     }

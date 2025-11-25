@@ -790,6 +790,7 @@ public class IPoint implements Comparable<IPoint> {
         return new IPoint(coordinates);
     }
 
+    //Deprecated
     /**
      * Equivalent to <code>{@link #projectionAlongAxis(int) projectionAlongAxis}(coordIndex).equals(point)</code>,
      * but works faster (no Java objects are allocated).

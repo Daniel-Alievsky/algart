@@ -22,9 +22,13 @@
  * SOFTWARE.
  */
 
-package net.algart.math;
+package net.algart.math.points;
 
-import java.io.File;
+import net.algart.math.IPoint;
+import net.algart.math.IRange;
+import net.algart.math.IRectangularArea;
+import net.algart.math.Point;
+
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -91,8 +95,6 @@ public class IPointDemo {
             System.out.println(ip + "; symmetric: " + ip.symmetric()
                     + "; distance from origin: " + ip.distanceFromOrigin()
                     + " = " + ip.distanceFrom(List.of(IPoint.origin(ip.coordCount())))
-                    + (ip.coordCount() > 1 && ip.projectionAlongAxisEquals(0, IPoint.origin(ip.coordCount() - 1)) ?
-                    "; x-projection is origin" : "")
                     + "; x-shift: " + ip.shiftAlongAxis(0, 100)
                     + "; x-projection: "
                     + (ip.coordCount() == 1 ? "impossible" : ip.projectionAlongAxis(0))
@@ -120,6 +122,9 @@ public class IPointDemo {
                 System.out.println("  Cannot create area with " + p.get(k) + " and " + p.get(k + 1) + ": " + e);
             }
         }
+//        IRange.of(10, Long.MAX_VALUE);
+//        areas.add(IRectangularArea.of(10, 10, Long.MAX_VALUE - 1, Long.MAX_VALUE - 1));
+//        areas.add(IRectangularArea.ofSize(10, 10, Long.MAX_VALUE - 10, Long.MAX_VALUE - 10));
         for (IRectangularArea ra : areas) {
             System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                     + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))

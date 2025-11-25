@@ -95,19 +95,19 @@ public class RectangularArea {
         Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;
         if (n != max.coordinates.length) {
-            throw new IllegalArgumentException("min.coordCount() = " + n
+            throw new IllegalArgumentException("Cannot create RectangularArea: min.coordCount() = " + n
                     + " does not match max.coordCount() = " + max.coordinates.length);
         }
         for (int k = 0; k < n; k++) {
             if (Double.isNaN(min.coordinates[k])) {
-                throw new IllegalArgumentException("min.coord(" + k + ") is NaN");
+                throw new IllegalArgumentException("Cannot create RectangularArea: min.coord(" + k + ") is NaN");
             }
             if (Double.isNaN(max.coordinates[k])) {
-                throw new IllegalArgumentException("max.coord(" + k + ") is NaN");
+                throw new IllegalArgumentException("Cannot create RectangularArea: max.coord(" + k + ") is NaN");
             }
             if (min.coordinates[k] > max.coordinates[k]) {
-                throw new IllegalArgumentException("min.coord(" + k + ") > max.coord(" + k + ")"
-                        + " (min = " + min + ", max = " + max + ")");
+                throw new IllegalArgumentException("Cannot create RectangularArea: min.coord(" + k +
+                        ") > max.coord(" + k + ")" + " (min = " + min + ", max = " + max + ")");
             }
         }
         return new RectangularArea(min, max);
@@ -122,42 +122,42 @@ public class RectangularArea {
      * Returns the Cartesian product of the specified coordinate ranges.
      * More precisely, return an <i>n</i>-dimensional {@link RectangularArea rectangular area}
      * with the minimal vertex <b>min</b> and maximal vertex <b>max</b>, where
-     * <i>n</i><code>=coordRanges.length</code>,
+     * <i>n</i><code>=coordinateRanges.length</code>,
      * <b>min</b>.{@link Point#coord(int)
-     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link Range#min() min()}</code>,
+     * coord(<i>i</i>)}<code>=coordinateRanges[<i>i</i>].{@link Range#min() min()}</code>,
      * <b>max</b>.{@link Point#coord(int)
-     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link Range#max() max()}</code>.
+     * coord(<i>i</i>)}<code>=coordinateRanges[<i>i</i>].{@link Range#max() max()}</code>.
      * See the {@link RectangularArea comments to this class} for more details.
      *
-     * @param coordRanges the coordinate ranges.
+     * @param coordinateRanges the coordinate ranges.
      * @return the Cartesian product of the specified coordinate ranges.
      * @throws NullPointerException     if the argument is {@code null}
-     *                                  or if one of specified <code>coordRanges</code> is {@code null}.
+     *                                  or if one of specified <code>coordinateRanges</code> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
-    public static RectangularArea of(Range... coordRanges) {
-        Objects.requireNonNull(coordRanges, "Null coordRanges argument");
-        int n = coordRanges.length;
+    public static RectangularArea of(Range... coordinateRanges) {
+        Objects.requireNonNull(coordinateRanges, "Null coordinateRanges argument");
+        int n = coordinateRanges.length;
         if (n == 0) {
-            throw new IllegalArgumentException("Empty coordRanges array");
+            throw new IllegalArgumentException("Empty coordinateRanges array");
         }
-        coordRanges = coordRanges.clone();
+        coordinateRanges = coordinateRanges.clone();
         // cloning before checking guarantees a correct check while multithreading
         for (int k = 0; k < n; k++) {
-            Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
+            Objects.requireNonNull(coordinateRanges[k], "Null coordinateRanges[" + k + "]");
         }
         double[] min = new double[n];
         double[] max = new double[n];
         for (int k = 0; k < n; k++) {
-            min[k] = coordRanges[k].min;
-            max[k] = coordRanges[k].max;
+            min[k] = coordinateRanges[k].min;
+            max[k] = coordinateRanges[k].max;
         }
         return new RectangularArea(new Point(min), new Point(max));
     }
 
     @Deprecated
-    public static RectangularArea valueOf(Range... coordRanges) {
-        return of(coordRanges);
+    public static RectangularArea valueOf(Range... coordinateRanges) {
+        return of(coordinateRanges);
     }
 
     /**

@@ -122,42 +122,42 @@ public class IRectangularArea {
      * Returns the Cartesian product of the specified coordinate ranges.
      * More precisely, return an <i>n</i>-dimensional {@link IRectangularArea rectangular area}
      * with the minimal vertex <b>min</b> and maximal vertex <b>max</b>, where
-     * <i>n</i><code>=coordRanges.length</code>,
+     * <i>n</i><code>=coordinateRanges.length</code>,
      * <b>min</b>.{@link IPoint#coord(int)
-     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link IRange#min() min()}</code>,
+     * coord(<i>i</i>)}<code>=coordinateRanges[<i>i</i>].{@link IRange#min() min()}</code>,
      * <b>max</b>.{@link IPoint#coord(int)
-     * coord(<i>i</i>)}<code>=coordRanges[<i>i</i>].{@link IRange#max() max()}</code>.
+     * coord(<i>i</i>)}<code>=coordinateRanges[<i>i</i>].{@link IRange#max() max()}</code>.
      * See the {@link IRectangularArea comments to this class} for more details.
      *
-     * @param coordRanges the coordinate ranges.
+     * @param coordinateRanges the coordinate ranges.
      * @return the Cartesian product of the specified coordinate ranges.
      * @throws NullPointerException     if the argument is {@code null}
-     *                                  or if one of specified <code>coordRanges</code> is {@code null}.
+     *                                  or if one of specified <code>coordinateRanges</code> is {@code null}.
      * @throws IllegalArgumentException if the passed array is empty (no ranges are passed).
      */
-    public static IRectangularArea of(IRange... coordRanges) {
-        Objects.requireNonNull(coordRanges, "Null coordRanges argument");
-        int n = coordRanges.length;
+    public static IRectangularArea of(IRange... coordinateRanges) {
+        Objects.requireNonNull(coordinateRanges, "Null coordinateRanges argument");
+        int n = coordinateRanges.length;
         if (n == 0) {
-            throw new IllegalArgumentException("Empty coordRanges array");
+            throw new IllegalArgumentException("Empty coordinateRanges array");
         }
-        coordRanges = coordRanges.clone();
+        coordinateRanges = coordinateRanges.clone();
         // cloning before checking guarantees a correct check while multithreading
         for (int k = 0; k < n; k++) {
-            Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
+            Objects.requireNonNull(coordinateRanges[k], "Null coordinateRanges[" + k + "]");
         }
         long[] min = new long[n];
         long[] max = new long[n];
         for (int k = 0; k < n; k++) {
-            min[k] = coordRanges[k].min;
-            max[k] = coordRanges[k].max;
+            min[k] = coordinateRanges[k].min;
+            max[k] = coordinateRanges[k].max;
         }
         return new IRectangularArea(new IPoint(min), new IPoint(max));
     }
 
     @Deprecated
-    public static IRectangularArea valueOf(IRange... coordRanges) {
-        return of(coordRanges);
+    public static IRectangularArea valueOf(IRange... coordinateRanges) {
+        return of(coordinateRanges);
     }
 
     /**
@@ -1662,23 +1662,25 @@ public class IRectangularArea {
         Objects.requireNonNull(max, "Null max vertex");
         int n = min.coordinates.length;
         if (n != max.coordinates.length) {
-            throw new IllegalArgumentException("min.coordCount() = " + n
+            throw new IllegalArgumentException("Cannot create IRectangularArea: min.coordCount() = " + n
                     + " does not match max.coordCount() = " + max.coordinates.length);
         }
         for (int k = 0; k < n; k++) {
             if (min.coordinates[k] > max.coordinates[k]) {
-                throw IRange.invalidBoundsException("min.coord(" + k + ") > max.coord(" + k + ")"
-                        + " (min = " + min + ", max = " + max + ")", ise);
+                throw IRange.invalidBoundsException("Cannot create IRectangularArea: min.coord(" + k
+                        + ") > max.coord(" + k + ")" + " (min = " + min + ", max = " + max + ")", ise);
             }
             if (max.coordinates[k] == Long.MAX_VALUE) {
-                throw IRange.invalidBoundsException("max.coord(" + k + ") == Long.MAX_VALUE", ise);
+                throw IRange.invalidBoundsException("Cannot create IRectangularArea: max.coord(" + k
+                        + ") == Long.MAX_VALUE", ise);
             }
             if (min.coordinates[k] <= -Long.MAX_VALUE) {
-                throw IRange.invalidBoundsException("min.coord(" + k + ") == Long.MAX_VALUE or Long.MIN_VALUE+1", ise);
+                throw IRange.invalidBoundsException("Cannot create IRectangularArea: min.coord(" + k +
+                        ") == Long.MAX_VALUE or Long.MIN_VALUE+1", ise);
             }
             if (max.coordinates[k] - min.coordinates[k] + 1L <= 0L) {
-                throw IRange.invalidBoundsException("max.coord(" + k + ") - min.coord(" + k + ")"
-                        + " >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")", ise);
+                throw IRange.invalidBoundsException("Cannot create IRectangularArea: max.coord(" + k +
+                        ") - min.coord(" + k + ")" + " >= Long.MAX_VALUE (min = " + min + ", max = " + max + ")", ise);
             }
         }
         return new IRectangularArea(min, max);

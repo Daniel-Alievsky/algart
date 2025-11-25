@@ -22,7 +22,9 @@
  * SOFTWARE.
  */
 
-package net.algart.math;
+package net.algart.math.points;
+
+import net.algart.math.*;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -121,8 +123,6 @@ public class PointDemo {
             System.out.println(rp + "; symmetric: " + rp.symmetric()
                     + "; distance from origin: " + rp.distanceFromOrigin()
                     + " = " + rp.distanceFrom(List.of(Point.origin(rp.coordCount())))
-                    + (rp.coordCount() > 1 && rp.projectionAlongAxisEquals(0, Point.origin(rp.coordCount() - 1)) ?
-                    "; x-projection is origin" : "")
                     + "; x-shift: " + rp.shiftAlongAxis(0, 100.0)
                     + "; x-projection: "
                     + (rp.coordCount() == 1 ? "impossible" : rp.projectionAlongAxis(0))

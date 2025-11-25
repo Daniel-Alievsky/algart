@@ -782,6 +782,7 @@ public class Point implements Comparable<Point> {
         return new Point(coordinates);
     }
 
+    //Deprecated
     /**
      * Equivalent to <code>{@link #projectionAlongAxis(int) projectionAlongAxis}(coordIndex).equals(point)</code>,
      * but works faster (no Java objects are allocated).
