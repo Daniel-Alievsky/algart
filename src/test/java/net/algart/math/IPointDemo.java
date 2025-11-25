@@ -27,6 +27,8 @@ package net.algart.math;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public class IPointDemo {
         if (args.length > 0) {
             System.setOut(new PrintStream(args[0]));
         }
-        IPoint[] p = {
+        List<IPoint> p = new ArrayList<>(List.of(
                 IPoint.of(12, 3),
                 IPoint.of(12, 3, 1),
                 IPoint.of(12, 3, 0),
@@ -70,9 +72,8 @@ public class IPointDemo {
                 IPoint.of(100, Long.MAX_VALUE),
                 IPoint.of(Long.MIN_VALUE + 1, -2),
                 IPoint.of(Long.MIN_VALUE + 1, -2),
-                IPoint.of(Long.MIN_VALUE + 1, -3),
-        };
-        java.util.Arrays.sort(p);
+                IPoint.of(Long.MIN_VALUE + 1, -3)));
+        Collections.sort(p);
         long[] dimensions = {10, 10, 10};
         for (long[] ends : new long[][]{
                 {0, 10},
@@ -109,20 +110,24 @@ public class IPointDemo {
                     + "; hash: " + ip.hashCode());
         }
         System.out.println();
-        for (int k = 0; k < p.length - 1; k += 2) {
+        List<IRectangularArea> areas = new ArrayList<>();
+        for (int k = 0; k < p.size() - 1; k += 2) {
             try {
-                final IRectangularArea ra = IRectangularArea.of(p[k], p[k + 1]);
+                final IRectangularArea ra = IRectangularArea.of(p.get(k), p.get(k + 1));
                 assert IRectangularArea.of(ra.ranges()).equals(ra);
-                System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
-                        + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))
-                        + "; expand(origin): " + ra.expand(IPoint.origin(ra.coordCount()))
-                        + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.of(
-                        IPoint.ofEqualCoordinates(ra.coordCount(), -1),
-                        IPoint.ofEqualCoordinates(ra.coordCount(), 2)))
-                        + " hash: " + ra.hashCode());
+                areas.add(ra);
             } catch (Exception e) {
-                System.out.println("  Cannot create area with " + p[k] + " and " + p[k + 1] + ": " + e);
+                System.out.println("  Cannot create area with " + p.get(k) + " and " + p.get(k + 1) + ": " + e);
             }
+        }
+        for (IRectangularArea ra : areas) {
+            System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
+                    + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))
+                    + "; expand(origin): " + ra.expand(IPoint.origin(ra.coordCount()))
+                    + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.of(
+                    IPoint.ofEqualCoordinates(ra.coordCount(), -1),
+                    IPoint.ofEqualCoordinates(ra.coordCount(), 2)))
+                    + " hash: " + ra.hashCode());
         }
     }
 }

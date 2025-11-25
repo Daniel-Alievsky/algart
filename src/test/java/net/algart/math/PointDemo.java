@@ -27,6 +27,7 @@ package net.algart.math;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,7 +84,7 @@ public class PointDemo {
             }
         }
         System.out.println();
-        Point[] points = {
+        List<Point> p = new ArrayList<>(List.of(
                 Point.of(12, 3),
                 Point.of(1.2, 3, 1),
                 Point.of(12, 3, 0),
@@ -114,10 +115,9 @@ public class PointDemo {
                 Point.of(-5e18, 30),
                 Point.of(-5e18, -300),
                 Point.of(-7e18, -5e18),
-                Point.of(5e18, 1e20),
-        };
-        java.util.Arrays.sort(points);
-        for (Point rp : points) {
+                Point.of(5e18, 1e20)));
+        Collections.sort(p);
+        for (Point rp : p) {
             System.out.println(rp + "; symmetric: " + rp.symmetric()
                     + "; distance from origin: " + rp.distanceFromOrigin()
                     + " = " + rp.distanceFrom(List.of(Point.origin(rp.coordCount())))
@@ -137,17 +137,18 @@ public class PointDemo {
                     + "; hash: " + rp.hashCode());
         }
         System.out.println();
-        for (int k = 0; k < points.length - 1; k += 2) {
+        List<RectangularArea> areas = new ArrayList<>();
+        for (int k = 0; k < p.size() - 1; k += 2) {
             System.out.print(k + ": ");
-            RectangularArea ra = null;
             try {
-                ra = RectangularArea.of(points[k], points[k + 1]);
+                RectangularArea ra = RectangularArea.of(p.get(k), p.get(k + 1));
                 assert RectangularArea.of(ra.ranges()).equals(ra);
                 Point point = Point.ofEqualCoordinates(ra.coordCount(), -1.5);
                 RectangularArea test = RectangularArea.of(point, Point.origin(ra.coordCount()));
                 assert ra.intersects(test) ? ra.intersection(test).equals(RectangularArea.of(
                         ra.min().max(test.min()), ra.max().min(test.max()))) :
                         ra.intersection(test) == null;
+                areas.add(ra);
                 System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                         + "; contains(origin): " + ra.contains(Point.origin(ra.coordCount()))
                         + "; expand(origin): " + ra.expand(Point.origin(ra.coordCount()))
@@ -163,11 +164,10 @@ public class PointDemo {
                         + "; subtracted " + test + ": " + ra.difference(new ArrayList<>(), test)
                         + "; hash: " + ra.hashCode());
             } catch (Exception e) {
-                System.out.println("  Cannot create area with " + points[k] + " and " + points[k + 1] + ": " + e);
+                System.out.println("  Cannot create area with " + p.get(k) + " and " + p.get(k + 1) + ": " + e);
             }
-            if (ra == null) {
-                continue;
-            }
+        }
+        for (RectangularArea ra : areas) {
             IRectangularArea cast = null, rounded = null;
             try {
                 cast = ra.toIntegerRectangularArea();

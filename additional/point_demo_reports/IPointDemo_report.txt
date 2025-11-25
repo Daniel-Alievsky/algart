@@ -41,13 +41,13 @@ Range -9223372036854775806..100 is not allowed
   Cannot create area with (14, -3) and (-9223372036854775807, -2): java.lang.IllegalArgumentException: min.coord(0) > max.coord(0) (min = (14, -3), max = (-9223372036854775807, -2))
   Cannot create area with (-9223372036854775807, -2) and (-13, 0): java.lang.IllegalArgumentException: min.coord(0) == Long.MAX_VALUE or Long.MIN_VALUE+1
   Cannot create area with (0) and (0, 0): java.lang.IllegalArgumentException: min.coordCount() = 1 does not match max.coordCount() = 2
-[0..0]x[0..0]x[0..0]; ranges: [0..0, 0..0, 0..0]; contains(origin): true; expand(origin): [0..0]x[0..0]x[0..0]; expand(-1,-1..2,2): [-1..2]x[-1..2]x[-1..2] hash: 1912110070
-[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; ranges: [0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0]; contains(origin): true; expand(origin): [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; expand(-1,-1..2,2): [-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2] hash: -1275090784
   Cannot create area with (13) and (13, 0): java.lang.IllegalArgumentException: min.coordCount() = 1 does not match max.coordCount() = 2
-[-1..0]x[1..1]; ranges: [-1..0, 1..1]; contains(origin): false; expand(origin): [-1..0]x[0..1]; expand(-1,-1..2,2): [-1..2]x[-1..2] hash: 1838562240
   Cannot create area with (1, 1) and (0, 2): java.lang.IllegalArgumentException: min.coord(0) > max.coord(0) (min = (1, 1), max = (0, 2))
-[2..12]x[3..3]; ranges: [2..12, 3..3]; contains(origin): false; expand(origin): [0..12]x[0..3]; expand(-1,-1..2,2): [-1..12]x[-1..3] hash: -704869097
   Cannot create area with (12, 3, 0) and (1, 4): java.lang.IllegalArgumentException: min.coordCount() = 3 does not match max.coordCount() = 2
   Cannot create area with (2, 4) and (3, 4, 0): java.lang.IllegalArgumentException: min.coordCount() = 2 does not match max.coordCount() = 3
   Cannot create area with (100, 9223372036854775807) and (13, 0, 1): java.lang.IllegalArgumentException: min.coordCount() = 2 does not match max.coordCount() = 3
   Cannot create area with (12, 3, 1) and (12, 3, 0, 1234): java.lang.IllegalArgumentException: min.coordCount() = 3 does not match max.coordCount() = 4
+[0..0]x[0..0]x[0..0]; ranges: [0..0, 0..0, 0..0]; contains(origin): true; expand(origin): [0..0]x[0..0]x[0..0]; expand(-1,-1..2,2): [-1..2]x[-1..2]x[-1..2] hash: 1912110070
+[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; ranges: [0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0, 0..0]; contains(origin): true; expand(origin): [0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]x[0..0]; expand(-1,-1..2,2): [-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2]x[-1..2] hash: -1275090784
+[-1..0]x[1..1]; ranges: [-1..0, 1..1]; contains(origin): false; expand(origin): [-1..0]x[0..1]; expand(-1,-1..2,2): [-1..2]x[-1..2] hash: 1838562240
+[2..12]x[3..3]; ranges: [2..12, 3..3]; contains(origin): false; expand(origin): [0..12]x[0..3]; expand(-1,-1..2,2): [-1..12]x[-1..3] hash: -704869097
