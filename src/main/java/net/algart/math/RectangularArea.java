@@ -59,7 +59,7 @@ import java.util.*;
  * and all coordinates of both vertices are never <code>Double.NaN</code>.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see IRectangularArea
@@ -142,7 +142,7 @@ public class RectangularArea {
             throw new IllegalArgumentException("Empty coordRanges array");
         }
         coordRanges = coordRanges.clone();
-        // cloning before checking guarantees correct check while multithreading
+        // cloning before checking guarantees a correct check while multithreading
         for (int k = 0; k < n; k++) {
             Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
         }
@@ -832,7 +832,7 @@ public class RectangularArea {
      * Returns a list of set-theoretical intersections <b>A</b>&nbsp;&cap;&nbsp;<b>B<sub><i>i</i></sub></b>
      * of this rectangular area (<b>A</b>) and all rectangular areas (<b>B<sub><i>i</i></sub></b>), specified
      * by <code>areas</code> argument.
-     * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
+     * If the passed collection doesn't contain areas intersecting this area, the result will be an empty list.
      * <p>Equivalent to the following loop:
      * <pre>
      * final List&lt;RectangularArea>gt; result = ... (some empty list);
@@ -992,7 +992,7 @@ public class RectangularArea {
      * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
-     * @throws IllegalArgumentException if some of the elements of the passed collection and array
+     * @throws IllegalArgumentException if some elements of the passed collection and array
      *                                  have different {@link #coordCount()}.
      */
     public static Queue<RectangularArea> subtractCollection(
@@ -1045,7 +1045,7 @@ public class RectangularArea {
      * the {@link #max() maximal vertex} is equal to
      * <code>thisInstance.{@link #max()}.{@link Point#max(Point) max}(point)</code>.
      *
-     * @param point some point that should be included to the new rectangular area.
+     * @param point the point that should be included in the new rectangular area.
      * @return the expanded rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
@@ -1058,7 +1058,7 @@ public class RectangularArea {
      */
     public RectangularArea expand(Point point) {
         if (contains(point)) {
-            // - also checks number of dimensions
+            // - also checks the number of dimensions
             return this;
         }
         double[] newMin = new double[min.coordinates.length];
@@ -1085,7 +1085,7 @@ public class RectangularArea {
      */
     public RectangularArea expand(RectangularArea area) {
         if (contains(area)) {
-            // - also checks number of dimensions
+            // - also checks the number of dimensions
             return this;
         }
         double[] newMin = new double[min.coordinates.length];
@@ -1162,7 +1162,7 @@ public class RectangularArea {
      * is defined as maximal value from all <i>d<sub>i</sub></i>:
      * max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>).
      *
-     * @param point some point.
+     * @param point the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>point.{@link Point#coordCount() coordCount()}</code> is not equal to
@@ -1213,8 +1213,8 @@ public class RectangularArea {
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
-     * @param x the 1st coordinate of some point.
-     * @param y the 2nd coordinate of some point.
+     * @param x the 1st coordinate of the point.
+     * @param y the 2nd coordinate of the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
@@ -1241,9 +1241,9 @@ public class RectangularArea {
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
-     * @param x the 1st coordinate of some point.
-     * @param y the 2nd coordinate of some point.
-     * @param z the 3rd coordinate of some point.
+     * @param x the 1st coordinate of the point.
+     * @param y the 2nd coordinate of the point.
+     * @param z the 3rd coordinate of the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
@@ -1323,7 +1323,7 @@ public class RectangularArea {
     }
 
     /**
-     * Returns this rectangular area, dilated (expanded) according the argument. More precisely, returns
+     * Returns this rectangular area, dilated (expanded) according to the argument. More precisely, returns
      *
      * <pre>RectangularArea.of(
      * thisInstance.{@link #min() min()}.{@link Point#subtract(Point) subtract}(expansion),
@@ -1480,7 +1480,7 @@ public class RectangularArea {
      *                                  the {@link #coordCount() number of dimensions} of one of areas,
      *                                  or if <code>straightOnly</code> amd one of coordinates
      *                                  of <code>expansion</code>
-     *                                  is negative (and collection of areas is not empty),
+     *                                  is negative (and the collection of areas is not empty),
      *                                  or if one of the result areas will be incorrect (see comments to
      *                                  {@link #of(Point, Point)} method).
      */

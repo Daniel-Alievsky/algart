@@ -70,7 +70,7 @@ import java.util.*;
  * and the {@link #range(int)} method is always possible to return an allowed range.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see RectangularArea
@@ -142,7 +142,7 @@ public class IRectangularArea {
             throw new IllegalArgumentException("Empty coordRanges array");
         }
         coordRanges = coordRanges.clone();
-        // cloning before checking guarantees correct check while multithreading
+        // cloning before checking guarantees a correct check while multithreading
         for (int k = 0; k < n; k++) {
             Objects.requireNonNull(coordRanges[k], "Null coordRanges[" + k + "]");
         }
@@ -893,7 +893,7 @@ public class IRectangularArea {
      * Returns a list of set-theoretical intersections <b>A</b>&nbsp;&cap;&nbsp;<b>B<sub><i>i</i></sub></b>
      * of this rectangular area (<b>A</b>) and all rectangular areas (<b>B<sub><i>i</i></sub></b>), specified
      * by <code>areas</code> argument.
-     * If the passed collection doesn't contain areas, intersecting this area, the result will be an empty list.
+     * If the passed collection doesn't contain areas intersecting this area, the result will be an empty list.
      * <p>Equivalent to the following loop:
      * <pre>
      * final List&lt;IRectangularArea>gt; result = ... (some empty list);
@@ -1053,7 +1053,7 @@ public class IRectangularArea {
      * the difference <b>A</b>&nbsp;\&nbsp;<b>B</b>.
      * @throws NullPointerException     if <code>fromWhatToSubtract</code> or <code>whatToSubtract</code> argument
      *                                  is {@code null} or if one of their elements it {@code null}.
-     * @throws IllegalArgumentException if some of the elements of the passed collection and array
+     * @throws IllegalArgumentException if some elements of the passed collection and array
      *                                  have different {@link #coordCount()}.
      */
     public static Queue<IRectangularArea> subtractCollection(
@@ -1106,7 +1106,7 @@ public class IRectangularArea {
      * the {@link #max() maximal vertex} is equal to
      * <code>thisInstance.{@link #max()}.{@link IPoint#max(IPoint) max}(point)</code>.
      *
-     * @param point some point that should be included to the new rectangular area.
+     * @param point the point that should be included in the new rectangular area.
      * @return the expanded rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>point.{@link IPoint#coordCount() coordCount()}</code> is not equal to
@@ -1119,7 +1119,7 @@ public class IRectangularArea {
      */
     public IRectangularArea expand(IPoint point) {
         if (contains(point)) {
-            // - also checks number of dimensions
+            // - also checks the number of dimensions
             return this;
         }
         long[] newMin = new long[min.coordinates.length];
@@ -1146,7 +1146,7 @@ public class IRectangularArea {
      */
     public IRectangularArea expand(IRectangularArea area) {
         if (contains(area)) {
-            // - also checks number of dimensions
+            // - also checks the number of dimensions
             return this;
         }
         long[] newMin = new long[min.coordinates.length];
@@ -1223,7 +1223,7 @@ public class IRectangularArea {
      * is defined as maximal value from all <i>d<sub>i</sub></i>:
      * max(<i>d</i><sub>0</sub>, <i>d</i><sub>1</sub>, ..., <i>d</i><sub><i>n</i>&minus;1</sub>).
      *
-     * @param point some point.
+     * @param point the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>point.{@link IPoint#coordCount() coordCount()}</code> is not equal to
@@ -1274,8 +1274,8 @@ public class IRectangularArea {
      * Works only for 2-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
-     * @param x the 1st coordinate of some point.
-     * @param y the 2nd coordinate of some point.
+     * @param x the 1st coordinate of the point.
+     * @param y the 2nd coordinate of the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
@@ -1302,9 +1302,9 @@ public class IRectangularArea {
      * Works only for 3-dimensional rectangular areas, in other cases throws
      * <code>IllegalArgumentException</code>.
      *
-     * @param x the 1st coordinate of some point.
-     * @param y the 2nd coordinate of some point.
-     * @param z the 3rd coordinate of some point.
+     * @param x the 1st coordinate of the point.
+     * @param y the 2nd coordinate of the point.
+     * @param z the 3rd coordinate of the point.
      * @return the parallel distance from this point to this rectangular area.
      * @throws IllegalArgumentException if <code>coordinates.length!=2</code> .
      */
@@ -1463,7 +1463,7 @@ public class IRectangularArea {
      * this method throws <code>ArithmeticException</code>.
      *
      * <p>If some coordinates of the point <code>expansion</code> are zero, new areas along the corresponding
-     * facets are not added (recanglar area cannot be empty).
+     * facets are not added (rectangular area cannot be empty).
      * In particular, if <code>expansion.{@link IPoint#isOrigin() isOrigin()}</code>,
      * the result will contain this area as the only element.
      *

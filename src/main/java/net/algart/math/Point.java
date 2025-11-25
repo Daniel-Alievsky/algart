@@ -33,7 +33,7 @@ import java.util.zip.Checksum;
  * Represented as an array of <code>double</code> numbers.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see IPoint
@@ -591,7 +591,7 @@ public class Point implements Comparable<Point> {
      * <code>thisInstance.{@link #coord(int) coord(i)}*multipliers[i]</code>.
      * The length of <code>multipliers</code> array must be equal to {@link #coordCount()}.
      *
-     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0 and &minus;1.0.
+     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0, and &minus;1.0.
      * If the condition <code>multipliers[k]==1.0</code> is <code>true</code> for some <code>k</code>,
      * then the coordinate <code>#k</code> is just copied from this point into the result.
      * If the condition <code>multipliers[k]==0.0</code> is <code>true</code> for some <code>k</code>,
@@ -628,7 +628,7 @@ public class Point implements Comparable<Point> {
      * <code>shift.{@link Point#coord(int) coord(i)}+thisInstance.{@link #coord(int) coord(i)}*multipliers[i]</code>.
      * The length of <code>multipliers</code> array must be equal to {@link #coordCount()}.
      *
-     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0 and &minus;1.0.
+     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0, and &minus;1.0.
      * If the condition <code>multipliers[k]==1.0</code> is <code>true</code> for some <code>k</code>,
      * then the coordinate <code>#k</code> will be equal to
      * <code>shift.{@link Point#coord(int) coord}(k)+thisInstance.{@link #coord(int) coord}(k)</code>.
@@ -765,7 +765,7 @@ public class Point implements Comparable<Point> {
      * coord}(</code><i>i'</i><code>)</code>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
      * <i>i'</i>=<i>i</i>+1 for <i>i</i>&ge;<code>coordIndex</code>.
      *
-     * @param coordIndex the number of coordinate, along which the projecting is performed.
+     * @param coordIndex the number of coordinates along which the projecting is performed.
      * @return the projection of this point along the coordinates axis <code>#coordIndex</code>.
      * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
      *                                   <code>coordIndex&gt;={@link #coordCount()}</code>.
@@ -786,7 +786,7 @@ public class Point implements Comparable<Point> {
      * Equivalent to <code>{@link #projectionAlongAxis(int) projectionAlongAxis}(coordIndex).equals(point)</code>,
      * but works faster (no Java objects are allocated).
      *
-     * @param coordIndex the number of coordinate, along which the projecting is performed.
+     * @param coordIndex the number of coordinates along which the projecting is performed.
      * @param point      another point.
      * @return <code>true</code> if and only if the projection of this point along the given axis
      * is a point equal to the second argument.
@@ -831,10 +831,10 @@ public class Point implements Comparable<Point> {
      * <i>y</i><sub><i>i</i></sub> is <code>o.{@link #coord(int) coord}(<i>i</i>)</code>
      * for <code>0&lt;=<i>i</i>&lt;o.{@link #coordCount()}</code> and
      * <i>y</i><sub><i>i</i></sub>=0 for <code><i>i</i>&gt;=o.{@link #coordCount()}</code>.
-     * This method returns a negative integer if there is such index <i>k</i> that
+     * This method returns a negative integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&lt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>;
-     * this method returns a positive integer if there is such index <i>k</i> that
+     * this method returns a positive integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&gt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>.
      * If all <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub>,
@@ -853,7 +853,7 @@ public class Point implements Comparable<Point> {
 
     /**
      * Compares points lexicographically alike {@link #compareTo(Point)} method,
-     * but with the cyclical shift of all indexes of coordinates:
+     * but with the cyclical shift of coordinate indexes:
      * the coordinate <code>#firstCoordIndex</code> instead of <i>x</i>,
      * <code>#firstCoordIndex+1</code> instead of <i>y</i>, etc.
      *
@@ -866,10 +866,10 @@ public class Point implements Comparable<Point> {
      * As in {@link #compareTo(Point)} method, we suppose here that
      * all coordinates {@link #coord(int) coord(<i>k</i>)} with <code><i>k</i>&gt;={@link #coordCount()}</code>
      * are zero.
-     * This method returns a negative integer if there is such index <i>k</i> that
+     * This method returns a negative integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&lt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>;
-     * this method returns a positive integer if there is such index <i>k</i> that
+     * this method returns a positive integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&gt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>.
      * If all <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub>,
@@ -878,7 +878,7 @@ public class Point implements Comparable<Point> {
      * <code>o.{@link #coordCount()}</code>.
      *
      * @param o               the point to be compared.
-     * @param firstCoordIndex the index of "first" coordinate, that is compared after all other coordinates.
+     * @param firstCoordIndex the index of the "first" coordinate that is compared after all other coordinates.
      * @return negative integer, zero, or a positive integer as this point
      * is lexicographically less than, equal to, or greater than <code>o</code>.
      * @throws NullPointerException     if the <code>o</code> argument is {@code null}.
@@ -946,7 +946,7 @@ public class Point implements Comparable<Point> {
      * Indicates whether some other point is equal to this instance,
      * that is the number of coordinates is the same and all corresponding coordinates are equal.
      * The corresponding coordinates are compared as in <code>Double.equals</code> method,
-     * i.e. they are converted to <code>long</code> values by <code>Double.doubleToLongBits</code> method
+     * i.e., they are converted to <code>long</code> values by <code>Double.doubleToLongBits</code> method
      * and the results are compared.
      *
      * @param obj the object to be compared for equality with this instance.

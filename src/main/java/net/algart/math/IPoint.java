@@ -35,7 +35,7 @@ import java.util.zip.Checksum;
  * Represented as an array of <code>long</code> numbers.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see Point
@@ -599,7 +599,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>StrictMath.round(thisInstance.{@link #coord(int) coord(i)}*multipliers[i])</code>.
      * The length of <code>multipliers</code> array must be equal to {@link #coordCount()}.
      *
-     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0 and &minus;1.0.
+     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0, and &minus;1.0.
      * If the condition <code>multipliers[k]==1.0</code> is <code>true</code> for some <code>k</code>,
      * then the coordinate <code>#k</code> is just copied from this point into the result.
      * If the condition <code>multipliers[k]==0.0</code> is <code>true</code> for some <code>k</code>,
@@ -636,7 +636,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>shift.{@link Point#coord(int) coord(i)}+thisInstance.{@link #coord(int) coord(i)}*multipliers[i]</code>.
      * The length of <code>multipliers</code> array must be equal to {@link #coordCount()}.
      *
-     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0 and &minus;1.0.
+     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0, and &minus;1.0.
      * If the condition <code>multipliers[k]==1.0</code> is <code>true</code> for some <code>k</code>,
      * then the coordinate <code>#k</code> will be equal to
      * <code>shift.{@link Point#coord(int) coord}(k)+thisInstance.{@link #coord(int) coord}(k)</code>.
@@ -773,7 +773,7 @@ public class IPoint implements Comparable<IPoint> {
      * coord}(</code><i>i'</i><code>)</code>, <i>i'</i>=<i>i</i> for <i>i</i>&lt;<code>coordIndex</code> or
      * <i>i'</i>=<i>i</i>+1 for <i>i</i>&ge;<code>coordIndex</code>.
      *
-     * @param coordIndex the number of coordinate, along which the projecting is performed.
+     * @param coordIndex the number of coordinates along which the projecting is performed.
      * @return the projection of this point along the coordinates axis <code>#coordIndex</code>.
      * @throws IndexOutOfBoundsException if <code>coordIndex&lt;0</code> or
      *                                   <code>coordIndex&gt;={@link #coordCount()}</code>.
@@ -794,7 +794,7 @@ public class IPoint implements Comparable<IPoint> {
      * Equivalent to <code>{@link #projectionAlongAxis(int) projectionAlongAxis}(coordIndex).equals(point)</code>,
      * but works faster (no Java objects are allocated).
      *
-     * @param coordIndex the number of coordinate, along which the projecting is performed.
+     * @param coordIndex the number of coordinates along which the projecting is performed.
      * @param point      another point.
      * @return <code>true</code> if and only if the projection of this point along the given axis
      * is a point equal to the second argument.
@@ -839,10 +839,10 @@ public class IPoint implements Comparable<IPoint> {
      * <i>y</i><sub><i>i</i></sub> is <code>o.{@link #coord(int) coord}(<i>i</i>)</code>
      * for <code>0&lt;=<i>i</i>&lt;o.{@link #coordCount()}</code> and
      * <i>y</i><sub><i>i</i></sub>=0 for <code><i>i</i>&gt;=o.{@link #coordCount()}</code>.
-     * This method returns a negative integer if there is such index <i>k</i> that
+     * This method returns a negative integer if there is an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&lt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>;
-     * this method returns a positive integer if there is such index <i>k</i> that
+     * this method returns a positive integer if there is an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&gt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>.
      * If all <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub>,
@@ -861,7 +861,7 @@ public class IPoint implements Comparable<IPoint> {
 
     /**
      * Compares points lexicographically alike {@link #compareTo(IPoint)} method,
-     * but with the cyclical shift of all indexes of coordinates:
+     * but with the cyclical shift of coordinate indexes:
      * the coordinate <code>#firstCoordIndex</code> instead of <i>x</i>,
      * <code>#firstCoordIndex+1</code> instead of <i>y</i>, etc.
      *
@@ -874,10 +874,10 @@ public class IPoint implements Comparable<IPoint> {
      * As in {@link #compareTo(IPoint)} method, we suppose here that
      * all coordinates {@link #coord(int) coord(<i>k</i>)} with <code><i>k</i>&gt;={@link #coordCount()}</code>
      * are zero.
-     * This method returns a negative integer if there is such index <i>k</i> that
+     * This method returns a negative integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&lt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>;
-     * this method returns a positive integer if there is such index <i>k</i> that
+     * this method returns a positive integer if there is such an index <i>k</i> that
      * <i>x</i><sub><i>k</i></sub>&gt;<i>y</i><sub><i>k</i></sub>
      * and <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub> for all <i>i</i>&gt;<i>k</i>.
      * If all <i>x</i><sub><i>i</i></sub>=<i>y</i><sub><i>i</i></sub>,
@@ -886,7 +886,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>o.{@link #coordCount()}</code>.
      *
      * @param o               the point to be compared.
-     * @param firstCoordIndex the index of "first" coordinate, that is compared after all other coordinates.
+     * @param firstCoordIndex the index of the "first" coordinate that is compared after all other coordinates.
      * @return negative integer, zero, or a positive integer as this point
      * is lexicographically less than, equal to, or greater than <code>o</code>.
      * @throws NullPointerException     if the <code>o</code> argument is {@code null}.
@@ -1054,7 +1054,7 @@ public class IPoint implements Comparable<IPoint> {
      * <code>(long)(thisInstance.{@link #coord(int) coord(i)}*multipliers[i])</code>.
      * The length of <code>multipliers</code> array must be equal to {@link #coordCount()}.
      *
-     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0 and &minus;1.0.
+     * <p>Note: this method does not perform actual multiplication to multipliers, equal to 1.0, 0.0, and &minus;1.0.
      * If the condition <code>multipliers[k]==1.0</code> is <code>true</code> for some <code>k</code>,
      * then the coordinate <code>#k</code> is just copied from this point into the result.
      * If the condition <code>multipliers[k]==0.0</code> is <code>true</code> for some <code>k</code>,
@@ -1101,7 +1101,7 @@ public class IPoint implements Comparable<IPoint> {
      * {@link #coord(int)
      * coord(<i>n</i>-1)}*<i>dim</i><sub>0</sub>*<i>dim</i><sub>1</sub>*...*<i>dim</i><sub><i>n</i>-2</sub>
      * </code>
-     * (<i>n</i> = {@link #coordCount()},
+     * (<i>n</i> = {@link #coordCount()}),
      * where <code><i>dim</i><sub><i>i</i></sub>=<i>i</i>&gt;=dimensions.length?1:dimensions[<i>i</i>]</code>.
      * If <code>pseudoCyclicTruncation</code> is <code>true</code>,
      * returns the positive remainder of division of this value
@@ -1125,14 +1125,14 @@ public class IPoint implements Comparable<IPoint> {
      * values in these formulas are out of <code>Long.MIN_VALUE..Long.MAX_VALUE</code> range).
      * However, if <code>product&gt;Long.MAX_VALUE</code>, the results will be probably incorrect due to overflow.
      *
-     * <p>If <code>pseudoCyclicTruncation</code> is false, the result is calculated by the traditional Horner scheme
+     * <p>If <code>pseudoCyclicTruncation</code> is false, the result is calculated by the traditional Horner's scheme
      * without any overflow checks, using standard Java <code>long</code> arithmetic:
      * <p><code>
      * (...({@link #coord(int)
      * coord(<i>n</i>-1)}*<i>dim</i><sub><i>n</i>-2</sub>+{@link #coord(int)
      * coord(<i>n</i>-2)})*<i>dim</i><sub><i>n</i>-3</sub>+...)*<i>dim</i><sub>0</sub>+{@link #coord(int) coord(0)}
      * </code></p>
-     * So, the result can be incorrect in a case of overflow.
+     * So, the result can be incorrect in the case of overflow.
      *
      * @param dimensions             the dimensions of some <i>n</i>-dimensional matrix, stored in the one-dimensional
      *                               array.
@@ -1142,7 +1142,7 @@ public class IPoint implements Comparable<IPoint> {
      * describing by this point.
      * @throws NullPointerException     if <code>dimensions</code> argument is {@code null}.
      * @throws IllegalArgumentException if some elements of <code>dimensions</code> array are negative
-     *                                  (however note, that this method does not check elements, indexes of which are
+     *                                  (however note that this method does not check elements, indexes of which are
      *                                  &gt;={@link #coordCount()})
      */
     public long toOneDimensional(long[] dimensions, boolean pseudoCyclicTruncation) {
@@ -1177,13 +1177,14 @@ public class IPoint implements Comparable<IPoint> {
                 }
                 limit *= dimensions[n];
                 long coord = limit == 0 ? 0 : coordinates[n] % limit;
-                // Note: if limit becomes 0, then this and all further "coord" will be 0, and the result will be 0
+                // Note: if the limit becomes 0, then this and all further "coord" will be 0, and the result will be 0
                 if (coord < 0) {
                     coord += limit;
                 }
                 result *= dimensions[n];
-                // If product of all dimensions is 63-bit, then overflow here is possible in the only case when some
-                // of further dimensions are zero, and in this case it is unimportant: the result will be 0
+                // If the product of all dimensions is 63-bit, then overflow here is possible in the only case when
+                // some of the further dimensions are zero,
+                // and in this case it is unimportant: the result will be 0
                 result += coord;
                 if (result < 0 || result >= limit) { // If "*=* did not lead to overflow, "< 0" here means overflow
                     result -= limit;
@@ -1249,7 +1250,7 @@ public class IPoint implements Comparable<IPoint> {
     // From 1.8
     static long subtractExact(long x, long y) {
         long r = x - y;
-        // HD 2-12 Overflow iff the arguments have different signs and
+        // HD 2-12 Overflow iff the arguments have different signs, and
         // the sign of the result is different from the sign of x
         if (((x ^ y) & (x ^ r)) < 0) {
             throw new ArithmeticException("long overflow");
