@@ -167,7 +167,8 @@ public class PointDemo {
                 System.out.println("  Cannot create area with " + p.get(k) + " and " + p.get(k + 1) + ": " + e);
             }
         }
-//        areas.add(RectangularArea.ofSize(10, -10, 0, 0, Long.MAX_VALUE / 2, 233));
+        areas.add(RectangularArea.ofSize(0, Long.MAX_VALUE));
+        areas.add(RectangularArea.ofSize(10, 0, 0, 0, Long.MAX_VALUE - 2000, 233));
         for (RectangularArea ra : areas) {
             IRectangularArea cast = null, rounded = null;
             try {

@@ -118,3 +118,11 @@
   Cannot call toRoundedRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
   Cannot cast range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
   Cannot round range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
+      Cannot call toIntegerRectangularArea for [0.0..9.223372036854776E18]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(0) must not be Long.MAX_VALUE
+  Cannot call toRoundedRectangularArea for [0.0..9.223372036854776E18]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(0) must not be Long.MAX_VALUE
+  Cannot cast range [0.0..9.223372036854776E18]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(0) must not be Long.MAX_VALUE
+  Cannot round range [0.0..9.223372036854776E18]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(0) must not be Long.MAX_VALUE
+[10.0..10.0]x[0.0..9.223372036854774E18]x[0.0..233.0] casted to [10..10]x[0..9223372036854773760]x[0..233]
+[10.0..10.0]x[0.0..9.223372036854774E18]x[0.0..233.0] rounded to [10..10]x[0..9223372036854773760]x[0..233]; parallel distance to (10,10,...): 0 (inside); intersection with [0..10]x[0..10]x[0..10]: [10..10]x[0..10]x[0..10]; subtracted [0..10]x[0..10]x[0..10]: [[10..10]x[0..9223372036854773760]x[11..233], [10..10]x[11..9223372036854773760]x[0..10]]; hash: -1995840990
+[10.0..10.0]x[0.0..9.223372036854774E18]x[0.0..233.0] casted to [10..10]x[0..9223372036854773760]x[0..233]
+[10.0..10.0]x[0.0..9.223372036854774E18]x[0.0..233.0] rounded to [10..10]x[0..9223372036854773760]x[0..233]
