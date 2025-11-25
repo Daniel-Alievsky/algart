@@ -122,16 +122,25 @@ public class IPointDemo {
                 System.out.println("  Cannot create area with " + p.get(k) + " and " + p.get(k + 1) + ": " + e);
             }
         }
-//        IRange.of(10, Long.MAX_VALUE);
-//        areas.add(IRectangularArea.of(10, 10, Long.MAX_VALUE - 1, Long.MAX_VALUE - 1));
-//        areas.add(IRectangularArea.ofSize(10, 10, Long.MAX_VALUE - 10, Long.MAX_VALUE - 10));
+        areas.add(IRectangularArea.ofSize(10, -10, Long.MAX_VALUE - 10, Long.MAX_VALUE));
+        areas.add(IRectangularArea.ofSize(10, 10, Long.MAX_VALUE - 10, Long.MAX_VALUE - 10));
         for (IRectangularArea ra : areas) {
+            IRectangularArea expandPoint = null;
+            try {
+                expandPoint = ra.expand(IPoint.origin(ra.coordCount()));
+            } catch (RuntimeException ignored) {
+            }
+            IRectangularArea expandRectangle = null;
+            try {
+                expandRectangle = ra.expand(IRectangularArea.of(
+                        IPoint.ofEqualCoordinates(ra.coordCount(), -1),
+                        IPoint.ofEqualCoordinates(ra.coordCount(), 2)));
+            } catch (RuntimeException ignored) {
+            }
             System.out.println(ra + "; ranges: " + java.util.Arrays.asList(ra.ranges())
                     + "; contains(origin): " + ra.contains(IPoint.origin(ra.coordCount()))
-                    + "; expand(origin): " + ra.expand(IPoint.origin(ra.coordCount()))
-                    + "; expand(-1,-1..2,2): " + ra.expand(IRectangularArea.of(
-                    IPoint.ofEqualCoordinates(ra.coordCount(), -1),
-                    IPoint.ofEqualCoordinates(ra.coordCount(), 2)))
+                    + "; expand(origin): " + (expandPoint == null ? "impossible" : expandPoint)
+                    + "; expand(-1,-1..2,2): " + (expandRectangle == null ? "impossible" : expandRectangle)
                     + " hash: " + ra.hashCode());
         }
     }

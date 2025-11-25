@@ -10,18 +10,18 @@
 -27.1..24.81 rounded to -27..25
 -27.1..24.81 casted to -27..24
 -27.1..24.81 rounded to -27..25
-  Cannot call toIntegerRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: Cannot create IRange: max == Long.MAX_VALUE
-  Cannot call toRoundedRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: Cannot create IRange: max == Long.MAX_VALUE
-  Cannot cast range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: Cannot create IRange: max == Long.MAX_VALUE
-  Cannot round range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: Cannot create IRange: max == Long.MAX_VALUE
-  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
-  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1
+  Cannot call toIntegerRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: Cannot create IRange: max must not be Long.MAX_VALUE
+  Cannot call toRoundedRange for 0.0..9.223372036854776E18: java.lang.IllegalStateException: Cannot create IRange: max must not be Long.MAX_VALUE
+  Cannot cast range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: Cannot create IRange: max must not be Long.MAX_VALUE
+  Cannot round range 0.0..9.223372036854776E18: java.lang.IllegalArgumentException: Cannot create IRange: max must not be Long.MAX_VALUE
+  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot call toIntegerRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot call toRoundedRange for -9.223372036854776E18..-100.0: java.lang.IllegalStateException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot cast range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
+  Cannot round range -9.223372036854776E18..-100.0: java.lang.IllegalArgumentException: Cannot create IRange: min must not be Long.MIN_VALUE or Long.MIN_VALUE+1
 -9.223372036852776E18..-100.0 casted to -9223372036852775936..-100
 -9.223372036852776E18..-100.0 rounded to -9223372036852775936..-100
 -9.223372036852776E18..-100.0 casted to -9223372036852775936..-100
@@ -114,7 +114,7 @@
 [-5.0E18..1000.0]x[30.0..30.0] rounded to [-5000000000000000000..1000]x[30..30]; parallel distance to (10,10,...): 20; intersection with [0..10]x[0..10]: null; subtracted [0..10]x[0..10]: [[-5000000000000000000..1000]x[30..30]]; hash: -1332303237
 [-5.0E18..1000.0]x[30.0..30.0] casted to [-5000000000000000000..1000]x[30..30]
 [-5.0E18..1000.0]x[30.0..30.0] rounded to [-5000000000000000000..1000]x[30..30]
-  Cannot call toIntegerRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(1) == Long.MAX_VALUE
-  Cannot call toRoundedRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(1) == Long.MAX_VALUE
-  Cannot cast range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) == Long.MAX_VALUE
-  Cannot round range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) == Long.MAX_VALUE
+  Cannot call toIntegerRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
+  Cannot call toRoundedRectangularArea for [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalStateException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
+  Cannot cast range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE
+  Cannot round range [1000.0..5.0E18]x[1.0E20..1.0E20]: java.lang.IllegalArgumentException: Cannot create IRectangularArea: max.coord(1) must not be Long.MAX_VALUE

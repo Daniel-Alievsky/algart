@@ -22,9 +22,10 @@
  * SOFTWARE.
  */
 
-package net.algart.math;
+package net.algart.math.ranges;
 
 import net.algart.arrays.JArrays;
+import net.algart.math.IRangeFinder;
 
 import java.util.Arrays;
 import java.util.Random;

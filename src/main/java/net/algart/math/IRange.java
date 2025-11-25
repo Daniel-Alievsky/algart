@@ -65,7 +65,7 @@ public final class IRange {
     IRange(long min, long max) {
         this.min = min;
         this.max = max;
-        assert isAllowedRange(min, max) : "someone created an invalid range: " + this;
+        assert isAllowedRange(min, max) : "some method illegally created an invalid range: " + this;
     }
 
     /**
@@ -301,9 +301,10 @@ public final class IRange {
             throw new IllegalArgumentException("Cannot create IRange: min > max (min = " +
                     min + ", max = " + max + ")");
         if (max == Long.MAX_VALUE)
-            throw invalidBoundsException("Cannot create IRange: max == Long.MAX_VALUE", ise);
+            throw invalidBoundsException("Cannot create IRange: max must not be Long.MAX_VALUE", ise);
         if (min <= -Long.MAX_VALUE)
-            throw invalidBoundsException("Cannot create IRange: min == Long.MAX_VALUE or Long.MIN_VALUE+1", ise);
+            throw invalidBoundsException("Cannot create IRange: min must not be " +
+                    "Long.MIN_VALUE or Long.MIN_VALUE+1", ise);
         if (max - min + 1L <= 0L)
             throw invalidBoundsException("Cannot create IRange: max - min >= Long.MAX_VALUE (min = " +
                     min + ", max = " + max + ")", ise);

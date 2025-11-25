@@ -22,7 +22,11 @@
  * SOFTWARE.
  */
 
-package net.algart.math;
+package net.algart.math.ranges;
+
+import net.algart.math.IRangeConsumer;
+import net.algart.math.IRangeFinder;
+import net.algart.math.IRangeFinderMeasuringTime;
 
 import java.util.Locale;
 import java.util.Random;

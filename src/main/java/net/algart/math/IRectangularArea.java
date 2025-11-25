@@ -79,7 +79,7 @@ public class IRectangularArea {
     final IPoint min;
     final IPoint max;
 
-    IRectangularArea(IPoint min, IPoint max) {
+    private IRectangularArea(IPoint min, IPoint max) {
         this.min = min;
         this.max = max;
     }
@@ -887,6 +887,7 @@ public class IRectangularArea {
             }
         }
         return new IRectangularArea(new IPoint(newMin), new IPoint(newMax));
+        // - if two rectangular areas are allowed, then their intersection is also allowed
     }
 
     /**
@@ -972,11 +973,15 @@ public class IRectangularArea {
             if (area.min.coordinates[k] > this.min.coordinates[k]) {
                 min[k] = this.min.coordinates[k];
                 max[k] = area.min.coordinates[k] - 1;
+                // - so, max[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
+                // direct using constructor is safe
                 results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
             if (area.max.coordinates[k] < this.max.coordinates[k]) {
                 min[k] = area.max.coordinates[k] + 1;
                 max[k] = this.max.coordinates[k];
+                // - so, min[k] is in the correct range: -Long.MAX_VALUE+1 .. Long.MAX_VALUE-1
+                // direct using constructor is safe
                 results.add(new IRectangularArea(IPoint.of(min), IPoint.of(max)));
             }
             min[k] = Math.max(area.min.coordinates[k], this.min.coordinates[k]);
@@ -1142,7 +1147,9 @@ public class IRectangularArea {
      * @return the minimal rectangular area, containing this and the passed area.
      * @throws NullPointerException     if the argument is {@code null}.
      * @throws IllegalArgumentException if <code>area.{@link #coordCount() coordCount()}</code> is not equal to
-     *                                  the {@link #coordCount() number of dimensions} of this instance.
+     *                                  the {@link #coordCount() number of dimensions} of this instance,
+     *                                  or if the new min/max points
+     *                                  do not match requirements of {@link #of(IPoint, IPoint)} method.
      */
     public IRectangularArea expand(IRectangularArea area) {
         if (contains(area)) {
@@ -1155,7 +1162,7 @@ public class IRectangularArea {
             newMin[k] = Math.min(min.coordinates[k], area.min.coordinates[k]);
             newMax[k] = Math.max(max.coordinates[k], area.max.coordinates[k]);
         }
-        return new IRectangularArea(new IPoint(newMin), new IPoint(newMax));
+        return of(new IPoint(newMin), new IPoint(newMax));
     }
 
     /**
@@ -1672,11 +1679,12 @@ public class IRectangularArea {
             }
             if (max.coordinates[k] == Long.MAX_VALUE) {
                 throw IRange.invalidBoundsException("Cannot create IRectangularArea: max.coord(" + k
-                        + ") == Long.MAX_VALUE", ise);
+                        + ") must not be Long.MAX_VALUE", ise);
             }
             if (min.coordinates[k] <= -Long.MAX_VALUE) {
+                // -Long.MAX_VALUE or -Long.MAX_VALUE-1==Long.MIN_VALUE
                 throw IRange.invalidBoundsException("Cannot create IRectangularArea: min.coord(" + k +
-                        ") == Long.MAX_VALUE or Long.MIN_VALUE+1", ise);
+                        ") must not be Long.MIN_VALUE or Long.MIN_VALUE+1", ise);
             }
             if (max.coordinates[k] - min.coordinates[k] + 1L <= 0L) {
                 throw IRange.invalidBoundsException("Cannot create IRectangularArea: max.coord(" + k +
