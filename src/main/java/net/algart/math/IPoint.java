@@ -1104,7 +1104,7 @@ public class IPoint implements Comparable<IPoint> {
      * (<i>n</i> = {@link #coordCount()}),
      * where <code><i>dim</i><sub><i>i</i></sub>=<i>i</i>&gt;=dimensions.length?1:dimensions[<i>i</i>]</code>.
      * If <code>pseudoCyclicTruncation</code> is <code>true</code>,
-     * returns the positive remainder of division of this value
+     * returns the positive remainder after division of this value
      * by the product of all dimensions:
      * <pre>
      * shift%product &gt;= 0 ? shift%product : shift%product&nbsp;+&nbsp;product,

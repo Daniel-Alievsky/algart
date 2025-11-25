@@ -34,7 +34,7 @@ package net.algart.math.functions;
  * or if the argument, cast to <code>int</code> type, is negative or <code>&gt;=values.length</code>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

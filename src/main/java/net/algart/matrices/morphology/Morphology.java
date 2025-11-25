@@ -56,7 +56,7 @@ import net.algart.math.patterns.UniformGridPattern;
  * <p>and also the methods creating {@link RankMorphology} objects &mdash; see comments to that interface.</p>
  *
  * <p>The classes, implementing this interface, are <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

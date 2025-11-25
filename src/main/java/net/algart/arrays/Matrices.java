@@ -118,7 +118,7 @@ public class Matrices {
      * <p>Resizing mode for {@link Matrices#asResized Matrices.asResized} method.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static class ResizingMethod {
         /**
@@ -860,7 +860,7 @@ public class Matrices {
      * </ul>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static final class Hyperparallelepiped extends Region {
         private Hyperparallelepiped(IRange... coordRanges) {
@@ -1052,7 +1052,7 @@ public class Matrices {
      * are calculated automatically.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static class ConvexHyperpolyhedron extends Region {
         final double[] a, b;
@@ -1236,7 +1236,7 @@ public class Matrices {
      * {@link DegeneratedSimplexException} is thrown in these cases.
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static final class Simplex extends ConvexHyperpolyhedron {
         private final double[][] vertices;
@@ -1340,7 +1340,7 @@ public class Matrices {
      * </ul>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static final class Polygon2D extends Region {
         private final double[] vx, vy;

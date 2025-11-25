@@ -254,7 +254,7 @@ import java.util.Set;
  * or <code>OutOfMemoryError</code> in the same situations as {@link Pattern#points()} method.</p>
  *
  * <p>The classes, implementing this interface, are usually <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance. It is not guaranteed for any classes,
+ * there are no ways to modify the settings of the created instance. It is not guaranteed for any classes,
  * but it is guaranteed for all instances created by the methods of the classes of this package.</p>
  *
  * @author Daniel Alievsky

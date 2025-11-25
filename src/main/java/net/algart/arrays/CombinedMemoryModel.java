@@ -145,7 +145,7 @@ import java.util.Objects;
  * </ul>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @param <E> the generic type of array elements in object arrays created by this memory model.
  * @author Daniel Alievsky

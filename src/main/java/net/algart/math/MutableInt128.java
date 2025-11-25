@@ -65,8 +65,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Creates a new instance of this class with given bits of stored integer value.
      *
-     * @param high64Bits high 64 bits of the absolute value of the created integer value (unsigned value).
-     * @param low64Bits  low 64 bits of the absolute value of the created integer value (unsigned value).
+     * @param high64Bits high 64 bits of the absolute value in the created integer value (unsigned value).
+     * @param low64Bits  low 64 bits of the absolute value in the created integer value (unsigned value).
      * @param negative   the sign of the created integer value.
      * @throws IllegalArgumentException if <code>high64Bits&le;0</code>.
      */
@@ -93,7 +93,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <p>This method is equivalent to <code>new MutableInt128().setToUnsignedLong(value)</code>.</p>
      *
      * @param value some <code>long</code> value.
-     * @return a newly created object, containing this value, interpreted as unsigned 64-bit integer.
+     * @return a newly created object, containing this value, interpreted as an unsigned 64-bit integer.
      */
     public static MutableInt128 ofUnsigned(long value) {
         return new MutableInt128().setToUnsignedLong(value);
@@ -191,7 +191,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns low 64 bits of the absolute value of this number. You can use this method together with
+     * Returns low 64 bits of the absolute value in this number. You can use this method together with
      * {@link #shiftRight(int)} to retrieve any bits of the absolute value.
      *
      * @return low 64 bits of the absolute value (unsigned <code>long</code> value).
@@ -201,7 +201,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Returns high 64 bits of the absolute value of this number.
+     * Returns high 64 bits of the absolute value in this number.
      *
      * <p>The result of this method is equal to the following expression:
      * <pre>
@@ -261,13 +261,13 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
             final long middle = 1L << (lowBitsRightShift - 1);
             final long otherBits = low64Bits & ((middle << 1) - 1L);
             if (otherBits == middle) {
-                // exactly between two nearest neighbours: choose correction 0 or 1 to more even mantissa
+                // exactly between two nearest neighbors: choose correction 0 or 1 to more even mantissa
                 increment = (mantissa & 1L) != 0;
             } else {
                 increment = (otherBits & middle) != 0; // don't use "<=" here! these longs are unsigned!
             }
         } else {
-            // all mantissa is in highBits
+            // the entire mantissa is in highBits
             final int rightShift = 11 - leadingZeros; // 0 <= rightShift <= 11
             mantissa = (high64Bits >>> rightShift) & 0xFFFFFFFFFFFFFL;
             if (rightShift == 0) {
@@ -447,7 +447,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this number to minimal possible value (&minus;2<sup>128</sup>).
+     * Sets this number to the minimal possible value (&minus;2<sup>128</sup>).
      *
      * @return a reference to this object.
      */
@@ -459,7 +459,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Sets this number to maximal possible value (+2<sup>128</sup>).
+     * Sets this number to the maximal possible value (+2<sup>128</sup>).
      *
      * @return a reference to this object.
      */
@@ -475,7 +475,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * if <code>index==0</code>, this method returns <code>true</code> when this number is odd.
      * If <code>index</code> is too large (&ge;128), this method returns <code>false</code>.
      *
-     * @param index index of the bit of this number.
+     * @param index index of the bit.
      * @return value of this bit.
      * @throws IllegalArgumentException if <code>index</code> argument is negative.
      */
@@ -497,7 +497,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * Sets the bit #<code>index</code> of the absolute value of this number to the given value.
      * If <code>index</code> is too large (&ge;128), this method does nothing.
      *
-     * @param index index of the bit of this number.
+     * @param index index of the bit.
      * @param value new value of the bit (<code>true</code> is 1, <code>false</code> is 0).
      * @return a reference to this object.
      * @throws IllegalArgumentException if <code>index</code> argument is negative.
@@ -526,8 +526,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Shifts all bits of the absolute value of this number rightwards by the specified number of bits.
-     * As the result, this number <i>x</i> is changed to
+     * Shifts all bits of the absolute value in this number rightwards by the specified number of bits.
+     * As a result, this number <i>x</i> is changed to
      * <p><code>&nbsp;&nbsp;&nbsp;&nbsp;
      * <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)/2<sup>shift</sup> : <i>x</i>/2<sup>shift</sup>.
      * </code></p>
@@ -563,8 +563,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Shifts all bits of the absolute value of this number leftwards by the specified number of bits.
-     * As the result, this number <i>x</i> is changed to
+     * Shifts all bits of the absolute value in this number leftwards by the specified number of bits.
+     * As a result, this number <i>x</i> is changed to
      * <p><code>&nbsp;&nbsp;&nbsp;&nbsp;
      * <i>x</i>&lt;0 ? &minus;(&minus;<i>x</i>)*2<sup>shift</sup> : <i>x</i>*2<sup>shift</sup>.
      * </code></p>
@@ -688,11 +688,11 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Replaces all bits of the absolute value of this number with bitwise AND of this and other number:
+     * Replaces all bits of the absolute value in this number with bitwise AND of this and other number:
      * <code>|this| = |this| &amp; |other|</code>.
      *
-     * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number was non-zero,
-     * but the result is zero (i.e. not positive and not negative).
+     * <p>The sign of this number stays unchanged &mdash; excepting the case when this number was non-zero,
+     * but the result is zero (i.e., not positive and not negative).
      *
      * @param other value to be AND'ed with this number.
      * @return a reference to this object.
@@ -704,11 +704,11 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Replaces all bits of the absolute value of this number with bitwise OR of this and other number:
+     * Replaces all bits of the absolute value in this number with bitwise OR of this and other number:
      * <code>|this| = |this| | |other|</code>.
      *
-     * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number was zero,
-     * but the result is nonzero (i.e. positive or negative).
+     * <p>The sign of this number stays unchanged &mdash; excepting the case when this number was zero,
+     * but the result is nonzero (i.e., positive or negative).
      *
      * @param other value to be OR'ed with this number.
      * @return a reference to this object.
@@ -720,7 +720,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Replaces all bits of the absolute value of this number with bitwise XOR of this and other number:
+     * Replaces all bits of the absolute value in this number with bitwise XOR of this and other number:
      * <code>|this| = |this| ^ |other|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number or the result
@@ -736,7 +736,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Inverts all bits of the absolute value of this number:
+     * Inverts all bits of the absolute value in this number:
      * <code>|this| = ~|this|</code>.
      *
      * <p>The sign of this number stays unchanged &mdash; excepting the case, when this number or the result
@@ -758,7 +758,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <p>It is a 128-bit analogue of the standard <code>Long.numberOfLeadingZeros</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
-     * @return the number of leading zero bits in the absolute value of this number, or 128 for zero number.
+     * @return the number of leading zero bits in the absolute value of this number, or 128 for a zero number.
      */
     public int numberOfLeadingZeros() {
         return high64Bits != 0 ? Long.numberOfLeadingZeros(high64Bits) : 64 + Long.numberOfLeadingZeros(low64Bits);
@@ -772,7 +772,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <p>It is a 128-bit analogue of the standard <code>Long.numberOfTrailingZeros</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
-     * @return the number of trailing zero bits in the absolute value of this number, or 128 for zero number.
+     * @return the number of trailing zero bits in the absolute value of this number, or 128 for a zero number.
      */
     public int numberOfTrailingZeros() {
         return low64Bits != 0 ? Long.numberOfTrailingZeros(low64Bits) : 64 + Long.numberOfTrailingZeros(high64Bits);
@@ -784,7 +784,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * <p>It is a 128-bit analogue of the standard <code>Long.bitCount</code> method,
      * but working with the absolute value of this number (instead of two's complement binary representation).
      *
-     * @return the number of one-bits in the binary representation of the absolute value of this number.
+     * @return the number of one-bits in the binary representation of the absolute value.
      */
     public int bitCount() {
         return Long.bitCount(high64Bits) + Long.bitCount(low64Bits);
@@ -909,7 +909,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
         long t = (w0 >>> 32) + a1 * b;
         this.low64Bits = (w0 & 0xFFFFFFFFL) + (t << 32);
         this.high64Bits = t >>> 32;
-        assert this.high64Bits >= 0; // - because long argument is signed and cannot be >2^63 by absolute value
+        assert this.high64Bits >= 0; // - because a long argument is signed and cannot be >2^63 by absolute value
         return this;
     }
 
@@ -920,8 +920,8 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * <p>Note: this method works little faster than {@link #setToLongLongProduct(long, long)}.
      *
-     * @param firstMultiplier  first multiplicand (interpreted as unsigned 64-bit integer number).
-     * @param secondMultiplier second multiplicand (interpreted as unsigned 64-bit integer number).
+     * @param firstMultiplier  first multiplicand (interpreted as an unsigned 64-bit integer number).
+     * @param secondMultiplier second multiplicand (interpreted as an unsigned 64-bit integer number).
      * @return a reference to this object.
      */
     public MutableInt128 setToUnsignedLongLongProduct(long firstMultiplier, long secondMultiplier) {
@@ -983,7 +983,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
         // w2:w1:w0 (low 32 bits of every w2,w1,w0) = a * a0 + (a1 * a0) << 32
         this.low64Bits = (w0 & 0xFFFFFFFFL) + (w1 << 32);
         this.high64Bits = a1 * a1 + w2;
-        assert this.high64Bits >= 0; // - because long argument is signed and cannot be >2^63 by absolute value
+        assert this.high64Bits >= 0; // - because a long argument is signed and cannot be >2^63 by absolute value
         return this;
     }
 
@@ -997,7 +997,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * @param firstMultiplier  first multiplicand.
      * @param secondMultiplier second multiplicand.
      * @return a reference to this object.
-     * @throws ArithmeticException in a case of arithmetic overflow while adding.
+     * @throws ArithmeticException in the case of arithmetic overflow while adding.
      */
     public MutableInt128 addLongLongProduct(long firstMultiplier, long secondMultiplier) {
         final boolean productNegative = (firstMultiplier < 0) != (secondMultiplier < 0);
@@ -1043,7 +1043,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      * @param firstMultiplier  first multiplicand.
      * @param secondMultiplier second multiplicand.
      * @return a reference to this object.
-     * @throws ArithmeticException in a case of arithmetic overflow while adding.
+     * @throws ArithmeticException in the case of arithmetic overflow while adding.
      */
     public MutableInt128 addLongIntProduct(long firstMultiplier, int secondMultiplier) {
         final boolean productNegative = (firstMultiplier < 0) != (secondMultiplier < 0);
@@ -1057,7 +1057,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
         long t = (w0 >>> 32) + a1 * b;
         final long productLow64Bits = (w0 & 0xFFFFFFFFL) + (t << 32);
         final long productHigh64Bits = t >>> 32;
-        assert productHigh64Bits >= 0; // - because long argument is signed and cannot be >2^63 by absolute value
+        assert productHigh64Bits >= 0; // - because a long argument is signed and cannot be >2^63 by absolute value
         add(productHigh64Bits, productLow64Bits, productNegative);
         return this;
     }
@@ -1073,10 +1073,10 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * <p>Note: this method works little faster than {@link #addLongLongProduct(long, long)}.
      *
-     * @param firstMultiplier  first multiplicand (interpreted as unsigned 64-bit integer number).
-     * @param secondMultiplier second multiplicand (interpreted as unsigned 64-bit integer number).
+     * @param firstMultiplier  first multiplicand (interpreted as an unsigned 64-bit integer number).
+     * @param secondMultiplier second multiplicand (interpreted as an unsigned 64-bit integer number).
      * @return a reference to this object.
-     * @throws ArithmeticException in a case of arithmetic overflow while adding.
+     * @throws ArithmeticException in the case of arithmetic overflow while adding.
      */
     public MutableInt128 addUnsignedLongLongProduct(long firstMultiplier, long secondMultiplier) {
         // Now 0 <= a < 2^64, 0 <= b < 2^64 (unsigned)
@@ -1107,7 +1107,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     }
 
     /**
-     * Calculate exact exact square of the given value: <code>value</code>*<code>value</code>
+     * Calculate exact square of the given value: <code>value</code>*<code>value</code>
      * and adds it to this number.
      * Equivalent to
      * <pre>    {@link #add(MutableInt128) add}(new {@link #MutableInt128()
@@ -1116,7 +1116,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
      *
      * @param value some long signed value.
      * @return a reference to this object.
-     * @throws ArithmeticException in a case of arithmetic overflow while adding.
+     * @throws ArithmeticException in the case of arithmetic overflow while adding.
      */
     public MutableInt128 addLongSqr(long value) {
         final long a = value < 0 ? -value : value;
@@ -1139,7 +1139,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
         // w2:w1:w0 (low 32 bits of every w2,w1,w0) = a * a0 + (a1 * a0) << 32
         final long productLow64Bits = (w0 & 0xFFFFFFFFL) + (w1 << 32);
         final long productHigh64Bits = a1 * a1 + w2;
-        assert productHigh64Bits >= 0; // - because long argument is signed and cannot be >2^63 by absolute value
+        assert productHigh64Bits >= 0; // - because a long argument is signed and cannot be >2^63 by absolute value
         add(productHigh64Bits, productLow64Bits, false);
         return this;
     }
@@ -1161,7 +1161,7 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
     /**
      * Compares this number with the specified one.
      *
-     * @param o other number to which this number is to be compared.
+     * @param o another number to which this number is to be compared.
      * @return -1, 0 or 1 as this number is numerically less than, equal
      * to, or greater than {@code o}.
      * @throws NullPointerException if the argument is {@code null}.
@@ -1261,9 +1261,9 @@ public final class MutableInt128 implements Cloneable, Comparable<MutableInt128>
         // - About the following code see toDouble() method for a fixed case leadingZeros=64
         // (the high bit of value is 1).
         // We could also use something like "2.0 * (double) (value >>> 1)",
-        // but such result needs correction in a rare situation "exactly between two nearest neighbours":
+        // but such a result needs correction in a rare situation "exactly between the nearest neighbors":
         // it this case, the lowest bit #0 can become significant.
-        // The following code provide performance, comparable with built-in (double) cast.
+        // The following code provides performance, comparable with built-in (double) cast.
         long mantissa = (value >>> 11) & 0xFFFFFFFFFFFFFL;
         // 0xFFFFFFFFFFFFFL = (1L << 52) - 1: clearing the highest bit #52
         final long otherBits = value & 2047L;

@@ -37,7 +37,7 @@ import java.util.Objects;
  * and both numbers are never <code>Double.NaN</code>.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see IRange

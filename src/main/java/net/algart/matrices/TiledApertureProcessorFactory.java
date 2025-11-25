@@ -450,7 +450,7 @@ import java.util.*;
  * <h2>Multithreading compatibility</h2>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.
+ * there are no ways to modify the settings of the created instance.
  * The same is true for the tiled processors, created by {@link #tile(ApertureProcessor)} method.</p>
  *
  * @author Daniel Alievsky
@@ -471,7 +471,7 @@ public final class TiledApertureProcessorFactory {
      * the section "Contexts for the one-tile processor".</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static final class TileInformation {
         private final IRectangularArea tile;

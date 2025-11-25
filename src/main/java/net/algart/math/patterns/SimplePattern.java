@@ -50,7 +50,7 @@ import java.util.*;
  * {@link #minBound(int)}, {@link #maxBound(int)} &mdash; always return instances of this class.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

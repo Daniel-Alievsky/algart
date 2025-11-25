@@ -41,7 +41,7 @@ import java.util.*;
  * </ol>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.
+ * there are no ways to modify the settings of the created instance.
  * However, all important information is returned "lazily", i.e. while the 1st attempt to read it.
  * So, the instance creation method {@link #newInstance(Collection)}
  * works quickly and does not lead to complex calculations and allocating additional memory.</p>

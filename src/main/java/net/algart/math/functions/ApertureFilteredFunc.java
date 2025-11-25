@@ -34,7 +34,7 @@ import java.util.Objects;
  * {@link ApertureFilterOperator#apply(Func) apply} method.
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see ApertureFilterOperator#apply(Func)

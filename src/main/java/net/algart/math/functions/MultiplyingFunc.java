@@ -33,7 +33,7 @@ package net.algart.math.functions;
  * If the number of arguments is 0, it returns <i>scale</i> value.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

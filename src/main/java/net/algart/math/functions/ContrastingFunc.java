@@ -79,7 +79,7 @@ package net.algart.math.functions;
  * and throws <code>IndexOutOfBoundsException</code> if the number of arguments is 0, 1 or 2.</p>
  *
  * <p>All implementations of this class are <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

@@ -77,7 +77,7 @@ public class Boundary2DSimpleMeasurer extends Boundary2DWrapper {
      * {@link Boundary2DSimpleMeasurer} class.
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public enum ObjectParameter {
         /**

@@ -31,7 +31,7 @@ package net.algart.math.functions;
  * The {@link #get} method of the instance of this class may process any number of arguments.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

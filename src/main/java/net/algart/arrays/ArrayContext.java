@@ -39,7 +39,7 @@ import java.util.Objects;
  * as an object implementing this interface.</p>
  *
  * <p>Objects implementing this interface are usually <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

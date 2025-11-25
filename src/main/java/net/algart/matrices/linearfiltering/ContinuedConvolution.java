@@ -78,7 +78,7 @@ import java.util.Objects;
  * Of course, these are very improbable cases.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

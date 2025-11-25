@@ -228,7 +228,7 @@ public abstract class Boundary2DScanner {
      * See definition of the "pixel" term in comments to {@link Boundary2DScanner} class.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public enum Side {
         /**
@@ -430,7 +430,7 @@ public abstract class Boundary2DScanner {
      * method.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public static class Step {
         /**

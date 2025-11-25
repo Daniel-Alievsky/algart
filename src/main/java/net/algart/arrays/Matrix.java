@@ -176,7 +176,7 @@ public interface Matrix<T extends Array> extends Cloneable {
      * See more details in comments to {@link Matrix#subMatrix(long[], long[], ContinuationMode)} method.
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.
+     * there are no ways to modify the settings of the created instance.
      * Moreover, the constants {@link #NONE}, {@link #CYCLIC}, {@link #PSEUDO_CYCLIC}, {@link #MIRROR_CYCLIC},
      * {@link #NULL_CONSTANT}, {@link #ZERO_CONSTANT}, {@link #NAN_CONSTANT},
      * as well as constants in standard Java enumerations, are unique instances, which cannot be equal to any other

@@ -33,7 +33,7 @@ import java.util.random.RandomGenerator;
  * <p>Right orthonormal basis in 3D Euclidean space: 3 orthogonal unit vectors <b>i</b>, <b>j</b>, <b>k</b>.</p>
  *
  * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  */

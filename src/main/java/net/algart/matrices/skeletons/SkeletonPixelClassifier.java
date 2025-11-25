@@ -228,7 +228,7 @@ import net.algart.arrays.PIntegerArray;
  * <h2>Multithreading compatibility</h2>
  *
  * <p>This class and its inheritors from this package are <b>immutable</b> and <b>thread-safe</b>:
- * there are no ways to modify settings of the created instance.</p>
+ * there are no ways to modify the settings of the created instance.</p>
  *
  * @author Daniel Alievsky
  * @see SkeletonScanner
@@ -240,7 +240,7 @@ public abstract class SkeletonPixelClassifier {
      * SkeletonPixelClassifier.AttachmentInformation)} method.</p>
      *
      * <p>This class is <b>immutable</b> and <b>thread-safe</b>:
-     * there are no ways to modify settings of the created instance.</p>
+     * there are no ways to modify the settings of the created instance.</p>
      */
     public enum AttachmentInformation {
         /**
