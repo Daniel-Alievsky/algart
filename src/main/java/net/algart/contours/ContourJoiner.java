@@ -38,7 +38,7 @@ import java.util.stream.IntStream;
  * <p>Joiner of {@link Contours contours}.</p>
  * <p>Note that this class guarantees full 100% joining of only 4-connected contours (external and internal).
  * Contours of 8-connected objects, in some situations, are not joined completely.
- * It allows to use more simple and efficient algorithm with a guarantee that
+ * It allows using a more simple and efficient algorithm with a guarantee that
  * it will not require a lot of memory (more than necessary for storing results
  * and the largest matrix, necessary for "drawing" any source contour).</p>
  */
