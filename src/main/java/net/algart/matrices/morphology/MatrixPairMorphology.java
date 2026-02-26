@@ -106,7 +106,7 @@ public final class MatrixPairMorphology {
      * but the results near matrix boundary are not strictly specified. Really, in this case the current implmentation
      * uses CYCLIC or PSEUDO_CYCLIC mode, but it can change in future versions.
      *
-     * @param continuationMode new continuation mode; can be {@code null}, then will be chosen
+     * @param continuationMode new continuation mode; can be {@code null}, in which case will be chosen
      *                         automatically to provide better performance
      * @return a reference to this object.
      */
@@ -178,7 +178,8 @@ public final class MatrixPairMorphology {
         if (sizeX < 0 || sizeY < 0) {
             throw new IllegalArgumentException("Negative sizeX=" + sizeX + " or sizeY=" + sizeY);
         }
-//        System.out.println("!!!!dilation " + work.elementType() + " " + sizeX + "x" + sizeY + ", " + minX + "," + minY);
+//        System.out.println("!!!!dilation " + work.elementType() + " " + sizeX + "x" + sizeY + ", " + minX + "," +
+//        minY);
         if (minX == -1 && minY == -1 && sizeX == 3 && sizeY == 3 && simple3x3Optimization()) {
             dilationBySquare3x3.filter(work, result);
             swap();
@@ -274,7 +275,8 @@ public final class MatrixPairMorphology {
         if (sizeX < 0 || sizeY < 0) {
             throw new IllegalArgumentException("Negative sizeX=" + sizeX + " or sizeY=" + sizeY);
         }
-//        System.out.println("!!!!erosion " + work.elementType() + " " + sizeX + "x" + sizeY + ", " + minX + "," + minY);
+//        System.out.println("!!!!erosion " + work.elementType() + " " + sizeX + "x" + sizeY + ", " + minX + "," +
+//        minY);
         if (minX == -1 && minY == -1 && sizeX == 3 && sizeY == 3 && simple3x3Optimization()) {
             erosionBySquare3x3.filter(work, result);
             swap();

@@ -178,7 +178,7 @@ public interface IterativeArrayProcessor<T> extends ArrayProcessor {
      *
      * <p>This method must be implemented while creating a new iterative array-processing algorithm.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     void freeResources(ArrayContext context);
 

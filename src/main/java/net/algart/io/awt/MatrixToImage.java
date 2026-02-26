@@ -205,8 +205,9 @@ public abstract class MatrixToImage {
      * by {@link #toDataBuffer(net.algart.arrays.Matrix)} method, maybe with some post-processing.)
      *
      * @param interleavedMatrix the interleaved matrix.
-     * @param dataBuffer        the data for <code>BufferedImage</code>; can be {@code null}, then it is automatically
-     *                          created as {@link #toDataBuffer(net.algart.arrays.Matrix)
+     * @param dataBuffer        the data for <code>BufferedImage</code>; can be {@code null},
+     *                          in which case it is automatically created
+     *                          as {@link #toDataBuffer(net.algart.arrays.Matrix)
      *                          toDataBuffer(interleavedMatrix)}.
      * @return the <code>BufferedImage</code> with the same data.
      */

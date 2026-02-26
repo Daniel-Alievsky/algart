@@ -1171,7 +1171,7 @@ public class JArrays {
      * Equivalent to {@link #copy(byte[], byte[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>byte[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>byte[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1215,7 +1215,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>byte[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>byte[]</code> array.
      * @param n    number of bytes to be copied.
      * @return array with resulting data;
@@ -1250,7 +1250,7 @@ public class JArrays {
      * Equivalent to {@link #copy(char[], char[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>char[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>char[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1294,7 +1294,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>char[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>char[]</code> array.
      * @param n    number of chars to be copied.
      * @return array with resulting data;
@@ -1328,7 +1328,7 @@ public class JArrays {
      * Equivalent to {@link #copy(short[], short[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>short[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>short[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1372,7 +1372,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>short[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>short[]</code> array.
      * @param n    number of shorts to be copied.
      * @return array with resulting data;
@@ -1406,7 +1406,7 @@ public class JArrays {
      * Equivalent to {@link #copy(int[], int[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>int[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>int[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1450,7 +1450,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>int[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>int[]</code> array.
      * @param n    number of ints to be copied.
      * @return array with resulting data;
@@ -1484,7 +1484,7 @@ public class JArrays {
      * Equivalent to {@link #copy(long[], long[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>long[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>long[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1528,7 +1528,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>long[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>long[]</code> array.
      * @param n    number of longs to be copied.
      * @return array with resulting data;
@@ -1562,7 +1562,7 @@ public class JArrays {
      * Equivalent to {@link #copy(float[], float[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>float[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>float[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1606,7 +1606,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>float[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>float[]</code> array.
      * @param n    number of floats to be copied.
      * @return array with resulting data;
@@ -1640,7 +1640,7 @@ public class JArrays {
      * Equivalent to {@link #copy(double[], double[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>double[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>double[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1684,7 +1684,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>double[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>double[]</code> array.
      * @param n    number of doubles to be copied.
      * @return array with resulting data;
@@ -1718,7 +1718,7 @@ public class JArrays {
      * Equivalent to {@link #copy(boolean[], boolean[], int) copy(dest, src, src.length)}.
      *
      * @param dest the result <code>boolean[]</code> array;
-     *             can be {@code null}, then it is equivalent to <code>src.clone()</code>.
+     *             can be {@code null}, in which case it is equivalent to <code>src.clone()</code>.
      * @param src  the source <code>boolean[]</code> array.
      * @return array with resulting data;
      * if <code>dest</code> argument is not {@code null}, a reference to this argument is returned.
@@ -1762,7 +1762,7 @@ public class JArrays {
      * <code>n&nbsp;=&nbsp;src.length</code> is equivalent to <code>src.clone()</code>.</p>
      *
      * @param dest the result <code>boolean[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>boolean[]</code> array.
      * @param n    number of booleans to be copied.
      * @return array with resulting data;
@@ -1825,7 +1825,7 @@ public class JArrays {
      * </pre>
      *
      * @param dest        the result <code>byte[]</code> array;
-     *                    can be {@code null}, then it will be allocated automatically.
+     *                    can be {@code null}, in which case it will be allocated automatically.
      * @param src         the source <code>byte[]</code> array.
      * @param elementType the primitive type of words in which the byte order needs to be changed,
      *                    usually <code>short.class</code>, <code>int.class</code> or <code>long.class</code>
@@ -1858,7 +1858,7 @@ public class JArrays {
      * this method throws an exception.
      *
      * @param dest        the result <code>byte[]</code> array;
-     *                    can be {@code null}, then it will be allocated automatically.
+     *                    can be {@code null}, in which case it will be allocated automatically.
      * @param src         the source <code>byte[]</code> array.
      * @param length      number of bytes to be copied with swapping byte order.
      * @param elementType the primitive type of words in which the byte order needs to be changed,
@@ -1924,7 +1924,7 @@ public class JArrays {
      * bytes are ignored.</p>
      *
      * @param dest            the result <code>byte[]</code> array;
-     *                        can be {@code null}, then it will be allocated automatically.
+     *                        can be {@code null}, in which case it will be allocated automatically.
      * @param src             the source <code>byte[]</code> array.
      * @param length          number of bytes to be copied with swapping byte order.
      * @param bytesPerElement the size of each word in which the byte order needs to be changed:
@@ -2362,7 +2362,7 @@ public class JArrays {
      * <p>Note that this method <b>cannot</b> be used with <code>Object[]</code> array.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source Java array, containing elements of some primitive type.
      * @param n         number of elements of <code>src</code> array to be copied
      *                  (must be in <code>0..Integer.MAX_VALUE</code> range).
@@ -2535,7 +2535,7 @@ public class JArrays {
      * <p>Note that this method <b>cannot</b> be used with <code>Object[]</code> array.</p>
      *
      * @param dest        the result Java array, containing elements of some primitive type;
-     *                    can be {@code null}, then it will be allocated automatically.
+     *                    can be {@code null}, in which case it will be allocated automatically.
      * @param src         the source <code>byte[]</code> array.
      * @param n           number of elements of <code>dest</code> array to be copied
      *                    (must be in <code>0..Integer.MAX_VALUE</code> range).
@@ -2683,7 +2683,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>char[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -2792,7 +2792,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>char[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>char</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -2899,7 +2899,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>short[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3008,7 +3008,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>short[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>short</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3113,7 +3113,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>int[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3222,7 +3222,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>int[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>int</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3327,7 +3327,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>long[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3436,7 +3436,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>long[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>long</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3541,7 +3541,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>float[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3650,7 +3650,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>float[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>float</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3755,7 +3755,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>byte[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>double[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3864,7 +3864,7 @@ public class JArrays {
      * low-level CPU instructions and can provide comparable speed.</p>
      *
      * @param dest      the result <code>double[]</code> array;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param src       the source <code>byte[]</code> array.
      * @param n         number of <code>double</code> elements to be copied.
      * @param byteOrder the byte order.
@@ -3957,7 +3957,7 @@ public class JArrays {
      * </pre>
      *
      * @param dest the result <code>byte[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>boolean[]</code> array.
      * @param n    number of <code>boolean</code> elements to be copied.
      * @return array with resulting data;
@@ -4044,7 +4044,7 @@ public class JArrays {
      * </pre>
      *
      * @param dest the result <code>boolean[]</code> array;
-     *             can be {@code null}, then it will be allocated automatically.
+     *             can be {@code null}, in which case it will be allocated automatically.
      * @param src  the source <code>byte[]</code> array.
      * @param n    number of <code>boolean</code> elements to be copied.
      * @return array with resulting data;

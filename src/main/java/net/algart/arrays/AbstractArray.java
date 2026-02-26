@@ -441,7 +441,7 @@ public abstract class AbstractArray implements Array, Cloneable {
      * preloading correct part all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     public void loadResources(ArrayContext context) {
     }
@@ -450,11 +450,12 @@ public abstract class AbstractArray implements Array, Cloneable {
      * This implementation calls the same method with the same arguments
      * for all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
-     * Please override it if you want to provide (in a case of subarray)
+     * Please override it if you want to provide (in the case of subarray)
      * flushing the correct part of the underlying arrays.
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
-     * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
+     * @param forcePhysicalWriting is it necessary to try forcing physical
+     *                             writing all associated resources
      *                             to the external device.
      */
     public void flushResources(ArrayContext context, boolean forcePhysicalWriting) {
@@ -468,12 +469,12 @@ public abstract class AbstractArray implements Array, Cloneable {
     /**
      * This implementation calls the same method for all underlying arrays, passed via the last argument
      * of the {@link #AbstractArray(long, long, Array...) constructor}.
-     * Please override it if you want to provide (in a case of subarray)
-     * freeing correct part of the underlying arrays.
+     * Please override it if you want to provide (in the case of subarray)
+     * freeing the correct part of the underlying arrays.
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
-     *                             to the external device.
+     *                             to an external device.
      */
     public void freeResources(ArrayContext context, boolean forcePhysicalWriting) {
         for (int k = 0; k < underlyingArrays.length; k++) {

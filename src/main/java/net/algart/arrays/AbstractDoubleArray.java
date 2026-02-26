@@ -580,7 +580,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * This implementation calls
      * {@link #loadResources(ArrayContext, long, long) loadResources(context, 0, length())}.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     @Override
     public void loadResources(ArrayContext context) {
@@ -592,7 +592,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * {@link #flushResources(ArrayContext, long, long, boolean)
      * flushResources(context, 0, length(), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device?
      */
@@ -606,7 +606,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * {@link #freeResources(ArrayContext, long, long, boolean)
      * freeResources(context, 0, length()), forcePhysicalWriting)}.
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device?
      */
@@ -626,7 +626,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * if the <code>underlyingArraysAreParallel</code> constructor argument was <code>true</code>,
      * or does nothing in another case.
      *
-     * @param context   the context of execution; can be {@code null}, then it will be ignored.
+     * @param context   the context of execution; can be {@code null}, in which case it will be ignored.
      * @param fromIndex low endpoint (inclusive) of the subarray that should be loaded.
      * @param toIndex   high endpoint (exclusive) of the subarray that should be loaded.
      * @throws IndexOutOfBoundsException for illegal fromIndex and toIndex
@@ -654,7 +654,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * or for original underlying arrays in another case
      * (alike {@link AbstractArray#flushResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be flushed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be flushed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
@@ -687,7 +687,7 @@ public abstract class AbstractDoubleArray extends AbstractArray implements Doubl
      * or for original underlying arrays in another case
      * (alike {@link AbstractArray#freeResources(ArrayContext, boolean)}).
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param fromIndex            low endpoint (inclusive) of the subarray that should be freed.
      * @param toIndex              high endpoint (exclusive) of the subarray that should be freed.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources

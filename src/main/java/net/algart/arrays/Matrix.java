@@ -2684,14 +2684,14 @@ public interface Matrix<T extends Array> extends Cloneable {
     /**
      * Equivalent to <code>{@link #array()}.{@link Array#flushResources(ArrayContext) flushResources(context)}</code>.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     void flushResources(ArrayContext context);
 
     /**
      * Equivalent to <code>{@link #array()}.{@link Array#freeResources(ArrayContext) freeResources(context)}</code>.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     void freeResources(ArrayContext context);
 

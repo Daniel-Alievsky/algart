@@ -164,7 +164,7 @@ public class OctupleThinningSkeleton2D extends AbstractThinningSkeleton2D implem
      * This mode essentially slows down the algorithm.
      *
      * @param context          the {@link #context() context} that will be used by this object;
-     *                         can be {@code null}, then it will be ignored.
+     *                         can be {@code null}, in which case it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
      * @param diagonalThinning whether the algorithm will perform diagonal thinning; usually <code>true</code>.
      * @param topological      whether the algorithm will shorten isolated thin lines with "free ends".
@@ -184,7 +184,7 @@ public class OctupleThinningSkeleton2D extends AbstractThinningSkeleton2D implem
      * getInstance(context, matrix, true, false)}.
      *
      * @param context          the {@link #context() context} that will be used by this object;
-     *                         can be {@code null}, then it will be ignored.
+     *                         can be {@code null}, in which case it will be ignored.
      * @param matrix           the bit matrix that should be processed and returned by {@link #result()} method.
      * @return                 new instance of this class.
      * @throws NullPointerException if <code>matrix</code> argument is {@code null}.

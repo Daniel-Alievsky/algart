@@ -152,7 +152,7 @@ public class StrongQuadruple3x5ThinningSkeleton2D extends AbstractThinningSkelet
      * Creates new instance of this class.
      *
      * @param context the {@link #context() context} that will be used by this object;
-     *                can be {@code null}, then it will be ignored.
+     *                can be {@code null}, in which case it will be ignored.
      * @param matrix  the bit matrix that should be processed and returned by {@link #result()} method.
      * @return        new instance of this class.
      * @throws NullPointerException if <code>matrix</code> argument is {@code null}.

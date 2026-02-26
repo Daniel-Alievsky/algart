@@ -555,7 +555,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * used for skeletonization.
      *
      * @param context         the {@link #context() context} that will be used by this object;
-     *                        can be {@code null}, then it will be ignored.
+     *                        can be {@code null}, in which case it will be ignored.
      * @param skeleton        the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
@@ -581,7 +581,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getOctupleThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.
@@ -602,7 +602,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getQuadruple3x5ThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.
@@ -623,7 +623,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getStrongQuadruple3x5ThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.
@@ -650,7 +650,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * used for skeletonization.
      *
      * @param context         the {@link #context() context} that will be used by this object;
-     *                        can be {@code null}, then it will be ignored.
+     *                        can be {@code null}, in which case it will be ignored.
      * @param skeleton        the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @param pixelClassifier the {@link #pixelClassifier() pixel classifier}, which will be used by this scanner
      *                        for detecting types of all pixels.
@@ -676,7 +676,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getOctupleThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.
@@ -697,7 +697,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getQuadruple3x5ThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.
@@ -718,7 +718,7 @@ public final class SkeletonScanner implements ArrayProcessor {
      * {@link BasicSkeletonPixelClassifier2D#getStrongQuadruple3x5ThinningInstance()})</code>.
      *
      * @param context  the {@link #context() context} that will be used by this object;
-     *                 can be {@code null}, then it will be ignored.
+     *                 can be {@code null}, in which case it will be ignored.
      * @param skeleton the {@link #skeleton() skeleton}: a bit matrix that should be processed by this scanner.
      * @return new instance of this class.
      * @throws NullPointerException     if <code>matrix</code> argument is {@code null}.

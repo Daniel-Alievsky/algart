@@ -1974,7 +1974,7 @@ public class Matrices {
      * <i>n</i>-dimensional matrix <i>M</i><sub>1</sub>x...x<i>M</i><sub><i>n</i></sub>.
      *
      * @param context     the context;
-     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                    can be {@code null}, in which case {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param result      the list of the result matrices.
      * @param interleaved the source interleaved matrix.
      * @throws NullPointerException     if <code>interleaved</code> argument, the <code>results</code> list or
@@ -2027,7 +2027,7 @@ public class Matrices {
      *
      * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context;
-     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                    can be {@code null}, in which case {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension.
      * @throws NullPointerException  if <code>interleaved</code> argument is {@code null}.
@@ -2088,7 +2088,7 @@ public class Matrices {
      * @param <T>         the generic type of the built-in AlgART arrays.
      * @param context     the context; allows specifying (in particular)
      *                    the memory model for creating returned matrices;
-     *                    can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                    can be {@code null}, in which case {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param interleaved the source interleaved matrix.
      * @param limit       maximal allowed number of returned matrices (the first dimension of the source matrix).
      * @return a list of matrices: "channels", interleaved in the source matrix along the first dimension
@@ -2168,7 +2168,7 @@ public class Matrices {
      * <p>The <code>separated</code> list must not be empty (<i>M</i><sub>0</sub>&gt;0).</p>
      *
      * @param context   the context;
-     *                  can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                  can be {@code null}, in which case {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param result    the result matrix.
      * @param separated list of the source matrices; must be non-empty.
      * @throws NullPointerException     if <code>result</code> argument, the <code>separated</code> list or
@@ -2256,7 +2256,7 @@ public class Matrices {
      * @param <T>       the generic type of the built-in AlgART arrays.
      * @param context   the context; allows specifying (in particular)
      *                  the memory model for creating returned matrix;
-     *                  can be {@code null}, then {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
+     *                  can be {@code null}, in which case {@link ArrayContext#DEFAULT_SINGLE_THREAD} will be used.
      * @param separated list of the source matrices-"channels" (like the red, green, blue channels for 3-channel
      *                  RGB image); must be non-empty.
      * @return result matrix, where "channels" are interleaved along the first dimension
@@ -3075,7 +3075,7 @@ public class Matrices {
      * Arrays.isIndexFuncArray}(matrix.{@link Matrix#array() array()})</code>
      * </pre>
      *
-     * @param matrix the checked AlgART matrix (can be {@code null}, then the method returns <code>false</code>).
+     * @param matrix the checked AlgART matrix (can be {@code null}, in which case the method returns <code>false</code>).
      * @return <code>true</code> if the passed matrix a functional one, calculated on the base of coordinates only.
      */
     public static boolean isCoordFuncMatrix(Matrix<? extends PArray> matrix) {
@@ -4124,7 +4124,7 @@ public class Matrices {
      * <p>By the way, in a case of such differences, the results of this method usually better correspond
      * to intuitive expectations of the resizing results.
      *
-     * @param context        the context of resizing; can be {@code null}, then it will be ignored.
+     * @param context        the context of resizing; can be {@code null}, in which case it will be ignored.
      * @param resizingMethod the algorithm of resizing.
      * @param result         the destination matrix.
      * @param src            the source matrix.
@@ -5057,7 +5057,7 @@ public class Matrices {
      * {@link Matrix#subMatrix(long[], long[], Matrix.ContinuationMode)} method,
      * the case of the {@link Matrix.ContinuationMode#getConstantMode(Object) constant continuation mode}.
      *
-     * @param context    the context of filling; can be {@code null}, then it will be ignored.
+     * @param context    the context of filling; can be {@code null}, in which case it will be ignored.
      * @param dest       the destination matrix.
      * @param destRegion the region in the destination matrix that should be filled by the specified value.
      * @param value      the value to be stored in all elements of the matrix inside the region.

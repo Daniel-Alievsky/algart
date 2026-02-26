@@ -169,7 +169,7 @@ public class PackedBitArraysPer8 {
      * The result array (the <code>result</code> argument or a newly created <code>long[]</code> array)
      * is returned in the result of this method.
      *
-     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param result       the result array; can be <code>null</code>, in which case it will be created automatically.
      * @param byteArray    byte array, supposedly storing packed bits according the rules of this class.
      * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
@@ -261,7 +261,7 @@ public class PackedBitArraysPer8 {
      * its settings like position and limit. Note that the byte order in the passes <code>ByteBuffer</code> is ignored:
      * the bytes are always packed into <code>long</code> values in little-endian order.</p>
      *
-     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param result       the result array; can be <code>null</code>, in which case it will be created automatically.
      * @param byteBuffer   bytes, supposedly storing packed bits according the rules of this class.
      * @param numberOfBits the number of packed bits.
      * @return <code>long[]</code> array, storing the same packed bits according the rules of {@link PackedBitArrays}.
@@ -350,7 +350,7 @@ public class PackedBitArraysPer8 {
      * The result array (the <code>result</code> argument or a newly created <code>byte[]</code> array)
      * is returned in the result of this method.
      *
-     * @param result       the result array; can be <code>null</code>, then it will be created automatically.
+     * @param result       the result array; can be <code>null</code>, in which case it will be created automatically.
      * @param longArray    <code>long</code> array, supposedly storing packed bits according the rules
      *                     of {@link PackedBitArrays} class.
      * @param numberOfBits the number of packed bits.

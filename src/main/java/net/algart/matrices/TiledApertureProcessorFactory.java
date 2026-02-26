@@ -703,7 +703,7 @@ public final class TiledApertureProcessorFactory {
      * no references to them are maintained by the created object.
      *
      * @param context           the {@link #context() context} that will be used by this tiler;
-     *                          can be {@code null}, then it will be ignored, and
+     *                          can be {@code null}, in which case it will be ignored, and
      *                          the {@link #tile(ApertureProcessor) tiled} processor will create all temporary
      *                          matrices in {@link SimpleMemoryModel}.<br>&nbsp;
      * @param continuationMode  continuation mode, used by the {@link #tile(ApertureProcessor) tiled} processor

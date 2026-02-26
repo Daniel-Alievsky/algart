@@ -735,7 +735,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * it is cloned in the beginning of the method and is not used after this.
      * It can be important in a case of multithreading access.</p>
      *
-     * @param context        the context of scanning; can be {@code null}, then will be ignored.
+     * @param context        the context of scanning; can be {@code null}, in which case will be ignored.
      *                       The main purpose of the context in most implementation is to allow interruption
      *                       of this method via {@link ArrayContext#checkInterruption()} and to allocate
      *                       work memory via {@link ArrayContext#getMemoryModel()}.
@@ -743,7 +743,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *                       its methods {@link ArrayContext#updateProgress} and
      *                       {@link ArrayContext#checkInterruptionAndUpdateProgress} are not called.
      * @param elementVisitor the visitor, called for every visited element;
-     *                       can be {@code null}, then will be ignored.
+     *                       can be {@code null}, in which case will be ignored.
      * @param coordinates    the coordinates of some matrix element, belonging to the connected object
      *                       that should be scanned.
      * @param forceClearing  <code>false</code> value allows the method not to perform actual clearing
@@ -784,12 +784,12 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * #clear(ArrayContext, net.algart.matrices.scanning.ConnectedObjectScanner.ElementVisitor, long[], boolean)
      * clear(context, elementVisitor, coordinates, true)}.
      *
-     * @param context        the context of scanning; can be {@code null}, then will be ignored.
+     * @param context        the context of scanning; can be {@code null}, in which case will be ignored.
      *                       The main purpose of the context in most implementation is to allow interruption
      *                       of this method via {@link ArrayContext#checkInterruption()} and to allocate
      *                       work memory via {@link ArrayContext#getMemoryModel()}.
      * @param elementVisitor the visitor, called for every visited element;
-     *                       can be {@code null}, then will be ignored.
+     *                       can be {@code null}, in which case will be ignored.
      * @param coordinates    the coordinates of some matrix element, belonging to the connected object
      *                       that should be scanned.
      * @return the number of matrix elements in the connected object
@@ -811,7 +811,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * #clear(ArrayContext, net.algart.matrices.scanning.ConnectedObjectScanner.ElementVisitor, long[], boolean)
      * clear(context, null, coordinates, forceClearing)}.
      *
-     * @param context       the context of scanning; can be {@code null}, then will be ignored.
+     * @param context       the context of scanning; can be {@code null}, in which case will be ignored.
      *                      The main purpose of the context in most implementation is to allow interruption
      *                      of this method via {@link ArrayContext#checkInterruption()} and to allocate
      *                      work memory via {@link ArrayContext#getMemoryModel()}.
@@ -836,7 +836,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * #clear(ArrayContext, net.algart.matrices.scanning.ConnectedObjectScanner.ElementVisitor, long[], boolean)
      * clear(context, null, coordinates, true)}.
      *
-     * @param context     the context of scanning; can be {@code null}, then will be ignored.
+     * @param context     the context of scanning; can be {@code null}, in which case will be ignored.
      *                    The main purpose of the context in most implementation is to allow interruption
      *                    of this method via {@link ArrayContext#checkInterruption()} and to allocate
      *                    work memory via {@link ArrayContext#getMemoryModel()}.
@@ -882,7 +882,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *
      * <p>Note: this method calls {@link #reset()} in the very beginning.
      *
-     * @param context           the context of scanning; can be {@code null}, then will be ignored.
+     * @param context           the context of scanning; can be {@code null}, in which case will be ignored.
      * @param mask              the bit mask, on which the volume should be counted; can be {@code null},
      *                          then the volume is the full number of elements in connected objects.
      * @param minNonClearedSize minimal volume of connected objects that will not be cleared.
@@ -952,7 +952,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      *
      * <p>Note: this method calls {@link #reset()} in the very beginning.
      *
-     * @param context the context of scanning; can be {@code null}, then will be ignored.
+     * @param context the context of scanning; can be {@code null}, in which case will be ignored.
      * @param objects the second matrix, where this method clears all objects connected with some objects
      *                in the matrix, corresponding to this object.
      * @return the total number of cleared elements in <code>objects</code>.
@@ -989,7 +989,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * {@link #clear clear} and {@link #nextUnitBit nextUnitBit} calls.
      *
      * @param context     the context of execution;
-     *                    can be {@code null}, then it will be ignored.
+     *                    can be {@code null}, in which case it will be ignored.
      * @param coordinates coordinates of currently scanned matrix element.
      */
     public final void updateProgress(ArrayContext context, long... coordinates) {
@@ -1024,7 +1024,7 @@ public abstract class ConnectedObjectScanner implements Cloneable {
      * <p>This method may be used in situations when the instance of this object has long time life
      * and will be reused in future.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     public void freeResources(ArrayContext context) {
         if (workMemory != null) {

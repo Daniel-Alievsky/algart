@@ -1817,7 +1817,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be {@code null}, then will be ignored.
+     *                      can be {@code null}, in which case will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      * the simple histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).
@@ -1910,7 +1910,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be {@code null}, then will be ignored.
+     *                      can be {@code null}, in which case will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      * the simple histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).
@@ -2075,7 +2075,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be {@code null}, then will be ignored.
+     *                      can be {@code null}, in which case will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      * the precise histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).
@@ -2308,7 +2308,7 @@ public abstract class SummingHistogram extends Histogram {
      * @param minValue      the minimal value.
      * @param maxValue      the maximal value.
      * @param countOfValues some additional information filled by this method;
-     *                      can be {@code null}, then will be ignored.
+     *                      can be {@code null}, in which case will be ignored.
      * @return the definite integral of <i>v</i>(<i>r</i>) function, defined in terms of
      * the precise histogram model, between <i>r</i>=<i>r</i>(<code>minValue</code>) and
      * <i>r</i>=<i>r</i>(<code>maxValue</code>).

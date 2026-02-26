@@ -85,7 +85,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be {@code null}, then it will be ignored.
+     *                     can be {@code null}, in which case it will be ignored.
      * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
      *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
@@ -146,7 +146,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be {@code null}, then it will be ignored.
+     *                     can be {@code null}, in which case it will be ignored.
      * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
      *                     the precise histogram model, <code>false</code> means the simple histogram model
      *                     (see comments to {@link Histogram} class).
@@ -227,7 +227,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be {@code null}, then it will be ignored.
+     *                     can be {@code null}, in which case it will be ignored.
      * @param filler       the reserved value, returned when
      *                     <i>r</i><sub>1</sub>&ge;<i>r</i><sub>2</sub>.
      * @param interpolated the histogram model used while calculating percentile: <code>true</code> means
@@ -311,7 +311,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context      the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                     can be {@code null}, then it will be ignored.
+     *                     can be {@code null}, in which case it will be ignored.
      * @param filler       the reserved value, returned when
      *                     <i>r</i>(<i>v</i><sub>1</sub>*&sigma;)&ge;<i>r</i>(<i>v</i><sub>2</sub>*&sigma;),
      *                     or one of the special keys {@link RankMorphology#FILL_MIN_VALUE},
@@ -394,7 +394,7 @@ public class RankProcessors {
      * methods in {@link BasicRankMorphology} class.
      *
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                       can be {@code null}, then it will be ignored.
+     *                       can be {@code null}, in which case it will be ignored.
      * @param processingFunc the function, which should be applied to every calculated aperture sum.
      * @return the new streaming aperture processor, finding the given function of the aperture sum.
      * @throws NullPointerException     if <code>bitLevels</code> argument is {@code null}.
@@ -485,7 +485,7 @@ public class RankProcessors {
      * processor twice: as the main source matrix <b>M</b> and as the first additional matrix <b>M</b><sub>0</sub>.
      *
      * @param context        the {@link StreamingApertureProcessor#context() context} that will be used by this object;
-     *                       can be {@code null}, then it will be ignored.
+     *                       can be {@code null}, in which case it will be ignored.
      * @param processingFunc the function, which should be applied to every three
      *                       (<i>v</i><sub>0</sub>,<i>v</i><sub>1</sub>,<i>v</i><sub>2</sub>),
      *                       where <i>v</i><sub>0</sub> is the element of <b>M</b><sub>0</sub> matrix,

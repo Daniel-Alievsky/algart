@@ -43,7 +43,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
      * Returns new instance of this class.
      *
      * @param context the {@link #context() context} that will be used by this object;
-     *                can be {@code null}, then it will be ignored.
+     *                can be {@code null}, in which case it will be ignored.
      * @return        new instance of this class.
      */
     public static BasicDerivator getInstance(ArrayContext context) {
@@ -57,7 +57,7 @@ public class BasicDerivator extends AbstractDerivator implements Derivator {
      * (<code>byte</code>) or 32768 (<code>short</code> and <code>char</code>).
      *
      * @param context              the {@link #context() context} that will be used by this object;
-     *                             can be {@code null}, then it will be ignored.
+     *                             can be {@code null}, in which case it will be ignored.
      * @return                     new instance of this class.
      */
     public static BasicDerivator getCorrectingUnsignedInstance(ArrayContext context) {

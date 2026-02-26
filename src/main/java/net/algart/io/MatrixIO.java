@@ -196,14 +196,14 @@ public class MatrixIO {
      * Returns <code>true</code> if both methods <code>setCompressionMode</code> and
      * <code>setCompressionQuality</code> have been successfully called.
      *
-     * <p>The <code>quality</code> argument can be <code>null</code>, then this method does nothing
+     * <p>The <code>quality</code> argument can be <code>null</code>, in which case this method does nothing
      * and simply returns <code>false</code>.</p>
      *
      * <p>This method can be used inside a customizer passed to
      * {@link #writeBufferedImage(Path, BufferedImage, Consumer)} and similar methods.</p>
      *
      * @param parameters parameters for writing image.
-     * @param quality    quality in range 0.0..1.0; can be <code>null</code>, then this method does nothing.
+     * @param quality    quality in range 0.0..1.0; can be <code>null</code>, in which case this method does nothing.
      * @return whether the quality was set.
      * @throws NullPointerException if <code>parameters</code> is <code>null</code>.
      */

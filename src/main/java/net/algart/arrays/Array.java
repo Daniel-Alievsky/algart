@@ -1322,7 +1322,7 @@ public interface Array {
      * created by {@link Arrays#nByteCopies}, {@link Arrays#nCharCopies}, etc.:
      * these arrays have no associated resources.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      * @see #freeResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see #flushResources(ArrayContext, boolean)
@@ -1343,7 +1343,7 @@ public interface Array {
     /**
      * Equivalent to <code>{@link #flushResources(ArrayContext, boolean) flushResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #freeResources(ArrayContext)
      */
@@ -1428,7 +1428,7 @@ public interface Array {
      * however, it is still possible that the second call will spend time for writing data again t
      * o an external device.
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext)
@@ -1453,7 +1453,7 @@ public interface Array {
     /**
      * Equivalent to <code>{@link #freeResources(ArrayContext, boolean) freeResources}(context, false)</code>.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      * @see #loadResources(ArrayContext)
      * @see #flushResources(ArrayContext)
      * @see Matrix#freeResources(ArrayContext)
@@ -1553,7 +1553,7 @@ public interface Array {
      * In another case, thousands of inactive instances of AlgART arrays with non-released resources
      * can exhaust all available RAM (or address space).
      *
-     * @param context              the context of execution; can be {@code null}, then it will be ignored.
+     * @param context              the context of execution; can be {@code null}, in which case it will be ignored.
      * @param forcePhysicalWriting is it necessary to try forcing physical writing all associated resources
      *                             to the external device.
      * @see #loadResources(ArrayContext context)

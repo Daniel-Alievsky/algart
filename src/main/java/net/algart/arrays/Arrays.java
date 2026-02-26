@@ -1634,7 +1634,7 @@ public class Arrays {
      *
      * <p>This method never throws exceptions.
      *
-     * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be {@code null}, in which case &minus;1 is returned.
      * @param arrayLength the desired length of the AlgART array.
      * @return the estimated size of the AlgART array in bytes or &minus;1 if it is unknown.
      * @see #sizeOf(Array)
@@ -1680,7 +1680,7 @@ public class Arrays {
      * <li>for all other cases, returns <code>-1.0</code> ("unknown size").</li>
      * </ul>
      *
-     * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be {@code null}, in which case &minus;1 is returned.
      * @return the exact size of each element of the AlgART array in bytes or &minus;1 for non-primitive types.
      * @see #sizeOf(Array)
      * @see #bytesPerElement(Class)
@@ -1725,7 +1725,7 @@ public class Arrays {
      * <li>for all other cases, returns <code>-1</code> ("unknown size").</li>
      * </ul>
      *
-     * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be {@code null}, in which case &minus;1 is returned.
      * @return the integer number of bytes, necessary to store such elements, or &minus;1 for non-primitive types.
      * @see #sizeOf(Class)
      */
@@ -1767,7 +1767,7 @@ public class Arrays {
      * <li>for all other cases, returns <code>-1</code> ("unknown size").</li>
      * </ul>
      *
-     * @param elementType some primitive element type; can be {@code null}, then &minus;1 is returned.
+     * @param elementType some primitive element type; can be {@code null}, in which case &minus;1 is returned.
      * @return the size of each element of the AlgART array in bits or &minus;1 if it is unknown.
      * @see #sizeOf(Class)
      * @see PArray#bitsPerElement()
@@ -1803,7 +1803,7 @@ public class Arrays {
      * Equivalent to {@link Class#isPrimitive() elementType.isPrimitive()}, but
      * does not throw exception for {@code null} argument (<code>false</code> is returned for {@code null}).
      *
-     * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
+     * @param elementType some element type; can be {@code null}, in which case <code>false</code> is returned.
      * @return whether this element type is a primitive type.
      */
     public static boolean isPrimitiveElementType(Class<?> elementType) {
@@ -1815,7 +1815,7 @@ public class Arrays {
      * <code>short.class</code>, <code>int.class</code>, <code>long.class</code>,
      * <code>float.class</code> or <code>double.class</code>.
      *
-     * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
+     * @param elementType some element type; can be {@code null}, in which case <code>false</code> is returned.
      * @return whether this element type is a numeric primitive type (not <code>boolean</code> or <code>char</code>).
      */
     public static boolean isNumberElementType(Class<?> elementType) {
@@ -1828,7 +1828,7 @@ public class Arrays {
      * Returns <code>true</code> if the passed element type is <code>float.class</code>
      * or <code>double.class</code>.
      *
-     * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
+     * @param elementType some element type; can be {@code null}, in which case <code>false</code> is returned.
      * @return whether this element type is a floating-point primitive type.
      */
     public static boolean isFloatingPointElementType(Class<?> elementType) {
@@ -1839,7 +1839,7 @@ public class Arrays {
      * Returns <code>true</code> if the passed element type is <code>boolean.class</code>,
      * <code>char.class</code>, <code>byte.class</code> or <code>short.class</code>.
      *
-     * @param elementType some element type; can be {@code null}, then <code>false</code> is returned.
+     * @param elementType some element type; can be {@code null}, in which case <code>false</code> is returned.
      * @return whether this element type is primitive and should be interpreted as unsigned primitive type
      * according AlgART agreements.
      */
@@ -4628,7 +4628,7 @@ public class Arrays {
      *
      * @param array     the source AlgART array.
      * @param bytes     Java array, to which the content of the source array will be copied;
-     *                  can be {@code null}, then it will be allocated automatically.
+     *                  can be {@code null}, in which case it will be allocated automatically.
      * @param byteOrder the byte order for element types, greater than 1 byte;
      *                  it is not used in cases of {@link ByteArray} and {@link BitArray}.
      * @return Java array with resulting data;

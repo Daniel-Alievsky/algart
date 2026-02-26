@@ -143,7 +143,7 @@ public class ArrayPool {
      * <p>This method does nothing if the passed argument is {@code null}.
      *
      * @param array some AlgART array, returned by previous {@link #requestArray()} call;
-     *        can be {@code null}, then the method does nothing.
+     *        can be {@code null}, in which case the method does nothing.
      * @throws IllegalArgumentException if the length or element type of the passed array
      *                                  do not match the arguments of {@link #getInstance getInstance} method.
      */

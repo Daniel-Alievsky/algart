@@ -379,7 +379,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * Returns new instance of this class.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       can be {@code null}, then it will be ignored, and all temporary arrays
+     *                       can be {@code null}, in which case it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.
@@ -402,7 +402,7 @@ public class GeneralizedBitProcessing extends AbstractArrayProcessorWithContextS
      * already uses multithreading.
      *
      * @param context        the {@link #context() context} that will be used by this object;
-     *                       can be {@code null}, then it will be ignored, and all temporary arrays
+     *                       can be {@code null}, in which case it will be ignored, and all temporary arrays
      *                       will be created by {@link SimpleMemoryModel}.
      * @param sliceOperation the bit processing operation that will be generalized by this instance.
      * @param roundingMode   the rounding mode, used by the created instance.

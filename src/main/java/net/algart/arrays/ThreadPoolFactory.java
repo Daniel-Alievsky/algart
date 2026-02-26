@@ -215,7 +215,7 @@ public interface ThreadPoolFactory {
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be {@code null}, then some default thread factory will be used.
+     *                      can be {@code null}, in which case some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
      * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
      * @see #performTasks(Array, java.util.concurrent.ThreadFactory, Runnable[])
@@ -234,7 +234,7 @@ public interface ThreadPoolFactory {
      * @param threadFactory the factory, passed to
      *                      {@link #getThreadPool(Array, java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be {@code null}, then some default thread factory will be used.
+     *                      can be {@code null}, in which case some default thread factory will be used.
      * @param tasks         the tasks which should be performed.
      * @throws NullPointerException if <code>tasks</code> argument or one of the tasks is {@code null}.
      */
@@ -260,7 +260,7 @@ public interface ThreadPoolFactory {
      *
      * @param threadFactory the factory, passed to {@link #getThreadPool(java.util.concurrent.ThreadFactory)}
      *                      method to get the necessary thread pool;
-     *                      can be {@code null}, then some default thread factory will be used.
+     *                      can be {@code null}, in which case some default thread factory will be used.
      * @param from  the initial index of the performed task, inclusive
      * @param to    the final index of the performed task, exclusive. (This index may lie outside the array.)
      * @param tasks the tasks which should be performed.

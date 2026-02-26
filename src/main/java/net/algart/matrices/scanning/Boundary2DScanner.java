@@ -2193,7 +2193,7 @@ public abstract class Boundary2DScanner {
      * more than 10<sup>10</sup> seconds (&gt; 300 years) on a very quick computer that can perform one
      * iteration per 1&nbsp;ns.</p>
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      * @return the length of scanned boundary (the number of visited pixel sides,
      * not the number of visited pixels!)
      * @throws IllegalStateException if this scanner was not {@link #isInitialized() positioned yet}.
@@ -2219,7 +2219,7 @@ public abstract class Boundary2DScanner {
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     public final void updateProgress(ArrayContext context) {
         if (context != null)
@@ -2233,7 +2233,7 @@ public abstract class Boundary2DScanner {
      * <p>The method can be useful while sequentially scanning the matrix via a usual loop of
      * {@link #nextBoundary()} and {@link #scanBoundary(ArrayContext)} calls.
      *
-     * @param context the context of execution; can be {@code null}, then it will be ignored.
+     * @param context the context of execution; can be {@code null}, in which case it will be ignored.
      */
     public final void checkInterruption(ArrayContext context) {
         if (context != null) {

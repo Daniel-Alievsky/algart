@@ -128,7 +128,7 @@ public final class JArrayPool {
      * <p>This method does nothing if the passed argument is {@code null}.
      *
      * @param array some Java array, returned by previous {@link #requestArray()} call;
-     *        can be {@code null}, then the method does nothing.
+     *        can be {@code null}, in which case the method does nothing.
      * @throws IllegalArgumentException if the argument is not a Java array, or if its size or element type
      *                                  do not match the arguments of {@link #getInstance} method.
      */
