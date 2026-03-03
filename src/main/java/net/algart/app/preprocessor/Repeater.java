@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.executable.preprocessor;
+package net.algart.app.preprocessor;
 
 import java.io.*;
 import java.util.Arrays;

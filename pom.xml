@@ -6,7 +6,7 @@
 
     <groupId>net.algart</groupId>
     <artifactId>algart</artifactId>
-    <version>1.5.1</version>
+    <version>1.5.2</version>
     <!--
     Please remember that you Arrays.SystemSettings.VERSION constant must be equal to this value!
     This condition is checked automatically in the "release-maven-central" profile below.
@@ -94,7 +94,7 @@
                                 <configuration>
                                     <target>
                                         <echo level="info"/>
-                                        <java classname="net.algart.executable.verifier.CheckAlgARTVersion"
+                                        <java classname="net.algart.app.verifier.CheckAlgARTVersion"
                                               fork="true" failonerror="true">
                                             <!-- See https://ant.apache.org/manual/Tasks/java.html -->
                                             <classpath refid="maven.compile.classpath"/>
@@ -115,7 +115,7 @@
                             <encoding>UTF-8</encoding>
                             <doclint>none</doclint>
                             <excludePackageNames>
-                                net.algart.executable.*
+                                net.algart.app.*
                             </excludePackageNames>
                         </configuration>
                         <executions>

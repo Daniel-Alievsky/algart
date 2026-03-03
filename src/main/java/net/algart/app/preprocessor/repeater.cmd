@@ -14,7 +14,7 @@ set f=%f% "..\..\..\..\..\**\*.java"
 set f=%f% "..\..\..\..\..\..\test\**\*.java"
 rem set f=%f% "(some-folder)\src\main\java\**\*.java"
 
-if exist ..\..\..\..\..\..\..\target\classes\net\algart\executable\preprocessor\Repeater.class (
+if exist ..\..\..\..\..\..\..\target\classes\net\algart\app\preprocessor\Repeater.class (
     echo Calling Repeater compiled in the target\ folder
     goto calljava
 )
@@ -31,7 +31,7 @@ echo Calling javac -d ..\..\..\.. Repeater.java
 javac -version -d ..\..\..\.. Repeater.java
 
 :calljava
-java -cp ..\..\..\..;..\..\..\..\..\..\..\target\classes\ net.algart.executable.preprocessor.Repeater %flags% %f%
+java -cp ..\..\..\..;..\..\..\..\..\..\..\target\classes\ net.algart.app.preprocessor.Repeater %flags% %f%
 if errorlevel 1 pause
 
 :end

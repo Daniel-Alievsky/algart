@@ -41,7 +41,7 @@
             <!-- Locale is necessary to provide English, not Breakiterator algorithm of parsing the first sentence -->
             <packageset dir="../src/main/java/">
                 <include name="net/algart/**"/>
-                <exclude name="net/algart/executable/**"/>
+                <exclude name="net/algart/app/**"/>
             </packageset>
             <header><![CDATA[
 <!--algartHeader-->
@@ -69,7 +69,7 @@
 ]]></bottom>
         -->
         </javadoc>
-        <java classpath="../target/classes" classname="net.algart.executable.preprocessor.JavaDocCorrector" failonerror="true">
+        <java classpath="../target/classes" classname="net.algart.app.preprocessor.JavaDocCorrector" failonerror="true">
             <arg value="../docs/api/"/>
         </java>
         <replace dir="../docs/api" summary="true">
@@ -98,7 +98,7 @@
             <zipfileset prefix="algart" dir="../" includes="LICENSE"/>
             <zipfileset prefix="algart/src" dir="../src/main/java/">
                 <include name="/net/algart/**/"/>
-                <exclude name="/net/algart/executable/**"/>
+                <exclude name="/net/algart/app/**"/>
             </zipfileset>
             <zipfileset prefix="algart" dir="../" includes="documentation.html"/>
             <zipfileset prefix="algart" dir="../target/ant-jars/" includes="algart.jar"/>

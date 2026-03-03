@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Test for Repeater" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="net.algart.executable.preprocessor.Repeater" />
+    <option name="MAIN_CLASS_NAME" value="net.algart.app.preprocessor.Repeater" />
     <module name="algart" />
     <option name="PROGRAM_PARAMETERS" value="-trimTrailingWhitespace src/main/java/net/algart/executable/preprocessor/repeaterTest.txt" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="net.algart.executable.preprocessor.*" />
+        <option name="PATTERN" value="net.algart.app.preprocessor.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
