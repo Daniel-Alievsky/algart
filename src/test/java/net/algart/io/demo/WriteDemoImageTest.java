@@ -182,5 +182,4 @@ public class WriteDemoImageTest {
         }
         throw new UnsupportedOperationException("Unsupported elementType = " + elementType);
     }
-
 }
