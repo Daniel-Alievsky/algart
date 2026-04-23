@@ -2041,18 +2041,22 @@ public class JArrays {
      */
     public static long getBytes8(byte[] src, int srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
-        if (count == 4) {
-            // - possible popular case
-            return ((long) src[srcPos] & 0xFF)
-                    | (((long) src[srcPos + 1] & 0xFF) << 8)
-                    | (((long) src[srcPos + 2] & 0xFF) << 16)
-                    | (((long) src[srcPos + 3] & 0xFF) << 24);
-        }
-        if (count == 3) {
-            // - possible popular case
-            return ((long) src[srcPos] & 0xFF)
-                    | (((long) src[srcPos + 1] & 0xFF) << 8)
-                    | (((long) src[srcPos + 2] & 0xFF) << 16);
+        // - possible popular cases
+        switch (count) {
+            case 1:
+                return (long) src[srcPos] & 0xFFL;
+            case 2:
+                return ((long) src[srcPos] & 0xFFL)
+                        | (((long) src[srcPos + 1] & 0xFFL) << 8);
+            case 3:
+                return ((long) src[srcPos] & 0xFFL)
+                        | (((long) src[srcPos + 1] & 0xFFL) << 8)
+                        | (((long) src[srcPos + 2] & 0xFFL) << 16);
+            case 4:
+                return ((long) src[srcPos] & 0xFFL)
+                        | (((long) src[srcPos + 1] & 0xFFL) << 8)
+                        | (((long) src[srcPos + 2] & 0xFFL) << 16)
+                        | (((long) src[srcPos + 3] & 0xFFL) << 24);
         }
         rangeCheckForBytes8(src.length, srcPos, count);
         // Note: special versions of this method for count = 1, 2, 4 has no sense,
@@ -2110,18 +2114,22 @@ public class JArrays {
      */
     public static long getBytes8InBigEndianOrder(byte[] src, int srcPos, int count) {
         Objects.requireNonNull(src, "Null src");
-        if (count == 4) {
-            // - possible popular case
-            return (((long) src[srcPos] & 0xFF) << 24)
-                    | (((long) src[srcPos + 1] & 0xFF) << 16)
-                    | (((long) src[srcPos + 2] & 0xFF) << 8)
-                    | ((long) src[srcPos + 3] & 0xFF);
-        }
-        if (count == 3) {
-            // - possible popular case
-            return (((long) src[srcPos] & 0xFF) << 16)
-                    | (((long) src[srcPos + 1] & 0xFF) << 8)
-                    | ((long) src[srcPos + 2] & 0xFF);
+        // - possible popular cases
+        switch (count) {
+            case 1:
+                return (long) src[srcPos] & 0xFFL;
+            case 2:
+                return (((long) src[srcPos] & 0xFFL) << 8)
+                        | ((long) src[srcPos + 1] & 0xFFL);
+            case 3:
+                return (((long) src[srcPos] & 0xFFL) << 16)
+                        | (((long) src[srcPos + 1] & 0xFFL) << 8)
+                        | ((long) src[srcPos + 2] & 0xFFL);
+            case 4:
+                return (((long) src[srcPos] & 0xFFL) << 24)
+                        | (((long) src[srcPos + 1] & 0xFFL) << 16)
+                        | (((long) src[srcPos + 2] & 0xFFL) << 8)
+                        | ((long) src[srcPos + 3] & 0xFFL);
         }
         rangeCheckForBytes8(src.length, srcPos, count);
         long result = 0;
@@ -2175,10 +2183,10 @@ public class JArrays {
      * <p>Note: if you know that the number of bytes <code>count</code> is always 2, 4 or 8,
      * there is a better alternative to this function based on the standard {@link ByteBuffer} class,
      * for example,</p><pre>
-     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN);
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
      *     // using buffer.putInt(k, ...)
      * </pre>or<pre>
-     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.BIG_ENDIAN).asIntBuffer();
+     *     var buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
      *     // using buffer.put(k, ...)
      * </pre>
      *
@@ -2195,6 +2203,20 @@ public class JArrays {
      */
     public static void setBytes8(byte[] dest, int destPos, long packedBytes, int count) {
         Objects.requireNonNull(dest, "Null dest");
+        // - possible popular cases
+        switch (count) {
+            case 1:
+                dest[destPos] = (byte) packedBytes;
+                return;
+            case 2:
+                if (destPos >= 0) {
+                    // - otherwise, it will be checked in rangeCheckForBytes8
+                    dest[destPos + 1] = (byte) (packedBytes >>> 8);
+                    dest[destPos] = (byte) packedBytes;
+                    return;
+                }
+                break;
+        }
         rangeCheckForBytes8(dest.length, destPos, count);
         // Note: special branches for count = 3/4 may even lead to reducing performance in modern JVM
         // (probably little methods are optimized better)
@@ -2242,6 +2264,19 @@ public class JArrays {
      */
     public static void setBytes8InBigEndianOrder(byte[] dest, int destPos, long packedBytes, int count) {
         Objects.requireNonNull(dest, "Null dest");
+        switch (count) {
+            case 1:
+                dest[destPos] = (byte) packedBytes;
+                return;
+            case 2:
+                if (destPos >= 0) {
+                    // - otherwise, it will be checked in rangeCheckForBytes8
+                    dest[destPos + 1] = (byte) packedBytes;
+                    dest[destPos] = (byte) (packedBytes >>> 8);
+                    return;
+                }
+                break;
+        }
         rangeCheckForBytes8(dest.length, destPos, count);
         // Note: special branches for count = 3/4 may even lead to reducing performance in modern JVM
         // (probably little methods are optimized better)
@@ -8061,7 +8096,6 @@ public class JArrays {
         }
         rangeCheck(arrayLength, pos, count);
     }
-
 
     private static void getBytes(boolean[] array, int offset, int count, byte[] result) {
         for (int disp = 0, offsetMax = offset + count; offset < offsetMax; offset++) {

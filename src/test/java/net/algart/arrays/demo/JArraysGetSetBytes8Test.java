@@ -63,13 +63,9 @@ public class JArraysGetSetBytes8Test {
         }
     }
 
-    private static void testUnpack(byte[] data, int pos, int count, long value, boolean little) {
-
-    }
-
     public static void main(String[] args) {
         final int arrayLength = 160000;
-        final int numberOfTests = 1000;
+        final int numberOfTests = 10000;
         Random rnd = new Random(157);
         final long valueForTestingSpeed = rnd.nextLong();
         byte[] data = new byte[arrayLength];
