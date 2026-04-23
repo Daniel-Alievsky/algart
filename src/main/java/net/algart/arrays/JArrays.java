@@ -1972,7 +1972,6 @@ public class JArrays {
         return dest;
     }
 
-
     /**
      * Equivalent to {@link #getBytes8(byte[], int, int)} with the same arguments
      * if <code>byteOrder&nbsp;==&nbsp;ByteOrder.LITTLE_ENDIAN</code>, or to
