@@ -2040,7 +2040,7 @@ public class JArrays {
      * @see PackedBitArraysPer8#getBits64(byte[], long, int)
      */
     public static long getBytes8(byte[] src, int srcPos, int count) {
-        Objects.requireNonNull(src, "Null src");
+        // src == null is checked automatically via its usage
         // - possible popular cases
         switch (count) {
             case 1:
@@ -2059,8 +2059,6 @@ public class JArrays {
                         | (((long) src[srcPos + 3] & 0xFFL) << 24);
         }
         rangeCheckForBytes8(src.length, srcPos, count);
-        // Note: special versions of this method for count = 1, 2, 4 has no sense,
-        // because ByteBuffer.wrap(data).order(byteOrder).asXxxBuffer().get() lead to the same results.
         int numberOfBits = count << 3;
         long result = 0;
         for (int shift = 0; shift < numberOfBits; shift += 8, srcPos++) {
@@ -2113,7 +2111,7 @@ public class JArrays {
      * @see PackedBitArraysPer8#getBits64InReverseOrder(byte[], long, int)
      */
     public static long getBytes8InBigEndianOrder(byte[] src, int srcPos, int count) {
-        Objects.requireNonNull(src, "Null src");
+        // src == null is checked automatically via its usage
         // - possible popular cases
         switch (count) {
             case 1:
@@ -2202,7 +2200,7 @@ public class JArrays {
      * @see PackedBitArraysPer8#setBits64(byte[], long, long, int)
      */
     public static void setBytes8(byte[] dest, int destPos, long packedBytes, int count) {
-        Objects.requireNonNull(dest, "Null dest");
+        // dest == null is checked automatically via its usage
         // - possible popular cases
         switch (count) {
             case 1:
@@ -2263,7 +2261,7 @@ public class JArrays {
      * @see PackedBitArraysPer8#setBits64InReverseOrder(byte[], long, long, int)
      */
     public static void setBytes8InBigEndianOrder(byte[] dest, int destPos, long packedBytes, int count) {
-        Objects.requireNonNull(dest, "Null dest");
+        // dest == null is checked automatically via its usage
         switch (count) {
             case 1:
                 dest[destPos] = (byte) packedBytes;
