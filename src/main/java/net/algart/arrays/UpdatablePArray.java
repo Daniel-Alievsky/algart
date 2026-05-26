@@ -57,6 +57,8 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      *     <code>{@link UpdatableByteArray#setByte(long, byte) setByte}(index, (byte) value)</code>;</li>
      *     <li>for {@link UpdatableShortArray}:
      *     <code>{@link UpdatableShortArray#setShort(long, short) setShort}(index, (short) value)</code>;</li>
+     *     <li>for {@link UpdatableIntArray}:
+     *     <code>{@link UpdatableIntArray#setInt(long, int) setInt}(index, (int) value)</code>;</li>
      *     <li>for {@link UpdatableLongArray}:
      *     <code>{@link UpdatableLongArray#setLong(long, long) setLong}(index, (long) value)</code>;</li>
      *     <li>for {@link UpdatableFloatArray}:
@@ -90,6 +92,8 @@ public interface UpdatablePArray extends PArray, UpdatableArray {
      *     <code>{@link UpdatableByteArray#setByte(long, byte) setByte}(index, (byte) value)</code>;</li>
      *     <li>for {@link UpdatableShortArray}:
      *     <code>{@link UpdatableShortArray#setShort(long, short) setShort}(index, (short) value)</code>;</li>
+     *     <li>for {@link UpdatableIntArray}:
+     *     <code>{@link UpdatableIntArray#setInt(long, int) setInt}(index, (int) value)</code>;</li>
      *     <li>for {@link UpdatableLongArray}: the same method is already declared in this interface;</li>
      *     <li>for {@link UpdatableFloatArray}:
      *     <code>{@link UpdatableFloatArray#setFloat(long, float) setFloat}(index, (float) value)</code>;</li>
