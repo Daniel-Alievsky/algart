@@ -5307,7 +5307,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -5476,7 +5476,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -5993,7 +5993,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -6493,7 +6493,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -6993,7 +6993,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -7493,7 +7493,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -7993,7 +7993,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -8493,7 +8493,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
@@ -8993,7 +8993,7 @@ public class PackedBitArrays {
             throw new IllegalArgumentException("Negative count = " + count);
         }
         if (count > unpackedLength(src) - srcPos) {
-            throw new IllegalArgumentException("Too short source array byte[" + src.length +
+            throw new IllegalArgumentException("Too short source array long[" + src.length +
                     "]: it cannot contain " + count + " bits since position " + srcPos);
         }
         if (count > Integer.MAX_VALUE) {
