@@ -8062,7 +8062,7 @@ public class JArrays {
             throw new IndexOutOfBoundsException("Start position = " + pos + " < 0");
         }
         if (pos > arrayLen - count) {
-            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos + count)
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + ((long) pos + (long) count)
                     + " > array length = " + arrayLen);
         }
     }
@@ -8075,14 +8075,14 @@ public class JArrays {
             throw new IndexOutOfBoundsException("Start position = " + pos1 + " < 0");
         }
         if (pos1 > arrayLen1 - count) {
-            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos1 + count)
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + ((long) pos1 + (long) count)
                     + " > array length = " + arrayLen1);
         }
         if (pos2 < 0) {
             throw new IndexOutOfBoundsException("Start position = " + pos2 + " < 0");
         }
         if (pos2 > arrayLen2 - count) {
-            throw new IndexOutOfBoundsException("End position (last index + 1) = " + (pos2 + count)
+            throw new IndexOutOfBoundsException("End position (last index + 1) = " + ((long) pos2 + (long) count)
                     + " > array length = " + arrayLen2);
         }
     }
