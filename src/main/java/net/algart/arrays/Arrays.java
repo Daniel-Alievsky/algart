@@ -1027,8 +1027,8 @@ public class Arrays {
                 //noinspection SimplifiableConditionalExpression
                 return s == null ? defaultValue
                         : s.equalsIgnoreCase("true") ? true
-                        : s.equalsIgnoreCase("false") ? false
-                        : defaultValue;
+                          : s.equalsIgnoreCase("false") ? false
+                            : defaultValue;
             } catch (Exception ex) {
                 return defaultValue;
             }
@@ -1867,7 +1867,7 @@ public class Arrays {
      * valid values do not require such precision: they must always be in the range 1..64.</p>
      *
      * @param bitsPerElement the number of bits per element for the returned primitive type.
-     * @param floatingPoint whether the return type should be <code>float</code> / <code>double</code>.
+     * @param floatingPoint  whether the return type should be <code>float</code> / <code>double</code>.
      * @return the primitive type corresponding to the function arguments.
      * @throws IllegalArgumentException if there is no required primitive element type.
      */
@@ -1883,8 +1883,9 @@ public class Arrays {
                 switch ((int) bitsPerElement) {
                     case 32 -> float.class;
                     case 64 -> double.class;
-                    default -> throw new IllegalArgumentException(bitsPerElement +
-                            " bits/element is impossible for floating-point primitive types");
+                    default -> throw new IllegalArgumentException(
+                            bitsPerElement + " bits/element is impossible for floating-point " +
+                            "primitive types");
                 } :
                 switch ((int) bitsPerElement) {
                     case 1 -> boolean.class;
@@ -1892,8 +1893,9 @@ public class Arrays {
                     case 16 -> short.class;
                     case 32 -> int.class;
                     case 64 -> long.class;
-                    default -> throw new IllegalArgumentException(bitsPerElement +
-                            " bits/element is impossible for fixed-point primitive types");
+                    default -> throw new IllegalArgumentException(
+                            bitsPerElement + " bits/element is impossible for fixed-point " +
+                            "primitive types");
                 };
     }
 
@@ -4938,7 +4940,7 @@ public class Arrays {
      * For integer arrays ({@link ByteArray}, {@link ShortArray},
      * {@link IntArray}, {@link LongArray}), the signed decimal representation is used.
      * For arrays of <code>char</code> elements ({@link CharArray}),
-     * the unsigned decimal representation is used.
+     * the standard string representation is used.
      * For arrays of objects ({@link ObjectArray}),
      * the {@code null} elements are represented as <code>"null"</code> string,
      * and all non-null elements converted to strings by their <code>toString</code> method.
@@ -4954,8 +4956,8 @@ public class Arrays {
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
-     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
-     *                        with adding "..." at the end).
+     * @param maxStringLength the length threshold after which no more elements are appended
+     *                        (longer results are truncated, and "..." is appended to the end).
      * @return the string representations of all elements joined into one string.
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
@@ -4981,94 +4983,102 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        MutableCharArray ca = SimpleMemoryModel.getInstance().newEmptyCharArray();
-        if (array instanceof BitArray a) {
-            ca.append(String.valueOf(a.getBit(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        switch (array) {
+            case BitArray a -> {
+                sb.append(a.getBit(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getBit(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getBit(k)));
             }
-        } else if (array instanceof CharArray a) {
-            ca.append(String.valueOf(a.getChar(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case CharArray a -> {
+                sb.append(a.getChar(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getChar(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getChar(k)));
             }
-        } else if (array instanceof ByteArray a) {
-            ca.append(String.valueOf(a.getByte(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case ByteArray a -> {
+                sb.append(a.getByte(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getByte(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getByte(k)));
             }
-        } else if (array instanceof ShortArray a) {
-            ca.append(String.valueOf(a.getShort(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case ShortArray a -> {
+                sb.append(a.getShort(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getShort(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getShort(k)));
             }
-        } else if (array instanceof IntArray a) {
-            ca.append(String.valueOf(a.getInt(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case IntArray a -> {
+                sb.append(a.getInt(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getInt(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getInt(k)));
             }
-        } else if (array instanceof LongArray a) {
-            ca.append(String.valueOf(a.getLong(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case LongArray a -> {
+                sb.append(a.getLong(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getLong(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getLong(k)));
             }
-        } else if (array instanceof FloatArray a) {
-            ca.append(String.valueOf(a.getFloat(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case FloatArray a -> {
+                sb.append(a.getFloat(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getFloat(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getFloat(k)));
             }
-        } else if (array instanceof DoubleArray a) {
-            ca.append(String.valueOf(a.getDouble(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case DoubleArray a -> {
+                sb.append(a.getDouble(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getDouble(k));
                 }
-                ca.append(separator).append(String.valueOf(a.getDouble(k)));
             }
-        } else if (array instanceof ObjectArray<?> a) {
-            ca.append(String.valueOf(a.get(0)));
-            for (long k = 1; k < n; k++) {
-                if (ca.length() >= maxStringLength) {
-                    ca.append(separator).append("...");
-                    break;
+            case ObjectArray<?> a -> {
+                sb.append(a.get(0));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.get(k));
                 }
-                ca.append(separator).append(String.valueOf(a.get(k)));
             }
-        } else {
-            throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
+            default -> throw new AssertionError("Unallowed type of passed argument: " + array.getClass());
         }
-        return toString(ca);
+        return sb.toString();
     }
-
 
     /**
      * Joins and returns as a string the string representations for all
@@ -5088,10 +5098,11 @@ public class Arrays {
      * @param format          format string for numeric elements: each element <code>v</code> is converted
      *                        to string by <code>String.format(locale,format,v)</code> call.
      * @param separator       the string used for separating elements.
-     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
-     *                        with adding "..." at the end).
+     * @param maxStringLength the length threshold after which no more elements are appended
+     *                        (longer results are truncated, and "..." is appended to the end).
      * @return the string representations of all elements joined into one string.
-     * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
+     * @throws NullPointerException     if <code>array</code>, <code>format</code> or <code>separator</code>
+     *                                  argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
      * @see #toString(Array, String, int)
      * @see JArrays#toString(byte[], Locale, String, String, int)
@@ -5103,6 +5114,7 @@ public class Arrays {
      */
     public static String toString(Array array, Locale locale, String format, String separator, int maxStringLength) {
         Objects.requireNonNull(array, "Null array argument");
+        Objects.requireNonNull(format, "Null format argument");
         Objects.requireNonNull(separator, "Null separator argument");
         if (maxStringLength <= 0) {
             throw new IllegalArgumentException("maxStringLength argument must be positive");
@@ -5111,65 +5123,73 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
-        if (array instanceof ByteArray a) {
-            cv.append(String.format(locale, format, a.getByte(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        switch (array) {
+            case ByteArray a -> {
+                sb.append(String.format(locale, format, a.getByte(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getByte(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getByte(k)));
             }
-        } else if (array instanceof ShortArray a) {
-            cv.append(String.format(locale, format, a.getShort(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case ShortArray a -> {
+                sb.append(String.format(locale, format, a.getShort(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getShort(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getShort(k)));
             }
-        } else if (array instanceof IntArray a) {
-            cv.append(String.format(locale, format, a.getInt(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case IntArray a -> {
+                sb.append(String.format(locale, format, a.getInt(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getInt(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getInt(k)));
             }
-        } else if (array instanceof LongArray a) {
-            cv.append(String.format(locale, format, a.getLong(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case LongArray a -> {
+                sb.append(String.format(locale, format, a.getLong(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getLong(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getLong(k)));
             }
-        } else if (array instanceof FloatArray a) {
-            cv.append(String.format(locale, format, a.getFloat(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case FloatArray a -> {
+                sb.append(String.format(locale, format, a.getFloat(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getFloat(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getFloat(k)));
             }
-        } else if (array instanceof DoubleArray a) {
-            cv.append(String.format(locale, format, a.getDouble(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case DoubleArray a -> {
+                sb.append(String.format(locale, format, a.getDouble(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(String.format(locale, format, a.getDouble(k)));
                 }
-                cv.append(separator).append(String.format(locale, format, a.getDouble(k)));
             }
-        } else {
-            return toString(array, separator, maxStringLength);
+            default -> {
+                return toString(array, separator, maxStringLength);
+            }
         }
-        return toString(cv);
+        return sb.toString();
     }
 
     /**
@@ -5188,8 +5208,8 @@ public class Arrays {
      *
      * @param array           the source AlgART array.
      * @param separator       the string used for separating elements.
-     * @param maxStringLength the maximal allowed length of returned string (longer results are truncated
-     *                        with adding "..." at the end).
+     * @param maxStringLength the length threshold after which no more elements are appended
+     *                        (longer results are truncated, and "..." is appended to the end).
      * @return the string representations of all elements joined into one string.
      * @throws NullPointerException     if <code>array</code> or <code>separator</code> argument is {@code null}.
      * @throws IllegalArgumentException if <code>maxStringLength</code> &lt;= 0.
@@ -5211,65 +5231,73 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        MutableCharArray cv = SimpleMemoryModel.getInstance().newEmptyCharArray();
-        if (array instanceof BitArray a) {
-            cv.append(a.getBit(0) ? "1" : "0");
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        switch (array) {
+            case BitArray a -> {
+                sb.append(a.getBit(0) ? "1" : "0");
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(a.getBit(k) ? "1" : "0");
                 }
-                cv.append(separator).append(a.getBit(k) ? "1" : "0");
             }
-        } else if (array instanceof CharArray a) {
-            cv.append(InternalUtils.toHexString((short) a.getChar(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case CharArray a -> {
+                sb.append(InternalUtils.toHexString((short) a.getChar(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(InternalUtils.toHexString((short) a.getChar(k)));
                 }
-                cv.append(separator).append(InternalUtils.toHexString((short) a.getChar(k)));
             }
-        } else if (array instanceof ByteArray a) {
-            cv.append(InternalUtils.toHexString((byte) a.getByte(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case ByteArray a -> {
+                sb.append(InternalUtils.toHexString((byte) a.getByte(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(InternalUtils.toHexString((byte) a.getByte(k)));
                 }
-                cv.append(separator).append(InternalUtils.toHexString((byte) a.getByte(k)));
             }
-        } else if (array instanceof ShortArray a) {
-            cv.append(InternalUtils.toHexString((short) a.getShort(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case ShortArray a -> {
+                sb.append(InternalUtils.toHexString((short) a.getShort(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(InternalUtils.toHexString((short) a.getShort(k)));
                 }
-                cv.append(separator).append(InternalUtils.toHexString((short) a.getShort(k)));
             }
-        } else if (array instanceof IntArray a) {
-            cv.append(InternalUtils.toHexString(a.getInt(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case IntArray a -> {
+                sb.append(InternalUtils.toHexString(a.getInt(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(InternalUtils.toHexString(a.getInt(k)));
                 }
-                cv.append(separator).append(InternalUtils.toHexString(a.getInt(k)));
             }
-        } else if (array instanceof LongArray a) {
-            cv.append(InternalUtils.toHexString(a.getLong(0)));
-            for (long k = 1; k < n; k++) {
-                if (cv.length() >= maxStringLength) {
-                    cv.append(separator).append("...");
-                    break;
+            case LongArray a -> {
+                sb.append(InternalUtils.toHexString(a.getLong(0)));
+                for (long k = 1; k < n; k++) {
+                    if (sb.length() >= maxStringLength) {
+                        sb.append(separator).append("...");
+                        break;
+                    }
+                    sb.append(separator).append(InternalUtils.toHexString(a.getLong(k)));
                 }
-                cv.append(separator).append(InternalUtils.toHexString(a.getLong(k)));
             }
-        } else {
-            return toString(array, separator, maxStringLength);
+            default -> {
+                return toString(array, separator, maxStringLength);
+            }
         }
-        return toString(cv);
+        return sb.toString();
     }
 
     /**
@@ -7197,8 +7225,8 @@ public class Arrays {
             this.numberOfTasks = numberOfTasks > 0 ? numberOfTasks :
                     getClass() == Copier.class
                             && !src.isLazy() ? 1
-                            // source array is probably file or memory: no reasons for multithreading copying
-                            : Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks(src));
+                    // source array is probably file or memory: no reasons for multithreading copying
+                    : Math.max(1, this.threadPoolFactory.recommendedNumberOfTasks(src));
             // assert this.numberOfTasks > 0;
             long m = numberOfRanges > 0 ? numberOfRanges : recommendedNumberOfRanges(src, true);
             assert m > 0 : "A bug in recommendedNumberOfRanges(Array): it returns non-positive value " + m;

@@ -392,7 +392,8 @@ public class MainOperationsTest implements Cloneable {
         long m2 = rt.totalMemory() - rt.freeMemory();
         System.out.printf(Locale.US, "Used memory for Java arrays: %.3f MB%n", (m2 - m1) / 1048576.0);
         System.out.println("Tested array: " + (a instanceof CharArray ?
-                Arrays.toHexString(a, ", ", 100) : Arrays.toString(a, ", ", 100)));
+                Arrays.toHexString(a, ", ", 100) :
+                Arrays.toString(a, ", ", 100)));
         System.out.println("Bit mask for unpacking bits: " + Arrays.toHexString(bits, "", 100));
 
         int numberOfThreads = multithreading ?

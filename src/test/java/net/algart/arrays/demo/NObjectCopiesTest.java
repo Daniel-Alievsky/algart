@@ -35,8 +35,8 @@ import net.algart.arrays.ObjectArray;
 public class NObjectCopiesTest {
 
     public static void main(String[] args) {
-        ObjectArray<String> hello = Arrays.nObjectCopies(5, "Hello");
-        System.out.println("AlgART array: " + Arrays.toString(hello, ", ", 256));
+        ObjectArray<String> hello = Arrays.nObjectCopies(30, "Hello");
+        System.out.println("AlgART array: " + Arrays.toString(hello, ", ", 100));
         String[] j = hello.toJavaArray();
         System.out.println("Java array: " + java.util.Arrays.toString(j));
         j = hello.newJavaArray(2);
