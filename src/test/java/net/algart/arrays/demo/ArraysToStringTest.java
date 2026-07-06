@@ -26,9 +26,11 @@ package net.algart.arrays.demo;
 
 import net.algart.arrays.Arrays;
 import net.algart.arrays.JArrays;
-import net.algart.arrays.SimpleMemoryModel;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * <p>Test for <code>Arrays.toString</code> and <code>JArrays.toString</code> methods.</p>
@@ -240,6 +242,28 @@ public class ArraysToStringTest {
         s = JArrays.toString(floats, Locale.US, "%.3f", separator, maxStringLength);
         System.out.printf("floats[%d] (formatter): \"%s\"%n", floats.length, s);
         if (!s.equals(Arrays.toString(Arrays.SMM.of(floats), Locale.US, "%.3f", separator, maxStringLength))) {
+            throw new AssertionError();
+        }
+
+        Collection<String> list = List.of("Hello1", "Hello2", "");
+        s = JArrays.toString(list, String::toUpperCase, separator, maxStringLength);
+        System.out.printf("list[%d] (formatted): \"%s\"%n", list.size(), s);
+        s = JArrays.toString(list, separator, maxStringLength);
+        System.out.printf("list[%d]: \"%s\"%n", list.size(), s);
+        if (!s.equals(Arrays.toString(Arrays.SMM.of(list.toArray()), separator, maxStringLength))) {
+            throw new AssertionError();
+        }
+        list = Set.of();
+        s = JArrays.toString(list, separator, maxStringLength);
+        //noinspection ConstantValue
+        System.out.printf("list[%d]: \"%s\"%n", list.size(), s);
+        if (!s.equals(Arrays.toString(Arrays.SMM.of(list.toArray()), separator, maxStringLength))) {
+            throw new AssertionError();
+        }
+        list = Arrays.asList(Arrays.nObjectCopies(97,"My"));
+        s = JArrays.toString(list, separator, maxStringLength);
+        System.out.printf("list[%d]: \"%s\"%n", list.size(), s);
+        if (!s.equals(Arrays.toString(Arrays.SMM.of(list.toArray()), separator, maxStringLength))) {
             throw new AssertionError();
         }
         System.out.println();
