@@ -7568,9 +7568,9 @@ public class JArrays {
      * </p>
      *
      * <p>If the necessary string length exceeds <code>maxStringLength</code> characters,
-     * this method break joining after the element, which leads to exceeding this limit,
-     * and adds "..." instead of all further elements. So, the length of returning
-     * string will never be essentially larger than <code>maxStringLength</code> characters.
+     * this method breaks joining after the element, which leads to exceeding the limit,
+     * and adds "..." instead of all further elements. So, the length of the returned string
+     * will never be essentially larger than <code>maxStringLength</code> characters.
      * You may specify <code>Integer.MAX_VALUE</code> as <code>maxStringLength</code> value
      * to be sure that all collection elements will be joined.</p>
      *

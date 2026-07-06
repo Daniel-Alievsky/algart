@@ -94,7 +94,7 @@
                                 <configuration>
                                     <target>
                                         <echo level="info"/>
-                                        <java classname="net.algart.app.verifier.CheckAlgARTVersion"
+                                        <java classname="net.algart.app.versions.CheckAlgARTVersion"
                                               fork="true" failonerror="true">
                                             <!-- See https://ant.apache.org/manual/Tasks/java.html -->
                                             <classpath refid="maven.compile.classpath"/>

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package net.algart.app.verifier;
+package net.algart.app.versions;
 
 import net.algart.arrays.Arrays;
 
