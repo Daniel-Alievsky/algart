@@ -7229,7 +7229,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7267,7 +7267,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7304,7 +7304,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7341,7 +7341,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7378,7 +7378,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7415,7 +7415,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7452,7 +7452,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7489,7 +7489,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7526,7 +7526,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0]);
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7601,7 +7601,7 @@ public class JArrays {
         if (!iterator.hasNext()) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(formatter.apply(iterator.next()));
         while (iterator.hasNext()) {
             if (sb.length() >= maxStringLength) {
@@ -7653,7 +7653,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7702,7 +7702,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7750,7 +7750,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7798,7 +7798,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7846,7 +7846,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7894,7 +7894,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(String.format(locale, format, array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7944,7 +7944,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(array[0] ? "1" : "0");
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -7982,7 +7982,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(InternalUtils.toHexString((short) array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -8019,7 +8019,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(InternalUtils.toHexString(array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -8056,7 +8056,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(InternalUtils.toHexString(array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -8093,7 +8093,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(InternalUtils.toHexString(array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {
@@ -8130,7 +8130,7 @@ public class JArrays {
         if (array.length == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         sb.append(InternalUtils.toHexString(array[0]));
         for (int k = 1; k < array.length; k++) {
             if (sb.length() >= maxStringLength) {

@@ -4983,7 +4983,7 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         switch (array) {
             case BitArray a -> {
                 sb.append(a.getBit(0));
@@ -5123,7 +5123,7 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         switch (array) {
             case ByteArray a -> {
                 sb.append(String.format(locale, format, a.getByte(0)));
@@ -5231,7 +5231,7 @@ public class Arrays {
         if (n == 0) {
             return "";
         }
-        final StringBuilder sb = new StringBuilder(Math.min(maxStringLength, 16));
+        final StringBuilder sb = new StringBuilder();
         switch (array) {
             case BitArray a -> {
                 sb.append(a.getBit(0) ? "1" : "0");
