@@ -258,7 +258,11 @@ public class MatrixIO {
             throw new UnsupportedImageFormatException("Cannot write " + file +
                     ": no writers found for file suffix \"" + fileExtension + "\"");
         }
-        writeBufferedImage(file, image, writer, customizer);
+        try {
+            writeBufferedImage(file, image, writer, customizer);
+        } finally {
+            writer.dispose();
+        }
     }
 
     public static void writeBufferedImageByFormatName(
@@ -284,7 +288,11 @@ public class MatrixIO {
                     ": no writers found for format name \"" + formatName +
                     "\" for writing " + image);
         }
-        writeBufferedImage(file, image, writer, customizer);
+        try {
+            writeBufferedImage(file, image, writer, customizer);
+        } finally {
+            writer.dispose();
+        }
     }
 
     public static void writeBufferedImage(
