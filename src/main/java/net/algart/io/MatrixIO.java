@@ -321,12 +321,16 @@ public class MatrixIO {
                         ", possibly because the containing folder is invalid or not permitted for writing");
             }
             writer.setOutput(ios);
-            final ImageWriteParam writeParam = writer.getDefaultWriteParam();
-            if (customizer != null) {
-                customizer.accept(writeParam);
+            try {
+                final ImageWriteParam writeParam = writer.getDefaultWriteParam();
+                if (customizer != null) {
+                    customizer.accept(writeParam);
+                }
+                final IIOImage iioImage = new IIOImage(image, null, null);
+                writer.write(null, iioImage, writeParam);
+            } finally {
+                writer.setOutput(null);
             }
-            final IIOImage iioImage = new IIOImage(image, null, null);
-            writer.write(null, iioImage, writeParam);
         }
     }
 
