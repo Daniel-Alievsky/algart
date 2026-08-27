@@ -34,6 +34,7 @@ import net.algart.io.awt.MatrixToImage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -99,6 +100,7 @@ public class WriteDemoImageTest {
             MatrixIO.writeBufferedImage(
                     targetFile, bi, p -> MatrixIO.setQuality(p, quality));
         }
+        System.out.printf("Done: file size %d bytes%n", Files.size(targetFile));
     }
 
     static Object makeSamples(Class<?> elementType, int bandCount, int dimX, int dimY) {
