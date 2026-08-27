@@ -199,6 +199,10 @@ public class MatrixIO {
      * <p>The <code>quality</code> argument can be <code>null</code>, in which case this method does nothing
      * and simply returns <code>false</code>.</p>
      *
+     * <p>This method also returns <code>false</code> if the parameters do not support writing
+     * with compression (i.e. {@link ImageWriteParam#canWriteCompressed() canWriteCompressed()}
+     * returns <code>false</code>).</p>
+     *
      * <p>This method can be used inside a customizer passed to
      * {@link #writeBufferedImage(Path, BufferedImage, Consumer)} and similar methods.</p>
      *
@@ -210,6 +214,9 @@ public class MatrixIO {
     public static boolean setQuality(ImageWriteParam parameters, Double quality) {
         Objects.requireNonNull(parameters, "Null parameters (ImageWriteParam)");
         if (quality == null) {
+            return false;
+        }
+        if (!parameters.canWriteCompressed()) {
             return false;
         }
         parameters.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
